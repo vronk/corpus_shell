@@ -1,0 +1,594 @@
+var PanelCount = 0;
+var PanelPostions = new Array();
+
+function ToggleSideBar()
+{
+	 var left = $("#sidebar").css("left").replace(/px/g, "");
+	 var width = $("#sidebar").css("width").replace(/px/g, "");
+
+	 if (left == "0" || left == "0px")
+	 {
+	   left = left - width + 7;
+	   $("#sidebaricon").attr("src", "img/sidebargrip.right.png");
+	 }
+	 else
+	 {
+	 	 left = 0;
+	   $("#sidebaricon").attr("src", "img/sidebargrip.left.png");
+	 }
+
+	 $("#sidebar").css("left", left+"px");
+}
+
+function ToggleSideBarHiLight(hi)
+{
+		if (hi == 1)
+				$(".sidebartoggle").css("background-color", "#E0EEF8");
+		else
+				$(".sidebartoggle").css("background-color", "#214F75");
+}
+
+function SavePanelPositon(panel)
+{
+  var panelid = $(panel).attr("id");
+  PanelPostions[panelid] = new Array();
+  PanelPostions[panelid]["left"] = $(panel).css("left");
+  PanelPostions[panelid]["top"] = $(panel).css("top");
+  PanelPostions[panelid]["width"] = $(panel).css("width");
+  PanelPostions[panelid]["height"] = $(panel).css("height");
+}
+
+function LoadPanelPosition(panel)
+{
+  var panelid = $(panel).attr("id");
+  return PanelPostions[panelid];
+}
+
+function BringToFront(panel)
+{
+  $( ".draggable" ).each(function(index)
+  {
+     if ($(this).css("z-index") != "10")
+       $(this).css("z-index","10");
+  });
+  $(panel).css("z-index","11");
+}
+
+function InitDraggable(divid)
+{
+  $(divid)
+  .resizable({ containment: "parent", aspectRatio: false,
+             resize: function(event, ui)
+             {
+               BringToFront(this);
+               var hgt = parseInt($(this).css("height").replace(/px/g, ""));
+               if ($(this).find(".searchstring").length != 0)
+                 $(this).find(".scroll-pane").css("height", hgt - 150 + "px");
+               else
+                 $(this).find(".scroll-pane").css("height", hgt - 25 + "px");
+
+               SavePanelPositon(this);
+             }
+             })
+  .draggable({ handle: "p", containment: "parent",  snap: true,
+             start: function(event, ui)
+             {
+               BringToFront(this);
+             } ,
+             stop: function(event, ui)
+             {
+               SavePanelPositon(this);
+             }
+             });
+}
+
+function InitScrollPanes()
+{
+  //$(".jspScrollable").removeClass("jspScrollable");
+  $('.scroll-pane').jScrollPane({autoReinitialise: true});
+}
+
+$(function()
+{
+	 OpenNewSearchPanel();
+});
+
+function StartSearch(elem)
+{
+  var parElem = $(elem).parents(".draggable");
+  var sstr = $(parElem).find(".searchstring").val();
+  var sele = parseInt($(parElem).find(".searchcombo").val());
+  $.ajax(
+  {
+      type: 'GET',
+      url: "http://corpus3.aac.ac.at/sru/DdcOnSRUXslt.php",
+//          url: "/ddconsru",
+      dataType: 'xml',
+      data : {operation: 'searchRetrieve', query: sstr, 'x-cmd-context': SearchConfig[sele]['x-cmd-context']},
+      complete: function(xml, textStatus)
+      {
+        /*
+        var api = $(parElem).find('.scroll-pane').data('jsp');
+
+     			api.getContentPane().html(xml.responseText);
+     			api.reinitialise();
+     			*/
+
+        $(parElem).find(".searchresults").html(xml.responseText);
+        $(parElem).find(".hitcount").text($(".recordcount").val());
+        InitScrollPanes();
+      }
+  }
+  );
+}
+
+function LoadBatch(elem)
+{
+  var parElem = $(elem).parents(".draggable");
+  var recordcount = parseInt($(parElem).find(".recordcount").val());
+  var startrecord = parseInt($(parElem).find(".startrecord").val());
+  var maxrecord = parseInt($(parElem).find(".maxrecord").val());
+
+  if (recordcount > 0 && startrecord > 0 && startrecord < recordcount)
+  {
+     Search(elem, startrecord, maxrecord);
+  }
+}
+
+function Search(elem, startrecord, maxrecord)
+{
+  var parElem = $(elem).parents(".draggable");
+  var sstr = $(parElem).find(".searchstring").val();
+  $.ajax(
+  {
+      type: 'GET',
+      url: "http://corpus3.aac.ac.at/sru/DdcOnSRUXslt.php",
+//          url: "/ddconsru",
+      dataType: 'xml',
+      data : {operation: 'searchRetrieve', query: sstr, startRecord: startrecord, maximumRecords: maxrecord},
+      complete: function(xml, textStatus)
+      {
+        //var resText = xml.responseText;
+        //alert(resText);
+        $(parElem).find(".searchresults").html(xml.responseText);
+        $(parElem).find(".hitcount").text($(".recordcount").val());
+
+        //InitScrollPanes();
+      }
+  }
+  );
+}
+
+function LoadPreviousBatch(elem)
+{
+  var parElem = $(elem).parents(".draggable");
+  var recordcount = parseInt($(parElem).find(".recordcount").val());
+  var startrecord = parseInt($(parElem).find(".startrecord").val());
+  var maxrecord = parseInt($(parElem).find(".maxrecord").val());
+
+  if (recordcount > 0)
+  {
+    if (startrecord - maxrecord > 0)
+    {
+      $(parElem).find(".startrecord").val(startrecord - maxrecord);
+      Search(elem, startrecord - maxrecord, maxrecord);
+    }
+    else if (startrecord - maxrecord <= 0)
+    {
+      $(parElem).find(".startrecord").val(1);
+      Search(1, maxrecord);
+    }
+  }
+}
+
+function LoadNextBatch(elem)
+{
+  var parElem = $(elem).parents(".draggable");
+  var recordcount = parseInt($(parElem).find(".recordcount").val());
+  var startrecord = parseInt($(parElem).find(".startrecord").val());
+  var maxrecord = parseInt($(parElem).find(".maxrecord").val());
+
+  if (startrecord + maxrecord < recordcount)
+  {
+    $(parElem).find(".startrecord").val(startrecord + maxrecord);
+    Search(elem, startrecord + maxrecord, maxrecord);
+  }
+}
+
+function GetFullText(elem, filename)
+{
+  $.ajax(
+  {
+      type: 'GET',
+      url: "http://corpus3.aac.ac.at/cs/gethtml.php",
+//          url: "/ddconsru",
+      dataType: 'xml',
+      data : {txt: filename},
+      complete: function(xml, textStatus)
+      {
+        //var resText = xml.responseText;
+        //alert(resText);
+        var srdiv =  $(elem).find(".searchresults");
+        //var str = $(srdiv).html();
+        //alert(str);
+        $(srdiv).html(xml.responseText);
+        InitScrollPanes();
+      }
+  }
+  );
+}
+
+function GetFacsimile(elem, filename)
+{
+  var srdiv =  $(elem).find(".searchresults");
+  $(srdiv).html('<img src="getimage.php?img=' + filename + '" />');
+  InitScrollPanes();
+}
+
+function GeneratePanelTitle(titlestring, pin)
+{
+ 	var titlep = document.createElement('p');
+ 	$(titlep).addClass("ui-widget-header");
+
+ 	var titletable = document.createElement('table');
+ 	$(titletable).css("width", "100%");
+
+ 	var titletr = document.createElement('tr');
+ 	var lefttd = document.createElement('td');
+ 	$(lefttd).text(titlestring);
+
+ 	if (pin == 1)
+ 	{
+    	var pintd = document.createElement('td');
+    	$(pintd).css("width", "17px");
+
+    	var pina = document.createElement('a');
+    	$(pina).attr("href", "#");
+    	$(pina).attr("onclick", "PinPanel(this, 2);");
+    	$(pina).addClass("noborder");
+
+    	var pinimg = document.createElement('img');
+    	$(pinimg).attr("src", "img/pin.gray.png");
+    	$(pinimg).addClass("titletopiconpin");
+    	$(pinimg).addClass("noborder");
+ 	}
+
+ 	var righttd1 = document.createElement('td');
+ 	$(righttd1).css("width", "17px");
+
+ 	var maxa = document.createElement('a');
+ 	$(maxa).attr("href", "#");
+ 	$(maxa).attr("onclick", "MaximizePanel(this);");
+ 	$(maxa).addClass("noborder");
+
+ 	var maximg = document.createElement('img');
+ 	$(maximg).attr("src", "img/n.win_max.png");
+ 	$(maximg).addClass("titletopiconmax");
+ 	$(maximg).addClass("noborder");
+
+ 	var righttd2 = document.createElement('td');
+ 	$(righttd2).css("width", "17px");
+
+ 	var closea = document.createElement('a');
+ 	$(closea).attr("href", "#");
+ 	$(closea).attr("onclick", "ClosePanel(this);");
+ 	$(closea).addClass("noborder");
+
+ 	var closeimg = document.createElement('img');
+ 	$(closeimg).attr("src", "img/n.win_close.png");
+ 	$(closeimg).addClass("titletopiconclose");
+ 	$(closeimg).addClass("noborder");
+
+  $(maxa).append(maximg);
+  $(closea).append(closeimg);
+
+  $(righttd1).append(maxa);
+  $(righttd2).append(closea);
+
+  $(titletr).append(lefttd);
+
+  if (pin == 1)
+  {
+    $(pina).append(pinimg);
+    $(pintd).append(pina);
+
+    $(titletr).append(pintd);
+  }
+
+  $(titletr).append(righttd1);
+  $(titletr).append(righttd2);
+
+  $(titletable).append(titletr);
+  $(titlep).append(titletable);
+
+ 	return titlep;
+}
+
+function GenerateSearchNavigation()
+{
+  var navtable = document.createElement('table');
+ 	$(navtable).addClass("navigation");
+
+ 	var navtr = document.createElement('tr');
+ 	var navigationtitle = document.createElement('td');
+ 	$(navigationtitle).text("Search results");
+ 	$(navigationtitle).addClass("navigationtitle");
+
+ 	var navigationmain = document.createElement('td');
+ 	$(navigationmain).addClass("navigationmain");
+ 	$(navigationmain).append("<i>hits:</i>&nbsp;");
+
+ 	var hitcount = document.createElement('span');
+ 	$(hitcount).addClass("hitcount");
+ 	$(hitcount).text("0");
+
+ 	$(navigationmain).append(hitcount);
+ 	$(navigationmain).append(";&nbsp;<i>from:</i>&nbsp;");
+
+ 	var startrecord = document.createElement('input');
+ 	$(startrecord).addClass("startrecord");
+ 	$(startrecord).attr("type","text");
+ 	$(startrecord).val("1");
+
+ 	$(navigationmain).append(startrecord);
+ 	$(navigationmain).append("&nbsp;<i>max:</i>&nbsp;");
+
+ 	var maxrecord = document.createElement('input');
+ 	$(maxrecord).addClass("maxrecord");
+ 	$(maxrecord).attr("type","text");
+ 	$(maxrecord).val("10");
+
+ 	$(navigationmain).append(maxrecord);
+
+ 	var loada = document.createElement('a');
+ 	$(loada).addClass("noborder");
+
+ 	var loadimg = document.createElement('img');
+ 	$(loadimg).addClass("navigationicon");
+ 	$(loadimg).attr("src", "img/n.arrow_right_b.png");
+
+ 	$(loada).append(loadimg);
+
+ 	var preva = document.createElement('a');
+ 	$(preva).addClass("noborder");
+
+ 	var previmg = document.createElement('img');
+ 	$(previmg).addClass("navigationicon");
+ 	$(previmg).attr("src", "img/n.arrow_left.png");
+
+ 	$(preva).append(previmg);
+
+ 	var nexta = document.createElement('a');
+ 	$(nexta).addClass("noborder");
+
+ 	var nextimg = document.createElement('img');
+ 	$(nextimg).addClass("navigationicon");
+ 	$(nextimg).attr("src", "img/n.arrow_right.png");
+
+ 	$(nexta).append(nextimg);
+
+ 	$(navigationmain).append(loada);
+ 	$(navigationmain).append(preva);
+ 	$(navigationmain).append(nexta);
+
+ 	$(navtr).append(navigationtitle);
+ 	$(navtr).append(navigationmain);
+
+ 	$(navtable).append(navtr);
+
+ 	return navtable;
+}
+
+function GenerateSearchInputs()
+{
+ 	var searchdiv = document.createElement('div');
+ 	$(searchdiv).addClass("searchdiv");
+ 	$(searchdiv).text("Search for ");
+
+ 	var searchstring = document.createElement('input');
+ 	$(searchstring).addClass("searchstring");
+ 	$(searchstring).attr("type", "text");
+
+ 	var searchbutton = document.createElement('input');
+ 	$(searchbutton).addClass("searchbutton");
+ 	$(searchbutton).attr("type", "button");
+ 	$(searchbutton).attr("value", "Go");
+ 	$(searchbutton).attr("onclick", "StartSearch(this);");
+
+ 	var searchcombo = document.createElement('select');
+ 	$(searchcombo).addClass("searchcombo");
+
+ 	for (var i = 0; i < SearchConfig.length; i++)
+ 	{
+ 	   var searchoption = document.createElement('option');
+ 	   $(searchoption).attr("value", i);
+ 	   $(searchoption).text(SearchConfig[i]["DisplayText"]);
+ 	   $(searchcombo).append(searchoption);
+ 	}
+
+ 	$(searchdiv).append(searchstring);
+ 	//var searchbr = document.createElement('br');
+ 	//$(searchdiv).append(searchbr);
+
+ 	$(searchdiv).append(" in ");
+ 	$(searchdiv).append(searchcombo);
+ 	$(searchdiv).append(" ");
+ 	$(searchdiv).append(searchbutton);
+
+  return searchdiv;
+}
+
+function GenerateSearchResultsDiv()
+{
+  var resultdiv = document.createElement('div');
+ 	$(resultdiv).addClass("scroll-pane");
+ 	$(resultdiv).addClass("searchresults");
+
+  return resultdiv;
+}
+
+function OpenNewSearchPanel()
+{
+ 	var searchpanel = document.createElement('div');
+ 	PanelCount++;
+ 	$(searchpanel).addClass("draggable ui-widget-content");
+ 	$(searchpanel).attr("id", "Panel" + PanelCount);
+ 	$(searchpanel).attr("onclick", "BringToFront(this);");
+ 	$(searchpanel).css("position", "absolute");
+ 	$(searchpanel).css("left", 200 + 20*PanelCount + "px");
+ 	$(searchpanel).css("top", 10 + 20*PanelCount +  "px");
+ 	$(searchpanel).css("width", "450px");
+ 	$(searchpanel).css("height", "300px");
+ 	$(searchpanel).css("z-index", "12");
+
+ 	var titlep = GeneratePanelTitle("Search " + PanelCount, 0);
+ 	$(searchpanel).append(titlep);
+ 	$(searchpanel).append(GenerateSearchInputs());
+ 	$(searchpanel).append(GenerateSearchNavigation());
+ 	$(searchpanel).append(GenerateSearchResultsDiv());
+
+ 	$("#snaptarget").append(searchpanel);
+ 	InitDraggable(searchpanel);
+}
+
+function OpenTextPanel(elem, filename)
+{
+  var paneldiv = $(elem).parents(".draggable");
+
+ 	var textpanel = document.createElement('div');
+ 	PanelCount++;
+ 	$(textpanel).addClass("draggable ui-widget-content");
+ 	$(textpanel).attr("id", "Panel" + PanelCount);
+ 	$(textpanel).attr("onclick", "BringToFront(this);");
+ 	$(textpanel).css("position", "absolute");
+
+ 	var wid = parseInt($(paneldiv).css("width").replace(/px/g, ""));
+ 	var lef = parseInt($(paneldiv).css("left").replace(/px/g, ""));
+
+ 	$(textpanel).css("left", lef + wid + 15 + "px");
+ 	$(textpanel).css("top", $(paneldiv).css("top"));
+ 	$(textpanel).css("width", "350px");
+ 	$(textpanel).css("height", $(paneldiv).css("height"));
+ 	$(textpanel).css("z-index", "12");
+
+ 	var titlep = GeneratePanelTitle("Full text '" + filename + "'", 1);
+ 	$(textpanel).append(titlep);
+ 	$(textpanel).append(GenerateSearchResultsDiv());
+
+ 	$("#snaptarget").append(textpanel);
+ 	CorrectSearchResultHeight(textpanel);
+
+ 	GetFullText(textpanel, filename);
+ 	InitDraggable(textpanel);
+}
+
+function OpenImagePanel(elem, filename)
+{
+  var paneldiv = $(elem).parents(".draggable");
+  filename = filename.replace(/xml/g, "jpg");
+
+ 	var textpanel = document.createElement('div');
+ 	PanelCount++;
+ 	$(textpanel).addClass("draggable ui-widget-content");
+ 	$(textpanel).attr("id", "Panel" + PanelCount);
+ 	$(textpanel).attr("onclick", "BringToFront(this);");
+ 	$(textpanel).css("position", "absolute");
+
+ 	var wid = parseInt($(paneldiv).css("width").replace(/px/g, ""));
+ 	var lef = parseInt($(paneldiv).css("left").replace(/px/g, ""));
+
+ 	$(textpanel).css("left", lef + wid + 15 + "px");
+ 	$(textpanel).css("top", $(paneldiv).css("top"));
+ 	$(textpanel).css("width", "350px");
+ 	$(textpanel).css("height", $(paneldiv).css("height"));
+ 	$(textpanel).css("z-index", "12");
+
+ 	var titlep = GeneratePanelTitle("Facsimile '" + filename + "'", 1);
+ 	$(textpanel).append(titlep);
+ 	$(textpanel).append(GenerateSearchResultsDiv());
+
+ 	$("#snaptarget").append(textpanel);
+  CorrectSearchResultHeight(textpanel);
+
+ 	GetFacsimile(textpanel, filename);
+
+ 	InitDraggable(textpanel);
+}
+
+function MaximizePanel(titlep)
+{
+ 	var paneldiv = $(titlep).parents(".draggable");
+ 	$(paneldiv).css("left", "5px");
+ 	$(paneldiv).css("top", "0px");
+ 	var wid = $("#mainpanel").width();
+ 	var hgt = $("#mainpanel").height();
+ 	$(paneldiv).css("width", wid-30);
+ 	$(paneldiv).css("height", hgt-25);
+ 	$(paneldiv).css("z-index", "25");
+
+  //var hgt = parseInt($(paneldiv).css("height").replace(/px/g, ""));
+  //$(paneldiv).find(".scroll-pane").css("height", hgt - 150 + "px");
+
+  CorrectSearchResultHeight(paneldiv);
+
+  $(titlep).find(".titletopiconmax").attr("src", "img/n.win_norm.png");
+  $(titlep).find(".titletopiconmax").parent().attr("onclick", "NormalizePanel(this);");
+}
+
+function NormalizePanel(titlep)
+{
+ 	var paneldiv = $(titlep).parents(".draggable");
+ 	var pos = LoadPanelPosition(paneldiv);
+
+ 	if (pos)
+ 	{
+   	$(paneldiv).css("left", pos["left"]);
+   	$(paneldiv).css("top", pos["top"]);
+   	$(paneldiv).css("width", pos["width"]);
+   	$(paneldiv).css("height", pos["height"]);
+   	$(paneldiv).css("z-index", "25");
+ 	}
+
+  //var hgt = parseInt($(paneldiv).css("height").replace(/px/g, ""));
+  //$(paneldiv).find(".scroll-pane").css("height", hgt - 150 + "px");
+
+  CorrectSearchResultHeight(paneldiv);
+
+  $(titlep).find(".titletopiconmax").attr("src", "img/n.win_max.png");
+  $(titlep).find(".titletopiconmax").parent().attr("onclick", "MaximizePanel(this);");
+}
+
+function ClosePanel(titlep)
+{
+ 	$(titlep).parents(".draggable").remove();
+}
+
+function PinPanel(elem, col)
+{
+ 	var paneldiv = $(elem).parents(".draggable");
+
+  if (col == 1)
+  {
+    $(paneldiv).find(".titletopiconpin").attr("src", "img/pin.gray.png");
+    $(paneldiv).find(".titletopiconpin").removeClass("pinned");
+    $(paneldiv).find(".titletopiconpin").parent().attr("onclick", "PinPanel(this, 2);");
+  }
+  else
+  {
+    $(paneldiv).find(".titletopiconpin").attr("src", "img/pin.color.png");
+    $(paneldiv).find(".titletopiconpin").addClass("pinned");
+    $(paneldiv).find(".titletopiconpin").parent().attr("onclick", "PinPanel(this, 1);");
+  }
+
+}
+
+function CorrectSearchResultHeight(paneldiv)
+{
+  var hgt = parseInt($(paneldiv).css("height").replace(/px/g, ""));
+  if ($(paneldiv).find(".searchstring").length != 0)
+    $(paneldiv).find(".scroll-pane").css("height", hgt - 150 + "px");
+  else
+    $(paneldiv).find(".scroll-pane").css("height", hgt - 25 + "px");
+}
+
+

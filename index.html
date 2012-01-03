@@ -1,0 +1,45 @@
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="css/base/jquery.ui.all.css" />
+    <link rel="stylesheet" type="text/css" href="css/demos.css" />
+    <link rel="stylesheet" type="text/css" href="css/jquery.sbscroller.css" />
+    <link rel="stylesheet" type="text/css" href="css/corpusshell.css" />
+    
+    <script type="text/javascript" src="js/jquery-1.6.2.js"></script>
+    <script type="text/javascript" src="js/ui/jquery.ui.core.js"></script>
+    <script type="text/javascript" src="js/ui/jquery.ui.widget.js"></script>
+    <script type="text/javascript" src="js/ui/jquery.ui.mouse.js"></script>
+    <script type="text/javascript" src="js/ui/jquery.ui.draggable.js"></script>
+    <script type="text/javascript" src="js/ui/jquery.ui.resizable.js"></script>
+    <script type="text/javascript" src="js/jquery.cookie-modified.js"></script>
+    <script type="text/javascript" src="js/jquery.mousewheel.min.js"></script>
+    <script type="text/javascript" src="js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="js/jquery.sbscroller.js"></script>
+    <script type="text/javascript" src="js/corpusshell.config.php"></script>
+    <script type="text/javascript" src="js/corpusshell.new.js"></script>
+  </head>
+  <body>
+    <div id="sidebar">
+    	<table class="sidebar">
+    		<tr>
+    			<td class="sidebar">
+    				 <h3>ICLTT Corpus Shell</h3>
+    				 <div style="padding: 10px; height: 100%;" id="searchbuttons">
+      				<a href="#" onclick="OpenNewSearchPanel($('#searchbuttons .searchcombo').val());" class="sidebar">New search panel</a>
+      			</div>
+    			</td>
+    			<td class="sidebartoggle" onclick="ToggleSideBar();" onmouseover="ToggleSideBarHiLight(1);" onmouseout="ToggleSideBarHiLight(0);">
+    				<img id="sidebaricon" src="img/sidebargrip.left.png" />
+    			</td>
+    		</tr>
+    	</table>
+    </div>
+    <div id="messagebox"></div>
+
+<div class="demo" id="mainpanel">
+    <div id="snaptarget" class="ui-widget-header">
+    </div>
+</div>
+
+  </body>
+</html>
