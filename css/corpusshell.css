@@ -1,0 +1,234 @@
+html
+{
+  height: 100%;
+}
+
+body
+{
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+  background-color: #CCCCCC;
+  font-family: verdana, helvetica, serif;
+}
+
+#sidebar
+{
+  height: 100%;
+  width: 210px;
+  background-color: #FFFFFF;
+  /* border: 1px solid #FFFFFF; */
+  position: absolute;
+  left: 0px;
+  z-index: 100;
+}
+
+table.sidebar
+{
+  height: 100%;
+  width: 100%;
+  border: none;
+  border-collapse: collapse;
+}
+
+td.sidebar
+{
+  height: 100%;
+  width: 193px;
+  color: #FFFFFF;
+  padding: 0px;
+  vertical-align: top;
+}
+
+td.sidebar h3
+{
+ font-size: 14px;
+ font-weight bold;
+ padding: 35px 10px 15px;
+ background-color: #286290;
+}
+
+td.sidebartoggle
+{
+  height: 100%;
+  width: 7px;
+  background-color: #214F75;
+  cursor: pointer;
+  vertical-align: middle;
+  text-align: center;
+}
+
+#messagebox
+{
+  height: 100px;
+  width: 200px;
+  background-color: #286290;
+  color: #FFFFFF;
+  /* border: 1px solid #FFFFFF; */
+  position: absolute;
+  left: -300px;
+}
+
+a.sidebar:link, a.sidebar:active, a.sidebar:visited
+{
+  display: block;
+  font-size:12px;
+  color: #000000;
+  background-color: transparent;
+  text-decoration:none;
+  text-align: left;
+  padding: 5px 10px;
+  border: 1px dotted #286290;
+}
+
+a.sidebar:hover,
+a.sidebar:focus
+{
+  color: #FFFFFF;
+  background-color: #286290;
+  display: block;
+  text-decoration: none;
+  text-align: left;
+  font-size: 12px;
+  padding: 5px 10px;
+  border: 1px solid #286290;
+}
+
+a.searchresult:link, a.searchresult:active, a.searchresult:visited
+{
+  font-size:12px;
+  color: #000000;
+  background-color: transparent;
+  text-decoration:none;
+  text-align: left;
+  padding: 3px 6px;
+  border: 1px dotted #286290;
+}
+
+a.searchresult:hover,
+a.searchresult:focus
+{
+  color: #FFFFFF;
+  background-color: #286290;
+  text-decoration: none;
+  text-align: left;
+  font-size: 12px;
+  padding: 3px 6px;
+  border: 1px solid #286290;
+}
+
+.noborder
+{
+  border: none;
+}
+
+img.titletopiconmax, img.titletopiconclose, img.titletopiconpin
+{
+  width: 15px;
+  height: 15px;
+  vertical-align: middle;
+}
+
+div.searchdiv
+{
+  padding: 10px;
+  font-size: 12px;
+}
+
+div.searchresults
+{
+  color: #000000;
+  clear: both;
+  position: relative;		
+}
+
+input.searchstring, select.searchcombo
+{
+  border: 1px solid #CCCCCC;
+  width: 183px;
+}
+
+input.searchbutton
+{
+	border: 1px solid #CCCCCC;
+	color: #000000;
+}
+
+table.navigation
+{
+	border-collapse: collapse; 
+	border: none; 
+	margin: 10px 0px; 
+	padding: 5px 10px; 
+	width: 100%; 
+	background-color: #CCCCCC;	
+	clear: both;
+}
+
+td.navigationtitle
+{
+	text-align: left; 
+	font-size: 14px; 
+	font-variant: small-caps; 
+	padding-left: 10px;	
+}
+
+td.navigationmain
+{
+	text-align: right; 
+	vertical-align: middle; 
+	font-size: 10px; 
+	padding: 3px 10px;
+}
+
+span.hitcount
+{
+	font-weight: bold; 
+	font-size: 14px; 
+	vertical-align: middle;	
+}
+
+input.startrecord, input.maxrecord
+{
+	border: 1px solid #CCCCCC; 
+	width: 40px; 
+	text-align: right; 
+	font-size: 10px; 
+	vertical-align: middle;
+}
+
+img.navigationicon
+{
+	border: none; 
+	width: 13px; 
+	height: 13px; 
+	vertical-align: middle; 
+	margin-left: 2px; 
+	padding: 0px;
+}
+
+.draggable {padding: 5px; float: left; margin: 5px; /* font-size: .9em; */ border: 3px solid #286290; overflow: visible; border-radius: 10px;}
+.ui-widget-header p, .ui-widget-content p { margin: 0; padding: 0px 0px 0px 10px; border-radius: 10px; font-size: 12px;}
+/*
+#snaptarget { height: 910px; width: 1110px; border: none; background: #EEEEEE url(); position: relative;}
+*/
+#snaptarget { height: 100%; width: 100%; border: none; background: #FFFFFF url(); position: relative;}
+div p.ui-widget-header { cursor: move; background-color: #999999;}
+.ui-resizable-helper { border: 1px dotted #666666; }
+div.demo { border: none; padding: 0px; overflow: hidden; height: 100%; width: 100%; }
+div.profiletext, div.profiletext p { text-align: left; font-size: 11px; font-weight: normal; padding: 3px 0px;}
+
+div.profiletext h3 { font-size: 15px; margin: 10px 0px; }
+div.profiletext h4 { font-size: 13px; border-bottom: 1px solid #A82027; }
+
+.scroll-pane
+{
+  width: 100%;
+  height: 180px;
+  overflow: auto;
+}
+
+.slider-wrap, .ui-slider-handle 
+{
+    width: 15px;
+}
