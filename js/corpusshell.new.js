@@ -112,8 +112,9 @@ function StartSearch(elem)
   $.ajax(
   {
       type: 'GET',
+//      CHANGE THIS FOR RELEASE
 //      url: "http://corpus3.aac.ac.at/sru/switch.php",
-      url: "sru/switch.php",
+      url: "fcs/aggregator/switch.php",
 //          url: "/ddconsru",
       dataType: 'xml',
       // FIX: x-context gehört nicht in den query string
@@ -164,8 +165,9 @@ function Search(elem, startrecord, maxrecord)
   $.ajax(
   {
       type: 'GET',
+//      CHANGE THIS FOR RELEASE
 //      url: "http://corpus3.aac.ac.at/sru/switch.php",
-      url: "sru/switch.php",
+      url: "fcs/aggregator/switch.php",
 //          url: "/ddconsru",
       dataType: 'xml',
       data : {operation: 'searchRetrieve', query: SearchConfig[sele]['x-context'] + '=' + sstr, startRecord: startrecord, maximumRecords: maxrecord, 'x-context': SearchConfig[sele]['x-context'], 'x-format': 'html'},

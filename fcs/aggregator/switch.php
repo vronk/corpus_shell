@@ -97,17 +97,31 @@
       $style = str_replace($localhost, "localhost",  $ary["style"]);
       //print $fileName;
 
-      $xslDoc = new DOMDocument();
-      $xslDoc->load($style);
+      if (file_exists($style))
+      {
+        $xslDoc = new DOMDocument();
+        $xslDoc->load($style);
 
-      $xmlDoc = new DOMDocument();
-      $xmlDoc->load($fileName);
+        if (file_exists($fileName))
+        {
+          $xmlDoc = new DOMDocument();
+          $xmlDoc->load($fileName);
 
-      $proc = new XSLTProcessor();
-      $proc->importStylesheet($xslDoc);
-     	$proc->setParameter('', 'format', $format);
-      header("content-type: text/html; charset=UTF-8");
-      echo $proc->transformToXML($xmlDoc);
+          $proc = new XSLTProcessor();
+          $proc->importStylesheet($xslDoc);
+         	$proc->setParameter('', 'format', $format);
+          header("content-type: text/html; charset=UTF-8");
+          echo $proc->transformToXML($xmlDoc);
+        }
+        else
+        {
+          print "$fileName not found!";
+        }
+      }
+      else
+      {
+        print "$style not found!";
+      }
     }
     else if (stripos($format, "xsltproc") !== FALSE)
     {
@@ -130,7 +144,15 @@
     else
     {
       header ("content-type: text/xml; charset=UTF-8");
-      readfile($uri . $params);
+      $fileName = $uri . $params;
+      if (file_exists($fileName))
+      {
+        readfile($fileName);
+      }
+      else
+      {
+        print "<message>uri or script not found!</message>";
+      }
     }
   }
 ?>

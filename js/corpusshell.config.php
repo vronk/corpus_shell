@@ -1,5 +1,8 @@
 <?php
-  $configUrl = "../sru/switch.config";
+
+//  CHANGE THIS FOR RELEASE
+//  $configUrl = "../../sru/switch.config";
+  $configUrl = "../fcs/aggregator/switch.config";
   $localhost = "corpus3.aac.ac.at";
 
   function GetNodeValue($node, $tagName)
