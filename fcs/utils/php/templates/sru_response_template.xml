@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sru:searchRetrieveResponse xmlns:diag="http://www.loc.gov/zing/srw/diagnostic/" xmlns:sru="http://www.loc.gov/zing/srw/"
+	xmlns:ccs="http://clarin.eu/schema/ccs-v1.0" >
+  <sru:version>{tmpl_var name='version'}</sru:version>
+  <sru:numberOfRecords>{tmpl_var name='numberOfRecords'}</sru:numberOfRecords>
+  <echoedSearchRetrieveRequest>
+    <version>{tmpl_var name='version'}</version>
+    <query>{tmpl_var name='query'}</query>
+    <baseUrl>{tmpl_var name='baseURL'}</baseUrl>
+  </echoedSearchRetrieveRequest>
+  <sru:records>
+  <tmpl_loop name='hits'>
+    <sru:record>
+      <sru:recordSchema>{tmpl_var name='recordSchema'}</sru:recordSchema>
+      <sru:recordPacking>{tmpl_var name='recordPacking'}</sru:recordPacking>
+      <sru:recordData>
+        <ccs:Resource>
+          <ccs:DataView type="metadata">
+            <tmpl_loop name='hitsMetaData'>
+              <ccs:f key="{tmpl_var name='key'}" >{tmpl_var name='value'}</ccs:f>
+            </tmpl_loop>
+          </ccs:DataView>
+          <ccs:ResourceFragment>
+            <ccs:DataView type="w">
+              {tmpl_var name='content'}
+            </ccs:DataView>
+          </ccs:ResourceFragment>
+        </ccs:Resource>
+      </sru:recordData>
+      <sru:recordPosition>{tmpl_var name='__ROWNUM__'}</sru:recordPosition>
+      <sru:recordIdentifier>{tmpl_var name='queryUrl'}</sru:recordIdentifier>
+    </sru:record>
+  </tmpl_loop>
+  <sru:nextRecordPosition>{tmpl_var name='nextRecordPosition'}</sru:nextRecordPosition>
+	</sru:records>
+	<sru:res>{tmpl_var name='res'}</sru:res>
+</sru:searchRetrieveResponse>
