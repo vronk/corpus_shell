@@ -5,9 +5,13 @@ import module namespace diag =  "http://www.loc.gov/zing/srw/diagnostic/" at  "m
 
 (: 
   ***********************
-  HELPER function - dealing with caching the results
+  HELPER function - dealing (not only) with caching the results
 :)
 
+declare variable $repo-utils:config := doc("config.xml");
+declare variable $repo-utils:mappings := doc(repo-utils:config-value('mappings'));
+declare variable $repo-utils:data-collection := collection(repo-utils:config-value('data.path'));
+declare variable $repo-utils:md-collection := collection(repo-utils:config-value('metadata.path'));
 declare variable $repo-utils:xmlExt as xs:string := ".xml";
 declare variable $repo-utils:cachePath as xs:string := "/db/cache";
 
@@ -18,6 +22,25 @@ declare variable $repo-utils:responseFormatHTML as xs:string := "html";
 
 declare variable $repo-utils:resultXsl := doc('/db/content_repository/scripts/xsl/result2view.xsl');
 
+
+declare function repo-utils:config-value($key as xs:string) as xs:string* {
+    $repo-utils:config//property[@key=$key]
+};
+    
+(:
+  Get the resource by PID/handle/URL or some known identifier.
+  TODO: NOT ADAPTED YET! (taken from CMD)
+  TODO: be clear about resource itself and metadata-record!
+:)
+declare function repo-utils:get-resource-by-id($id as xs:string) as node()* {
+  let $collection := collection($cr:dataPath)
+  return 
+    if ($id eq "" or $id eq $cr:collectionRoot) then
+    $collection//IsPartOf[. = $cr:collectionRoot]/ancestor::CMD
+  else
+    util:eval(concat("$collection/ft:query(descendant::MdSelfLink, <term>", xdb:decode($id), "</term>)/ancestor::CMD"))
+ (: $collection/descendant::MdSelfLink[. = xdb:decode($id)]/ancestor::CMD :)
+};
 
 (: 
   Function for telling wether the document is available or not.
