@@ -1,0 +1,24 @@
+
+1. 
+localhost:8681/exist/rest/db/cr/cr.xql
+localhost:8681/exist/rest/db/cr/cr.xql?operation=explain
+
+TODO: announce fcs.resource index!
+
+2. scan fcs.resource
+http://localhost:8681/exist/rest/db/cr/cr.xql?operation=scan&scanClause=fcs.resource
+
+3. explain resource
+
+http://localhost:8681/exist/rest/db/cr/cr.xql?operation=explain&x-context=clarin.at:icltt:cr:stb.cmd
+
+TODO: distinguish MD-ID and resource-id (MdSelfLink vs. ResourceProxy)
+TODO: perhaps keep explain in extra file (problems with namespace)
+
+(4. scan resource index)
+! http://localhost:8681/exist/rest/db/cr/cr.xql?operation=scan&scanClause=diary-day&x-context=clarin.at:icltt:cr:stb
+
+
+5. search in resource
+
+http://localhost:8681/exist/rest/db/cr/cr.xql?operation=searchRetrieve&query=Haus&x-context=clarin.at:icltt:cr:stb

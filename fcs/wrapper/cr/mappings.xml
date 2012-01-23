@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map>
+    <index key="cql.serverChoice" base_elem="tei:person">*</index>
+    <index key="personName" base_elem="tei:person">tei:persName</index>
+    <index key="Person.Name" base_elem="tei:person">tei:persName</index>
+    <index key="occupation" base_elem="tei:person">tei:occupation</index>
+    <index key="sex" base_elem="tei:person">tei:sex</index>
+    <index key="location" base_elem="tei:person">tei:placeName</index>
+    <index key="diary-day" base_elem="div[@type='day']">div[@type='day']/p/date/@value</index>
+    <index key="text" base_elem="div[@type='day']">div[@type='day']</index>
+</map>
