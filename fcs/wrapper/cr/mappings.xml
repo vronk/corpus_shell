@@ -7,10 +7,12 @@
         <index key="cql.serverChoice" base_elem="p">*</index>
         <index key="fcs.resource" type="explicit"/>
     </map>
-    <map key="clarin.at:icltt:cr:stb" path="/db/cr-data/stb" base_elem="div[@type='day']">
+    <map key="clarin.at:icltt:cr:stb" path="/db/cr-data/stb" base_elem="div[@type='diary-day']">
         <index key="cql.serverChoice">*</index>
-        <index key="diary-day">div[@type='day']/p/date/@value</index>
-        <index key="text">div[@type='day']</index>
+        <index key="diary-day">div[@type='diary-day']/p/date/xs:string(@value)</index>
+        <index key="diary-month" use="substring(xs:string(@value),1,7)">div[@type='diary-day']/p/date</index>
+        <index key="diary-year">div[@type='diary-day']/p/date/substring(xs:string(@value),1,4)</index>
+        <index key="text">div[@type='diary-day']</index>
     </map>
     <map key="clarin.at:icltt:cr:aac-names" path="/db/cr-data/aac_names" base_elem="tei:person">
         <index key="cql.serverChoice">*</index>

@@ -3,10 +3,16 @@
 localhost:8681/exist/rest/db/cr/cr.xql
 localhost:8681/exist/rest/db/cr/cr.xql?operation=explain
 
-TODO: announce fcs.resource index!
+clarin.aac.ac.at/icltt-cr
+clarin.aac.ac.at/icltt-cr/stb = clarin.aac.ac.at/icltt-cr?x-context=clarin.at:icltt:cr:stb.pid
+clarin.aac.ac.at/icltt-cr/aac-names
+
+
 
 2. scan fcs.resource
 http://localhost:8681/exist/rest/db/cr/cr.xql?operation=scan&scanClause=fcs.resource
+
+
 
 3. explain resource
 
@@ -15,10 +21,21 @@ http://localhost:8681/exist/rest/db/cr/cr.xql?operation=explain&x-context=clarin
 TODO: distinguish MD-ID and resource-id (MdSelfLink vs. ResourceProxy)
 TODO: perhaps keep explain in extra file (problems with namespace)
 
+
+
 (4. scan resource index)
 ! http://localhost:8681/exist/rest/db/cr/cr.xql?operation=scan&scanClause=diary-day&x-context=clarin.at:icltt:cr:stb
+
+http://localhost:8681/exist/rest/db/cr/cr.xql?operation=scan&scanClause=diary-month
+http://localhost:8681/exist/rest/db/cr/cr.xql?operation=scan&scanClause=diary-month&startTerm=10&x-format=htmlpage
+
+
 
 
 5. search in resource
 
 http://localhost:8681/exist/rest/db/cr/cr.xql?operation=searchRetrieve&query=Haus&x-context=clarin.at:icltt:cr:stb
+http://localhost:8681/exist/rest/db/cr/cr.xql?operation=searchRetrieve&query=Haus&x-context=clarin.at:icltt:cr:aac-names
+
+
+http://localhost:8681/exist/rest/db/cr/cr.xql?operation=searchRetrieve&query=diary-month%20=%201881-03&x-context=clarin.at:icltt:cr:stb&x-format=htmlpage

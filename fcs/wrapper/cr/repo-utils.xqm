@@ -13,20 +13,24 @@ declare variable $repo-utils:mappings := doc(repo-utils:config-value('mappings')
 declare variable $repo-utils:data-collection := collection(repo-utils:config-value('data.path'));
 declare variable $repo-utils:md-collection := collection(repo-utils:config-value('metadata.path'));
 declare variable $repo-utils:xmlExt as xs:string := ".xml";
-declare variable $repo-utils:cachePath as xs:string := "/db/cache";
+declare variable $repo-utils:cachePath as xs:string := repo-utils:config-value('cache.path');
 
 declare variable $repo-utils:responseFormatXml as xs:string := "xml";
 declare variable $repo-utils:responseFormatJSon as xs:string := "json";
 declare variable $repo-utils:responseFormatText as xs:string := "text";
 declare variable $repo-utils:responseFormatHTML as xs:string := "html";
 
-declare variable $repo-utils:resultXsl := doc('/db/content_repository/scripts/xsl/result2view.xsl');
-
 
 declare function repo-utils:config-value($key as xs:string) as xs:string* {
     $repo-utils:config//property[@key=$key]
 };
     
+
+declare function repo-utils:context-to-collection ($x-context as xs:string+) as node()* {
+    if ($x-context) then collection($repo-utils:mappings//map[xs:string(@key) eq $x-context]/@path)
+                  else $repo-utils:data-collection
+};
+
 (:
   Get the resource by PID/handle/URL or some known identifier.
   TODO: NOT ADAPTED YET! (taken from CMD)
@@ -54,6 +58,7 @@ declare function repo-utils:is-in-cache($doc-name as xs:string) as xs:boolean {
   fn:doc-available(fn:concat($repo-utils:cachePath, "/", $doc-name))
 };
 
+
 declare function repo-utils:get-from-cache($doc-name as xs:string) as item()* {
       fn:doc(fn:concat($repo-utils:cachePath, "/", $doc-name))
 };
@@ -77,20 +82,23 @@ declare function repo-utils:gen-cache-id($type-name as xs:string, $keys as xs:st
   let $name-prefix := fn:concat($type-name, $depth),
     $sorted-names := for $key in $keys order by $key ascending return $key
     return
-    fn:concat($name-prefix, "-", util:hash(string-join($sorted-names, ""), "MD5"), $repo-utils:xmlExt)
+(:    fn:concat($name-prefix, "-", util:hash(string-join($sorted-names, ""), "MD5"), $repo-utils:xmlExt):)
+    fn:concat($name-prefix, "-", string-join($sorted-names, "_"), $repo-utils:xmlExt)
 };
 
 (:
   Seraliseringsformat. 
 :)
-declare function repo-utils:serialise-as($item as node()?, $format as xs:string) as item()? {
+declare function repo-utils:serialise-as($item as node()?, $format as xs:string, $operation as xs:string) as item()? {
       if ($format eq $repo-utils:responseFormatJSon) then
 	       let $option := util:declare-option("exist:serialize", "method=text media-type=application/json")
 	       return $item
 	       (: json:xml-to-json($item) :)
 	    else if (contains($format, $repo-utils:responseFormatHTML)) then
-	           let $res := transform:transform($item,$repo-utils:resultXsl, 
+	           let $xslDoc := doc(concat(repo-utils:config-value('scripts.path'), repo-utils:config-value(concat($operation, ".xsl"))) )
+	           let $res := transform:transform($item,$xslDoc, 
               			<parameters><param name="format" value="{$format}"/>
+              			            <param name="base_dir" value="{repo-utils:config-value('base.dir')}"/>
               			</parameters>)          
                let $option := util:declare-option("exist:serialize", "method=xml media-type=text/html")
 	           return $res
@@ -109,17 +117,3 @@ declare function repo-utils:serialise-as($item as node()?, $format as xs:string)
           
 	          	(: $item :)
 };
-
-(:
-declare function diag:diagnostics($key as xs:string, $param as xs:string) as item()? {
-    
-	let $diag := 
-	       if (exists($diag:diagnostics//diag:diagnostic[@key=$key])) then
-	               $diag:diagnostics//diag:diagnostic[@key=$key]
-	           else $diag:diagnostics//diag:diagnostic[@key='general-error']
-	   return
-	       <diagnostics>
-	           {$diag}
-	       </diagnostics>	   
-};
-:)

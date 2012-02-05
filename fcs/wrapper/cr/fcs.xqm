@@ -11,6 +11,10 @@ declare variable $fcs:explain as xs:string := "explain";
 declare variable $fcs:scan  as xs:string := "scan";
 declare variable $fcs:searchRetrieve as xs:string := "searchRetrieve";
 
+declare variable $fcs:scanSortText as xs:string := "text";
+declare variable $fcs:scanSortSize as xs:string := "size";
+declare variable $fcs:indexXsl := doc('index.xsl');
+
 
 declare function fcs:explain($x-context as xs:string*) as item()* {
     let $context := if ($x-context) then $x-context
@@ -23,27 +27,134 @@ declare function fcs:explain($x-context as xs:string*) as item()* {
 (:
 TODO?: only read explicit indexes + create index on demand.
 :)
+(:
 declare function fcs:scan($scanClause as xs:string, $x-context as xs:string*) {
     
     let $clause-tokens := tokenize($scanClause,'='),
         $index := $clause-tokens[1],
         $term := $clause-tokens[2],
-        (:$map-index := $repo-utils:mappings/map/index[@key=$index], :)
+        (\:$map-index := $repo-utils:mappings/map/index[@key=$index], :\)
         $index-file := concat(repo-utils:config-value('index.prefix'),$index,'.xml'),
-        $result := doc($index-file)
+        h$result := doc($index-file)
     
-    return $result  
-    
-    
+    return $result     
+};
+:)
+
+(:
+  (derived from cmd:scanIndex function)
+two phases: 
+    1. one create full index for given path/element (and cache)
+	2. select wished subsequence (on second call, only the second step is performed)
+:)
+declare function fcs:scan($scan-clause  as xs:string, $x-context as xs:string+, $start-item as xs:integer, $max-items as xs:integer, $p-sort as xs:string?) as item()? {
+
+  let $scx := tokenize($scan-clause,'='),
+	 $index-name := $scx[1],  (: TODO: needs mapping from index-name to xpath.. ? :) 
+	 $index := fcs:get-mapping($index-name, $x-context ),
+	 (: if no index-mapping found, dare to use the index-name as xpath :) 
+	 $index-xpath := if ($index/text()) then $index/text() else $index-name, 
+ 	 $filter := ($scx[2],'')[1],
+	 $sort := if ($p-sort eq $fcs:scanSortText or $p-sort eq $fcs:scanSortSize) then $p-sort else $fcs:scanSortText,
+	 $data-collection := repo-utils:context-to-collection($x-context)
+	 
+    let $index-doc-name := repo-utils:gen-cache-id("index", ($index-name, $sort),""),
+  
+  (: get the base-index from cache, or create and cache :)
+    $index-scan := if (repo-utils:is-in-cache($index-doc-name )) then
+      repo-utils:get-from-cache($index-doc-name ) 
+    else        
+        let $getnodes := util:eval(fn:concat("$data-collection/descendant-or-self::", $index-xpath)),
+            (: to overcome problems with attributes :) 
+            $prenodes := if ($getnodes[1][self::text()]) then for $t in $getnodes return <v>{$t}</v>  
+                            else $getnodes
+        let $nodes := <nodes path="{fn:concat("//", $index-xpath)}"  >{$prenodes}</nodes>,
+        	(: use XSLT-2.0 for-each-group functionality to aggregate the values of a node - much, much faster, than XQuery :)
+   	    $data := transform:transform($nodes,$fcs:indexXsl, <parameters><param name="scan-clause" value="{$scan-clause}"/></parameters>)      
+        return repo-utils:store-in-cache($index-doc-name , $data)
+
+	(: extract the required subsequence (according to given sort) :)
+	let $res-nodeset := transform:transform($index-scan,$fcs:indexXsl, 
+			<parameters><param name="scan-clause" value="{$scan-clause}"/>
+			            <param name="mode" value="subsequence"/>
+						<param name="sort" value="{$sort}"/>
+						<param name="filter" value="{$filter}"/>
+						<param name="start-item" value="{$start-item}"/>
+						<param name="max-items" value="{$max-items}"/>
+			</parameters>),
+		$count-items := count($res-nodeset/sru:term),
+		(: $colls := if (fn:empty($collection)) then '' else fn:string-join($collection, ","), :)
+        $colls := string-join( $x-context, ', ') ,
+		$created := fn:current-dateTime()
+		(: $scan-clause := concat($xpath, '=', $filter) :)
+		(: $res := <Terms colls="{$colls}" created="{$created}" count_items="{$count-items}" 
+					start-item="{$start-item}" max-items="{$max-items}" sort="{$sort}" scanClause="{$scan-clause}"  >{$res-term}</Terms> 
+					  count_text="{$count-text}" count_distinct_text="{$distinct-text-count}" :)
+        (: $res := <sru:scanResponse>
+                    <sru:version>1.2</sru:version>
+                    {$res-nodeset}        			    
+                    <sru:echoedScanRequest>                        
+                        <sru:scanClause>{$scan-clause}</sru:scanClause>
+                        <sru:maximumTerms>{ $count-items }</sru:maximumTerms>    
+
+                    </sru:echoedScanRequest>
+    			</sru:scanResponse>
+           :)         
+(:	let	$result-count := $doc/Term/@count,
+    $result-seq := fn:subsequence($doc/Term/v, $start-item, $end-item),
+	$result-frag := ($doc/Term, $result-seq),
+    $seq-count := fn:count($result-seq) :)
+
+  return $res-nodeset
+   (:  repo-utils:serialise-as($res, $format)	 :)
 };
 
 
+
 declare function fcs:search-retrieve($query as xs:string, $x-context as xs:string*, $startRecord as xs:integer, $maximumRecords as xs:integer) as item()* {
-    let $data-collection := if ($x-context) then collection($repo-utils:mappings//map[xs:string(@key) eq $x-context]/@path)
-                            else $repo-utils:data-collection
+    let $start-time := util:system-dateTime()
+    let $data-collection := repo-utils:context-to-collection($x-context) 
+    (:if ($x-context) then collection($repo-utils:mappings//map[xs:string(@key) eq $x-context]/@path)
+                            else $repo-utils:data-collection:)
     let $xpath-query := concat("$data-collection", fcs:transform-query ($query, $x-context))
-    let $result := util:eval($xpath-query)
-    return <result>{$result}</result>
+        
+    let $results := util:eval($xpath-query)
+
+    let	$result-count := fn:count($results),
+    $result-seq := fn:subsequence($results, $startRecord, $maximumRecords),
+    $seq-count := fn:count($result-seq),
+    $end-time := util:system-dateTime(),
+    
+    $result :=
+    <sru:searchRetrieveResponse>
+      <sru:numberOfRecords>{$result-count}</sru:numberOfRecords>
+      <sru:echoedSearchRetrieveRequest>{string-join(($query, '[', $xpath-query, ']', $x-context, $startRecord, $maximumRecords), " ")}</sru:echoedSearchRetrieveRequest>
+      <sru:extraResponseData>
+      	<sru:returnedRecords>{$seq-count}</sru:returnedRecords>
+		<sru:duration>{$end-time - $start-time}</sru:duration>
+      </sru:extraResponseData>
+      <sru:records>
+	       {for $rec at $pos in $result-seq
+	           let $exp-rec := util:expand($rec, "expand-xincludes=no") (: kwic:summarize($rec,<config width="40"/>) :)
+	           return 
+	               <sru:record>
+	                   <sru:recordSchema>http://clarin.eu/fcs/1.0/Resource.xsd</sru:recordSchema>
+	                   <sru:recordPacking>xml</sru:recordPacking>
+	                   <sru:recordData>	                       
+	                       <fcs:Resource>
+	                           <fcs:ResourceFragment>
+    	                         <fcs:DataView type="full">{$exp-rec}</fcs:DataView>
+    	                       </fcs:ResourceFragment>
+	                       </fcs:Resource>
+	                   </sru:recordData>
+	                   <sru:recordPosition>{$pos}</sru:recordPosition>
+	                   <sru:recordIdentifier>{$rec/@xml:id}</sru:recordIdentifier>
+	                </sru:record>
+	       }
+      </sru:records>
+    </sru:searchRetrieveResponse>
+
+    return $result
                     
 };
 
@@ -66,24 +177,44 @@ declare function fcs:transform-query($cql-query as xs:string, $x-context as xs:s
                                 $repo-utils:mappings//map[xs:string(@key) eq $x-context]
                             else $repo-utils:mappings//map[xs:string(@key) eq 'default'],
         
-            (: try to get a mapping for given index, or else take the index itself :)
+            (: try  to get a) a mapping for given index within the context-map,
+                    b) in any of the mapping (if not found in the context-map) , - potentially dangerous!!
+                    c) or else take the index itself :)
+            
         $index-map := $context-map/index[xs:string(@key) eq $index],
         $resolved-index := if (exists($index-map)) then $index-map/text()
-                        else $index       
+                           else if (exists($repo-utils:mappings//index[xs:string(@key) eq $index])) then
+                                $repo-utils:mappings//index[xs:string(@key) eq $index]
+                            else $index       
             ,    
             (: get either a) the specific base-element for the index, 
                   b) the default for given map,
                   c) the index itself :)
-        $base-elem := if (exists($index-map/@base_elem)) then xs:string($index-map/@base_elem)
+        $base-elem := if (exists($index-map/@base_elem)) then xs:string($index-map/@base_elem) 
                         else if (exists($context-map/@base_elem)) then xs:string($context-map/@base_elem)
                         else $index,
             (: <index status="indexed"> - flag to know if ft-indexes can be used.
             TODO?: should be checked against the actual index-configuration :)
-        $indexed := (xs:string($index-map/@status) eq 'indexed') 
+        $indexed := (xs:string($index-map/@status) eq 'indexed'),
+        $match-on := if (exists($index-map/@use) ) then xs:string($index-map/@use) else "."  
         
-	let $res := concat("//", $resolved-index, "[", if ($indexed) then "ft:query" else "contains", "(.,'", $searchTerm, "')]",
+	let $res := concat("//", $resolved-index, "[", if ($indexed) then "ft:query" else "contains", "(", $match-on, ",'", $searchTerm, "')]",
 								"/ancestor-or-self::", $base-elem)					
 
 	return $res
 
+};
+
+(: if $index-param = "" return the map-element, 
+else - if found return the index-element 
+:)
+declare function fcs:get-mapping($index as xs:string, $x-context as xs:string+) as node()* {
+    let $context-map := if (exists($repo-utils:mappings//map[xs:string(@key) eq $x-context])) then 
+                                $repo-utils:mappings//map[xs:string(@key) eq $x-context]
+                            else $repo-utils:mappings//map[xs:string(@key) eq 'default']
+    
+    return  if ($index eq '') then 
+                $context-map
+             else $context-map/index[xs:string(@key) eq $index]
+             
 };
