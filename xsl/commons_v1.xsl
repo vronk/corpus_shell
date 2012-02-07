@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:sru="http://www.loc.gov/standards/sru/" xmlns:fcs="http://clarin.eu/fcs/1.0" version="1.0">
 
 <!-- 
 <purpose>generic functions for SRU-result handling</purpose>
@@ -14,6 +14,7 @@
 <!-- <xsl:param name="mode" select="'html'" /> -->
     <xsl:param name="dict_file" select="'dict.xml'"/>
     <xsl:variable name="dict" select="document($dict_file)"/>
+    <xsl:variable name="contexts" select="document($contexts_url)"/>
 	
 	<!-- common starting point for all stylesheet; cares for unified html-envelope
 		and passes back to the individual stylesheets for the content (via template: continue-root) -->
@@ -92,9 +93,29 @@
         </html>
     </xsl:template>
     <xsl:template name="callback-header"/>
-	
-	
-	
+
+    
+    <!-- generates a select-option list of available contexts  
+    -->
+    <xsl:template name="contexts-select">
+        <select name="x-context">
+            <xsl:for-each select="$contexts//sru:terms/sru:term">
+                <xsl:variable name="ancestors-prefix">
+                    <xsl:for-each select="ancestor::sru:term">
+                        <xsl:text>.</xsl:text>
+                    </xsl:for-each>
+                </xsl:variable>
+                <option value="{sru:value}">
+                    <xsl:if test="sru:value/text() eq $x-context">
+                        <xsl:attribute name="selected">selected</xsl:attribute>
+                    </xsl:if>
+                    <xsl:value-of select="concat($ancestors-prefix, sru:displayTerm)"/>
+                </option>
+            </xsl:for-each>
+        </select>
+    </xsl:template>
+    
+    	
 	<!-- shall be usable to form consistently all urls within xsl 
 	-->
     <xsl:template name="formURL">

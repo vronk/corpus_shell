@@ -2,10 +2,10 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:diag="http://www.loc.gov/zing/srw/diagnostic/" xmlns:saxon="http://saxon.sf.net/" xmlns:sru="http://www.loc.gov/standards/sru/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fcs="http://clarin.eu/fcs/1.0" xmlns:exsl="http://exslt.org/common" version="1.0" exclude-result-prefixes="saxon xs exsl diag sru fcs">
 <!--   
     <purpose> generate html view of a sru-result-set  (eventually in various formats).</purpose>
-<history> 
+<history>  
 <change on="2011-12-06" type="created" by="vr">based on cmdi/scripts/mdset2view.xsl retrofitted for XSLT 1.0</change>	
-</history> 
---> 
+</history>
+-->    
     <!--  method="xhtml" is saxon-specific! prevents  collapsing empty <script> tags, that makes browsers choke -->
     <xsl:output method="xml" media-type="text/xhtml" indent="yes" encoding="UTF-8" doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"/>
     <xsl:include href="commons.xsl"/>
@@ -43,7 +43,6 @@
         </xsl:for-each>
     </xsl:template>
     <xsl:template name="header">
-        <xsl:variable name="numberOfRecords" select="sru:numberOfRecords"/>
         <div class="result-header" data-numberOfRecords="{$numberOfRecords}">
             <xsl:if test="contains($format, 'page')">
                 <xsl:call-template name="query-input"/>

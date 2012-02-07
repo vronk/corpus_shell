@@ -71,8 +71,7 @@
         </div>
     </xsl:template>
     <xsl:template name="query-input">
-        <xsl:variable name="cnt_hits" select="sru:numberOfRecords"/>
-        
+    
 	<!-- QUERYSEARCH - BLOCK -->
         <div class="cmds-ui-block init-show" id="querysearch">
             <div class="header ui-widget-header ui-state-default ui-corner-top">
@@ -87,6 +86,8 @@
                     <table class="cmds-ui-elem-stretch">
                         <tr>
                             <td colspan="2">
+                                <label>Context</label>
+                                <xsl:call-template name="contexts-select"/>
                                 <input type="text" id="input-simplequery" name="query" value="{$q}" class="queryinput active"/>
                                 <div id="searchclauselist" class="queryinput inactive"/>
                             </td>
@@ -98,9 +99,8 @@
                             </td>
                         </tr>
                         <tr>
-                            <td valign="top">
-                                <label>Context</label>
-                                <input type="text" id="input-x-context" name="x-context" value="{$x-context}" class="queryinput active"/>
+                            <td valign="top">                                    
+                                        
                                         <!--
                                         <select id="repositories_select" name="repository">
                                             <option value="">TODO - not implemented yet</option>
@@ -135,8 +135,8 @@
                                     <input type="text" name="maximumRecords" class="value maximum_records paging-input">
                                         <xsl:attribute name="value">
                                             <xsl:choose>
-                                                <xsl:when test="number($cnt_hits) &lt; number($maximumRecords)">
-                                                    <xsl:value-of select="$cnt_hits"/>
+                                                <xsl:when test="number($numberOfRecords) &lt; number($maximumRecords)">
+                                                    <xsl:value-of select="$numberOfRecords"/>
                                                 </xsl:when>
                                                 <xsl:otherwise>
                                                     <xsl:value-of select="$maximumRecords"/>

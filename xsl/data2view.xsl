@@ -10,8 +10,8 @@
         <change on="2011-11-14" type="created" by="vr">based on cmdi/scripts/xml2view.xsl</change>	
         </history>
     -->
-    <xsl:include href="data2view_tei.xsl"/> 
-<!--    <xsl:include href="stand_weiss.xsl"/>-->
+    <xsl:include href="data2view_tei.xsl"/>
+    <xsl:include href="stand_weiss.xsl"/>
    
 <!-- default starting-point -->
     <xsl:template match="sru:recordData" mode="record-data">
@@ -51,10 +51,11 @@
  <!-- better hide the fullview (the default view is too much)
         TODO: some more condensed view -->
 <!--    <xsl:template match="fcs:DataView[@type='full']" mode="record-data"/>-->
+<!--  this would be to use, if including a stylesheet without mode=record-data (like aac:stand.xsl)       
     <xsl:template match="fcs:DataView[@type='full']/*" mode="record-data">
-        <xsl:apply-templates/>
+        <xsl:apply-templates></xsl:apply-templates>
     </xsl:template>
-    
+-->    
         
  <!-- handle generic metadata-fields -->
     <xsl:template match="fcs:f" mode="record-data">

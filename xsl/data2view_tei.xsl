@@ -11,6 +11,18 @@ if the same transformation applies to multiple elements,
 it is extracted into own named-template and called from the matching templates.
 the named templates are at the bottom.
 -->
+    
+    <!-- some special elements retained in data, due to missing correspondencies in tei 
+        if it will get more, we should move to separate file -->
+    <xsl:template match="aac_HYPH1" mode="record-data">
+        <xsl:apply-templates/>
+    </xsl:template>
+    <xsl:template match="aac_HYPH2" mode="record-data">
+        <xsl:apply-templates/>
+    </xsl:template>
+    <xsl:template match="aac_HYPH3" mode="record-data">
+        <xsl:apply-templates/>
+    </xsl:template>
     <xsl:template match="bibl" mode="record-data">
         <xsl:call-template name="inline"/>
     </xsl:template>
@@ -111,6 +123,9 @@ the named templates are at the bottom.
             </div>
         </div>
     </xsl:template>
+    <xsl:template match="lb" mode="record-data">
+        <br/>
+    </xsl:template>
     <xsl:template match="milestone" mode="record-data">
         <xsl:text>...</xsl:text>
     </xsl:template>
@@ -121,13 +136,25 @@ the named templates are at the bottom.
     <xsl:template match="person | place " mode="record-data">
         <xsl:call-template name="inline"/>
     </xsl:template>
+    <xsl:template match="placeName " mode="record-data">
+        <xsl:call-template name="inline"/>
+    </xsl:template>
+    <xsl:template match="rs" mode="record-data">
+        <xsl:call-template name="inline"/>
+    </xsl:template>
+    <!-- handing over to aac:stand.xsl -->
+    <xsl:template match="seg" mode="record-data">
+        <xsl:apply-templates select="."/>
+    </xsl:template>
+    <!--
     <xsl:template match="seg[@type='header']" mode="record-data"/>
     <xsl:template match="seg[@rend='italicised']" mode="record-data">
         <em>
             <xsl:apply-templates mode="record-data"/>
         </em>
     </xsl:template>
-
+    -->
+    
 <!-- ************************ -->
 <!-- named templates starting -->
     <xsl:template name="inline">
