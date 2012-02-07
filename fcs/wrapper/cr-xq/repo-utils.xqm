@@ -98,7 +98,8 @@ declare function repo-utils:serialise-as($item as node()?, $format as xs:string,
 	           let $xslDoc := doc(concat(repo-utils:config-value('scripts.path'), repo-utils:config-value(concat($operation, ".xsl"))) )
 	           let $res := transform:transform($item,$xslDoc, 
               			<parameters><param name="format" value="{$format}"/>
-              			            <param name="base_dir" value="{repo-utils:config-value('base.dir')}"/>
+              			            <param name="base_url" value="{repo-utils:config-value('base.url')}"/>
+              			            <param name="scripts_url" value="{repo-utils:config-value('scripts.url')}"/>
               			</parameters>)          
                let $option := util:declare-option("exist:serialize", "method=xml media-type=text/html")
 	           return $res

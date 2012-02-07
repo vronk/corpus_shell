@@ -1,7 +1,7 @@
 xquery version "1.0";
 module namespace fcs = "http://clarin.eu/fcs/1.0";
 
-declare namespace sru = "http://www.loc.gov/zing/srw/";
+declare namespace sru = "http://www.loc.gov/standards/sru/";
 import module namespace diag =  "http://www.loc.gov/zing/srw/diagnostic/" at  "modules/diagnostics/diagnostics.xqm";
 import module namespace repo-utils = "http://aac.ac.at/content_repository/utils" at  "repo-utils.xqm";
 
@@ -50,7 +50,7 @@ two phases:
 declare function fcs:scan($scan-clause  as xs:string, $x-context as xs:string+, $start-item as xs:integer, $max-items as xs:integer, $p-sort as xs:string?) as item()? {
 
   let $scx := tokenize($scan-clause,'='),
-	 $index-name := $scx[1],  (: TODO: needs mapping from index-name to xpath.. ? :) 
+	 $index-name := $scx[1],  
 	 $index := fcs:get-mapping($index-name, $x-context ),
 	 (: if no index-mapping found, dare to use the index-name as xpath :) 
 	 $index-xpath := if ($index/text()) then $index/text() else $index-name, 
@@ -65,10 +65,12 @@ declare function fcs:scan($scan-clause  as xs:string, $x-context as xs:string+, 
       repo-utils:get-from-cache($index-doc-name ) 
     else        
         let $getnodes := util:eval(fn:concat("$data-collection/descendant-or-self::", $index-xpath)),
-            (: to overcome problems with attributes :) 
-            $prenodes := if ($getnodes[1][self::text()]) then for $t in $getnodes return <v>{$t}</v>  
-                            else $getnodes
-        let $nodes := <nodes path="{fn:concat("//", $index-xpath)}"  >{$prenodes}</nodes>,
+            (: to overcome problems with attributes
+            this is not really reliable, but the self::text() test produced bad error, 
+            so it is reversed, hoping that we will select only elements or text :) 
+            $prenodes := if ($getnodes[1][self::element()]) then $getnodes
+                            else for $t in $getnodes return <v>{$t}</v>
+        let $nodes := <nodes path="{fn:concat('//', $index-xpath)}"  >{$prenodes}</nodes>,
         	(: use XSLT-2.0 for-each-group functionality to aggregate the values of a node - much, much faster, than XQuery :)
    	    $data := transform:transform($nodes,$fcs:indexXsl, <parameters><param name="scan-clause" value="{$scan-clause}"/></parameters>)      
         return repo-utils:store-in-cache($index-doc-name , $data)
@@ -125,13 +127,31 @@ declare function fcs:search-retrieve($query as xs:string, $x-context as xs:strin
     $seq-count := fn:count($result-seq),
     $end-time := util:system-dateTime(),
     
+    (:<sru:recordSchema>mods</sru:recordSchema>:)          
+          (:<xQuery><searchClause xmlns="http://www.loc.gov/zing/cql/xcql/">
+          <index>dc.title</index>
+          <relation>
+          <value>=</value>
+          </relation>
+          <term>dinosaur</term>
+          </searchClause> 
+          </xQuery>:)
     $result :=
     <sru:searchRetrieveResponse>
       <sru:numberOfRecords>{$result-count}</sru:numberOfRecords>
-      <sru:echoedSearchRetrieveRequest>{string-join(($query, '[', $xpath-query, ']', $x-context, $startRecord, $maximumRecords), " ")}</sru:echoedSearchRetrieveRequest>
+      <sru:echoedSearchRetrieveRequest>
+          <sru:version>1.2</sru:version>
+          <sru:query>{$query}</sru:query>
+          <fcs:x-context>{$x-context}</fcs:x-context>
+          <sru:startRecord>{$startRecord}</sru:startRecord>
+          <sru:maximumRecords>{$maximumRecords}</sru:maximumRecords>
+          <sru:query>{$query}</sru:query>          
+          <sru:baseUrl>{repo-utils:config-value("base.url")}</sru:baseUrl> 
+      </sru:echoedSearchRetrieveRequest>
       <sru:extraResponseData>
-      	<sru:returnedRecords>{$seq-count}</sru:returnedRecords>
-		<sru:duration>{$end-time - $start-time}</sru:duration>
+      	<fcs:returnedRecords>{$seq-count}</fcs:returnedRecords>
+		<fcs:duration>{$end-time - $start-time}</fcs:duration>
+		<fcs:transformedQuery>{ $xpath-query }</fcs:transformedQuery>
       </sru:extraResponseData>
       <sru:records>
 	       {for $rec at $pos in $result-seq
@@ -173,9 +193,7 @@ declare function fcs:transform-query($cql-query as xs:string, $x-context as xs:s
 						else
 							$query-constituents[3]
             (: try to get a mapping specific to given context, else take the default :)
-    let $context-map := if (exists($repo-utils:mappings//map[xs:string(@key) eq $x-context])) then 
-                                $repo-utils:mappings//map[xs:string(@key) eq $x-context]
-                            else $repo-utils:mappings//map[xs:string(@key) eq 'default'],
+    let $context-map := fcs:get-mapping("",$x-context),
         
             (: try  to get a) a mapping for given index within the context-map,
                     b) in any of the mapping (if not found in the context-map) , - potentially dangerous!!

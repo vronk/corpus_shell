@@ -45,13 +45,13 @@ two tasks (in separate calls, managed by $mode-param):
             </sru:echoedScanRequest>
         </sru:scanResponse>
     </xsl:template>
-    <xsl:template match="nodes">
+    <xsl:template match="nodes[*]">
         <xsl:variable name="nodes" select="*"/>
         <xsl:variable name="count-text" select="count($nodes/text()[.!=''])"/>
         <xsl:variable name="distinct-text-count" select="count(distinct-values($nodes/text()))"/>
         <sru:terms>
             <xsl:copy-of select="@*"/>
-            <xsl:for-each-group select="*" group-by="text()">
+            <xsl:for-each-group select="$nodes" group-by="text()">
                 <sru:term>
                     <sru:value>
                         <xsl:value-of select="text()"/>

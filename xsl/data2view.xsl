@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:saxon="http://saxon.sf.net/" xmlns:sru="http://www.loc.gov/zing/srw/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fcs="http://clarin.eu/fcs/1.0" xmlns:exist="http://exist.sourceforge.net/NS/exist" version="1.0" exclude-result-prefixes="saxon xs sru exist tei fcs">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:saxon="http://saxon.sf.net/" xmlns:sru="http://www.loc.gov/standards/sru/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fcs="http://clarin.eu/fcs/1.0" xmlns:exist="http://exist.sourceforge.net/NS/exist" version="1.0" exclude-result-prefixes="saxon xs sru exist tei fcs">
 
     <!-- 
         <purpose> provide more specific handling of sru-result-set recordData</purpose>
@@ -11,6 +11,7 @@
         </history>
     -->
     <xsl:include href="data2view_tei.xsl"/> 
+<!--    <xsl:include href="stand_weiss.xsl"/>-->
    
 <!-- default starting-point -->
     <xsl:template match="sru:recordData" mode="record-data">
@@ -50,6 +51,10 @@
  <!-- better hide the fullview (the default view is too much)
         TODO: some more condensed view -->
 <!--    <xsl:template match="fcs:DataView[@type='full']" mode="record-data"/>-->
+    <xsl:template match="fcs:DataView[@type='full']/*" mode="record-data">
+        <xsl:apply-templates/>
+    </xsl:template>
+    
         
  <!-- handle generic metadata-fields -->
     <xsl:template match="fcs:f" mode="record-data">
