@@ -55,7 +55,6 @@
     <!--
 <xsl:param name="detail_uri_prefix"  select="'?q='"/> 
 -->
-    <xsl:output method="html"/>
     <xsl:decimal-format name="european" decimal-separator="," grouping-separator="."/>
     <xsl:param name="index" select="/sru:scanResponse/sru:echoedScanRequest/sru:scanClause"/>
     <xsl:template name="continue-root">
@@ -140,12 +139,14 @@ sample data:
                 <xsl:value-of select="sru:numberOfRecords"/>
             </td>
             <td>
-                <span class="cmd cmd_columns"/>
-                <a class="value-caller" href="{utils:formURL('searchRetrieve', $format, concat($index, '%3D%22', sru:value, '%22'))}" target="_blank">
-                    <xsl:value-of select="(sru:displayTerm, sru:value)[1]"/>
-                </a>
+                <span class="cmd_columns">
+                    <a class="value-caller" href="{utils:formURL('searchRetrieve', $format, concat($index, '%3D%22', sru:value, '%22'))}" target="_blank">
+                        <xsl:value-of select="(sru:displayTerm, sru:value)[1]"/>
+                    </a>
+                </span>
             </td>
         </tr>
+        <xsl:apply-templates select="sru:extraTermData/sru:terms/sru:term"/>
     </xsl:template>
     <xsl:template name="callback-header">
         <style type="text/css">

@@ -106,7 +106,7 @@
                     </xsl:for-each>
                 </xsl:variable>
                 <option value="{sru:value}">
-                    <xsl:if test="sru:value/text() eq $x-context">
+                    <xsl:if test="sru:value/text() = $x-context">
                         <xsl:attribute name="selected">selected</xsl:attribute>
                     </xsl:if>
                     <xsl:value-of select="concat($ancestors-prefix, sru:displayTerm)"/>

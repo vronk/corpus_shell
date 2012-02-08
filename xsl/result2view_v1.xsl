@@ -8,7 +8,7 @@
 -->    
     <!--  method="xhtml" is saxon-specific! prevents  collapsing empty <script> tags, that makes browsers choke -->
     <xsl:output method="xml" media-type="text/xhtml" indent="yes" encoding="UTF-8" doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"/>
-    <xsl:include href="commons.xsl"/>
+    <xsl:include href="commons_v1.xsl"/>
     <xsl:include href="data2view.xsl"/>
     <xsl:param name="mode" select="'html'"/>
     <xsl:param name="title">
