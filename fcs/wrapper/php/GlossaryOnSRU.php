@@ -76,8 +76,10 @@ error_reporting(E_ALL);
     require_once $vlibPath;
 
     $db = mysql_connect($server, $user, $password);
-    if (!$db)
+    if (!$db) {
       diagnostics('MySQl Connection Error', 'Failed to connect to database: ' . mysql_error());
+      return;
+    } 
     mysql_select_db($database, $db);
 
     $sqlstr = "SELECT DISTINCT b.id, b.entry FROM $glossTable b, " . $glossTable . "_ndx ndx ";

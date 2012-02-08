@@ -1,5 +1,5 @@
 <?php
-  ini_set('display_errors', 1);
+//  ini_set('display_errors', 1);
 
   $configUrl = "switch.config";
   $localhost = "corpus3.aac.ac.at";
@@ -45,6 +45,13 @@
        }
     }
   }
+  
+  function url_exists($url)
+  {
+      $handle = @fopen($url,'r');
+      return ($handle !== false);
+  }
+  
 
   //header("Content-Type: text/plain");
 
@@ -62,24 +69,24 @@
   $sAry = array("?&", "&&");
   $rAry = array("?", "&");
 
-  $params = str_replace($sAry, $rAry, $params);
-  //print "Params: $params\n";
-
-
 	 // add default params
 	 $params = $params."&version=1.2";
+	 
+  $params = str_replace($sAry, $rAry, $params);
+  //print "Params: $params\n";
 
   $context = explode(",", $hstr);
   //print_r($context);
 
   foreach($context as $item)
   {
-    $ary = GetConfig($item);
+    $config_item = GetConfig($item);
     //print_r($ary);
 
-    $uri = str_replace($localhost, "localhost",  $ary["uri"]);
+   //$uri = str_replace($localhost, "127.0.0.1",  $config_item["uri"]);
+   $uri = $config_item["uri"];
 
-    if ($ary['type'] == "fcs")
+    if ($config_item['type'] == "fcs")
     {
       if ($params == "")
         $params = "?x-context=" . $item;
@@ -94,15 +101,15 @@
 	   //depending on x-format parameter decide if to transform the result (into html), or leave it as raw xml
     if ($pos !== FALSE)
     {
-      $style = str_replace($localhost, "localhost",  $ary["style"]);
+      $style = str_replace($localhost, "localhost",  $config_item["style"]);
       //print $fileName;
 
-      if (file_exists($style))
+      if (url_exists($style))
       {
         $xslDoc = new DOMDocument();
         $xslDoc->load($style);
 
-        if (file_exists($fileName))
+        if (url_exists($fileName))
         {
           $xmlDoc = new DOMDocument();
           $xmlDoc->load($fileName);
@@ -132,7 +139,7 @@
     else if (stripos($format, "xsl") !== FALSE)
     {
     	 // this option is more or less only for debugging (to see the xsl used)
-    	 $style = str_replace($localhost, "localhost",  $ary["style"]);
+    	 $style = str_replace($localhost, "localhost",  $config_item["style"]);
 
     	 header ("content-type: text/xml; charset=UTF-8");
     	 readfile($style);
@@ -145,13 +152,16 @@
     {
       header ("content-type: text/xml; charset=UTF-8");
       $fileName = $uri . $params;
-      if (file_exists($fileName))
+      $fileName = str_replace($localhost, "localhost", $fileName);  
+      
+      if (url_exists($fileName))
       {
         readfile($fileName);
       }
       else
       {
-        print "<message>uri or script not found!</message>";
+        $fileName = str_replace("&", "&amp;", $fileName); 
+        print "<message>uri or script not found! $fileName</message>";
       }
     }
   }
