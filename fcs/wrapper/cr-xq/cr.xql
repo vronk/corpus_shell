@@ -34,7 +34,7 @@ declare function local:repo() as item()* {
   let $result :=
       (: if ($operation eq $cr:getCollections) then
 		cr:get-collections($query-collections, $format, $max-depth)
-      else :) 
+      else :)
       if ($operation eq $fcs:explain) then
           fcs:explain($x-context)		
       else if ($operation eq $fcs:scan) then
@@ -54,7 +54,7 @@ declare function local:repo() as item()* {
             return fcs:search-retrieve($cql-query, $x-context, xs:integer($start-item), xs:integer($max-items))
     else 
       diag:diagnostics("unsupported-operation", $operation)
-      
+       
     return repo-utils:serialise-as($result,$x-format, $operation)
 
 };

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0" >
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:sru="http://www.loc.gov/standards/sru/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fcs="http://clarin.eu/fcs/1.0" version="1.0" exclude-result-prefixes="xs sru fcs">
 
 <!-- 
 <purpose>pieces of html wrapped in templates, to be reused by other stylesheets</purpose>
@@ -9,15 +9,14 @@
 
 -->
     <xsl:import href="params.xsl"/>
-    
     <xsl:template name="html-head">
         <title>
             <xsl:value-of select="$title"/>
-        </title> 
+        </title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-        <link href="{$base_dir}/style/jquery/clarindotblue/jquery-ui-1.8.5.custom.css" type="text/css" rel="stylesheet"/>
-        <link href="{$base_dir}/style/cmds-ui.css" type="text/css" rel="stylesheet"/>
-        <link href="{$base_dir}/style/cr.css" type="text/css" rel="stylesheet"/>
+        <link href="{$scripts_url}/style/jquery/clarindotblue/jquery-ui-1.8.5.custom.css" type="text/css" rel="stylesheet"/>
+        <link href="{$scripts_url}/style/cmds-ui.css" type="text/css" rel="stylesheet"/>
+        <link href="{$scripts_url}/style/cr.css" type="text/css" rel="stylesheet"/>
         <!--        <xsl:if test="contains($format,'htmljspage')">
             <link href="{$base_dir}/style/jquery/jquery-treeview/jquery.treeview.css" rel="stylesheet"/>        
             </xsl:if>-->
@@ -25,7 +24,7 @@
     <xsl:template name="page-header">
         <div class="cmds-ui-block" id="titlelogin">
             <div id="logo">
-                <a href="http://www.clarin.eu">
+                <a href="{$base_url}">
                     <img src="{$site_logo}" alt="{$site_name}"/>
                 </a>
                 <div id="site-name">
@@ -34,17 +33,16 @@
             </div>
             <div id="top-menu">
                 <div id="user">
-                    <xsl:variable name="link_toggle_js">                           
-                     <xsl:call-template name="formURL">
-                            <xsl:with-param name="format" >
+                    <xsl:variable name="link_toggle_js">
+                        <xsl:call-template name="formURL">
+                            <xsl:with-param name="format">
                                 <xsl:choose>
                                     <xsl:when test="contains($format,'htmljspage')">htmlpage</xsl:when>
                                     <xsl:otherwise>htmljspage</xsl:otherwise>
-                                </xsl:choose>                                
+                                </xsl:choose>
                             </xsl:with-param>
-                     </xsl:call-template>
+                        </xsl:call-template>
                     </xsl:variable>
-                    
                     <xsl:choose>
                         <xsl:when test="contains($format,'htmljspage')">
                             <a href="{$link_toggle_js}"> none js </a>
@@ -73,39 +71,40 @@
         </div>
     </xsl:template>
     <xsl:template name="query-input">
-	
+    
 	<!-- QUERYSEARCH - BLOCK -->
         <div class="cmds-ui-block init-show" id="querysearch">
             <div class="header ui-widget-header ui-state-default ui-corner-top">
-                <span>Search</span>
+                Search
             </div>
             <div class="content" id="query-input">
-                <xsl:variable name="form_action" >
-                    <xsl:call-template name="formURL">                    
-                    </xsl:call-template>
-                </xsl:variable>
-                
-                <form id="searchretrieve" action="{$form_action}" method="get">
+                <!-- fill form@action with <xsl:call-template name="formURL"/> will not work, 
+                        because the parameter have to be encoded as input-elements  not in the form-url  
+                    -->
+                <form id="searchretrieve" action="{$base_url}" method="get">
+                    <input type="hidden" name="x-format" value="{$format}"/>
                     <table class="cmds-ui-elem-stretch">
                         <tr>
-                            <td>
+                            <td colspan="2">
+                                <label>Context</label>
+                                <xsl:call-template name="contexts-select"/>
                                 <input type="text" id="input-simplequery" name="query" value="{$q}" class="queryinput active"/>
                                 <div id="searchclauselist" class="queryinput inactive"/>
                             </td>
                             <td>
                                 <input type="submit" value="submit" id="submit-query"/>
+                                <br/>
+                                <span id="switch-input" class="cmd"/>
+                                <label>Complex query</label>
                             </td>
                         </tr>
-                    </table>
-                    <div>
-                        <table class="cmds-ui-elem-stretch ui-advanced">
-                            <tr>
-                                <td valign="top">
-                                    <div id="repositories">
-                                        <label>Repository</label>
+                        <tr>
+                            <td valign="top">                                    
+                                        
+                                        <!--
                                         <select id="repositories_select" name="repository">
                                             <option value="">TODO - not implemented yet</option>
-                                            <!--
+                                        
                                                 TODO: 
                                             <xsl:for-each select="exsl:node-set($repositories)">
                                                 <option>
@@ -115,30 +114,115 @@
                                                     <xsl:value-of select="name"/>
                                                 </option>
                                             </xsl:for-each>
-                                            -->
-                                        </select>
-                                    </div>
+                                        </select>                                        -->
+                                        
+                                    
 							<!--  selected collections  -->
 							<!-- <label>Collections</label><br/>-->
-                                    <div id="collections-widget" class="c-widget"/>
-                                </td>
-                                <td valign="top">
-                                    <label>Complex query</label>
-                                    <span id="switch-input" class="cmd"/>
-                                    <br/>
-						<!--  <div id="searchclauselist"></div>-->							
-						<!--<input type="checkbox" checked="false" id="input-withsummary" name="WS"/><label>with Summary</label> 
-						 -->
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
+                                <div id="collections-widget" class="c-widget"/>
+                            </td>
+                            <td valign="top">
+                                <span class="label">from:</span>
+                                <span>
+                                    <input type="text" name="startRecord" class="value start_record paging-input">
+                                        <xsl:attribute name="value">
+                                            <xsl:value-of select="$startRecord"/>
+                                        </xsl:attribute>
+                                    </input>
+                                </span>
+                                <span class="label">max:</span>
+                                <span>
+                                    <input type="text" name="maximumRecords" class="value maximum_records paging-input">
+                                        <xsl:attribute name="value">
+                                            <xsl:choose>
+                                                <xsl:when test="number($numberOfRecords) &lt; number($maximumRecords)">
+                                                    <xsl:value-of select="$numberOfRecords"/>
+                                                </xsl:when>
+                                                <xsl:otherwise>
+                                                    <xsl:value-of select="$maximumRecords"/>
+                                                </xsl:otherwise>
+                                            </xsl:choose>
+                                        </xsl:attribute>
+                                    </input>
+                                </span>
+                            </td>
+                            <td/>
+                        </tr>
+                    </table>
                 </form>
             </div>
         </div>
     </xsl:template>
+    <xsl:template name="prev-next">
+        <input type="submit" value="" class="cmd cmd_reload"/>
+        <xsl:variable name="prev_startRecord">
+            <xsl:choose>
+                <xsl:when test="number($startRecord) - number($maximumRecords) &gt; 0">
+                    <xsl:value-of select="format-number(number($startRecord) - number($maximumRecords),'#')"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="1"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <xsl:variable name="next_startRecord">
+            <xsl:choose>
+                <xsl:when test="number($startRecord) + number($maximumRecords) &gt; number(numberOfRecords)">
+                    <xsl:value-of select="$startRecord"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="format-number(number($startRecord) + number($maximumRecords),'#')"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <xsl:variable name="link_prev">
+            <xsl:call-template name="formURL">
+                <xsl:with-param name="startRecord" select="$prev_startRecord"/>
+                <xsl:with-param name="maximumRecords" select="$maximumRecords"/>
+            </xsl:call-template>
+        </xsl:variable>
+        <a class="internal prev" href="{$link_prev}">
+            <span>
+                <xsl:choose>
+                    <xsl:when test="$startRecord = '1'">
+                        <xsl:attribute name="class">
+                            <xsl:value-of select="'cmd cmd_prev disabled'"/>
+                        </xsl:attribute>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:attribute name="class">
+                            <xsl:value-of select="'cmd cmd_prev '"/>
+                        </xsl:attribute>
+                    </xsl:otherwise>
+                </xsl:choose>
+                <xsl:text>prev</xsl:text>
+            </span>
+        </a>
+        <xsl:variable name="link_next">
+            <xsl:call-template name="formURL">
+                <xsl:with-param name="startRecord" select="$next_startRecord"/>
+                <xsl:with-param name="maximumRecords" select="$maximumRecords"/>
+            </xsl:call-template>
+        </xsl:variable>
+        <a class="internal next" href="{$link_next}">
+            <span class="cmd cmd_next">
+                <xsl:choose>
+                    <xsl:when test="number($startRecord) + number($maximumRecords) &gt;= number(numberOfRecords)">
+                        <xsl:attribute name="class">
+                            <xsl:value-of select="'cmd cmd_next disabled'"/>
+                        </xsl:attribute>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:attribute name="class">
+                            <xsl:value-of select="'cmd cmd_next '"/>
+                        </xsl:attribute>
+                    </xsl:otherwise>
+                </xsl:choose>
+                <xsl:text>next</xsl:text>
+            </span>
+        </a>
+    </xsl:template>
     <xsl:template name="query-list">
-
 <!-- QUERYLIST BLOCK -->
         <div id="querylistblock" class="cmds-ui-block">
             <div class="header ui-widget-header ui-state-default ui-corner-top">
