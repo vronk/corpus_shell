@@ -3,10 +3,13 @@
 localhost:8681/exist/rest/db/cr/cr.xql
 localhost:8681/exist/rest/db/cr/cr.xql?operation=explain
 
+-> http://localhost:8681/exist/cr/?x-format=htmlpage
+
 clarin.aac.ac.at/icltt-cr
 clarin.aac.ac.at/icltt-cr/stb = clarin.aac.ac.at/icltt-cr?x-context=clarin.at:icltt:cr:stb.pid
 clarin.aac.ac.at/icltt-cr/aac-names
 
+http://localhost:8681/exist/cr-scripts/style/cmds-ui.css
 
 
 2. scan fcs.resource
@@ -39,3 +42,4 @@ http://localhost:8681/exist/rest/db/cr/cr.xql?operation=searchRetrieve&query=Hau
 
 
 http://localhost:8681/exist/rest/db/cr/cr.xql?operation=searchRetrieve&query=diary-month%20=%201881-03&x-context=clarin.at:icltt:cr:stb&x-format=htmlpage
+

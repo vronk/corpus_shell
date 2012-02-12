@@ -5,3 +5,21 @@ for searching in data in a XMLDB.
 
 FCS = Federated Content Search
 more: http://clarin.eu/fcs
+
+
+content of the project:
+
+- config.xml - main configuration used by the scripts/modules
+- mappings.xml - configuration mapping
+- cr.xql - main script
+- fcs.xqm - main module
+- repo-utils.xqm - module with helper functions (store resources in the db ...)
+- writer.xml  - necessary for the scripts being able to write into the database (cache) even when called via REST-interface
+							you need to setup a user and put its credentials into this file.
+- index.xsl - used for aggregating and selecting a subset in the scan-request
+
++ docs - some (developer) information about the project
++ modules/testing - started a xquery-module for testing fcs-endpoints
+
+requirements:
+expects the fcs-xsl collection in the database (by default in: /db/cr/xsl)
