@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<explain xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://explain.z3950.org/dtd/2.0/ file:/C:/Users/m/3lingua/corpus_shell/_repo2/corpus_shell/fcs/schemas/zeerex-2.0.xsd" authoritative="false" id="id1">
+    <serverInfo protocol="SRU" version="1.2" transport="http">
+        <host>clarin.aac.ac.at</host>
+        <port>80</port>
+        <database>cr</database>
+    </serverInfo>
+    <databaseInfo>
+        <title lang="en" primary="true">ICLTT Content Repository</title>
+        <description lang="en" primary="true">
+            a repository offering various Language Resources. FCS-capable
+        </description>
+        <author>ICLTT</author>
+        <contact>icltt@oeaw.ac.at</contact>
+    </databaseInfo>
+    <metaInfo>
+        <dateModified>2012-01-18</dateModified>
+    </metaInfo>
+    <indexInfo>
+        <set identifier="isocat.org/datcat" name="isocat">
+            <title>ISOcat data categories</title>
+        </set>
+        <set identifier="clarin.eu/fcs/1.0" name="fcs">
+            <title>Federated Content Search (CLARIN)</title>
+        </set>
+        <set identifier="clarin.eu/cmd" name="cmd">
+            <title>Component Metadata (CLARIN)</title>
+        </set>
+        <index search="true" scan="true" sort="false">
+            <title lang="en">Resource</title>
+            <map>
+                <name set="fcs">resource</name>
+            </map>
+        </index>
+    </indexInfo>
+    <schemaInfo>
+        <schema identifier="clarin.eu/fcs/1.0" location="" name="fcs" retrieve="true">
+            <title lang="en">Federated Content Search</title>
+        </schema>
+    </schemaInfo>
+    <configInfo>
+        <supports type="extraSearchData">cmd context</supports>
+    </configInfo>
+</explain>

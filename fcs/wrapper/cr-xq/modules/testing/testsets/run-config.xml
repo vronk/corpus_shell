@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <target key="local-8681-exist-cr">http://localhost:8681/exist/cr/</target>
+    <testset key="test_connect">test_connect</testset>
+</config>
