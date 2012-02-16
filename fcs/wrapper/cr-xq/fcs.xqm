@@ -15,11 +15,12 @@ declare variable $fcs:scanSortText as xs:string := "text";
 declare variable $fcs:scanSortSize as xs:string := "size";
 declare variable $fcs:indexXsl := doc('index.xsl');
 
-
+(: meanwhile accept both MD-PID or Res-PID (MdSelfLink or ResourceRef/text
+:)
 declare function fcs:explain($x-context as xs:string*) as item()* {
     let $context := if ($x-context) then $x-context
                     else repo-utils:config-value('explain')
-   let $explain := $repo-utils:md-collection//CMD[Header/MdSelfLink/text() eq $context]//explain (: //ResourceRef/text() :)
+   let $explain := $repo-utils:md-collection//CMD[Header/MdSelfLink/text() eq $context or .//ResourceRef/text() eq $context]//explain (: //ResourceRef/text() :)
     
     return $explain
 };
@@ -44,7 +45,7 @@ declare function fcs:scan($scanClause as xs:string, $x-context as xs:string*) {
 (:
   (derived from cmd:scanIndex function)
 two phases: 
-    1. one create full index for given path/element (and cache)
+    1. one create full index for given path/element within given collection (for now the collection is stored in the name - not perfect) (and cache)
 	2. select wished subsequence (on second call, only the second step is performed)
 :)
 declare function fcs:scan($scan-clause  as xs:string, $x-context as xs:string+, $start-item as xs:integer, $max-items as xs:integer, $p-sort as xs:string?) as item()? {
@@ -55,10 +56,12 @@ declare function fcs:scan($scan-clause  as xs:string, $x-context as xs:string+, 
 	 (: if no index-mapping found, dare to use the index-name as xpath :) 
 	 $index-xpath := if ($index/text()) then $index/text() else $index-name, 
  	 $filter := ($scx[2],'')[1],
-	 $sort := if ($p-sort eq $fcs:scanSortText or $p-sort eq $fcs:scanSortSize) then $p-sort else $fcs:scanSortText,
-	 $data-collection := repo-utils:context-to-collection($x-context)
+	 $sort := if ($p-sort eq $fcs:scanSortText or $p-sort eq $fcs:scanSortSize) then $p-sort else $fcs:scanSortText,	
+	 $data-collection := repo-utils:context-to-collection($x-context)	 
 	 
-    let $index-doc-name := repo-utils:gen-cache-id("index", ($index-name, $sort),""),
+	 (: WATCHME: this is quite unreliable, once the id become PIDs :)
+	 let $short-xcontext := substring-after($x-context, concat(repo-utils:config-value('explain'),':')) 
+    let $index-doc-name := repo-utils:gen-cache-id("index", ($short-xcontext, $index-name, $sort),""),
   
   (: get the base-index from cache, or create and cache :)
     $index-scan := if (repo-utils:is-in-cache($index-doc-name )) then
@@ -73,7 +76,8 @@ declare function fcs:scan($scan-clause  as xs:string, $x-context as xs:string+, 
         let $nodes := <nodes path="{fn:concat('//', $index-xpath)}"  >{$prenodes}</nodes>,
         	(: use XSLT-2.0 for-each-group functionality to aggregate the values of a node - much, much faster, than XQuery :)
    	    $data := transform:transform($nodes,$fcs:indexXsl, <parameters><param name="scan-clause" value="{$scan-clause}"/></parameters>)      
-        return repo-utils:store-in-cache($index-doc-name , $data)
+
+return repo-utils:store-in-cache($index-doc-name , $data)
 
 	(: extract the required subsequence (according to given sort) :)
 	let $res-nodeset := transform:transform($index-scan,$fcs:indexXsl, 

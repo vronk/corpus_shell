@@ -21,7 +21,9 @@ two tasks (in separate calls, managed by $mode-param):
             <sru:version>1.2</sru:version>
             <xsl:choose>
                 <xsl:when test="$mode='subsequence'">
-                    <xsl:apply-templates mode="subsequence" select=".//sru:terms"/>
+<!--                    don't go descendancts-axis, because of nested terms
+<xsl:apply-templates mode="subsequence" select=".//sru:terms"/>-->
+                    <xsl:apply-templates mode="subsequence" select="sru:scanResponse/sru:terms"/>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:variable name="terms">

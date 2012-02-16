@@ -24,7 +24,15 @@ declare variable $repo-utils:responseFormatHTML as xs:string := "html";
 declare function repo-utils:config-value($key as xs:string) as xs:string* {
     $repo-utils:config//property[@key=$key]
 };
+
+(: from config or from request-param :)
+declare function repo-utils:param-value($key as xs:string, $default as xs:string) as xs:string* {
     
+    let $param := request:get-parameter($key, $default)
+    return if ($param) then $param else $repo-utils:config//property[@key=$key]
+
+};
+
 
 declare function repo-utils:context-to-collection ($x-context as xs:string+) as node()* {
     if ($x-context) then collection($repo-utils:mappings//map[xs:string(@key) eq $x-context]/@path)
@@ -64,15 +72,46 @@ declare function repo-utils:get-from-cache($doc-name as xs:string) as item()* {
 };
 
 (:  
-  Store the collection listing for given collection.
+  Store the data in cache
 :)
 declare function repo-utils:store-in-cache($doc-name as xs:string, $data as node()) as item()* {
-  let $clarin-writer := fn:doc("/db/clarin/writer.xml"),
+  let $clarin-writer := fn:doc("/db/cr/writer.xml"),
   $dummy := xdb:login($repo-utils:cachePath, $clarin-writer//write-user/text(), $clarin-writer//write-user-cred/text())
   let $store := (: util:catch("org.exist.xquery.XPathException", :) xdb:store($repo-utils:cachePath, $doc-name, $data), (: , ()) :)
   $stored-doc := fn:doc(concat($repo-utils:cachePath, "/", $doc-name))
   return $stored-doc
 };
+
+
+(: 
+this tries to create sub-collections in index for
+individual data-collection - but it makes the retrieval etc. also more complicated 
+so rather encoding the data-collection also in the name  
+
+declare function repo-utils:store-in-cache($data-collection as item(), $doc-name as xs:string, $data as node()) as item()* {
+    let $data-coll-name := collection-name($data-collection) 
+    let $index-coll-path := concat($repo-utils:cachePath, "/", $data-coll-name )
+   let $create-coll := if (not(xmldb:collection-available($index-coll-path ))) then 
+                           xmldb:create-collection($repo-utils:cachePath, $data-collname) else ()
+  let $store-result := repo-utils:store($index-coll-path, $doc-name, $data, true())
+
+return $store-result
+};
+:)
+
+(:<options><option key="update">yes</option></options>:)
+declare function repo-utils:store($collection as xs:string, $doc-name as xs:string, $data as node(), $overwrite as xs:boolean) as item()* {
+  let $clarin-writer := fn:doc("/db/cr/writer.xml"),
+  $dummy := xdb:login($collection, $clarin-writer//write-user/text(), $clarin-writer//write-user-cred/text())
+
+  let $rem := if ($overwrite and doc-available(concat($collection, $doc-name))) then xdb:remove($collection, $doc-name) else ()
+  
+  let $store := (: util:catch("org.exist.xquery.XPathException", :) xdb:store($collection, $doc-name, $data), (: , ()) :)
+  $stored-doc := fn:doc(concat($collection, "/", $doc-name))
+  return $stored-doc
+};
+
+
 
 (:
   Create document name with md5-hash for selected collections (or types) 
@@ -80,10 +119,17 @@ declare function repo-utils:store-in-cache($doc-name as xs:string, $data as node
 :)
 declare function repo-utils:gen-cache-id($type-name as xs:string, $keys as xs:string+, $depth as xs:string) as xs:string {
   let $name-prefix := fn:concat($type-name, $depth),
-    $sorted-names := for $key in $keys order by $key ascending return $key
+       $sanitized-names := for $key in $keys return repo-utils:sanitize-name($key)
     return
 (:    fn:concat($name-prefix, "-", util:hash(string-join($sorted-names, ""), "MD5"), $repo-utils:xmlExt):)
-    fn:concat($name-prefix, "-", string-join($sorted-names, "_"), $repo-utils:xmlExt)
+    fn:concat($name-prefix, "-", string-join($sanitized-names, "-"), $repo-utils:xmlExt)
+};
+
+(:
+wipes out problematic characters from names
+:)
+declare function repo-utils:sanitize-name($name as xs:string) as xs:string {
+    translate($name, ":",'_')
 };
 
 (:
@@ -98,6 +144,7 @@ declare function repo-utils:serialise-as($item as node()?, $format as xs:string,
 	           let $xslDoc := doc(concat(repo-utils:config-value('scripts.path'), repo-utils:config-value(concat($operation, ".xsl"))) )
 	           let $res := transform:transform($item,$xslDoc, 
               			<parameters><param name="format" value="{$format}"/>
+              			            <param name="x-context" value="{repo-utils:param-value('x-context', '' )}"/>
               			            <param name="base_url" value="{repo-utils:config-value('base.url')}"/>
               			            <param name="scripts_url" value="{repo-utils:config-value('scripts.url')}"/>
               			</parameters>)          
