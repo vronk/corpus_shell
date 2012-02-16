@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sru:explainResponse xmlns:sru="http://www.loc.gov/standards/sru/">
-
+<sru:explainResponse xmlns:sru="http://www.loc.gov/zing/srw/">
   <sru:version>1.2</sru:version>
-
   <sru:record>
-
     <sru:recordPacking>XML</sru:recordPacking>
     <sru:recordSchema>http://explain.z3950.org/dtd/2.1/</sru:recordSchema>
 

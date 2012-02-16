@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sru:searchRetrieveResponse xmlns="http://www.loc.gov/zing/srw/diagnostic/" xmlns:sru="http://www.loc.gov/standards/sru/" >
+<sru:searchRetrieveResponse xmlns="http://www.loc.gov/zing/srw/diagnostic/" xmlns:sru="http://www.loc.gov/zing/srw/" >
 <sru:version>{tmpl_var name='version'}</sru:version>
 <sru:diagnostics>
 	<diagnostic>

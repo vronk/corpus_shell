@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sru:scanResponse xmlns:sru="http://www.loc.gov/standards/sru/"
+<sru:scanResponse xmlns:sru="http://www.loc.gov/zing/srw/"
           xmlns:diag="http://www.loc.gov/zing/srw/diagnostic/"
-          xmlns:myServer="http://myServer.com/">
+         >
 <sru:version>1.2</sru:version>
   <sru:terms>
     <sru:term>
