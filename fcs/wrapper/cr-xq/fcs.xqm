@@ -185,15 +185,24 @@ declare function fcs:search-retrieve($query as xs:string, $x-context as xs:strin
 
 
 (: This expects a CQL-query that it (will be able to) translates to XPath 
-returns: XPath version of the CQL-query :)
+returns: XPath version of the CQL-query 
+currently it accepts: 
+term
+index=term
+index relation term
+:)
 declare function fcs:transform-query($cql-query as xs:string, $x-context as xs:string) as xs:string {
-    let $query-constituents := tokenize($cql-query, " ")    
+    
+    let $query-constituents := if (contains($cql-query,'=')) then 
+                                        tokenize($cql-query, "=") 
+                                   else tokenize($cql-query, " ")    
 	let $index := if (count($query-constituents)=1) then
 				  "cql.serverChoice"
-				 else 
-					$query-constituents[1]				
+				 else $query-constituents[1]				
 	let $searchTerm := if (count($query-constituents)=1) then
 							$cql-query
+						else if (count($query-constituents)=2) then (: tokenized with '=' :)
+						    normalize-space($query-constituents[2])
 						else
 							$query-constituents[3]
             (: try to get a mapping specific to given context, else take the default :)
@@ -220,7 +229,7 @@ declare function fcs:transform-query($cql-query as xs:string, $x-context as xs:s
         $indexed := (xs:string($index-map/@status) eq 'indexed'),
         $match-on := if (exists($index-map/@use) ) then xs:string($index-map/@use) else "."  
         
-	let $res := concat("//", $resolved-index, "[", if ($indexed) then "ft:query" else "contains", "(", $match-on, ",'", $searchTerm, "')]",
+	let $res := concat("//", $resolved-index, "[", if ($indexed) then "ft:query" else "contains", "(", $match-on, ",'", translate($searchTerm,'"',''), "')]",
 								"/ancestor-or-self::", $base-elem)					
 
 	return $res
