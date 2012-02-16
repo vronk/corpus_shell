@@ -1,7 +1,7 @@
 xquery version "1.0";
 module namespace fcs = "http://clarin.eu/fcs/1.0";
 
-declare namespace sru = "http://www.loc.gov/standards/sru/";
+declare namespace sru = "http://www.loc.gov/zing/srw/";
 import module namespace diag =  "http://www.loc.gov/zing/srw/diagnostic/" at  "modules/diagnostics/diagnostics.xqm";
 import module namespace repo-utils = "http://aac.ac.at/content_repository/utils" at  "repo-utils.xqm";
 

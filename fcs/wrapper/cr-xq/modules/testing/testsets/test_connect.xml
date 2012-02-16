@@ -78,7 +78,7 @@
             return $data
        </code>
 <!--<xpath>/config</xpath>        -->
-        <xpath xmlns:sru="http://www.loc.gov/standards/sru/">//sru:searchRetrieveResponse/sru:numberOfRecords</xpath>
+        <xpath xmlns:sru="http://www.loc.gov/zing/srw/">//sru:searchRetrieveResponse/sru:numberOfRecords</xpath>
     </test>
     <test output="xml" ignore="no">
         <task>check search response in html</task>
