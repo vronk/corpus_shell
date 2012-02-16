@@ -4,7 +4,7 @@
     <purpose> generate html view of a sru-result-set  (eventually in various formats).</purpose>
 <history>  
 <change on="2011-12-06" type="created" by="vr">based on cmdi/scripts/mdset2view.xsl retrofitted for XSLT 1.0</change>	
-</history>
+</history> 
 -->    
     <!--  method="xhtml" is saxon-specific! prevents  collapsing empty <script> tags, that makes browsers choke -->
     <xsl:output method="xml" media-type="text/xhtml" indent="yes" encoding="UTF-8" doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"/>
@@ -57,17 +57,18 @@
             </span>
             <span class="label">hits</span>
             <div class="note">
-                <xsl:for-each select="sru:echoedSearchRetrieveRequest/*">
+                <xsl:for-each select="(sru:echoedSearchRetrieveRequest/*|sru:extraResponseData/*)">
                     <span class="label">
                         <xsl:value-of select="name()"/>: </span>
                     <span class="value">
                         <xsl:value-of select="."/>
                     </span>;
 	        </xsl:for-each>
-                <span class="label">duration: </span>
+                <!--<span class="label">duration: </span>
                 <span class="value">
                     <xsl:value-of select="sru:extraResponseData/fcs:duration"/>
-                </span>;</div>
+                    </span>;-->
+            </div>
         </div>
     </xsl:template>
     <xsl:template match="sru:records" mode="list">

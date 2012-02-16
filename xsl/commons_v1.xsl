@@ -15,7 +15,7 @@
     <xsl:param name="dict_file" select="'dict.xml'"/>
     <xsl:variable name="dict" select="document($dict_file)"/>
     <xsl:variable name="contexts" select="document($contexts_url)"/>
-	
+   
 	<!-- common starting point for all stylesheet; cares for unified html-envelope
 		and passes back to the individual stylesheets for the content (via template: continue-root) -->
     <xsl:template match="/">
