@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:sru="http://www.loc.gov/zing/srw/"
-    xmlns:utils="http://aac.ac.at/content_repository/utils" 
-    xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fcs="http://clarin.eu/fcs/1.0" 
-    version="2.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:utils="http://aac.ac.at/content_repository/utils" xmlns:sru="http://www.loc.gov/zing/srw/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fcs="http://clarin.eu/fcs/1.0" version="2.0">
     <!-- 
 <purpose> generate a view for a values-list (index scan) </purpose>
 <params>
@@ -143,7 +140,18 @@ sample data:
             </td>
             <td>
                 <span class="cmd_columns">
-                    <a class="value-caller" href="{utils:formURL('searchRetrieve', $format, concat($index, '%3D%22', sru:value, '%22'))}" target="_blank">
+                    <xsl:variable name="href">
+<!--                        special handling for special index -->
+                        <xsl:choose>
+                            <xsl:when test="$index = 'fcs.resource'">
+                                <xsl:value-of select="utils:formURL('explain', $format, sru:value)"/>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:value-of select="utils:formURL('searchRetrieve', $format, concat($index, '%3D%22', sru:value, '%22'))"/>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </xsl:variable>
+                    <a class="value-caller" href="{$href}" target="_blank">
                         <xsl:value-of select="(sru:displayTerm, sru:value)[1]"/>
                     </a>
                 </span>
@@ -151,6 +159,7 @@ sample data:
         </tr>
         <xsl:apply-templates select="sru:extraTermData/sru:terms/sru:term"/>
     </xsl:template>
+<!--    
     <xsl:template name="callback-header">
         <style type="text/css">
             #modeltree {
@@ -186,5 +195,5 @@ sample data:
 			
 		});
 	</script>
-    </xsl:template>
+    </xsl:template>-->
 </xsl:stylesheet>

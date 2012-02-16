@@ -134,9 +134,16 @@
             </xsl:if>
         </xsl:variable>
         <xsl:variable name="param_x-context">
-            <xsl:if test="$x-context != ''">
-                <xsl:value-of select="concat('&amp;x-context=',$x-context)"/>
-            </xsl:if>
+<!--            if action=explain, handle-q param as x-context-->
+            <xsl:choose>
+                <xsl:when test="$action='explain'">
+                    <xsl:value-of select="concat('&amp;x-context=',$q)"/>
+                </xsl:when>
+                <xsl:when test="$x-context != '' ">
+                    <xsl:value-of select="concat('&amp;x-context=',$x-context)"/>
+                </xsl:when>
+                <xsl:otherwise/>
+            </xsl:choose>
         </xsl:variable>
         <xsl:variable name="param_startRecord">
             <xsl:if test="$startRecord != ''">
@@ -148,8 +155,16 @@
                 <xsl:value-of select="concat('&amp;maximumRecords=',$maximumRecords)"/>
             </xsl:if>
         </xsl:variable>
-        <xsl:value-of select="concat($base_url, '?operation=',$action, $param_q, $param_x-context, $param_startRecord, $param_maximumRecords, $param_format)"/>
-<!--        <xsl:choose>
+        <xsl:choose>
+            <xsl:when test="$action='explain'">
+                <xsl:value-of select="concat($base_url, '?operation=',$action, $param_x-context, $param_format)"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="concat($base_url, '?operation=',$action, $param_q, $param_x-context, $param_startRecord, $param_maximumRecords, $param_format)"/>
+            </xsl:otherwise>
+        </xsl:choose>                
+         
+        <!--        <xsl:choose>
             <xsl:when test="$action=''">
                 <xsl:value-of select="concat($base_dir, '?q=', $q, '&repository=', $repository)"/>
             </xsl:when>

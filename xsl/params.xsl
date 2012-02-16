@@ -10,7 +10,7 @@
         <xsl:param name="base_dir">http://corpus3.aac.ac.at/cs/</xsl:param>-->
     <xsl:param name="scripts_url" select="''"/>
     <!-- http://clarin.aac.ac.at/exist7/rest/db/content_repository/scripts</xsl:param> -->
-    <xsl:param name="site_logo">corpus_shell</xsl:param>
+    <xsl:param name="site_logo" select="concat($scripts_url, 'style/logo_c_s.png')"/>
     <xsl:param name="site_name">Content Repository</xsl:param>
     <xsl:param name="format" select="'htmlpagelist'"/> <!-- table|list|detail -->
     <xsl:param name="q" select="/sru:searchRetrieveResponse/sru:echoedSearchRetrieveRequest/sru:query"/>
