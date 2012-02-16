@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:utils="http://aac.ac.at/content_repository/utils" xmlns:sru="http://www.loc.gov/standards/sru/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fcs="http://clarin.eu/fcs/1.0" xmlns:my="myFunctions" version="2.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+    version="2.0">
     <!-- 
-        <purpose> generate a view for the explain-record (http://www.loc.gov/standards/sru/specs/explain.html) </purpose>
+        <purpose> generate a generic html-view for xml </purpose>
         <params>
         <param name=""></param>
         </params>

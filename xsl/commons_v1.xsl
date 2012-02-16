@@ -81,12 +81,11 @@
                 <title>
                     <xsl:value-of select="$title"/>
                 </title>
-                <link href="{$scripts_url}/style/cmds-ui.css" type="text/css" rel="stylesheet"/>
-				
+                <link href="{$scripts_url}/style/cmds-ui.css" type="text/css" rel="stylesheet"/>				
 				<!-- <xsl:call-template name="callback-header"/> -->
             </head>
             <xsl:call-template name="page-header"/>
-            <body>
+            <body>                
 				<!-- <h1><xsl:value-of select="$title"/></h1> -->
                 <xsl:call-template name="continue-root"/>
             </body>
