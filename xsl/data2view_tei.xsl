@@ -133,6 +133,9 @@ the named templates are at the bottom.
         <div class="pb">p. <xsl:value-of select="@n"/>
         </div>
     </xsl:template>
+    <xsl:template match="persName | placeName" mode="record-data">
+        <xsl:call-template name="inline"/>
+    </xsl:template>
     <xsl:template match="rs" mode="record-data">
         <xsl:call-template name="inline"/>
     </xsl:template>
@@ -148,8 +151,7 @@ the named templates are at the bottom.
         </em>
     </xsl:template>
     -->
-    
-    
+        
     <!-- a rather sloppy section optimized for result from aacnames listPerson/tei:person -->
     <!-- this should occur only in lists, not in text-->
     <xsl:template match="tei:person" mode="record-data">

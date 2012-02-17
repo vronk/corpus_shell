@@ -1,4 +1,5 @@
-span.person {
-    font-weight: bold;
-   color: #009900;
-}
+
+span.bibl { font-style: italic; color: #000099;}
+span.persName ,span.person { font-weight: bold;  color: #009900; }
+
+span.placeName { font-weight: bold;  color: #990000; }

@@ -13,12 +13,11 @@
         <index key="diary-month" use="substring(xs:string(@value),1,7)">div[@type='diary-day']/p/date</index>
         <index key="diary-year" use="substring(xs:string(@value),1,4)">div[@type='diary-day']/p/date</index>
         <index key="text">div[@type='diary-day']</index>
-        <index key="persName">persName</index>
+        <index key="personName">persName</index>
     </map>
     <map key="clarin.at:icltt:cr:aac-names" path="/db/cr-data/aac_names" base_elem="tei:person">
         <index key="cql.serverChoice">*</index>
         <index key="personName">tei:persName</index>
-        <index key="Person.Name">tei:persName</index>
         <index key="occupation">tei:occupation</index>
         <index key="sex">tei:sex</index>
         <index key="birth-place">tei:birth/tei:placeName</index>
