@@ -54,12 +54,14 @@ declare function fcs:scan($scan-clause  as xs:string, $x-context as xs:string+, 
 	 $index-name := $scx[1],  
 	 $index := fcs:get-mapping($index-name, $x-context ),
 	 (: if no index-mapping found, dare to use the index-name as xpath :) 
-	 $index-xpath := if ($index/text()) then $index/text() else $index-name, 
- 	 $filter := ($scx[2],'')[1],
+(:	 $index-xpath := if ($index/text()) then $index/text() else $index-name, :)
+     $index-xpath :=  fcs:transform-query($index-name,$x-context,'scan' ),
+ 	 $filter := ($scx[2],'')[1],	 
 	 $sort := if ($p-sort eq $fcs:scanSortText or $p-sort eq $fcs:scanSortSize) then $p-sort else $fcs:scanSortText,	
 	 $data-collection := repo-utils:context-to-collection($x-context)	 
 	 
-	 (: WATCHME: this is quite unreliable, once the id become PIDs :)
+	 (: WATCHME: this is quite unreliable, it relies on manual (urn-like) creation of the ids for the resources)  
+	   it won't work once the id become PIDs :)
 	 let $short-xcontext := substring-after($x-context, concat(repo-utils:config-value('explain'),':')) 
     let $index-doc-name := repo-utils:gen-cache-id("index", ($short-xcontext, $index-name, $sort),""),
   
@@ -67,12 +69,13 @@ declare function fcs:scan($scan-clause  as xs:string, $x-context as xs:string+, 
     $index-scan := if (repo-utils:is-in-cache($index-doc-name )) then
       repo-utils:get-from-cache($index-doc-name ) 
     else        
-        let $getnodes := util:eval(fn:concat("$data-collection/descendant-or-self::", $index-xpath)),
-            (: to overcome problems with attributes
-            this is not really reliable, but the self::text() test produced bad error, 
-            so it is reversed, hoping that we will select only elements or text :) 
-            $prenodes := if ($getnodes[1][self::element()]) then $getnodes
-                            else for $t in $getnodes return <v>{$t}</v>
+(:        let $getnodes := util:eval(fn:concat("$data-collection/descendant-or-self::", $index-xpath)),:)
+let $getnodes := util:eval(fn:concat("$data-collection", $index-xpath)),
+            (: if we collected strings, we have to wrap them in elements 
+                    to be able to work with them in xsl :) 
+            $prenodes := if ($getnodes[1] instance of xs:string) then
+                                    for $t in $getnodes return <v>{$t}</v>
+                            else for $t in $getnodes return <v>{string-join($t//text()," ")}</v>
         let $nodes := <nodes path="{fn:concat('//', $index-xpath)}"  >{$prenodes}</nodes>,
         	(: use XSLT-2.0 for-each-group functionality to aggregate the values of a node - much, much faster, than XQuery :)
    	    $data := transform:transform($nodes,$fcs:indexXsl, <parameters><param name="scan-clause" value="{$scan-clause}"/></parameters>)      
@@ -183,22 +186,27 @@ declare function fcs:search-retrieve($query as xs:string, $x-context as xs:strin
 };
 
 
+(: default type= search :)
+declare function fcs:transform-query($cql-query as xs:string, $x-context as xs:string) as xs:string {
+    fcs:transform-query ($cql-query, $x-context, 'search')
+};
 
-(: This expects a CQL-query that it (will be able to) translates to XPath 
+(: This expects a CQL-query that it (will be able to) translates to XPath
+params: 
+$type = search or scan
 returns: XPath version of the CQL-query 
 currently it accepts: 
 term
 index=term
 index relation term
 :)
-declare function fcs:transform-query($cql-query as xs:string, $x-context as xs:string) as xs:string {
+declare function fcs:transform-query($cql-query as xs:string, $x-context as xs:string, $type as xs:string ) as xs:string {
     
     let $query-constituents := if (contains($cql-query,'=')) then 
                                         tokenize($cql-query, "=") 
                                    else tokenize($cql-query, " ")    
-	let $index := if (count($query-constituents)=1) then
-				  "cql.serverChoice"
-				 else $query-constituents[1]				
+	let $index := if ($type eq 'scan' or count($query-constituents)>1 )  then $query-constituents[1]
+	                else "cql.serverChoice"				 				
 	let $searchTerm := if (count($query-constituents)=1) then
 							$cql-query
 						else if (count($query-constituents)=2) then (: tokenized with '=' :)
@@ -227,10 +235,14 @@ declare function fcs:transform-query($cql-query as xs:string, $x-context as xs:s
             (: <index status="indexed"> - flag to know if ft-indexes can be used.
             TODO?: should be checked against the actual index-configuration :)
         $indexed := (xs:string($index-map/@status) eq 'indexed'),
-        $match-on := if (exists($index-map/@use) ) then xs:string($index-map/@use) else "."  
+        $match-on := if (exists($index-map/@use) ) then xs:string($index-map/@use) else '.'  
         
-	let $res := concat("//", $resolved-index, "[", if ($indexed) then "ft:query" else "contains", "(", $match-on, ",'", translate($searchTerm,'"',''), "')]",
-								"/ancestor-or-self::", $base-elem)					
+	let $res := if ($type eq 'scan') then
+	                   concat("//", $resolved-index, if ($match-on ne '.') then concat("/", $match-on) else '') 
+	               else
+	                   concat("//", $resolved-index, "[", if ($indexed) then "ft:query" else "contains", "(", $match-on, ",'", translate($searchTerm,'"',''), "')]",
+								"/ancestor-or-self::", $base-elem)		
+				    
 
 	return $res
 
