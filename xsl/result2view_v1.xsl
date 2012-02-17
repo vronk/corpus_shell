@@ -4,7 +4,7 @@
     <purpose> generate html view of a sru-result-set  (eventually in various formats).</purpose>
 <history>  
 <change on="2011-12-06" type="created" by="vr">based on cmdi/scripts/mdset2view.xsl retrofitted for XSLT 1.0</change>	
-</history> 
+</history>
 -->    
     <!--  method="xhtml" is saxon-specific! prevents  collapsing empty <script> tags, that makes browsers choke -->
     <xsl:output method="xml" media-type="text/xhtml" indent="yes" encoding="UTF-8" doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"/>
@@ -136,7 +136,7 @@
 <!--                        <a class="internal" href="{my:formURL('record', $format, my:encodePID(.//recordIdentifier))}">-->
                         <a class="internal" href="{$rec_uri}">
                             <xsl:value-of select="$absolute_position"/>
-                        </a>                        
+                        </a>                         
 <!--                        <span class="cmd cmd_save"/>-->
                     </xsl:when>
                     <xsl:otherwise>
@@ -147,7 +147,7 @@
             </td>
             <td>
                 <!--
-                    TODO: handle context
+                    TODO: handle context 
                     <xsl:call-template name="getContext"/>-->
                 <div class="title">
                     <xsl:call-template name="getTitle"/>
