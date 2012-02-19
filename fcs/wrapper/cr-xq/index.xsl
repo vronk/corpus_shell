@@ -21,7 +21,7 @@ two tasks (in separate calls, managed by $mode-param):
             <sru:version>1.2</sru:version>
             <xsl:choose>
                 <xsl:when test="$mode='subsequence'">
-<!--                    don't go descendancts-axis, because of nested terms
+<!--                    don't go descendants-axis, because of nested terms
 <xsl:apply-templates mode="subsequence" select=".//sru:terms"/>-->
                     <xsl:apply-templates mode="subsequence" select="sru:scanResponse/sru:terms"/>
                 </xsl:when>
@@ -50,13 +50,15 @@ two tasks (in separate calls, managed by $mode-param):
     <xsl:template match="nodes[*]">
         <xsl:variable name="nodes" select="*"/>
         <xsl:variable name="count-text" select="count($nodes/text()[.!=''])"/>
+        <!-- FIXME: this is not correct, because it counts individual text-nodes.
+            if there are nods with subnodes, text in every child is counted extra-->
         <xsl:variable name="distinct-text-count" select="count(distinct-values($nodes/text()))"/>
         <sru:terms>
             <xsl:copy-of select="@*"/>
-            <xsl:for-each-group select="$nodes" group-by="text()">
+            <xsl:for-each-group select="$nodes" group-by=".//text()">
                 <sru:term>
                     <sru:value>
-                        <xsl:value-of select="text()"/>
+                        <xsl:value-of select=".//text()"/>
                     </sru:value>
                     <sru:numberOfRecords>
                         <xsl:value-of select="count(current-group())"/>
@@ -66,7 +68,8 @@ two tasks (in separate calls, managed by $mode-param):
         </sru:terms>
     </xsl:template>
     <xsl:template match="sru:terms" mode="subsequence">
-        <xsl:variable name="filtered" select="*[if ($filter!='') then                             if ($filter-mode='starts-with') then starts-with(sru:value,substring-before($filter,'*'))                                else contains(sru:value, $filter)                            else true()]"/>
+        <xsl:variable name="filtered" select="*[if ($filter!='') then                                                                                  if ($filter-mode='starts-with') then starts-with(sru:value,substring-before($filter,'*'))                                                                                    else contains(sru:value, $filter)                                                                            else true()]"/>
+                                    
         
         <!-- this may be potentially expensive and we may need to store the index already sorted (which is the normal/sane way to do!) -->
         <xsl:variable name="ordered">

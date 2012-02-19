@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-    xmlns:sru="http://www.loc.gov/zing/srw/" xmlns:html="http://www.w3.org/1999/xhtml" 
-    version="1.0" exclude-result-prefixes="html">
+<xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:sru="http://www.loc.gov/zing/srw/" xmlns:html="http://www.w3.org/1999/xhtml" version="1.0" exclude-result-prefixes="html">
 
 <!-- 
  stylesheet for formatting TEI-elements  inside a FCS/SRU-result.
@@ -135,10 +133,7 @@ the named templates are at the bottom.
         <div class="pb">p. <xsl:value-of select="@n"/>
         </div>
     </xsl:template>
-    <xsl:template match="person | place " mode="record-data">
-        <xsl:call-template name="inline"/>
-    </xsl:template>
-    <xsl:template match="placeName " mode="record-data">
+    <xsl:template match="persName | placeName" mode="record-data">
         <xsl:call-template name="inline"/>
     </xsl:template>
     <xsl:template match="rs" mode="record-data">
@@ -156,6 +151,54 @@ the named templates are at the bottom.
         </em>
     </xsl:template>
     -->
+        
+    <!-- a rather sloppy section optimized for result from aacnames listPerson/tei:person -->
+    <!-- this should occur only in lists, not in text-->
+    <xsl:template match="tei:person" mode="record-data">
+        <div class="person">
+            <xsl:apply-templates select="tei:birth|tei:death|tei:occupation" mode="record-data"/>
+            <div class="links">
+                <ul>
+                    <xsl:apply-templates select="tei:link" mode="record-data"/>
+                </ul>
+            </div>
+        </div>
+    </xsl:template>
+    
+    <!-- already used as title -->
+    <xsl:template match="tei:person/tei:persName" mode="record-data"/>
+    
+    <!-- not really nice for output -->
+    <xsl:template match="tei:sex" mode="record-data"/>
+    <xsl:template match="tei:birth" mode="record-data">
+        <div>
+            <span class="label">geboren: </span>
+            <span class="{local-name()}" data-when="{@when}">
+                <xsl:value-of select="concat(@when, ', ', tei:placeName)"/>
+            </span>
+        </div>
+    </xsl:template>
+    <xsl:template match="tei:death" mode="record-data">
+        <div>
+            <span class="label">gestorben: </span>
+            <span class="{local-name()}" data-when="{@when}">
+                <xsl:value-of select="concat(@when, ', ', tei:placeName)"/>
+            </span>
+        </div>
+    </xsl:template>
+    <xsl:template match="tei:occupation" mode="record-data">
+        <div class="{local-name()}">
+            <xsl:value-of select="."/>
+        </div>
+    </xsl:template>
+    <xsl:template match="tei:link" mode="record-data">
+        <li>
+            <a href="{@target}">
+                <xsl:value-of select="@target"/>
+            </a>
+        </li>
+    </xsl:template>
+    
     
 <!-- ************************ -->
 <!-- named templates starting -->
