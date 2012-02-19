@@ -21,9 +21,11 @@
         <xsl:for-each select="sru:searchRetrieveResponse">
             <xsl:apply-templates select="sru:diagnostics"/>
             <div>
-                <xsl:if test="contains($format, 'htmlpage')">
+                <!-- the header needs to be sent every time, really, because it carries important summary information (like number of records)
+                    so rather hide it via css if needed -->
+<!--                <xsl:if test="contains($format, 'htmlpage')">-->
                     <xsl:call-template name="header"/>
-                </xsl:if>
+<!--                </xsl:if>-->
                 <xsl:apply-templates select="sru:records" mode="list"/>
     <!-- switch mode depending on the $format-parameter -->        
                 <!--<xsl:choose> 
