@@ -207,8 +207,8 @@ img.navigationicon
 	padding: 0px;
 }
 
-.draggable {padding: 5px; float: left; margin: 5px; /* font-size: .9em; */ border: 3px solid #286290; overflow: visible; border-radius: 10px;}
-.ui-widget-header p, .ui-widget-content p { margin: 0; padding: 0px 0px 0px 10px; border-radius: 10px; font-size: 12px;}
+.draggable {padding: 3px; float: left; margin: 3px; /* font-size: .9em; */ border: 1px solid #286290; overflow: visible; border-radius: 6px;}
+.ui-widget-header p, .ui-widget-content p { margin: 0; padding: 0px 0px 0px 10px; border-radius: 6px; font-size: 12px;}
 /*
 #snaptarget { height: 910px; width: 1110px; border: none; background: #EEEEEE url(); position: relative;}
 */
