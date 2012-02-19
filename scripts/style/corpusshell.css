@@ -232,3 +232,8 @@ div.profiletext h4 { font-size: 13px; border-bottom: 1px solid #A82027; }
 {
     width: 15px;
 }
+
+.cmd {	display: inline-block; 	width: 16px;	height: 16px;		background: no-repeat center center;	
+			margin: 0px 1px;	position: relative;	top: 2px; }
+
+.loading { background-image: url("img/icon_get.gif");}

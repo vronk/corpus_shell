@@ -109,6 +109,11 @@ function StartSearch(elem)
   var parElem = $(elem).parents(".draggable");
   var sstr = $(parElem).find(".searchstring").val();
   var sele = parseInt($(parElem).find(".searchcombo").val());
+  
+  // empty result-pane and indicate loading
+  $(parElem).find(".searchresults").addClass("cmd loading").text("");
+  $(parElem).find(".hitcount").text("-");
+  
   $.ajax(
   {
       type: 'GET',
@@ -128,7 +133,9 @@ function StartSearch(elem)
      			api.getContentPane().html(xml.responseText);
      			api.reinitialise();
      			*/
-
+				
+				$(parElem).find(".searchresults").removeClass("cmd loading");
+				
      			if ($(parElem).find(".searchresults .scroll-content").length > 0)
      			{
           $(parElem).find(".searchresults .scroll-content").html(xml.responseText);
@@ -139,7 +146,8 @@ function StartSearch(elem)
           $(parElem).find(".searchresults").html(xml.responseText);
           InitScrollPane(parElem);
         }
-        $(parElem).find(".hitcount").text($(".recordcount").val());
+        $(parElem).find(".hitcount").text($(".result-header").attr("data-numberOfRecords"));
+        $(".result-header").hide();
       }
   }
   );

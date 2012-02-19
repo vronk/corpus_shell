@@ -11,7 +11,7 @@
   $configUrl = "../../fcs/aggregator/switch.config";
   $localhost = "corpus3.aac.ac.at";
 
-  $ddcConfig = "../../fcs/utils/php/ddcconfig.php";
+  $ddcConfig = "../../fcs/aggregator/fcs.resource.config.php";
   $ddcConfigFound = false;
 
   function GetNodeValue($node, $tagName)
