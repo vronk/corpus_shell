@@ -55,7 +55,7 @@
     }
     
     //context not found in switch.config
-    //have a look in ddcConfig
+    //have a look in fcsConfig
     global $fcsConfigFound;
     
     if ($fcsConfigFound)
@@ -81,6 +81,9 @@
 
   //header("Content-Type: text/plain");
 
+// FIXME: all this parameter handling has to be reworked
+		// dont just pass the request string, but check the parameters and recreate the url for the endpoint
+	
   $hstr = $_GET["x-context"];
 
   if (isset($_GET['x-format']))
@@ -90,7 +93,9 @@
 
   $params = $_SERVER["REQUEST_URI"];
   $params = strstr($params, "?");
+  // carving out some parameters! not nice!
   $params = str_replace("x-context=" . $hstr, "", $params);
+  $params = str_replace("x-format=" . $format, "", $params);
 
   $sAry = array("?&", "&&");
   $rAry = array("?", "&");
@@ -114,10 +119,13 @@
       
       if (($config_item['type'] == "fcs")||($config_item['type'] == "fcs.resource"))
       {
-        if ($params == "")
-          $params = "?x-context=" . $item;
-        else
-          $params .= "&x-context=" . $item;
+        if ($params == "") 
+        	$params = "?x-context=" . $item;          
+          // temporarily deactivated, because produced double param x-context 
+          // (for exist, maybe it will make problems with other targets
+          //      else          $params .= "&x-context=" . $item;
+          else 
+          $params = $params;
       }
       $fileName = $uri . $params;
   
@@ -139,6 +147,9 @@
           {
             $xmlDoc = new DOMDocument();
             $xmlDoc->load($fileName);
+							    // DEBUG 
+							    // $outXML = $xmlDoc->saveXML(); 
+							    // print $outXML;
   
             $proc = new XSLTProcessor();
             $proc->importStylesheet($xslDoc);
