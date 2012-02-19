@@ -3,6 +3,15 @@
 
   $configUrl = "switch.config";
   $localhost = "corpus3.aac.ac.at";
+  $scriptsUrl = "http://corpus3.aac.ac.at/cs2/corpus_shell/scripts";
+  $fcsConfig = "fcs.resource.config.php";
+  $fcsConfigFound = false;
+  
+  if (file_exists($fcsConfig))
+  {
+    include $fcsConfig;
+    $fcsConfigFound = true;    
+  }  
 
   function GetNodeValue($node, $tagName)
   {
@@ -44,6 +53,23 @@
          return array("name" => $name, "type" => $type, "uri" => $uri, "style" => $style);
        }
     }
+    
+    //context not found in switch.config
+    //have a look in ddcConfig
+    global $fcsConfigFound;
+    
+    if ($fcsConfigFound)
+    {
+      global $configName;
+     
+      if (array_key_exists($context, $configName))
+      {
+        $conf = $configName[$context];
+        return array("name" => $conf["name"], "type" => $conf["type"], "uri" => $conf["endPoint"], "style" => $conf["style"]);
+      }
+    }
+    
+    return false;
   }
   
   function url_exists($url)
@@ -81,87 +107,89 @@
   foreach($context as $item)
   {
     $config_item = GetConfig($item);
-    //print_r($ary);
-
-   //$uri = str_replace($localhost, "127.0.0.1",  $config_item["uri"]);
-   $uri = $config_item["uri"];
-
-    if ($config_item['type'] == "fcs")
-    {
-      if ($params == "")
-        $params = "?x-context=" . $item;
-      else
-        $params .= "&x-context=" . $item;
-    }
-    $fileName = $uri . $params;
-
-    $pos = stripos($format, "html");
-    //print "StriPos: $pos";
-
-	   //depending on x-format parameter decide if to transform the result (into html), or leave it as raw xml
-    if ($pos !== FALSE)
-    {
-      $style = str_replace($localhost, "localhost",  $config_item["style"]);
-      //print $fileName;
-
-      if (url_exists($style))
+    
+    if ($config_item !== false)
+    {      
+      $uri = $config_item["uri"];
+      
+      if (($config_item['type'] == "fcs")||($config_item['type'] == "fcs.resource"))
       {
-        $xslDoc = new DOMDocument();
-        $xslDoc->load($style);
-
-        if (url_exists($fileName))
+        if ($params == "")
+          $params = "?x-context=" . $item;
+        else
+          $params .= "&x-context=" . $item;
+      }
+      $fileName = $uri . $params;
+  
+      $pos = stripos($format, "html");
+      //print "StriPos: $pos";
+  
+  	   //depending on x-format parameter decide if to transform the result (into html), or leave it as raw xml
+      if ($pos !== FALSE)
+      {
+        $style = str_replace($localhost, "localhost",  $config_item["style"]);
+        //print $fileName;
+  
+        if (url_exists($style))
         {
-          $xmlDoc = new DOMDocument();
-          $xmlDoc->load($fileName);
-
-          $proc = new XSLTProcessor();
-          $proc->importStylesheet($xslDoc);
-         	$proc->setParameter('', 'format', $format);
-          header("content-type: text/html; charset=UTF-8");
-          echo $proc->transformToXML($xmlDoc);
+          $xslDoc = new DOMDocument();
+          $xslDoc->load($style);
+  
+          if (url_exists($fileName))
+          {
+            $xmlDoc = new DOMDocument();
+            $xmlDoc->load($fileName);
+  
+            $proc = new XSLTProcessor();
+            $proc->importStylesheet($xslDoc);
+           	$proc->setParameter('', 'format', $format);
+           	$proc->setParameter('', 'scripts_url', $scriptsUrl);         	
+            header("content-type: text/html; charset=UTF-8");
+            echo $proc->transformToXML($xmlDoc);
+          }
+          else
+          {
+            print "$fileName not found!";
+          }
         }
         else
         {
-          print "$fileName not found!";
+          print "$style not found!";
         }
       }
-      else
+      else if (stripos($format, "xsltproc") !== FALSE)
       {
-        print "$style not found!";
+      	 print "XSLTPROC-testing";
+      	 print "hasExsltSupport:".$proc->hasExsltSupport;
+        //print $xslDoc->saveXML();
       }
-    }
-    else if (stripos($format, "xsltproc") !== FALSE)
-    {
-    	 print "XSLTPROC-testing";
-    	 print "hasExsltSupport:".$proc->hasExsltSupport;
-      //print $xslDoc->saveXML();
-    }
-    else if (stripos($format, "xsl") !== FALSE)
-    {
-    	 // this option is more or less only for debugging (to see the xsl used)
-    	 $style = str_replace($localhost, "localhost",  $config_item["style"]);
-
-    	 header ("content-type: text/xml; charset=UTF-8");
-    	 readfile($style);
-
-    	 //$xslDoc = new DOMDocument();
-      //$xslDoc->load($style);
-      //print $xslDoc->saveXML();
-    }
-    else
-    {
-      header ("content-type: text/xml; charset=UTF-8");
-      $fileName = $uri . $params;
-      $fileName = str_replace($localhost, "localhost", $fileName);  
-      
-      if (url_exists($fileName))
+      else if (stripos($format, "xsl") !== FALSE)
       {
-        readfile($fileName);
+      	 // this option is more or less only for debugging (to see the xsl used)
+      	 $style = str_replace($localhost, "localhost",  $config_item["style"]);
+  
+      	 header ("content-type: text/xml; charset=UTF-8");
+      	 readfile($style);
+  
+      	 //$xslDoc = new DOMDocument();
+        //$xslDoc->load($style);
+        //print $xslDoc->saveXML();
       }
       else
       {
-        $fileName = str_replace("&", "&amp;", $fileName); 
-        print "<message>uri or script not found! $fileName</message>";
+        header ("content-type: text/xml; charset=UTF-8");
+        $fileName = $uri . $params;
+        $fileName = str_replace($localhost, "localhost", $fileName);  
+        
+        if (url_exists($fileName))
+        {
+          readfile($fileName);
+        }
+        else
+        {
+          $fileName = str_replace("&", "&amp;", $fileName); 
+          print "<message>uri or script not found! $fileName</message>";
+        }
       }
     }
   }

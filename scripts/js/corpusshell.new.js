@@ -9,12 +9,12 @@ function ToggleSideBar()
 	 if (left == "0" || left == "0px")
 	 {
 	   left = left - width + 7;
-	   $("#sidebaricon").attr("src", "img/sidebargrip.right.png");
+	   $("#sidebaricon").attr("src", "scripts/style/img/sidebargrip.right.png");
 	 }
 	 else
 	 {
 	 	 left = 0;
-	   $("#sidebaricon").attr("src", "img/sidebargrip.left.png");
+	   $("#sidebaricon").attr("src", "scripts/style/img/sidebargrip.left.png");
 	 }
 
 	 $("#sidebar").css("left", left+"px");
@@ -300,7 +300,7 @@ function GeneratePanelTitle(titlestring, pin)
     	$(pina).addClass("noborder");
 
     	var pinimg = document.createElement('img');
-    	$(pinimg).attr("src", "img/pin.gray.png");
+    	$(pinimg).attr("src", "scripts/style/img/pin.gray.png");
     	$(pinimg).addClass("titletopiconpin");
     	$(pinimg).addClass("noborder");
  	}
@@ -314,7 +314,7 @@ function GeneratePanelTitle(titlestring, pin)
  	$(maxa).addClass("noborder");
 
  	var maximg = document.createElement('img');
- 	$(maximg).attr("src", "img/n.win_max.png");
+ 	$(maximg).attr("src", "scripts/style/img/n.win_max.png");
  	$(maximg).addClass("titletopiconmax");
  	$(maximg).addClass("noborder");
 
@@ -327,7 +327,7 @@ function GeneratePanelTitle(titlestring, pin)
  	$(closea).addClass("noborder");
 
  	var closeimg = document.createElement('img');
- 	$(closeimg).attr("src", "img/n.win_close.png");
+ 	$(closeimg).attr("src", "scripts/style/img/n.win_close.png");
  	$(closeimg).addClass("titletopiconclose");
  	$(closeimg).addClass("noborder");
 
@@ -397,7 +397,7 @@ function GenerateSearchNavigation()
 
  	var loadimg = document.createElement('img');
  	$(loadimg).addClass("navigationicon");
- 	$(loadimg).attr("src", "img/n.arrow_right_b.png");
+ 	$(loadimg).attr("src", "scripts/style/img/n.arrow_right_b.png");
 
  	$(loada).append(loadimg);
 
@@ -406,7 +406,7 @@ function GenerateSearchNavigation()
 
  	var previmg = document.createElement('img');
  	$(previmg).addClass("navigationicon");
- 	$(previmg).attr("src", "img/n.arrow_left.png");
+ 	$(previmg).attr("src", "scripts/style/img/n.arrow_left.png");
 
  	$(preva).append(previmg);
 
@@ -415,7 +415,7 @@ function GenerateSearchNavigation()
 
  	var nextimg = document.createElement('img');
  	$(nextimg).addClass("navigationicon");
- 	$(nextimg).attr("src", "img/n.arrow_right.png");
+ 	$(nextimg).attr("src", "scripts/style/img/n.arrow_right.png");
 
  	$(nexta).append(nextimg);
 
@@ -597,7 +597,7 @@ function MaximizePanel(titlep)
 
   CorrectSearchResultHeight(paneldiv);
 
-  $(titlep).find(".titletopiconmax").attr("src", "img/n.win_norm.png");
+  $(titlep).find(".titletopiconmax").attr("src", "scripts/style/img/n.win_norm.png");
   $(titlep).find(".titletopiconmax").parent().attr("onclick", "NormalizePanel(this);");
 }
 
@@ -620,7 +620,7 @@ function NormalizePanel(titlep)
 
   CorrectSearchResultHeight(paneldiv);
 
-  $(titlep).find(".titletopiconmax").attr("src", "img/n.win_max.png");
+  $(titlep).find(".titletopiconmax").attr("src", "scripts/style/img/n.win_max.png");
   $(titlep).find(".titletopiconmax").parent().attr("onclick", "MaximizePanel(this);");
 }
 
@@ -635,13 +635,13 @@ function PinPanel(elem, col)
 
   if (col == 1)
   {
-    $(paneldiv).find(".titletopiconpin").attr("src", "img/pin.gray.png");
+    $(paneldiv).find(".titletopiconpin").attr("src", "scripts/style/img/pin.gray.png");
     $(paneldiv).find(".titletopiconpin").removeClass("pinned");
     $(paneldiv).find(".titletopiconpin").parent().attr("onclick", "PinPanel(this, 2);");
   }
   else
   {
-    $(paneldiv).find(".titletopiconpin").attr("src", "img/pin.color.png");
+    $(paneldiv).find(".titletopiconpin").attr("src", "scripts/style/img/pin.color.png");
     $(paneldiv).find(".titletopiconpin").addClass("pinned");
     $(paneldiv).find(".titletopiconpin").parent().attr("onclick", "PinPanel(this, 1);");
   }
