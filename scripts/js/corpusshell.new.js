@@ -134,8 +134,11 @@ function StartSearch(elem)
      			api.reinitialise();
      			*/
 				
-				$(parElem).find(".searchresults").removeClass("cmd loading");
+				var resultPane = $(parElem).find(".searchresults")
 				
+				resultPane.removeClass("cmd loading");
+				
+				// What does this do?? 
      			if ($(parElem).find(".searchresults .scroll-content").length > 0)
      			{
           $(parElem).find(".searchresults .scroll-content").html(xml.responseText);
@@ -143,11 +146,12 @@ function StartSearch(elem)
      			}
      	  else
      		 {
-          $(parElem).find(".searchresults").html(xml.responseText);
+          $(resultPane).html(xml.responseText);
           InitScrollPane(parElem);
         }
-        $(parElem).find(".hitcount").text($(".result-header").attr("data-numberOfRecords"));
-        $(".result-header").hide();
+        var hits = $(resultPane).find(".result-header").attr("data-numberOfRecords")
+        $(parElem).find(".hitcount").text(hits);
+        $(resultPane).find(".result-header").hide();
       }
   }
   );

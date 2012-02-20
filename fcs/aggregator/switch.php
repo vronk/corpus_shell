@@ -101,7 +101,7 @@
   $rAry = array("?", "&");
 
 	 // add default params
-	 $params = $params."&version=1.2";
+	 $params = $params."&version=1.2&maximumRecords=10";
 	 
   $params = str_replace($sAry, $rAry, $params);
   //print "Params: $params\n";
@@ -109,6 +109,7 @@
   $context = explode(",", $hstr);
   //print_r($context);
 
+// would loop over every context, but only concat results (even with headers!) so this is not really "aggregating"
   foreach($context as $item)
   {
     $config_item = GetConfig($item);
@@ -123,9 +124,11 @@
         	$params = "?x-context=" . $item;          
           // temporarily deactivated, because produced double param x-context 
           // (for exist, maybe it will make problems with other targets
-          //      else          $params .= "&x-context=" . $item;
-          else 
-          $params = $params;
+          elseif (stripos($params, "x-context") !== FALSE) 
+          	$params  = $params;
+          else
+          	$params .= "&x-context=" . $item;
+          
       }
       $fileName = $uri . $params;
   
