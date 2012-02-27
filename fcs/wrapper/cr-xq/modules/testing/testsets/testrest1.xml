@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<info xml:lang="en">
+    <div class="title">Test suite - basic requests</div>
+    <div>
+        <test id="explain">
+            <a class="request" href="">endpoint-root (expected: explain)</a>
+            <xpath>exists($result-data//explain)</xpath>
+            <xpath>exists($result-data//zr:explain)</xpath>
+            <xpath>count($result-data//set)</xpath>
+            <xpath>count($result-data//index)</xpath>
+        </test>
+        <test id="search-haus">
+            <a class="request" href="?operation=searchRetrieve&amp;query=Haus">search: Haus</a>
+            <xpath>$result-data//sru:numberOfRecords</xpath>
+        </test>
+    </div>
+</info>
