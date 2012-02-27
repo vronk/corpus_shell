@@ -1,4 +1,4 @@
-html
+
 {
   height: 100%;
 }
@@ -10,8 +10,11 @@ body
   padding: 0px;
   background-color: #CCCCCC;
   font-family: verdana, helvetica, serif;
+  font-size: 11px;
 }
 
+table { font-size: 11px;}
+	
 #sidebar
 {
   height: 100%;
@@ -232,3 +235,12 @@ div.profiletext h4 { font-size: 13px; border-bottom: 1px solid #A82027; }
 {
     width: 15px;
 }
+
+.cmd {	display: inline-block; 	width: 16px;	height: 16px;		background: no-repeat center center;	
+			margin: 0px 1px;	position: relative;	top: 2px; }
+
+.loading { background-image: url("img/icon_get.gif");}
+
+.kw.hilight { background-color: #aaffaa; }
+
+div.data-view.metadata { color: #999999; font-style: italic; }

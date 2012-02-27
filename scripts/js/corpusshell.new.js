@@ -109,6 +109,11 @@ function StartSearch(elem)
   var parElem = $(elem).parents(".draggable");
   var sstr = $(parElem).find(".searchstring").val();
   var sele = parseInt($(parElem).find(".searchcombo").val());
+  
+  // empty result-pane and indicate loading
+  $(parElem).find(".searchresults").addClass("cmd loading").text("");
+  $(parElem).find(".hitcount").text("-");
+  
   $.ajax(
   {
       type: 'GET',
@@ -128,7 +133,12 @@ function StartSearch(elem)
      			api.getContentPane().html(xml.responseText);
      			api.reinitialise();
      			*/
-
+				
+				var resultPane = $(parElem).find(".searchresults")
+				
+				resultPane.removeClass("cmd loading");
+				
+				// What does this do?? 
      			if ($(parElem).find(".searchresults .scroll-content").length > 0)
      			{
           $(parElem).find(".searchresults .scroll-content").html(xml.responseText);
@@ -136,10 +146,12 @@ function StartSearch(elem)
      			}
      	  else
      		 {
-          $(parElem).find(".searchresults").html(xml.responseText);
+          $(resultPane).html(xml.responseText);
           InitScrollPane(parElem);
         }
-        $(parElem).find(".hitcount").text($(".recordcount").val());
+        var hits = $(resultPane).find(".result-header").attr("data-numberOfRecords")
+        $(parElem).find(".hitcount").text(hits);
+        $(resultPane).find(".result-header").hide();
       }
   }
   );
