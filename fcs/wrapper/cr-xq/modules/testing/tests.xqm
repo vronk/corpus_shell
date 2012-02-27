@@ -15,8 +15,8 @@ declare namespace diag = "http://www.loc.gov/zing/srw/diagnostic/";
  :)
 declare variable $fcs-tests:config := doc("config.xml");
 declare variable $fcs-tests:run-config := "run-config.xml";
-declare variable $fcs-tests:testsets-coll := "/db/cr/testing/testsets/";
-declare variable $fcs-tests:results-coll := "/db/cr/testing/results/";
+declare variable $fcs-tests:testsets-coll := "/db/cr/modules/testing/testsets/";
+declare variable $fcs-tests:results-coll := "/db/cr/modules/testing/results/";
 
 (: this function is accesses by the testing-code to get configuration-options from the run-config :)
 declare function fcs-tests:config-value($key as xs:string) as xs:string* {

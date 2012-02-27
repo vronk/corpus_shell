@@ -2,16 +2,17 @@
 <info xml:lang="en">
     <div class="title">Test suite - basic requests</div>
     <div>
-        <test id="explain">
-            <a class="request" href="">endpoint-root (expected: explain)</a>
-            <xpath>exists($result-data//explain)</xpath>
-            <xpath>exists($result-data//zr:explain)</xpath>
-            <xpath>count($result-data//set)</xpath>
-            <xpath>count($result-data//index)</xpath>
-        </test>
-        <test id="search-haus">
+        <test id="search-haus-1">
             <a class="request" href="?operation=searchRetrieve&amp;query=Haus">search: Haus</a>
-            <xpath>$result-data//sru:numberOfRecords</xpath>
+            <xpath key="numberOfRecords">$result-data//sru:numberOfRecords/text()</xpath>
+        </test>
+        <test id="search-haus-2">
+            <a class="request" href="?operation=searchRetrieve&amp;query=text=Haus">search: text=Haus</a>
+            <xpath key="numberOfRecords">$result-data//sru:numberOfRecords/text()</xpath>
+        </test>
+        <test id="search-haus-3">
+            <a class="request" href="?operation=searchRetrieve&amp;query=text%20=%20Haus">search: text%20=%20Haus</a>
+            <xpath key="numberOfRecords">$result-data//sru:numberOfRecords/text()</xpath>
         </test>
     </div>
 </info>
