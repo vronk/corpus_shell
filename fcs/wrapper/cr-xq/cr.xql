@@ -41,8 +41,9 @@ declare function local:repo() as item()* {
 		let $scanClause := request:get-parameter("scanClause", ""),
 		$start-term := request:get-parameter("startTerm", 1),
 		$max-terms := request:get-parameter("maximumTerms", 50),
+	    $max-depth := request:get-parameter("x-maximumDepth", 1),
 		$sort := request:get-parameter("sort", 'text')
-		 return fcs:scan($scanClause, $x-context, $start-term, $max-terms, $sort) 
+		 return fcs:scan($scanClause, $x-context, $start-term, $max-terms, $max-depth, $sort) 
         (: return fcs:scan($scanClause, $x-context) :)
 	  else if ($operation eq $fcs:searchRetrieve) then
         if ($query eq "") then diag:diagnostics("param-missing", "query")

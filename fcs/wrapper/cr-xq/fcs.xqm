@@ -4,6 +4,8 @@ module namespace fcs = "http://clarin.eu/fcs/1.0";
 declare namespace sru = "http://www.loc.gov/zing/srw/";
 import module namespace diag =  "http://www.loc.gov/zing/srw/diagnostic/" at  "modules/diagnostics/diagnostics.xqm";
 import module namespace repo-utils = "http://aac.ac.at/content_repository/utils" at  "repo-utils.xqm";
+import module namespace cmd = "http://clarin.eu/cmd/collections" at  "cmd-collections.xqm";
+
 
 declare namespace tei = "http://www.tei-c.org/ns/1.0";
 
@@ -47,8 +49,13 @@ declare function fcs:scan($scanClause as xs:string, $x-context as xs:string*) {
 two phases: 
     1. one create full index for given path/element within given collection (for now the collection is stored in the name - not perfect) (and cache)
 	2. select wished subsequence (on second call, only the second step is performed)
+	
+actually wrapping function handling caching of the actual scan result (coming from do-scan-default())
+or fetching the cached result (if available)
+also dispatching to cmd-collections for the scan-clause=cmd.collections 
+
 :)
-declare function fcs:scan($scan-clause  as xs:string, $x-context as xs:string+, $start-item as xs:integer, $max-items as xs:integer, $p-sort as xs:string?) as item()? {
+declare function fcs:scan($scan-clause  as xs:string, $x-context as xs:string+, $start-item as xs:integer, $max-items as xs:integer, $max-depth as xs:integer, $p-sort as xs:string?) as item()? {
 
   let $scx := tokenize($scan-clause,'='),
 	 $index-name := $scx[1],  
@@ -57,30 +64,25 @@ declare function fcs:scan($scan-clause  as xs:string, $x-context as xs:string+, 
 (:	 $index-xpath := if ($index/text()) then $index/text() else $index-name, :)
      $index-xpath :=  fcs:transform-query($index-name,$x-context,'scan' ),
  	 $filter := ($scx[2],'')[1],	 
-	 $sort := if ($p-sort eq $fcs:scanSortText or $p-sort eq $fcs:scanSortSize) then $p-sort else $fcs:scanSortText,	
-	 $data-collection := repo-utils:context-to-collection($x-context)	 
+	 $sort := if ($p-sort eq $fcs:scanSortText or $p-sort eq $fcs:scanSortSize) then $p-sort else $fcs:scanSortText	
 	 
 	 (: WATCHME: this is quite unreliable, it relies on manual (urn-like) creation of the ids for the resources)  
-	   it won't work once the id become PIDs :)
+	   it won't work once the id become PIDs 
+	   this is only used for generating the cache-id to store the resultset :)
 	 let $short-xcontext := substring-after($x-context, concat(repo-utils:config-value('explain'),':')) 
-    let $index-doc-name := repo-utils:gen-cache-id("index", ($short-xcontext, $index-name, $sort),""),
+    let $index-doc-name := repo-utils:gen-cache-id("index", ($short-xcontext, $index-name, $sort, $max-depth),""),
   
   (: get the base-index from cache, or create and cache :)
-    $index-scan := if (repo-utils:is-in-cache($index-doc-name )) then
-      repo-utils:get-from-cache($index-doc-name ) 
-    else        
-(:        let $getnodes := util:eval(fn:concat("$data-collection/descendant-or-self::", $index-xpath)),:)
-let $getnodes := util:eval(fn:concat("$data-collection", $index-xpath)),
-            (: if we collected strings, we have to wrap them in elements 
-                    to be able to work with them in xsl :) 
-            $prenodes := if ($getnodes[1] instance of xs:string) then
-                                    for $t in $getnodes return <v>{$t}</v>
-                            else for $t in $getnodes return <v>{string-join($t//text()," ")}</v>
-        let $nodes := <nodes path="{fn:concat('//', $index-xpath)}"  >{$prenodes}</nodes>,
-        	(: use XSLT-2.0 for-each-group functionality to aggregate the values of a node - much, much faster, than XQuery :)
-   	    $data := transform:transform($nodes,$fcs:indexXsl, <parameters><param name="scan-clause" value="{$scan-clause}"/></parameters>)      
+  $index-scan := if (repo-utils:is-in-cache($index-doc-name )) then
+          repo-utils:get-from-cache($index-doc-name ) 
+        else
+            let $data :=
+                if ($index-name eq $cmd:scan-collection) then
+                    cmd:colls($filter, $max-depth) 
+                else
+                    fcs:do-scan-default($scan-clause, $index-xpath, $x-context)         
 
-return repo-utils:store-in-cache($index-doc-name , $data)
+        return repo-utils:store-in-cache($index-doc-name , $data)
 
 	(: extract the required subsequence (according to given sort) :)
 	let $res-nodeset := transform:transform($index-scan,$fcs:indexXsl, 
@@ -118,6 +120,22 @@ return repo-utils:store-in-cache($index-doc-name , $data)
    (:  repo-utils:serialise-as($res, $format)	 :)
 };
 
+
+declare function fcs:do-scan-default ($scan-clause as xs:string, $index-xpath as xs:string, $x-context as xs:string) as item()* {
+  (:        let $getnodes := util:eval(fn:concat("$data-collection/descendant-or-self::", $index-xpath)),:)
+    let $data-collection := repo-utils:context-to-collection($x-context)
+        let $getnodes := util:eval(fn:concat("$data-collection", $index-xpath)),
+            (: if we collected strings, we have to wrap them in elements 
+                    to be able to work with them in xsl :) 
+            $prenodes := if ($getnodes[1] instance of xs:string) then
+                                    for $t in $getnodes return <v>{$t}</v>
+                            else for $t in $getnodes return <v>{string-join($t//text()," ")}</v>
+        let $nodes := <nodes path="{fn:concat('//', $index-xpath)}"  >{$prenodes}</nodes>,
+        	(: use XSLT-2.0 for-each-group functionality to aggregate the values of a node - much, much faster, than XQuery :)
+   	    $data := transform:transform($nodes,$fcs:indexXsl, <parameters><param name="scan-clause" value="{$scan-clause}"/></parameters>)
+   	    
+   	  return $data
+};
 
 
 declare function fcs:search-retrieve($query as xs:string, $x-context as xs:string*, $startRecord as xs:integer, $maximumRecords as xs:integer) as item()* {
@@ -201,7 +219,10 @@ index=term
 index relation term
 :)
 declare function fcs:transform-query($cql-query as xs:string, $x-context as xs:string, $type as xs:string ) as xs:string {
-    
+
+(: parse query 
+let $xcql := cql:cql-to-xcql($cql-query)
+:)
     let $query-constituents := if (contains($cql-query,'=')) then 
                                         tokenize($cql-query, "=") 
                                    else tokenize($cql-query, " ")    
@@ -213,9 +234,11 @@ declare function fcs:transform-query($cql-query as xs:string, $x-context as xs:s
 						    normalize-space($query-constituents[2])
 						else
 							$query-constituents[3]
-            (: try to get a mapping specific to given context, else take the default :)
+
+(: try to get a mapping specific to given context, else take the default :)
     let $context-map := fcs:get-mapping("",$x-context),
-        
+
+(: TODO: for every index in $xcql :)
             (: try  to get a) a mapping for given index within the context-map,
                     b) in any of the mapping (if not found in the context-map) , - potentially dangerous!!
                     c) or else take the index itself :)
@@ -240,7 +263,12 @@ declare function fcs:transform-query($cql-query as xs:string, $x-context as xs:s
 	let $res := if ($type eq 'scan') then
 	                   concat("//", $resolved-index, if ($match-on ne '.') then concat("/", $match-on) else '') 
 	               else
-	                   concat("//", $resolved-index, "[", if ($indexed) then "ft:query" else "contains", "(", $match-on, ",'", translate($searchTerm,'"',''), "')]",
+	                   concat("//", $resolved-index, "[", 
+	                                       if ($indexed) then 
+	                                               concat("ft:query(", $match-on, ",<term>",translate($searchTerm,'"',''), "</term>)")
+	                                           else 
+	                                               concat("contains(", $match-on, ",'", translate($searchTerm,'"',''), "')")
+	                                        , "]",
 								"/ancestor-or-self::", $base-elem)		
 				    
 

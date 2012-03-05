@@ -2,6 +2,14 @@ module namespace cmd = "http://clarin.eu/cmd/collections";
 import module namespace fcs  = "http://clarin.eu/fcs/1.0" at "xmldb:exist:///db/cr/fcs.xqm";
 import module namespace repo-utils = "http://aac.ac.at/content_repository/utils" at  "xmldb:exist:///db/cr/repo-utils.xqm";
 
+declare namespace sru = "http://www.loc.gov/zing/srw/";
+
+
+declare variable $cmd:dataPath := "/db/mdrepo-data"; (:repo-utils:config-value('metadata.path'):)
+declare variable $cmd:base-dbcoll := collection($cmd:dataPath);
+declare variable $cmd:collectionRoot := "root";
+declare variable $cmd:scan-collection := "cmd.collection";
+
 (:~
   API function getCollections. 
 :)
@@ -14,7 +22,7 @@ declare function cmd:get-collections($collections as xs:string+, $format as xs:s
       let $data := cmd:colls($collections, $max-depth)
  	return repo-utils:store-in-cache($name, $data)
   return 
-    repo-utils:serialise-as($doc, $format,"scan")
+    repo-utils:serialise-as($doc, $format, 'scan')
 };
 
 (: 
@@ -23,71 +31,115 @@ declare function cmd:get-collections($collections as xs:string+, $format as xs:s
 :)
 declare function cmd:colls($collections as xs:string+, $max-depth as xs:integer) as element() {
 		let $children := 
+	  	(: loop over the list of collection-ids provided as parameter 
+	  	    and run colls-r on each to recursively get all subcollections :)
 	  	for $collection-item in $collections
 	   		return
-	   			for $collection-doc in cmd:get-resource-by-handle($collection-item) 
-	     			return cmd:colls-r($collection-doc, cmd:get-md-collection-name($collection-doc), $collection-doc//MdSelfLink, "", $max-depth)
+	   		  (: loop over sequence only for the case of root-records :) 
+	   			for $collection-record in cmd:get-resource-by-handle($collection-item) 
+	     			return cmd:colls-r($collection-record, $collection-record//MdSelfLink, $max-depth)
 		let $res-count := sum($children/@cnt)
 		let $coll-count := sum($children/@cnt_subcolls) + count($children) 
-		let $data := <Collections cnt="{$res-count}" cnt_subcolls="{$coll-count}" cnt_children="{count($children)}" root="{$collections}">{$children}</Collections>			
+		let $data :=
+		  <sru:scanResponse xmlns:sru="http://www.loc.gov/zing/srw/" xmlns:fcs="http://clarin.eu/fcs/1.0">
+              <sru:version>1.2</sru:version>
+              <sru:echoedScanRequest>                      
+                      <sru:scanClause>{$cmd:scan-collection}</sru:scanClause>
+                      <sru:responsePosition/>
+                      <sru:maximumTerms>?</sru:maximumTerms>
+                  </sru:echoedScanRequest>
+              <sru:terms>
+                {$children}
+               </sru:terms>
+           </sru:scanResponse>
+(:
+		      <Collections cnt="{$res-count}" cnt_subcolls="{$coll-count}" cnt_children="{count($children)}" root="{$collections}">
+		          {$children}
+		      </Collections>:)			
 		return $data
 };
 
 (:
   Recurse down in collections.
 :)
-declare function cmd:colls-r($collection as node(), $name as xs:string, $handle as xs:string, $proxy-id as xs:string, $depth as xs:integer) as item()* {
-  let $children :=  if ($depth eq 1) then () else cmd:get-children-colls($collection)
-  (: let $dummy := util:log('debug', fn:concat(cmd:get-md-collection-name($collection), " ", $collection//MdSelfLink, " ", xs:string($depth), " CHILDREN = ", string-join(for $child in $children return $child//MdSelfLink, "#"))) :)
-    return
-      if (fn:exists($children)) then
-	let $child-results :=
-	  for $child in $children
-	    (: let $child-doc := if (empty($child/unresolvable-uri)) then
-		cmd:get-resource-by-handle($child/ResourceRef) else (), :)
-            let $child-name := cmd:get-md-collection-name($child)
-	    let $proxyid := ($collection//ResourceProxy[ResourceRef = $child//MdSelfLink]/@id, concat("UNKNOWN proxy id:", $child//MdSelfLink))[1] 
-	    return
-	      cmd:colls-r($child, $child-name, $child//Header/MdSelfLink, $proxyid, $depth - 1)
+declare function cmd:colls-r($cmd-collection-record as node(), $cmd-collection-handle as xs:string, $depth as xs:integer) as item()* {
+  let $children :=  if ($depth eq 1) then () else cmd:get-children-colls($cmd-collection-handle)
 
-	  return
-	  <c n="{$name}" handle="{$handle}" proxy-id="{$proxy-id}" cnt="{sum($child-results/@cnt)}" cnt_subcolls="{if ($handle eq '') then '-1' else cmd:get-collection-count($handle)}" cnt_children="{count($child-results)}" >{$child-results}</c>
-      else
-      	<c n="{$name}" handle="{$handle}" proxy-id="{$proxy-id}" cnt_subcolls="{if ($handle eq '') then '-1' else cmd:get-collection-count($handle)}" cnt="{if ($handle eq '') then '-1' else cmd:get-resource-count($handle)}"></c>
+  let $sub-colls :=
+      if (fn:exists($children)) then
+           for $child in $children
+   	        return
+   	            cmd:colls-r($child, $child//Header/MdSelfLink, $depth - 1)
+          else
+            ()
+         
+   let $count-sub-records := cmd:get-sub-records-count($cmd-collection-handle)	   
+   let $count-sub-colls := cmd:get-collection-count($cmd-collection-handle)
+   let $cmd-collection-name := cmd:get-md-collection-name($cmd-collection-record)
+   
+   return
+	      <sru:term>
+            <sru:value>{$cmd-collection-handle}</sru:value>
+            <sru:numberOfRecords>{$count-sub-records}</sru:numberOfRecords>
+            <sru:displayTerm>{$cmd-collection-name}</sru:displayTerm>
+            <sru:extraTermData>
+                <fcs:numberOfChildren>{count($children)}</fcs:numberOfChildren>
+                <fcs:numberOfCollections>{$count-sub-colls}</fcs:numberOfCollections>
+                <sru:terms>
+                    {$sub-colls}
+	            </sru:terms>
+	         </sru:extraTermData>
+	      </sru:term>
+	      (:
+	           c n="{$name}" handle="{$handle}" cnt="{sum($child-results/@cnt)}" cnt_subcolls="{if ($handle eq '') then '-1' else cmd:get-collection-count($handle)}" cnt_children="{count($child-results)}" >{$child-results}</c>
+     else
+       <c n="{$name}" handle="{$handle}" cnt_subcolls="{if ($handle eq '') then '-1' else cmd:get-collection-count($handle)}" cnt="{if ($handle eq '') then '-1' else cmd:get-resource-count($handle)}"></c>:)
 };
 
 (:
-  Get the MD resource by handle.
+  Get the MD resource by handle (matching on MdSelfLink)
+  if param empty return the root records (IsPartOf=root)
+  IMPORTANT to have just the basic lucene:WhitespaceAnalyzer on MdSelfLink, so that the handles 
+  are considered one token (don't get tokenized on the punctuation) 
 :)
-declare function cmd:get-resource-by-handle($id as xs:string) as node()* {
-  let $collection := collection($cmd:dataPath)
-  return 
+declare function cmd:get-resource-by-handle($id as xs:string) as node()* {  
     if ($id eq "" or $id eq $cmd:collectionRoot) then
-    $collection//IsPartOf[. = $cmd:collectionRoot]/ancestor::CMD
+        $cmd:base-dbcoll//IsPartOf[. = $cmd:collectionRoot]/ancestor::CMD
   else
-    util:eval(concat("$collection/ft:query(descendant::MdSelfLink, <term>", xmldb:decode($id), "</term>)/ancestor::CMD"))
+    util:eval(concat("$cmd:base-dbcoll/ft:query(descendant::MdSelfLink, <term>", xmldb:decode($id), "</term>)/ancestor::CMD"))
  (: $collection/descendant::MdSelfLink[. = xdb:decode($id)]/ancestor::CMD :)
 };
 
 (:
   Get the next level collection-records (ResourceType='Metadata')
-  rely on the ResourceProxy of the parent (param)
-:)
-declare function cmd:get-children-colls($collection as node()) as node()* {
-  let $handle := $collection//MdSelfLink/text(),
-    $cmdi-collection := collection($cmd:dataPath)
-  return util:eval(concat("$cmdi-collection/ft:query(descendant::IsPartOf, <term>", $handle, "</term>)/ancestor::CMD[descendant::ResourceType[. = 'Metadata']]"))
+  The children are actually defined in the ResourceProxyList of the parent record,
+  but we rely here on the inverse IsPartOf-element (that are generated from the ResourceProxies during import/initialization)
+  because it allows faster access (via lucene-index)
+  :)
+declare function cmd:get-children-colls($handle as xs:string) as node()* {   
+  util:eval(concat("$cmd:base-dbcoll/ft:query(descendant::IsPartOf[@level=1], <term>", $handle, "</term>)/ancestor::CMD[descendant::ResourceType[. = 'Metadata']]"))
+    
     (: collection($cmd:dataPath)/descendant::IsPartOf[. eq $handle]/ancestor::CMD[descendant::ResourceType[. = "Metadata"]] :)
 };
 
+(:
+count ALL (independent of maxDepth) records (descendants of given record)
+both collection and resource records
+:)
+declare function cmd:get-sub-records-count($handle as xs:string) as xs:integer {
+ (: 	xs:string(count(collection($cmd:dataPath)//IsPartOf[. eq $handle]/ancestor::CMD[descendant::ResourceType[. = "Resource"] or not(exists(descendant::ResourceType)) ])):)
+	count($cmd:base-dbcoll//IsPartOf[ft:query(.,<term>{$handle}</term>)]/ancestor::CMD)
+}; 
 (: 
   count ALL (independent of maxDepth) resource-records (ie actually ResourceType=Resource, but
   there are records without ResourceProxy[ResourceType=Resource] - 
   so care for that (not(exists((ResourceType))))
 :)
-declare function cmd:get-resource-count($handle as xs:string) as xs:string {
+declare function cmd:get-resource-count($handle as xs:string) as xs:integer {
  (: 	xs:string(count(collection($cmd:dataPath)//IsPartOf[. eq $handle]/ancestor::CMD[descendant::ResourceType[. = "Resource"] or not(exists(descendant::ResourceType)) ])):)
-	xs:string(count(collection($cmd:dataPath)//IsPartOf[. eq $handle]/ancestor::CMD[not(descendant::ResourceType eq 'Metadata') ]))
+(:	count($cmd:base-dbcoll//IsPartOf[. eq $handle]/ancestor::CMD[not(descendant::ResourceType eq 'Metadata') ]):)
+count($cmd:base-dbcoll//IsPartOf[ft:query(.,<term>{$handle}</term>)]/ancestor::CMD[not(descendant::ResourceType eq 'Metadata') ])
+
 }; 
 
 (:
@@ -95,8 +147,9 @@ declare function cmd:get-resource-count($handle as xs:string) as xs:string {
   count ALL (independent of maxDepth) collection-records 
   (ie ResourceType=Metadata)			
 :)
-declare function cmd:get-collection-count($handle as xs:string) as xs:string {
-	xs:string(count(collection($cmd:dataPath)//IsPartOf[. eq $handle]/ancestor::CMD[descendant::ResourceType[. = "Metadata"]]))
+declare function cmd:get-collection-count($handle as xs:string) as xs:integer {
+(:	count($cmd:base-dbcoll//IsPartOf[. eq $handle]/ancestor::CMD[descendant::ResourceType[. = "Metadata"]]):)
+		count($cmd:base-dbcoll//IsPartOf[ft:query(.,<term>{$handle}</term>)]/ancestor::CMD[descendant::ResourceType[. = "Metadata"]])	
 };
 
 (: 
@@ -104,5 +157,7 @@ declare function cmd:get-collection-count($handle as xs:string) as xs:string {
   the actual schema.
 :)
 declare function cmd:get-md-collection-name($collection-doc as node()) as xs:string {
-($collection-doc//Corpus/Name, $collection-doc//Session/Name, $collection-doc//Collection/GeneralInfo/Name, $collection-doc//Collection/GeneralInfo/Title, $collection-doc//Name, $collection-doc//name, $collection-doc//Title, $collection-doc//title, "UNKNOWN")[1]
+($collection-doc//Corpus/Name, $collection-doc//Session/Name, $collection-doc//Collection/GeneralInfo/Name, $collection-doc//Collection/GeneralInfo/Title, 
+    $collection-doc//Name, $collection-doc//name, $collection-doc//Title, $collection-doc//title, 
+    $collection-doc//Header/MdCollectionDisplayName, "UNKNOWN")[1]
 };
