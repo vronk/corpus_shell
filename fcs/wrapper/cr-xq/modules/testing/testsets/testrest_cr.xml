@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<info xml:lang="en">
+    <h2>Test suite - content-repository </h2>
+    <div>
+        <test id="search-cr-stb-date">
+            <a class="request" href="?operation=searchRetrieve&amp;query=persName=Adler&amp;x-context=clarin.at:icltt:cr:stb">search: persName=Adler in stb</a>
+            <xpath>$result-data//sru:numberOfRecords/text()</xpath>
+        </test>
+    </div>
+</info>

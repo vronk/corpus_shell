@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<info xml:lang="en">
+    <div class="title">Test suite - mdrepo tests</div>
+    <div>
+        <test id="scan-cmd-collection">
+            <a class="request" href="?operation=scan&amp;scanClause=cmd.collection&amp;x-maximumDepth=3&amp;x-context=clarin.eu:mdrepo">scan:cmd.collection (maxdepth=3)</a>
+            <xpath>exists($result-data//httpclient:body/sru:scanResponse)</xpath>
+            <xpath>count($result-data//sru:term)</xpath>
+        </test>
+        <test id="search-cmd-collection">
+            <a class="request" href="?operation=searchRetrieve&amp;query=cmd.collection=clarin-at%3Aaac-test-corpus%3Aaustriaca&amp;x-context=clarin.eu:mdrepo">cmd.collection={austriaca-pid}</a>
+            <xpath>$result-data//sru:numberOfRecords=1</xpath>
+            <xpath>$result-data//sru:numberOfRecords</xpath>
+        </test>
+        <test id="search-cmd-collection-without-context">
+            <a class="request" href="?operation=searchRetrieve&amp;query=cmd.collection=clarin-at%3Aaac-test-corpus%3AHomeFamilyManagement">cmd.collection={HomeFamilyManagement-pid} ohne x-context</a>
+            <xpath>$result-data//sru:numberOfRecords=0</xpath>
+            <xpath>$result-data//sru:numberOfRecords</xpath>
+        </test>
+        <test id="search-mdrepo-date">
+            <a class="request" href="?operation=searchRetrieve&amp;query=date=1919&amp;x-context=clarin.eu:mdrepo">search: date=1919 in mdrepo</a>
+            <xpath>$result-data//sru:numberOfRecords/text()</xpath>
+        </test>
+    </div>
+</info>
