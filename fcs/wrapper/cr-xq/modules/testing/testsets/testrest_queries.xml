@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<info xml:lang="en">
+    <div class="title">Test suite - basic requests</div>
+    <div>
+        <test id="search-haus-1">
+            <a class="request" href="?operation=searchRetrieve&amp;query=Haus">search: Haus</a>
+            <xpath key="numberOfRecords">$result-data//sru:numberOfRecords/text()</xpath>
+        </test>
+        <test id="search-haus-2">
+            <a class="request" href="?operation=searchRetrieve&amp;query=text=Haus">search: text=Haus</a>
+            <xpath key="numberOfRecords">$result-data//sru:numberOfRecords/text()</xpath>
+        </test>
+        <test id="search-haus-3">
+            <a class="request" href="?operation=searchRetrieve&amp;query=text%20=%20Haus">search: text%20=%20Haus</a>
+            <xpath key="numberOfRecords">$result-data//sru:numberOfRecords/text()</xpath>
+        </test>
+    </div>
+</info>

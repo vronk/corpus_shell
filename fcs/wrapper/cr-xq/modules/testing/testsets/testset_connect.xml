@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestSet>
+    <testName>Connectivity test</testName>
+    <description>
+        <p>Testing accessibility of the endpoints</p>
+        <author>Matej durco</author>
+    </description>
+    <setup>
+<!--        <create-collection parent="/db/cr/testing" name="test"/>
+        <store collection="/db/cr/testing/testsets" name="config.xml">
+            <config>
+                <property key="testset_name">test_connect</property>                
+                <property key="target">http://localhost:8681/exist/cr/</property>
+            </config>
+            </store>-->
+    </setup>
+    <imports><!-- Import statements --> 
+        import module namespace httpclient = "http://exist-db.org/xquery/httpclient";
+        import module namespace fcs-tests = "http://clarin.eu/fcs/1.0/tests" at  "/db/cr/testing/tests.xqm";
+    </imports>
+    <functions><!-- Function declarations --></functions>
+    <!--<tearDown>
+        <remove-collection collection="/db/test"/>
+    </tearDown> -->
+    <test output="xml" ignore="no">
+        <task>check explain response</task>
+        <code>
+             let $target := fcs-tests:config-value("target") 
+            let $request := $target
+            let $data := httpclient:get(xs:anyURI($target), false(), () )
+            let $store := fcs-tests:store-result(fcs-tests:config-key("target"), fcs-tests:config-key("testset"), 
+                            "_explain" , $data)
+              return $data
+            </code>
+<!--        <xpath>//explain</xpath>       
+    doc(concat( "/db/cr/testing/results/","test_connect", "_explain.xml"))//httpclient:body/explain,
+-->
+<!--        <xpath xmlns:httpclient="http://exist-db.org/xquery/httpclient" >doc("/db/cr/testing/testdata/explain.xml")//indexIno</xpath>-->
+        <xpath xmlns:zr="http://explain.z3950.org/dtd/2.1/" xmlns:httpclient="http://exist-db.org/xquery/httpclient">//zr:explain</xpath>
+    </test>
+    <test output="text" ignore="no">
+        <task>problem with explain//description</task>
+        <code>
+            let $target := fcs-tests:config-value("target") 
+            let $request := $target
+            let $data := httpclient:get(xs:anyURI($target), false(), () )
+            let $store := fcs-tests:store-result(fcs-tests:config-key("target"), fcs-tests:config-key("testset"), 
+                            "_explain" , $data)            
+            return            
+            (xdiff:compare(doc(concat( "/db/cr/testing/results/",fcs-tests:config-value("testset"), "_explain.xml"))//explain,
+            doc("/db/cr/testing/testdata/explain.xml")//explain) ,
+            xdiff:compare((doc(concat( "/db/cr/testing/results/",fcs-tests:config-value("testset"), "_explain.xml"))//title)[1],
+            (doc("/db/cr/testing/testdata/explain.xml")//title)[1]),
+            xdiff:compare(doc(concat( "/db/cr/testing/results/",fcs-tests:config-value("testset"), "_explain.xml"))//description,
+            doc("/db/cr/testing/testdata/explain.xml")//description) ,
+            doc(concat( "/db/cr/testing/results/",fcs-tests:config-value("testset"), "_explain.xml"))//description ,
+            doc("/db/cr/testing/testdata/explain.xml")//description
+            
+            )
+        </code>
+    </test>
+    <test output="text" ignore="no">
+        <task>check search response</task>
+        <code>
+            let $amp := "&amp;amp;"
+<!--            let $target := "http://localhost:8681/exist/cr/"-->
+            let $target := fcs-tests:config-value("target")
+            let $query := "query=text+=+Haus"
+            let $request := concat( $target, "?",
+           <!--                 "x-context=clarin.at%3Aicltt%3Acr%3Astb", -->
+                            "operation=searchRetrieve", 
+                       $amp, $query,
+                       $amp, "startRecord=1", $amp, "maximumRecords=10") 
+            <!-- ?x-context=clarin.at%3Aicltt%3Acr%3Astb&query=place+%3D+Wien&startRecord=1&maximumRecords=10"h--> 
+            let $data := httpclient:get(xs:anyURI($request), false(), () )
+            let $store := fcs-tests:store-result(fcs-tests:config-key("target"), fcs-tests:config-key("testset"), 
+                            "_search" , $data)
+            
+            return $data
+       </code>
+<!--<xpath>/config</xpath>        -->
+        <xpath xmlns:sru="http://www.loc.gov/zing/srw/">//sru:searchRetrieveResponse/sru:numberOfRecords</xpath>
+    </test>
+    <test output="xml" ignore="no">
+        <task>check search response in html</task>
+        <code>
+            let $amp := "&amp;amp;"
+            <!--            let $target := "http://localhost:8681/exist/cr/"-->
+            let $target := fcs-tests:config-value("target")
+            let $query := "query=text=Haus"
+            let $request := concat( $target, "?",
+                "x-context=clarin.at%3Aicltt%3Acr%3Astb",
+                $amp, $query, $amp, "x-format=htmlpage",
+                $amp, "startRecord=1", $amp, "maximumRecords=10") 
+            <!-- ?x-context=clarin.at%3Aicltt%3Acr%3Astb&query=place+%3D+Wien&startRecord=1&maximumRecords=10"h--> 
+            let $data := httpclient:get(xs:anyURI($request), false(), () )
+            let $store := fcs-tests:store-result(fcs-tests:config-key("target"), fcs-tests:config-key("testset"), 
+                                "_search_html" , $data)
+        
+        <!--            return $data//div[@class="result-header"]-->
+            return <![CDATA[<div>{$data//div[@class="result-header"]/@*}</div>]]></code>
+        <!--<xpath>/config</xpath>        -->
+<!--        <xpath xmlns:html="http://www.w3.org/1999/xhtml" >//html:html</xpath>        -->
+        <expected>
+            <div class="result-header" data-numberOfRecords="1853"/>
+        </expected>
+    </test>
+</TestSet>

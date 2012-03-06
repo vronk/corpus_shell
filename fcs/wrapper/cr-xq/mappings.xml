@@ -6,6 +6,7 @@
         -->
         <index key="cql.serverChoice" base_elem="p">*</index>
         <index key="fcs.resource" type="explicit"/>
+        <index key="cmd.collection" base_elem="CMD" type="explicit" status="indexed">MdSelfLink</index>
     </map>
     <map key="clarin.at:icltt:cr:stb" path="/db/cr-data/stb" base_elem="div[@type='diary-day']">
         <index key="cql.serverChoice">*</index>
@@ -29,5 +30,9 @@
     <map key="clarin.at:icltt:cr:barock" path="/db/cr-data/barock" base_elem="p">
         <index key="cql.serverChoice">*</index>
         <index key="ref">rs</index>
+    </map>
+    <map key="clarin.eu:mdrepo" path="/db/mdrepo-data" base_elem="CMD">
+        <index key="cql.serverChoice">*</index>
+        <index key="cmd.collection" base_elem="CMD" type="explicit" status="indexed">MdSelfLink</index>
     </map>
 </map>
