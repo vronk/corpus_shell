@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<sru:searchRetrieveResponse xmlns:diag="http://www.loc.gov/zing/srw/diagnostic/" xmlns:sru="http://www.loc.gov/zing/srw/"
+	xmlns:fcs="[% recordSchema %]" >
+  <sru:version>[% version %]</sru:version>
+  <sru:numberOfRecords>[% numberOfRecords %]</sru:numberOfRecords>
+  <echoedSearchRetrieveRequest>
+    <version>[% version %]</version>
+    <query>[% query %]</query>
+    <baseUrl>[% baseURL %]</baseUrl>
+  </echoedSearchRetrieveRequest>
+  <sru:records>[%
+      # res # this if only for debugging
+   %]
+   [% FOREACH hit IN hits %]
+     <sru:record>
+     		<sru:recordSchema>[% recordSchema %]</sru:recordSchema>
+     	  <sru:recordPacking>[% recordPacking %]</sru:recordPacking>
+			  <sru:recordData>
+			     	<fcs:Resource>
+			     		<fcs:DataView type="metadata">
+			     		[% FOREACH kw = hit.keys %][% #
+			     		# if this commented out, you can see the raw context in the output - good for debugging
+			     		NEXT IF kw == 'context'
+				   			%]<fcs:f key="[% kw %]" >[% hit.$kw.replace('&','&amp;') %]</fcs:f>
+				   			[% END
+				   		%]</fcs:DataView>
+					[%
+						tokens = parse_context(hit.context, hit.keywords );
+						   fileRef = tokens.0.$resourceFragmentIdColumn;
+
+					%]<fcs:ResourceFragment ref="[% fileRef %]" >[%
+								# FOREACH kw IN hit.keywords # could list the matched keywords %]
+			     		<fcs:DataView type="kwic">
+								<fcs:c type="left">[% FOREACH token  = tokens;
+							 	 # token.kw ;
+								IF token.kw == 1  %]</fcs:c><fcs:kw>[%  token.2 %]</fcs:kw><fcs:c type="right">[% ELSE;
+									token.2;
+								 END; %] [% END %]</fcs:c>
+							</fcs:DataView>
+							<fcs:DataView type="full">
+						[% FOREACH token IN tokens %]
+				   			<t>[% FOREACH fk IN token.keys.sort %]
+				   					<f k="[%  fk %]">[%  token.$fk %]</f>[% END %]
+				   				</t>[%
+							 END
+							%]</fcs:DataView>
+							</fcs:ResourceFragment>
+						</fcs:Resource>
+				</sru:recordData>
+				<sru:recordPosition>[% startRecord + loop.count - 1 %]</sru:recordPosition>
+				<sru:recordIdentifier>[% recordIdBase %][% startRecord + loop.count - 1 %]</sru:recordIdentifier>
+
+     	</sru:record>
+
+   [% END %]
+
+  <sru:nextRecordPosition>[% nextRecordPosition %]</sru:nextRecordPosition>
+	</sru:records>
+	<sru:res>[% res %]</sru:res>
+</sru:searchRetrieveResponse>

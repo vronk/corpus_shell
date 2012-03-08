@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<sru:searchRetrieveResponse xmlns="http://www.loc.gov/zing/srw/diagnostic/" xmlns:sru="http://www.loc.gov/zing/srw/" >
+<sru:version>[% version %]</sru:version>
+<sru:diagnostics>
+	<diagnostic>
+	<uri>[% diagnosticId %]</uri>
+	<message>[% diagnosticMessage %]</message>
+	<details>[% diagnosticDetails %]</details>
+	</diagnostic>
+</sru:diagnostics>
+</sru:searchRetrieveResponse>

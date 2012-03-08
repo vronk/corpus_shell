@@ -3,11 +3,18 @@
     <target key="local-8681-exist-cr">http://localhost:8681/exist/cr/</target>
     <target key="local-mdservice">http://localhost:8080/MDService2/sru</target>
     <target key="local-8680-exist-cr-old">http://localhost:8680/exist/rest/db/content_repository/scripts/cr.xql</target>
+    <target key="clarin-at-exist-cr">http://clarin.aac.ac.at/exist8/rest/db/cr/cr.xql</target>
+    <target key="clarin-at-cr">http://clarin.aac.ac.at/cr</target>
     <target key="corpus3-switch">http://corpus3.aac.ac.at/cs2/corpus_shell/fcs/aggregator/switch.php</target>
     <target key="corpus3-ddconsru">http://corpus3.aac.ac.at/ddconsru</target>
     <target key="corpus3-old-switch">http://corpus3.aac.ac.at/sru/switch.php</target>
+    <target key="empty-target"/>
     <testset key="testrest1">testrest1</testset>
     <testset key="testrest_queries">testrest_queries</testset>
+    <testset key="testrest_cr">testrest_cr</testset>
+    <testset key="testrest_errors">testrest_errors</testset>
+    <testset key="testrest_mdrepo">testrest_mdrepo</testset>
+    <testset key="testrest_barock">testrest_barock</testset>
     <testset key="testset_connect">testset_connect</testset>
     <testset key="testset_queries">testset_queries</testset>
     
