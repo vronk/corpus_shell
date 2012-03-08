@@ -1,0 +1,81 @@
+
+**********************************************
+README for the corpus_shell fcs-wrapper to DDC
+**********************************************
+
+
+This module provides an interface (REST-style API)
+to the corpus search engine DDC
+	[ http://www.ddc-concordance.org/documentation ] 
+	[ http://sourceforge.net/projects/ddc-concordance/ ]
+	
+It builds upon the ddc-perl API provided by DDC:
+	[ http://sourceforge.net/projects/ddc-concordance/files/ddc-perl/ ]
+	
+It accepts parameters as defined in the SRU-protocol:
+	[ http://www.loc.gov/standards/sru/specs/scan.html ]
+or rather its FCS-extension
+  [ http://clarin.eu/fcs ]
+  
+translates them to the queries as DDC-API expects them
+and parses the result and translates it back to format expected by the FCS/SRU-protocol.
+
+It uses the Template perl-module for generating the response.
+
+
+== How to use it  ==
+
+First, you have to have a ddc-server running, or make one to run
+as described in ddc-documentation.
+
+Then you add the ddconsru-scripts into your webserver (usually cgi-bin folder)
+and add the the ddc-perl scripts, so that you have following folder structure.
+
+cgi-bin:
+  ddconsru/
+  ddconsru/DDC/*
+  ddconsru/tmpl/*
+  ddconsru/DDConSRU.pl
+  ddconsru/DDC.pm
+  ddconsru/ddc.config
+  
+Then you have to adapt your configuration.
+
+== Config ==
+
+the <server>-element stores obviously the information about the ddc-server
+       
+   <key>{key}</key>
+   <ip>{ddc-server ip}</ip>
+   <port>{ddc-server port</port>
+
+The key is primarily meant for the client, 
+to be able to restrict the request to this specific server
+so could be any internal identifier.
+
+The <item>-elements within <server> represent individual corpus-threads
+available at given ddc-server (every ddc-server can serve many corpora/threads):
+
+	<item>
+		<key>clarin.at:icltt:ddc:traum_russ</key>
+	    <name>traum_russ</name>
+	    <displayText>Freud: Die Traumdeutung, Russian</displayText>
+    </item>    
+
+<key> is again an identifier for the client to pick a corpus to search in (via the parameter x-context)
+Upon request this is translated to the internal name of the corpus undestood by ddc (<name>-element).
+
+The config is served to the client upon the request
+ 
+  operation=scan&scanClause=fcs.resource
+  
+Within FCS this is meant as a request to list available resource in an endpoint.
+
+== To Do ==
+
+* Parsing and translating complex queries!
+	 SRU-protocol defines a powerful query language (CQL - Context Query Language)
+	 DDC also provides its own powerful query language.
+	 There needs to be translation between those two.
+
+
