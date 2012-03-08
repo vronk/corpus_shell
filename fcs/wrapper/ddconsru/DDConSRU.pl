@@ -149,6 +149,7 @@ if ($context ne "")
     my($key) = $item->findnodes('./key');
     if ($key->to_literal eq $context)
     {
+    	# get the internal name of the corpus (to be given to ddc as context)
       my($name) = $item->findnodes('./name');
       $context =  $name->to_literal;
       my($par) = $key->findnodes('../../../ip');
