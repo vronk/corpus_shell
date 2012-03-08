@@ -109,11 +109,11 @@ function StartSearch(elem)
   var parElem = $(elem).parents(".draggable");
   var sstr = $(parElem).find(".searchstring").val();
   var sele = parseInt($(parElem).find(".searchcombo").val());
-  
+
   // empty result-pane and indicate loading
   $(parElem).find(".searchresults").addClass("cmd loading").text("");
   $(parElem).find(".hitcount").text("-");
-  
+
   $.ajax(
   {
       type: 'GET',
@@ -124,7 +124,7 @@ function StartSearch(elem)
       dataType: 'xml',
       // FIX: x-context gehört nicht in den query string
       //data : {operation: 'searchRetrieve', query: SearchConfig[sele]['x-context'] + '=' + sstr, 'x-context': SearchConfig[sele]['x-context'], 'x-format': 'html'},
-      data : {operation: 'searchRetrieve', query: sstr, 'x-context': SearchConfig[sele]['x-context'], 'x-format': 'html'},
+      data : {operation: 'searchRetrieve', query: sstr, 'x-context': SearchConfig[sele]['x-context'], 'x-format': 'html', version: '1.2'},
       complete: function(xml, textStatus)
       {
         /*
@@ -133,12 +133,12 @@ function StartSearch(elem)
      			api.getContentPane().html(xml.responseText);
      			api.reinitialise();
      			*/
-				
+
 				var resultPane = $(parElem).find(".searchresults")
-				
+
 				resultPane.removeClass("cmd loading");
-				
-				// What does this do?? 
+
+				// What does this do??
      			if ($(parElem).find(".searchresults .scroll-content").length > 0)
      			{
           $(parElem).find(".searchresults .scroll-content").html(xml.responseText);
@@ -182,7 +182,7 @@ function Search(elem, startrecord, maxrecord)
       url: "fcs/aggregator/switch.php",
 //          url: "/ddconsru",
       dataType: 'xml',
-      data : {operation: 'searchRetrieve', query: SearchConfig[sele]['x-context'] + '=' + sstr, startRecord: startrecord, maximumRecords: maxrecord, 'x-context': SearchConfig[sele]['x-context'], 'x-format': 'html'},
+      data : {operation: 'searchRetrieve', query: SearchConfig[sele]['x-context'] + '=' + sstr, startRecord: startrecord, maximumRecords: maxrecord, 'x-context': SearchConfig[sele]['x-context'], 'x-format': 'html', version: '1.2'},
       complete: function(xml, textStatus)
       {
      			if ($(parElem).find(".searchresults .scroll-content").length > 0)
