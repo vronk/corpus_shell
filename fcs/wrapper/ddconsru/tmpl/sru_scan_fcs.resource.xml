@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<sru:scanResponse xmlns:sru="http://www.loc.gov/zing/srw/">
+  <sru:version>1.2</sru:version>
+  <sru:terms>
+    <sru:term>
+      <sru:value>clarin.at:icltt:ddc</sru:value>
+      <sru:numberOfRecords>3</sru:numberOfRecords>
+      <sru:displayTerm>Text corpora by ICLTT on DDC</sru:displayTerm>
+      <sru:extraTermData>
+        <sru:terms>
+          <sru:term>
+            <sru:value>clarin.at:icltt:ddc:traum_deu</sru:value>
+            <sru:numberOfRecords>1</sru:numberOfRecords>
+            <sru:displayTerm>Freud: Die Traumdeutung, German</sru:displayTerm>
+          </sru:term>
+          <sru:term>
+            <sru:value>clarin.at:icltt:ddc:traum_russ</sru:value>
+            <sru:numberOfRecords>1</sru:numberOfRecords>
+            <sru:displayTerm>Freud: Die Traumdeutung, Russian</sru:displayTerm>
+          </sru:term>
+          <sru:term>
+            <sru:value>clarin.at:icltt:ddc:barock</sru:value>
+            <sru:numberOfRecords>1</sru:numberOfRecords>
+            <sru:displayTerm>Barocktexte</sru:displayTerm>
+          </sru:term>
+        </sru:terms>
+      </sru:extraTermData>
+    </sru:term>
+    <sru:term>
+      <sru:value>clarin.at:icltt:ddc</sru:value>
+      <sru:numberOfRecords>1</sru:numberOfRecords>
+      <sru:displayTerm>Text corpora by ICLTT on DDC</sru:displayTerm>
+      <sru:extraTermData>
+        <sru:terms>
+          <sru:term>
+            <sru:value>clarin.at:icltt:ddc:c4</sru:value>
+            <sru:numberOfRecords>1</sru:numberOfRecords>
+            <sru:displayTerm>C4 Vienna</sru:displayTerm>
+          </sru:term>
+        </sru:terms>
+      </sru:extraTermData>
+    </sru:term>
+  </sru:terms>
+  <sru:echoedScanRequest>
+    <sru:version>1.2</sru:version>
+    <sru:scanClause>fcs.resource</sru:scanClause>
+    <sru:responsePosition />
+    <sru:maximumTerms>42</sru:maximumTerms>
+  </sru:echoedScanRequest>
+</sru:scanResponse>
