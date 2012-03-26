@@ -139,7 +139,6 @@ declare function repo-utils:serialise-as($item as node()?, $format as xs:string,
       if ($format eq $repo-utils:responseFormatJSon) then
 	       let $option := util:declare-option("exist:serialize", "method=text media-type=application/json")
 	       return $item
-	       (: json:xml-to-json($item) :)
 	    else if (contains($format, $repo-utils:responseFormatHTML)) then
 	           let $xslDoc := doc(concat(repo-utils:config-value('scripts.path'), repo-utils:config-value(concat($operation, ".xsl"))) )
 	           let $res := transform:transform($item,$xslDoc, 

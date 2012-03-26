@@ -215,7 +215,7 @@ if ($operation eq "explain" || !$operation)
 	 return;
 }
 
-### Handle scan cmd-collections
+### Handle scan fcs.resource, fcs.toc
 if ($operation eq "scan" )
 {
  	if ($scanClause eq "fcs.resource" )
