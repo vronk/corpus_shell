@@ -18,5 +18,6 @@
     <xsl:param name="startRecord" select="/sru:searchRetrieveResponse/sru:echoedSearchRetrieveRequest/sru:startRecord"/>
     <xsl:param name="maximumRecords" select="/sru:searchRetrieveResponse/sru:echoedSearchRetrieveRequest/sru:maximumRecords"/>
     <xsl:param name="numberOfRecords" select="/sru:searchRetrieveResponse/sru:numberOfRecords"/>
+    <xsl:param name="scanClause" select="''"/>
     <xsl:param name="contexts_url" select="concat($base_url,'?operation=scan&amp;scanClause=fcs.resource&amp;sort=text')"/>
 </xsl:transform>

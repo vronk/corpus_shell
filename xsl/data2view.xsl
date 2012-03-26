@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:tei="http://www.tei-c.org/ns/1.0" 
-    xmlns:sru="http://www.loc.gov/zing/srw/" xmlns:xs="http://www.w3.org/2001/XMLSchema" 
-    xmlns:fcs="http://clarin.eu/fcs/1.0" xmlns:exist="http://exist.sourceforge.net/NS/exist" 
-    version="1.0" exclude-result-prefixes="xs sru exist tei fcs">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:sru="http://www.loc.gov/zing/srw/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fcs="http://clarin.eu/fcs/1.0" xmlns:exist="http://exist.sourceforge.net/NS/exist" version="1.0" exclude-result-prefixes="xs sru exist tei fcs">
 
     <!-- 
         <purpose> provide more specific handling of sru-result-set recordData</purpose>
@@ -46,9 +43,12 @@
         <xsl:apply-templates select=".//fcs:DataView" mode="record-data"/>
     </xsl:template>
     <xsl:template match="fcs:DataView" mode="record-data">
-        <div class="data-view {@type}">
-            <xsl:apply-templates mode="record-data"/>
-        </div>
+           <!-- don't show full view if, there is kwic -->
+        <xsl:if test="not(@type='full' and parent::*/fcs:DataView[@type='kwic'])">
+            <div class="data-view {@type}">
+                <xsl:apply-templates mode="record-data"/>
+            </div>
+        </xsl:if>
     </xsl:template>
 
  <!-- better hide the fullview (the default view is too much)

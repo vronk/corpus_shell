@@ -84,6 +84,14 @@
             <xsl:attribute name="start-item" select="$start-item"/>
             <xsl:attribute name="maximum-items" select="$maximum-items"/>
             <xsl:value-of select="$title"/>
+            <form>
+            <!--<input type="text" name="index" value="{$index}" />-->
+                <input type="text" name="scanClause" value="{$index}"/>
+                <input type="hidden" name="operation" value="scan"/>
+                <input type="hidden" name="x-format" value="{$format}"/>
+                <input type="hidden" name="x-context" value="{$x-context}"/>
+                <input type="submit" value="suchen"/>
+            </form>
             <span class="cmd cmd_detail"/>
             <div class="ui-context-dialog">
                 <table class="show">
@@ -144,6 +152,10 @@ sample data:
 <!--                        special handling for special index -->
                         <xsl:choose>
                             <xsl:when test="$index = 'fcs.resource'">
+                                <xsl:value-of select="utils:formURL('explain', $format, sru:value)"/>
+                            </xsl:when>
+                            <!-- TODO: special handling for cmd.collection? -->
+                            <xsl:when test="$index = 'cmd'">
                                 <xsl:value-of select="utils:formURL('explain', $format, sru:value)"/>
                             </xsl:when>
                             <xsl:otherwise>

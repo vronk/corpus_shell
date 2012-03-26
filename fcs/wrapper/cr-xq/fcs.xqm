@@ -1,7 +1,24 @@
 xquery version "1.0";
+
+(:
+: Module Name: FCS
+: Date: 2012-03-01
+: 
+: XQuery 
+: Specification : XQuery v1.0
+: Module Overview: Federated Content Search
+:)
+
+(:~ This module provides methods to serve XML-data via the FCS/SRU-interface  
+: see: http://clarin.eu/fcs 
+: @author Matej Durco
+: @since 2011-11-01 
+: @version 1.1 
+:)
 module namespace fcs = "http://clarin.eu/fcs/1.0";
 
 declare namespace sru = "http://www.loc.gov/zing/srw/";
+import module namespace kwic = "http://exist-db.org/xquery/kwic";
 import module namespace diag =  "http://www.loc.gov/zing/srw/diagnostic/" at  "modules/diagnostics/diagnostics.xqm";
 import module namespace repo-utils = "http://aac.ac.at/content_repository/utils" at  "repo-utils.xqm";
 import module namespace cmd = "http://clarin.eu/cmd/collections" at  "cmd-collections.xqm";
@@ -44,15 +61,16 @@ declare function fcs:scan($scanClause as xs:string, $x-context as xs:string*) {
 };
 :)
 
-(:
-  (derived from cmd:scanIndex function)
-two phases: 
-    1. one create full index for given path/element within given collection (for now the collection is stored in the name - not perfect) (and cache)
-	2. select wished subsequence (on second call, only the second step is performed)
+
+(:~ This function handles the scan-operation requests
+:  (derived from cmd:scanIndex function)
+: two phases: 
+:   1. one create full index for given path/element within given collection (for now the collection is stored in the name - not perfect) (and cache)
+:	2. select wished subsequence (on second call, only the second step is performed)
 	
-actually wrapping function handling caching of the actual scan result (coming from do-scan-default())
-or fetching the cached result (if available)
-also dispatching to cmd-collections for the scan-clause=cmd.collections 
+: actually wrapping function handling caching of the actual scan result (coming from do-scan-default())
+: or fetching the cached result (if available)
+: also dispatching to cmd-collections for the scan-clause=cmd.collections 
 
 :)
 declare function fcs:scan($scan-clause  as xs:string, $x-context as xs:string+, $start-item as xs:integer, $max-items as xs:integer, $max-depth as xs:integer, $p-sort as xs:string?) as item()? {
@@ -181,6 +199,15 @@ declare function fcs:search-retrieve($query as xs:string, $x-context as xs:strin
       <sru:records>
 	       {for $rec at $pos in $result-seq
 	           let $exp-rec := util:expand($rec, "expand-xincludes=no") (: kwic:summarize($rec,<config width="40"/>) :)
+	           let $config := <config width="40"/>
+	           let $kwic-html := kwic:summarize($exp-rec, $config)
+	           let $kwic := for $match in $kwic-html 
+	                              return (<fcs:c type="left">{$match/span[1]/text()}</fcs:c>, 
+	           (: <c type="left">{kwic:truncate-previous($exp-rec, $matches[1], (), 10, (), ())}</c> :)
+	                          <fcs:kw>{$match/span[2]/text()}</fcs:kw>,
+	                          <fcs:c type="right">{$match/span[3]/text()}</fcs:c>)
+               (: let $summary  := kwic:get-summary($exp-rec, $matches[1], $config) :)
+(:	                               <fcs:DataView type="kwic-html">{$kwic-html}</fcs:DataView>:)               
 	           return 
 	               <sru:record>
 	                   <sru:recordSchema>http://clarin.eu/fcs/1.0/Resource.xsd</sru:recordSchema>
@@ -188,6 +215,7 @@ declare function fcs:search-retrieve($query as xs:string, $x-context as xs:strin
 	                   <sru:recordData>	                       
 	                       <fcs:Resource>
 	                           <fcs:ResourceFragment>
+	                               <fcs:DataView type="kwic">{$kwic}</fcs:DataView>
     	                         <fcs:DataView type="full">{$exp-rec}</fcs:DataView>
     	                       </fcs:ResourceFragment>
 	                       </fcs:Resource>
