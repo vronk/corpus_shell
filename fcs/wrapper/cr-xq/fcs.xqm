@@ -10,7 +10,7 @@ xquery version "1.0";
 :)
 
 (:~ This module provides methods to serve XML-data via the FCS/SRU-interface  
-: see: http://clarin.eu/fcs 
+: @see http://clarin.eu/fcs 
 : @author Matej Durco
 : @since 2011-11-01 
 : @version 1.1 
@@ -23,7 +23,6 @@ import module namespace diag =  "http://www.loc.gov/zing/srw/diagnostic/" at  "m
 import module namespace repo-utils = "http://aac.ac.at/content_repository/utils" at  "repo-utils.xqm";
 import module namespace cmd = "http://clarin.eu/cmd/collections" at  "cmd-collections.xqm";
 
-
 declare namespace tei = "http://www.tei-c.org/ns/1.0";
 
 declare variable $fcs:explain as xs:string := "explain";
@@ -33,8 +32,11 @@ declare variable $fcs:searchRetrieve as xs:string := "searchRetrieve";
 declare variable $fcs:scanSortText as xs:string := "text";
 declare variable $fcs:scanSortSize as xs:string := "size";
 declare variable $fcs:indexXsl := doc('index.xsl');
+declare variable $fcs:kwicWidth := 80;
 
-(: meanwhile accept both MD-PID or Res-PID (MdSelfLink or ResourceRef/text
+(:~ handles the explain-operation requests.
+: @param $x-context optional, identifies a resource to return the explain-record for. (Accepts both MD-PID or Res-PID (MdSelfLink or ResourceRef/text))
+: @returns either the default root explain-record, or - when provided with the $x-context parameter - the explain-record of given resource
 :)
 declare function fcs:explain($x-context as xs:string*) as item()* {
     let $context := if ($x-context) then $x-context
@@ -155,8 +157,9 @@ declare function fcs:do-scan-default ($scan-clause as xs:string, $index-xpath as
    	  return $data
 };
 
-
-declare function fcs:search-retrieve($query as xs:string, $x-context as xs:string*, $startRecord as xs:integer, $maximumRecords as xs:integer) as item()* {
+(:~ main search function (handles the searchRetrieve-operation request) 
+:)
+declare function fcs:search-retrieve($query as xs:string, $x-context as xs:string*, $startRecord as xs:integer, $maximumRecords as xs:integer, $x-dataview as xs:string*) as item()* {
     let $start-time := util:system-dateTime()
     let $data-collection := repo-utils:context-to-collection($x-context) 
     (:if ($x-context) then collection($repo-utils:mappings//map[xs:string(@key) eq $x-context]/@path)
@@ -186,6 +189,7 @@ declare function fcs:search-retrieve($query as xs:string, $x-context as xs:strin
           <sru:version>1.2</sru:version>
           <sru:query>{$query}</sru:query>
           <fcs:x-context>{$x-context}</fcs:x-context>
+          <fcs:x-dataview>{$x-dataview}</fcs:x-dataview>
           <sru:startRecord>{$startRecord}</sru:startRecord>
           <sru:maximumRecords>{$maximumRecords}</sru:maximumRecords>
           <sru:query>{$query}</sru:query>          
@@ -199,15 +203,24 @@ declare function fcs:search-retrieve($query as xs:string, $x-context as xs:strin
       <sru:records>
 	       {for $rec at $pos in $result-seq
 	           let $exp-rec := util:expand($rec, "expand-xincludes=no") (: kwic:summarize($rec,<config width="40"/>) :)
-	           let $config := <config width="40"/>
+	           let $config := <config width="{$fcs:kwicWidth}"/>
 	           let $kwic-html := kwic:summarize($exp-rec, $config)
-	           let $kwic := for $match in $kwic-html 
-	                              return (<fcs:c type="left">{$match/span[1]/text()}</fcs:c>, 
-	           (: <c type="left">{kwic:truncate-previous($exp-rec, $matches[1], (), 10, (), ())}</c> :)
-	                          <fcs:kw>{$match/span[2]/text()}</fcs:kw>,
-	                          <fcs:c type="right">{$match/span[3]/text()}</fcs:c>)
-               (: let $summary  := kwic:get-summary($exp-rec, $matches[1], $config) :)
-(:	                               <fcs:DataView type="kwic-html">{$kwic-html}</fcs:DataView>:)               
+	           
+	           (: a basic diry solution to the data-view parameterization 
+	           now it only checks if kwic and/or full, but 
+	               TODO: the configuration of data-view should be outsourced to configuration:)	           
+	           let $kwic := if ('kwic' = $x-dataview) then
+	                               <fcs:DataView type="kwic">{
+	                                       for $match in $kwic-html 
+	                                       return (<fcs:c type="left">{$match/span[1]/text()}</fcs:c>, 
+            	           (: <c type="left">{kwic:truncate-previous($exp-rec, $matches[1], (), 10, (), ())}</c> :)
+            	                          <fcs:kw>{$match/span[2]/text()}</fcs:kw>,
+            	                          <fcs:c type="right">{$match/span[3]/text()}</fcs:c>)            	                       
+                           (: let $summary  := kwic:get-summary($exp-rec, $matches[1], $config) :)
+            (:	                               <fcs:DataView type="kwic-html">{$kwic-html}</fcs:DataView>:)
+                                }</fcs:DataView>
+                              else ()
+                
 	           return 
 	               <sru:record>
 	                   <sru:recordSchema>http://clarin.eu/fcs/1.0/Resource.xsd</sru:recordSchema>
@@ -215,8 +228,10 @@ declare function fcs:search-retrieve($query as xs:string, $x-context as xs:strin
 	                   <sru:recordData>	                       
 	                       <fcs:Resource>
 	                           <fcs:ResourceFragment>
-	                               <fcs:DataView type="kwic">{$kwic}</fcs:DataView>
-    	                         <fcs:DataView type="full">{$exp-rec}</fcs:DataView>
+	                             {($kwic,
+    	                         if ('full' = $x-dataview) then <fcs:DataView type="full">{$exp-rec}</fcs:DataView>
+        	                         else ()
+        	                         )}
     	                       </fcs:ResourceFragment>
 	                       </fcs:Resource>
 	                   </sru:recordData>
@@ -232,12 +247,12 @@ declare function fcs:search-retrieve($query as xs:string, $x-context as xs:strin
 };
 
 
-(: default type= search :)
+(:~ default type= search :)
 declare function fcs:transform-query($cql-query as xs:string, $x-context as xs:string) as xs:string {
     fcs:transform-query ($cql-query, $x-context, 'search')
 };
 
-(: This expects a CQL-query that it (will be able to) translates to XPath
+(:~ This expects a CQL-query that it (will be able to) translates to XPath
 params: 
 $type = search or scan
 returns: XPath version of the CQL-query 
@@ -248,9 +263,10 @@ index relation term
 :)
 declare function fcs:transform-query($cql-query as xs:string, $x-context as xs:string, $type as xs:string ) as xs:string {
 
-(: parse query 
-let $xcql := cql:cql-to-xcql($cql-query)
-:)
+(: parse query  :)
+(: let $xcql := cql:cql-to-xcql($cql-query) 
+   let $xpath := cql:cql2xpath($cql-query) :)
+
     let $query-constituents := if (contains($cql-query,'=')) then 
                                         tokenize($cql-query, "=") 
                                    else tokenize($cql-query, " ")    
@@ -304,8 +320,8 @@ let $xcql := cql:cql-to-xcql($cql-query)
 
 };
 
-(: if $index-param = "" return the map-element, 
-else - if found return the index-element 
+(:~ if $index-param = "" return the map-element, 
+    else - if found - return the index-element 
 :)
 declare function fcs:get-mapping($index as xs:string, $x-context as xs:string+) as node()* {
     let $context-map := if (exists($repo-utils:mappings//map[xs:string(@key) eq $x-context])) then 

@@ -25,9 +25,7 @@ declare function cmd:get-collections($collections as xs:string+, $format as xs:s
     repo-utils:serialise-as($doc, $format, 'scan')
 };
 
-(: 
-  **********************
-  getCollections - subfunctions
+(:~ collect subcollection for every collection identified by its id in the $collections-param 
 :)
 declare function cmd:colls($collections as xs:string+, $max-depth as xs:integer) as element() {
 		let $children := 
@@ -59,8 +57,7 @@ declare function cmd:colls($collections as xs:string+, $max-depth as xs:integer)
 		return $data
 };
 
-(:
-  Recurse down in collections.
+(:~  Recurse down in collections-tree
 :)
 declare function cmd:colls-r($cmd-collection-record as node(), $cmd-collection-handle as xs:string, $depth as xs:integer) as item()* {
   let $children :=  if ($depth eq 1) then () else cmd:get-children-colls($cmd-collection-handle)
@@ -96,7 +93,7 @@ declare function cmd:colls-r($cmd-collection-record as node(), $cmd-collection-h
        <c n="{$name}" handle="{$handle}" cnt_subcolls="{if ($handle eq '') then '-1' else cmd:get-collection-count($handle)}" cnt="{if ($handle eq '') then '-1' else cmd:get-resource-count($handle)}"></c>:)
 };
 
-(:
+(:~ 
   Get the MD resource by handle (matching on MdSelfLink)
   if param empty return the root records (IsPartOf=root)
   IMPORTANT to have just the basic lucene:WhitespaceAnalyzer on MdSelfLink, so that the handles 
@@ -110,7 +107,7 @@ declare function cmd:get-resource-by-handle($id as xs:string) as node()* {
  (: $collection/descendant::MdSelfLink[. = xdb:decode($id)]/ancestor::CMD :)
 };
 
-(:
+(:~
   Get the next level collection-records (ResourceType='Metadata')
   The children are actually defined in the ResourceProxyList of the parent record,
   but we rely here on the inverse IsPartOf-element (that are generated from the ResourceProxies during import/initialization)
@@ -122,7 +119,7 @@ declare function cmd:get-children-colls($handle as xs:string) as node()* {
     (: collection($cmd:dataPath)/descendant::IsPartOf[. eq $handle]/ancestor::CMD[descendant::ResourceType[. = "Metadata"]] :)
 };
 
-(:
+(:~
 count ALL (independent of maxDepth) records (descendants of given record)
 both collection and resource records
 :)
@@ -130,7 +127,8 @@ declare function cmd:get-sub-records-count($handle as xs:string) as xs:integer {
  (: 	xs:string(count(collection($cmd:dataPath)//IsPartOf[. eq $handle]/ancestor::CMD[descendant::ResourceType[. = "Resource"] or not(exists(descendant::ResourceType)) ])):)
 	count($cmd:base-dbcoll//IsPartOf[ft:query(.,<term>{$handle}</term>)]/ancestor::CMD)
 }; 
-(: 
+
+(:~ 
   count ALL (independent of maxDepth) resource-records (ie actually ResourceType=Resource, but
   there are records without ResourceProxy[ResourceType=Resource] - 
   so care for that (not(exists((ResourceType))))
@@ -142,7 +140,7 @@ count($cmd:base-dbcoll//IsPartOf[ft:query(.,<term>{$handle}</term>)]/ancestor::C
 
 }; 
 
-(:
+(:~
   This is complement to cmd:get-resource-count()
   count ALL (independent of maxDepth) collection-records 
   (ie ResourceType=Metadata)			
@@ -152,9 +150,8 @@ declare function cmd:get-collection-count($handle as xs:string) as xs:integer {
 		count($cmd:base-dbcoll//IsPartOf[ft:query(.,<term>{$handle}</term>)]/ancestor::CMD[descendant::ResourceType[. = "Metadata"]])	
 };
 
-(: 
-  Try to derive a name from the collection-record (more-or-less agnostic about 
-  the actual schema.
+(:~ 
+  Try to derive a name from the collection-record, it tries to find one of the common fields for a name and takes first.
 :)
 declare function cmd:get-md-collection-name($collection-doc as node()) as xs:string {
 ($collection-doc//Corpus/Name, $collection-doc//Session/Name, $collection-doc//Collection/GeneralInfo/Name, $collection-doc//Collection/GeneralInfo/Title, 

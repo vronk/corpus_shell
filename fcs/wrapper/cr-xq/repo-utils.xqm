@@ -55,7 +55,7 @@ declare function repo-utils:get-resource-by-id($id as xs:string) as node()* {
 };
 
 (: 
-  Function for telling wether the document is available or not.
+  Function for telling whether the document is available or not.
   generic, currently not used
 :)
 declare function repo-utils:is-doc-available($collection as xs:string, $doc-name as xs:string) as xs:boolean {
@@ -137,7 +137,7 @@ declare function repo-utils:sanitize-name($name as xs:string) as xs:string {
 :)
 declare function repo-utils:serialise-as($item as node()?, $format as xs:string, $operation as xs:string) as item()? {
       if ($format eq $repo-utils:responseFormatJSon) then
-	       let $option := util:declare-option("exist:serialize", "method=text media-type=application/json")
+	       let $option := util:declare-option("exist:serialize", "method=json media-type=application/json")
 	       return $item
 	    else if (contains($format, $repo-utils:responseFormatHTML)) then
 	           let $xslDoc := doc(concat(repo-utils:config-value('scripts.path'), repo-utils:config-value(concat($operation, ".xsl"))) )

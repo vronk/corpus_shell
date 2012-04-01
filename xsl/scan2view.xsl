@@ -91,8 +91,9 @@
                 <input type="hidden" name="x-format" value="{$format}"/>
                 <input type="hidden" name="x-context" value="{$x-context}"/>
                 <input type="submit" value="suchen"/>
+
             </form>
-            <span class="cmd cmd_detail"/>
+            <span class="cmd cmd_detail"/>            
             <div class="ui-context-dialog">
                 <table class="show">
                     <tbody>
@@ -147,7 +148,7 @@ sample data:
                 <xsl:value-of select="sru:numberOfRecords"/>
             </td>
             <td>
-                <span class="cmd_columns">
+                <span>
                     <xsl:variable name="href">
 <!--                        special handling for special index -->
                         <xsl:choose>

@@ -50,9 +50,10 @@ declare function local:repo() as item()* {
         else 
       	 let $cql-query := $query,
 			$start-item := request:get-parameter("startRecord", 1),
-			$max-items := request:get-parameter("maximumRecords", 50)	
+			$max-items := request:get-parameter("maximumRecords", 50),	
+			$x-dataview := request:get-parameter("x-dataview", 'kwic')
             (: return cr:search-retrieve($cql-query, $query-collections, $format, xs:integer($start-item), xs:integer($max-items)) :)
-            return fcs:search-retrieve($cql-query, $x-context, xs:integer($start-item), xs:integer($max-items))
+            return fcs:search-retrieve($cql-query, $x-context, xs:integer($start-item), xs:integer($max-items), $x-dataview)
     else 
       diag:diagnostics("unsupported-operation", $operation)
        
