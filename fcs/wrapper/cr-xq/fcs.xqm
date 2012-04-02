@@ -22,6 +22,7 @@ import module namespace kwic = "http://exist-db.org/xquery/kwic";
 import module namespace diag =  "http://www.loc.gov/zing/srw/diagnostic/" at  "modules/diagnostics/diagnostics.xqm";
 import module namespace repo-utils = "http://aac.ac.at/content_repository/utils" at  "repo-utils.xqm";
 import module namespace cmd = "http://clarin.eu/cmd/collections" at  "cmd-collections.xqm";
+(:import module namespace cql = "http://exist-db.org/xquery/cql" at "/db/cr/modules/cqlparser/cqlparser.xqm";:)
 
 declare namespace tei = "http://www.tei-c.org/ns/1.0";
 
@@ -75,7 +76,7 @@ declare function fcs:scan($scanClause as xs:string, $x-context as xs:string*) {
 : also dispatching to cmd-collections for the scan-clause=cmd.collections 
 
 :)
-declare function fcs:scan($scan-clause  as xs:string, $x-context as xs:string+, $start-item as xs:integer, $max-items as xs:integer, $max-depth as xs:integer, $p-sort as xs:string?) as item()? {
+declare function fcs:scan($scan-clause  as xs:string, $x-context as xs:string+, $start-item as xs:integer, $max-items as xs:integer, $response-position as xs:integer, $max-depth as xs:integer, $p-sort as xs:string?) as item()? {
 
   let $scx := tokenize($scan-clause,'='),
 	 $index-name := $scx[1],  
@@ -111,6 +112,7 @@ declare function fcs:scan($scan-clause  as xs:string, $x-context as xs:string+, 
 						<param name="sort" value="{$sort}"/>
 						<param name="filter" value="{$filter}"/>
 						<param name="start-item" value="{$start-item}"/>
+					    <param name="response-position" value="{$response-position}"/>
 						<param name="max-items" value="{$max-items}"/>
 			</parameters>),
 		$count-items := count($res-nodeset/sru:term),
