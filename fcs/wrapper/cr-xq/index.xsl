@@ -25,6 +25,7 @@ two tasks (in separate calls, managed by $mode-param):
 <!--                    don't go descendants-axis, because of nested terms
 <xsl:apply-templates mode="subsequence" select=".//sru:terms"/>-->
                     <xsl:apply-templates mode="subsequence" select="sru:scanResponse/sru:terms"/>
+                    <xsl:copy-of select="sru:scanResponse/sru:extraResponseData"/>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:variable name="terms">

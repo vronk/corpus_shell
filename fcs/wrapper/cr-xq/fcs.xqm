@@ -18,13 +18,14 @@ xquery version "1.0";
 module namespace fcs = "http://clarin.eu/fcs/1.0";
 
 declare namespace sru = "http://www.loc.gov/zing/srw/";
-import module namespace kwic = "http://exist-db.org/xquery/kwic";
+declare namespace tei = "http://www.tei-c.org/ns/1.0";
+import module namespace request="http://exist-db.org/xquery/request";
 import module namespace diag =  "http://www.loc.gov/zing/srw/diagnostic/" at  "modules/diagnostics/diagnostics.xqm";
 import module namespace repo-utils = "http://aac.ac.at/content_repository/utils" at  "repo-utils.xqm";
+import module namespace kwic = "http://exist-db.org/xquery/kwic";
 import module namespace cmd = "http://clarin.eu/cmd/collections" at  "cmd-collections.xqm";
 (:import module namespace cql = "http://exist-db.org/xquery/cql" at "/db/cr/modules/cqlparser/cqlparser.xqm";:)
 
-declare namespace tei = "http://www.tei-c.org/ns/1.0";
 
 declare variable $fcs:explain as xs:string := "explain";
 declare variable $fcs:scan  as xs:string := "scan";
@@ -35,14 +36,73 @@ declare variable $fcs:scanSortSize as xs:string := "size";
 declare variable $fcs:indexXsl := doc('index.xsl');
 declare variable $fcs:kwicWidth := 80;
 
+(:~ The main entry-point. Processes request-parameters 
+@returns the result document (in xml, html or json)
+:)
+declare function fcs:repo($config-file as xs:string) as item()* {
+  let
+    $config := if (doc-available($config-file)) then doc($config-file) 
+                        else diag:diagnostics("general-error", concat("config not available: ", $config-file)) ,
+        
+        (: accept "q" as synonym to query-param; "query" overrides:)
+    $q := request:get-parameter("q", ""),
+    $query := request:get-parameter("query", $q),    
+        (: if query-parameter not present, 'explain' as DEFAULT operation, otherwise 'searchRetrieve' :)
+    $operation :=  if ($query eq "") then request:get-parameter("operation", $fcs:explain)
+                    else request:get-parameter("operation", $fcs:searchRetrieve),
+    $x-format := request:get-parameter("x-format", $repo-utils:responseFormatXml),
+    $x-context := request:get-parameter("x-context", ""),
+    (:
+    $query-collections := 
+    if (matches($collection-params, "^root$") or $collection-params eq "") then 
+      $cr:collectionRoot
+    else
+		tokenize($collection-params,','),
+        :)
+(:      $collection-params, :)
+  $max-depth as xs:integer := xs:integer(request:get-parameter("maxdepth", 1))
+
+  let $result :=
+      (: if ($operation eq $cr:getCollections) then
+		cr:get-collections($query-collections, $format, $max-depth)
+      else :)
+      if ($operation eq $fcs:explain) then
+          fcs:explain($x-context, $config)		
+      else if ($operation eq $fcs:scan) then
+		let $scanClause := request:get-parameter("scanClause", ""),
+		$start-term := request:get-parameter("startTerm", 1),
+		$response-position := request:get-parameter("responsePosition", 1),
+		$max-terms := request:get-parameter("maximumTerms", 50),
+	    $max-depth := request:get-parameter("x-maximumDepth", 1),
+		$sort := request:get-parameter("sort", 'text')
+		 return fcs:scan($scanClause, $x-context, $start-term, $max-terms, $response-position, $max-depth, $sort, $config) 
+        (: return fcs:scan($scanClause, $x-context) :)
+	  else if ($operation eq $fcs:searchRetrieve) then
+        if ($query eq "") then diag:diagnostics("param-missing", "query")
+        else 
+      	 let $cql-query := $query,
+			$start-item := request:get-parameter("startRecord", 1),
+			$max-items := request:get-parameter("maximumRecords", 50),	
+			$x-dataview := request:get-parameter("x-dataview", 'kwic')
+            (: return cr:search-retrieve($cql-query, $query-collections, $format, xs:integer($start-item), xs:integer($max-items)) :)
+            return fcs:search-retrieve($cql-query, $x-context, xs:integer($start-item), xs:integer($max-items), $x-dataview, $config)
+    else 
+      diag:diagnostics("unsupported-operation", $operation)
+       
+   return  $result
+   
+};
+
+
 (:~ handles the explain-operation requests.
 : @param $x-context optional, identifies a resource to return the explain-record for. (Accepts both MD-PID or Res-PID (MdSelfLink or ResourceRef/text))
 : @returns either the default root explain-record, or - when provided with the $x-context parameter - the explain-record of given resource
 :)
-declare function fcs:explain($x-context as xs:string*) as item()* {
+declare function fcs:explain($x-context as xs:string*, $config) as item()* {
     let $context := if ($x-context) then $x-context
-                    else repo-utils:config-value('explain')
-   let $explain := $repo-utils:md-collection//CMD[Header/MdSelfLink/text() eq $context or .//ResourceRef/text() eq $context]//explain (: //ResourceRef/text() :)
+                    else repo-utils:config-value($config, 'explain')
+    let $md-dbcoll := collection(repo-utils:config-value($config,'metadata.path'))
+   let $explain := $md-dbcoll//CMD[Header/MdSelfLink/text() eq $context or .//ResourceRef/text() eq $context]//explain (: //ResourceRef/text() :)
     
     return $explain
 };
@@ -76,34 +136,34 @@ declare function fcs:scan($scanClause as xs:string, $x-context as xs:string*) {
 : also dispatching to cmd-collections for the scan-clause=cmd.collections 
 
 :)
-declare function fcs:scan($scan-clause  as xs:string, $x-context as xs:string+, $start-item as xs:integer, $max-items as xs:integer, $response-position as xs:integer, $max-depth as xs:integer, $p-sort as xs:string?) as item()? {
+declare function fcs:scan($scan-clause  as xs:string, $x-context as xs:string+, $start-item as xs:integer, $max-items as xs:integer, $response-position as xs:integer, $max-depth as xs:integer, $p-sort as xs:string?, $config) as item()? {
 
   let $scx := tokenize($scan-clause,'='),
 	 $index-name := $scx[1],  
-	 $index := fcs:get-mapping($index-name, $x-context ),
+	 $index := fcs:get-mapping($index-name, $x-context, $config ),
 	 (: if no index-mapping found, dare to use the index-name as xpath :) 
 (:	 $index-xpath := if ($index/text()) then $index/text() else $index-name, :)
-     $index-xpath :=  fcs:transform-query($index-name,$x-context,'scan' ),
+     $index-xpath :=  fcs:transform-query($index-name,$x-context,'scan', $config ),
  	 $filter := ($scx[2],'')[1],	 
 	 $sort := if ($p-sort eq $fcs:scanSortText or $p-sort eq $fcs:scanSortSize) then $p-sort else $fcs:scanSortText	
 	 
 	 (: WATCHME: this is quite unreliable, it relies on manual (urn-like) creation of the ids for the resources)  
 	   it won't work once the id become PIDs 
 	   this is only used for generating the cache-id to store the resultset :)
-	 let $short-xcontext := substring-after($x-context, concat(repo-utils:config-value('explain'),':')) 
+	 let $short-xcontext := substring-after($x-context, concat(repo-utils:config-value($config, 'explain'),':')) 
     let $index-doc-name := repo-utils:gen-cache-id("index", ($short-xcontext, $index-name, $sort, $max-depth),""),
   
   (: get the base-index from cache, or create and cache :)
-  $index-scan := if (repo-utils:is-in-cache($index-doc-name )) then
-          repo-utils:get-from-cache($index-doc-name ) 
+  $index-scan := if (repo-utils:is-in-cache($index-doc-name, $config)) then
+          repo-utils:get-from-cache($index-doc-name, $config) 
         else
             let $data :=
-                if ($index-name eq $cmd:scan-collection) then
-                    cmd:colls($filter, $max-depth) 
+                if ($index-name eq $cmd:scan-collection) then                        
+                    cmd:colls($filter, $max-depth, cmd:base-dbcoll($config)) 
                 else
-                    fcs:do-scan-default($scan-clause, $index-xpath, $x-context)         
+                    fcs:do-scan-default($scan-clause, $index-xpath, $x-context, $config)         
 
-        return repo-utils:store-in-cache($index-doc-name , $data)
+        return repo-utils:store-in-cache($index-doc-name , $data, $config)
 
 	(: extract the required subsequence (according to given sort) :)
 	let $res-nodeset := transform:transform($index-scan,$fcs:indexXsl, 
@@ -138,14 +198,13 @@ declare function fcs:scan($scan-clause  as xs:string, $x-context as xs:string+, 
 	$result-frag := ($doc/Term, $result-seq),
     $seq-count := fn:count($result-seq) :)
 
-  return $res-nodeset
-   (:  repo-utils:serialise-as($res, $format)	 :)
+  return $res-nodeset   
 };
 
 
-declare function fcs:do-scan-default ($scan-clause as xs:string, $index-xpath as xs:string, $x-context as xs:string) as item()* {
+declare function fcs:do-scan-default($scan-clause as xs:string, $index-xpath as xs:string, $x-context as xs:string, $config) as item()* {
   (:        let $getnodes := util:eval(fn:concat("$data-collection/descendant-or-self::", $index-xpath)),:)
-    let $data-collection := repo-utils:context-to-collection($x-context)
+    let $data-collection := repo-utils:context-to-collection($x-context, $config)
         let $getnodes := util:eval(fn:concat("$data-collection", $index-xpath)),
             (: if we collected strings, we have to wrap them in elements 
                     to be able to work with them in xsl :) 
@@ -161,12 +220,12 @@ declare function fcs:do-scan-default ($scan-clause as xs:string, $index-xpath as
 
 (:~ main search function (handles the searchRetrieve-operation request) 
 :)
-declare function fcs:search-retrieve($query as xs:string, $x-context as xs:string*, $startRecord as xs:integer, $maximumRecords as xs:integer, $x-dataview as xs:string*) as item()* {
+declare function fcs:search-retrieve($query as xs:string, $x-context as xs:string*, $startRecord as xs:integer, $maximumRecords as xs:integer, $x-dataview as xs:string*, $config) as item()* {
     let $start-time := util:system-dateTime()
-    let $data-collection := repo-utils:context-to-collection($x-context) 
+    let $data-collection := repo-utils:context-to-collection($x-context, $config) 
     (:if ($x-context) then collection($repo-utils:mappings//map[xs:string(@key) eq $x-context]/@path)
                             else $repo-utils:data-collection:)
-    let $xpath-query := concat("$data-collection", fcs:transform-query ($query, $x-context))
+    let $xpath-query := concat("$data-collection", fcs:transform-query ($query, $x-context, $config))
         
     let $results := util:eval($xpath-query)
 
@@ -195,7 +254,7 @@ declare function fcs:search-retrieve($query as xs:string, $x-context as xs:strin
           <sru:startRecord>{$startRecord}</sru:startRecord>
           <sru:maximumRecords>{$maximumRecords}</sru:maximumRecords>
           <sru:query>{$query}</sru:query>          
-          <sru:baseUrl>{repo-utils:config-value("base.url")}</sru:baseUrl> 
+          <sru:baseUrl>{repo-utils:config-value($config, "base.url")}</sru:baseUrl> 
       </sru:echoedSearchRetrieveRequest>
       <sru:extraResponseData>
       	<fcs:returnedRecords>{$seq-count}</fcs:returnedRecords>
@@ -205,8 +264,8 @@ declare function fcs:search-retrieve($query as xs:string, $x-context as xs:strin
       <sru:records>
 	       {for $rec at $pos in $result-seq
 	           let $exp-rec := util:expand($rec, "expand-xincludes=no") (: kwic:summarize($rec,<config width="40"/>) :)
-	           let $config := <config width="{$fcs:kwicWidth}"/>
-	           let $kwic-html := kwic:summarize($exp-rec, $config)
+	           let $kwic-config := <config width="{$fcs:kwicWidth}"/>
+	           let $kwic-html := kwic:summarize($exp-rec, $kwic-config)
 	           
 	           (: a basic diry solution to the data-view parameterization 
 	           now it only checks if kwic and/or full, but 
@@ -250,8 +309,8 @@ declare function fcs:search-retrieve($query as xs:string, $x-context as xs:strin
 
 
 (:~ default type= search :)
-declare function fcs:transform-query($cql-query as xs:string, $x-context as xs:string) as xs:string {
-    fcs:transform-query ($cql-query, $x-context, 'search')
+declare function fcs:transform-query($cql-query as xs:string, $x-context as xs:string, $config) as xs:string {
+    fcs:transform-query ($cql-query, $x-context, 'search', $config)
 };
 
 (:~ This expects a CQL-query that it (will be able to) translates to XPath
@@ -263,7 +322,7 @@ term
 index=term
 index relation term
 :)
-declare function fcs:transform-query($cql-query as xs:string, $x-context as xs:string, $type as xs:string ) as xs:string {
+declare function fcs:transform-query($cql-query as xs:string, $x-context as xs:string, $type as xs:string, $config ) as xs:string {
 
 (: parse query  :)
 (: let $xcql := cql:cql-to-xcql($cql-query) 
@@ -282,17 +341,17 @@ declare function fcs:transform-query($cql-query as xs:string, $x-context as xs:s
 							$query-constituents[3]
 
 (: try to get a mapping specific to given context, else take the default :)
-    let $context-map := fcs:get-mapping("",$x-context),
+    let $context-map := fcs:get-mapping("",$x-context, $config),
 
 (: TODO: for every index in $xcql :)
             (: try  to get a) a mapping for given index within the context-map,
                     b) in any of the mapping (if not found in the context-map) , - potentially dangerous!!
                     c) or else take the index itself :)
-            
+        $mappings := doc(repo-utils:config-value($config, 'mappings')),   
         $index-map := $context-map/index[xs:string(@key) eq $index],
         $resolved-index := if (exists($index-map)) then $index-map/text()
-                           else if (exists($repo-utils:mappings//index[xs:string(@key) eq $index])) then
-                                $repo-utils:mappings//index[xs:string(@key) eq $index]
+                           else if (exists($mappings//index[xs:string(@key) eq $index])) then
+                                $mappings//index[xs:string(@key) eq $index]
                             else $index       
             ,    
             (: get either a) the specific base-element for the index, 
@@ -325,10 +384,11 @@ declare function fcs:transform-query($cql-query as xs:string, $x-context as xs:s
 (:~ if $index-param = "" return the map-element, 
     else - if found - return the index-element 
 :)
-declare function fcs:get-mapping($index as xs:string, $x-context as xs:string+) as node()* {
-    let $context-map := if (exists($repo-utils:mappings//map[xs:string(@key) eq $x-context])) then 
-                                $repo-utils:mappings//map[xs:string(@key) eq $x-context]
-                            else $repo-utils:mappings//map[xs:string(@key) eq 'default']
+declare function fcs:get-mapping($index as xs:string, $x-context as xs:string+, $config) as node()* {
+    let $mappings := doc(repo-utils:config-value($config, 'mappings')), 
+    $context-map := if (exists($mappings//map[xs:string(@key) eq $x-context])) then 
+                                $mappings//map[xs:string(@key) eq $x-context]
+                            else $mappings//map[xs:string(@key) eq 'default']
     
     return  if ($index eq '') then 
                 $context-map
