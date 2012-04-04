@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <!-- root CMD/explain-record describing this repository-->
+    <property key="explain">clarin.eu:mdrepo.cmd</property>
+    <property key="mappings">/db/cr/etc/mappings_mdrepo.xml</property>
+    <property key="data.path">/db/mdrepo-data</property>
+    <property key="cache.path">/db/mdrepo-data/_indexes</property>
+    <property key="metadata.path">/db/mdrepo-data/_cmd</property>
+    <property key="index.prefix">/db/mdrepo-data/_indexes/index_</property>
+    <property key="scripts.path">/db/cr/xsl/</property>
+    <property key="scan.xsl">scan2view.xsl</property>
+    <property key="searchRetrieve.xsl">result2view_v1.xsl</property>
+    <property key="explain.xsl">explain2view.xsl</property>
+    <property key="default.xsl">xml2view.xsl</property>
+    <property key="test.xsl">test2view.xsl</property>
+    <property key="base.url">http://localhost:8681/exist/mdrepo/</property>
+    <property key="scripts.url">http://localhost:8681/exist/cr-scripts/</property>
+</config>

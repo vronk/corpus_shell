@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map>
+    <map key="default">
+        <!-- very bad idea to give * as default PLUS default base-elem !!! 
+        <index key="cql.serverChoice" base_elem="*">*</index>
+        -->
+        <index key="cql.serverChoice" base_elem="CMD">*</index>
+        <index key="cmd.collection" base_elem="CMD" type="explicit" status="indexed">MdSelfLink</index>
+    </map>
+    <map key="clarin.eu:mdrepo" path="/db/mdrepo-data" base_elem="CMD">
+        <index key="cql.serverChoice">*</index>
+        <index key="cmd.collection" base_elem="CMD" type="explicit" status="indexed">MdSelfLink</index>
+    </map>
+</map>
