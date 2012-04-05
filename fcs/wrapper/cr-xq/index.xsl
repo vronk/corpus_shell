@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:sru="http://www.loc.gov/zing/srw/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fcs="http://clarin.eu/fcs/1.0/" version="2.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:sru="http://www.loc.gov/zing/srw/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fcs="http://clarin.eu/fcs/1.0" version="2.0">
 
 
 <!--
@@ -12,7 +12,7 @@ two tasks (in separate calls, managed by $mode-param):
     <xsl:param name="sort" select="'text'"/>
     <xsl:param name="filter" select="''"/>
     <xsl:param name="filter-mode" select="if (ends-with($filter,'*')) then 'starts-with' else 'contains'"/> <!-- contains, starts-with -->
-    <xsl:param name="start-item" select="100"/>
+    <xsl:param name="start-item" select="1"/>
     <xsl:param name="response-position" select="1"/>
     <xsl:param name="max-items" select="100"/> <!-- if max-items=0 := return all -->
     <xsl:template match="/">
@@ -53,20 +53,38 @@ two tasks (in separate calls, managed by $mode-param):
         <xsl:variable name="nodes" select="*"/>
         <xsl:variable name="count-text" select="count($nodes/text()[.!=''])"/>
         <!-- FIXME: this is not correct, because it counts individual text-nodes.
-            if there are nods with subnodes, text in every child is counted extra-->
+            if there are nodes with subnodes, text in every child is counted extra-->
         <xsl:variable name="distinct-text-count" select="count(distinct-values($nodes/text()))"/>
         <sru:terms>
             <xsl:copy-of select="@*"/>
-            <xsl:for-each-group select="$nodes" group-by=".//text()">
-                <sru:term>
-                    <sru:value>
-                        <xsl:value-of select=".//text()"/>
-                    </sru:value>
-                    <sru:numberOfRecords>
-                        <xsl:value-of select="count(current-group())"/>
-                    </sru:numberOfRecords>
-                </sru:term>
-            </xsl:for-each-group>
+            <xsl:choose>
+                <xsl:when test="$sort='size'">
+                    <xsl:for-each-group select="$nodes" group-by=".//text()">
+                        <xsl:sort select=".//text()" data-type="text" order="ascending"/>
+                        <sru:term>
+                            <sru:value>
+                                <xsl:value-of select=".//text()"/>
+                            </sru:value>
+                            <sru:numberOfRecords>
+                                <xsl:value-of select="count(current-group())"/>
+                            </sru:numberOfRecords>
+                        </sru:term>
+                    </xsl:for-each-group>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:for-each-group select="$nodes" group-by=".//text()">
+                        <xsl:sort select="count(current-group())" data-type="number" order="descending"/>
+                        <sru:term>
+                            <sru:value>
+                                <xsl:value-of select=".//text()"/>
+                            </sru:value>
+                            <sru:numberOfRecords>
+                                <xsl:value-of select="count(current-group())"/>
+                            </sru:numberOfRecords>
+                        </sru:term>
+                    </xsl:for-each-group>
+                </xsl:otherwise>
+            </xsl:choose>
         </sru:terms>
     </xsl:template>
     <xsl:template match="sru:terms" mode="subsequence">
@@ -77,8 +95,11 @@ two tasks (in separate calls, managed by $mode-param):
 
 <!--        <xsl:message><xsl:value-of select="$match-position" /></xsl:message>-->
         <!-- this may be potentially expensive and we may need to store the index already sorted (which is the normal/sane way to do!) -->
+        <!-- simply expect ordered data -->
         <xsl:variable name="ordered">
-            <xsl:choose>
+            <xsl:copy-of select="*"/>
+        </xsl:variable>
+            <!--<xsl:choose>
                 <xsl:when test="xs:integer($response-position) = 1">
                     <xsl:choose>
                         <xsl:when test="$sort='size'">
@@ -95,14 +116,14 @@ two tasks (in separate calls, managed by $mode-param):
                         </xsl:otherwise>
                     </xsl:choose>
                 </xsl:when>
-                <!-- dare to not sort by size|text is response-position
+                <!-\- dare to not sort by size|text if response-position
                       i.e. expect the input-data sorted (by text)
-                    -->
+                    -\->
                 <xsl:otherwise>
                     <xsl:copy-of select="*"/>
                 </xsl:otherwise>
             </xsl:choose>
-        </xsl:variable>
+        </xsl:variable>-->
 
 <!-- 		<xsl:variable name="count-items" select="count($filtered)" />-->
         <xsl:copy>
@@ -111,8 +132,8 @@ two tasks (in separate calls, managed by $mode-param):
 <!--			<xsl:attribute name="count_items" select="if (xs:integer($count-items) > xs:integer($max-items)) then $max-items else $count-items" /> -->
             <xsl:variable name="effective-start-item" select="xs:integer($start-item) + xs:integer($match-position) - xs:integer($response-position) + 1"/>
             <xsl:variable name="effective-end-item" select="xs:integer($effective-start-item) + xs:integer($max-items)"/>
-            <xsl:message>cnt:<xsl:value-of select="count($ordered/*)"/>-match:<xsl:value-of select="$match-position"/>-start:<xsl:value-of select="$effective-start-item"/>-end:<xsl:value-of select="$effective-end-item"/>
-            </xsl:message>
+<!--            <xsl:message>cnt:<xsl:value-of select="count($ordered/*)"/>-match:<xsl:value-of select="$match-position"/>-start:<xsl:value-of select="$effective-start-item"/>-end:<xsl:value-of select="$effective-end-item"/>
+    </xsl:message>-->
             <xsl:apply-templates select="$ordered/*[xs:integer(position()) &gt;= xs:integer($effective-start-item) and ((xs:integer(position()) &lt; (xs:integer($effective-end-item))) or xs:integer($max-items)=0)]"/>
         </xsl:copy>
     </xsl:template>
