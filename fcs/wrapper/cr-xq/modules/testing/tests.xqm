@@ -9,16 +9,18 @@ declare namespace zr="http://explain.z3950.org/dtd/2.1/";
 declare namespace sru = "http://www.loc.gov/zing/srw/";
 declare namespace fcs = "http://clarin.eu/fcs/1.0";
 declare namespace diag = "http://www.loc.gov/zing/srw/diagnostic/";
+declare namespace xhtml="http://www.w3.org/1999/xhtml"; 
 
 (: sample input:
     
  :)
 declare variable $fcs-tests:config := doc("config.xml");
+declare variable $fcs-tests:cr-config := doc("/db/cr/etc/config.xml");
 declare variable $fcs-tests:run-config := "run-config.xml";
 declare variable $fcs-tests:testsets-coll := "/db/cr/modules/testing/testsets/";
 declare variable $fcs-tests:results-coll := "/db/cr/modules/testing/results/";
 
-(: this function is accesses by the testing-code to get configuration-options from the run-config :)
+(: this function is accessed by the testing-code to get configuration-options from the run-config :)
 declare function fcs-tests:config-value($key as xs:string) as xs:string* {
             let $config := doc(concat($fcs-tests:testsets-coll, $fcs-tests:run-config))/config
                 return if ($key eq "testset") then  xs:string($config//testset/@key)
@@ -39,25 +41,36 @@ declare function fcs-tests:get-result-path($target  as xs:string, $testset as xs
         string-join(fcs-tests:get-result-paths($target , $testset ), "" )
 };
 
-declare function fcs-tests:run-testset ($target  as xs:string, $testset as xs:string) as item()* {
+(:~ try to get the testset-file based on the testset-key
+@returns testset-file if available, otherwise empty result
+:)
+declare function fcs-tests:get-testset($testset as xs:string) as item()* {
+    let $testset-path := concat($fcs-tests:testsets-coll, $testset, ".xml")
+    return if (doc-available($testset-path)) then                        
+                    doc($testset-path)
+                  else 
+                  <diagnostics>unknown testset: {$testset}</diagnostics>
+};
+
+declare function fcs-tests:run-testset($target  as xs:string, $testset-key as xs:string) as item()* {
 
 (: preparing a configuration for given run, based on the parameters :)
 let $run-config := <config>{($fcs-tests:config//target[xs:string(@key) = $target],
-                            $fcs-tests:config//testset[xs:string(@key) = $testset])}</config>
+                            $fcs-tests:config//testset[xs:string(@key) = $testset-key])}</config>
 let $store := repo-utils:store($fcs-tests:testsets-coll, $fcs-tests:run-config, $run-config, true())
-let $testset-path := concat($fcs-tests:testsets-coll, $testset, ".xml")
-let $result := if (doc-available($testset-path)) then                        
-                        let $tests := doc($testset-path)//TestSet
+let $testset := fcs-tests:get-testset($testset-key)
+let $result := if (exists($testset)) then                        
+                        let $tests := $testset//TestSet
                         (: distinguish the testset, that the testing-module can process
                            and the home-made test-doc, that tests URLs :)
                         return if (exists($tests)) then
                                     t:run-testSet($tests)
                                  else
-                                    fcs-tests:test-rest(doc($testset-path))
+                                    fcs-tests:test-rest($testset)
                    else
-                        <diagnostics>unknown testset: {$testset}</diagnostics>
+                       $testset 
 
-let $store-result := fcs-tests:store-result($target, $testset, $result)
+let $store-result := fcs-tests:store-result($target, $testset-key, $result)
 (:for $test in $tests/tests/test return fcs-tests:run-test($test):)
 return $store-result
 
@@ -69,7 +82,7 @@ declare function fcs-tests:format-result($result as node()) as item()* {
             <div class="message">{$result/text()}</div>
           else if (exists($result/info)) then
                     $result
-          else repo-utils:serialise-as ($result,"html", "test")
+          else repo-utils:serialise-as ($result,"html", "test", $fcs-tests:cr-config)
               (: return quite empty html ?? 
                 t:format-testResult($result) :)
 };
@@ -79,11 +92,13 @@ declare function fcs-tests:display-page($target  as xs:string, $testset as xs:st
     let $result-path := fcs-tests:get-result-path($target, $testset)
        
             
-    let $result := if ($target eq () or $testset eq ()) then () 
+    let $result := if ($target = '' or $testset = '') then () 
                        else if (doc-available($result-path)) then
                             doc($result-path)                            
                         else 
-                            <diagnostics>result unavailable: {$result-path}</diagnostics>
+                            <diagnostics><diagnostic>result unavailable: {$result-path}</diagnostic>
+                                <diagnostic>fcs-tests:get-testset($testset)</diagnostic>
+                              </diagnostics>
      
     let $formatted-result := fcs-tests:format-result($result)  
     let $opt := util:declare-option("exist:serialize", "media-type=text/html method=xhtml") 
@@ -91,7 +106,8 @@ declare function fcs-tests:display-page($target  as xs:string, $testset as xs:st
     <html>
         <head>
             <title>FCS - test suite</title>
-            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>            
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+             <link rel="stylesheet" type="text/css" href="tests.css" />            
         </head>
         <body>            
             <div id="header">
@@ -164,7 +180,7 @@ return $store-result
 process a test-doc 
 (target is expected to be set in the config)
 :)
-declare function fcs-tests:test-rest ($test-doc as node()) as item()* {
+declare function fcs-tests:test-rest($test-doc as node()) as item()* {
 
     let $result := local:dispatch($test-doc)
     
@@ -210,7 +226,7 @@ typeswitch ($x)
       <span class="check xpath">//sru:numberOfRecords</span>
    </div>
 :)     
-declare function fcs-tests:process-request ($test as node()) as item()* {
+declare function fcs-tests:process-request($test as node()) as item()* {
     
     let $a := $test/a,
         $test-id := xs:string($test/@id),
@@ -223,9 +239,12 @@ declare function fcs-tests:process-request ($test as node()) as item()* {
     let $store := fcs-tests:store-result($target-key, $test-id, $result-data)
     
     (: try to match all the xpath defined for given request :) 
-    let $check := for $xpath in $test/xpath return 
+    let $check := for $xpath in $test/xpath 
+                    let $evald := util:eval($xpath/text())
+                    
+                    return 
                     <div><span class="key">{if (exists($xpath/@key)) then xs:string($xpath/@key) else $xpath/text()}:</span> 
-                          <span class="value">{util:eval($xpath/text())}</span>
+                          <span class="value {if ($evald instance of xs:boolean) then xs:string($evald) else '' }">{$evald}</span>
                     </div>
      (: TODO: check extra for diagnostics :)
      let $diag := $result-data//diag:diagnostic     
