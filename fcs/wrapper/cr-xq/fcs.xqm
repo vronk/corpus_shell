@@ -23,7 +23,7 @@ import module namespace request="http://exist-db.org/xquery/request";
 import module namespace diag =  "http://www.loc.gov/zing/srw/diagnostic/" at  "modules/diagnostics/diagnostics.xqm";
 import module namespace repo-utils = "http://aac.ac.at/content_repository/utils" at  "repo-utils.xqm";
 import module namespace kwic = "http://exist-db.org/xquery/kwic";
-import module namespace cmd = "http://clarin.eu/cmd/collections" at  "cmd-collections.xqm";
+import module namespace cmd = "http://clarin.eu/cmd/collections" at  "/db/cr/modules/cmd/cmd-collections.xqm";
 import module namespace cql = "http://exist-db.org/xquery/cql" at "/db/cr/modules/cqlparser/cqlparser.xqm";
 
 
@@ -140,10 +140,10 @@ declare function fcs:scan($scan-clause  as xs:string, $x-context as xs:string+, 
 
   let $scx := tokenize($scan-clause,'='),
 	 $index-name := $scx[1],  
-	 $index := fcs:get-mapping($index-name, $x-context, $config ),
+	 (:$index := fcs:get-mapping($index-name, $x-context, $config ), :)
 	 (: if no index-mapping found, dare to use the index-name as xpath :) 
 (:	 $index-xpath := if ($index/text()) then $index/text() else $index-name, :)
-     $index-xpath :=  fcs:transform-query($index-name,$x-context,'scan', $config ),
+     $index-xpath :=  fcs:index-as-xpath($index-name,$x-context, $config ),
  	 $filter := ($scx[2],'')[1],	 
 	 $sort := if ($p-sort eq $fcs:scanSortText or $p-sort eq $fcs:scanSortSize) then $p-sort else $fcs:scanSortText	
 	 
@@ -205,7 +205,7 @@ declare function fcs:scan($scan-clause  as xs:string, $x-context as xs:string+, 
 declare function fcs:do-scan-default($scan-clause as xs:string, $index-xpath as xs:string, $x-context as xs:string, $config) as item()* {
   (:        let $getnodes := util:eval(fn:concat("$data-collection/descendant-or-self::", $index-xpath)),:)
     let $data-collection := repo-utils:context-to-collection($x-context, $config)
-        let $getnodes := util:eval(fn:concat("$data-collection", $index-xpath)),
+        let $getnodes := util:eval(fn:concat("$data-collection//", $index-xpath)),
             (: if we collected strings, we have to wrap them in elements 
                     to be able to work with them in xsl :) 
             $prenodes := if ($getnodes[1] instance of xs:string) then
@@ -308,22 +308,18 @@ declare function fcs:search-retrieve($query as xs:string, $x-context as xs:strin
 };
 
 
-(:~ default type= search :)
-declare function fcs:transform-query($cql-query as xs:string, $x-context as xs:string, $config) as xs:string {
-    fcs:transform-query ($cql-query, $x-context, 'search', $config)
-};
-
 (:~ This expects a CQL-query that it translates to XPath
 
 It relies on the external cqlparser-module, that delivers the query in XCQL-format (parse-tree of the query as XML)
 and then applies a stylesheet
 
-@params $type = search or scan
+@params $x-context identifier of a resource/collection
 @returns XPath version of the CQL-query 
 :)
-declare function fcs:transform-query($cql-query as xs:string, $x-context as xs:string, $type as xs:string, $config ) as xs:string {
+declare function fcs:transform-query($cql-query as xs:string, $x-context as xs:string, $config) as xs:string {
     let $mappings := repo-utils:config-value($config, 'mappings')
     return cql:cql2xpath ($cql-query, $x-context, $mappings)
+    
  };
 
 (: old version, "manually" parsing the cql-string
@@ -387,11 +383,16 @@ declare function fcs:transform-query-old($cql-query as xs:string, $x-context as 
 
 };
 
-(:~ if $index-param = "" return the map-element, 
+(:~ gets the mapping-entry for the index
+
+first tries a mapping within given context, then tries defaults.
+
+if $index-param = "" return the map-element, 
     else - if found - return the index-element 
 :)
 declare function fcs:get-mapping($index as xs:string, $x-context as xs:string+, $config) as node()* {
-    let $mappings := doc(repo-utils:config-value($config, 'mappings')), 
+    let $mappings := doc(repo-utils:config-value($config, 'mappings')),
+    
     $context-map := if (exists($mappings//map[xs:string(@key) eq $x-context])) then 
                                 $mappings//map[xs:string(@key) eq $x-context]
                             else $mappings//map[xs:string(@key) eq 'default']
@@ -400,4 +401,17 @@ declare function fcs:get-mapping($index as xs:string, $x-context as xs:string+, 
                 $context-map
              else $context-map/index[xs:string(@key) eq $index]
              
+};
+
+(:~ gets the mapping for the index and creates an xpath (UNION)
+
+@param $index index-key as known to mappings 
+
+@returns xpath-equivalent of given index as defined in mappings; multiple xpaths are translated to a UNION; 
+         if no mapping found, returns the input-index unchanged 
+:)
+declare function fcs:index-as-xpath($index as xs:string, $x-context as xs:string+, $config) as xs:string {    
+    let $index-map := fcs:get-mapping($index, $x-context, $config )      
+     return if (exists($index-map)) then translate(concat('(', string-join($index-map/path,'|'),')'),'.','/')
+                    else $index
 };

@@ -37,6 +37,10 @@ declare function repo-utils:param-value($config, $key as xs:string, $default as 
 };
 
 
+(:~ returns db-collection based on the identifier in x-context, looked up in the mapping 
+
+@returns nodeset of given context 
+:)
 declare function repo-utils:context-to-collection ($x-context as xs:string+, $config) as node()* {
       let $mappings:= doc(repo-utils:config-value($config, 'mappings'))
     return if ($x-context) then collection($mappings//map[xs:string(@key) eq $x-context]/@path)
