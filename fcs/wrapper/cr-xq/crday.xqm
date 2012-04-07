@@ -13,12 +13,6 @@ declare namespace fcs = "http://clarin.eu/fcs/1.0";
 
 declare variable $crday:docTypeTerms := "Terms";
 
-(:
-declare function cmd:base-dbcoll($config) as item()* {
-    collection(repo-utils:config-value($config, 'data.path'))
-};
-:)
-
 (:~ analyzes the xml-structure - sub-elements and text-nodes
 in the context of given collection, starting from given xpath
 
