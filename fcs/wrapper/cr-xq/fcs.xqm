@@ -24,7 +24,7 @@ import module namespace diag =  "http://www.loc.gov/zing/srw/diagnostic/" at  "m
 import module namespace repo-utils = "http://aac.ac.at/content_repository/utils" at  "repo-utils.xqm";
 import module namespace kwic = "http://exist-db.org/xquery/kwic";
 import module namespace cmd = "http://clarin.eu/cmd/collections" at  "cmd-collections.xqm";
-(:import module namespace cql = "http://exist-db.org/xquery/cql" at "/db/cr/modules/cqlparser/cqlparser.xqm";:)
+import module namespace cql = "http://exist-db.org/xquery/cql" at "/db/cr/modules/cqlparser/cqlparser.xqm";
 
 
 declare variable $fcs:explain as xs:string := "explain";
@@ -89,7 +89,7 @@ declare function fcs:repo($config-file as xs:string) as item()* {
     else 
       diag:diagnostics("unsupported-operation", $operation)
        
-   return  $result
+   return  repo-utils:serialise-as($result, $x-format, $operation, $config)
    
 };
 
@@ -313,20 +313,26 @@ declare function fcs:transform-query($cql-query as xs:string, $x-context as xs:s
     fcs:transform-query ($cql-query, $x-context, 'search', $config)
 };
 
-(:~ This expects a CQL-query that it (will be able to) translates to XPath
-params: 
-$type = search or scan
-returns: XPath version of the CQL-query 
-currently it accepts: 
+(:~ This expects a CQL-query that it translates to XPath
+
+It relies on the external cqlparser-module, that delivers the query in XCQL-format (parse-tree of the query as XML)
+and then applies a stylesheet
+
+@params $type = search or scan
+@returns XPath version of the CQL-query 
+:)
+declare function fcs:transform-query($cql-query as xs:string, $x-context as xs:string, $type as xs:string, $config ) as xs:string {
+    let $mappings := repo-utils:config-value($config, 'mappings')
+    return cql:cql2xpath ($cql-query, $x-context, $mappings)
+ };
+
+(: old version, "manually" parsing the cql-string
+it accepted/understood: 
 term
 index=term
 index relation term
 :)
-declare function fcs:transform-query($cql-query as xs:string, $x-context as xs:string, $type as xs:string, $config ) as xs:string {
-
-(: parse query  :)
-(: let $xcql := cql:cql-to-xcql($cql-query) 
-   let $xpath := cql:cql2xpath($cql-query) :)
+declare function fcs:transform-query-old($cql-query as xs:string, $x-context as xs:string, $type as xs:string, $config ) as xs:string {
 
     let $query-constituents := if (contains($cql-query,'=')) then 
                                         tokenize($cql-query, "=") 

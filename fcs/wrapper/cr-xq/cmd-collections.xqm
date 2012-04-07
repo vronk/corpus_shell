@@ -14,7 +14,7 @@ declare variable $cmd:collectionRoot := "root";
 declare variable $cmd:scan-collection := "cmd.collection";
 
 
-declare function cmd:base-dbcoll($config) as item() {
+declare function cmd:base-dbcoll($config) as item()* {
     collection(repo-utils:config-value($config, 'data.path'))
 };
 
