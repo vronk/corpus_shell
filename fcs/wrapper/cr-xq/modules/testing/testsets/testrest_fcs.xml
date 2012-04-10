@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<info xml:lang="en">
+    <h2>Test suite - FCS-interface</h2>
+    <div>
+        <test id="sru-explain">
+            <a class="request" href="">endpoint-root (expected: explain)</a>
+            <xpath>exists($result-data//explain)</xpath>
+            <xpath>exists($result-data//zr:explain)</xpath>
+            <xpath key="count sets">count($result-data//set)</xpath>
+            <xpath key="count indexes">count($result-data//index)</xpath>
+        </test>
+        <test id="sru-explain-op">
+            <a class="request" href="?operation=explain">operation: explain </a>
+            <xpath>exists($result-data//explain)</xpath>
+            <xpath>exists($result-data//zr:explain)</xpath>
+            <xpath key="count sets">count($result-data//set)</xpath>
+            <xpath key="count indexes">count($result-data//index)</xpath>
+        </test>
+        <test id="scan-fcs-resource">
+            <a class="request" href="?operation=scan&amp;scanClause=fcs.resource">scan: fcs.resource</a>
+            <xpath>exists($result-data//sru:scanResponse)</xpath>
+            <xpath key="count terms">count($result-data//sru:term)</xpath>
+        </test>
+    </div>
+</info>

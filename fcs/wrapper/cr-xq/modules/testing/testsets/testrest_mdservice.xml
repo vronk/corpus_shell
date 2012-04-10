@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<info xml:lang="en">
+    <div class="title">Tests: mdservice </div>
+    <h3>Workspaceprofile</h3>
+    <div>
+        <test id="mdservice-ws-server">
+            <a class="request" href="/workspaceprofile/server">default workspace profile</a>
+            <xpath key="server-WorkspaceProfile">exists($result-data//httpclient:body/WorkspaceProfile[@user="server"])</xpath>
+        </test>
+        <test id="mdservice-ws-server-options">
+            <a class="request" href="/workspaceprofile/server?part=options">default workspace profile - part options</a>
+            <xpath key="only options">exists($result-data//httpclient:body/Options)</xpath>
+        </test>
+        <test id="mdservice-ws-server-repositories">
+            <a class="request" href="/workspaceprofile/server?part=repositories">default workspace profile - part repositories</a>
+            <xpath key="only repositories">exists($result-data//httpclient:body/Repositories)</xpath>
+            <xpath key="count repositories">count($result-data//Repositories/item)</xpath>
+        </test>
+        <test id="mdservice-ws-server-repositories-as-fcs-resource-scan">
+            <a class="request" href="/workspaceprofile/server?part=repositories&amp;format=xml&amp;extradata=fcs.resource">repositories as fcs.resource-scan</a>
+            <xpath key="has sru:scanResponse">exists($result-data//sru:scanResponse)</xpath>
+            <xpath key="count terms">count($result-data//sru:term) &gt; 0</xpath>
+            <xpath key="count terms">count($result-data//sru:term)</xpath>
+        </test>
+    </div>
+</info>

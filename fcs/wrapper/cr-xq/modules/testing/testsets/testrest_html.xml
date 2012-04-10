@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<info xml:lang="en">
+    <h2>Test suite - HTML-views</h2>
+    <div>
+        <test id="scan-fcs-resource">
+            <a class="request" href="?operation=scan&amp;scanClause=fcs.resource&amp;x-format=htmlpage">scan: fcs.resource htmlpage</a>
+            <xpath key="heading">$result-data//xhtml:h1/text()</xpath>
+            <xpath key="count terms">count($result-data//div[@class='content']/table/tr)</xpath>
+        </test>
+    </div>
+</info>
