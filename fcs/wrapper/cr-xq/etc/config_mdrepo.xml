@@ -7,6 +7,7 @@
     <property key="cache.path">/db/mdrepo-data/_indexes</property>
     <property key="metadata.path">/db/mdrepo-data/_cmd</property>
     <property key="index.prefix">/db/mdrepo-data/_indexes/index_</property>
+    <property key="log.path">/db/cr-logs</property>
     <property key="scripts.path">/db/cr/xsl/</property>
     <property key="scan.xsl">scan2view.xsl</property>
     <property key="searchRetrieve.xsl">result2view_v1.xsl</property>

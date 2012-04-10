@@ -1,6 +1,10 @@
-let $doc-name := xmldb:store("/db/mdrepo-data", "stats.xml", <result></result>),
-$doc := doc($doc-name),
-$collection := collection("/db/mdrepo-data"),
+let $doc-name := xmldb:store("/db/mdrepo-data", "stats_cmd.xml", <result></result>),
+    $doc := doc($doc-name),
+    (:    $ns-uri := namespace-uri($context[1]/*), :)         	           
+            (: dynamically declare a namespace for the next step, if one is defined in current context :)
+    (: $dummy := if (exists($ns-uri)) then util:declare-namespace("",$ns-uri) else () :)
+    $dummy := util:declare-namespace("",xs:anyURI("http://www.clarin.eu/cmd/")),
+    $collection := collection("/db/mdrepo-data"),
 $items := (<item key="C" label="CMD" >count($collection//CMD)</item> ,
 <item key="C.0" label="CMD without " >count($collection//CMD[not(.//ResourceType='Resource')][not(.//ResourceType='Metadata')])</item>,
 <item key="C.R+M" label="CMD with MD and Res" >count(($collection//CMD[.//ResourceType='Resource'][.//ResourceType='Metadata']))</item>,
@@ -11,6 +15,8 @@ $items := (<item key="C" label="CMD" >count($collection//CMD)</item> ,
 <item key="C.R.1+2" label="CMD - with relative and http Resource">count($collection//CMD[.//ResourceType='Resource'][starts-with(.//ResourceRef,'.')][starts-with(.//ResourceRef,'http')])</item>,
 <item key="C.R.3" label="CMD - Resource only filename (not empty, no '/')" >count($collection//CMD[.//ResourceProxy[ResourceType='Resource'][ResourceRef[not(. = "")][not(contains(.,'/'))]]])</item>,
 <item key="RP.R" label="ResourceProxy - Resource" >count(//ResourceProxy[ResourceType='Resource'])</item>,
+
+<item key="C.cc.self" label="CMD with IsPartOf=MdSelfLink" >count($collection//CMD[.//MdSelfLink=.//IsPartOf])</item>,
 
 <item key="C.M" label="CMD with Metadata = Collections" >count($collection//CMD[.//ResourceType='Metadata'])</item>,
 <item key="C.M.1" label="CMD with relative MD" >count($collection//CMD[.//ResourceType='Metadata'][starts-with(.//ResourceRef,'.')])</item>,

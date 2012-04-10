@@ -1,14 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map>
-    <map key="default">
+    <map key="default" path="/db/mdrepo-data" base_elem="CMD">
         <!-- very bad idea to give * as default PLUS default base-elem !!! 
         <index key="cql.serverChoice" base_elem="*">*</index>
         -->
-        <index key="cql.serverChoice" base_elem="CMD">*</index>
-        <index key="cmd.collection" base_elem="CMD" type="explicit" status="indexed">MdSelfLink</index>
+        <index key="cql.serverChoice" base_elem="CMD">
+            <path>Components</path>
+        </index>
+        <index key="cmd.collection" base_elem="CMD" type="explicit" status="indexed">
+            <path>MdSelfLink</path>
+        </index>
+        <index key="cmd.profile" base_elem="CMD" status="indexed">
+            <path>MdProfile</path>
+        </index>
     </map>
-    <map key="clarin.eu:mdrepo" path="/db/mdrepo-data" base_elem="CMD">
-        <index key="cql.serverChoice">*</index>
-        <index key="cmd.collection" base_elem="CMD" type="explicit" status="indexed">MdSelfLink</index>
+    <map key="http://clarin.eu/lrt-inventory" path="/db/mdrepo-data/lrt-20110622"/>
+    <map key="olac-root" path="/db/mdrepo-data/olac/"/>
+    <map key="clarin-at:aac-test-corpus" path="/db/mdrepo-data/aac-test-corpus" base_elem="CMD">
+        <index key="isocat:DC-2580">
+            <path>teiHeader.fileDesc.extent</path>
+        </index>
+        <index key="dce:title">
+            <path>teiHeader.fileDesc.titleStmt.title</path>
+            <path>teiHeader.fileDesc.sourceDesc.biblStruct.monogr.title</path>
+        </index>
+        <index key="dce:publisher">
+            <path>teiHeader.fileDesc.publicationStmt.publisher</path>
+            <path>teiHeader.fileDesc.sourceDesc.biblStruct.monogr.imprint.publisher</path>
+        </index>
+        <index key="dce:rights">
+            <path>teiHeader.fileDesc.publicationStmt.availability</path>
+        </index>
+        <index key="dce:date">
+            <path>teiHeader.fileDesc.publicationStmt.date</path>
+        </index>
+        <index key="dce:source">
+            <path>teiHeader.fileDesc.sourceDesc</path>
+        </index>
+        <index key="dce:contributor">
+            <path>teiHeader.fileDesc.sourceDesc.biblStruct.monogr.editor</path>
+        </index>
+        <index key="dce:identifier">
+            <path>teiHeader.fileDesc.sourceDesc.biblStruct.monogr.idno</path>
+        </index>
+        <index key="isocat:DC-2510">
+            <path>teiHeader.fileDesc.sourceDesc.biblStruct.monogr.imprint.date</path>
+        </index>
+        <index key="dce:language">
+            <path>teiHeader.profileDesc.langUsage.language</path>
+        </index>
     </map>
 </map>

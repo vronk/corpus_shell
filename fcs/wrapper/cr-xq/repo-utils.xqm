@@ -23,8 +23,6 @@ declare variable $repo-utils:responseFormatText as xs:string := "text";
 declare variable $repo-utils:responseFormatHTML as xs:string := "html";
 
 
-
-
 declare function repo-utils:config-value($config, $key as xs:string) as xs:string* {
     $config//property[@key=$key]
 };
@@ -37,14 +35,31 @@ declare function repo-utils:param-value($config, $key as xs:string, $default as 
 };
 
 
-(:~ returns db-collection based on the identifier in x-context, looked up in the mapping 
+(:~ returns db-collection (as nodeset) based on the identifier in x-context, looked up in the mapping or default collection as defined in config 
 
-@returns nodeset of given context 
+@returns nodeset of given context, or empty result if no match; if no context provided returns default data.path from the config (if available, otherwise again empty result)
+
+TODO: accept $x-context as xs:string*
 :)
-declare function repo-utils:context-to-collection ($x-context as xs:string+, $config) as node()* {
+declare function repo-utils:context-to-collection ($x-context as xs:string, $config) as node()* {
+      let $mappings := doc(repo-utils:config-value($config, 'mappings'))
+      let $dbcoll-path := repo-utils:context-to-collection-path($x-context, $config)
+    return if ($dbcoll-path eq "" ) then ()
+                else collection($dbcoll-path)                    
+};
+
+(:~ returns path to db-collection (as nodeset) based on the identifier in x-context, 
+looked up in the mapping or default data.path as defined in config
+:)
+declare function repo-utils:context-to-collection-path ($x-context as xs:string, $config) as xs:string {
       let $mappings:= doc(repo-utils:config-value($config, 'mappings'))
-    return if ($x-context) then collection($mappings//map[xs:string(@key) eq $x-context]/@path)
-                  else collection(repo-utils:config-value($config, 'data.path'))
+    return if ($x-context) then 
+                    if (exists($mappings//map[xs:string(@key) eq $x-context]/@path)) then 
+                            $mappings//map[xs:string(@key) eq $x-context]/xs:string(@path)
+                        else ""
+                  else if (exists(repo-utils:config-value($config, 'data.path'))) then  
+                        repo-utils:config-value($config, 'data.path')
+                  else ""
 };
 
 (:~ Get the resource by PID/handle/URL or some known identifier.

@@ -19,11 +19,12 @@ module namespace fcs = "http://clarin.eu/fcs/1.0";
 
 declare namespace sru = "http://www.loc.gov/zing/srw/";
 declare namespace tei = "http://www.tei-c.org/ns/1.0";
+declare namespace cmd = "http://www.clarin.eu/cmd/"; 
 import module namespace request="http://exist-db.org/xquery/request";
 import module namespace diag =  "http://www.loc.gov/zing/srw/diagnostic/" at  "modules/diagnostics/diagnostics.xqm";
 import module namespace repo-utils = "http://aac.ac.at/content_repository/utils" at  "repo-utils.xqm";
 import module namespace kwic = "http://exist-db.org/xquery/kwic";
-import module namespace cmd = "http://clarin.eu/cmd/collections" at  "/db/cr/modules/cmd/cmd-collections.xqm";
+import module namespace cmdcoll = "http://clarin.eu/cmd/collections" at  "/db/cr/modules/cmd/cmd-collections.xqm";
 import module namespace cql = "http://exist-db.org/xquery/cql" at "/db/cr/modules/cqlparser/cqlparser.xqm";
 
 
@@ -133,7 +134,8 @@ declare function fcs:scan($scanClause as xs:string, $x-context as xs:string*) {
 	
 : actually wrapping function handling caching of the actual scan result (coming from do-scan-default())
 : or fetching the cached result (if available)
-: also dispatching to cmd-collections for the scan-clause=cmd.collections 
+: also dispatching to cmd-collections for the scan-clause=cmd.collections
+:   there either scanClause-filter or x-context is used as constraint (scanClause-filter is prefered))
 
 :)
 declare function fcs:scan($scan-clause  as xs:string, $x-context as xs:string+, $start-item as xs:integer, $max-items as xs:integer, $response-position as xs:integer, $max-depth as xs:integer, $p-sort as xs:string?, $config) as item()? {
@@ -150,16 +152,18 @@ declare function fcs:scan($scan-clause  as xs:string, $x-context as xs:string+, 
 	 (: WATCHME: this is quite unreliable, it relies on manual (urn-like) creation of the ids for the resources)  
 	   it won't work once the id become PIDs 
 	   this is only used for generating the cache-id to store the resultset :)
-	 let $short-xcontext := substring-after($x-context, concat(repo-utils:config-value($config, 'explain'),':')) 
-    let $index-doc-name := repo-utils:gen-cache-id("index", ($short-xcontext, $index-name, $sort, $max-depth),""),
+	 let $short-xcontext := substring-after($x-context, concat(repo-utils:config-value($config, 'explain'),':'))
+	 let $sanitized-xcontext := if ($short-xcontext='') then repo-utils:sanitize-name($x-context) else $short-xcontext   
+    let $index-doc-name := repo-utils:gen-cache-id("index", ($sanitized-xcontext, $index-name, $sort, $max-depth),""),
   
   (: get the base-index from cache, or create and cache :)
   $index-scan := if (repo-utils:is-in-cache($index-doc-name, $config)) then
           repo-utils:get-from-cache($index-doc-name, $config) 
         else
             let $data :=
-                if ($index-name eq $cmd:scan-collection) then                        
-                    cmd:colls($filter, $max-depth, cmd:base-dbcoll($config)) 
+                if ($index-name eq $cmdcoll:scan-collection) then
+                    let $starting-handle := if ($filter ne '') then $filter else $x-context
+                    cmdcoll:colls($starting-handle, $max-depth, cmdcoll:base-dbcoll($config)) 
                 else
                     fcs:do-scan-default($scan-clause, $index-xpath, $x-context, $config)         
 
