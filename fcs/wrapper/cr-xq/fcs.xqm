@@ -163,7 +163,7 @@ declare function fcs:scan($scan-clause  as xs:string, $x-context as xs:string+, 
             let $data :=
                 if ($index-name eq $cmdcoll:scan-collection) then
                     let $starting-handle := if ($filter ne '') then $filter else $x-context
-                    cmdcoll:colls($starting-handle, $max-depth, cmdcoll:base-dbcoll($config)) 
+                    return cmdcoll:colls($starting-handle, $max-depth, cmdcoll:base-dbcoll($config)) 
                 else
                     fcs:do-scan-default($scan-clause, $index-xpath, $x-context, $config)         
 
@@ -399,12 +399,17 @@ declare function fcs:get-mapping($index as xs:string, $x-context as xs:string+, 
     
     $context-map := if (exists($mappings//map[xs:string(@key) eq $x-context])) then 
                                 $mappings//map[xs:string(@key) eq $x-context]
-                            else $mappings//map[xs:string(@key) eq 'default']
+                            else $mappings//map[xs:string(@key) eq 'default'],    
+    $context-index := $context-map/index[xs:string(@key) eq $index]
+    
     
     return  if ($index eq '') then 
                 $context-map
-             else $context-map/index[xs:string(@key) eq $index]
-             
+             else if (exists($context-index)) then 
+                        $context-index
+                else (: if no contextual index, dare to take any index - may be dangerous!  :)
+                    let $any-index := $mappings//index[xs:string(@key) eq $index]
+                    return $any-index
 };
 
 (:~ gets the mapping for the index and creates an xpath (UNION)

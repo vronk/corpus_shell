@@ -35,14 +35,19 @@ declare function repo-utils:param-value($config, $key as xs:string, $default as 
 };
 
 
+
 (:~ returns db-collection (as nodeset) based on the identifier in x-context, looked up in the mapping or default collection as defined in config 
 
-@returns nodeset of given context, or empty result if no match; if no context provided returns default data.path from the config (if available, otherwise again empty result)
+@returns nodeset of given context 
+ if no x-context match or no context provided returns default collection from the config (data.path ) 
+ (if available, otherwise again empty result)
 
+WATCHME: changed to lax handling of the context (if no match - go to default)
+        gives better recall, but may confuse - alternatively: strict: empty result if x-context does not match 
 TODO: accept $x-context as xs:string*
 :)
-declare function repo-utils:context-to-collection ($x-context as xs:string, $config) as node()* {
-      let $mappings := doc(repo-utils:config-value($config, 'mappings'))
+declare function repo-utils:context-to-collection($x-context as xs:string, $config) as node()* {
+(:      let $mappings := doc(repo-utils:config-value($config, 'mappings')):)
       let $dbcoll-path := repo-utils:context-to-collection-path($x-context, $config)
     return if ($dbcoll-path eq "" ) then ()
                 else collection($dbcoll-path)                    
@@ -50,13 +55,21 @@ declare function repo-utils:context-to-collection ($x-context as xs:string, $con
 
 (:~ returns path to db-collection (as nodeset) based on the identifier in x-context, 
 looked up in the mapping or default data.path as defined in config
+
+@returns dbcoll-path of given context
+ if no x-context match or no context provided returns default collection from the config (data.path ) 
+ (if available, otherwise again empty result)
+
+WATCHME: changed to lax handling of the context (if no match - go to default)
+        gives better recall, but may confuse - alternatively: strict: empty result if x-context does not match 
+T
 :)
-declare function repo-utils:context-to-collection-path ($x-context as xs:string, $config) as xs:string {
+declare function repo-utils:context-to-collection-path($x-context as xs:string, $config) as xs:string {
       let $mappings:= doc(repo-utils:config-value($config, 'mappings'))
-    return if ($x-context) then 
-                    if (exists($mappings//map[xs:string(@key) eq $x-context]/@path)) then 
-                            $mappings//map[xs:string(@key) eq $x-context]/xs:string(@path)
-                        else ""
+    return    (: if ($x-context) then :) 
+            if (exists($mappings//map[xs:string(@key) eq $x-context]/@path)) then 
+                    $mappings//map[xs:string(@key) eq $x-context]/xs:string(@path)
+                (: else "" :)
                   else if (exists(repo-utils:config-value($config, 'data.path'))) then  
                         repo-utils:config-value($config, 'data.path')
                   else ""
