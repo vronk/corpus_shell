@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestSet type="internal">
+    <test id="cmd-tests">
+        <xpath key="C" label="CMD">count($context//CMD)</xpath>
+        <xpath key="C.-handle" label="CMD without MdSelfLink">count($context//CMD[not(Header/MdSelfLink) or Header/MdSelfLink=''])</xpath>
+        <xpath key="C.0" label="CMD without MD or Res - ResourceRefs ">count($context//CMD[not(.//ResourceType='Resource')][not(.//ResourceType='Metadata')])</xpath>
+        <xpath key="C.R+M" label="CMD with MD and Res">count($context//CMD[.//ResourceType='Resource'][.//ResourceType='Metadata'])</xpath>
+        <xpath key="C.R" label="CMD with Resource">count($context//CMD[.//ResourceType='Resource'])</xpath>
+        <xpath key="C.R.0" label="CMD - with Resource empty">count($context//CMD[.//ResourceType='Resource'][.//ResourceRef[. = ""]])</xpath>
+        <xpath key="C.R.1" label="CMD with relative Resource (starts-with('.'))">count($context//CMD[.//ResourceType='Resource'][starts-with(.//normalize-space(ResourceRef),'.')])</xpath>
+        <xpath key="C.R.2" label="CMD with http-uri Resource">count($context//CMD[.//ResourceType='Resource'][starts-with(.//normalize-space(ResourceRef), 'http')])</xpath>
+        <xpath key="C.R.1+2" label="CMD - with relative and http Resource">count($context//CMD[.//ResourceType='Resource'][starts-with(.//ResourceRef, '.')][starts-with(.//normalize-space(ResourceRef), 'http')])</xpath>
+        <xpath key="C.R.3" label="CMD - Resource only filename (not empty no '/')">count($context//CMD[.//ResourceProxy[ResourceType='Resource'][ResourceRef[not(. = "")][not(contains(.,'/'))]]])</xpath>
+        <xpath key="RP.R" label="ResourceProxy - Resource">count($context//ResourceProxy[ResourceType='Resource'])</xpath>
+        <xpath key="C.I" label="CMD with IsPartOf">count($context//CMD[.//IsPartOf ne ''])</xpath>
+        <xpath key="C.cc.self" label="CMD with IsPartOf=MdSelfLink">count($context//CMD[.//MdSelfLink=.//IsPartOf])</xpath>
+        <xpath key="C.cc.link-match" label="CMD with MdSelfLink=ResourceRef">count($context//MdSelfLink[. = $context//ResourceProxy[ResourceType eq 'Metadata']/ResourceRef])</xpath>
+        <xpath key="C.cc.orphans" label="CMD with orphaned MdSelfLink">count($context//MdSelfLink[not(. = $context//ResourceProxy[ResourceType eq 'Metadata']/ResourceRef)])</xpath>
+<!--        <xpath key="C.cc.deadlinks" label="CMD with dead-link Metadata-ResourceRef">count($context//ResourceRef[not(. =  $context//MdSelfLink)][../ResourceType eq 'Metadata'])</xpath>-->
+        <xpath key="C.cc.deadlinks" label="CMD with dead-link Metadata-ResourceRef">count($context//ResourceRef[not(. =  $context//MdSelfLink)] intersect $context//ResourceType[. = 'Metadata']/../ResourceRef)</xpath>
+        <xpath key="C.M" label="CMD with Metadata = Collections">count($context//CMD[.//ResourceType='Metadata'])</xpath>
+        <xpath key="C.M.1" label="CMD with relative MD">count($context//CMD[.//ResourceType='Metadata'][starts-with(.//normalize-space(ResourceRef),'.')])</xpath>
+        <xpath key="C.M.2" label="CMD with http-uri MD">count($context//CMD[.//ResourceType='Metadata'][starts-with(.//normalize-space(ResourceRef),'http')])</xpath>
+    </test>
+</TestSet>
