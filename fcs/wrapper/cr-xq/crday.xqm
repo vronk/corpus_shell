@@ -28,11 +28,16 @@ declare function crday:ay-xml($context as item()*, $path as xs:string, $depth as
   if ($collections[1] eq $cr:collectionRoot) then
   util:eval(fn:concat("$collection/descendant::IsPartOf[ft:query(., <query><term>", xdb:decode($coll), "</term></query>)]/ancestor-or-self::CMD/descendant-or-self::", $path))
   :)
-
+   let $ns-uri := namespace-uri($context[1]/*),
+       $qname := $context[1]/*/name(),
+       $prefix := if (exists(prefix-from-QName($qname))) then prefix-from-QName($qname) else "",
+       $dummy := if (exists($ns-uri)) then util:declare-namespace($prefix,$ns-uri) else ()
+   
   let $path-nodes := util:eval(fn:concat("$context/descendant-or-self::", $path))
   
-  let $entries := crday:elem-r($path-nodes, $path, (), $depth, $depth),
+  let $entries := crday:elem-r($path-nodes, $path, $ns-uri, $depth, $depth),
 (:      $coll-names-value := if (fn:empty($collections)) then () else attribute colls {fn:string-join($collections, ",")},:)
+        $dummy-undeclare-ns := util:declare-namespace("",xs:anyURI("")), 
 	  $result := element {$crday:docTypeTerms} {
 (:      		  $coll-names-value,:)
       		  attribute depth {$depth},
@@ -54,20 +59,21 @@ declare function crday:elem-r($path-nodes as node()*, $path as xs:string, $ns as
 	$nodes-child-terminal := if (empty($child-elements)) then $path-nodes else () (: Maybe some selected elements $child-elements[not(element())] later on :),
 	$text-nodes := $nodes-child-terminal/text(),
 	$text-count := count($text-nodes),
-	$text-count-distinct := count(distinct-values($text-nodes))
+	$text-count-distinct := count(distinct-values($text-nodes)),
+	$dummy-undeclare-ns := util:declare-namespace("",xs:anyURI(""))
 	return 
 (:	<Term path="{fn:concat("//", $path)}" name="{text:groups($path, "/([^/]+)$")[last()]}" count="{$path-count}" count_text="{$text-count}"  count_distinct_text="{$text-count-distinct}">{ :)
 	<Term path="{fn:concat("//", $path)}" name="{(text:groups($path, "/([^/]+)$")[last()],$path)[1] }" count="{$path-count}" count_text="{$text-count}"  count_distinct_text="{$text-count-distinct}">{
 	   (attribute ns {$ns},
 	  if ($depth > 0) then
-	    (for $ns-qname in $child-ns-qnames[. != '']
+	    for $ns-qname in $child-ns-qnames[. != '']
 	       let $ns-uri := substring-before($ns-qname, '|'),
 	           $qname := substring-after($ns-qname, '|'),
 	           $prefix := if (exists(prefix-from-QName($qname))) then prefix-from-QName($qname) else "",
 	           (: dynamically declare a namespace for the next step, if one is defined in current context :)
 	           $dummy := if (exists($ns-uri)) then util:declare-namespace($prefix,$ns-uri) else ()
-	    return
-	      crday:elem-r(util:eval(concat("$path-nodes/", $qname)), concat($path, '/', $qname), $ns-uri, $max-depth, $depth - 1)			
+	           return  
+	           crday:elem-r(util:eval(concat("$path-nodes/", $qname)), concat($path, '/', $qname), $ns-uri, $max-depth, $depth - 1)			
 	  else 'maxdepth'
 	)}</Term>
 };
