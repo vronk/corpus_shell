@@ -25,6 +25,7 @@ import module namespace diag =  "http://www.loc.gov/zing/srw/diagnostic/" at  "m
 import module namespace repo-utils = "http://aac.ac.at/content_repository/utils" at  "repo-utils.xqm";
 import module namespace kwic = "http://exist-db.org/xquery/kwic";
 import module namespace cmdcoll = "http://clarin.eu/cmd/collections" at  "/db/cr/modules/cmd/cmd-collections.xqm";
+import module namespace cmdcheck = "http://clarin.eu/cmd/check" at  "/db/cr/modules/cmd/cmd-check.xqm";
 import module namespace cql = "http://exist-db.org/xquery/cql" at "/db/cr/modules/cqlparser/cqlparser.xqm";
 
 
@@ -84,7 +85,7 @@ declare function fcs:repo($config-file as xs:string) as item()* {
       	 let $cql-query := $query,
 			$start-item := request:get-parameter("startRecord", 1),
 			$max-items := request:get-parameter("maximumRecords", 50),	
-			$x-dataview := request:get-parameter("x-dataview", 'kwic')
+			$x-dataview := request:get-parameter("x-dataview", repo-utils:config-value($config, 'default.dataview'))
             (: return cr:search-retrieve($cql-query, $query-collections, $format, xs:integer($start-item), xs:integer($max-items)) :)
             return fcs:search-retrieve($cql-query, $x-context, xs:integer($start-item), xs:integer($max-items), $x-dataview, $config)
     else 
@@ -163,9 +164,13 @@ declare function fcs:scan($scan-clause  as xs:string, $x-context as xs:string+, 
             let $data :=
                 if ($index-name eq $cmdcoll:scan-collection) then
                     let $starting-handle := if ($filter ne '') then $filter else $x-context
-                    return cmdcoll:colls($starting-handle, $max-depth, cmdcoll:base-dbcoll($config)) 
+                    return cmdcoll:colls($starting-handle, $max-depth, cmdcoll:base-dbcoll($config))
+                  (: just a hack for now, handling of special indexes should be put solved in some more easily extensible way :)  
+                else if ($index-name eq 'cmd.profile') then
+                    let $context := repo-utils:context-to-collection($x-context, $config)
+                    return  cmdcheck:stat-profiles($context)
                 else
-                    fcs:do-scan-default($scan-clause, $index-xpath, $x-context, $config)         
+                    fcs:do-scan-default($scan-clause, $index-xpath, $x-context, $sort, $config)         
 
         return repo-utils:store-in-cache($index-doc-name , $data, $config)
 
@@ -206,7 +211,7 @@ declare function fcs:scan($scan-clause  as xs:string, $x-context as xs:string+, 
 };
 
 
-declare function fcs:do-scan-default($scan-clause as xs:string, $index-xpath as xs:string, $x-context as xs:string, $config) as item()* {
+declare function fcs:do-scan-default($scan-clause as xs:string, $index-xpath as xs:string, $x-context as xs:string, $sort as xs:string, $config) as item()* {
   (:        let $getnodes := util:eval(fn:concat("$data-collection/descendant-or-self::", $index-xpath)),:)
     let $data-collection := repo-utils:context-to-collection($x-context, $config)
         let $getnodes := util:eval(fn:concat("$data-collection//", $index-xpath)),
@@ -217,7 +222,9 @@ declare function fcs:do-scan-default($scan-clause as xs:string, $index-xpath as 
                             else for $t in $getnodes return <v>{string-join($t//text()," ")}</v>
         let $nodes := <nodes path="{fn:concat('//', $index-xpath)}"  >{$prenodes}</nodes>,
         	(: use XSLT-2.0 for-each-group functionality to aggregate the values of a node - much, much faster, than XQuery :)
-   	    $data := transform:transform($nodes,$fcs:indexXsl, <parameters><param name="scan-clause" value="{$scan-clause}"/></parameters>)
+   	    $data := transform:transform($nodes,$fcs:indexXsl, 
+   	                <parameters><param name="scan-clause" value="{$scan-clause}"/>
+   	                <param name="sort" value="{$sort}"/></parameters>)
    	    
    	  return $data
 };
@@ -236,7 +243,7 @@ declare function fcs:search-retrieve($query as xs:string, $x-context as xs:strin
     let	$result-count := fn:count($results),
     $result-seq := fn:subsequence($results, $startRecord, $maximumRecords),
     $seq-count := fn:count($result-seq),
-    $end-time := util:system-dateTime(),
+    $end-time := util:system-dateTime(),    
     
     (:<sru:recordSchema>mods</sru:recordSchema>:)          
           (:<xQuery><searchClause xmlns="http://www.loc.gov/zing/cql/xcql/">
@@ -266,40 +273,15 @@ declare function fcs:search-retrieve($query as xs:string, $x-context as xs:strin
 		<fcs:transformedQuery>{ $xpath-query }</fcs:transformedQuery>
       </sru:extraResponseData>
       <sru:records>
-	       {for $rec at $pos in $result-seq
-	           let $exp-rec := util:expand($rec, "expand-xincludes=no") (: kwic:summarize($rec,<config width="40"/>) :)
-	           let $kwic-config := <config width="{$fcs:kwicWidth}"/>
-	           let $kwic-html := kwic:summarize($exp-rec, $kwic-config)
-	           
-	           (: a basic diry solution to the data-view parameterization 
-	           now it only checks if kwic and/or full, but 
-	               TODO: the configuration of data-view should be outsourced to configuration:)	           
-	           let $kwic := if ('kwic' = $x-dataview) then
-	                               <fcs:DataView type="kwic">{
-	                                       for $match in $kwic-html 
-	                                       return (<fcs:c type="left">{$match/span[1]/text()}</fcs:c>, 
-            	           (: <c type="left">{kwic:truncate-previous($exp-rec, $matches[1], (), 10, (), ())}</c> :)
-            	                          <fcs:kw>{$match/span[2]/text()}</fcs:kw>,
-            	                          <fcs:c type="right">{$match/span[3]/text()}</fcs:c>)            	                       
-                           (: let $summary  := kwic:get-summary($exp-rec, $matches[1], $config) :)
-            (:	                               <fcs:DataView type="kwic-html">{$kwic-html}</fcs:DataView>:)
-                                }</fcs:DataView>
-                              else ()
-                
+	       {for $rec at $pos in $result-seq	           
+	           let $rec-data := fcs:format-record-data($rec,$x-dataview, $config)	           
 	           return 
 	               <sru:record>
 	                   <sru:recordSchema>http://clarin.eu/fcs/1.0/Resource.xsd</sru:recordSchema>
 	                   <sru:recordPacking>xml</sru:recordPacking>
-	                   <sru:recordData>	                       
-	                       <fcs:Resource>
-	                           <fcs:ResourceFragment>
-	                             {($kwic,
-    	                         if ('full' = $x-dataview) then <fcs:DataView type="full">{$exp-rec}</fcs:DataView>
-        	                         else ()
-        	                         )}
-    	                       </fcs:ResourceFragment>
-	                       </fcs:Resource>
-	                   </sru:recordData>
+	                   <sru:recordData>
+	                     {$rec-data}
+                        </sru:recordData>
 	                   <sru:recordPosition>{$pos}</sru:recordPosition>
 	                   <sru:recordIdentifier>{$rec/@xml:id}</sru:recordIdentifier>
 	                </sru:record>
@@ -311,6 +293,42 @@ declare function fcs:search-retrieve($query as xs:string, $x-context as xs:strin
                     
 };
 
+declare function fcs:format-record-data($raw-record-data as node(), $data-view as xs:string+, $config as node()) as item()*  {
+
+    let $exp-rec := util:expand($raw-record-data, "expand-xincludes=no") (: kwic:summarize($rec,<config width="40"/>) :)
+	       
+    let $kwic := if ('kwic' = $data-view) then
+                   let $kwic-config := <config width="{$fcs:kwicWidth}"/>
+                   let $kwic-html := kwic:summarize($exp-rec, $kwic-config)
+                       
+                    return if (exists($kwic-html)) then  
+                                           <fcs:DataView type="kwic">{
+                                               for $match in $kwic-html 
+                                               return (<fcs:c type="left">{$match/span[1]/text()}</fcs:c>, 
+                                       (: <c type="left">{kwic:truncate-previous($exp-rec, $matches[1], (), 10, (), ())}</c> :)
+                                                      <fcs:kw>{$match/span[2]/text()}</fcs:kw>,
+                                                      <fcs:c type="right">{$match/span[3]/text()}</fcs:c>)            	                       
+                                       (: let $summary  := kwic:get-summary($exp-rec, $matches[1], $config) :)
+                        (:	                               <fcs:DataView type="kwic-html">{$kwic-html}</fcs:DataView>:)
+                                            }</fcs:DataView>
+                                     else (: if no kwic-match let's take first 100 characters 
+                                        There c/should be some more sophisticated way to extract most significant info 
+                                        e.g. match on the query-field :)
+                                       <fcs:DataView type="kwic">{substring($raw-record-data,1,100)}</fcs:DataView>                                         
+                     else ()
+    let $title := <fcs:DataView type="title">{cmdcoll:get-md-collection-name($raw-record-data)}</fcs:DataView>                      
+    return if ($data-view = 'raw') then $raw-record-data 
+            else <fcs:Resource>
+                       <fcs:ResourceFragment>                       
+                         {($title, $kwic,
+                         if ('full' = $data-view or not(exists($kwic))) then <fcs:DataView type="{$data-view}">{$exp-rec}</fcs:DataView>
+                             else ()
+                           )}
+                           </fcs:ResourceFragment>
+                       </fcs:Resource>
+
+
+};
 
 (:~ This expects a CQL-query that it translates to XPath
 
