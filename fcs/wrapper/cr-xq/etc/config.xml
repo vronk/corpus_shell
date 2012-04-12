@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
     <!-- root CMD/explain-record describing this repository-->
+    <property key="site.name">ICLTT Content Repository</property>
     <property key="explain">clarin.at:icltt:cr</property>
-    <property key="mappings">/db/cr/mappings.xml</property>
+    <property key="mappings">/db/cr/etc/mappings.xml</property>
     <property key="data.path">/db/cr-data</property>
     <property key="cache.path">/db/cr-data/_indexes</property>
     <property key="metadata.path">/db/cr-data/_cmd</property>
+    <property key="log.path">/db/cr-logs</property>
     <property key="index.prefix">/db/cr-data/_indexes/index_</property>
     <property key="scripts.path">/db/cr/xsl/</property>
     <property key="scan.xsl">scan2view.xsl</property>

@@ -183,8 +183,10 @@ declare function cmdcoll:get-collection-count($handle as xs:string, $base-dbcoll
 (:~ 
   Try to derive a name from the collection-record, it tries to find one of the common fields for a name and takes first.
 :)
-declare function cmdcoll:get-md-collection-name($collection-doc as node()) as xs:string {
+declare function cmdcoll:get-md-collection-name($collection-doc as node()) as xs:string* {
 util:eval("($collection-doc//Corpus/Name, $collection-doc//Session/Name, $collection-doc//Collection/GeneralInfo/Name, $collection-doc//Collection/GeneralInfo/Title, 
     $collection-doc//Name, $collection-doc//name, $collection-doc//Title, $collection-doc//title, 
-    $collection-doc//Header/MdCollectionDisplayName, 'UNKNOWN')[1]")
+    $collection-doc//cmd:Corpus/cmd:Name, $collection-doc//cmd:Session/cmd:Name, $collection-doc//cmd:Collection/cmd:GeneralInfo/Name, $collection-doc//cmd:Collection/cmd:GeneralInfo/cmd:Title, 
+    $collection-doc//cmd:Name, $collection-doc//cmd:name, $collection-doc//cmd:Title, $collection-doc//cmd:title,
+    $collection-doc//cmd:Header/cmd:MdCollectionDisplayName, $collection-doc//Header/MdCollectionDisplayName)[1]")
 };

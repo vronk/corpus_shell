@@ -42,7 +42,7 @@
     <xsl:param name="mappings-file" select="'xmldb:///db/cr/etc/mappings.xml'"/>
     <xsl:variable name="context-param" select="'x-context'"/>
     <xsl:variable name="mappings" select="doc($mappings-file)"/>
-    <xsl:variable name="context-mapping" select="$mappings//map[xs:string(@key) eq $x-context]"/>
+    <xsl:variable name="context-mapping" select="$mappings//map[@key][xs:string(@key) eq $x-context]"/>
     <xsl:variable name="ws">
         <xsl:choose>
             <xsl:when test="$mode='url'">%20</xsl:when>
@@ -56,8 +56,8 @@
             <xsl:when test="$context-mapping[@base_elem]">
                 <xsl:value-of select="concat('ancestor-or-self::', $context-mapping/@base_elem)"/>
             </xsl:when>
-            <xsl:when test="$mappings[@base_elem]">
-                <xsl:value-of select="concat('ancestor-or-self::', $mappings/@base_elem)"/>
+            <xsl:when test="$mappings//map[@key='default'][@base_elem]">
+                <xsl:value-of select="concat('ancestor-or-self::', $mappings//map[@key='default']/@base_elem)"/>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:value-of select="'self::*'"/>
@@ -136,7 +136,8 @@
         <xsl:value-of select="term"/>
         </xsl:template>-->
     <xsl:template match="index">
-
+        <xsl:message>index:<xsl:value-of select="."/>
+        </xsl:message>
 	<!-- reverting the "escaping" of whitespaces in indices with datcat-name -->
         <xsl:variable name="ix_string" select="replace(text(),'_',' ')"/>
         <xsl:variable name="ix_resolved">
@@ -147,11 +148,11 @@
             $repo-utils:mappings//index[xs:string(@key) eq $index]
             else $index-->
             <xsl:choose>
-                <xsl:when test="$context-mapping/index[@key eq  $ix_string]">
+                <xsl:when test="exists($context-mapping/index[@key eq  $ix_string])">
                     <xsl:value-of select="concat('(', string-join($context-mapping/index[@key eq  $ix_string]/path/text(),'|'),')')"/>
                 </xsl:when>
                 <!-- if no contextual mapping, try in whole map -->
-                <xsl:when test="$mappings//index[@key eq  $ix_string]">
+                <xsl:when test="exists($mappings//index[@key eq  $ix_string])">
                     <xsl:value-of select="concat('(', string-join($mappings//index[@key eq  $ix_string]/path/text(),'|'),')')"/>
                 </xsl:when>
                 <xsl:otherwise>

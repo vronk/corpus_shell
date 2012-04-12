@@ -12,10 +12,11 @@
         </index>
         <index key="cmd.profile" base_elem="CMD" status="indexed">
             <path>MdProfile</path>
+            <path>cmd:MdProfile</path>
         </index>
     </map>
     <map key="http://clarin.eu/lrt-inventory" path="/db/mdrepo-data/lrt-20110622"/>
-    <map key="olac-root" path="/db/mdrepo-data/olac/"/>
+    <map key="olac-root" path="/db/mdrepo-data/olac/" base_elem="cmd:CMD/cmd:Components"/>
     <map key="clarin-at:aac-test-corpus" path="/db/mdrepo-data/aac-test-corpus" base_elem="CMD">
         <index key="isocat:DC-2580">
             <path>teiHeader.fileDesc.extent</path>
@@ -39,6 +40,9 @@
         </index>
         <index key="dce:contributor">
             <path>teiHeader.fileDesc.sourceDesc.biblStruct.monogr.editor</path>
+        </index>
+        <index key="dce:creator">
+            <path>teiHeader.fileDesc.sourceDesc.biblStruct.monogr.author</path>
         </index>
         <index key="dce:identifier">
             <path>teiHeader.fileDesc.sourceDesc.biblStruct.monogr.idno</path>
