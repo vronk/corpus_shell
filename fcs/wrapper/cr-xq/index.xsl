@@ -58,9 +58,10 @@ two tasks (in separate calls, managed by $mode-param):
         <sru:terms>
             <xsl:copy-of select="@*"/>
             <xsl:choose>
-                <xsl:when test="$sort='size'">
+                <xsl:when test="$sort='text'">
                     <xsl:for-each-group select="$nodes" group-by=".//text()">
                         <xsl:sort select=".//text()" data-type="text" order="ascending"/>
+<!--                        <xsl:sort select="count(current-group())" data-type="number" order="descending"/>-->
                         <sru:term>
                             <sru:value>
                                 <xsl:value-of select=".//text()"/>
@@ -88,7 +89,7 @@ two tasks (in separate calls, managed by $mode-param):
         </sru:terms>
     </xsl:template>
     <xsl:template match="sru:terms" mode="subsequence">
-        <xsl:variable name="filtered" select="*[if ($filter!='') then                                     if ($filter-mode='starts-with') then starts-with(sru:value,substring-before($filter,'*'))                                     else contains(sru:value, $filter)                                      else true()]"/>
+        <xsl:variable name="filtered" select="*[if ($filter!='') then                                                              if ($filter-mode='starts-with') then starts-with(sru:value,substring-before($filter,'*'))                                                          else contains(sru:value, $filter)                                      else true()]"/>
             
         <!-- position of the matching term within the index, if there is a filter -->
         <xsl:variable name="match-position" select="count(sru:term[.=$filtered[1]]/preceding-sibling::sru:term)"/>
@@ -98,18 +99,17 @@ two tasks (in separate calls, managed by $mode-param):
         <!-- simply expect ordered data -->
         <xsl:variable name="ordered">
             <xsl:copy-of select="*"/>
-        </xsl:variable>
-            <!--<xsl:choose>
+<!--            <xsl:choose>
                 <xsl:when test="xs:integer($response-position) = 1">
                     <xsl:choose>
                         <xsl:when test="$sort='size'">
-                            <xsl:for-each select="$filtered">
+                            <xsl:for-each select="*">
                                 <xsl:sort select="sru:numberOfRecords" data-type="number" order="descending"/>
                                 <xsl:copy-of select="."/>
                             </xsl:for-each>
                         </xsl:when>
                         <xsl:otherwise>
-                            <xsl:for-each select="$filtered">
+                            <xsl:for-each select="*">
                                 <xsl:sort select="sru:value" data-type="text" order="ascending"/>
                                 <xsl:copy-of select="."/>
                             </xsl:for-each>
@@ -123,7 +123,8 @@ two tasks (in separate calls, managed by $mode-param):
                     <xsl:copy-of select="*"/>
                 </xsl:otherwise>
             </xsl:choose>
-        </xsl:variable>-->
+-->
+        </xsl:variable>
 
 <!-- 		<xsl:variable name="count-items" select="count($filtered)" />-->
         <xsl:copy>
