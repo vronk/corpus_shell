@@ -8,6 +8,9 @@ TODO: check (and/or generate) the inverse links in IsPartOf (vs. ResourceProxies
 (:import module namespace cmd  = "http://clarin.eu/cmd/collections" at "cmd-collections.xqm";:)
 import module namespace repo-utils = "http://aac.ac.at/content_repository/utils" at  "/db/cr/repo-utils.xqm";
 
+declare namespace sru = "http://www.loc.gov/zing/srw/";
+declare namespace cmd = "http://www.clarin.eu/cmd/";
+
 (:~ default namespace: cmd - declared statically, because dynamic ns-declaration did not work 
 cmd is the default namespace in (not) all the CMD records  
 :)
@@ -45,17 +48,43 @@ TODO: profile-name deduction not reliable  - needs match with cmd-terms and diag
 declare function cmdcheck:stat-profiles($context as node()*) as item()* {
       (: try- to handle namespace problem - primitively :)  
     let $ns-uri := namespace-uri($context[1]/*),         	           
-            (: dynamically declare a namespace for the next step, if one is defined in current context :)
-       $dummy := if (exists($ns-uri)) then util:declare-namespace("",$ns-uri) else ()
-    let $profiles := util:eval("$context//MdProfile/text()")
+            (: dynamically declare a namespace for the next step, if one is defined in current context 
+       $dummy := if (exists($ns-uri)) then util:declare-namespace("",$ns-uri) else () :)
+       (: this is now trying to overcome the default-ns issue, by accepting with and without ns :)
+
+        $dummy := util:declare-namespace("",xs:anyURI(""))       
+    let $profiles := util:eval("$context//(MdProfile|cmd:MdProfile)/text()")
     let $distinct-profiles := distinct-values($profiles)
     let $profiles-summary := for $profile in $distinct-profiles            
-                                let $profile-name := util:eval("$context[.//MdProfile/text() = $profile][1]//Components/*/name()") 
-                                return <profile id="{$profile}" name="{$profile-name}" cnt="{count($profiles[. eq $profile])}" />                                    
-    return $profiles-summary
+                                let $profile-name := util:eval("$context[.//(MdProfile|cmd:MdProfile)/text() = $profile][1]//(Components|cmd:Components)/*/name()")
+                                let $cnt := count($profiles[. eq $profile])
+                                return <sru:term>
+                                           <sru:value>{$profile}</sru:value>
+                                           <sru:numberOfRecords>{$cnt }</sru:numberOfRecords>
+                                           <sru:displayTerm>{$profile-name}</sru:displayTerm>                                      
+                                         </sru:term>
+    let $count-all := count($context)                                        
+    return
+        <sru:scanResponse xmlns:sru="http://www.loc.gov/zing/srw/" xmlns:fcs="http://clarin.eu/fcs/1.0">
+              <sru:version>1.2</sru:version>              
+              <sru:terms>              
+                {$profiles-summary }
+               </sru:terms>
+               <sru:extraResponseData>
+                     <fcs:countTerms>{$count-all}</fcs:countTerms>
+                 </sru:extraResponseData>
+                 <sru:echoedScanRequest>                      
+                      <sru:scanClause>cmd.profile</sru:scanClause>
+                  </sru:echoedScanRequest>
+           </sru:scanResponse>    
 };
 
 (:~ checking consistency of the IDs in CMD-records (MdSelfLink vs. ResourceProxies)
+
+this is now solved better (faster) with xpaths in the cmd-testset, 
+so this is probably obsolete.
+it has very bad performance!
+
 TODO: check (and/or generate) the inverse links in IsPartOf (vs. ResourceProxies) :)
 declare function cmdcheck:check-linking($context as node()*) as item()* {
 
@@ -76,12 +105,8 @@ let $diff2 := for $mdselflink in $mdselflinks
 return ($diff,$diff2)
 };
 
-(:~ evaluates xpaths (xqueries actually) against some nodeset and stores the result
-takes a set of xpaths and applies them to the $context nodeset, 
-storing the result (updating after every evaluation) in the result-doc (creatd based on the result-path)
 
-@returns the resulting-document, like the input-document, but with the result of the evaluation and duration inserted
-:)
+
 declare function cmdcheck:query-internal($queries, $context as node()+, $result-path as xs:string, $result-filename as xs:string ) as item()* {
     
     (: collect the xpaths from the before fiddling with the namespace :)
@@ -92,7 +117,6 @@ declare function cmdcheck:query-internal($queries, $context as node()+, $result-
     let $result-store := xmldb:store($result-path ,  $result-filename, <result test="{$queries//test/xs:string(@id)}" ></result>),
         $result-doc:= doc($result-store)
 
-	
     let $ns-uri := namespace-uri($context[1]/*)        	           
       (: dynamically declare a default namespace for the xpath-evaluation, if one is defined in current context 
       WATCHME: this is not very reliable, mainly meant to handle default-ns: cmd :)
@@ -109,6 +133,7 @@ declare function cmdcheck:query-internal($queries, $context as node()+, $result-
            return update insert <xpath key="{$xpath/@key}" label="{$xpath/@label}" dur="{$duration}">{$answer}</xpath> into $result-doc/result
 
     return $result-doc
+
 };
 
 
@@ -180,3 +205,4 @@ let $log-file-name := concat('log_addIsPartOf_', $x-context, '.xml')
 							<IsPartOf level="1">{$coll_id}</IsPartOf>
 						  </IsPartOfList> into $cmdi_files//Resources ):)
 };
+
