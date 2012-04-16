@@ -88,42 +88,28 @@ two tasks (in separate calls, managed by $mode-param):
             </xsl:choose>
         </sru:terms>
     </xsl:template>
+
+    <!-- if filter by default use only filtered data, except when sort=text and either filter mode = starts-with (only sensible result )
+        or the response-position is other than 1 (needed for navigation scan)
+        than use the subsequence of the data-set, starting from first filter-matching term +/- response-position  -->
     <xsl:template match="sru:terms" mode="subsequence">
-        <xsl:variable name="filtered" select="*[if ($filter!='') then                                                              if ($filter-mode='starts-with') then starts-with(sru:value,substring-before($filter,'*'))                                                          else contains(sru:value, $filter)                                      else true()]"/>
-            
+        <xsl:variable name="only-filtered" select="not($sort='text' and ($filter-mode='starts-with' or not(xs:integer($response-position) = 1)))"/>
         <!-- position of the matching term within the index, if there is a filter -->
+        <xsl:variable name="filtered" select="*[if ($filter!='') then if ($filter-mode='starts-with') then starts-with(sru:value,substring-before($filter,'*')) else contains(sru:value, $filter) else true()]"/>
         <xsl:variable name="match-position" select="count(sru:term[.=$filtered[1]]/preceding-sibling::sru:term)"/>
 
 <!--        <xsl:message><xsl:value-of select="$match-position" /></xsl:message>-->
-        <!-- this may be potentially expensive and we may need to store the index already sorted (which is the normal/sane way to do!) -->
-        <!-- simply expect ordered data -->
+        
+        <!-- expect ordered data -->
         <xsl:variable name="ordered">
-            <xsl:copy-of select="*"/>
-<!--            <xsl:choose>
-                <xsl:when test="xs:integer($response-position) = 1">
-                    <xsl:choose>
-                        <xsl:when test="$sort='size'">
-                            <xsl:for-each select="*">
-                                <xsl:sort select="sru:numberOfRecords" data-type="number" order="descending"/>
-                                <xsl:copy-of select="."/>
-                            </xsl:for-each>
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <xsl:for-each select="*">
-                                <xsl:sort select="sru:value" data-type="text" order="ascending"/>
-                                <xsl:copy-of select="."/>
-                            </xsl:for-each>
-                        </xsl:otherwise>
-                    </xsl:choose>
+            <xsl:choose>
+                <xsl:when test="$only-filtered">
+                    <xsl:copy-of select="$filtered"/>
                 </xsl:when>
-                <!-\- dare to not sort by size|text if response-position
-                      i.e. expect the input-data sorted (by text)
-                    -\->
                 <xsl:otherwise>
                     <xsl:copy-of select="*"/>
                 </xsl:otherwise>
             </xsl:choose>
--->
         </xsl:variable>
 
 <!-- 		<xsl:variable name="count-items" select="count($filtered)" />-->
@@ -131,10 +117,11 @@ two tasks (in separate calls, managed by $mode-param):
 <!--            <xsl:copy-of select="@*" />-->
 <!--			<xsl:value-of select="count($ordered/*)" /> -->
 <!--			<xsl:attribute name="count_items" select="if (xs:integer($count-items) > xs:integer($max-items)) then $max-items else $count-items" /> -->
-            <xsl:variable name="effective-start-item" select="xs:integer($start-item) + xs:integer($match-position) - xs:integer($response-position) + 1"/>
-            <xsl:variable name="effective-end-item" select="xs:integer($effective-start-item) + xs:integer($max-items)"/>
 <!--            <xsl:message>cnt:<xsl:value-of select="count($ordered/*)"/>-match:<xsl:value-of select="$match-position"/>-start:<xsl:value-of select="$effective-start-item"/>-end:<xsl:value-of select="$effective-end-item"/>
-    </xsl:message>-->
+</xsl:message>-->
+            <xsl:variable name="start-pos" select="if ($only-filtered) then 0 else xs:integer($match-position)"/>
+            <xsl:variable name="effective-start-item" select="xs:integer($start-item) + $start-pos - xs:integer($response-position) + 1"/>
+            <xsl:variable name="effective-end-item" select="xs:integer($effective-start-item) + xs:integer($max-items)"/>
             <xsl:apply-templates select="$ordered/*[xs:integer(position()) &gt;= xs:integer($effective-start-item) and ((xs:integer(position()) &lt; (xs:integer($effective-end-item))) or xs:integer($max-items)=0)]"/>
         </xsl:copy>
     </xsl:template>
