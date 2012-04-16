@@ -293,7 +293,7 @@ declare function fcs:search-retrieve($query as xs:string, $x-context as xs:strin
                     
 };
 
-declare function fcs:format-record-data($raw-record-data as node(), $data-view as xs:string+, $config as node()) as item()*  {
+declare function fcs:format-record-data($raw-record-data as node(), $data-view as xs:string*, $config as node()) as item()*  {
 
     let $exp-rec := util:expand($raw-record-data, "expand-xincludes=no") (: kwic:summarize($rec,<config width="40"/>) :)
 	       
