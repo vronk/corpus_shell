@@ -1,4 +1,4 @@
-xquery version "1.0";
+xquery version '3.0';
 
 (:
 : Module Name: FCS
@@ -17,11 +17,14 @@ xquery version "1.0";
 :)
 module namespace fcs = "http://clarin.eu/fcs/1.0";
 
+declare namespace err = "http://www.w3.org/2005/xqt-errors";
 declare namespace sru = "http://www.loc.gov/zing/srw/";
+declare namespace zr = "http://explain.z3950.org/dtd/2.0/";
 declare namespace tei = "http://www.tei-c.org/ns/1.0";
 declare namespace cmd = "http://www.clarin.eu/cmd/"; 
 import module namespace request="http://exist-db.org/xquery/request";
 import module namespace diag =  "http://www.loc.gov/zing/srw/diagnostic/" at  "modules/diagnostics/diagnostics.xqm";
+
 import module namespace repo-utils = "http://aac.ac.at/content_repository/utils" at  "repo-utils.xqm";
 import module namespace kwic = "http://exist-db.org/xquery/kwic";
 import module namespace cmdcoll = "http://clarin.eu/cmd/collections" at  "/db/cr/modules/cmd/cmd-collections.xqm";
@@ -36,7 +39,7 @@ declare variable $fcs:searchRetrieve as xs:string := "searchRetrieve";
 declare variable $fcs:scanSortText as xs:string := "text";
 declare variable $fcs:scanSortSize as xs:string := "size";
 declare variable $fcs:indexXsl := doc('index.xsl');
-declare variable $fcs:kwicWidth := 80;
+declare variable $fcs:kwicWidth := 30;
 
 (:~ The main entry-point. Processes request-parameters 
 @returns the result document (in xml, html or json)
@@ -103,8 +106,8 @@ declare function fcs:repo($config-file as xs:string) as item()* {
 declare function fcs:explain($x-context as xs:string*, $config) as item()* {
     let $context := if ($x-context) then $x-context
                     else repo-utils:config-value($config, 'explain')
-    let $md-dbcoll := collection(repo-utils:config-value($config,'metadata.path'))
-   let $explain := $md-dbcoll//CMD[Header/MdSelfLink/text() eq $context or .//ResourceRef/text() eq $context]//explain (: //ResourceRef/text() :)
+    let $md-dbcoll := collection(repo-utils:config-value($config,'metadata.path'))     
+   let $explain := $md-dbcoll//CMD[Header/MdSelfLink/text() eq $context or .//ResourceRef/text() eq $context]//(explain|zr:explain) (: //ResourceRef/text() :)
     
     return $explain
 };
@@ -232,71 +235,95 @@ declare function fcs:do-scan-default($scan-clause as xs:string, $index-xpath as 
 (:~ main search function (handles the searchRetrieve-operation request) 
 :)
 declare function fcs:search-retrieve($query as xs:string, $x-context as xs:string*, $startRecord as xs:integer, $maximumRecords as xs:integer, $x-dataview as xs:string*, $config) as item()* {
-    let $start-time := util:system-dateTime()
-    let $data-collection := repo-utils:context-to-collection($x-context, $config) 
-    (:if ($x-context) then collection($repo-utils:mappings//map[xs:string(@key) eq $x-context]/@path)
-                            else $repo-utils:data-collection:)
-    let $xpath-query := concat("$data-collection", fcs:transform-query ($query, $x-context, $config))
+                                 
+    try {
+        let $start-time := util:system-dateTime()
+        let $data-collection := repo-utils:context-to-collection($x-context, $config) 
+        (:if ($x-context) then collection($repo-utils:mappings//map[xs:string(@key) eq $x-context]/@path)
+                                else $repo-utils:data-collection:)
         
-    let $results := util:eval($xpath-query)
-
-    let	$result-count := fn:count($results),
-    $result-seq := fn:subsequence($results, $startRecord, $maximumRecords),
-    $seq-count := fn:count($result-seq),
-    $end-time := util:system-dateTime(),    
+        let $xpath-query := concat("$data-collection", fcs:transform-query ($query, $x-context, $config))
+            
+        let $results := util:eval($xpath-query)
     
-    (:<sru:recordSchema>mods</sru:recordSchema>:)          
-          (:<xQuery><searchClause xmlns="http://www.loc.gov/zing/cql/xcql/">
-          <index>dc.title</index>
-          <relation>
-          <value>=</value>
-          </relation>
-          <term>dinosaur</term>
-          </searchClause> 
-          </xQuery>:)
-    $result :=
-    <sru:searchRetrieveResponse>
-      <sru:numberOfRecords>{$result-count}</sru:numberOfRecords>
-      <sru:echoedSearchRetrieveRequest>
-          <sru:version>1.2</sru:version>
-          <sru:query>{$query}</sru:query>
-          <fcs:x-context>{$x-context}</fcs:x-context>
-          <fcs:x-dataview>{$x-dataview}</fcs:x-dataview>
-          <sru:startRecord>{$startRecord}</sru:startRecord>
-          <sru:maximumRecords>{$maximumRecords}</sru:maximumRecords>
-          <sru:query>{$query}</sru:query>          
-          <sru:baseUrl>{repo-utils:config-value($config, "base.url")}</sru:baseUrl> 
-      </sru:echoedSearchRetrieveRequest>
-      <sru:extraResponseData>
-      	<fcs:returnedRecords>{$seq-count}</fcs:returnedRecords>
-		<fcs:duration>{$end-time - $start-time}</fcs:duration>
-		<fcs:transformedQuery>{ $xpath-query }</fcs:transformedQuery>
-      </sru:extraResponseData>
-      <sru:records>
-	       {for $rec at $pos in $result-seq	           
-	           let $rec-data := fcs:format-record-data($rec,$x-dataview, $config)	           
-	           return 
-	               <sru:record>
-	                   <sru:recordSchema>http://clarin.eu/fcs/1.0/Resource.xsd</sru:recordSchema>
-	                   <sru:recordPacking>xml</sru:recordPacking>
-	                   <sru:recordData>
-	                     {$rec-data}
-                        </sru:recordData>
-	                   <sru:recordPosition>{$pos}</sru:recordPosition>
-	                   <sru:recordIdentifier>{$rec/@xml:id}</sru:recordIdentifier>
-	                </sru:record>
-	       }
-      </sru:records>
-    </sru:searchRetrieveResponse>
-
-    return $result
-                    
+        let	$result-count := fn:count($results),
+        $result-seq := fn:subsequence($results, $startRecord, $maximumRecords),
+        $seq-count := fn:count($result-seq),        
+        $end-time := util:system-dateTime(),
+        (:<sru:recordSchema>mods</sru:recordSchema>:)          
+              (:<xQuery><searchClause xmlns="http://www.loc.gov/zing/cql/xcql/">
+              <index>dc.title</index>
+              <relation>
+              <value>=</value>
+              </relation>
+              <term>dinosaur</term>
+              </searchClause> 
+              </xQuery>:)
+        $records :=
+          <sru:records>
+    	       {for $rec at $pos in $result-seq	           
+    	           let $rec-data := fcs:format-record-data($rec,$x-dataview, $x-context, $config)	           
+    	           return 
+    	               <sru:record>
+    	                   <sru:recordSchema>http://clarin.eu/fcs/1.0/Resource.xsd</sru:recordSchema>
+    	                   <sru:recordPacking>xml</sru:recordPacking>
+    	                   <sru:recordData>
+    	                     {$rec-data}
+                            </sru:recordData>
+    	                   <sru:recordPosition>{$pos}</sru:recordPosition>
+    	                   <sru:recordIdentifier>{xs:string($rec-data/fcs:ResourceFragment/@ref) }</sru:recordIdentifier>
+    	                </sru:record>
+    	       }
+          </sru:records>,
+        $end-time2 := util:system-dateTime(),
+        $result :=
+        <sru:searchRetrieveResponse>
+          <sru:numberOfRecords>{$result-count}</sru:numberOfRecords>
+          <sru:echoedSearchRetrieveRequest>
+              <sru:version>1.2</sru:version>
+              <sru:query>{$query}</sru:query>
+              <fcs:x-context>{$x-context}</fcs:x-context>
+              <fcs:x-dataview>{$x-dataview}</fcs:x-dataview>
+              <sru:startRecord>{$startRecord}</sru:startRecord>
+              <sru:maximumRecords>{$maximumRecords}</sru:maximumRecords>
+              <sru:query>{$query}</sru:query>          
+              <sru:baseUrl>{repo-utils:config-value($config, "base.url")}</sru:baseUrl> 
+          </sru:echoedSearchRetrieveRequest>
+          <sru:extraResponseData>
+          	<fcs:returnedRecords>{$seq-count}</fcs:returnedRecords>
+    		<fcs:duration>{($end-time - $start-time, $end-time2 - $end-time) }</fcs:duration>
+    		<fcs:transformedQuery>{ $xpath-query }</fcs:transformedQuery>
+          </sru:extraResponseData>
+          { $records }
+        </sru:searchRetrieveResponse>
+    
+        return $result
+        
+      }
+    catch err:XPTY0004 
+    {
+        diag:diagnostics("query-syntax-error", ($err:code , $err:description, $err:value))
+    } 
+    catch *
+    { (: FIXME: this could be any error!! :)
+       diag:diagnostics("query-syntax-error", $query)
+    }
+    
+    
 };
 
-declare function fcs:format-record-data($raw-record-data as node(), $data-view as xs:string*, $config as node()) as item()*  {
+declare function fcs:format-record-data($raw-record-data as node(), $data-view as xs:string*, $x-context as xs:string*, $config as node()) as item()*  {
 
     let $exp-rec := util:expand($raw-record-data, "expand-xincludes=no") (: kwic:summarize($rec,<config width="40"/>) :)
-	       
+	      
+                        (:	      cmdcoll:get-md-collection-name($raw-record-data):)
+	let $title := fcs:apply-index ($raw-record-data, "title",$x-context, $config)	   
+	let $resource-pid := fcs:apply-index ($raw-record-data, "resource-pid",$x-context, $config)	
+	let $resourcefragment-pid := fcs:apply-index ($raw-record-data, "resourcefragment-pid",$x-context, $config)	
+	(: to repeat current $x-format param-value in the constructed requested :)
+	let $x-format := request:get-parameter("x-format", $repo-utils:responseFormatXml)
+	let $resourcefragment-ref := concat('?operation=searchRetrieve&amp;query=resourcefragment-pid="', xmldb:encode-uri($resourcefragment-pid), '"&amp;x-dataview=full&amp;x-context=', $x-context)
+	
     let $kwic := if ('kwic' = $data-view) then
                    let $kwic-config := <config width="{$fcs:kwicWidth}"/>
                    let $kwic-html := kwic:summarize($exp-rec, $kwic-config)
@@ -314,12 +341,13 @@ declare function fcs:format-record-data($raw-record-data as node(), $data-view a
                                      else (: if no kwic-match let's take first 100 characters 
                                         There c/should be some more sophisticated way to extract most significant info 
                                         e.g. match on the query-field :)
-                                       <fcs:DataView type="kwic">{substring($raw-record-data,1,100)}</fcs:DataView>                                         
+                                       <fcs:DataView type="kwic">{substring($raw-record-data,1,$fcs:kwicWidth)}</fcs:DataView>                                         
                      else ()
-    let $title := <fcs:DataView type="title">{cmdcoll:get-md-collection-name($raw-record-data)}</fcs:DataView>                      
+    let $title := <fcs:DataView type="title">{$title}</fcs:DataView>                      
+
     return if ($data-view = 'raw') then $raw-record-data 
-            else <fcs:Resource>
-                       <fcs:ResourceFragment>                       
+            else <fcs:Resource pid="{$resource-pid}" >
+                       <fcs:ResourceFragment pid="{$resourcefragment-pid}" ref="{$resourcefragment-ref}" >                       
                          {($title, $kwic,
                          if ('full' = $data-view or not(exists($kwic))) then <fcs:DataView type="{$data-view}">{$exp-rec}</fcs:DataView>
                              else ()
@@ -430,15 +458,28 @@ declare function fcs:get-mapping($index as xs:string, $x-context as xs:string+, 
                     return $any-index
 };
 
+declare function fcs:apply-index($data, $index as xs:string, $x-context as xs:string+, $config) as item()* {
+
+  let $index-map := fcs:get-mapping($index,$x-context, $config),
+  $match-on := if (exists($index-map/@use) ) then concat('/', xs:string($index-map/@use)) else ''
+  
+  return util:eval(concat("$data//", $index-map/path/text(), $match-on))  
+  
+};
+
 (:~ gets the mapping for the index and creates an xpath (UNION)
 
 @param $index index-key as known to mappings 
 
-@returns xpath-equivalent of given index as defined in mappings; multiple xpaths are translated to a UNION; 
+@returns xpath-equivalent of given index as defined in mappings; multiple xpaths are translated to a UNION, 
+           value of @use-attribute is also attached;  
          if no mapping found, returns the input-index unchanged 
 :)
 declare function fcs:index-as-xpath($index as xs:string, $x-context as xs:string+, $config) as xs:string {    
-    let $index-map := fcs:get-mapping($index, $x-context, $config )      
-     return if (exists($index-map)) then translate(concat('(', string-join($index-map/path,'|'),')'),'.','/')
+    let $index-map := fcs:get-mapping($index, $x-context, $config )        
+     return if (exists($index-map)) then
+                        let $match-on := if (exists($index-map/@use) ) then concat('/', xs:string($index-map/@use)) else ''
+                        return translate(concat('(', string-join($index-map/path,'|'),')', $match-on),'.','/')
                     else $index
+    
 };
