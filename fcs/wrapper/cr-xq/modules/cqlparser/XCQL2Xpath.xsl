@@ -38,7 +38,7 @@
     <xsl:output method="text"/>
     <xsl:param name="mode" select="'xpath'"/> <!-- xpath |  url -->
     <xsl:param name="x-context" select="''"/>
-    <xsl:param name="debug" select="false()"/>
+    <xsl:param name="debug" select="true()"/>
     <xsl:param name="mappings-file" select="'xmldb:///db/cr/etc/mappings.xml'"/>
     <xsl:variable name="context-param" select="'x-context'"/>
     <xsl:variable name="mappings" select="doc($mappings-file)/map"/>
@@ -193,7 +193,7 @@
                     </xsl:when>
                     <xsl:when test="contains($term,'%7C')">
                         <xsl:value-of select="concat('ft:query(', $match-on, ', ')"/>
-<!--                        <xsl:text>ft:query(.,'</xsl:text>-->
+                        <xsl:text>'</xsl:text>
                         <xsl:value-of select="replace($sanitized_term,'%7C','')"/>
                         <xsl:text>')</xsl:text>
                     </xsl:when>
@@ -201,7 +201,7 @@
                         <xsl:for-each select="tokenize(replace($sanitized_term,'\+',$ws),$ws)">
                             <xsl:if test=".!=''">
                                 <xsl:value-of select="concat('ft:query(', $match-on, ', ')"/>
-<!--                                <xsl:text>ft:query(.,'</xsl:text>-->
+                                <xsl:text>'</xsl:text>
                                 <xsl:value-of select="."/>
                                 <xsl:text>')</xsl:text>
                                 <xsl:message>
@@ -215,7 +215,7 @@
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:value-of select="concat('ft:query(', $match-on, ', ')"/>
-<!--                        <xsl:text>ft:query(.,'</xsl:text>-->
+                        <xsl:text>'</xsl:text>
                         <xsl:value-of select="$sanitized_term"/>
                         <xsl:text>')</xsl:text>
                     </xsl:otherwise>
@@ -245,10 +245,10 @@
         
         <!-- reverting the "escaping" of whitespaces in indices with datcat-name -->
         <xsl:variable name="ix_string" select="replace($ix/text(),'_',' ')"/>
-        <xsl:call-template name="message">
+        <!--<xsl:call-template name="message">
             <xsl:with-param name="msg">resolve index:<xsl:value-of select="$ix"/>
             </xsl:with-param>
-        </xsl:call-template>
+        </xsl:call-template>-->
 
         <!--$resolved-index := if (exists($index-map)) then $index-map/text()
             else if (exists($repo-utils:mappings//index[xs:string(@key) eq $index])) then
