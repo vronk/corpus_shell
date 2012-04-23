@@ -43,14 +43,19 @@
         <xsl:apply-templates select=".//fcs:DataView" mode="record-data"/>
     </xsl:template>
     <xsl:template match="fcs:DataView" mode="record-data">
-           <!-- don't show full view if, there is kwic -->
-        <xsl:if test="not(@type='full' and parent::*/fcs:DataView[@type='kwic'])">
+           <!-- don't show full view if, there is kwic, title-view is called separately, and  -->
+        <xsl:if test="not((@type='full' and parent::*/fcs:DataView[@type='kwic']) or @type='title')">
             <div class="data-view {@type}">
                 <xsl:apply-templates mode="record-data"/>
             </div>
         </xsl:if>
     </xsl:template>
-
+    <xsl:template match="fcs:DataView/@ref" mode="record-data">
+        <a href="{@ref}">
+            <xsl:value-of select="{@type}"/>
+        </a>
+    </xsl:template>
+    
  <!-- better hide the fullview (the default view is too much)
         TODO: some more condensed view -->
 <!--    <xsl:template match="fcs:DataView[@type='full']" mode="record-data"/>-->
@@ -78,6 +83,9 @@
         <span class="context {@c | @type}">
             <xsl:apply-templates mode="record-data"/>
         </span>
+        <xsl:if test="following-sibling::*[1][local-name()='c']">
+            <br/>
+        </xsl:if>
     </xsl:template>
     <xsl:template match="fcs:kw" mode="record-data">
         <xsl:text> </xsl:text>
@@ -88,6 +96,9 @@
     </xsl:template>
     <xsl:template name="getTitle">
         <xsl:choose>
+            <xsl:when test=".//fcs:DataView[@type='title']">
+                <xsl:value-of select=".//fcs:DataView[@type='title']"/>
+            </xsl:when>
             <xsl:when test=".//date/@value">
                 <xsl:value-of select=".//date/@value"/>
             </xsl:when>
