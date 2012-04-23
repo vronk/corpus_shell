@@ -1,4 +1,42 @@
 <?php
+
+    /*
+      the purpose of this script is to return the content of a single entity (ie.
+      page etc) paired with two links pointing to the previous and next element.
+
+      example of usage:
+      http://corpus3.aac.ac.at/cs2/corpus_shell/viewer/navigate.php?x-context=clarin.at:icltt:cr:stb|1879-06-16
+
+      params:
+
+      mandatory    x-context     name of the context (as defined in switch.config
+                                 and fcs.resource.config.php) succeeded by an
+                                 entity token separated by a "|" (pipe)
+                                 i.e.: clarin.at:icltt:cr:stb|1879-06-16
+
+      optional     x-format      possible values are "htmldetail" (default), "xml", and
+                                 "img" so far.
+                   x-resultType  possible values are "xml" and "html" whith
+                                 "html" beeing the default
+
+      how does it work?
+
+      1.) the x-context param is split into the xcontext and the entity token
+
+      2.) locate xcontext in the config files
+
+      3.) get operation=explain result from xcontext endpoint, parse for
+          <configInfo><setting type="naviIndex"> to get the search index name
+
+      4.) get operation=scan result to to be able to generate the links to the
+          preceeding and succeding elements
+
+      5.) get operation=searchRetrieve result for the current element data
+
+      6.) return the data as html (default) or xml (param x-resultType)
+
+    */
+
     $thisUrl = "http://corpus3.aac.ac.at/cs2/corpus_shell/viewer/navigate.php";
     $localhost = "corpus3.aac.ac.at";
     $configUrl = "../fcs/aggregator/switch.config";
@@ -108,6 +146,8 @@
     //eg: x-context=clarin.at:icltt:cr:stb|1879-04-27
 
     if (isset($_GET['x-context'])) $xcontext = $_GET["x-context"]; else $xcontext = "";
+    if (isset($_GET['x-resultType'])) $resultType = $_GET["x-resultType"]; else $resultType = "html";
+    if (isset($_GET['x-format'])) $xformat = $_GET["x-format"]; else $xformat = "htmldetail";
 
     $fragment = "";
     //look for resource fragment in $xcontext
@@ -156,7 +196,7 @@
 
         if ($indexName != "")
         {
-          $elements = $xpath->query("//index/map/name[.='diary-day']/../../title[@lang='en']");
+          $elements = $xpath->query("//index/map/name[.='$indexName']/../../title[@lang='en']");
           if (!is_null($elements) && $elements->length != 0)
           {
             $element = $elements->item(0);
@@ -211,8 +251,8 @@
               $searchUrl = AddParamToUrl("?", "x-context", $xcontext);
               $searchUrl = AddParamToUrl($searchUrl, "operation", "searchRetrieve");
               $searchUrl = AddParamToUrl($searchUrl, "maximumRecords", "1");
-              $searchUrl = AddParamToUrl($searchUrl, "x-format", "htmldetail");
-              $searchUrl = AddParamToUrl($searchUrl, "query", $indexName."=".$element2->nodeValue);
+              $searchUrl = AddParamToUrl($searchUrl, "x-format", $xformat);
+              $searchUrl = AddParamToUrl($searchUrl, "query", $indexName.'="'.$element2->nodeValue.'"');
               $searchUrl = AddParamToUrl($searchUrl, "x-dataview", "full");
               $searchUrl = $endpoint . $searchUrl;
               //$htmlResult .= $searchUrl;
