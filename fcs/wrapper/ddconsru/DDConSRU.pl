@@ -7,6 +7,8 @@ use Pod::Usage;
 use CGI qw(param);
 use Encode;
 use Template;
+use Diagnostics;
+use ReturnData;
 #use XML::Simple qw(:strict);
 
 use XML::LibXML;
@@ -35,15 +37,11 @@ our $queryTypeIsRaw = 0;
 our $templatePath = "tmpl";
 
 our $response_template = "sru_response_template.xml";
-our $diagnostics_template = "sru_diagnostics_template.xml";
 
 our $explain_file = $templatePath . "/explain.xml";
 our $scan_collections_file = $templatePath . "/sru_scan_fcs.resource.xml";
 
 our $recordSchema = "http://clarin.eu/fcs/1.0";
-
-our $xmlCache = "/srv/www/htdocs/cstest/xmlCache.pl";
-our $imgCache = "/srv/www/htdocs/cstest/imgCache.pl";
 
 our $operation = "";
 our $version = "1.2";
@@ -69,6 +67,10 @@ my $xformat = "";
 
 my $shts = "";
 my $sTable = "";
+
+our $wIdx = "0";
+our $sIdx = "-1";
+our $sLink = "";
 
 
 ##------------------------------------------------------------------------------
@@ -117,10 +119,16 @@ $sh = param("recordPacking");
   if ($sh && $sh eq "raw") {$queryTypeIsRaw = 1}
   if ($sh && $sh eq "xml") {$queryTypeIsRaw = 2}
 
+$sh = param("responsePosition");
+  if ($sh) {$responsePosition = $sh}
+
+$sh = param("maximumTerms");
+  if ($sh) {$maximumTerms = $sh}
+
 if ($context eq "" && $operation eq "searchRetrieve")
 {
  	#param "x-context" is missing
- 	diagnostics(7, "x-context");
+ 	Diagnostics::diagnostics(7, "x-context");
  	return;
 }
 
@@ -149,7 +157,7 @@ if ($context ne "")
     my($key) = $item->findnodes('./key');
     if ($key->to_literal eq $context)
     {
-    	# get the internal name of the corpus (to be given to ddc as context)
+    	 # get the internal name of the corpus (to be given to ddc as context)
       my($name) = $item->findnodes('./name');
       $context =  $name->to_literal;
       my($par) = $key->findnodes('../../../ip');
@@ -163,6 +171,24 @@ if ($context ne "")
         $fileMask = $mask->to_literal;
       }
 
+      if ($item->exists('./externalLink'))
+      {
+        my($eLink) = $item->findnodes('./externalLink');
+        $sLink = $eLink->to_literal;
+      }
+
+      if ($item->exists('./index[@key=\'w\']'))
+      {
+        my($wordIndex) = $item->findnodes('./index[@key=\'w\']');
+        $wIdx = $wordIndex->to_literal;
+      }
+
+      if ($item->exists('./index[@key=\'s\']'))
+      {
+        my($sentIndex) = $item->findnodes('./index[@key=\'s\']');
+        $sIdx = $sentIndex->to_literal;
+      }
+
       my($txt) = $item->findnodes('./displayText');
       $displayText = $txt->to_literal;
     }
@@ -170,7 +196,7 @@ if ($context ne "")
   if ($oldContext eq $context)
   {
     ##search index was not found
-    diagnostics(6, $context);
+    Diagnostics::diagnostics(6, $context);
     return;
   }
 }
@@ -215,7 +241,7 @@ if ($operation eq "explain" || !$operation)
 	 return;
 }
 
-### Handle scan fcs.resource, fcs.toc
+### Handle scan cmd-collections
 if ($operation eq "scan" )
 {
  	if ($scanClause eq "fcs.resource" )
@@ -231,11 +257,15 @@ if ($operation eq "scan" )
  	}
  	elsif ($scanClause eq "fcs.toc" )
  	{
- 		 fcsToc($contextOriginal, $fileMask, $displayText);
+ 		 fcsToc($oldContext, $fileMask, $displayText);
+ 	}
+ 	elsif (($responsePosition ne "") and ($maximumTerms ne "") and (index($scanClause, "=") ne -1))
+ 	{
+
  	}
  	else
  	{
- 		 diagnostics(6, $scanClause) ; # unsupported parameter value
+ 		 Diagnostics::diagnostics(6, $scanClause) ; # unsupported parameter value
  	}
 
 		return;
@@ -245,11 +275,11 @@ if (($operation eq "searchRetrieve") and ($pageToken ne ""))
 {
   if ($xformat eq "img")
   {
-    getImageByPid($fileMask, $pageToken);
+    ReturnData::getImageByPid($fileMask, $pageToken);
   }
   else
   {
-    getXmlByPid($fileMask, $pageToken);
+    ReturnData::getXmlByPid($fileMask, $pageToken);
   }
   return;
 }
@@ -304,10 +334,13 @@ my $vars = {
     recordPacking => $recordPacking,
     query => $query,
     hits => $hits,
+    wIdx => $wIdx,
+    sIdx => $sIdx,
+    sLink => $sLink,
     recordIdBase => $recordIdBase."&amp;start=",
     resourceFragmentIdColumn => "4",
  #   res => $res,
-    parse_context => sub { my ($context,$kws) = @_; return parse_context($context, $kws)},
+    parse_context => sub { my ($context, $kws, $wIdx, $sIdx, $sLink) = @_; return parse_context($context, $kws, $wIdx, $sIdx, $sLink)},
   };
 
 
@@ -327,7 +360,7 @@ $tt->process($response_template, $vars)
 
 sub parse_context($@)
 {
-	my ($context, $kws) = @_;
+	my ($context, $kws, $wIdx, $sIdx, $sLink) = @_;
 	# print "DEBUG: context:".$context;
 	# important to use @{$kws} later in code, otherwise it won't be handled correctly as an array.
 	# ( man, it took time to find out.)
@@ -353,8 +386,13 @@ sub parse_context($@)
 		foreach (@tokens) {
 #		 print $_;
 		 @token_fields = split(/\#|\^/, $_);
-		 next if (@token_fields < 2);
-		 $w = $token_fields[0];
+		 next if (@token_fields <= $wIdx);
+		 $w = $token_fields[$wIdx];
+
+		 #if (($sIdx ne "-1") && ($sLink ne ""))
+		 {
+		   $token_fields[$sIdx] = $sLink . $token_fields[$sIdx];
+		 }
 
 		 # check if keyword is marked with &&,
 		 if ($w =~ /^&&/) {
@@ -398,7 +436,7 @@ sub fcsToc()
 
   if ($mask eq "")
   {
-    diagnostics(27, "x-context");  #Empty term unsupported
+    Diagnostics::diagnostics(27, "x-context");  #Empty term unsupported
     return;
   }
 
@@ -461,177 +499,4 @@ sub fcsToc()
   return;
 }
 
-sub getImageByPid()
-{
-  my ($mask, $pageNo) = @_;
-
-  require $imgCache;
-
-  my $hstr = $mask.$pageNo;
-  my @subArray = grep(/$hstr/, @imgArray);
-  my $count = @subArray;
-
-  if ($count != 0)
-  {
-    returnImage($subArray[0]);
-  }
-}
-
-sub returnImage()
-{
-  my ($img) = @_;
-
-  open IMAGE, $img;
-
-  #assume is a jpeg...
-  my ($image, $buff);
-  while(read IMAGE, $buff, 1024)
-  {
-    $image .= $buff;
-  }
-
-  close IMAGE;
-  print "Content-type: image/jpeg\n\n";
-  print $image;
-}
-
-sub getXmlByPid()
-{
-  my ($mask, $pageNo) = @_;
-
-  require $xmlCache;
-
-  my $hstr = $mask.$pageNo;
-  my @subArray = grep(/$hstr/, @xmlArray);
-  my $count = @subArray;
-
-  if ($count != 0)
-  {
-    returnText($subArray[0]);
-  }
-}
-
-sub returnText()
-{
-  my ($txt) = @_;
-
-  print "Content-Type: text/xml\n\n";
- 	open(IN,'<'.$txt) || die "Can not open file $explain_file: $!";
-
-		while(<IN>)
-		{
-  		print "$_\n";
-		}
-
-		close IN;
-}
-
-sub diagnostics () {
-
-	my ($dgId, $dgDetails) = @_;
-
-# TODO: this needs to be based on diagnostics-list:
-# http://www.loc.gov/standards/sru/resources/diagnostics-list.html
-
-my %errorMessages = (
-1   => "General system error",
-2   => "System temporarily unavailable",
-3   => "Authentication error",
-4   => "Unsupported operation",
-5   => "Unsupported version",
-6   => "Unsupported parameter value",
-7   => "Mandatory parameter not supplied",
-8   => "Unsupported Parameter",
-10  => "Query syntax error",
-12  => "Too many characters in query",
-13  => "Invalid or unsupported use of parentheses",
-14  => "Invalid or unsupported use of quotes",
-15  => "Unsupported context set",
-16  => "Unsupported index",
-18  => "Unsupported combination of indexes",
-19  => "Unsupported relation",
-20  => "Unsupported relation modifier",
-21  => "Unsupported combination of relation modifers",
-22  => "Unsupported combination of relation and index",
-23  => "Too many characters in term",
-24  => "Unsupported combination of relation and term",
-26  => "Non special character escaped in term",
-27  => "Empty term unsupported",
-28  => "Masking character not supported",
-29  => "Masked words too short",
-30  => "Too many masking characters in term",
-31  => "Anchoring character not supported",
-32  => "Anchoring character in unsupported position",
-33  => "Combination of proximity/adjacency and masking characters not supported",
-34  => "Combination of proximity/adjacency and anchoring characters not supported",
-35  => "Term contains only stopwords",
-36  => "Term in invalid format for index or relation",
-37  => "Unsupported boolean operator",
-38  => "Too many boolean operators in query",
-39  => "Proximity not supported",
-40  => "Unsupported proximity relation",
-41  => "Unsupported proximity distance",
-42  => "Unsupported proximity unit",
-43  => "Unsupported proximity ordering",
-44  => "Unsupported combination of proximity modifiers",
-46  => "Unsupported boolean modifier",
-47  => "Cannot process query; reason unknown",
-48  => "Query feature unsupported",
-49  => "Masking character in unsupported position",
-50  => "Result sets not supported",
-51  => "Result set does not exist",
-52  => "Result set temporarily unavailable",
-53  => "Result sets only supported for retrieval",
-55  => "Combination of result sets with search terms not supported",
-58  => "Result set created with unpredictable partial results available",
-59  => "Result set created with valid partial results available",
-60  => "Result set not created: too many matching records",
-61  => "First record position out of range",
-64  => "Record temporarily unavailable",
-65  => "Record does not exist",
-66  => "Unknown schema for retrieval",
-67  => "Record not available in this schema",
-68  => "Not authorised to send record",
-69  => "Not authorised to send record in this schema",
-70  => "Record too large to send",
-71  => "Unsupported record packing",
-72  => "XPath retrieval unsupported",
-73  => "XPath expression contains unsupported feature",
-74  => "Unable to evaluate XPath expression",
-80  => "Sort not supported",
-82  => "Unsupported sort sequence",
-83  => "Too many records to sort",
-84  => "Too many sort keys to sort",
-86  => "Cannot sort: incompatible record formats",
-87  => "Unsupported schema for sort",
-88  => "Unsupported path for sort",
-89  => "Path unsupported for schema",
-90  => "Unsupported direction",
-91  => "Unsupported case",
-92  => "Unsupported missing value action",
-93  => "Sort ended due to missing value",
-110 => "Stylesheets not supported",
-111 => "Unsupported stylesheet",
-120 => "Response position out of range",
-121 => "Too many terms requested");
-
-my $diagnosticMessage = $errorMessages{$dgId};
-
-my $vars = {
-    version => $version,
-    diagnosticId => $dgId,
-    diagnosticMessage =>  $diagnosticMessage,
-    diagnosticDetails => $dgDetails
-  };
-
-print "Content-Type: text/xml\n\n";
-
-my $tt = Template->new({
-    INCLUDE_PATH => $templatePath,
-    INTERPOLATE  => 1,
-}) || die "$Template::ERROR\n";
-
-$tt->process($diagnostics_template, $vars)
-    || die $tt->error(), "\n";
-}
 
