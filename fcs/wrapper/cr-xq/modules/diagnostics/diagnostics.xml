@@ -20,4 +20,9 @@
         <message>Mandatory parameter not supplied</message>
         <details>{$param}</details>
     </diagnostic>
+    <diagnostic xmlns="http://www.loc.gov/zing/srw/diagnostic/" key="query-syntax-error">
+        <uri>info:srw/diagnostic/1/10</uri>
+        <message>Query syntax error</message>
+        <details>{$param}</details>
+    </diagnostic>
 </diagnostics>
