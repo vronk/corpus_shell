@@ -52,7 +52,7 @@
     </xsl:template>
     <xsl:template match="fcs:DataView/@ref" mode="record-data">
         <a href="{@ref}">
-            <xsl:value-of select="{@type}"/>
+            <xsl:value-of select="@type"/>
         </a>
     </xsl:template>
     
