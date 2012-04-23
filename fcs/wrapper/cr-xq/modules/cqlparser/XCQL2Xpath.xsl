@@ -43,6 +43,7 @@
     <xsl:variable name="context-param" select="'x-context'"/>
     <xsl:variable name="mappings" select="doc($mappings-file)/map"/>
     <xsl:variable name="context-mapping" select="$mappings//map[@key][xs:string(@key) eq $x-context]"/>
+    <xsl:variable name="default-mapping" select="$mappings//map[@key][xs:string(@key) eq 'default']"/>
     <xsl:variable name="ws">
         <xsl:choose>
             <xsl:when test="$mode='url'">%20</xsl:when>
@@ -261,7 +262,10 @@
 <!--                <xsl:copy-of select="$context-mapping/index[xs:string(@key) eq  $ix_string]"></xsl:copy-of>-->
                 <xsl:apply-templates select="$context-mapping/index[$ix_string eq xs:string(@key)]" mode="copy"/>
             </xsl:when>
-            <!-- if no contextual mapping, try in whole map -->
+            <!-- if no contextual mapping, try in default, than whole map -->
+            <xsl:when test="exists($default-mapping/index[xs:string(@key) eq  $ix_string])">
+                <xsl:apply-templates select="$default-mapping/index[$ix_string eq xs:string(@key)]" mode="copy"/>
+            </xsl:when>
             <xsl:when test="exists($mappings//index[$ix_string eq xs:string(@key)])">
 <!--               <xsl:copy-of select="$mappings//index[$ix_string eq xs:string(@key)]" />
                     work-around a bug in transform:transform with copy-of on doc($data)

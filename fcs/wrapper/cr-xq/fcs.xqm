@@ -236,7 +236,7 @@ declare function fcs:do-scan-default($scan-clause as xs:string, $index-xpath as 
 :)
 declare function fcs:search-retrieve($query as xs:string, $x-context as xs:string*, $startRecord as xs:integer, $maximumRecords as xs:integer, $x-dataview as xs:string*, $config) as item()* {
                                  
-    try {
+(:    try {:)
         let $start-time := util:system-dateTime()
         let $data-collection := repo-utils:context-to-collection($x-context, $config) 
         (:if ($x-context) then collection($repo-utils:mappings//map[xs:string(@key) eq $x-context]/@path)
@@ -299,15 +299,15 @@ declare function fcs:search-retrieve($query as xs:string, $x-context as xs:strin
     
         return $result
         
-      }
+    (:  }
     catch err:XPTY0004 
     {
         diag:diagnostics("query-syntax-error", ($err:code , $err:description, $err:value))
-    } 
-    catch *
-    { (: FIXME: this could be any error!! :)
-       diag:diagnostics("query-syntax-error", $query)
-    }
+    }:) 
+    (:catch *
+    { (\: FIXME: this could be any error!! :\)
+       diag:diagnostics("general-system-error", )
+    }:)
     
     
 };
@@ -322,7 +322,8 @@ declare function fcs:format-record-data($raw-record-data as node(), $data-view a
 	let $resourcefragment-pid := fcs:apply-index ($raw-record-data, "resourcefragment-pid",$x-context, $config)	
 	(: to repeat current $x-format param-value in the constructed requested :)
 	let $x-format := request:get-parameter("x-format", $repo-utils:responseFormatXml)
-	let $resourcefragment-ref := concat('?operation=searchRetrieve&amp;query=resourcefragment-pid="', xmldb:encode-uri($resourcefragment-pid), '"&amp;x-dataview=full&amp;x-context=', $x-context)
+	let $resourcefragment-ref := if (exists($resourcefragment-pid)) then concat('?operation=searchRetrieve&amp;query=resourcefragment-pid="', xmldb:encode-uri($resourcefragment-pid), '"&amp;x-dataview=full&amp;x-context=', $x-context)
+	                                      else ""
 	
     let $kwic := if ('kwic' = $data-view) then
                    let $kwic-config := <config width="{$fcs:kwicWidth}"/>
@@ -458,13 +459,18 @@ declare function fcs:get-mapping($index as xs:string, $x-context as xs:string+, 
                     return $any-index
 };
 
+(:~ evaluate given index on given piece of data
+used when formatting record-data, to put selected pieces of data (indexes) into the results record 
+
+@returns result of evaluating given index's path on given data. or empty node if no mapping index was found
+:)
 declare function fcs:apply-index($data, $index as xs:string, $x-context as xs:string+, $config) as item()* {
 
   let $index-map := fcs:get-mapping($index,$x-context, $config),
   $match-on := if (exists($index-map/@use) ) then concat('/', xs:string($index-map/@use)) else ''
   
-  return util:eval(concat("$data//", $index-map/path/text(), $match-on))  
-  
+  return if (exists($index-map/path/text())) then util:eval(concat("$data//", $index-map/path/text(), $match-on))
+            else ()  
 };
 
 (:~ gets the mapping for the index and creates an xpath (UNION)
