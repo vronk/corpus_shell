@@ -50,10 +50,12 @@
             </div>
         </xsl:if>
     </xsl:template>
-    <xsl:template match="fcs:DataView/@ref" mode="record-data">
+    <xsl:template match="fcs:DataView[@ref]" mode="record-data">
+    	<div class="data-view {@type}">                
         <a href="{@ref}">
             <xsl:value-of select="@type"/>
         </a>
+        </div>
     </xsl:template>
     
  <!-- better hide the fullview (the default view is too much)
