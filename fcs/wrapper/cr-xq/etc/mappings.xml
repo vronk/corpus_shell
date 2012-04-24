@@ -5,7 +5,7 @@
         <index key="cql.serverChoice" base_elem="*">*</index>
         -->
         <index key="cql.serverChoice" base_elem="p">
-            <path>*</path>
+            <path>p</path>
         </index>
         <index key="fcs.resource" type="explicit"/>
         <index key="cmd.collection" base_elem="CMD" type="explicit" status="indexed">
@@ -33,6 +33,16 @@
         </index>
         <index key="persId" use="xs:string(@xml:id)">
             <path>persName</path>
+        </index>
+        <!-- -->
+        <index key="title" use="xs:string(@value)">
+            <path>p/date</path>
+        </index>
+        <index key="resource-pid">
+            <path>'clarin.at:icltt:cr:stb'</path>
+        </index>
+        <index key="resourcefragment-pid" use="xs:string(@value)">
+            <path>date</path>
         </index>
     </map>
     <map key="clarin.at:icltt:cr:aac-names" path="/db/cr-data/aac_names" base_elem="tei:person">

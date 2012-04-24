@@ -245,7 +245,7 @@ declare function fcs:search-retrieve($query as xs:string, $x-context as xs:strin
         let $xpath-query := fcs:transform-query ($query, $x-context, $config)
          
             (: if there was a problem with the parsing the query  don't evaluate :)
-        let $results := if ($xpath-query instance of xs:string) then
+        let $results := if ($xpath-query instance of text()) then
                                 util:eval(concat("$data-collection",$xpath-query))
                            else ()
     

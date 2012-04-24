@@ -61,7 +61,7 @@
                 <xsl:value-of select="concat('ancestor-or-self::', $mappings//map[@key='default']/@base_elem)"/>
             </xsl:when>
             <xsl:otherwise>
-                <xsl:value-of select="'self::*'"/>
+                <xsl:value-of select="'.'"/>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:variable>
@@ -202,7 +202,7 @@
                         <xsl:value-of select="replace($sanitized_term,'%22','')"/>
                         <xsl:text>&lt;/phrase&gt;)</xsl:text>
                     </xsl:when>
-                    <xsl:when test="contains($term,'%7C')"> <!-- contains: | but why simply remove? -->
+                    <xsl:when test="contains($term,'%7C')"> <!-- contains: |  - but why simply remove? -->
                         <xsl:value-of select="concat('ft:query(', $match-on, ', ')"/>
                         <xsl:text>'</xsl:text>
                         <xsl:value-of select="replace($sanitized_term,'%7C','')"/>
@@ -296,8 +296,11 @@
         <xsl:param name="ix" select="."/>
         <xsl:variable name="paths">
             <xsl:choose>
-                <xsl:when test="exists($ix/path)">
+                <xsl:when test="count($ix/path) &gt; 1">
                     <xsl:value-of select="concat('(', string-join(distinct-values($ix/path/text()),'|'),')')"/>
+                </xsl:when>
+                <xsl:when test="exists($ix/path)">
+                    <xsl:value-of select="$ix/path/text()"/>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:value-of select="$ix/text()"/>

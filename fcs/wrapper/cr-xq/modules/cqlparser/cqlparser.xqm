@@ -41,7 +41,7 @@ declare function cql:cql-to-xcql($cql-expression as xs:string) {
 declare function cql:cql2xpath($cql-expression as xs:string, $x-context as xs:string)  as item() {
     let $xcql := cql:cql-to-xcql($cql-expression)
 (:    return transform:transform ($xcql, $cql:transform-doc, <parameters><param name="mappings-file" value="{repo-utils:config-value('mappings')}" /></parameters>):)
-    return if ($xcql instance of xs:string) then
+    return if (not($xcql instance of element(diagnostics))) then
                 transform:transform ($xcql, $cql:transform-doc, <parameters><param name="x-context" value="{$x-context}" /></parameters> )
              else $xcql 
   
@@ -51,7 +51,7 @@ declare function cql:cql2xpath($cql-expression as xs:string, $x-context as xs:st
 :)
 declare function cql:cql2xpath($cql-expression as xs:string, $x-context as xs:string, $mappings as xs:string)  as item() {
     let $xcql := cql:cql-to-xcql($cql-expression)
-      return if ($xcql instance of xs:string) then
+      return if (not($xcql instance of element(diagnostics))) then
                 transform:transform ($xcql, $cql:transform-doc, 
                     <parameters><param name="x-context" value="{$x-context}" />
                         <param name="mappings-file" value="{$mappings}" /></parameters> )
