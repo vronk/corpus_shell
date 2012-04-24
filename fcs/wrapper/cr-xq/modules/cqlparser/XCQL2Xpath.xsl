@@ -169,9 +169,19 @@
     <xsl:template match="relation">
         <xsl:param name="term"/>
         <xsl:param name="index"/>
-        <xsl:param name="sanitized_term" select="replace($term,' ','+')"/>
         <xsl:param name="match-on" select="if (exists($index/index/@use)) then xs:string($index/index/@use) else  '.' "/>
-<!--        <xsl:message>relation index:<xsl:value-of select="$index/index/@use"/></xsl:message>-->
+        <!--        <xsl:message>relation index:<xsl:value-of select="$index/index/@use"/></xsl:message>-->
+        <xsl:variable name="sanitized_term">
+            <!-- select="replace($term,' ','+')"/ -->
+            <xsl:choose>
+                <xsl:when test="starts-with($term, '''') ">
+                    <xsl:value-of select="translate($term,'''','')"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="$term"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
         <xsl:text>[</xsl:text>
         <xsl:choose>
             <xsl:when test="$term='*' or $term='_'">
@@ -192,7 +202,7 @@
                         <xsl:value-of select="replace($sanitized_term,'%22','')"/>
                         <xsl:text>&lt;/phrase&gt;)</xsl:text>
                     </xsl:when>
-                    <xsl:when test="contains($term,'%7C')">
+                    <xsl:when test="contains($term,'%7C')"> <!-- contains: | but why simply remove? -->
                         <xsl:value-of select="concat('ft:query(', $match-on, ', ')"/>
                         <xsl:text>'</xsl:text>
                         <xsl:value-of select="replace($sanitized_term,'%7C','')"/>

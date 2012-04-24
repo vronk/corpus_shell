@@ -236,15 +236,18 @@ declare function fcs:do-scan-default($scan-clause as xs:string, $index-xpath as 
 :)
 declare function fcs:search-retrieve($query as xs:string, $x-context as xs:string*, $startRecord as xs:integer, $maximumRecords as xs:integer, $x-dataview as xs:string*, $config) as item()* {
                                  
-(:    try {:)
+
         let $start-time := util:system-dateTime()
         let $data-collection := repo-utils:context-to-collection($x-context, $config) 
         (:if ($x-context) then collection($repo-utils:mappings//map[xs:string(@key) eq $x-context]/@path)
                                 else $repo-utils:data-collection:)
         
-        let $xpath-query := concat("$data-collection", fcs:transform-query ($query, $x-context, $config))
-            
-        let $results := util:eval($xpath-query)
+        let $xpath-query := fcs:transform-query ($query, $x-context, $config)
+         
+            (: if there was a problem with the parsing the query  don't evaluate :)
+        let $results := if ($xpath-query instance of xs:string) then
+                                util:eval(concat("$data-collection",$xpath-query))
+                           else ()
     
         let	$result-count := fn:count($results),
         $result-seq := fn:subsequence($results, $startRecord, $maximumRecords),
@@ -294,21 +297,12 @@ declare function fcs:search-retrieve($query as xs:string, $x-context as xs:strin
     		<fcs:duration>{($end-time - $start-time, $end-time2 - $end-time) }</fcs:duration>
     		<fcs:transformedQuery>{ $xpath-query }</fcs:transformedQuery>
           </sru:extraResponseData>
-          { $records }
+          { ($records,
+            if ($xpath-query instance of element(diagnostics)) then  <sru:diagnostics>{$xpath-query/*}</sru:diagnostics> else ()
+           ) }
         </sru:searchRetrieveResponse>
     
         return $result
-        
-    (:  }
-    catch err:XPTY0004 
-    {
-        diag:diagnostics("query-syntax-error", ($err:code , $err:description, $err:value))
-    }:) 
-    (:catch *
-    { (\: FIXME: this could be any error!! :\)
-       diag:diagnostics("general-system-error", )
-    }:)
-    
     
 };
 
@@ -365,12 +359,12 @@ It relies on the external cqlparser-module, that delivers the query in XCQL-form
 and then applies a stylesheet
 
 @params $x-context identifier of a resource/collection
-@returns XPath version of the CQL-query 
+@returns XPath version of the CQL-query, or diagnostics bubbling up the call-chain if parse-error! 
 :)
-declare function fcs:transform-query($cql-query as xs:string, $x-context as xs:string, $config) as xs:string {
-    let $mappings := repo-utils:config-value($config, 'mappings')
-    return cql:cql2xpath ($cql-query, $x-context, $mappings)
-    
+declare function fcs:transform-query($cql-query as xs:string, $x-context as xs:string, $config) as item() {
+    let $mappings := repo-utils:config-value($config, 'mappings'),
+    $xpath-query := cql:cql2xpath ($cql-query, $x-context, $mappings)
+    return $xpath-query    
  };
 
 (: old version, "manually" parsing the cql-string
