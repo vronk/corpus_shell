@@ -50,15 +50,16 @@
     <xsl:param name="name_col_width">50%</xsl:param>
 
     <!-- <xsl:param name="mode" select="'htmldiv'" />     -->
-    <xsl:param name="title" select="concat('scan: ', $index )"/>
+    <xsl:param name="title" select="concat('scan: ', $scanClause )"/>
 
     <!--
 <xsl:param name="detail_uri_prefix"  select="'?q='"/> 
 -->
     <xsl:decimal-format name="european" decimal-separator="," grouping-separator="."/>
-    <xsl:param name="index" select="/sru:scanResponse/sru:echoedScanRequest/sru:scanClause"/>
+    <xsl:param name="scanClause" select="/sru:scanResponse/sru:echoedScanRequest/sru:scanClause"/>
+    <xsl:param name="index" select="$scanClause"/>
     <xsl:template name="continue-root">
-        <div class="cmds-ui-block  init-show">
+        <div> <!-- class="cmds-ui-block  init-show" -->
             <xsl:call-template name="header"/>
             <div class="content">
                 <xsl:apply-templates select="/sru:scanResponse/sru:terms"/>
@@ -74,56 +75,24 @@
         <sru:maximumTerms>100</sru:maximumTerms>        
         </sru:echoedScanRequest> -->
     <xsl:template name="header">
-        <xsl:variable name="max-value" select="fcs:countTerms"/>
+        <xsl:variable name="countTerms" select="sru:extraResponseData/fcs:countTerms"/>
         <xsl:variable name="start-item" select="'TODO:start-item=?'"/>
         <xsl:variable name="maximum-items" select="/sru:scanResponse/sru:echoedScanRequest/sru:scanClause"/>
         
         <!--  <h2>MDRepository Statistics - index values</h2>  -->
         <div class="header">
-            <xsl:attribute name="max-value" select="$max-value"/>
+            <xsl:attribute name="data-countTerms" select="$countTerms"/>
             <xsl:attribute name="start-item" select="$start-item"/>
             <xsl:attribute name="maximum-items" select="$maximum-items"/>
-            <xsl:value-of select="$title"/>
+            <!--<xsl:value-of select="$title"/>-->
             <form>
             <!--<input type="text" name="index" value="{$index}" />-->
-                <input type="text" name="scanClause" value="{$index}"/>
+                <input type="text" name="scanClause" value="{$scanClause}"/>
                 <input type="hidden" name="operation" value="scan"/>
                 <input type="hidden" name="x-format" value="{$format}"/>
                 <input type="hidden" name="x-context" value="{$x-context}"/>
                 <input type="submit" value="suchen"/>
-
             </form>
-            <span class="cmd cmd_detail"/>            
-            <div class="ui-context-dialog">
-                <table class="show">
-                    <tbody>
-                        <tr>
-                            <td class="key">
-                                <xsl:value-of select="max-value"/>
-                            </td>
-                            <td class="value">
-                                <xsl:value-of select="$max-value"/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="key">
-                                <xsl:value-of select="start-item"/>
-                            </td>
-                            <td class="value">
-                                <xsl:value-of select="$start-item"/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="key">
-                                <xsl:value-of select="maximum-items"/>
-                            </td>
-                            <td class="value">
-                                <xsl:value-of select="$maximum-items"/>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
         </div>
     </xsl:template>
     
@@ -143,6 +112,7 @@ sample data:
         </table>
     </xsl:template>
     <xsl:template match="sru:term">
+        <xsl:variable name="depth" select="count(ancestor::sru:term)"/>
         <tr>
             <td align="right">
                 <xsl:value-of select="sru:numberOfRecords"/>
@@ -164,6 +134,7 @@ sample data:
                             </xsl:otherwise>
                         </xsl:choose>
                     </xsl:variable>
+                    <xsl:value-of select="for $i in (1 to $depth) return '- '"/>
                     <a class="value-caller" href="{$href}" target="_blank">
                         <xsl:value-of select="(sru:displayTerm, sru:value)[1]"/>
                     </a>
