@@ -178,8 +178,10 @@ declare function repo-utils:serialise-as($item as node()?, $format as xs:string,
               			            <param name="x-context" value="{repo-utils:param-value($config, 'x-context', '' )}"/>
               			            <param name="base_url" value="{repo-utils:config-value($config, 'base.url')}"/>
               			            <param name="scripts_url" value="{repo-utils:config-value($config, 'scripts.url')}"/>
+              			             <param name="site_name" value="{repo-utils:config-value($config, 'site.name')}"/>
               			</parameters>)          
-               let $option := util:declare-option("exist:serialize", "method=xml media-type=text/html")
+(:               let $option := util:declare-option("exist:serialize", "method=xml media-type=text/html"):)
+let $option := util:declare-option("exist:serialize", "method=xhtml media-type=text/html")
 	           return $res
 	   else
 	       let $option := util:declare-option("exist:serialize", "method=xml media-type=application/xml")
