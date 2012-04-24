@@ -61,4 +61,28 @@
             </tr>
         </xsl:if>
     </xsl:template>
+    <xsl:template match="testrun">
+        <div>
+            <xsl:copy-of select="info/h2"/>
+            <div class="note">duration: <xsl:value-of select="@duration"/>; on: <xsl:value-of select="substring(@on,1,10)"/>; </div>
+            <xsl:apply-templates select="(info/*|TestSet)"/>
+        </div>
+    </xsl:template>
+    <xsl:template match="diagnostics">
+        <div>
+            <div class="test-failed">
+                <xsl:value-of select="@type"/>
+            </div>
+            <xsl:copy-of select="."/>
+        </div>
+    </xsl:template>
+    <xsl:template match="h2"/>
+    <xsl:template match="*|@*">
+        <xsl:copy>
+            <xsl:apply-templates select="*|@*|text()"/>
+        </xsl:copy>
+    </xsl:template>
+    <xsl:template match="text()">
+        <xsl:value-of select="."/>
+    </xsl:template>
 </xsl:stylesheet>
