@@ -27,9 +27,10 @@ the named templates are at the bottom.
         <xsl:call-template name="inline"/>
     </xsl:template>
     <xsl:template match="date" mode="record-data">
-        <div class="date">
-            <xsl:value-of select="."/>[<xsl:value-of select="@value"/>]
-      </div>
+        <span class="date">
+            <xsl:value-of select="."/>
+            <span class="note">[<xsl:value-of select="@value"/>]</span>
+        </span>
     </xsl:template>
     <xsl:template match="div|p" mode="record-data">
         <xsl:copy>
@@ -129,20 +130,26 @@ the named templates are at the bottom.
     <xsl:template match="milestone" mode="record-data">
         <xsl:text>...</xsl:text>
     </xsl:template>
-    <xsl:template match="pb" mode="record-data">
+    
+    <!-- for STB: dont want pb -->
+    <xsl:template match="pb" mode="record-data"/>
+    <!--<xsl:template match="pb" mode="record-data">
         <div class="pb">p. <xsl:value-of select="@n"/>
         </div>
-    </xsl:template>
+    </xsl:template>-->
     <xsl:template match="persName | placeName" mode="record-data">
         <xsl:call-template name="inline"/>
     </xsl:template>
     <xsl:template match="rs" mode="record-data">
         <xsl:call-template name="inline"/>
     </xsl:template>
+    
+    <!-- for STB: dont want seg -->
+    <xsl:template match="seg" mode="record-data"/>
     <!-- handing over to aac:stand.xsl -->
-    <xsl:template match="seg" mode="record-data">
+    <!--<xsl:template match="seg" mode="record-data">
         <xsl:apply-templates select="."/>
-    </xsl:template>
+    </xsl:template>-->
     <!--
     <xsl:template match="seg[@type='header']" mode="record-data"/>
     <xsl:template match="seg[@rend='italicised']" mode="record-data">
@@ -204,7 +211,12 @@ the named templates are at the bottom.
 <!-- named templates starting -->
     <xsl:template name="inline">
         <span class="{name()}">
-            <xsl:value-of select="."/>
+<!--            <xsl:value-of select="."/>-->
+            <!-- umständliche lösung to get spaces between children elements -->
+            <xsl:for-each select=".//text()">
+                <xsl:value-of select="."/>
+                <xsl:text> </xsl:text>
+            </xsl:for-each>
         </span>
     </xsl:template>
 </xsl:stylesheet>
