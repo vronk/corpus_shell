@@ -95,7 +95,7 @@ two tasks (in separate calls, managed by $mode-param):
     <xsl:template match="sru:terms" mode="subsequence">
         <xsl:variable name="only-filtered" select="not($sort='text' and ($filter-mode='starts-with' or not(xs:integer($response-position) = 1)))"/>
         <!-- position of the matching term within the index, if there is a filter -->
-        <xsl:variable name="filtered" select="*[if ($filter!='') then if ($filter-mode='starts-with') then starts-with(sru:value,substring-before($filter,'*')) else contains(sru:value, $filter) else true()]"/>
+        <xsl:variable name="filtered" select="*[if ($filter!='') then if ($filter-mode='starts-with') then (starts-with(sru:value,substring-before($filter,'*')) or starts-with(sru:displayTerm,substring-before($filter,'*'))) else (contains(sru:value, $filter) or contains(sru:displayTerm, $filter))  else true()]"/>
         <xsl:variable name="match-position" select="count(sru:term[.=$filtered[1]]/preceding-sibling::sru:term)"/>
 
 <!--        <xsl:message><xsl:value-of select="$match-position" /></xsl:message>-->
