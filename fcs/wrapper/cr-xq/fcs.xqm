@@ -175,7 +175,12 @@ declare function fcs:scan($scan-clause  as xs:string, $x-context as xs:string+, 
                 else
                     fcs:do-scan-default($scan-clause, $index-xpath, $x-context, $sort, $config)         
 
-        return repo-utils:store-in-cache($index-doc-name , $data, $config)
+          (: if empty result, return the empty result, but don't store
+            to not fill cache with garbage:)
+        return         repo-utils:store-in-cache($index-doc-name , $data, $config)
+        (:if (number($data//sru:scanResponse/sru:extraResponseData/fcs:countTerms) > 0) then
+        
+                else $data:)
 
 	(: extract the required subsequence (according to given sort) :)
 	let $res-nodeset := transform:transform($index-scan,$fcs:indexXsl, 
@@ -251,8 +256,9 @@ declare function fcs:search-retrieve($query as xs:string, $x-context as xs:strin
                                 util:eval(concat("$data-collection",$xpath-query))
                            else ()
     
-        let	$result-count := fn:count($results),
-        $result-seq := fn:subsequence($results, $startRecord, $maximumRecords),
+        let	$result-count := fn:count($results),         
+        $ordered-result := fcs:sort-result($results, $query, $x-context, $config),                              
+        $result-seq := fn:subsequence($ordered-result, $startRecord, $maximumRecords),
         
         $seq-count := fn:count($result-seq),        
         $end-time := util:system-dateTime(),
@@ -507,10 +513,16 @@ declare function fcs:index-as-xpath($index as xs:string, $x-context as xs:string
     let $index-map := fcs:get-mapping($index, $x-context, $config )        
      return if (exists($index-map)) then
                         let $match-on := if (exists($index-map/@use) ) then concat('/', xs:string($index-map/@use)) else ''
-                        return translate(concat('(', string-join($index-map/path,'|'),')', $match-on),'.','/')
-                    else $index
+                        let $indexes := if (count($index-map/path)) then  
+                                            translate(concat('(', string-join($index-map/path,'|'),')', $match-on),'.','/')
+                                            else translate(concat($index-map/path, $match-on),'.','/')
+                           return $indexes
+                  else $index
     
 };
+
+(:~ this is to mark matched-element, even if usual index-matching-mechanism fails (which is when matching on attributes) 
+:)
 
 declare function fcs:highlight-result($result as node()*, $query as xs:string, $x-context as xs:string+, $config) as item()* {
     
@@ -520,22 +532,29 @@ declare function fcs:highlight-result($result as node()*, $query as xs:string, $
                                let $xpath-query := fcs:transform-query ($query, $x-context, $config, false())    
                                let $match := util:eval (concat("$result", $xpath-query))
                                return fcs:process-result($result, $match)                                                       
-                    else util:expand($result, "highlight-matches=both")
+                    else util:expand($result, "highlight-matches=elements")
     
     return $processed-result                               
 };
 
-(:~ this is to mark matched-element, even if usual index-matching-mechanism fails (which is when matching on attributes) 
-:)
+(:~ this is to mark matched element, even if usual index-matching-mechanism fails (which is when matching on attributes)
+it recursively processes the result 
+and sets a <exist:match> element (-a-r-o-u-n-d) INSIDE the matching elements
+(because it is important for the further processing to keep the matching element)
+it still strips the inner elements (descendants) and only leaves the .//text() . 
 
+@param $result the result containing the matched elements, but somewhere inside the ancestors (base-elem)
+@param $matching the list of directly matched elements, that are contained in the $result somewhere
+
+:)
 declare function fcs:process-result($result as node()*, $matching as node()*) as item()* {
   for $node in $result
     return  typeswitch ($node)
         case text() return $node
         case comment() return $node
         (:case element() return  if ($node = $matching) then <exist:match>{fcs:process-result-default($node, $matching )}</exist:match>:)
-                
-        case element() return  if ($node = $matching) then <exist:match>{$node//text() }</exist:match>
+                            
+        case element() return  if ($node = $matching) then element {$node/name()} {$node/@*, <exist:match>{$node//text()}</exist:match>}
                     else  fcs:process-result-default($node, $matching )
         default return fcs:process-result-default($node, $matching )
 
@@ -545,3 +564,47 @@ declare function fcs:process-result-default($node as node(), $matching as node()
   element {$node/name()} {($node/@*, fcs:process-result($node/node(), $matching))}
   (: <div class="default">{$node/name()} </div> :)  
  };
+
+(:~ dynamically sort result based on query (CQL: sortBy clause) or default sorting defined in mappings
+<sortKeys>
+<key>
+<index>dc.date</index>
+<modifiers>
+<modifier>
+<type>sort.descending</type>
+</modifier>
+</modifiers>
+</key>
+<key>
+<index>dc.title</index>
+<modifiers>
+<modifier>
+<type>sort.ascending</type>
+</modifier>
+</modifiers>
+</key>
+</sortKeys>
+:)
+declare function fcs:sort-result($result as node()*, $cql as xs:string, $x-context as xs:string+, $config) as item()* {
+
+  let $xcql := cql:cql-to-xcql($cql)
+  let $indexes := if (exists($xcql//sortKeys/key/index)) then
+                        $xcql//sortKeys/key/index
+                      else 
+                          let $context-map := fcs:get-mapping("",$x-context, $config)
+                          return if (exists($context-map/@sort)) then $context-map/@sort
+                                    else ()
+                        
+    let $xpaths := for $ix in $indexes                         
+                        return fcs:index-as-xpath($ix,$x-context, $config )
+                                 
+   let $sorting-expression := string-join(("for $rec in $result order by ",
+                                    for $index at $pos in $xpaths
+                                        let $modifier := substring-after ($indexes[position()=$pos]/following-sibling::modifiers/modifier/type, 'sort.')
+                                    return 
+                                        ("$rec//", $index, " ", $modifier, if ($pos = count($xpaths)) then '' else ', '),
+                                    " return $rec"                                      
+                                    ), '')                                   
+   return util:eval($sorting-expression)
+
+};

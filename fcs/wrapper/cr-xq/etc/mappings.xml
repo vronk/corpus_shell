@@ -12,11 +12,11 @@
             <path>MdSelfLink</path>
         </index>
     </map>
-    <map key="clarin.at:icltt:cr:stb" path="/db/cr-data/stb" base_elem="div[@type='diary-day']">
+    <map key="clarin.at:icltt:cr:stb" path="/db/cr-data/stb" base_elem="div[@type='diary-day']" sort="diary-day">
         <index status="indexed" key="cql.serverChoice">
             <path>p</path>
         </index>
-        <index key="diary-day" use="xs:string(@value)">
+        <index key="diary-day" use="@value">
             <path>div[@type='diary-day']/p/date</path>
         </index>
         <index key="diary-month" use="substring(xs:string(@value),1,7)">
@@ -31,12 +31,12 @@
         <index status="indexed" key="personName">
             <path>persName</path>
         </index>
-        <index key="persId" use="@key" base_elem="p" link="?x-format=html&amp;x-context=clarin.at%3Aicltt%3Acr%3Aaac-names&amp;query=persId=">
+        <index key="person" use="@key" base_elem="p" link="?x-format=html&amp;x-context=clarin.at%3Aicltt%3Acr%3Aaac-names&amp;query=persId=">
             <path>persName</path>
         </index>
         <!-- -->
         <index key="title" use="xs:string(@value)">
-            <path>p/date</path>
+            <path>date</path>
         </index>
         <index key="resource-pid">
             <path>'clarin.at:icltt:cr:stb'</path>
@@ -46,7 +46,7 @@
         </index>
     </map>
     <map key="clarin.at:icltt:cr:aac-names" path="/db/cr-data/aac_names" base_elem="tei:person">
-        <index key="persId" use="@xml:id" link="?x-format=html&amp;x-context=clarin.at%3Aicltt%3Acr%3Astb&amp;query=persId=">
+        <index key="persId" use="@xml:id" link="?x-format=html&amp;x-context=clarin.at%3Aicltt%3Acr%3Astb&amp;query=person=">
             <path>tei:person</path>
         </index>
         <index key="cql.serverChoice">
