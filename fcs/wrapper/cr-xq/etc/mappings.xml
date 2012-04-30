@@ -31,7 +31,7 @@
         <index status="indexed" key="personName">
             <path>persName</path>
         </index>
-        <index key="persId" use="xs:string(@xml:id)">
+        <index key="persId" use="@key" base_elem="p" link="?x-format=html&amp;x-context=clarin.at%3Aicltt%3Acr%3Aaac-names&amp;query=persId=">
             <path>persName</path>
         </index>
         <!-- -->
@@ -41,15 +41,21 @@
         <index key="resource-pid">
             <path>'clarin.at:icltt:cr:stb'</path>
         </index>
-        <index key="resourcefragment-pid" use="xs:string(@value)">
+        <index key="resourcefragment-pid" use="@value">
             <path>date</path>
         </index>
     </map>
     <map key="clarin.at:icltt:cr:aac-names" path="/db/cr-data/aac_names" base_elem="tei:person">
+        <index key="persId" use="@xml:id" link="?x-format=html&amp;x-context=clarin.at%3Aicltt%3Acr%3Astb&amp;query=persId=">
+            <path>tei:person</path>
+        </index>
         <index key="cql.serverChoice">
-            <path>*</path>
+            <path>tei:person</path>
         </index>
         <index key="personName" status="indexed">
+            <path>tei:persName</path>
+        </index>
+        <index key="title">
             <path>tei:persName</path>
         </index>
         <index key="occupation">
