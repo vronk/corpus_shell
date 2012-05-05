@@ -48,6 +48,7 @@
     <xsl:param name="sort">x</xsl:param>
     <!-- s=size|n=name|t=time|x=default -->
     <xsl:param name="name_col_width">50%</xsl:param>
+    <xsl:param name="list-mode">table</xsl:param>
 
     <!-- <xsl:param name="mode" select="'htmldiv'" />     -->
     <xsl:param name="title" select="concat('scan: ', $scanClause )"/>
@@ -57,7 +58,9 @@
 -->
     <xsl:decimal-format name="european" decimal-separator="," grouping-separator="."/>
     <xsl:param name="scanClause" select="/sru:scanResponse/sru:echoedScanRequest/sru:scanClause"/>
-    <xsl:param name="index" select="$scanClause"/>
+    <xsl:param name="scanClause-array" select="tokenize($scanClause,'=')"/>
+    <xsl:param name="index" select="$scanClause-array[1]"/>
+    <xsl:param name="filter" select="$scanClause-array[2]"/>
     <xsl:template name="continue-root">
         <div> <!-- class="cmds-ui-block  init-show" -->
             <xsl:call-template name="header"/>
@@ -75,7 +78,7 @@
         <sru:maximumTerms>100</sru:maximumTerms>        
         </sru:echoedScanRequest> -->
     <xsl:template name="header">
-        <xsl:variable name="countTerms" select="sru:extraResponseData/fcs:countTerms"/>
+        <xsl:variable name="countTerms" select="/sru:scanResponse/sru:extraResponseData/fcs:countTerms"/>
         <xsl:variable name="start-item" select="'TODO:start-item=?'"/>
         <xsl:variable name="maximum-items" select="/sru:scanResponse/sru:echoedScanRequest/sru:scanClause"/>
         
@@ -86,13 +89,15 @@
             <xsl:attribute name="maximum-items" select="$maximum-items"/>
             <!--<xsl:value-of select="$title"/>-->
             <form>
-            <!--<input type="text" name="index" value="{$index}" />-->
-                <input type="text" name="scanClause" value="{$scanClause}"/>
+                <input type="text" name="index" value="{$index}"/>
+                <input type="text" name="scanClause" value="{$filter}"/>
                 <input type="hidden" name="operation" value="scan"/>
                 <input type="hidden" name="x-format" value="{$format}"/>
                 <input type="hidden" name="x-context" value="{$x-context}"/>
                 <input type="submit" value="suchen"/>
             </form>
+            <xsl:value-of select="count(//sru:terms/sru:term)"/> out of <xsl:value-of select="$countTerms"/> Terms
+            
         </div>
     </xsl:template>
     
@@ -107,77 +112,65 @@ sample data:
     -->
     <xsl:template match="sru:terms">
 <!--        <xsl:variable name="index" select="my:xpath2index(@path)"/>-->
-        <table>
-            <xsl:apply-templates select="sru:term"/>
-        </table>
+        <xsl:choose>
+            <xsl:when test="$list-mode = 'table'">
+                <table>
+                    <xsl:apply-templates select="sru:term"/>
+                </table>
+            </xsl:when>
+            <xsl:otherwise>
+                <ul>
+                    <xsl:apply-templates select="sru:term"/>
+                </ul>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
     <xsl:template match="sru:term">
         <xsl:variable name="depth" select="count(ancestor::sru:term)"/>
-        <tr>
-            <td align="right">
-                <xsl:value-of select="sru:numberOfRecords"/>
-            </td>
-            <td>
-                <span>
-                    <xsl:variable name="href">
-<!--                        special handling for special index -->
-                        <xsl:choose>
-                            <xsl:when test="$index = 'fcs.resource'">
-                                <xsl:value-of select="utils:formURL('explain', $format, sru:value)"/>
-                            </xsl:when>
-                            <!-- TODO: special handling for cmd.collection? -->
-                            <xsl:when test="$index = 'cmd'">
-                                <xsl:value-of select="utils:formURL('explain', $format, sru:value)"/>
-                            </xsl:when>
-                            <xsl:otherwise>
-                                <xsl:value-of select="utils:formURL('searchRetrieve', $format, concat($index, '%3D%22', sru:value, '%22'))"/>
-                            </xsl:otherwise>
-                        </xsl:choose>
-                    </xsl:variable>
-                    <xsl:value-of select="for $i in (1 to $depth) return '- '"/>
-                    <a class="value-caller" href="{$href}" target="_blank">
-                        <xsl:value-of select="(sru:displayTerm, sru:value)[1]"/>
-                    </a>
-                </span>
-            </td>
-        </tr>
-        <xsl:apply-templates select="sru:extraTermData/sru:terms/sru:term"/>
+        <xsl:variable name="href">
+            <!--                        special handling for special index -->
+            <xsl:choose>
+                <xsl:when test="$index = 'fcs.resource'">
+                    <xsl:value-of select="utils:formURL('explain', $format, sru:value)"/>
+                </xsl:when>
+                <!-- TODO: special handling for cmd.collection? -->
+                <xsl:when test="$index = 'cmd'">
+                    <xsl:value-of select="utils:formURL('explain', $format, sru:value)"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="utils:formURL('searchRetrieve', $format, concat($index, '%3D%22', sru:value, '%22'))"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <xsl:variable name="link">
+            <span>
+                <xsl:value-of select="for $i in (1 to $depth) return '- '"/>
+                <a class="value-caller" href="{$href}">  <!--target="_blank"-->
+                    <xsl:value-of select="(sru:displayTerm, sru:value)[1]"/>
+                </a>
+            </span>
+        </xsl:variable>
+        <xsl:choose>
+            <xsl:when test="$list-mode = 'table'">
+                <tr>
+                    <td align="right">
+                        <xsl:value-of select="sru:numberOfRecords"/>
+                    </td>
+                    <td>
+                        <xsl:copy-of select="$link"/>
+                    </td>
+                </tr>
+                <xsl:apply-templates select="sru:extraTermData/sru:terms/sru:term"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <li>
+                    <xsl:copy-of select="$link"/>
+                    <span class="note"> |<xsl:value-of select="sru:numberOfRecords"/>|</span>
+                    <ul>
+                        <xsl:apply-templates select="sru:extraTermData/sru:terms/sru:term"/>
+                    </ul>
+                </li>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
-<!--    
-    <xsl:template name="callback-header">
-        <style type="text/css">
-            #modeltree {
-                margin-left : 10px;
-                border : 1px solid #9999aa;
-                border-collapse : collapse;
-            }
-            .number {
-                text-align : right;
-            }
-            td {
-                border-bottom : 1px solid #9999aa;
-                padding : 1px 4px;
-            }
-            .treecol {
-                padding-left : 1.5em;
-            }
-            table thead {
-                background : #ccccff;
-                font-size : 0.9em;
-            }
-            table thead tr th {
-                border : 1px solid #9999aa;
-                font-weight : normal;
-                text-align : left;
-                padding : 1px 4px;
-            }</style>
-        <script type="text/javascript">
-		$(function(){
-			$("#modeltree").treeTable({initialState:"expanded"});
-			addPaging($('.cmds-ui-block'));
-			
-			
-		});
-	</script>
-    </xsl:template>-->
 </xsl:stylesheet>
