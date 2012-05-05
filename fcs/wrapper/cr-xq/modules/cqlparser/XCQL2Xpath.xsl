@@ -77,7 +77,9 @@
         <xsl:variable name="xpath-query">
             <xsl:apply-templates/>
         </xsl:variable>
-        <xsl:value-of select="concat($xpath-query,'/', $base-elem)"/>
+<!-- moving the base-elem out into xquery        
+<xsl:value-of select="concat($xpath-query,'/', $base-elem)"/>-->
+        <xsl:value-of select="$xpath-query"/>
     </xsl:template>
     <xsl:template match="triple">
         <!--special handling for collection (=context) index, disabled for now,
@@ -173,9 +175,12 @@
         <!--        <xsl:message>relation index:<xsl:value-of select="$index/index/@use"/></xsl:message>-->
         <xsl:variable name="sanitized_term">
             <!-- select="replace($term,' ','+')"/ -->
-            <xsl:choose>
+            <xsl:choose> <!-- remove quotes -->
                 <xsl:when test="starts-with($term, '''') ">
                     <xsl:value-of select="translate($term,'''','')"/>
+                </xsl:when>
+                <xsl:when test="starts-with($term, '%22') ">
+                    <xsl:value-of select="translate($term,'%22','')"/>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:value-of select="$term"/>
@@ -188,18 +193,19 @@
                 <xsl:text>true()</xsl:text>
             </xsl:when>
             <xsl:when test="value='contains'">
-                <xsl:value-of select="concat('contains(', $match-on, ', ')"/>
+                <xsl:value-of select="concat('contains(', $match-on, ', ''')"/>
                 <xsl:value-of select="$sanitized_term"/>
                 <xsl:text>')</xsl:text>
             </xsl:when>
             <xsl:when test="(value='any' or preceding-sibling::index='*' or preceding-sibling::index='cql.serverChoice')">
 				<!--  use full-text querying: [ft:query(., "language")] -->
                 <xsl:choose>
-                    <xsl:when test="starts-with($term,'%22')">
+<!--                    <xsl:when test="starts-with($term,'%22') or starts-with($term,'"') ">-->
+                    <xsl:when test="contains($sanitized_term, ' ')">
                         <xsl:value-of select="concat('ft:query(', $match-on, ', ')"/>
 <!--                        <xsl:text>ft:query(.,<phrase></xsl:text>-->
                         <xsl:text>&lt;phrase&gt;</xsl:text>
-                        <xsl:value-of select="replace($sanitized_term,'%22','')"/>
+                        <xsl:value-of select="replace($sanitized_term,'&#34;','')"/>
                         <xsl:text>&lt;/phrase&gt;)</xsl:text>
                     </xsl:when>
                     <xsl:when test="contains($term,'%7C')"> <!-- contains: |  - but why simply remove? -->
