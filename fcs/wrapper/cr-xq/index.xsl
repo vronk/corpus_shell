@@ -122,16 +122,19 @@ two tasks (in separate calls, managed by $mode-param):
             <xsl:variable name="start-pos" select="if ($only-filtered) then 0 else xs:integer($match-position)"/>
             <xsl:variable name="effective-start-item" select="xs:integer($start-item) + $start-pos - xs:integer($response-position) + 1"/>
             <xsl:variable name="effective-end-item" select="xs:integer($effective-start-item) + xs:integer($max-items)"/>
-            <xsl:apply-templates select="$ordered/*[xs:integer(position()) &gt;= xs:integer($effective-start-item) and ((xs:integer(position()) &lt; (xs:integer($effective-end-item))) or xs:integer($max-items)=0)]"/>
+            <xsl:apply-templates select="$ordered/*[xs:integer(position()) &gt;= xs:integer($effective-start-item) and ((xs:integer(position()) &lt; (xs:integer($effective-end-item))) or xs:integer($max-items)=0)]">
+                <xsl:with-param name="start-pos" select="$effective-start-item"/>
+            </xsl:apply-templates>
         </xsl:copy>
     </xsl:template>
     <xsl:template match="sru:term">
+        <xsl:param name="start-pos" select="0"/>
         <xsl:copy>
             <xsl:copy-of select="*"/>
             <!-- <xsl:attribute name="pos" select="position()"/> -->
             <extraTermData>
                 <fcs:position>
-                    <xsl:value-of select="position()"/>
+                    <xsl:value-of select="position() + $start-pos"/>
                 </fcs:position>
             </extraTermData>
         </xsl:copy>
