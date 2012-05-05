@@ -25,7 +25,27 @@ $hts = 0;
 
 $query_suffix = " #has_field[availability,/^._s_/] #has_field[site,Wien]"; # vienna version
 #$query_suffix = " :barock";
-$recordIdBase = "http://corpus4.aac.ac.at/search/searchx?query=__query__&amp;paging=1&amp;query_cql=__query__";
+
+my $localhost = "corpus3.aac.ac.at";
+
+my $cgi = new CGI;
+my $url = $cgi->url(-query => 1);
+
+$url =~ s/localhost/$localhost/g;
+
+$url =~ s/&amp;/&/g;
+$url =~ s/;/&/g;
+$url = URLDecode($url);
+$url =~ s/&&/&/g;
+$url =~ s/&/&amp;/g;
+$recordIdBase = $url;
+$url =~ s/query=.*&amp;/&amp;/g;
+$url =~ s/query=.*//g;
+$url =~ s/x-format=.*&amp;/&amp;/g;
+$url =~ s/x-format=.*//g;
+$url =~ s/(&amp;)+/&amp;/g;
+
+#$recordIdBase = "http://corpus3.aac.ac.at/ddconsru?operation=searchRetrieve&x-context=clarin.at:icltt:ddc:barock&query=__query__";
 
 # basel server
 #$query_suffix = " #has_field[availability,/^._s_/] #within file #greater_by[random]"  # basler version
@@ -70,7 +90,9 @@ my $sTable = "";
 
 our $wIdx = "0";
 our $sIdx = "-1";
-our $sLink = "";
+our $fIdx = "-1";
+our $extLink = "";
+our $fullLink = "";
 
 
 ##------------------------------------------------------------------------------
@@ -140,20 +162,6 @@ if ($context ne "")
 
   foreach my $item ($doc->findnodes('//item'))
   {
-#    my $key = $item->findnodes('./key');
-#    if ($key->to_literal eq $context)
-#    {
-#      my($name) = $item->findnodes('./name');
-#      $context =  $name->to_literal;
-#      my($par) = $key->findnodes('../../../ip');
-#      $server = $par->to_literal;
-#      my($par1) = $key->findnodes('../../../port');
-#      $port = $par1->to_literal;
-#      my($mask) = $item->findnodes('./fileMask');
-#      $fileMask = $mask->to_literal;
-#      my($txt) = $item->findnodes('./displayText');
-#      $displayText = $txt->to_literal;
-#    }
     my($key) = $item->findnodes('./key');
     if ($key->to_literal eq $context)
     {
@@ -171,10 +179,16 @@ if ($context ne "")
         $fileMask = $mask->to_literal;
       }
 
-      if ($item->exists('./externalLink'))
+      if ($item->exists('./dataview[@type=\'external\']/@ref'))
       {
-        my($eLink) = $item->findnodes('./externalLink');
-        $sLink = $eLink->to_literal;
+        my($eLink) = $item->findnodes('./dataview[@type=\'external\']/@ref');
+        $extLink = $eLink->to_literal;
+      }
+
+      if ($item->exists('./dataview[@type=\'full\']/@ref'))
+      {
+        my($fLink) = $item->findnodes('./dataview[@type=\'full\']/@ref');
+        $fullLink = $fLink->to_literal;
       }
 
       if ($item->exists('./index[@key=\'w\']'))
@@ -189,6 +203,12 @@ if ($context ne "")
         $sIdx = $sentIndex->to_literal;
       }
 
+      if ($item->exists('./index[@key=\'f\']'))
+      {
+        my($fileIndex) = $item->findnodes('./index[@key=\'f\']');
+        $fIdx = $fileIndex->to_literal;
+      }
+
       my($txt) = $item->findnodes('./displayText');
       $displayText = $txt->to_literal;
     }
@@ -200,6 +220,8 @@ if ($context ne "")
     return;
   }
 }
+
+$url =~ s/http:\/\/$localhost\/ddconsru/$fullLink/g;
 
 ### Diagnostics
 # http://www.loc.gov/standards/sru/resources/diagnostics-list.html
@@ -336,11 +358,14 @@ my $vars = {
     hits => $hits,
     wIdx => $wIdx,
     sIdx => $sIdx,
-    sLink => $sLink,
-    recordIdBase => $recordIdBase."&amp;start=",
+    fIdx => $fIdx,
+    url => $url,
+    fileMask => $fileMask,
+    extLink => $extLink,
+    recordIdBase => $recordIdBase."&amp;startRecord=",
     resourceFragmentIdColumn => "4",
  #   res => $res,
-    parse_context => sub { my ($context, $kws, $wIdx, $sIdx, $sLink) = @_; return parse_context($context, $kws, $wIdx, $sIdx, $sLink)},
+    parse_context => sub { my ($context, $kws, $wIdx, $sIdx, $extLink, $fIdx, $fileMask, $url) = @_; return parse_context($context, $kws, $wIdx, $sIdx, $extLink, $fIdx, $fileMask, $url)},
   };
 
 
@@ -360,7 +385,7 @@ $tt->process($response_template, $vars)
 
 sub parse_context($@)
 {
-	my ($context, $kws, $wIdx, $sIdx, $sLink) = @_;
+	my ($context, $kws, $wIdx, $sIdx, $extLink, $fIdx, $fileMask, $url) = @_;
 	# print "DEBUG: context:".$context;
 	# important to use @{$kws} later in code, otherwise it won't be handled correctly as an array.
 	# ( man, it took time to find out.)
@@ -389,9 +414,20 @@ sub parse_context($@)
 		 next if (@token_fields <= $wIdx);
 		 $w = $token_fields[$wIdx];
 
-		 #if (($sIdx ne "-1") && ($sLink ne ""))
+		 if (($sIdx ne "-1") && ($extLink ne ""))
 		 {
-		   $token_fields[$sIdx] = $sLink . $token_fields[$sIdx];
+		   $token_fields[$sIdx] = $extLink . $token_fields[$sIdx];
+		 }
+
+		 if (($fIdx ne "-1") && ($fileMask ne ""))
+		 {
+		   my $hstr = $token_fields[$fIdx];
+		   $hstr =~ s/$fileMask//g;
+		   $hstr =~ s/\..*//g;
+
+		   $hstr = $url . "&amp;query=toc=" . $hstr;
+     $hstr =~ s/(&amp;)+/&amp;/g;
+		   $token_fields[$fIdx] = $hstr;
 		 }
 
 		 # check if keyword is marked with &&,
@@ -499,4 +535,11 @@ sub fcsToc()
   return;
 }
 
-
+sub URLDecode
+{
+  my $theURL = $_[0];
+  $theURL =~ tr/+/ /;
+  $theURL =~ s/%([a-fA-F0-9]{2,2})/chr(hex($1))/eg;
+  $theURL =~ s/<!--(.|\n)*-->//g;
+  return $theURL;
+}
