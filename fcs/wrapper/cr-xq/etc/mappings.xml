@@ -12,18 +12,19 @@
             <path>MdSelfLink</path>
         </index>
     </map>
-    <map key="clarin.at:icltt:cr:stb" path="/db/cr-data/stb" base_elem="div[@type='diary-day']" sort="diary-day">
+    <map key="clarin.at:icltt:cr:stb" path="/db/cr-data/stb" base_elem="div" sort="diary-day">
+<!--        [@type='diary-day'] the attribute taken out of the base-elem, because of bug? with util:expand-->
         <index status="indexed" key="cql.serverChoice">
             <path>p</path>
         </index>
         <index key="diary-day" use="@value">
-            <path>div[@type='diary-day']/p/date</path>
+            <path>div[@type='diary-day']/p/date[1]</path>
         </index>
         <index key="diary-month" use="substring(xs:string(@value),1,7)">
-            <path>div[@type='diary-day']/p/date</path>
+            <path>div[@type='diary-day']//date[1]</path>
         </index>
         <index key="diary-year" use="substring(xs:string(@value),1,4)">
-            <path>div[@type='diary-day']/p/date</path>
+            <path>div[@type='diary-day']//date[1]</path>
         </index>
         <index key="text">
             <path>div[@type='diary-day']</path>
@@ -34,15 +35,18 @@
         <index key="person" use="@key" base_elem="p" link="?x-format=html&amp;x-context=clarin.at%3Aicltt%3Acr%3Aaac-names&amp;query=persId=">
             <path>persName</path>
         </index>
+        <index key="placeName" use="text()">
+            <path>placeName</path>
+        </index>
         <!-- -->
         <index key="title" use="xs:string(@value)">
-            <path>date</path>
+            <path>date[1]</path>
         </index>
         <index key="resource-pid">
             <path>'clarin.at:icltt:cr:stb'</path>
         </index>
         <index key="resourcefragment-pid" use="@value">
-            <path>date</path>
+            <path>date[1]</path>
         </index>
     </map>
     <map key="clarin.at:icltt:cr:aac-names" path="/db/cr-data/aac_names" base_elem="tei:person">
