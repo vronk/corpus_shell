@@ -30,6 +30,7 @@
 <!-- kwic match -->
     <xsl:template match="exist:match" mode="record-data">
         <span class="hilight match">
+  <!--            <xsl:apply-templates select="*" mode="record-data"/>-->
             <xsl:value-of select="."/>
         </span>
     </xsl:template>
@@ -38,6 +39,12 @@
 
 <!-- FCS-wrap -->
     <xsl:template match="fcs:Resource" mode="record-data">
+        
+        <!-- this is quite specialized only for the navigation-ResourceFragments! -->
+        <div class="navigation">
+            <xsl:apply-templates select=".//fcs:ResourceFragment[@type][not(fcs:DataView)]" mode="record-data"/>
+        </div>
+        
         <!-- currently reduced to processing only DataView-kwic 
         but we should make this generic (don't restrict by type, just continue processing the record-data) -->
         <xsl:apply-templates select=".//fcs:DataView" mode="record-data"/>
@@ -65,8 +72,14 @@
     <xsl:template match="fcs:DataView[@type='full']/*" mode="record-data">
         <xsl:apply-templates></xsl:apply-templates>
     </xsl:template>
--->    
-        
+-->
+    <xsl:template match="fcs:ResourceFragment[@type]" mode="record-data">
+        <a href="{@ref}&amp;x-format={$format}" rel="{@type}" class="{@type}">
+            <xsl:value-of select="@pid"/>
+        </a>
+    </xsl:template>
+    
+
  <!-- handle generic metadata-fields -->
     <xsl:template match="fcs:f" mode="record-data">
         <span class="label">
@@ -96,6 +109,10 @@
         </span>
         <xsl:text> </xsl:text>
     </xsl:template>
+    
+    
+    <!-- ************************ -->
+    <!-- named templates starting -->
     <xsl:template name="getTitle">
         <xsl:choose>
             <xsl:when test=".//fcs:DataView[@type='title']">
@@ -107,6 +124,43 @@
             <xsl:when test=".//tei:persName">
                 <xsl:value-of select=".//tei:persName"/>
             </xsl:when>
+        </xsl:choose>
+    </xsl:template>
+    <xsl:template name="inline">
+        <xsl:variable name="elem-link">
+            <xsl:call-template name="elem-link"/>
+        </xsl:variable>
+        <xsl:variable name="inline-content">
+            <!--            <xsl:value-of select="."/>-->
+            <!-- umständliche lösung to get spaces between children elements -->
+            <xsl:for-each select=".//text()">
+                <!--<xsl:value-of select="."/>
+                    <xsl:text> </xsl:text>-->
+                <xsl:choose>
+                    <xsl:when test="parent::exist:match">
+<!--                        <xsl:value-of select="name(.)"/>-->
+                        <xsl:apply-templates select="parent::exist:match" mode="record-data"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of select="."/>
+                        <xsl:text> </xsl:text>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:for-each>
+        </xsl:variable>
+        <xsl:choose>
+            <xsl:when test="$elem-link">
+                <a href="{$elem-link}">
+                    <span class="{name()}">
+                        <xsl:copy-of select="$inline-content"/>
+                    </span>
+                </a>
+            </xsl:when>
+            <xsl:otherwise>
+                <span class="{name()}">
+                    <xsl:copy-of select="$inline-content"/>
+                </span>
+            </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
 </xsl:stylesheet>

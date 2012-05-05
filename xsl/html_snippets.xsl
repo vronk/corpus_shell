@@ -101,50 +101,12 @@
                         <tr>
                             <td valign="top">                                    
                                         
-                                        <!--
-                                        <select id="repositories_select" name="repository">
-                                            <option value="">TODO - not implemented yet</option>
-                                        
-                                                TODO: 
-                                            <xsl:for-each select="exsl:node-set($repositories)">
-                                                <option>
-                                                    <xsl:attribute name="value">
-                                                        <xsl:value-of select="name"/>
-                                                    </xsl:attribute>
-                                                    <xsl:value-of select="name"/>
-                                                </option>
-                                            </xsl:for-each>
-                                        </select>                                        -->
-                                        
-                                    
 							<!--  selected collections  -->
 							<!-- <label>Collections</label><br/>-->
                                 <div id="collections-widget" class="c-widget"/>
                             </td>
                             <td valign="top">
-                                <span class="label">from:</span>
-                                <span>
-                                    <input type="text" name="startRecord" class="value start_record paging-input">
-                                        <xsl:attribute name="value">
-                                            <xsl:value-of select="$startRecord"/>
-                                        </xsl:attribute>
-                                    </input>
-                                </span>
-                                <span class="label">max:</span>
-                                <span>
-                                    <input type="text" name="maximumRecords" class="value maximum_records paging-input">
-                                        <xsl:attribute name="value">
-                                            <xsl:choose>
-                                                <xsl:when test="number($numberOfRecords) &gt; 0 and number($numberOfRecords) &lt; number($maximumRecords)">
-                                                    <xsl:value-of select="$numberOfRecords"/>
-                                                </xsl:when>
-                                                <xsl:otherwise>
-                                                    <xsl:value-of select="$maximumRecords"/>
-                                                </xsl:otherwise>
-                                            </xsl:choose>
-                                        </xsl:attribute>
-                                    </input>
-                                </span>
+                                <xsl:call-template name="result-paging"/>
                             </td>
                             <td/>
                         </tr>
@@ -153,8 +115,33 @@
             </div>
         </div>
     </xsl:template>
-    <xsl:template name="prev-next">
+    <xsl:template name="result-paging">
+        <span class="label">from:</span>
+        <span>
+            <input type="text" name="startRecord" class="value start_record paging-input">
+                <xsl:attribute name="value">
+                    <xsl:value-of select="$startRecord"/>
+                </xsl:attribute>
+            </input>
+        </span>
+        <span class="label">max:</span>
+        <span>
+            <input type="text" name="maximumRecords" class="value maximum_records paging-input">
+                <xsl:attribute name="value">
+                    <xsl:choose>
+                        <xsl:when test="number($numberOfRecords) &gt; 0 and number($numberOfRecords) &lt; number($maximumRecords)">
+                            <xsl:value-of select="$numberOfRecords"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="$maximumRecords"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:attribute>
+            </input>
+        </span>
         <input type="submit" value="" class="cmd cmd_reload"/>
+    </xsl:template>
+    <xsl:template name="prev-next">
         <xsl:variable name="prev_startRecord">
             <xsl:choose>
                 <xsl:when test="number($startRecord) - number($maximumRecords) &gt; 0">
@@ -181,46 +168,26 @@
                 <xsl:with-param name="maximumRecords" select="$maximumRecords"/>
             </xsl:call-template>
         </xsl:variable>
-        <a class="internal prev" href="{$link_prev}">
-            <span>
-                <xsl:choose>
-                    <xsl:when test="$startRecord = '1'">
-                        <xsl:attribute name="class">
-                            <xsl:value-of select="'cmd cmd_prev disabled'"/>
-                        </xsl:attribute>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:attribute name="class">
-                            <xsl:value-of select="'cmd cmd_prev '"/>
-                        </xsl:attribute>
-                    </xsl:otherwise>
-                </xsl:choose>
-                <xsl:text>prev</xsl:text>
-            </span>
-        </a>
+        <xsl:variable name="prev-disabled">
+            <xsl:if test="$startRecord = '1'">disabled</xsl:if>
+        </xsl:variable>
         <xsl:variable name="link_next">
             <xsl:call-template name="formURL">
                 <xsl:with-param name="startRecord" select="$next_startRecord"/>
                 <xsl:with-param name="maximumRecords" select="$maximumRecords"/>
             </xsl:call-template>
         </xsl:variable>
-        <a class="internal next" href="{$link_next}">
-            <span class="cmd cmd_next">
-                <xsl:choose>
-                    <xsl:when test="number($startRecord) + number($maximumRecords) &gt;= number(numberOfRecords)">
-                        <xsl:attribute name="class">
-                            <xsl:value-of select="'cmd cmd_next disabled'"/>
-                        </xsl:attribute>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:attribute name="class">
-                            <xsl:value-of select="'cmd cmd_next '"/>
-                        </xsl:attribute>
-                    </xsl:otherwise>
-                </xsl:choose>
-                <xsl:text>next</xsl:text>
-            </span>
-        </a>
+        <xsl:variable name="next-disabled">
+            <xsl:if test="number($startRecord) + number($maximumRecords) &gt;= number(numberOfRecords)">disabled</xsl:if>
+        </xsl:variable>
+        <span class="result-navigation prev-next">
+            <a class="internal prev {$prev-disabled}" href="{$link_prev}">
+                <span class="cmd cmd_prev"/>
+            </a>
+            <a class="internal next {$next-disabled}" href="{$link_next}">
+                <span class="cmd cmd_next"/>
+            </a>
+        </span>
     </xsl:template>
     <xsl:template name="query-list">
 <!-- QUERYLIST BLOCK -->

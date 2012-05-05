@@ -5,12 +5,11 @@
 <history>  
 <change on="2011-12-06" type="created" by="vr">based on cmdi/scripts/mdset2view.xsl retrofitted for XSLT 1.0</change>	
 </history> 
- -->   
+ -->  
     <!--  method="xhtml" is saxon-specific! prevents  collapsing empty <script> tags, that makes browsers choke -->
     <xsl:output method="xml" media-type="text/xhtml" indent="yes" encoding="UTF-8" doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"/>
     <xsl:include href="commons_v1.xsl"/>
     <xsl:include href="data2view.xsl"/>
-    <xsl:param name="mode" select="'html'"/>
     <xsl:param name="title">
         <xsl:text>Result Set</xsl:text>
     </xsl:param>
@@ -51,11 +50,15 @@
             <span class="value hilight">
                 <xsl:value-of select="sru:extraResponseData/fcs:returnedRecords"/>
             </span>
-            <span class="label">out of </span>
+            <span class="label"> out of </span>
             <span class="value hilight">
                 <xsl:value-of select="$numberOfRecords"/>
             </span>
-            <span class="label">hits</span>
+            <span class="label"> entries (with </span>
+            <span class="value hilight">
+                <xsl:value-of select="$numberOfMatches"/>
+            </span>
+            <span class="label"> hits)</span>
             <div class="note">
                 <xsl:for-each select="(sru:echoedSearchRetrieveRequest/*|sru:extraResponseData/*)">
                     <span class="label">
@@ -63,7 +66,7 @@
                     <span class="value">
                         <xsl:value-of select="."/>
                     </span>;
-	        </xsl:for-each>
+	        </xsl:for-each> 
                 <!--<span class="label">duration: </span>
                 <span class="value">
                     <xsl:value-of select="sru:extraResponseData/fcs:duration"/>

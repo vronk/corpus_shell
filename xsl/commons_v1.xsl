@@ -13,7 +13,9 @@
 
 <!-- <xsl:param name="mode" select="'html'" /> -->
     <xsl:param name="dict_file" select="'dict.xml'"/>
-    <xsl:variable name="dict" select="document($dict_file)"/>
+    <xsl:variable name="dict">
+        <dict/>
+    </xsl:variable>
     <xsl:variable name="contexts" select="document($contexts_url)"/>
    
 	<!-- common starting point for all stylesheet; cares for unified html-envelope
@@ -183,6 +185,20 @@
             </xsl:otherwise>
         </xsl:choose>
 -->
+    </xsl:template>
+    
+    <!-- add link to more information to a link using information from mappings  and some attribute (@key)-->
+    <xsl:template name="elem-link">
+        <xsl:param name="elem" select="."/>
+        
+        <!-- WATCHME: primitive matching on elem-name, let's see how far this gets us -->
+        <xsl:variable name="index" select="$context-mapping//index[path = name($elem)][@link]"/>
+        <xsl:if test="$index">
+            <!-- we would need a dynamic evaluation to get the specific piece of data from the $elem 
+                but let's try with some more trivial means -->
+            <xsl:variable name="linking-value" select="$elem/@*[name()= substring-after($index/@use,'@')]"/>
+            <xsl:value-of select="concat($index/@link, $linking-value)"/>
+        </xsl:if>
     </xsl:template>
     <xsl:template name="format-field">
         <xsl:param name="elems"/>
