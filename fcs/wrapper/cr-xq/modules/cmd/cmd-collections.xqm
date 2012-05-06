@@ -16,6 +16,7 @@ declare namespace cmd = "http://www.clarin.eu/cmd/";
 declare variable $cmdcoll:dataPath := "/db/mdrepo-data"; (\:repo-utils:config-value('metadata.path'):\)
 declare variable $cmdcoll:base-dbcoll := collection($cmdcoll:dataPath);
 :)
+(:declare default element namespace "http://www.clarin.eu/cmd/";:)
 
 declare variable $cmdcoll:collectionRoot := "root";
 declare variable $cmdcoll:scan-collection := "cmd.collection";
@@ -129,8 +130,9 @@ declare function cmdcoll:get-resource-by-handle($id as xs:string, $base-dbcoll) 
         ($base-dbcoll//IsPartOf[. = $cmdcoll:collectionRoot]/ancestor::CMD |
         $base-dbcoll//cmd:IsPartOf[. = $cmdcoll:collectionRoot]/ancestor::cmd:CMD)
   else     
-    (util:eval(concat("$base-dbcoll/ft:query(descendant::MdSelfLink, <term>", xmldb:decode($id), "</term>)/ancestor::CMD")),
-    util:eval(concat("$base-dbcoll/ft:query(descendant::cmd:MdSelfLink, <term>", xmldb:decode($id), "</term>)/ancestor::cmd:CMD")))
+    let $handle-lower := lower-case($id)
+    return (util:eval(concat("$base-dbcoll/ft:query(descendant::MdSelfLink, <term>", xmldb:decode($handle-lower), "</term>)/ancestor::CMD")),
+    util:eval(concat("$base-dbcoll/ft:query(descendant::cmd:MdSelfLink, <term>", xmldb:decode($handle-lower), "</term>)/ancestor::cmd:CMD")))
  (: $collection/descendant::MdSelfLink[. = xdb:decode($id)]/ancestor::CMD :)
 };
 
@@ -141,8 +143,13 @@ declare function cmdcoll:get-resource-by-handle($id as xs:string, $base-dbcoll) 
   because it allows faster access (via lucene-index)
   :)
 declare function cmdcoll:get-children-colls($handle as xs:string, $base-dbcoll) as node()* {
-        
-    util:eval(concat("$base-dbcoll/ft:query(descendant::IsPartOf[@level=1], <term>", $handle, "</term>)/ancestor::CMD[descendant::ResourceType[. = 'Metadata']]"))
+
+    let $handle-lower := lower-case($handle)
+    let $parent := $base-dbcoll//cmd:MdSelfLink[ft:query(., <term>{$handle-lower}</term>)]/ancestor::cmd:CMD
+    let $children := $base-dbcoll//cmd:MdSelfLink[. = $parent//cmd:ResourceRef]/ancestor::cmd:CMD[descendant::cmd:ResourceType[. = 'Metadata']]
+    return $children
+(:    return util:eval(concat("$base-dbcoll/descendant::IsPartOf[ft:query(., <term>", $handle-lower, "</term>)]/ancestor::CMD[descendant::ResourceType[. = 'Metadata']]")):)
+(:    return util:eval(concat("$base-dbcoll/ft:query(descendant::IsPartOf[@level=1], <term>", $handle-lower, "</term>)/ancestor::CMD[descendant::ResourceType[. = 'Metadata']]")):)
     
     (: collection($cmdcoll:dataPath)/descendant::IsPartOf[. eq $handle]/ancestor::CMD[descendant::ResourceType[. = "Metadata"]] :)
 };
@@ -177,7 +184,8 @@ declare function cmdcoll:get-resource-count($handle as xs:string, $base-dbcoll) 
 :)
 declare function cmdcoll:get-collection-count($handle as xs:string, $base-dbcoll) as xs:integer {
 (:	count($cmdcoll:base-dbcoll//IsPartOf[. eq $handle]/ancestor::CMD[descendant::ResourceType[. = "Metadata"]]):)
-		count($base-dbcoll//IsPartOf[ft:query(.,<term>{$handle}</term>)]/ancestor::CMD[descendant::ResourceType[. = "Metadata"]])	
+    let $handle-lower := lower-case($handle)
+	return count($base-dbcoll//IsPartOf[ft:query(.,<term>{$handle-lower}</term>)]/ancestor::CMD[descendant::ResourceType[. = "Metadata"]])	
 };
 
 (:~ 
