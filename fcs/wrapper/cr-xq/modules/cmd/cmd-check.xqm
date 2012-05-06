@@ -14,9 +14,10 @@ declare namespace cmd = "http://www.clarin.eu/cmd/";
 (:~ default namespace: cmd - declared statically, because dynamic ns-declaration did not work 
 cmd is the default namespace in (not) all the CMD records  
 :)
-(:declare default element namespace "http://www.clarin.eu/cmd/";:)
+declare default element namespace "http://www.clarin.eu/cmd/";
 (:~ default namespace - not declared explicitely, it is declared dynamically where necessary (function: addIsPartOf() :) 
 declare variable $cmdcheck:default-ns := "http://www.clarin.eu/cmd/";
+declare variable $cmdcheck:root-coll := "root";
 
 (:~ init-function meant to call individual functions actually doing something.
 at least it resolves x-context to a nodeset
@@ -144,6 +145,7 @@ declare function cmdcheck:query-internal($queries, $context as node()+, $result-
 - can be applied repeatedly - deletes(!) old IsPartOfList, before inserting new
 
 @param $x-context an identifier of a collection (as defined in mappings)
+@param $config config-node - used to get log.path and collection-path
 
 TODO: could also generate the CMD-records for collections (assuming db-colls as collections) 
       (now done by the python script: dir2cmdicollection.py)
@@ -151,7 +153,7 @@ TODO: currently a hack: the collection-records also are marked as root elements 
       and may even be dangerous (count(IsPartOf[@level=1])>1)!
 TODO: not recursive yet!
 :)
-declare function cmdcheck:addIsPartOf($x-context as xs:string, $config as node()*) as item()* {
+declare function cmdcheck:addIsPartOf-colls($x-context as xs:string, $config as node()*) as item()* {
 
 let $log-file-name := concat('log_addIsPartOf_', $x-context, '.xml')
     let $log-path := repo-utils:config-value($config, 'log.path')
@@ -190,7 +192,7 @@ let $log-file-name := concat('log_addIsPartOf_', $x-context, '.xml')
 			update delete $coll_doc//IsPartOfList,
 			update insert <IsPartOfList>
 								<IsPartOf level="1">{$x-context}</IsPartOf>
-								<IsPartOf level="1">root</IsPartOf>
+								<IsPartOf level="1">{$cmdcheck:root-coll}</IsPartOf>
 						  </IsPartOfList>
 			  	into $coll_doc//Resources,
 			update insert <IsPartOfList>
@@ -204,5 +206,86 @@ let $log-file-name := concat('log_addIsPartOf_', $x-context, '.xml')
     return	($coll_name, count($cmdi_files), $coll_file,  update insert <IsPartOfList>
 							<IsPartOf level="1">{$coll_id}</IsPartOf>
 						  </IsPartOfList> into $cmdi_files//Resources ):)
+};
+
+(:~ recursive addIsPartOf 
+starts by finding "orphaned" mdrecords = expecting that to be the root records.
+and continues  ?
+:)
+declare function cmdcheck:addIsPartOf($x-context as xs:string, $config as node()*) as item()* {
+
+let $log-file-name := concat('log_addIsPartOf_', $x-context, '.xml')
+    let $log-path := repo-utils:config-value($config, 'log.path')
+    let $log-doc-path := xmldb:store($log-path ,  $log-file-name, <result></result>)
+    let $log-doc := doc($log-doc-path)
+    
+    let $root-dbcoll := repo-utils:context-to-collection($x-context, $config),
+        $root-dbcoll-path := repo-utils:context-to-collection-path($x-context, $config)
+    
+(:    let $coll-dbcoll := '_corpusstructure':)
+     
+    (: beware empty path!! would return first-level collections and run over whole database :) 
+    let $colls := if ($root-dbcoll-path ne "") then xmldb:get-child-collections($root-dbcoll-path) else ()
+    let $start_time := fn:current-dateTime()
+   
+    
+    let $log-dummy := update insert <edit x-context="{$x-context}" root-dbcoll="{$root-dbcoll-path}" 
+                         count-colls="{count($colls)}" time="{$start_time}" /> into $log-doc/result
+                        
+    let $root := cmdcheck:addIsPartOf-root($root-dbcoll, $log-doc)                        
+    let $updated := cmdcheck:addIsPartOf-r($root-dbcoll, $root, 1, $log-doc)
+    
+    return $log-doc
+ };
+ 
+ (:~ consider those, whose MdSelfLink isn't referenced anywhere (orphans) as the root-cmd-collections 
+ @returns the edited records :) 
+ declare function cmdcheck:addIsPartOf-root($context as node()*, $log-doc as node()*) as item()* {
+ 
+    let $pre_time := util:system-dateTime()
+ 
+    let $orphaned := $context//CMD[not(Header/MdSelfLink = $context//ResourceProxy[ResourceType eq 'Metadata']/ResourceRef)]
+
+    let $update := ( update insert <edit collid="root" count="{count($orphaned)}" time="{$pre_time}" /> into $log-doc/result, 
+			update delete $orphaned//IsPartOfList,
+			update insert <IsPartOfList>
+			                 <IsPartOf>{$cmdcheck:root-coll}</IsPartOf>					
+						  </IsPartOfList>  
+				into $orphaned//Resources,		
+		  update value $log-doc/result/edit[last()] with (util:system-dateTime() - $pre_time)
+        )
+ 
+    return $orphaned
+ 
+ };
+ 
+ declare function cmdcheck:addIsPartOf-r($context as node()*, $parents as node()*, $level as xs:integer, $log-doc as node()*) as item()* {
+    
+    let $start_time := util:system-dateTime()
+    let $log-dummy := update insert <edit level="{$level}"  
+                        count-colls="{count($parents)}" time="{$start_time}" /> into $log-doc/result
+    
+  let $update := for $cmd-record in $parents  
+                    let $parent-id := $cmd-record//MdSelfLink/text()
+                    let $children := $context//CMD[Header/MdSelfLink = $cmd-record//ResourceRef]    
+                	let $ispartoflist := <IsPartOfList>{($cmd-record//IsPartOfList/IsPartOf[not(text()=$cmdcheck:root-coll)],
+                								<IsPartOf >{$parent-id}</IsPartOf>) }					
+                						  </IsPartOfList>  
+                
+                    let $pre_time := util:system-dateTime()
+                	let $duration := $pre_time - $start_time
+                    return	( update insert <edit collid="{$parent-id}" count="{count($children)}" time="{$pre_time}" /> into $log-doc/result, 
+                			update delete $children//IsPartOfList,
+                			update insert $ispartoflist 
+                				into $children//Resources,		
+                		  update value $log-doc/result/edit[last()] with (util:system-dateTime() - $pre_time)
+                        )
+    
+    (: go next level - we dont have to recurse in the update-loop, 
+     but we can do whole next level in one call :)
+    let $next-level := $context//CMD[Header/MdSelfLink = $parents//ResourceRef]
+    let $updated := if (exists($next-level)) then  cmdcheck:addIsPartOf-r($context, $next-level ,($level+1),$log-doc)
+                        else ()
+    return $update                     
 };
 
