@@ -38,11 +38,12 @@
     <xsl:output method="text"/>
     <xsl:param name="mode" select="'xpath'"/> <!-- xpath |  url -->
     <xsl:param name="x-context" select="''"/>
-    <xsl:param name="debug" select="false()"/>
+    <xsl:param name="debug" select="true()"/>
     <xsl:param name="mappings-file" select="'xmldb:///db/cr/etc/mappings.xml'"/>
     <xsl:variable name="context-param" select="'x-context'"/>
     <xsl:variable name="mappings" select="doc($mappings-file)/map"/>
     <xsl:variable name="context-mapping" select="$mappings//map[@key][xs:string(@key) eq $x-context]"/>
+    <xsl:variable name="default-mapping" select="$mappings//map[@key][xs:string(@key) eq 'default']"/>
     <xsl:variable name="ws">
         <xsl:choose>
             <xsl:when test="$mode='url'">%20</xsl:when>
@@ -60,7 +61,7 @@
                 <xsl:value-of select="concat('ancestor-or-self::', $mappings//map[@key='default']/@base_elem)"/>
             </xsl:when>
             <xsl:otherwise>
-                <xsl:value-of select="'self::*'"/>
+                <xsl:value-of select="'.'"/>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:variable>
@@ -76,7 +77,9 @@
         <xsl:variable name="xpath-query">
             <xsl:apply-templates/>
         </xsl:variable>
-        <xsl:value-of select="concat($xpath-query,'/', $base-elem)"/>
+<!-- moving the base-elem out into xquery        
+<xsl:value-of select="concat($xpath-query,'/', $base-elem)"/>-->
+        <xsl:value-of select="$xpath-query"/>
     </xsl:template>
     <xsl:template match="triple">
         <!--special handling for collection (=context) index, disabled for now,
@@ -168,32 +171,46 @@
     <xsl:template match="relation">
         <xsl:param name="term"/>
         <xsl:param name="index"/>
-        <xsl:param name="sanitized_term" select="replace($term,' ','+')"/>
         <xsl:param name="match-on" select="if (exists($index/index/@use)) then xs:string($index/index/@use) else  '.' "/>
-<!--        <xsl:message>relation index:<xsl:value-of select="$index/index/@use"/></xsl:message>-->
+        <!--        <xsl:message>relation index:<xsl:value-of select="$index/index/@use"/></xsl:message>-->
+        <xsl:variable name="sanitized_term">
+            <!-- select="replace($term,' ','+')"/ -->
+            <xsl:choose> <!-- remove quotes -->
+                <xsl:when test="starts-with($term, '''') ">
+                    <xsl:value-of select="translate($term,'''','')"/>
+                </xsl:when>
+                <xsl:when test="starts-with($term, '%22') ">
+                    <xsl:value-of select="translate($term,'%22','')"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="$term"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
         <xsl:text>[</xsl:text>
         <xsl:choose>
             <xsl:when test="$term='*' or $term='_'">
                 <xsl:text>true()</xsl:text>
             </xsl:when>
             <xsl:when test="value='contains'">
-                <xsl:value-of select="concat('contains(', $match-on, ', ')"/>
+                <xsl:value-of select="concat('contains(', $match-on, ', ''')"/>
                 <xsl:value-of select="$sanitized_term"/>
                 <xsl:text>')</xsl:text>
             </xsl:when>
             <xsl:when test="(value='any' or preceding-sibling::index='*' or preceding-sibling::index='cql.serverChoice')">
 				<!--  use full-text querying: [ft:query(., "language")] -->
                 <xsl:choose>
-                    <xsl:when test="starts-with($term,'%22')">
+<!--                    <xsl:when test="starts-with($term,'%22') or starts-with($term,'"') ">-->
+                    <xsl:when test="contains($sanitized_term, ' ')">
                         <xsl:value-of select="concat('ft:query(', $match-on, ', ')"/>
 <!--                        <xsl:text>ft:query(.,<phrase></xsl:text>-->
                         <xsl:text>&lt;phrase&gt;</xsl:text>
-                        <xsl:value-of select="replace($sanitized_term,'%22','')"/>
+                        <xsl:value-of select="replace($sanitized_term,'&#34;','')"/>
                         <xsl:text>&lt;/phrase&gt;)</xsl:text>
                     </xsl:when>
-                    <xsl:when test="contains($term,'%7C')">
+                    <xsl:when test="contains($term,'%7C')"> <!-- contains: |  - but why simply remove? -->
                         <xsl:value-of select="concat('ft:query(', $match-on, ', ')"/>
-<!--                        <xsl:text>ft:query(.,'</xsl:text>-->
+                        <xsl:text>'</xsl:text>
                         <xsl:value-of select="replace($sanitized_term,'%7C','')"/>
                         <xsl:text>')</xsl:text>
                     </xsl:when>
@@ -201,7 +218,7 @@
                         <xsl:for-each select="tokenize(replace($sanitized_term,'\+',$ws),$ws)">
                             <xsl:if test=".!=''">
                                 <xsl:value-of select="concat('ft:query(', $match-on, ', ')"/>
-<!--                                <xsl:text>ft:query(.,'</xsl:text>-->
+                                <xsl:text>'</xsl:text>
                                 <xsl:value-of select="."/>
                                 <xsl:text>')</xsl:text>
                                 <xsl:message>
@@ -215,7 +232,7 @@
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:value-of select="concat('ft:query(', $match-on, ', ')"/>
-<!--                        <xsl:text>ft:query(.,'</xsl:text>-->
+                        <xsl:text>'</xsl:text>
                         <xsl:value-of select="$sanitized_term"/>
                         <xsl:text>')</xsl:text>
                     </xsl:otherwise>
@@ -245,10 +262,10 @@
         
         <!-- reverting the "escaping" of whitespaces in indices with datcat-name -->
         <xsl:variable name="ix_string" select="replace($ix/text(),'_',' ')"/>
-        <xsl:call-template name="message">
+        <!--<xsl:call-template name="message">
             <xsl:with-param name="msg">resolve index:<xsl:value-of select="$ix"/>
             </xsl:with-param>
-        </xsl:call-template>
+        </xsl:call-template>-->
 
         <!--$resolved-index := if (exists($index-map)) then $index-map/text()
             else if (exists($repo-utils:mappings//index[xs:string(@key) eq $index])) then
@@ -261,7 +278,10 @@
 <!--                <xsl:copy-of select="$context-mapping/index[xs:string(@key) eq  $ix_string]"></xsl:copy-of>-->
                 <xsl:apply-templates select="$context-mapping/index[$ix_string eq xs:string(@key)]" mode="copy"/>
             </xsl:when>
-            <!-- if no contextual mapping, try in whole map -->
+            <!-- if no contextual mapping, try in default, than whole map -->
+            <xsl:when test="exists($default-mapping/index[xs:string(@key) eq  $ix_string])">
+                <xsl:apply-templates select="$default-mapping/index[$ix_string eq xs:string(@key)]" mode="copy"/>
+            </xsl:when>
             <xsl:when test="exists($mappings//index[$ix_string eq xs:string(@key)])">
 <!--               <xsl:copy-of select="$mappings//index[$ix_string eq xs:string(@key)]" />
                     work-around a bug in transform:transform with copy-of on doc($data)
@@ -282,8 +302,11 @@
         <xsl:param name="ix" select="."/>
         <xsl:variable name="paths">
             <xsl:choose>
-                <xsl:when test="exists($ix/path)">
+                <xsl:when test="count($ix/path) &gt; 1">
                     <xsl:value-of select="concat('(', string-join(distinct-values($ix/path/text()),'|'),')')"/>
+                </xsl:when>
+                <xsl:when test="exists($ix/path)">
+                    <xsl:value-of select="$ix/path/text()"/>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:value-of select="$ix/text()"/>

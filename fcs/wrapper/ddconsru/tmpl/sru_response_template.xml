@@ -20,7 +20,7 @@
 			     		<fcs:DataView type="metadata">
 			     		[% FOREACH kw = hit.keys %][% #
 			     		# if this commented out, you can see the raw context in the output - good for debugging
-			     		NEXT IF kw == 'context'
+			     		 NEXT IF kw == 'context'
 				   			%]<fcs:f key="[% kw %]" >[% hit.$kw.replace('&','&amp;') %]</fcs:f>
 				   			[% END
 				   		%]</fcs:DataView>
@@ -33,12 +33,16 @@
 			     		<fcs:DataView type="kwic">
 								<fcs:c type="left">[% FOREACH token  = tokens;
 							 	 # token.kw ;
-								IF token.kw == 1  %]</fcs:c><fcs:kw>[%  token.2 %]</fcs:kw><fcs:c type="right">[% ELSE;
-									token.2;
+								IF token.kw == 1  %]</fcs:c><fcs:kw>[%  token.$wIdx %]</fcs:kw><fcs:c type="right">[% ELSE;
+									token.$wIdx;
 								 END; %] [% END %]</fcs:c>
 							</fcs:DataView>
 					[% # DataView full removed for now, but backed up in the file:
 						# sru_response_template_withDVfull.xml %]
+						[% IF sIdx %]
+							<fcs:DataView type="external" ref="[% sLink %][% token.$sIdx %]">
+							</fcs:DataView>
+						[% END %]
 							</fcs:ResourceFragment>
 						</fcs:Resource>
 				</sru:recordData>

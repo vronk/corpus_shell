@@ -165,9 +165,15 @@ declare function repo-utils:sanitize-name($name as xs:string) as xs:string {
     translate($name, ":",'_')
 };
 
-(:~ transform result to HTML, JSON, or leave as XML - according to format parameter 
+declare function repo-utils:serialise-as($item as node()?, $format as xs:string, $operation as xs:string, $config) as item()? {
+    repo-utils:serialise-as($item, $format, $operation, $config, ())
+};
+
+(:~ transform result to HTML, JSON, or leave as XML - according to format parameter
+
+@param $parameters optional additional parameters to be passed to xsl  
 :)
-declare function repo-utils:serialise-as($item as node()?, $format as xs:string, $operation as xs:string, $config ) as item()? {
+declare function repo-utils:serialise-as($item as node()?, $format as xs:string, $operation as xs:string, $config, $parameters as node()* ) as item()? {
       if ($format eq $repo-utils:responseFormatJSon) then
 	       let $option := util:declare-option("exist:serialize", "method=json media-type=application/json")
 	       return $item
@@ -178,8 +184,11 @@ declare function repo-utils:serialise-as($item as node()?, $format as xs:string,
               			            <param name="x-context" value="{repo-utils:param-value($config, 'x-context', '' )}"/>
               			            <param name="base_url" value="{repo-utils:config-value($config, 'base.url')}"/>
               			            <param name="scripts_url" value="{repo-utils:config-value($config, 'scripts.url')}"/>
+              			             <param name="site_name" value="{repo-utils:config-value($config, 'site.name')}"/>
+              			             {$parameters/param}
               			</parameters>)          
-               let $option := util:declare-option("exist:serialize", "method=xml media-type=text/html")
+(:               let $option := util:declare-option("exist:serialize", "method=xml media-type=text/html"):)
+let $option := util:declare-option("exist:serialize", "method=xhtml media-type=text/html")
 	           return $res
 	   else
 	       let $option := util:declare-option("exist:serialize", "method=xml media-type=application/xml")

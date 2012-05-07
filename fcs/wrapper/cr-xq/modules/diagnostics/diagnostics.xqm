@@ -1,8 +1,8 @@
-xquery version "1.0";
+xquery version "3.0";
 module namespace diag  = "http://www.loc.gov/zing/srw/diagnostic/";
 
 
-declare variable $diag:msgs := doc('/db/sade/modules/diagnostics/diagnostics.xml');
+declare variable $diag:msgs := doc('diagnostics.xml');
 
 declare function diag:diagnostics($key as xs:string, $param as xs:string) as item()? {
     

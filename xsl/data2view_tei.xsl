@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:sru="http://www.loc.gov/zing/srw/" xmlns:html="http://www.w3.org/1999/xhtml" version="1.0" exclude-result-prefixes="html">
+<xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:sru="http://www.loc.gov/zing/srw/" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:exist="http://exist.sourceforge.net/NS/exist" version="1.0" exclude-result-prefixes="exist">
 
 <!-- 
  stylesheet for formatting TEI-elements  inside a FCS/SRU-result.
@@ -27,9 +27,11 @@ the named templates are at the bottom.
         <xsl:call-template name="inline"/>
     </xsl:template>
     <xsl:template match="date" mode="record-data">
-        <div class="date">
-            <xsl:value-of select="."/>[<xsl:value-of select="@value"/>]
-      </div>
+        <span class="date">
+            <!--<xsl:value-of select="."/>-->
+            <xsl:apply-templates mode="record-data"/>
+<!--            <span class="note">[<xsl:value-of select="@value"/>]</span>-->
+        </span>
     </xsl:template>
     <xsl:template match="div|p" mode="record-data">
         <xsl:copy>
@@ -123,26 +125,43 @@ the named templates are at the bottom.
             </div>
         </div>
     </xsl:template>
+    <xsl:template match="l" mode="record-data">
+        <xsl:apply-templates mode="record-data"/>
+        <br/>
+    </xsl:template>
     <xsl:template match="lb" mode="record-data">
         <br/>
+    </xsl:template>
+    <xsl:template match="lg" mode="record-data">
+        <div class="lg">
+            <p>
+                <xsl:apply-templates mode="record-data"/>
+            </p>
+        </div>
     </xsl:template>
     <xsl:template match="milestone" mode="record-data">
         <xsl:text>...</xsl:text>
     </xsl:template>
-    <xsl:template match="pb" mode="record-data">
+    
+    <!-- for STB: dont want pb -->
+    <xsl:template match="pb" mode="record-data"/>
+    <!--<xsl:template match="pb" mode="record-data">
         <div class="pb">p. <xsl:value-of select="@n"/>
         </div>
-    </xsl:template>
+    </xsl:template>-->
     <xsl:template match="persName | placeName" mode="record-data">
         <xsl:call-template name="inline"/>
     </xsl:template>
     <xsl:template match="rs" mode="record-data">
         <xsl:call-template name="inline"/>
     </xsl:template>
+    
+    <!-- for STB: dont want seg -->
+    <xsl:template match="seg" mode="record-data"/>
     <!-- handing over to aac:stand.xsl -->
-    <xsl:template match="seg" mode="record-data">
+    <!--<xsl:template match="seg" mode="record-data">
         <xsl:apply-templates select="."/>
-    </xsl:template>
+    </xsl:template>-->
     <!--
     <xsl:template match="seg[@type='header']" mode="record-data"/>
     <xsl:template match="seg[@rend='italicised']" mode="record-data">
@@ -157,11 +176,17 @@ the named templates are at the bottom.
     <xsl:template match="tei:person" mode="record-data">
         <div class="person">
             <xsl:apply-templates select="tei:birth|tei:death|tei:occupation" mode="record-data"/>
-            <div class="links">
+            <xsl:variable name="elem-link">
+                <xsl:call-template name="elem-link"/>
+            </xsl:variable>
+            <a href="{$elem-link}">
+                <xsl:value-of select="tei:persName"/> in text</a>      
+
+            <!--<div class="links">
                 <ul>
                     <xsl:apply-templates select="tei:link" mode="record-data"/>
                 </ul>
-            </div>
+            </div>-->
         </div>
     </xsl:template>
     
@@ -197,14 +222,5 @@ the named templates are at the bottom.
                 <xsl:value-of select="@target"/>
             </a>
         </li>
-    </xsl:template>
-    
-    
-<!-- ************************ -->
-<!-- named templates starting -->
-    <xsl:template name="inline">
-        <span class="{name()}">
-            <xsl:value-of select="."/>
-        </span>
     </xsl:template>
 </xsl:stylesheet>

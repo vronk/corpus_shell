@@ -1,18 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <info xml:lang="en">
-    <div class="title">Test suite - basic requests</div>
+    <div class="title">Test search requests / queries</div>
     <div>
         <test id="search-haus-1">
             <a class="request" href="?operation=searchRetrieve&amp;query=Haus">search: Haus</a>
             <xpath key="numberOfRecords">$result-data//sru:numberOfRecords/text()</xpath>
+            <xpath key="duration">$result-data//fcs:duration/text()</xpath>
+            <xpath key="transformedQuery">$result-data//fcs:transformedQuery/text()</xpath>
         </test>
         <test id="search-haus-2">
             <a class="request" href="?operation=searchRetrieve&amp;query=text=Haus">search: text=Haus</a>
             <xpath key="numberOfRecords">$result-data//sru:numberOfRecords/text()</xpath>
+            <xpath key="duration">$result-data//fcs:duration/text()</xpath>
+            <xpath key="transformedQuery">$result-data//fcs:transformedQuery/text()</xpath>
         </test>
         <test id="search-haus-3">
             <a class="request" href="?operation=searchRetrieve&amp;query=text%20=%20Haus">search: text%20=%20Haus</a>
             <xpath key="numberOfRecords">$result-data//sru:numberOfRecords/text()</xpath>
+            <xpath key="duration">$result-data//fcs:duration/text()</xpath>
+            <xpath key="transformedQuery">$result-data//fcs:transformedQuery/text()</xpath>
+        </test>
+        <test id="search-haus-4">
+            <a class="request" href="?operation=searchRetrieve&amp;query=text+any+Haus">search: text+any+Haus</a>
+            <xpath key="numberOfRecords">$result-data//sru:numberOfRecords/text()</xpath>
+            <xpath key="duration">$result-data//fcs:duration/text()</xpath>
+            <xpath key="transformedQuery">$result-data//fcs:transformedQuery/text()</xpath>
+        </test>
+        <test id="search-diary-day-1">
+            <a class="request" href="?operation=searchRetrieve&amp;query=diary-day=1882-03-01&amp;x-context=clarin.at:icltt:cr:stb">search: diary-day=1882-03-01 (not quotes) in STB</a>
+            <xpath key="numberOfRecords">$result-data//sru:numberOfRecords/text()</xpath>
+            <xpath key="duration">$result-data//fcs:duration/text()</xpath>
+            <xpath key="transformedQuery">$result-data//fcs:transformedQuery/text()</xpath>
+        </test>
+        <test id="search-diary-day-2">
+            <a class="request" href="?operation=searchRetrieve&amp;query=diary-day='1882-03-01'&amp;x-context=clarin.at:icltt:cr:stb">search: diary-day='1882-03-01' (single quotes) in STB</a>
+            <xpath key="numberOfRecords">$result-data//sru:numberOfRecords/text()</xpath>
+            <xpath key="duration">$result-data//fcs:duration/text()</xpath>
+            <xpath key="transformedQuery">$result-data//fcs:transformedQuery/text()</xpath>
+        </test>
+        <test id="search-diary-day-3">
+            <a class="request" href="?operation=searchRetrieve&amp;query=diary-day=%221882-03-01%22&amp;x-context=clarin.at:icltt:cr:stb">search: diary-day="1882-03-01" (double quotes) in STB</a>
+            <xpath key="numberOfRecords">$result-data//sru:numberOfRecords/text()</xpath>
+            <xpath key="duration">$result-data//fcs:duration/text()</xpath>
+            <xpath key="transformedQuery">$result-data//fcs:transformedQuery/text()</xpath>
+        </test>
+        <test id="search-resourcefragment-pid">
+            <a class="request" href="?operation=searchRetrieve&amp;query=resourcefragment-pid=%221920-01-06%22&amp;x-context=clarin.at:icltt:cr:stb">search: resourcefragment-pid="1920-01-06" (double quotes) in STB</a>
+            <xpath key="numberOfRecords">$result-data//sru:numberOfRecords/text()</xpath>
+            <xpath key="duration">$result-data//fcs:duration/text()</xpath>
+            <xpath key="transformedQuery">$result-data//fcs:transformedQuery/text()</xpath>
+        </test>
+        <test id="search-check-index-dot">
+            <a class="request" href="?operation=searchRetrieve&amp;query=resourcefragment.pid=%221920-01-06%22&amp;x-context=clarin.at:icltt:cr:stb">search: resourcefragment.pid="1920-01-06" in STB (index with dot) </a>
+            <xpath key="numberOfRecords">$result-data//sru:numberOfRecords/text()</xpath>
+            <xpath key="duration">$result-data//fcs:duration/text()</xpath>
+            <xpath key="transformedQuery">$result-data//fcs:transformedQuery/text()</xpath>
         </test>
     </div>
 </info>
