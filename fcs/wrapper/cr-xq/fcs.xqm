@@ -270,11 +270,12 @@ declare function fcs:search-retrieve($query as xs:string, $x-context as xs:strin
         $seq-count := fn:count($result-seq),        
         $end-time := util:system-dateTime(),
     
-        $xpath-query-no-base-elem := fcs:transform-query ($query, $x-context, $config, false()),
+        (:$xpath-query-no-base-elem := fcs:transform-query ($query, $x-context, $config, false()),
         $match := util:eval (concat("$results", $xpath-query-no-base-elem)),
         $match-seq := util:eval (concat("$result-seq", $xpath-query-no-base-elem)),
-        $result-seq-match := fcs:highlight-result($result-seq, $match-seq, $x-context, $config),  
-        
+        $result-seq-match := fcs:highlight-result($result-seq, $match-seq, $x-context, $config),:)
+        $match := (),
+        $result-seq-match := $result-seq,
         $records :=
           <sru:records>
     	       {for $rec at $pos in $result-seq-match	           
@@ -321,7 +322,6 @@ declare function fcs:search-retrieve($query as xs:string, $x-context as xs:strin
 };
 
 declare function fcs:format-record-data($record-data as node(), $data-view as xs:string*, $x-context as xs:string*, $config as node()) as item()*  {
-
 (:    let $record-data := util:expand($record, ""):)
                         (:	      cmdcoll:get-md-collection-name($raw-record-data):)
 	let $title := fcs:apply-index ($record-data, "title",$x-context, $config)	   
@@ -394,11 +394,14 @@ and then applies a stylesheet
 @returns XPath version of the CQL-query, or diagnostics bubbling up the call-chain if parse-error! 
 :)
 declare function fcs:transform-query($cql-query as xs:string, $x-context as xs:string, $config, $base-elem-flag as xs:boolean) as item() {
-    let $mappings := repo-utils:config-value($config, 'mappings'),
-    $xpath-query := cql:cql2xpath ($cql-query, $x-context, $mappings),
     
-    $final-xpath := if ($base-elem-flag) then
-                let $context-map := fcs:get-mapping("",$x-context, $config),      
+    let $mappings := repo-utils:config-value($config, 'mappings'),    
+        $xpath-query := cql:cql2xpath ($cql-query, $x-context, $mappings),
+    
+    (: if there was a problem with the parsing the query  don't evaluate :)
+    $final-xpath := if ($base-elem-flag and ($xpath-query instance of text() or $xpath-query instance of xs:string)) then
+                let $context-map := fcs:get-mapping("",$x-context, $config),
+                    $default-mappings := fcs:get-mapping("", 'default', $config ),
 (:                    $index-map := $context-map/index[xs:string(@key) eq $index],
                 (\: get either a) the specific base-element for the index, 
                       b) the default for given map,
@@ -406,10 +409,10 @@ declare function fcs:transform-query($cql-query as xs:string, $x-context as xs:s
                     $base-elem := if (exists($index-map/@base_elem)) then xs:string($index-map/@base_elem) 
                         else if (exists($context-map/@base_elem)) then xs:string($context-map/@base_elem)
                         else $index:)                        
-                    $base-elem := if ($context-map[@base_elem]) then
+                    $base-elem := if (exists($context-map[@base_elem])) then
                                         concat('ancestor-or-self::', $context-map/@base_elem)
-                                    else if ($mappings//map[@key='default'][@base_elem]) then
-                                        concat('ancestor-or-self::', $mappings//map[@key='default']/@base_elem)
+                                    else if (exists($default-mappings[@base_elem])) then
+                                        concat('ancestor-or-self::', $default-mappings/@base_elem)
                                     else '.'
                                     
                 return concat($xpath-query,'/', $base-elem)
@@ -520,14 +523,17 @@ declare function fcs:indexes-in-query($cql as xs:string, $x-context as xs:string
 (:~ evaluate given index on given piece of data
 used when formatting record-data, to put selected pieces of data (indexes) into the results record 
 
+FIXME: takes just first @use-param - this prevents from creating invalid xpath, but is very unreliable wrt to the returned data 
+
 @returns result of evaluating given index's path on given data. or empty node if no mapping index was found
 :)
 declare function fcs:apply-index($data, $index as xs:string, $x-context as xs:string+, $config) as item()* {
 
   let $index-map := fcs:get-mapping($index,$x-context, $config),
-  $match-on := if (exists($index-map/@use) ) then concat('/', xs:string($index-map/@use)) else ''
-  
-  return if (exists($index-map/path/text())) then util:eval(concat("$data//", $index-map/path/text(), $match-on))
+    $index-xpath := fcs:index-as-xpath($index,$x-context, $config)
+(:    $match-on := if (exists($index-map/@use) ) then concat('/', xs:string($index-map[1]/@use)) else ''
+, $match-on:)  
+  return if (exists($index-map/path/text())) then util:eval(concat("$data//", $index-xpath ))
             else ()  
 };
 
