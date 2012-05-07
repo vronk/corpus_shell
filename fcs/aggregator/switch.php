@@ -261,6 +261,8 @@
     global $stylesheet;
     global $extraRequestData;
 
+    global $xformat;
+
     $urlStr = "?";
 
     if (($type == "fcs.resource") || ($type == "fcs"))
@@ -296,6 +298,10 @@
         $urlStr =  AddParamToUrlIfNotEmpty($urlStr, "recordPacking", $recordPacking);
         $urlStr =  AddParamToUrlIfNotEmpty($urlStr, "recordSchema", $recordSchema);
         $urlStr =  AddParamToUrlIfNotEmpty($urlStr, "resultSetTTL", $resultSetTTL);
+
+        //if x-format!=html --> forward x-format (added 2012-05-02 by AB)
+        if (stripos($xformat, "html")=== false)
+          $urlStr =  AddParamToUrlIfNotEmpty($urlStr, "x-format", $xformat);
       break;
       default:
         //"Unsupported parameter value"
@@ -329,13 +335,15 @@
     return false;
   }
 
-  function ReturnXmlDocument($url)
+  function ReturnXmlDocument($url, $headerStr)
   {
     $url = ReplaceLocalHost($url);
 
     if (url_exists($url))
     {
-      header ("content-type: text/xml; charset=UTF-8");
+      if ($headerStr != "")
+        header ($headerStr);
+
       readfile($url);
     }
     else
@@ -456,10 +464,12 @@
         {
           // this option is more or less only for debugging (to see the xsl used)
           $style = GetXslStyle($operation, $configItem);
-          ReturnXmlDocument($style);
+          ReturnXmlDocument($style, "content-type: text/xml; charset=UTF-8");
         }
+        elseif (stripos($xformat, "img") !== false)
+          ReturnXmlDocument($fileName, "content-type: image/jpg");
         else
-          ReturnXmlDocument($fileName);
+          ReturnXmlDocument($fileName, "content-type: text/xml; charset=UTF-8");
       }
       else
       {
