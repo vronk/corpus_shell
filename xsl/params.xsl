@@ -25,9 +25,9 @@
     <xsl:param name="mode" select="'html'"/>
     <xsl:param name="scanClause" select="''"/>
     <xsl:param name="contexts_url" select="concat($base_url,'?operation=scan&amp;scanClause=fcs.resource&amp;sort=text')"/>
-    <xsl:param name="mappings-file" select="'xmldb:///db/cr/etc/mappings.xml'"/>
+    <xsl:param name="mappings-file" select="''"/>
     <xsl:variable name="context-param" select="'x-context'"/>
     <xsl:variable name="mappings" select="document($mappings-file)/map"/>
-    <xsl:variable name="context-mapping" select="$mappings//map[@key][xs:string(@key) eq $x-context]"/>
-    <xsl:variable name="default-mapping" select="$mappings//map[@key][xs:string(@key) eq 'default']"/>
+    <xsl:variable name="context-mapping" select="$mappings//map[@key][xs:string(@key) = $x-context]"/>    
+    <xsl:variable name="default-mapping" select="$mappings//map[@key][xs:string(@key) = 'default']"/>    
 </xsl:transform>
