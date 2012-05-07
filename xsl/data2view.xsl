@@ -57,7 +57,7 @@
             </div>
         </xsl:if>
     </xsl:template>
-    <xsl:template match="fcs:DataView[@ref]" mode="record-data">
+    <xsl:template match="fcs:DataView[@ref][not(@ref='')]" mode="record-data">
         <div class="data-view {@type}">
             <a href="{@ref}">
                 <xsl:value-of select="@type"/>
