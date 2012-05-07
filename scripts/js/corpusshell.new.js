@@ -138,15 +138,18 @@ function StartSearch(elem)
 
 				resultPane.removeClass("cmd loading");
 
+        var hstr = xml.responseText;
+        hstr = hstr.replace(/&amp;/g, "&");
+
 				// What does this do??
      			if ($(parElem).find(".searchresults .scroll-content").length > 0)
      			{
-          $(parElem).find(".searchresults .scroll-content").html(xml.responseText);
+          $(parElem).find(".searchresults .scroll-content").html(hstr);
           RefreshScrollPane(parElem);
      			}
      	  else
      		 {
-          $(resultPane).html(xml.responseText);
+          $(resultPane).html(hstr);
           InitScrollPane(parElem);
         }
         var hits = $(resultPane).find(".result-header").attr("data-numberOfRecords")
@@ -185,14 +188,17 @@ function Search(elem, startrecord, maxrecord)
       data : {operation: 'searchRetrieve', query: SearchConfig[sele]['x-context'] + '=' + sstr, startRecord: startrecord, maximumRecords: maxrecord, 'x-context': SearchConfig[sele]['x-context'], 'x-format': 'html', version: '1.2'},
       complete: function(xml, textStatus)
       {
+        var hstr = xml.responseText;
+        hstr = hstr.replace(/&amp;/g, "&");
+
      			if ($(parElem).find(".searchresults .scroll-content").length > 0)
      			{
-          $(parElem).find(".searchresults .scroll-content").html(xml.responseText);
+          $(parElem).find(".searchresults .scroll-content").html(hstr);
           RefreshScrollPane(parElem);
      			}
      	  else
      		 {
-          $(parElem).find(".searchresults").html(xml.responseText);
+          $(parElem).find(".searchresults").html(hstr);
           InitScrollPane(parElem);
         }
         $(parElem).find(".hitcount").text($(".recordcount").val());
