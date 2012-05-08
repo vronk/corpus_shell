@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestSet type="internal">
-    <test id="cmd-tests">        
-<!--        <xpath key="C.cc.deadlinks" label="CMD with dead-link Metadata-ResourceRef">count($context//ResourceRef[not(. =  $context//MdSelfLink)][../ResourceType eq 'Metadata'])</xpath>-->
-        <xpath key="C.cc.deadlinks" label="CMD with dead-link Metadata-ResourceRef">count($context//ResourceRef[. =  $context//MdSelfLink] intersect $context//ResourceType[. = 'Metadata']/../ResourceRef)</xpath>
+    <test id="cmd-tests">
+        <xpath key="C" label="CMD">count($context//CMD)</xpath>
+        <!--        <xpath key="C.I" label="CMD with IsPartOf">count($context//CMD[.//IsPartOf ne ''])</xpath>-->
+        <xpath key="C.cc.self" label="CMD with IsPartOf=MdSelfLink">count($context//CMD[.//MdSelfLink=.//IsPartOf])</xpath>
+<!--        <xpath key="C.cc.link-match" label="MdSelfLink with matching ResourceRef">count($context//MdSelfLink[. = $context//ResourceProxy[ResourceType eq 'Metadata']/ResourceRef])</xpath> -->
+<!--        <xpath key="C.cc.orphans" label="orphaned MdSelfLink">count($context//MdSelfLink[not(. = $context//ResourceProxy[ResourceType eq 'Metadata']/ResourceRef)])</xpath>-->
+        <!--        <xpath key="C.cc.deadlinks" label="CMD with dead-link Metadata-ResourceRef">count($context//ResourceRef[not(. =  $context//MdSelfLink)][../ResourceType eq 'Metadata'])</xpath>-->
+        <xpath key="C.cc.deadlinks" label="dead-link Metadata-ResourceRef">count($context//ResourceRef[not(. =  $context//MdSelfLink)] intersect $context//ResourceType[. = 'Metadata']/../ResourceRef)</xpath>
+        <!--        <xpath key="C.cc.deadlinks" label="CMD with dead-link Metadata-ResourceRef">count($context//ResourceRef[not(. =  $context//MdSelfLink)][../ResourceType eq 'Metadata'])</xpath>-->
+<!--        <xpath key="C.cc.deadlinks" label="CMD with dead-link Metadata-ResourceRef">count($context//ResourceRef[not(. =  $context//MdSelfLink)] intersect $context//ResourceType[. = 'Metadata']/../ResourceRef)</xpath>-->
         <!--<xpath key="C.R+M" label="CMD with MD and Res">$context//CMD[.//ResourceType='Resource'][.//ResourceType='Metadata']/Header</xpath>
         <xpath key="C.cc.orphans" label="CMD with orphaned MdSelfLink">$context//MdSelfLink[not(. = $context//ResourceProxy[ResourceType eq 'Metadata']/ResourceRef)]</xpath>        
         <xpath key="C.M" label="CMD with Metadata = Collections">$context//CMD[.//ResourceType='Metadata']/Header/MdSelfLink</xpath>-->
