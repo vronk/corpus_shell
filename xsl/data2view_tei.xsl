@@ -23,17 +23,34 @@ the named templates are at the bottom.
     <xsl:template match="aac_HYPH3" mode="record-data">
         <xsl:apply-templates/>
     </xsl:template>
-    <xsl:template match="bibl" mode="record-data">
+    <xsl:template match="address | tei:address" mode="record-data">
+        <address>
+            <xsl:if test="tei:street">
+                <xsl:value-of select="tei:street"/>
+                <br/>
+            </xsl:if>
+            <xsl:if test="tei:postCode | tei:settlement">
+                <xsl:value-of select="tei:postCode"/>
+                <xsl:text> </xsl:text>
+                <xsl:value-of select="tei:settlement"/>
+                <br/>
+            </xsl:if>
+            <xsl:if test="tei:country">
+                <xsl:value-of select="tei:country"/>
+            </xsl:if>
+        </address>
+    </xsl:template>
+    <xsl:template match="bibl | tei:bibl" mode="record-data">
         <xsl:call-template name="inline"/>
     </xsl:template>
-    <xsl:template match="date" mode="record-data">
+    <xsl:template match="date|tei:date" mode="record-data">
         <span class="date">
             <!--<xsl:value-of select="."/>-->
             <xsl:apply-templates mode="record-data"/>
 <!--            <span class="note">[<xsl:value-of select="@value"/>]</span>-->
         </span>
     </xsl:template>
-    <xsl:template match="div|p" mode="record-data">
+    <xsl:template match="div|p|tei:div|tei:p" mode="record-data">
         <xsl:copy>
             <xsl:apply-templates mode="record-data"/>
         </xsl:copy>
@@ -43,7 +60,7 @@ the named templates are at the bottom.
      TODO: this has to be broken down to individual children-elements.
      the styles should be moved to CSS and referenced by classes 
    -->
-    <xsl:template match="entry" mode="record-data">
+    <xsl:template match="entry | tei:entry" mode="record-data">
         <div class="profiletext">
             <div style="margin-top: 15px; background:rgb(242,242,242); border: 1px solid grey">
                 <b>
@@ -125,39 +142,47 @@ the named templates are at the bottom.
             </div>
         </div>
     </xsl:template>
-    <xsl:template match="l" mode="record-data">
+    <xsl:template match="geo | tei:geo" mode="record-data">
+        <xsl:call-template name="inline"/>
+    </xsl:template>
+    <xsl:template match="l | tei:l" mode="record-data">
         <xsl:apply-templates mode="record-data"/>
         <br/>
     </xsl:template>
-    <xsl:template match="lb" mode="record-data">
+    <xsl:template match="lb | tei:lb" mode="record-data">
         <br/>
     </xsl:template>
-    <xsl:template match="lg" mode="record-data">
+    <xsl:template match="lg | tei:lg" mode="record-data">
         <div class="lg">
             <p>
                 <xsl:apply-templates mode="record-data"/>
             </p>
         </div>
     </xsl:template>
-    <xsl:template match="milestone" mode="record-data">
+    <xsl:template match="milestone | tei:milestone" mode="record-data">
         <xsl:text>...</xsl:text>
     </xsl:template>
     
     <!-- for STB: dont want pb -->
-    <xsl:template match="pb" mode="record-data"/>
+    <xsl:template match="pb | tei:pb" mode="record-data"/>
     <!--<xsl:template match="pb" mode="record-data">
         <div class="pb">p. <xsl:value-of select="@n"/>
         </div>
     </xsl:template>-->
-    <xsl:template match="persName | placeName" mode="record-data">
+    <xsl:template match="place | tei:place" mode="record-data">
+        <xsl:copy>
+            <xsl:apply-templates mode="record-data"/>
+        </xsl:copy>
+    </xsl:template>
+    <xsl:template match="persName | placeName | tei:persName | tei:placeName" mode="record-data">
         <xsl:call-template name="inline"/>
     </xsl:template>
-    <xsl:template match="rs" mode="record-data">
+    <xsl:template match="rs | tei:rs" mode="record-data">
         <xsl:call-template name="inline"/>
     </xsl:template>
     
     <!-- for STB: dont want seg -->
-    <xsl:template match="seg" mode="record-data"/>
+    <xsl:template match="seg | tei:seg" mode="record-data"/>
     <!-- handing over to aac:stand.xsl -->
     <!--<xsl:template match="seg" mode="record-data">
         <xsl:apply-templates select="."/>
