@@ -99,20 +99,23 @@
     <!-- generates a select-option list of available contexts  
     -->
     <xsl:template name="contexts-select">
+<!--        <xsl:value-of select="document($contexts_url)" />-->
         <select name="x-context">
-            <xsl:for-each select="$contexts//sru:terms/sru:term">
-                <xsl:variable name="ancestors-prefix">
-                    <xsl:for-each select="ancestor::sru:term">
-                        <xsl:text>.</xsl:text>
-                    </xsl:for-each>
-                </xsl:variable>
-                <option value="{sru:value}">
-                    <xsl:if test="sru:value/text() = $x-context">
-                        <xsl:attribute name="selected">selected</xsl:attribute>
-                    </xsl:if>
-                    <xsl:value-of select="concat($ancestors-prefix, sru:displayTerm)"/>
-                </option>
-            </xsl:for-each>
+            <xsl:if test="$contexts">
+                <xsl:for-each select="$contexts//sru:terms/sru:term">
+                    <xsl:variable name="ancestors-prefix">
+                        <xsl:for-each select="ancestor::sru:term">
+                            <xsl:text>.</xsl:text>
+                        </xsl:for-each>
+                    </xsl:variable>
+                    <option value="{sru:value}">
+                        <xsl:if test="sru:value/text() = $x-context">
+                            <xsl:attribute name="selected">selected</xsl:attribute>
+                        </xsl:if>
+                        <xsl:value-of select="concat($ancestors-prefix, sru:displayTerm)"/>
+                    </option>
+                </xsl:for-each>
+            </xsl:if>
         </select>
     </xsl:template>
     
@@ -196,7 +199,16 @@
         <xsl:if test="$index">
             <!-- we would need a dynamic evaluation to get the specific piece of data from the $elem 
                 but let's try with some more trivial means -->
-            <xsl:variable name="linking-value" select="$elem/@*[name()= substring-after($index/@use,'@')]"/>
+            <xsl:variable name="linking-value">
+                <xsl:choose>
+                    <xsl:when test="contains($index/@use,'@')">
+                        <xsl:value-of select="$elem/@*[name()= substring-after($index/@use,'@')]"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of select="$elem/text()"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:variable>
             <xsl:value-of select="concat($index/@link, $linking-value)"/>
         </xsl:if>
     </xsl:template>
@@ -261,7 +273,8 @@
                         <xsl:with-param name="value" select="text()[.!='']"/>
                     </xsl:call-template>
                 </span>
-                <xsl:apply-templates select="*" mode="format-xmlelem"/>
+<!--                <xsl:apply-templates select="*" mode="format-xmlelem"/>-->
+                <xsl:apply-templates select="*" mode="record-data"/>
                 <xsl:if test="@*">
                     <div class="attributes">
                         <xsl:apply-templates select="@*" mode="format-attr"/>

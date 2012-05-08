@@ -149,7 +149,7 @@
             </xsl:for-each>
         </xsl:variable>
         <xsl:choose>
-            <xsl:when test="$elem-link">
+            <xsl:when test="not($elem-link='')">
                 <a href="{$elem-link}">
                     <span class="{name()}">
                         <xsl:copy-of select="$inline-content"/>
