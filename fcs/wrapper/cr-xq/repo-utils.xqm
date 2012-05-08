@@ -183,6 +183,7 @@ declare function repo-utils:serialise-as($item as node()?, $format as xs:string,
               			<parameters><param name="format" value="{$format}"/>
               			            <param name="x-context" value="{repo-utils:param-value($config, 'x-context', '' )}"/>
               			            <param name="base_url" value="{repo-utils:config-value($config, 'base.url')}"/>
+              			            <param name="mappings-file" value="{repo-utils:config-value($config, 'mappings')}"/>
               			            <param name="scripts_url" value="{repo-utils:config-value($config, 'scripts.url')}"/>
               			             <param name="site_name" value="{repo-utils:config-value($config, 'site.name')}"/>
               			             {$parameters/param}
