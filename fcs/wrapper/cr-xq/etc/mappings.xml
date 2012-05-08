@@ -12,6 +12,38 @@
             <path>MdSelfLink</path>
         </index>
     </map>
+    <map key="univie.at:cpas" path="/db/cr-data/cpas" base_elem="">
+        <index key="text">
+            <path>tei:bibl</path>
+            <path>tei:event</path>
+            <path>tei:person</path>
+            <path>tei:place</path>
+            <path>tei:div</path>
+        </index>
+        <index key="cql.serverChoice">
+            <path>tei:bibl</path>
+            <path>tei:event</path>
+            <path>tei:person</path>
+            <path>tei:place</path>
+            <path>tei:div</path>
+        </index>
+        <index key="title" use="xs:string(@value)">
+            <path>persName</path>
+        </index>
+        <index key="geo" use="text()" link="http://maps.google.at/?q=">
+            <path>tei:geo</path>
+            <path>geo</path>
+        </index>
+        <index key="resource-pid">
+            <path>'univie.at:cpas'</path>
+        </index>
+        <index key="resourcefragment-pid" use="@xml:id">
+            <path>tei:person</path>
+            <path>tei:bibl</path>
+            <path>tei:event</path>
+            <path>tei:place</path>
+        </index>
+    </map>
     <map key="clarin.at:icltt:cr:stb" path="/db/cr-data/stb" base_elem="div" sort="diary-day">
 <!--        [@type='diary-day'] the attribute taken out of the base-elem, because of bug? with util:expand-->
         <index status="indexed" key="cql.serverChoice">
@@ -35,7 +67,7 @@
         <index key="person" use="@key" base_elem="p" link="?x-format=html&amp;x-context=clarin.at%3Aicltt%3Acr%3Aaac-names&amp;query=persId=">
             <path>persName</path>
         </index>
-        <index key="placeName" use="text()">
+        <index key="placeName"> <!--use="text()"-->
             <path>placeName</path>
         </index>
         <!-- -->
