@@ -270,12 +270,12 @@ declare function fcs:search-retrieve($query as xs:string, $x-context as xs:strin
         $seq-count := fn:count($result-seq),        
         $end-time := util:system-dateTime(),
     
-        (:$xpath-query-no-base-elem := fcs:transform-query ($query, $x-context, $config, false()),
+        $xpath-query-no-base-elem := fcs:transform-query ($query, $x-context, $config, false()),
         $match := util:eval (concat("$results", $xpath-query-no-base-elem)),
         $match-seq := util:eval (concat("$result-seq", $xpath-query-no-base-elem)),
-        $result-seq-match := fcs:highlight-result($result-seq, $match-seq, $x-context, $config),:)
-        $match := (),
-        $result-seq-match := $result-seq,
+        $result-seq-match := fcs:highlight-result($result-seq, $match-seq, $x-context, $config),
+        (:$match := (),
+        $result-seq-match := $result-seq,:)
         $records :=
           <sru:records>
     	       {for $rec at $pos in $result-seq-match	           
@@ -410,7 +410,9 @@ declare function fcs:transform-query($cql-query as xs:string, $x-context as xs:s
                         else if (exists($context-map/@base_elem)) then xs:string($context-map/@base_elem)
                         else $index:)                        
                     $base-elem := if (exists($context-map[@base_elem])) then
-                                        concat('ancestor-or-self::', $context-map/@base_elem)
+                                        if (not($context-map/@base_elem='')) then
+                                            concat('ancestor-or-self::', $context-map/@base_elem)
+                                         else '.'
                                     else if (exists($default-mappings[@base_elem])) then
                                         concat('ancestor-or-self::', $default-mappings/@base_elem)
                                     else '.'
