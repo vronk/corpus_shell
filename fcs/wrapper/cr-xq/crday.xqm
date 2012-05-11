@@ -18,6 +18,7 @@ declare variable $crday:docTypeTerms := "Terms";
 in the context of given collection, starting from given xpath
 
 @param $context nodeset to analyze
+@param $path if starts-with '/' or = '' start directly at the $context, else eval on f 'descendants-or-self'-axis 
 calls elem-r for recursive processing
 
 @returns xml-with paths and numbers 
@@ -33,7 +34,11 @@ declare function crday:ay-xml($context as item()*, $path as xs:string, $depth as
        $prefix := if (exists(prefix-from-QName($qname))) then prefix-from-QName($qname) else "",
        $dummy := if (exists($ns-uri)) then util:declare-namespace($prefix,$ns-uri) else ()
    
-  let $path-nodes := util:eval(fn:concat("$context/descendant-or-self::", $path))
+   let $full-path := if (starts-with($path,'/') or $path = '' ) then
+                        fn:concat("$context", $path)
+                       else     fn:concat("$context/descendant-or-self::", $path)
+                            
+  let $path-nodes := util:eval($full-path )
   
   let $entries := crday:elem-r($path-nodes, $path, $ns-uri, $depth, $depth),
 (:      $coll-names-value := if (fn:empty($collections)) then () else attribute colls {fn:string-join($collections, ",")},:)
@@ -63,7 +68,7 @@ declare function crday:elem-r($path-nodes as node()*, $path as xs:string, $ns as
 	$dummy-undeclare-ns := util:declare-namespace("",xs:anyURI(""))
 	return 
 (:	<Term path="{fn:concat("//", $path)}" name="{text:groups($path, "/([^/]+)$")[last()]}" count="{$path-count}" count_text="{$text-count}"  count_distinct_text="{$text-count-distinct}">{ :)
-	<Term path="{fn:concat("//", $path)}" name="{(text:groups($path, "/([^/]+)$")[last()],$path)[1] }" count="{$path-count}" count_text="{$text-count}"  count_distinct_text="{$text-count-distinct}">{
+	<Term path="{fn:concat("", translate($path,'/','.'))}" name="{(text:groups($path, "/([^/]+)$")[last()],$path)[1] }" count="{$path-count}" count_text="{$text-count}"  count_distinct_text="{$text-count-distinct}">{
 	   (attribute ns {$ns},
 	  if ($depth > 0) then
 	    for $ns-qname in $child-ns-qnames[. != '']
