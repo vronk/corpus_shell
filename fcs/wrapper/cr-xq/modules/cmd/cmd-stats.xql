@@ -1,3 +1,4 @@
+(: OBSOLETED by crday:query-internal() :)
 let $doc-name := xmldb:store("/db/mdrepo-data/", "stats_cmdi-providers.xml", <result></result>),
     $doc := doc($doc-name),
     (:    $ns-uri := namespace-uri($context[1]/*), :)         	           
