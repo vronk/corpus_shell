@@ -232,10 +232,16 @@
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:value-of select="concat('ft:query(', $match-on, ', ')"/>
+                        <xsl:text>&lt;term&gt;</xsl:text>
+                        <xsl:value-of select="$sanitized_term"/>
+                        <xsl:text>&lt;/term&gt;)</xsl:text>
+                    </xsl:otherwise>
+                    <!--<xsl:otherwise>
+                        <xsl:value-of select="concat('ft:query(', $match-on, ', ')"/>
                         <xsl:text>'</xsl:text>
                         <xsl:value-of select="$sanitized_term"/>
                         <xsl:text>')</xsl:text>
-                    </xsl:otherwise>
+                    </xsl:otherwise>-->
                 </xsl:choose>
             </xsl:when>
             <xsl:when test="value='='">
