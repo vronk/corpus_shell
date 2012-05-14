@@ -65,7 +65,8 @@ let $overview :=  <table><tr><th>collection</th><th>path</th><th>size</th><th>ns
 };
 
 
-(: calls: 
+(: actually: run or view (if available) 
+calls: 
 crday:query-internal($queries, $context as node()+, $result-path as xs:string, $result-filename as xs:string ) as item()* {
 :)
 declare function cr-admin:run-check-queries($config as node(), $x-context as xs:string, $run-flag as xs:boolean) as item()* {
