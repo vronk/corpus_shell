@@ -34,8 +34,6 @@ declare function repo-utils:param-value($config, $key as xs:string, $default as 
     return if ($param) then $param else $config//property[@key=$key]
 };
 
-
-
 (:~ returns db-collection (as nodeset) based on the identifier in x-context, looked up in the mapping or default collection as defined in config 
 
 @returns nodeset of given context 
