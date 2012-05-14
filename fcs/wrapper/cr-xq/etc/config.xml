@@ -17,4 +17,5 @@
     <property key="test.xsl">test2view.xsl</property>
     <property key="base.url">http://localhost:8682/exist/cr</property>
     <property key="scripts.url">http://localhost:8682/exist/cr-scripts/</property>
+    <property key="site.logo">http://localhost:8682/exist/cr-scripts/style/logo_c_s.png</property>
 </config>

@@ -184,6 +184,7 @@ declare function repo-utils:serialise-as($item as node()?, $format as xs:string,
               			            <param name="mappings-file" value="{repo-utils:config-value($config, 'mappings')}"/>
               			            <param name="scripts_url" value="{repo-utils:config-value($config, 'scripts.url')}"/>
               			             <param name="site_name" value="{repo-utils:config-value($config, 'site.name')}"/>
+              			             <param name="site_logo" value="{repo-utils:config-value($config, 'site.logo')}"/>
               			             {$parameters/param}
               			</parameters>)          
 (:               let $option := util:declare-option("exist:serialize", "method=xml media-type=text/html"):)

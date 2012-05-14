@@ -8,6 +8,7 @@
     <property key="cache.path">/db/mdrepo-data/_indexes</property>
     <property key="metadata.path">/db/mdrepo-data/_cmd</property>
     <property key="index.prefix">/db/mdrepo-data/_indexes/index_</property>
+    <property key="tests.path">/db/cr/modules/cmd/testset_cmd.xml</property>
     <property key="log.path">/db/cr-logs</property>
     <property key="scripts.path">/db/cr/xsl/</property>
     <property key="default.dataview">metadata</property>
@@ -16,6 +17,8 @@
     <property key="explain.xsl">explain2view.xsl</property>
     <property key="default.xsl">xml2view.xsl</property>
     <property key="test.xsl">test2view.xsl</property>
-    <property key="base.url">http://localhost:8681/exist/rest/db/cr/mdrepo.xql</property>
-    <property key="scripts.url">http://localhost:8681/exist/cr-scripts/</property>
+    <property key="base.url">http://localhost:8682/exist/rest/db/cr/mdrepo.xql</property>
+    <property key="admin.url">http://localhost:8682/exist/rest/db/cr/admin.xql</property>
+    <property key="scripts.url">http://localhost:8682/exist/cr-scripts/</property>
+    <property key="site.logo">http://localhost:8682/exist/cr-scripts/style/logo_clarin.png</property>
 </config>
