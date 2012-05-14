@@ -15,11 +15,12 @@ declare function cr-admin:display-overview($config-path as xs:string) as item()*
         let $opt := util:declare-option("exist:serialize", "media-type=text/html method=xhtml")
         
 (:    {for $target in $config//target return <th>{xs:string($target/@key)}</th>}</tr>:)
-let $overview :=  <table><tr><th>collection</th><th>path</th><th>size</th><th>ns</th><th>root-elem</th><th>base-elem</th><th>indexes</th></tr>
+let $overview :=  <table><tr><th>collection</th><th>path</th><th>size</th><th>ns</th><th>root-elem</th><th>base-elem</th><th>indexes</th><th>tests</th></tr>
            { for $map in $mappings//map[@key]
                     let $map-key := $map/xs:string(@key),
                         $map-dbcoll-path := $map/xs:string(@path),
-                        $map-dbcoll:= if ($map-dbcoll-path ne '' and xmldb:collection-available (($map-dbcoll-path,"")[1])) then collection($map-dbcoll-path) else (),                      
+(:                        $map-dbcoll:= if ($map-dbcoll-path ne '' and xmldb:collection-available (($map-dbcoll-path,"")[1])) then collection($map-dbcoll-path) else (),                      :)
+                          $map-dbcoll:= repo-utils:context-to-collection($map-key, $config),
                         $root-elems := for $elem in distinct-values($map-dbcoll/*/name()) return $elem,
                         $ns-uris := for $ns in distinct-values($map-dbcoll/namespace-uri(*)) return $ns,
                         $queries-doc-name := cr-admin:check-queries-doc-name($config, $map-key),
