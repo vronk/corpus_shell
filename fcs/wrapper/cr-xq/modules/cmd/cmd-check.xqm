@@ -7,6 +7,8 @@ TODO: check (and/or generate) the inverse links in IsPartOf (vs. ResourceProxies
    
 (:import module namespace cmd  = "http://clarin.eu/cmd/collections" at "cmd-collections.xqm";:)
 import module namespace repo-utils = "http://aac.ac.at/content_repository/utils" at  "/db/cr/repo-utils.xqm";
+import module namespace fcs = "http://clarin.eu/fcs/1.0" at "/db/cr/fcs.xqm";
+import module namespace cr-admin  = "http://aac.ac.at/content_repository/admin" at "/db/cr/admin.xqm";
 
 declare namespace sru = "http://www.loc.gov/zing/srw/";
 declare namespace cmd = "http://www.clarin.eu/cmd/";
@@ -19,10 +21,27 @@ declare default element namespace "http://www.clarin.eu/cmd/";
 declare variable $cmdcheck:default-ns := "http://www.clarin.eu/cmd/";
 declare variable $cmdcheck:root-coll := "root";
 
+
+(:~ runs cmd.profile-scan for all contexts defined in the mappings :)
+
+declare function cmdcheck:run-stats($config-path as xs:string) as item()* {
+
+       let $config := doc($config-path), 
+           $mappings := doc(repo-utils:config-value($config, 'mappings'))
+        
+        let $opt := util:declare-option("exist:serialize", "media-type=text/html method=xhtml")
+
+      for $map in $mappings//map[@key]
+                let $map-key := $map/xs:string(@key),
+                    $map-dbcoll-path := $map/xs:string(@path),
+                    $scan-cmd-profile := fcs:scan('cmd.profile', $map-key, 1, 50, 1, 1, "text", $config)                                        
+                return $scan-cmd-profile
+};
+
 (:~ init-function meant to call individual functions actually doing something.
 at least it resolves x-context to a nodeset
 :)
-declare function cmdcheck:checks($x-context as xs:string+, $config as node() ) as item()* {
+declare function cmdcheck:check($x-context as xs:string+, $config as node() ) as item()* {
     
     let $log-file-name := concat('log_checks_', repo-utils:sanitize-name($x-context), '.xml')
     let $log-path := repo-utils:config-value($config, 'log.path')
@@ -31,7 +50,7 @@ declare function cmdcheck:checks($x-context as xs:string+, $config as node() ) a
 	
     let $data-collection := repo-utils:context-to-collection($x-context, $config),        
         $stat-profiles := cmdcheck:stat-profiles($data-collection), 
-        $check-linking := cmdcheck:check-linking($data-collection),
+(:        $check-linking := cmdcheck:check-linking($data-collection),:)
         $duration := util:system-dateTime() - $start-time    
     
     let $result-data := <checks context="{$x-context}" on="{$start-time}" duration="{$duration}" >
@@ -48,19 +67,22 @@ TODO: profile-name deduction not reliable  - needs match with cmd-terms and diag
 :)
 declare function cmdcheck:stat-profiles($context as node()*) as item()* {
       (: try- to handle namespace problem - primitively :)  
-    let $ns-uri := namespace-uri($context[1]/*),         	           
+    let $ns-uri := namespace-uri($context[1]/*)  
             (: dynamically declare a namespace for the next step, if one is defined in current context 
        $dummy := if (exists($ns-uri)) then util:declare-namespace("",$ns-uri) else () :)
        (: this is now trying to overcome the default-ns issue, by accepting with and without ns :)
 
-        $dummy := util:declare-namespace("",xs:anyURI(""))       
-    let $profiles := util:eval("$context//(MdProfile|cmd:MdProfile)/text()")
+(:        $dummy := util:declare-namespace("",xs:anyURI(""))       :)
+(:    let $profiles := util:eval("$context//(MdProfile|cmd:MdProfile)/text()"):)
+    let $profiles := $context//cmd:CMD/concat(cmd:Header/cmd:MdProfile/text(), '#', cmd:Components/*/name())
     let $distinct-profiles := distinct-values($profiles)
     let $profiles-summary := for $profile in $distinct-profiles            
-                                let $profile-name := util:eval("$context[.//(MdProfile|cmd:MdProfile)/text() = $profile][1]//(Components|cmd:Components)/*/name()")
+(:                                let $profile-name := util:eval("$context[.//(MdProfile|cmd:MdProfile)/text() = $profile][1]//(Components|cmd:Components)/*/name()"):)
+                                let $profile-name := substring-after($profile, '#') 
+                                let $profile-id := substring-before($profile, '#')
                                 let $cnt := count($profiles[. eq $profile])
                                 return <sru:term>
-                                           <sru:value>{$profile}</sru:value>
+                                           <sru:value>{$profile-id}</sru:value>
                                            <sru:numberOfRecords>{$cnt }</sru:numberOfRecords>
                                            <sru:displayTerm>{$profile-name}</sru:displayTerm>                                      
                                          </sru:term>
@@ -80,62 +102,69 @@ declare function cmdcheck:stat-profiles($context as node()*) as item()* {
            </sru:scanResponse>    
 };
 
-(:~ checking consistency of the IDs in CMD-records (MdSelfLink vs. ResourceProxies)
 
-this is now solved better (faster) with xpaths in the cmd-testset, 
-so this is probably obsolete.
-it has very bad performance!
+declare function cmdcheck:display-overview($config-path as xs:string) as item()* {
 
-TODO: check (and/or generate) the inverse links in IsPartOf (vs. ResourceProxies) :)
-declare function cmdcheck:check-linking($context as node()*) as item()* {
+   let $config := doc($config-path),
+       $dummy := util:declare-namespace("",xs:anyURI("")),
+       $mappings := doc(repo-utils:config-value($config, 'mappings')),
+       $baseurl := repo-utils:config-value($config, 'base.url'),
+       $baseadminurl := repo-utils:config-value($config, 'admin.url')
+      
+        
+   let $opt := util:declare-option("exist:serialize", "media-type=text/html method=xhtml")
+                       
+(:    {for $target in $config//target return <th>{xs:string($target/@key)}</th>}</tr>:)
+let $overview :=  <table><tr><th>collection</th><th>path</th><th>size</th>(:<th>ns</th><th>root-elem</th>:)<th>base-elem</th><th>indexes</th><th>tests</th><th>profiles</th></tr>
+           { for $map in util:eval("$mappings//map[@key]")
+                    let $map-key := $map/xs:string(@key),
+                        $map-dbcoll-path := $map/xs:string(@path),
+                        $map-dbcoll:= if ($map-dbcoll-path ne '' and xmldb:collection-available (($map-dbcoll-path,"")[1])) then collection($map-dbcoll-path) else (),                      
+                        
+                        $queries-doc-name := cr-admin:check-queries-doc-name($config, $map-key),
+                        $invoke-check-queries-href := concat($baseadminurl, '?x-context=', repo-utils:sanitize-name($map-key) ,'&amp;config=', $config-path, '&amp;operation=' ),
+                        $queries := if (repo-utils:is-in-cache($queries-doc-name, $config)) then 
+                                                <a href="{concat($invoke-check-queries-href,'view')}" >view</a>                                             
+                                              else (),  
+                        $invoke-scan-cmd-profile-href := concat($baseurl, '?operation=scan&amp;scanClause=cmd.profile&amp;x-format=htmlpage&amp;x-context=', $map-key )                                              
+                    return <tr>
+                        <td>{$map-key}</td>
+                        <td>{$map-dbcoll-path}</td>
+                        <td>{count($map-dbcoll)}</td>
+                        <td>{$map/xs:string(@base_elem)}</td>
+                        <td>{count($map/index)}</td>                        
+                        <td>{$queries} [<a href="{concat($invoke-check-queries-href,'run')}" >run</a>]</td>
+                        <td>[<a href="{$invoke-scan-cmd-profile-href }" >profiles</a>]</td>
+                        </tr>
+                        }
+        </table>
+        
+        (:                        $root-elems := for $elem in distinct-values($map-dbcoll/*/name()) return $elem,
+                        $ns-uris := for $ns in distinct-values($map-dbcoll/namespace-uri(*)) return $ns,
+                                             <td>{$ns-uris}</td>
+                        <td>{$root-elems}</td>:)
 
-let $mdselflinks := $context//MdSelfLink
-let $resourceproxies := $context//ResourceProxy
-let $resourceproxies-md := $resourceproxies[ResourceType eq 'Metadata']/ResourceRef
-(: )let $diff :=  $resourceproxies-md[not(index-of($mdselflinks, self::*))] 
-let $diff2 :=  $mdselflinks[not($resourceproxies-md = text())]:)
-let $diff := for $resource-proxy in $resourceproxies-md
-                    let $id := xs:string($resource-proxy/text())
-                return if ($mdselflinks[ft:query(.,<term>{$id}</term>)]) then () (: $mdselflinks[ft:query(.,<term>{$id}</term>)] :)
-                 else <doc n="{util:document-name($resource-proxy)}" >{$resource-proxy}</doc>
+let $profiles-overview :=  <table><tr><th>collection</th><th>profiles</th></tr>
+           { for $map in util:eval("$mappings//map[@key]")
+                    let $map-key := $map/xs:string(@key),
+                        $map-dbcoll-path := $map/xs:string(@path),
+                        $scan-cmd-profile := fcs:scan('cmd.profile', $map-key, 1, 50, 1, 1, "text", $config)                                       
+                    return <tr>
+                        <td>{$map-key}</td>
+                        <td>
+                        { for $profile in $scan-cmd-profile//sru:term 
+                            return ($profile/sru:value, $profile/sru:displayTerm, $profile/sru:numberOfRecords)
+                        }</td>
+                        </tr>
+                        }
+        </table>
+            
 
-let $diff2 := for $mdselflink in $mdselflinks
-                    let $id := xs:string($mdselflink/text())
-                return if ($resourceproxies-md[ft:query(.,<term>{$id}</term>)]) then () (: $mdselflinks[ft:query(.,<term>{$id}</term>)] :)
-                 else <doc n="{util:document-name($mdselflink)}" >{$mdselflink}</doc>
-return ($diff,$diff2)
+
+         return <div>{($overview, $profiles-overview)}</div>
 };
 
 
-
-declare function cmdcheck:query-internal($queries, $context as node()+, $result-path as xs:string, $result-filename as xs:string ) as item()* {
-    
-    (: collect the xpaths from the before fiddling with the namespace :)
-    let $xpaths := $queries//xpath
-    (:    let $context := repo-utils:context-to-collection($x-context, $config)       
-	   $context:= collection("/db/mdrepo-data/cmdi-providers"),	   :)
-
-    let $result-store := xmldb:store($result-path ,  $result-filename, <result test="{$queries//test/xs:string(@id)}" ></result>),
-        $result-doc:= doc($result-store)
-
-    let $ns-uri := namespace-uri($context[1]/*)        	           
-      (: dynamically declare a default namespace for the xpath-evaluation, if one is defined in current context 
-      WATCHME: this is not very reliable, mainly meant to handle default-ns: cmd :)
-(:      $dummy := if (exists($ns-uri)) then util:declare-namespace("",$ns-uri) else () :)
-    let $dummy := util:declare-namespace("",xs:anyURI($ns-uri))    
-
-
-    let $start-time := util:system-dateTime()	
-    let $upd-dummy :=  
-        for $xpath in $xpaths            
-            let $start-time := util:system-dateTime()
-            let $answer := util:eval($xpath/text())
-            let $duration := util:system-dateTime() - $start-time
-           return update insert <xpath key="{$xpath/@key}" label="{$xpath/@label}" dur="{$duration}">{$answer}</xpath> into $result-doc/result
-
-    return $result-doc
-
-};
 
 
 (:~	WARNING - CHANGES DATA! adds IsPartOf to the CMDrecords (contained in the db-coll)
@@ -287,5 +316,32 @@ let $log-file-name := concat('log_addIsPartOf_', $x-context, '.xml')
     let $updated := if (exists($next-level)) then  cmdcheck:addIsPartOf-r($context, $next-level ,($level+1),$log-doc)
                         else ()
     return $update                     
+};
+
+
+(:~ checking consistency of the IDs in CMD-records (MdSelfLink vs. ResourceProxies)
+
+this is now solved better (faster) with xpaths in the cmd-testset, 
+so this is probably OBSOLETED.
+it has very bad performance!
+
+TODO: check (and/or generate) the inverse links in IsPartOf (vs. ResourceProxies) :)
+declare function cmdcheck:check-linking($context as node()*) as item()* {
+
+let $mdselflinks := $context//MdSelfLink
+let $resourceproxies := $context//ResourceProxy
+let $resourceproxies-md := $resourceproxies[ResourceType eq 'Metadata']/ResourceRef
+(: )let $diff :=  $resourceproxies-md[not(index-of($mdselflinks, self::*))] 
+let $diff2 :=  $mdselflinks[not($resourceproxies-md = text())]:)
+let $diff := for $resource-proxy in $resourceproxies-md
+                    let $id := xs:string($resource-proxy/text())
+                return if ($mdselflinks[ft:query(.,<term>{$id}</term>)]) then () (: $mdselflinks[ft:query(.,<term>{$id}</term>)] :)
+                 else <doc n="{util:document-name($resource-proxy)}" >{$resource-proxy}</doc>
+
+let $diff2 := for $mdselflink in $mdselflinks
+                    let $id := xs:string($mdselflink/text())
+                return if ($resourceproxies-md[ft:query(.,<term>{$id}</term>)]) then () (: $mdselflinks[ft:query(.,<term>{$id}</term>)] :)
+                 else <doc n="{util:document-name($mdselflink)}" >{$mdselflink}</doc>
+return ($diff,$diff2)
 };
 

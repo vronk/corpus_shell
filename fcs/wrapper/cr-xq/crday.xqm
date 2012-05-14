@@ -100,3 +100,33 @@ declare function crday:elem-r($path-nodes as node()*, $path as xs:string, $ns as
   return $doc	
 };
 :)
+
+
+declare function crday:query-internal($queries, $context as node()+, $result-path as xs:string, $result-filename as xs:string ) as item()* {
+    
+    (: collect the xpaths from the queries-list before fiddling with the namespace :)
+    let $xpaths := $queries//xpath
+    (:    let $context := repo-utils:context-to-collection($x-context, $config)       
+	   $context:= collection("/db/mdrepo-data/cmdi-providers"),	   :)
+
+    let $result-store := xmldb:store($result-path ,  $result-filename, <result test="{$queries//test/xs:string(@id)}" ></result>),
+        $result-doc:= doc($result-store)
+
+    let $ns-uri := namespace-uri($context[1]/*)        	           
+      (: dynamically declare a default namespace for the xpath-evaluation, if one is defined in current context 
+      WATCHME: this is not very reliable, mainly meant to handle default-ns: cmd :)
+(:      $dummy := if (exists($ns-uri)) then util:declare-namespace("",$ns-uri) else () :)
+    let $dummy := util:declare-namespace("",xs:anyURI($ns-uri))    
+
+
+    let $start-time := util:system-dateTime()	
+    let $upd-dummy :=  
+        for $xpath in $xpaths            
+            let $start-time := util:system-dateTime()
+            let $answer := util:eval($xpath/text())
+            let $duration := util:system-dateTime() - $start-time
+           return update insert <xpath key="{$xpath/@key}" label="{$xpath/@label}" dur="{$duration}">{$answer}</xpath> into $result-doc/result
+
+    return $result-doc
+
+};
