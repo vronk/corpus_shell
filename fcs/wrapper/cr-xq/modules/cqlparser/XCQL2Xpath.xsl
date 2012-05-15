@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:my="myFunctions" version="2.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="2.0">
 
 <!-- 
 <purpose>transform XCQL to xpath
@@ -65,12 +65,13 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:variable>
+    <xsl:variable name="boolean-query" select="exists(/triple)"/>
     <xsl:template match="/">
-    <!--    <xsl:call-template name="message">
+        <xsl:call-template name="message">
             <xsl:with-param name="msg">XCQL: <xsl:copy-of select="."/>
             </xsl:with-param>
         </xsl:call-template>
-        <xsl:call-template name="message">
+        <!-- <xsl:call-template name="message">
             <xsl:with-param name="msg"><xsl:copy-of select="doc($mappings-file)"/>
             </xsl:with-param>
         </xsl:call-template>-->
@@ -90,7 +91,7 @@
                 <xsl:apply-templates select="rightOperand/*" mode="collection"/>
             </xsl:when>
             <xsl:otherwise>-->
-        <xsl:if test="not(ancestor::triple)">descendant-or-self::*[</xsl:if>
+        <xsl:if test="not(ancestor::triple)">/descendant-or-self::*[</xsl:if>
         <xsl:call-template name="boolean">
             <xsl:with-param name="op" select="boolean/value"/>
             <xsl:with-param name="left">
@@ -149,7 +150,6 @@
         </xsl:template>-->
     <xsl:template match="index">
         
-        
 	<!-- <xsl:variable name="ix_xpathed" select="translate($ix_resolved, '.', '/')" ></xsl:variable> -->
 <!--        <xsl:variable name="ix_xpathed" select="my:index2xpath(.)"/>-->
         <xsl:variable name="ix_xpathed">
@@ -160,7 +160,7 @@
         <xsl:choose>
             <xsl:when test="($ix_xpathed='cql.serverChoice' or $ix_xpathed='*') and not(ancestor::triple)">.//*</xsl:when> <!-- descendant-or-self::*-->
             <xsl:when test="$ix_xpathed='cql.serverChoice' or $ix_xpathed='*'">.</xsl:when>
-            <xsl:when test="ancestor::triple">
+            <xsl:when test="$boolean-query">
                 <xsl:value-of select="concat('.//',$ix_xpathed)"/>
             </xsl:when>
             <xsl:otherwise>
@@ -371,6 +371,6 @@
                 <xsl:copy-of select="$msg"/>
             </xsl:message>
         </xsl:if>
-        <xsl:apply-templates/>
+<!--        <xsl:apply-templates/>-->
     </xsl:template>
 </xsl:stylesheet>
