@@ -551,7 +551,7 @@ declare function fcs:index-as-xpath($index as xs:string, $x-context as xs:string
     let $index-map := fcs:get-mapping($index, $x-context, $config )        
      return if (exists($index-map)) then
                         let $match-on := if (exists($index-map/@use) ) then concat('/', xs:string($index-map/@use)) else ''
-                        let $indexes := if (count($index-map/path)) then  
+                        let $indexes := if (count($index-map/path) > 1) then  
                                             translate(concat('(', string-join($index-map/path,'|'),')', $match-on),'.','/')
                                             else translate(concat($index-map/path, $match-on),'.','/')
                            return $indexes

@@ -82,6 +82,12 @@
         </index>
     </map>
     <map key="clarin.at:icltt:cr:aac-names" path="/db/cr-data/aac_names" base_elem="tei:person">
+        <index key="resource-pid">
+            <path>'clarin.at:icltt:cr:aac-names'</path>
+        </index>
+        <index key="resourcefragment-pid" use="@xml:id">
+            <path>tei:person</path>
+        </index>
         <index key="persId" use="@xml:id" link="?x-format=html&amp;x-context=clarin.at%3Aicltt%3Acr%3Astb&amp;query=person=">
             <path>tei:person</path>
         </index>
