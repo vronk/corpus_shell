@@ -115,7 +115,7 @@ declare function cmdcheck:display-overview($config-path as xs:string) as item()*
    let $opt := util:declare-option("exist:serialize", "media-type=text/html method=xhtml")
                        
 (:    {for $target in $config//target return <th>{xs:string($target/@key)}</th>}</tr>:)
-let $overview :=  <table><tr><th>collection</th><th>path</th><th>size</th>(:<th>ns</th><th>root-elem</th>:)<th>base-elem</th><th>indexes</th><th>tests</th><th>profiles</th></tr>
+let $overview :=  <table class="show" ><tr><th>collection</th><th>path</th><th>size</th>(:<th>ns</th><th>root-elem</th>:)<th>base-elem</th><th>indexes</th><th>tests</th><th>profiles</th></tr>
            { for $map in util:eval("$mappings//map[@key]")
                     let $map-key := $map/xs:string(@key),
                         $map-dbcoll-path := $map/xs:string(@path),
@@ -144,24 +144,24 @@ let $overview :=  <table><tr><th>collection</th><th>path</th><th>size</th>(:<th>
                                              <td>{$ns-uris}</td>
                         <td>{$root-elems}</td>:)
 
-let $profiles-overview :=  <table><tr><th>collection</th><th>profiles</th></tr>
+let $profiles-overview :=  <table class="show"><tr><th>collection</th><th>profiles</th></tr>
            { for $map in util:eval("$mappings//map[@key]")
                     let $map-key := $map/xs:string(@key),
                         $map-dbcoll-path := $map/xs:string(@path),
-                        $scan-cmd-profile := fcs:scan('cmd.profile', $map-key, 1, 50, 1, 1, "text", $config)                                       
+                        $scan-cmd-profile := fcs:scan('cmd.profile', $map-key, 1, 50, 1, 1, "text", $config),   
+                        $scan-formatted := repo-utils:serialise-as( $scan-cmd-profile, 'htmldetail', 'scan', $config, ())
                     return <tr>
                         <td>{$map-key}</td>
-                        <td>
-                        { for $profile in $scan-cmd-profile//sru:term 
-                            return ($profile/sru:value, $profile/sru:displayTerm, $profile/sru:numberOfRecords)
-                        }</td>
+                        <td>{ $scan-formatted }</td>
                         </tr>
                         }
         </table>
-            
+            (: { for $profile in $scan-cmd-profile//sru:term 
+                            return ($profile/sru:value, $profile/sru:displayTerm, $profile/sru:numberOfRecords)
+                        }:)
 
-
-         return <div>{($overview, $profiles-overview)}</div>
+        return repo-utils:serialise-as( <div>{($overview, $profiles-overview)}</div>, 'htmlpage', 'html', $config, ())
+        
 };
 
 
