@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-    version="2.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0">
     <!-- 
         <purpose> generate a generic html-view for xml </purpose>
         <params>
@@ -14,11 +13,10 @@
     -->
     <xsl:import href="commons.xsl"/>
     <xsl:output method="html"/>
-    <xsl:decimal-format name="european" decimal-separator="," grouping-separator="."/>
-    <xsl:variable name="title" select="concat('explain: ', $site_name)"/>
+    <xsl:variable name="title" select="''"/>
     <xsl:template name="continue-root">
-        <div class="explain-view">
-            <xsl:apply-templates select="." mode="format-xmlelem"/>
-        </div>
+        <xsl:apply-templates select="." mode="format-xmlelem">
+            <xsl:with-param name="strict" select="true()"/>
+        </xsl:apply-templates>
     </xsl:template>
 </xsl:stylesheet>

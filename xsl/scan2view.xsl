@@ -63,7 +63,9 @@
     <xsl:param name="filter" select="$scanClause-array[2]"/>
     <xsl:template name="continue-root">
         <div> <!-- class="cmds-ui-block  init-show" -->
-            <xsl:call-template name="header"/>
+            <xsl:if test="$format = 'htmlpage'">
+                <xsl:call-template name="header"/>
+            </xsl:if>
             <div class="content">
                 <xsl:apply-templates select="/sru:scanResponse/sru:terms"/>
             </div>

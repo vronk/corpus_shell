@@ -249,8 +249,12 @@
         </xsl:choose>
     </xsl:template>
 	
-	<!--generic html-view for xml-elements -->
+	<!--generic html-view for xml-elements 
+	
+	@param strict xs:boolean stay in format-xmlelem mode (or try to go back to mode=record-data)
+	-->
     <xsl:template match="*" mode="format-xmlelem">
+        <xsl:param name="strict" select="false()"/>
         <xsl:if test=".//text() or @*">
             <xsl:variable name="has_text">
                 <xsl:choose>
@@ -273,8 +277,14 @@
                         <xsl:with-param name="value" select="text()[.!='']"/>
                     </xsl:call-template>
                 </span>
-<!--                <xsl:apply-templates select="*" mode="format-xmlelem"/>-->
-                <xsl:apply-templates select="*" mode="record-data"/>
+                <xsl:choose>
+                    <xsl:when test="$strict">
+                        <xsl:apply-templates select="*" mode="format-xmlelem"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:apply-templates select="*" mode="record-data"/>
+                    </xsl:otherwise>
+                </xsl:choose>
                 <xsl:if test="@*">
                     <div class="attributes">
                         <xsl:apply-templates select="@*" mode="format-attr"/>
