@@ -8,7 +8,8 @@ let $config-path := request:get-parameter("config", "/db/cr/etc/config.xml"),
     $config := doc($config-path), 
     $x-context := request:get-parameter("x-context", "") (: "univie.at:cpas"  "clarin.at:icltt:cr:stb" :),
 
-    $result := if ($op eq '') then cradmin:display-overview($config-path)
+    $result := if ($op eq '') then 
+                        cradmin:display-overview($config-path)                   
                     else cradmin:run-check-queries($config, $x-context, ($op = 'run'))
 
 return $result

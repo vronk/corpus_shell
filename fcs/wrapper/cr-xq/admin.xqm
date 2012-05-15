@@ -59,9 +59,8 @@ let $overview :=  <table><tr><th>collection</th><th>path</th><th>size</th><th>ns
                                     
                         return <td align="center">{$view} [<a href="?target={$target-key}&amp;testset={$testset-key}&amp;operation=run" >run</a>]</td>
                         }:)                    
-            
-            
-         return $overview
+          
+       return repo-utils:serialise-as($overview, 'htmlpage', 'html', $config, ())
 };
 
 
@@ -80,16 +79,18 @@ declare function cr-admin:run-check-queries($config as node(), $x-context as xs:
   $result := if (exists($testset)) then 
                 if (repo-utils:is-in-cache($queries-doc-name, $config) and not($run-flag)) then
                     repo-utils:get-from-cache($queries-doc-name, $config) 
-                  else
+                  else                    
                     let $context := repo-utils:context-to-collection($x-context, $config)
-                    return crday:query-internal($testset, $context, $cache-path, $queries-doc-name)
+                    return crday:query-internal($testset, $context, $x-context, $cache-path, $queries-doc-name)
                     (: no need to store, because already continuously stored during querying  
                     return repo-utils:store-in-cache($index-doc-name , $data, $config) :)
                else
                 <diagnostics>no testset available</diagnostics>
                 
     
-  return $result
+  return repo-utils:serialise-as($result, 'htmlpage', 'table', $config, ())
+(:  return $result:)
+  
     
 };
 
