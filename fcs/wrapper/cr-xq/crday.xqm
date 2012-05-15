@@ -102,14 +102,15 @@ declare function crday:elem-r($path-nodes as node()*, $path as xs:string, $ns as
 :)
 
 
-declare function crday:query-internal($queries, $context as node()+, $result-path as xs:string, $result-filename as xs:string ) as item()* {
+declare function crday:query-internal($queries, $context as node()+, $x-context as xs:string+, $result-path as xs:string, $result-filename as xs:string ) as item()* {
     
+       
     (: collect the xpaths from the queries-list before fiddling with the namespace :)
     let $xpaths := $queries//xpath
     (:    let $context := repo-utils:context-to-collection($x-context, $config)       
 	   $context:= collection("/db/mdrepo-data/cmdi-providers"),	   :)
 
-    let $result-store := xmldb:store($result-path ,  $result-filename, <result test="{$queries//test/xs:string(@id)}" ></result>),
+    let $result-store := xmldb:store($result-path ,  $result-filename, <result test="{$queries//test/xs:string(@id)}" context="{$x-context}" ></result>),
         $result-doc:= doc($result-store)
 
     let $ns-uri := namespace-uri($context[1]/*)        	           
