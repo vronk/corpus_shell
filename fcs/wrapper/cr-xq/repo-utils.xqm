@@ -59,7 +59,8 @@ looked up in the mapping or default data.path as defined in config
  (if available, otherwise again empty result)
 
 WATCHME: changed to lax handling of the context (if no match - go to default)
-        gives better recall, but may confuse - alternatively: strict: empty result if x-context does not match 
+        gives better recall, but may confuse - alternatively: strict: empty result if x-context does not match
+changed again: only give default if x-context is empty string or 'default'-string.        
 T
 :)
 declare function repo-utils:context-to-collection-path($x-context as xs:string, $config) as xs:string {
@@ -68,7 +69,8 @@ declare function repo-utils:context-to-collection-path($x-context as xs:string, 
             if (exists($mappings//map[xs:string(@key) eq $x-context]/@path)) then 
                     $mappings//map[xs:string(@key) eq $x-context]/xs:string(@path)
                 (: else "" :)
-                  else if (exists(repo-utils:config-value($config, 'data.path'))) then  
+                  else if (exists(repo-utils:config-value($config, 'data.path')) and 
+                            ($x-context = ('', 'default'))) then  
                         repo-utils:config-value($config, 'data.path')
                   else ""
 };
