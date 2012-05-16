@@ -614,12 +614,12 @@
     <xsl:template match="aac_HYPH3">
         <xsl:apply-templates/>
     </xsl:template>
-    <xsl:template match="aac_PREV"/>
-    <xsl:template match="aac_NEXT"/>
-    <xsl:template match="aac_IMAGE"/>
-    <xsl:template match="aac_PAGE">
+    <xsl:template match="aac_PREV" mode="record-data"/>
+    <xsl:template match="aac_NEXT" mode="record-data"/>
+    <xsl:template match="aac_IMAGE" mode="record-data"/>
+    <!--<xsl:template match="aac_PAGE">
         <span style="font-family:'Arial Unicode MS'">
             <xsl:apply-templates/>
         </span>
-    </xsl:template>
+    </xsl:template>-->
 </xsl:stylesheet>
