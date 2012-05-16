@@ -25,7 +25,7 @@ declare function crday:display-overview($config-path as xs:string) as item()* {
 (:~ creates a html-overview of the datasets based on the defined mappings (as linked to from config)
 
 @param config-path path to the confing-file
-@param format [raw, htmlpage, html] - raw: return only the produced table, html* :   
+@param format [raw, htmlpage, html] - raw: return only the produced table, html* : serialize as html   
 @returns a html-table with overview of the datasets
 :)
 declare function crday:display-overview($config-path as xs:string, $format as xs:string ) as item()* {
@@ -37,14 +37,13 @@ declare function crday:display-overview($config-path as xs:string, $format as xs
         let $opt := util:declare-option("exist:serialize", "media-type=text/html method=xhtml")
         
 (:    {for $target in $config//target return <th>{xs:string($target/@key)}</th>}</tr>:)
-let $overview :=  <table><tr><th>collection</th><th>path</th><th>size</th><th>ns</th><th>root-elem</th><th>base-elem</th><th>indexes</th><th>tests</th><th>struct</th></tr>
+let $overview :=  <table><tr><th>collection</th><th>path</th><th>size</th><th>base-elem</th><th>indexes</th><th>tests</th><th>struct</th></tr>
            { for $map in $mappings//map[@key]
                     let $map-key := $map/xs:string(@key),
                         $map-dbcoll-path := $map/xs:string(@path),
 (:                        $map-dbcoll:= if ($map-dbcoll-path ne '' and xmldb:collection-available (($map-dbcoll-path,"")[1])) then collection($map-dbcoll-path) else (),                      :)
                           $map-dbcoll:= repo-utils:context-to-collection($map-key, $config),
-                        $root-elems := for $elem in distinct-values($map-dbcoll/*/name()) return $elem,
-                        $ns-uris := for $ns in distinct-values($map-dbcoll/namespace-uri(*)) return $ns,
+
                         $queries-doc-name := crday:check-queries-doc-name($config, $map-key),
                         $sturct-doc-name := repo-utils:gen-cache-id("structure", ($map-key,""), xs:string($crday:defaultMaxDepth)),
                         $invoke-href := concat($baseadminurl,'?x-context=', $map-key ,'&amp;config=', $config-path, '&amp;operation=' ),                        
@@ -58,8 +57,6 @@ let $overview :=  <table><tr><th>collection</th><th>path</th><th>size</th><th>ns
                         <td>{$map-key}</td>
                         <td>{$map-dbcoll-path}</td>
                         <td>{count($map-dbcoll)}</td>
-                        <td>{$ns-uris}</td>
-                        <td>{$root-elems}</td>
                         <td>{$map/xs:string(@base_elem)}</td>
                         <td>{count($map/index)}</td>                        
                         <td>{$queries} [<a href="{concat($invoke-href,'query-run')}" >run</a>]</td>                        
@@ -67,7 +64,14 @@ let $overview :=  <table><tr><th>collection</th><th>path</th><th>size</th><th>ns
                         </tr>
                         }
         </table>
-                  
+
+            (: <th>ns</th><th>root-elem</th>
+            $root-elems := for $elem in distinct-values($map-dbcoll/*/name()) return $elem,
+            $ns-uris := for $ns in distinct-values($map-dbcoll/namespace-uri(*)) return $ns,
+                        <td>{$ns-uris}</td>
+                        <td>{$root-elems}</td>:)
+            
+
        return if ($format eq 'raw') then
                    $overview
                 else            
@@ -75,11 +79,11 @@ let $overview :=  <table><tr><th>collection</th><th>path</th><th>size</th><th>ns
 };
 
 
-(: run or view (if available) 
-calls: 
-crday:query-internal($queries, $context as node()+, $result-path as xs:string, $result-filename as xs:string ) as item()* {
+(:~ run or view (if available) internal check queries 
+
+@param format [raw, htmlpage, html] - raw: return only the produced table, html* : serialize as html
 :)
-declare function crday:get-query-internal($config as node(), $x-context as xs:string, $run-flag as xs:boolean) as item()* {
+declare function crday:get-query-internal($config as node(), $x-context as xs:string, $run-flag as xs:boolean, $format as xs:string ) as item()* {
 
     let $testset := doc(repo-utils:config-value($config, 'tests.path')),
     
@@ -102,7 +106,10 @@ declare function crday:get-query-internal($config as node(), $x-context as xs:st
                 diag:diagnostics("general-error", concat("run-check-queries: no testset available: ", repo-utils:config-value($config, 'tests.path')))
                 
 (:  return $result:)    
-  return repo-utils:serialise-as($result, 'htmlpage', 'table', $config, ())    
+   return if ($format eq 'raw') then
+            $result
+         else            
+            repo-utils:serialise-as($result, $format, 'table', $config, ())    
 };
 
 (:~ evaluates queries against given context and stores the result in aresult-file
@@ -139,9 +146,11 @@ declare function crday:gen-query-internal($queries, $context as node()*, $x-cont
     return $result-doc
 };
 
-(:~ wrapper for the ay-xml function cares for storing the result or fetching a stored one   
+(:~ wrapper for the ay-xml function cares for storing the result or fetching a stored one
+
+@param format [raw, htmlpage, html] - raw: return only the produced table, html* : serialize as html
 :)
-declare function crday:get-ay-xml($config as node(), $x-context as xs:string+, $init-xpath as xs:string, $max-depth as xs:integer, $run-flag as xs:boolean ) as item()? {
+declare function crday:get-ay-xml($config as node(), $x-context as xs:string+, $init-xpath as xs:string, $max-depth as xs:integer, $run-flag as xs:boolean, $format as xs:string ) as item()? {
 	
   let $name := repo-utils:gen-cache-id("structure", ($x-context, $init-xpath), xs:string($max-depth)),
     $result := 
@@ -154,8 +163,11 @@ declare function crday:get-ay-xml($config as node(), $x-context as xs:string+, $
                     return repo-utils:store-in-cache($name, $data,$config)
                   else 
                     diag:diagnostics("general-error", concat("run-ay-xml: no context: ", $x-context))        
-    
-  return repo-utils:serialise-as($result, 'htmlpage', 'terms', $config, ())    
+
+   return if ($format eq 'raw') then
+            $result
+         else            
+          repo-utils:serialise-as($result, $format, 'terms', $config, ())    
 };
 
 

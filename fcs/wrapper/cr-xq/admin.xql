@@ -11,11 +11,11 @@ let $config-path := request:get-parameter("config", "/db/cr/etc/config.xml"),
     $result := if ($op eq '') then 
                         crday:display-overview($config-path)
                else if (contains ($op, 'query')) then
-                    crday:get-query-internal($config, $x-context, (contains($op, 'run')))                    
+                    crday:get-query-internal($config, $x-context, (contains($op, 'run')), 'htmlpage')                    
                else if (contains ($op, 'struct')) then
                     let $init-path := request:get-parameter("init-path", ""),              
                         $max-depth := request:get-parameter("x-maximumDepth", $crday:defaultMaxDepth)
-                     return crday:get-ay-xml($config, $x-context, $init-path, $max-depth, (contains($op, 'run')))                    
+                     return crday:get-ay-xml($config, $x-context, $init-path, $max-depth, (contains($op, 'run')), 'htmlpage')                    
                 else 
                     diag:diagnostics("unsupported-operation", $op)
 return $result
