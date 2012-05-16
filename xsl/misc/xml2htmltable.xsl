@@ -12,7 +12,7 @@
 </history>
 -->
     <xsl:output method="html" encoding="UTF-8"/>
-    <xsl:include href="commons_v1.xsl"/>
+    <xsl:include href="../commons_v1.xsl"/>
     <xsl:variable name="title" select="''"/>
     <xsl:template name="continue-root">
         <div>
