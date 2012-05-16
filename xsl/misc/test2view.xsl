@@ -22,7 +22,7 @@
  </sample>
         
     -->
-    <xsl:import href="commons_v1.xsl"/>
+    <xsl:import href="../commons_v1.xsl"/>
     <xsl:output method="html"/>
     <xsl:decimal-format name="european" decimal-separator="," grouping-separator="."/>
     <xsl:variable name="title" select="concat('explain: ', $site_name)"/>

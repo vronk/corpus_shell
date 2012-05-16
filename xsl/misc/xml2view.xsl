@@ -11,7 +11,7 @@
         </history>
         
     -->
-    <xsl:import href="commons.xsl"/>
+    <xsl:import href="../commons.xsl"/>
     <xsl:output method="html"/>
     <xsl:variable name="title" select="''"/>
     <xsl:template name="continue-root">
