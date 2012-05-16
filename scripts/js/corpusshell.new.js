@@ -1,3 +1,19 @@
+$(function()
+{
+    $('.scroll-container .data-view.full a').live("click", function (event) {
+         event.preventDefault();
+         OpenTextPanel(this, $(this).attr('href'));
+      });
+    $('.scroll-container .data-view.image a').live("click", function (event) {
+         event.preventDefault();
+         OpenImagePanel(this, $(this).attr('href'));
+      });
+    $('.scroll-container .navigation a').live("click", function (event) {
+         event.preventDefault();
+         OpenTextPanel(this, $(this).attr('href'));
+      });
+});
+
 var PanelCount = 0;
 var PanelPostions = new Array();
 
@@ -63,9 +79,9 @@ function InitDraggable(divid)
                BringToFront(this);
                var hgt = parseInt($(this).css("height").replace(/px/g, ""));
                if ($(this).find(".searchstring").length != 0)
-                 $(this).find(".scroll-pane").css("height", hgt - 120 + "px");
+                 $(this).find(".scroll-pane").css("height", hgt - 105 + "px");
                else
-                 $(this).find(".scroll-pane").css("height", hgt - 25 + "px");
+                 $(this).find(".scroll-pane").css("height", hgt - 35 + "px");
 
                RefreshScrollPane(this);
                SavePanelPositon(this);
@@ -264,7 +280,7 @@ function GetFullText(elem, filename)
         RefreshScrollPane(elem);
 */
 
-     			if ($(parElem).find(".searchresults .scroll-content").length > 0)
+     			if ($(elem).find(".searchresults .scroll-content").length > 0)
      			{
           $(elem).find(".searchresults .scroll-content").html(xml.responseText);
           RefreshScrollPane(elem);
@@ -281,9 +297,39 @@ function GetFullText(elem, filename)
   );
 }
 
+function GetFullTextNew(elem, filename)
+{
+  $.ajax(
+  {
+      type: 'GET',
+      url: filename,
+      dataType: 'xml',
+      complete: function(xml, textStatus)
+      {
+        var responseText = xml.responseText;
+
+        //strip unnecessary header
+        //responseText = $(responseText).find("div.data-view.full");
+        responseText = $(responseText).find(".title, .data-view, .navigation");
+
+     			if ($(elem).find(".searchresults .scroll-content").length > 0)
+     			{
+          $(elem).find(".searchresults .scroll-content").html(responseText);
+          RefreshScrollPane(elem);
+     			}
+     	  else
+     		 {
+          $(elem).find(".searchresults").html(responseText);
+          InitScrollPane(elem);
+        }
+      }
+  }
+  );
+}
+
 function GetFacsimile(elem, filename)
 {
-  if ($(parElem).find(".searchresults .scroll-content").length > 0)
+  if ($(elem).find(".searchresults .scroll-content").length > 0)
 		{
     $(elem).find(".searchresults .scroll-content").html('<img src="getimage.php?img=' + filename + '" />');
     RefreshScrollPane(elem);
@@ -291,6 +337,20 @@ function GetFacsimile(elem, filename)
   else
 	 {
     $(elem).find(".searchresults").html('<img src="getimage.php?img=' + filename + '" />');
+    InitScrollPane(elem);
+  }
+}
+
+function GetFacsimileNew(elem, filename)
+{
+  if ($(elem).find(".searchresults .scroll-content").length > 0)
+		{
+    $(elem).find(".searchresults .scroll-content").html('<img src="' + filename + '" />');
+    RefreshScrollPane(elem);
+		}
+  else
+	 {
+    $(elem).find(".searchresults").html('<img src="' + filename + '" />');
     InitScrollPane(elem);
   }
 }
@@ -479,6 +539,10 @@ function GenerateSearchInputs(config)
  	$(searchstring).addClass("searchstring");
  	$(searchstring).attr("type", "text");
 
+
+ 	var buttondiv = document.createElement('div');
+ 	$(buttondiv).css('float', 'right');
+
  	var searchbutton = document.createElement('input');
  	$(searchbutton).addClass("searchbutton");
  	$(searchbutton).attr("type", "button");
@@ -494,7 +558,8 @@ function GenerateSearchInputs(config)
  	$(searchdiv).append(" in ");
  	$(searchdiv).append(searchcombo);
  	$(searchdiv).append(" ");
- 	$(searchdiv).append(searchbutton);
+ 	$(buttondiv).append(searchbutton);
+ 	$(searchdiv).append(buttondiv);
 
   return searchdiv;
 }
@@ -504,7 +569,6 @@ function GenerateSearchResultsDiv()
   var resultdiv = document.createElement('div');
  	//$(resultdiv).addClass("scroll-pane");
  	$(resultdiv).addClass("searchresults");
-
   return resultdiv;
 }
 
@@ -512,24 +576,28 @@ function OpenNewSearchPanel(config)
 {
  	var searchpanel = document.createElement('div');
  	PanelCount++;
- 	$(searchpanel).addClass("draggable ui-widget-content");
+ 	$(searchpanel).addClass("draggable ui-widget-content whiteback");
  	$(searchpanel).attr("id", "Panel" + PanelCount);
  	$(searchpanel).attr("onclick", "BringToFront(this);");
  	$(searchpanel).css("position", "absolute");
  	$(searchpanel).css("left", 200 + 20*PanelCount + "px");
  	$(searchpanel).css("top", 10 + 20*PanelCount +  "px");
- 	$(searchpanel).css("width", "510px");
- 	$(searchpanel).css("height", "300px");
+ 	$(searchpanel).css("width", "525px");
+ 	$(searchpanel).css("height", "600px");
  	$(searchpanel).css("z-index", "12");
 
  	var titlep = GeneratePanelTitle("Search " + PanelCount, 0);
  	$(searchpanel).append(titlep);
  	$(searchpanel).append(GenerateSearchInputs(config));
  	$(searchpanel).append(GenerateSearchNavigation());
- 	$(searchpanel).append(GenerateSearchResultsDiv());
+
+ 	var searchResultDiv = GenerateSearchResultsDiv();
+ 	$(searchResultDiv).css("height", "495px");
+ 	$(searchpanel).append(searchResultDiv);
 
  	$("#snaptarget").append(searchpanel);
  	InitDraggable(searchpanel);
+  //CorrectSearchResultHeight(textpanel);
  	//InitScrollPane(searchpanel);
 }
 
@@ -539,7 +607,41 @@ function OpenTextPanel(elem, filename)
 
  	var textpanel = document.createElement('div');
  	PanelCount++;
- 	$(textpanel).addClass("draggable ui-widget-content");
+ 	$(textpanel).addClass("draggable ui-widget-content whiteback");
+ 	$(textpanel).attr("id", "Panel" + PanelCount);
+ 	$(textpanel).attr("onclick", "BringToFront(this);");
+ 	$(textpanel).css("position", "absolute");
+
+ 	var wid = parseInt($(paneldiv).css("width").replace(/px/g, ""));
+ 	var lef = parseInt($(paneldiv).css("left").replace(/px/g, ""));
+
+ 	$(textpanel).css("left", lef + wid + 15 + "px");
+ 	$(textpanel).css("top", $(paneldiv).css("top"));
+ 	$(textpanel).css("width", "350px");
+ 	$(textpanel).css("height", $(paneldiv).css("height"));
+ 	$(textpanel).css("z-index", "12");
+
+ 	var titlep = GeneratePanelTitle("Full text", 1);
+ 	$(textpanel).append(titlep);
+ 	var searchResultDiv = GenerateSearchResultsDiv();
+ 	$(searchResultDiv).css('height', $(textpanel).height() - 35);
+ 	$(textpanel).append(searchResultDiv);
+
+ 	$("#snaptarget").append(textpanel);
+ 	CorrectSearchResultHeight(textpanel);
+
+ 	GetFullTextNew(textpanel, filename);
+ 	InitDraggable(textpanel);
+ 	//InitScrollPane(textpanel);
+}
+
+function OpenTextPanelOld(elem, filename)
+{
+  var paneldiv = $(elem).parents(".draggable");
+
+ 	var textpanel = document.createElement('div');
+ 	PanelCount++;
+ 	$(textpanel).addClass("draggable ui-widget-content whiteback");
  	$(textpanel).attr("id", "Panel" + PanelCount);
  	$(textpanel).attr("onclick", "BringToFront(this);");
  	$(textpanel).css("position", "absolute");
@@ -560,7 +662,7 @@ function OpenTextPanel(elem, filename)
  	$("#snaptarget").append(textpanel);
  	CorrectSearchResultHeight(textpanel);
 
- 	GetFullText(textpanel, filename);
+ 	GetFullTextNew(textpanel, filename);
  	InitDraggable(textpanel);
  	//InitScrollPane(textpanel);
 }
@@ -572,7 +674,43 @@ function OpenImagePanel(elem, filename)
 
  	var textpanel = document.createElement('div');
  	PanelCount++;
- 	$(textpanel).addClass("draggable ui-widget-content");
+ 	$(textpanel).addClass("draggable ui-widget-content whiteback");
+ 	$(textpanel).attr("id", "Panel" + PanelCount);
+ 	$(textpanel).attr("onclick", "BringToFront(this);");
+ 	$(textpanel).css("position", "absolute");
+
+ 	var wid = parseInt($(paneldiv).css("width").replace(/px/g, ""));
+ 	var lef = parseInt($(paneldiv).css("left").replace(/px/g, ""));
+
+ 	$(textpanel).css("left", lef + wid + 15 + "px");
+ 	$(textpanel).css("top", $(paneldiv).css("top"));
+ 	$(textpanel).css("width", "350px");
+ 	$(textpanel).css("height", $(paneldiv).css("height"));
+ 	$(textpanel).css("z-index", "12");
+
+ 	var titlep = GeneratePanelTitle("Facsimile", 1);
+ 	$(textpanel).append(titlep);
+ 	var searchResultDiv = GenerateSearchResultsDiv();
+ 	$(searchResultDiv).css('height', $(textpanel).height() - 35);
+ 	$(textpanel).append(searchResultDiv);
+
+ 	$("#snaptarget").append(textpanel);
+  CorrectSearchResultHeight(textpanel);
+
+ 	GetFacsimileNew(textpanel, filename);
+
+ 	InitDraggable(textpanel);
+ 	//InitScrollPane(textpanel);
+}
+
+function OpenImagePanelOld(elem, filename)
+{
+  var paneldiv = $(elem).parents(".draggable");
+  filename = filename.replace(/xml/g, "jpg");
+
+ 	var textpanel = document.createElement('div');
+ 	PanelCount++;
+ 	$(textpanel).addClass("draggable ui-widget-content whiteback");
  	$(textpanel).attr("id", "Panel" + PanelCount);
  	$(textpanel).attr("onclick", "BringToFront(this);");
  	$(textpanel).css("position", "absolute");
@@ -670,7 +808,7 @@ function CorrectSearchResultHeight(paneldiv)
 {
   var hgt = parseInt($(paneldiv).css("height").replace(/px/g, ""));
   if ($(paneldiv).find(".searchstring").length != 0)
-    $(paneldiv).find(".scroll-pane").css("height", hgt - 150 + "px");
+    $(paneldiv).find(".scroll-pane").css("height", hgt - 105 + "px");
   else
     $(paneldiv).find(".scroll-pane").css("height", hgt - 25 + "px");
 }
