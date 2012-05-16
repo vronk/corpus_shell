@@ -1,6 +1,7 @@
 module namespace crday  = "http://aac.ac.at/content_repository/data-ay";
 
 import module namespace repo-utils =  "http://aac.ac.at/content_repository/utils" at  "repo-utils.xqm";
+import module namespace diag =  "http://www.loc.gov/zing/srw/diagnostic/" at  "modules/diagnostics/diagnostics.xqm";
 
 import module namespace xdb="http://exist-db.org/xquery/xmldb";
 (:import module namespace diag =  "http://www.loc.gov/zing/srw/diagnostic/" at  "modules/diagnostics/diagnostics.xqm";
@@ -14,11 +15,134 @@ declare namespace cmd = "http://www.clarin.eu/cmd/";
 
 declare variable $crday:docTypeTerms := "Terms";
 
+(:~ creates a html-overview of the datasets based on the defined mappings (as linked to from config)
+
+@param config-path path to the confing-file
+:)
+declare function crday:display-overview($config-path as xs:string) as item()* {
+
+       let $config := doc($config-path), 
+           $mappings := doc(repo-utils:config-value($config, 'mappings'))
+        
+        let $opt := util:declare-option("exist:serialize", "media-type=text/html method=xhtml")
+        
+(:    {for $target in $config//target return <th>{xs:string($target/@key)}</th>}</tr>:)
+let $overview :=  <table><tr><th>collection</th><th>path</th><th>size</th><th>ns</th><th>root-elem</th><th>base-elem</th><th>indexes</th><th>tests</th></tr>
+           { for $map in $mappings//map[@key]
+                    let $map-key := $map/xs:string(@key),
+                        $map-dbcoll-path := $map/xs:string(@path),
+(:                        $map-dbcoll:= if ($map-dbcoll-path ne '' and xmldb:collection-available (($map-dbcoll-path,"")[1])) then collection($map-dbcoll-path) else (),                      :)
+                          $map-dbcoll:= repo-utils:context-to-collection($map-key, $config),
+                        $root-elems := for $elem in distinct-values($map-dbcoll/*/name()) return $elem,
+                        $ns-uris := for $ns in distinct-values($map-dbcoll/namespace-uri(*)) return $ns,
+                        $queries-doc-name := crday:check-queries-doc-name($config, $map-key),
+                        $invoke-check-queries-href := concat('?x-context=', repo-utils:sanitize-name($map-key) ,'&amp;config=', $config-path, '&amp;operation=' ),
+                        $queries := if (repo-utils:is-in-cache($queries-doc-name, $config)) then 
+                                                <a href="{concat($invoke-check-queries-href,'view')}" >view</a>                                             
+                                              else ()  
+                    return <tr>
+                        <td>{$map-key}</td>
+                        <td>{$map-dbcoll-path}</td>
+                        <td>{count($map-dbcoll)}</td>
+                        <td>{$ns-uris}</td>
+                        <td>{$root-elems}</td>
+                        <td>{$map/xs:string(@base_elem)}</td>
+                        <td>{count($map/index)}</td>                        
+                        <td>{$queries} [<a href="{concat($invoke-check-queries-href,'run')}" >run</a>]</td>
+                        </tr>
+                        }
+        </table>
+                  
+       return repo-utils:serialise-as($overview, 'htmlpage', 'html', $config, ())
+};
+
+
+(: actually: run or view (if available) 
+calls: 
+crday:query-internal($queries, $context as node()+, $result-path as xs:string, $result-filename as xs:string ) as item()* {
+:)
+declare function crday:run-check-queries($config as node(), $x-context as xs:string, $run-flag as xs:boolean) as item()* {
+
+    let $testset := doc(repo-utils:config-value($config, 'tests.path')),
+    
+        $cache-path := repo-utils:config-value($config, 'cache.path'),             
+        $queries-doc-name := crday:check-queries-doc-name($config, $x-context), 
+  
+  (: get the the results from cache, or create :)
+  $result := if (exists($testset)) then 
+                if (repo-utils:is-in-cache($queries-doc-name, $config) and not($run-flag)) then
+                    repo-utils:get-from-cache($queries-doc-name, $config) 
+                  else                    
+                    let $context := repo-utils:context-to-collection($x-context, $config)
+                    return crday:query-internal($testset, $context, $x-context, $cache-path, $queries-doc-name)
+                    (: no need to store, because already continuously stored during querying  
+                    return repo-utils:store-in-cache($index-doc-name , $data, $config) :)
+               else
+                diag:diagnostics("general-error", concat("run-check-queries: no testset available: ", repo-utils:config-value($config, 'tests.path')))
+                
+(:  return $result:)    
+  return repo-utils:serialise-as($result, 'htmlpage', 'table', $config, ())    
+};
+
+(:~ evaluates queries against given context and stores the result in aresult-file
+
+@param $queries list of <xpath>-elements
+@param $context nodeset to evaluate the queries against ($context shall be used in the queries)
+@param $x-context string-key identifying the context 
+:)
+declare function crday:query-internal($queries, $context as node()+, $x-context as xs:string+, $result-path as xs:string, $result-filename as xs:string ) as item()* {
+       
+    (: collect the xpaths from the queries-list before fiddling with the namespace :)
+    let $xpaths := $queries//xpath
+    (:    let $context := repo-utils:context-to-collection($x-context, $config)       
+	   $context:= collection("/db/mdrepo-data/cmdi-providers"),	   :)
+
+    let $result-store := xmldb:store($result-path ,  $result-filename, <result test="{$queries//test/xs:string(@id)}" context="{$x-context}" ></result>),
+        $result-doc:= doc($result-store)
+
+    let $ns-uri := namespace-uri($context[1]/*)        	           
+      (: dynamically declare a default namespace for the xpath-evaluation, if one is defined in current context 
+      WATCHME: this is not very reliable, mainly meant to handle default-ns: cmd :)
+(:      $dummy := if (exists($ns-uri)) then util:declare-namespace("",$ns-uri) else () :)
+    let $dummy := util:declare-namespace("",xs:anyURI($ns-uri))    
+
+
+    let $start-time := util:system-dateTime()	
+    let $upd-dummy :=  
+        for $xpath in $xpaths            
+            let $start-time := util:system-dateTime()
+            let $answer := util:eval($xpath/text())
+            let $duration := util:system-dateTime() - $start-time
+           return update insert <xpath key="{$xpath/@key}" label="{$xpath/@label}" dur="{$duration}">{$answer}</xpath> into $result-doc/result
+
+    return $result-doc
+
+};
+
+
+(:~ analyze xml-structure
+  API function queryModel. 
+:)
+(:declare function crday:ay-xml-wrap($init-xpath as xs:string, $collection as xs:string+, $max-depth as xs:integer) as item()? {
+	
+  let $name := repo-utils:gen-cache-id("model", ($collection, $cmd-index-path), xs:string($max-depth)),
+    $doc := 
+    if (repo-utils:is-in-cache($name)) then
+      repo-utils:get-from-cache($name)
+    else
+      let $data := cr:elem($collection, $cmd-index-path, $max-depth)
+        return repo-utils:store-in-cache($name, $data)
+        
+  return $doc	
+};
+:)
+
 (:~ analyzes the xml-structure - sub-elements and text-nodes
 in the context of given collection, starting from given xpath
 
 @param $context nodeset to analyze
-@param $path if starts-with '/' or = '' start directly at the $context, else eval on f 'descendants-or-self'-axis 
+@param $path if starts-with '/' or = '' start directly at the $context, else eval on f 'descendants-or-self'-axis
+            if $path empty - diagnostics
 calls elem-r for recursive processing
 
 @returns xml-with paths and numbers 
@@ -29,33 +153,36 @@ declare function crday:ay-xml($context as item()*, $path as xs:string, $depth as
   if ($collections[1] eq $cr:collectionRoot) then
   util:eval(fn:concat("$collection/descendant::IsPartOf[ft:query(., <query><term>", xdb:decode($coll), "</term></query>)]/ancestor-or-self::CMD/descendant-or-self::", $path))
   :)
-   let $ns-uri := namespace-uri($context[1]/*),
-       $qname := $context[1]/*/name(),
-       $prefix := if (exists(prefix-from-QName($qname))) then prefix-from-QName($qname) else "",
-       $dummy := if (exists($ns-uri)) then util:declare-namespace($prefix,$ns-uri) else ()
-   
-   let $full-path := if (starts-with($path,'/') or $path = '' ) then
-                        fn:concat("$context", $path)
-                       else     fn:concat("$context/descendant-or-self::", $path)
-                            
-  let $path-nodes := util:eval($full-path )
-  
-  let $entries := crday:elem-r($path-nodes, $path, $ns-uri, $depth, $depth),
-(:      $coll-names-value := if (fn:empty($collections)) then () else attribute colls {fn:string-join($collections, ",")},:)
-        $dummy-undeclare-ns := util:declare-namespace("",xs:anyURI("")), 
-	  $result := element {$crday:docTypeTerms} {
-(:      		  $coll-names-value,:)
-      		  attribute depth {$depth},
-      		  attribute created {fn:current-dateTime()},
-      		  $entries  
-		}
-    return $result      	
+  if (not(exists($path))) then
+        diag:diagnostics("general-error", "ay-xml: no starting path provided") 
+    else 
+        let $ns-uri := namespace-uri($context[1]/*),
+            $qname := $context[1]/*/name(),
+            $prefix := if (exists(prefix-from-QName($qname))) then prefix-from-QName($qname) else "",
+            $dummy := if (exists($ns-uri)) then util:declare-namespace($prefix,$ns-uri) else ()
+        
+        let $full-path := if (starts-with($path,'/') or $path = '') then
+                             fn:concat("$context", $path)
+                            else     fn:concat("$context/descendant-or-self::", $path)
+                                 
+       let $path-nodes := util:eval($full-path )
+       
+       let $entries := crday:elem-r($path-nodes, $path, $ns-uri, $depth, $depth),
+     (:      $coll-names-value := if (fn:empty($collections)) then () else attribute colls {fn:string-join($collections, ",")},:)
+             $dummy-undeclare-ns := util:declare-namespace("",xs:anyURI("")), 
+     	  $result := element {$crday:docTypeTerms} {
+     (:      		  $coll-names-value,:)
+           		  attribute depth {$depth},
+           		  attribute created {fn:current-dateTime()},
+           		  $entries  
+     		}
+         return $result
+    
 };
 
 (:~ goes down the xml-structure recursively and creates a summary about it along the way
 
 namespace aware (handles namespace: none, default, explicit)
-
 :)
 declare function crday:elem-r($path-nodes as node()*, $path as xs:string, $ns as xs:anyURI?, $max-depth as xs:integer, $depth as xs:integer) as element() {
       let $path-count := count($path-nodes),
@@ -84,50 +211,11 @@ declare function crday:elem-r($path-nodes as node()*, $path as xs:string, $ns as
 };
 
 
-(:~ analyze xml-structure
-  API function queryModel. 
-:)
-(:declare function crday:ay-xml-wrap($init-xpath as xs:string, $collection as xs:string+, $max-depth as xs:integer) as item()? {
-	
-  let $name := repo-utils:gen-cache-id("model", ($collection, $cmd-index-path), xs:string($max-depth)),
-    $doc := 
-    if (repo-utils:is-in-cache($name)) then
-      repo-utils:get-from-cache($name)
-    else
-      let $data := cr:elem($collection, $cmd-index-path, $max-depth)
-        return repo-utils:store-in-cache($name, $data)
-        
-  return $doc	
-};
-:)
-
-
-declare function crday:query-internal($queries, $context as node()+, $x-context as xs:string+, $result-path as xs:string, $result-filename as xs:string ) as item()* {
-    
-       
-    (: collect the xpaths from the queries-list before fiddling with the namespace :)
-    let $xpaths := $queries//xpath
-    (:    let $context := repo-utils:context-to-collection($x-context, $config)       
-	   $context:= collection("/db/mdrepo-data/cmdi-providers"),	   :)
-
-    let $result-store := xmldb:store($result-path ,  $result-filename, <result test="{$queries//test/xs:string(@id)}" context="{$x-context}" ></result>),
-        $result-doc:= doc($result-store)
-
-    let $ns-uri := namespace-uri($context[1]/*)        	           
-      (: dynamically declare a default namespace for the xpath-evaluation, if one is defined in current context 
-      WATCHME: this is not very reliable, mainly meant to handle default-ns: cmd :)
-(:      $dummy := if (exists($ns-uri)) then util:declare-namespace("",$ns-uri) else () :)
-    let $dummy := util:declare-namespace("",xs:anyURI($ns-uri))    
-
-
-    let $start-time := util:system-dateTime()	
-    let $upd-dummy :=  
-        for $xpath in $xpaths            
-            let $start-time := util:system-dateTime()
-            let $answer := util:eval($xpath/text())
-            let $duration := util:system-dateTime() - $start-time
-           return update insert <xpath key="{$xpath/@key}" label="{$xpath/@label}" dur="{$duration}">{$answer}</xpath> into $result-doc/result
-
-    return $result-doc
-
+(:~ return doc-name out of context and testset (from config) or empty string if testset does not exist :)
+declare function crday:check-queries-doc-name($config as node(), $x-context as xs:string) as xs:string {
+let $testset := doc(repo-utils:config-value($config, 'tests.path')),
+    $testset-name := if (exists($testset)) then util:document-name($testset) else (),
+    $sanitized-xcontext := repo-utils:sanitize-name($x-context)  
+ return if (exists($testset)) then repo-utils:gen-cache-id("queries", ($sanitized-xcontext, $testset-name),"") else ""
+ 
 };
