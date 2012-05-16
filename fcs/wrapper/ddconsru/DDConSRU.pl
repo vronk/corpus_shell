@@ -63,6 +63,8 @@ our $scan_collections_file = $templatePath . "/sru_scan_fcs.resource.xml";
 
 our $recordSchema = "http://clarin.eu/fcs/1.0";
 
+our $context = "";
+
 our $operation = "";
 our $version = "1.2";
 our $query = "";
@@ -154,11 +156,13 @@ if ($context eq "" && $operation eq "searchRetrieve")
  	return;
 }
 
+my $oldContext = $context;
+
 if ($context ne "")
 {
   my $parser = XML::LibXML->new();
   my $doc    = $parser->parse_file($configFile);
-  my $oldContext = $context;
+
 
   foreach my $item ($doc->findnodes('//item'))
   {
@@ -301,7 +305,7 @@ if (($operation eq "searchRetrieve") and ($pageToken ne ""))
   }
   else
   {
-    ReturnData::getXmlByPid($fileMask, $pageToken);
+    ReturnData::getXmlByPid($fileMask, $pageToken, $oldContext);
   }
   return;
 }
@@ -385,29 +389,32 @@ $tt->process($response_template, $vars)
 
 sub parse_context($@)
 {
-	my ($context, $kws, $wIdx, $sIdx, $extLink, $fIdx, $fileMask, $url) = @_;
-	# print "DEBUG: context:".$context;
-	# important to use @{$kws} later in code, otherwise it won't be handled correctly as an array.
-	# ( man, it took time to find out.)
-	# eg like this:
-	#	for $i (@{$kws}) {		print $i;	}
+	 my ($context, $kws, $wIdx, $sIdx, $extLink, $fIdx, $fileMask, $url) = @_;
+	 # print "DEBUG: context:".$context;
+	 # important to use @{$kws} later in code, otherwise it won't be handled correctly as an array.
+	 # ( man, it took time to find out.)
+	 # eg like this:
+	 #	for $i (@{$kws}) {		print $i;	}
 
-	# the simple split would be just on whitespaces:
-	#	my @tokens = split (/ /, $context);
-	# but we need a special handling for punctuation - due to ddc glueing punctuation together with the previous token.
-	my @tokens = split (/(?:   						# therefore the parenthesis for alternative  |
-																				#  (?: - non capturing parenthesis
-													\s|           # this is the default for the whitespace
-													(?=[\,\.\!\/\(\:;\?][\#\^]\$))   # this captures the starting of a punct-token:  `.#$` or `,#$`
-											/x   #  /x modifier allows for comments and ignoring most whitespaces in the pattern
-	 												 # (?= ...  = lookahead assertion (splits before a pattern, but includes the pattern in the return
-													 # simple parenthesis, would split the punct-token once too often.
-					, $context);
+	 # the simple split would be just on whitespaces:
+	 #	my @tokens = split (/ /, $context);
+	 # but we need a special handling for punctuation - due to ddc glueing punctuation together with the previous token.
+	 my @tokens = split (/(?:   						# therefore the parenthesis for alternative  |
+	 																			#  (?: - non capturing parenthesis
+	 												\s|           # this is the default for the whitespace
+	 												(?=[\,\.\!\/\(\:;\?][\#\^]\$))   # this captures the starting of a punct-token:  `.#$` or `,#$`
+	 										/x   #  /x modifier allows for comments and ignoring most whitespaces in the pattern
+	  												 # (?= ...  = lookahead assertion (splits before a pattern, but includes the pattern in the return
+	 												 # simple parenthesis, would split the punct-token once too often.
+	 				, $context);
 
+  my $wordrange = 5;
+  my $kwIdx = -1;
 
-	my @tiered_tokens;
-	my $i =0;
-	my $j =0;
+	 my @tiered_tokens;
+	 my $i =0;
+	 my $j =0;
+
 		foreach (@tokens) {
 #		 print $_;
 		 @token_fields = split(/\#|\^/, $_);
@@ -434,6 +441,7 @@ sub parse_context($@)
 		 if ($w =~ /^&&/) {
 		 		$is_kw = 1;
 		 		# $w =~ s/^&&//;
+		 		$kwIdx = $i;
 		 } else {
 		 		$is_kw = 0;
 		 	}
@@ -463,6 +471,20 @@ sub parse_context($@)
 		 	#print $tiered_tokens[$i];
 		$i++;
 	}
+
+ 	if ($kwIdx != -1)
+ 	{
+ 	  if ($tiered_tokens < $kwIdx + $wordrange + 1)
+ 	  {
+ 	   splice(@tiered_tokens, $kwIdx + $wordrange + 1);
+ 	  }
+
+    if ($kwIdx - $wordrange > 0)
+    {
+      splice(@tiered_tokens,0,$kwIdx-$wordrange);
+    }
+ 	}
+
 		return @tiered_tokens;
 }
 
