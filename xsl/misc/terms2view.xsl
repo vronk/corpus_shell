@@ -24,7 +24,7 @@
     <xsl:param name="x_maximumDepth" select="0"/>
     <xsl:param name="sort">x</xsl:param> <!-- s=size|n=name|t=time|x=default -->
     <xsl:param name="name_col_width">50%</xsl:param>
-    <xsl:param name="title" select="'Terms'"/>
+    <xsl:param name="title" select="'XML-Structure summary'"/>
     <xsl:decimal-format name="european" decimal-separator="," grouping-separator="."/>
     <xsl:template name="continue-root">
         <div>
@@ -69,13 +69,18 @@
         </div>
     </xsl:template>
     <xsl:template name="header">
-        <h2>MDService Terms</h2>
         <table>
             <tbody>
                 <tr>
+                    <td>context</td>
+                    <td>
+                        <xsl:value-of select="$x-context"/>
+                    </td>
+                </tr>
+                <tr>
                     <td>count Termsets</td>
                     <td align="right">
-                        <xsl:value-of select="count(//Termset)"/>
+                        <xsl:value-of select="count((/Terms|//Termset))"/>
                     </td>
                 </tr>
             </tbody>
