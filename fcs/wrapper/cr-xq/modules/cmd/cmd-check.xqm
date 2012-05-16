@@ -113,13 +113,9 @@ declare function cmdcheck:display-overview($config-path as xs:string) as item()*
         
    let $opt := util:declare-option("exist:serialize", "media-type=text/html method=xhtml")                       
 
-    let $overview :=  crday:display-overview($config-path, 'raw')
-        (:                        $root-elems := for $elem in distinct-values($map-dbcoll/*/name()) return $elem,
-                        $ns-uris := for $ns in distinct-values($map-dbcoll/namespace-uri(*)) return $ns,
-                                             <td>{$ns-uris}</td>
-                        <td>{$root-elems}</td>:)
-
-let $profiles-overview :=  <table class="show"><tr><th>collection</th><th>profiles</th></tr>
+   let $overview :=  crday:display-overview($config-path, 'raw')
+    
+   let $profiles-overview :=  <table class="show"><tr><th>collection</th><th>profiles</th></tr>
            { for $map in util:eval("$mappings//map[@key]")
                     let $map-key := $map/xs:string(@key),
                         $map-dbcoll-path := $map/xs:string(@path),
