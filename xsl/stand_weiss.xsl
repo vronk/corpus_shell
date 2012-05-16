@@ -617,6 +617,9 @@
     <xsl:template match="aac_PREV" mode="record-data"/>
     <xsl:template match="aac_NEXT" mode="record-data"/>
     <xsl:template match="aac_IMAGE" mode="record-data"/>
+    <xsl:template match="aac_PAGE" mode="record-data">
+        <xsl:apply-templates mode="record-data"/>
+    </xsl:template>
     <!--<xsl:template match="aac_PAGE">
         <span style="font-family:'Arial Unicode MS'">
             <xsl:apply-templates/>
