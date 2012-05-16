@@ -5,6 +5,8 @@ import module namespace repo-utils = "http://aac.ac.at/content_repository/utils"
 import module namespace crday  = "http://aac.ac.at/content_repository/data-ay" at "/db/cr/crday.xqm";
 import module namespace cmdcheck  = "http://clarin.eu/cmd/check" at "/db/cr/modules/cmd/cmd-check.xqm";
 
+declare namespace sru = "http://www.loc.gov/zing/srw/";
+
 declare variable $smc:termsets := doc("data/termsets.xml");
 declare variable $smc:cmd-terms := doc("data/cmd-terms.xml");
 declare variable $smc:ay-data-depth := 8;
@@ -19,14 +21,15 @@ let $data-collection := repo-utils:context-to-collection($x-context, $config),
     $target_path := repo-utils:config-value($config, 'cache.path')
 
 (: for every profile in the data-set :)
-for $profile in $ay-profiles
-    let $profile-name := xs:string($profile/@name)
-    let $ay-data := crday:ay-xml($data-collection, $profile-name, $smc:ay-data-depth )
+for $profile in $ay-profiles//sru:term
+    let $profile-name := xs:string($profile/sru:displayTerm)
+    let $ay-data := crday:ay-xml($data-collection, $profile-name, $smc:ay-data-depth )    
     let $mappings := smc:match-paths($ay-data)
     let $ay-doc-name := concat('ay-', repo-utils:sanitize-name($x-context), '-', $profile-name, '.xml')
     let $map-doc-name := concat('map-', repo-utils:sanitize-name($x-context), '-', $profile-name, '.xml')
     return (xmldb:store($target_path, $ay-doc-name, $ay-data),
             xmldb:store($target_path, $map-doc-name, $mappings))
+            
 };
 
 (:~ expects a summary of data, matches the resulting paths with paths in cmd-terms
