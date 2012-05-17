@@ -594,14 +594,17 @@ declare function fcs:process-result($result as node()*, $matching as node()*) as
         case comment() return $node
         (:case element() return  if ($node = $matching) then <exist:match>{fcs:process-result-default($node, $matching )}</exist:match>:)
                             
-        case element() return  if ($node = $matching) then element {$node/name()} {$node/@*, <exist:match>{string-join($node//text(), ' ')}</exist:match>}
+        case element() return  if ($node = $matching) then 
+                                element {node-name($node)} {$node/@*, 
+                                            <exist:match>{string-join($node//text(), ' ')}</exist:match>}
                     else  fcs:process-result-default($node, $matching )
         default return fcs:process-result-default($node, $matching )
-
+(:namespace prefix-from-QName($node/name()) {$node/namespace-uri()} ,:)
     };
 
 declare function fcs:process-result-default($node as node(), $matching as node()*) as item()* {
-  element {$node/name()} {($node/@*, fcs:process-result($node/node(), $matching))}
+  element {node-name($node)} {($node/@*, fcs:process-result($node/node(), $matching))}
+(:  namespace {$node/namespace-uri()}, :)
   (: <div class="default">{$node/name()} </div> :)  
  };
 

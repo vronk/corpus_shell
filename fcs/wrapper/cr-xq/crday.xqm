@@ -221,7 +221,7 @@ namespace aware (handles namespace: none, default, explicit)
 declare function crday:elem-r($path-nodes as node()*, $path as xs:string, $ns as xs:anyURI?, $max-depth as xs:integer, $depth as xs:integer) as element() {
       let $path-count := count($path-nodes),
 	$child-elements := $path-nodes/child::element(),
-	$child-ns-qnames := if (exists($child-elements)) then distinct-values($child-elements/concat(namespace-uri(), '|', name())) else (),	
+	$child-ns-qnames := if (exists($child-elements)) then distinct-values($child-elements/concat(namespace-uri(), '|', local-name())) else (),	
 	$nodes-child-terminal := if (empty($child-elements)) then $path-nodes else () (: Maybe some selected elements $child-elements[not(element())] later on :),
 	$text-nodes := $nodes-child-terminal/text(),
 	$text-count := count($text-nodes),
@@ -234,12 +234,21 @@ declare function crday:elem-r($path-nodes as node()*, $path as xs:string, $ns as
 	  if ($depth > 0) then
 	    for $ns-qname in $child-ns-qnames[. != '']
 	       let $ns-uri := substring-before($ns-qname, '|'),
+	           $local-name := substring-after($ns-qname, '|'),
+(:	           $prefix := if (exists(prefix-from-QName($qname))) then prefix-from-QName($qname) else "",:)
+	           (: dynamically declare a namespace for the next step, if one is defined in current context :)
+	           $dummy := if (exists($ns-uri)) then util:declare-namespace("",$ns-uri) else ()
+	           return  
+	           crday:elem-r(util:eval(concat("$path-nodes/", $local-name)), concat($path, '/', $local-name), $ns-uri, $max-depth, $depth - 1)			
+	  (:
+	    for $ns-qname in $child-ns-qnames[. != '']
+	       let $ns-uri := substring-before($ns-qname, '|'),
 	           $qname := substring-after($ns-qname, '|'),
 	           $prefix := if (exists(prefix-from-QName($qname))) then prefix-from-QName($qname) else "",
-	           (: dynamically declare a namespace for the next step, if one is defined in current context :)
+	           (\: dynamically declare a namespace for the next step, if one is defined in current context :\)
 	           $dummy := if (exists($ns-uri)) then util:declare-namespace($prefix,$ns-uri) else ()
 	           return  
-	           crday:elem-r(util:eval(concat("$path-nodes/", $qname)), concat($path, '/', $qname), $ns-uri, $max-depth, $depth - 1)			
+	           crday:elem-r(util:eval(concat("$path-nodes/", $qname)), concat($path, '/', $qname), $ns-uri, $max-depth, $depth - 1):)			
 	  else 'maxdepth'
 	)}</Term>
 };
