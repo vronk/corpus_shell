@@ -2,6 +2,7 @@
 <TestSet type="internal">
     <test id="cmd-tests">        
 <!--        <xpath key="C.cc.deadlinks" label="CMD with dead-link Metadata-ResourceRef">count($context//ResourceRef[not(. =  $context//MdSelfLink)][../ResourceType eq 'Metadata'])</xpath>-->
+        <xpath key="C.C.multiple" label="CMD with multiple root-Components">count($context//CMD[count(Components/*) &gt; 1])</xpath>
         <xpath key="C.cc.deadlinks" label="CMD with dead-link Metadata-ResourceRef">count($context//ResourceRef[. =  $context//MdSelfLink] intersect $context//ResourceType[. = 'Metadata']/../ResourceRef)</xpath>
         <xpath key="C.cc.link-match" label="MdSelfLink with matching ResourceRef">count($context//MdSelfLink[. = $context//ResourceProxy[ResourceType eq 'Metadata']/ResourceRef])</xpath>
         <xpath key="C.-handle" label="CMD without MdSelfLink">count($context//CMD[not(Header/MdSelfLink) or Header/MdSelfLink=''])</xpath>

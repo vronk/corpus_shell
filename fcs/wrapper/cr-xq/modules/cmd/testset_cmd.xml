@@ -26,5 +26,6 @@
         <xpath key="C.M" label="CMD with Metadata = Collections">count($context//CMD[.//ResourceType='Metadata'])</xpath>
         <xpath key="C.M.1" label="CMD with relative MD">count($context//CMD[.//ResourceType='Metadata'][starts-with(.//ResourceRef,'.')])</xpath>
         <xpath key="C.M.2" label="CMD with http-uri MD">count($context//CMD[.//ResourceType='Metadata'][starts-with(.//ResourceRef,'http')])</xpath>
+        <xpath key="C.C.multiple" label="CMD with multiple root-Components">count($context//CMD[count(Components/*) &gt; 1])</xpath>
     </test>
 </TestSet>
