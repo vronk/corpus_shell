@@ -136,9 +136,9 @@ sample data:
                     <xsl:value-of select="utils:formURL('explain', $format, sru:value)"/>
                 </xsl:when>
                 <!-- TODO: special handling for cmd.collection? -->
-                <xsl:when test="$index = 'cmd'">
+                <!--<xsl:when test="$index = 'cmd.collection'">
                     <xsl:value-of select="utils:formURL('explain', $format, sru:value)"/>
-                </xsl:when>
+                </xsl:when>-->
                 <xsl:otherwise>
                     <xsl:value-of select="utils:formURL('searchRetrieve', $format, concat($index, '%3D%22', sru:value, '%22'))"/>
                 </xsl:otherwise>
@@ -151,11 +151,12 @@ sample data:
                     <xsl:value-of select="(sru:displayTerm, sru:value)[1]"/>
                 </a>
             </span>
+            <xsl:apply-templates select="sru:extraTermData/diagnostics"/>
         </xsl:variable>
         <xsl:choose>
             <xsl:when test="$list-mode = 'table'">
                 <tr>
-                    <td align="right">
+                    <td align="right" valign="top">
                         <xsl:value-of select="sru:numberOfRecords"/>
                     </td>
                     <td>

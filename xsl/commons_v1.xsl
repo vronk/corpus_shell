@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:sru="http://www.loc.gov/zing/srw/" xmlns:fcs="http://clarin.eu/fcs/1.0" version="1.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:diag="http://www.loc.gov/zing/srw/diagnostic/" xmlns:sru="http://www.loc.gov/zing/srw/" xmlns:fcs="http://clarin.eu/fcs/1.0" version="1.0">
 
 <!-- 
 <purpose>generic functions for SRU-result handling</purpose>
@@ -94,8 +94,20 @@
         </html>
     </xsl:template>
     <xsl:template name="callback-header"/>
-
-    
+    <xsl:template match="diagnostics">
+        <div class="error">
+            <xsl:apply-templates/>
+        </div>
+    </xsl:template>
+    <xsl:template match="diag:diagnostic">
+        <p>
+            <xsl:value-of select="diag:message"/>
+            <xsl:if test="diag:details"> (<xsl:value-of select="diag:details"/>)</xsl:if>
+            <br/>
+            <xsl:value-of select="diag:uri"/>
+        </p>
+    </xsl:template>
+        
     <!-- generates a select-option list of available contexts  
     -->
     <xsl:template name="contexts-select">
