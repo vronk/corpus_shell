@@ -9,6 +9,7 @@ TODO: check (and/or generate) the inverse links in IsPartOf (vs. ResourceProxies
 import module namespace repo-utils = "http://aac.ac.at/content_repository/utils" at  "/db/cr/repo-utils.xqm";
 import module namespace fcs = "http://clarin.eu/fcs/1.0" at "/db/cr/fcs.xqm";
 import module namespace crday  = "http://aac.ac.at/content_repository/data-ay" at "/db/cr/crday.xqm";
+import module namespace diag =  "http://www.loc.gov/zing/srw/diagnostic/" at  "modules/diagnostics/diagnostics.xqm";
 
 declare namespace sru = "http://www.loc.gov/zing/srw/";
 declare namespace cmd = "http://www.clarin.eu/cmd/";
@@ -64,7 +65,7 @@ declare function cmdcheck:check($x-context as xs:string+, $config as node() ) as
 
 (:~ extracts CMD-Profiles from given nodeset
 
-TODO: profile-name deduction not reliable  - needs match with cmd-terms and diagnostics
+TODO: match with cmd-terms and diagnostics
 :)
 declare function cmdcheck:scan-profiles($context as node()*) as item()* {
       (: try- to handle namespace problem - primitively :)  
@@ -75,7 +76,8 @@ declare function cmdcheck:scan-profiles($context as node()*) as item()* {
 
 (:        $dummy := util:declare-namespace("",xs:anyURI(""))       :)
 (:    let $profiles := util:eval("$context//(MdProfile|cmd:MdProfile)/text()"):)
-    let $profiles := $context//cmd:CMD/concat(cmd:Header/cmd:MdProfile/text(), '#', cmd:Components/*/name())
+(: taking :)
+    let $profiles := $context//cmd:CMD/concat(cmd:Header/cmd:MdProfile/text(), '#', cmd:Components/*[1]/local-name())
     let $distinct-profiles := distinct-values($profiles)
     let $profiles-summary := for $profile in $distinct-profiles            
 (:                                let $profile-name := util:eval("$context[.//(MdProfile|cmd:MdProfile)/text() = $profile][1]//(Components|cmd:Components)/*/name()"):)
@@ -83,11 +85,17 @@ declare function cmdcheck:scan-profiles($context as node()*) as item()* {
                                 let $profile-id := substring-before($profile, '#')
                                 let $cnt := count($profiles[. eq $profile])
                                 return <sru:term>
-                                           <sru:value>{$profile-id}</sru:value>
+                                           <sru:value>{if ($profile-id ne '') then $profile-id else $profile-name}</sru:value>
                                            <sru:numberOfRecords>{$cnt }</sru:numberOfRecords>
-                                           <sru:displayTerm>{$profile-name}</sru:displayTerm>                                      
+                                           <sru:displayTerm>{$profile-name}</sru:displayTerm>
+                                           { if ($profile-id eq '') then
+                                                    <sru:extraTermData>
+                                                        { diag:diagnostics("profile-missing", $profile-name) }
+                                                    </sru:extraTermData>
+                                                  else ()
+                                                  }
                                          </sru:term>
-    let $count-all := count($context)                                        
+    let $count-all := count($distinct-profiles)                                        
     return
         <sru:scanResponse xmlns:sru="http://www.loc.gov/zing/srw/" xmlns:fcs="http://clarin.eu/fcs/1.0">
               <sru:version>1.2</sru:version>              
