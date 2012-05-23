@@ -266,7 +266,8 @@
 	@param strict xs:boolean stay in format-xmlelem mode (or try to go back to mode=record-data)
 	-->
     <xsl:template match="*" mode="format-xmlelem">
-        <xsl:param name="strict" select="false()"/>
+        <xsl:param name="strict"/>
+<!--        <xsl:message>strict:<xsl:value-of select="$strict"/></xsl:message>        -->
         <xsl:if test=".//text() or @*">
             <xsl:variable name="has_text">
                 <xsl:choose>
@@ -281,36 +282,44 @@
                     <xsl:otherwise/>
                 </xsl:choose>
             </xsl:variable>
+            <xsl:variable name="label-class">
+                <xsl:choose>
+                    <xsl:when test="*">block label</xsl:when>
+                    <xsl:otherwise>inline label</xsl:otherwise>
+                </xsl:choose>
+            </xsl:variable>
             <div class="cmds-xmlelem {$has_children} value-{$has_text}">
-                <span class="label">
+                <span class="{$label-class}">
                     <xsl:value-of select="name()"/>:</span>
                 <span class="value">
                     <xsl:call-template name="format-value">
                         <xsl:with-param name="value" select="text()[.!='']"/>
                     </xsl:call-template>
                 </span>
-                <xsl:choose>
-                    <xsl:when test="$strict">
-                        <xsl:apply-templates select="*" mode="format-xmlelem"/>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:apply-templates select="*" mode="record-data"/>
-                    </xsl:otherwise>
-                </xsl:choose>
                 <xsl:if test="@*">
                     <div class="attributes">
                         <xsl:apply-templates select="@*" mode="format-attr"/>
                     </div>
                 </xsl:if>
+                <xsl:choose>
+                    <xsl:when test="$strict">
+                        <xsl:apply-templates select="*" mode="format-xmlelem">
+                            <xsl:with-param name="strict" select="$strict"/>
+                        </xsl:apply-templates>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:apply-templates select="*" mode="record-data"/>
+                    </xsl:otherwise>
+                </xsl:choose>
             </div>
         </xsl:if>
     </xsl:template>
     <xsl:template match="@*" mode="format-attr">
-        <span class="label">@<xsl:value-of select="name()"/>: </span>
+        <span class="inline label">@<xsl:value-of select="name()"/>: </span>
         <span class="value">
             <xsl:call-template name="format-value"/><!--<xsl:value-of select="." /> -->
-        </span>; 
-	</xsl:template>
+        </span>
+    </xsl:template>
 	
 	<!--  previously known as comppath -->
     <xsl:template name="xml-context">
