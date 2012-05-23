@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:kwic="http://clarin.eu/fcs/1.0/kwic" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:sru="http://www.loc.gov/zing/srw/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fcs="http://clarin.eu/fcs/1.0" xmlns:exist="http://exist.sourceforge.net/NS/exist" version="1.0" exclude-result-prefixes="xs sru exist tei fcs kwic">
+<xsl:stylesheet xmlns:kwic="http://clarin.eu/fcs/1.0/kwic" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:sru="http://www.loc.gov/zing/srw/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fcs="http://clarin.eu/fcs/1.0" xmlns:exist="http://exist.sourceforge.net/NS/exist" version="1.0" exclude-result-prefixes="xs sru exist tei fcs">
 
     <!-- 
         <purpose> provide more specific handling of sru-result-set recordData</purpose>
@@ -10,7 +10,7 @@
         <change on="2011-11-14" type="created" by="vr">based on cmdi/scripts/xml2view.xsl</change>	
         </history>
     -->
-    <xsl:include href="data2view_cmd.xsl"/>
+<!--    <xsl:include href="data2view_cmd.xsl"/>-->
     <xsl:include href="data2view_tei.xsl"/>
     <xsl:include href="stand_weiss.xsl"/>
    
@@ -91,10 +91,11 @@
     </xsl:template>
     
     <xsl:template match="kwic:kwic" mode="record-data">
-       <div class="kwic-line">
-           <xsl:apply-templates mode="record-data"/>
-       </div>
-     </xsl:template>        
+         <div class="kwic-line">
+            <xsl:apply-templates mode="record-data"/>
+        </div>
+    </xsl:template>        
+    
  <!--
      handle KWIC-DataView:
      <c type="left"></c><kw></kw><c type="right"></c>
