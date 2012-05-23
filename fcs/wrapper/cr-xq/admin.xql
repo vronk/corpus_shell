@@ -5,17 +5,20 @@ import module namespace diag =  "http://www.loc.gov/zing/srw/diagnostic/" at  "m
 
 let $config-path := request:get-parameter("config", "/db/cr/etc/config.xml"),
     $op := request:get-parameter("operation", ""),
-    $config := doc($config-path), 
+    $config := doc($config-path),
+    $format := request:get-parameter("x-format",'htmlpage'),
     $x-context := request:get-parameter("x-context", "") (: "univie.at:cpas"  "clarin.at:icltt:cr:stb" :),
 
     $result := if ($op eq '') then 
                         crday:display-overview($config-path)
                else if (contains ($op, 'query')) then
-                    crday:get-query-internal($config, $x-context, (contains($op, 'run')), 'htmlpage')                    
+                    crday:get-query-internal($config, $x-context, (contains($op, 'run')), $format)                    
+               else if (contains ($op, 'scan-fcs-resource')) then
+                    crday:get-fcs-resource-scan($config-path, (contains($op, 'run')), $format)                    
                else if (contains ($op, 'struct')) then
                     let $init-path := request:get-parameter("init-path", ""),              
                         $max-depth := request:get-parameter("x-maximumDepth", $crday:defaultMaxDepth)
-                     return crday:get-ay-xml($config, $x-context, $init-path, $max-depth, (contains($op, 'run')), 'htmlpage')                    
+                     return crday:get-ay-xml($config, $x-context, $init-path, $max-depth, (contains($op, 'run')), $format)                    
                 else 
                     diag:diagnostics("unsupported-operation", $op)
 return $result
