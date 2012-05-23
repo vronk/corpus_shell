@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:sru="http://www.loc.gov/zing/srw/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fcs="http://clarin.eu/fcs/1.0" xmlns:exist="http://exist.sourceforge.net/NS/exist" version="1.0" exclude-result-prefixes="xs sru exist tei fcs">
+<xsl:stylesheet xmlns:kwic="http://clarin.eu/fcs/1.0/kwic" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:sru="http://www.loc.gov/zing/srw/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fcs="http://clarin.eu/fcs/1.0" xmlns:exist="http://exist.sourceforge.net/NS/exist" version="1.0" exclude-result-prefixes="xs sru exist tei fcs">
 
     <!-- 
         <purpose> provide more specific handling of sru-result-set recordData</purpose>
@@ -10,6 +10,7 @@
         <change on="2011-11-14" type="created" by="vr">based on cmdi/scripts/xml2view.xsl</change>	
         </history>
     -->
+    <xsl:include href="data2view_cmd.xsl"/>
     <xsl:include href="data2view_tei.xsl"/>
     <xsl:include href="stand_weiss.xsl"/>
    
@@ -92,17 +93,17 @@
  <!--
      handle KWIC-DataView:
      <c type="left"></c><kw></kw><c type="right"></c>
+     WATCHME: temporarily accepting both version (fcs and kwic namespacEe)
  -->
-    <xsl:template match="fcs:c" mode="record-data">
-    <!-- FIXME:  accepting both attributes is temporary, until all providers agree on one -->
-        <span class="context {@c | @type}">
+    <xsl:template match="kwic:c|fcs:c" mode="record-data">
+        <span class="context {@type}">
             <xsl:apply-templates mode="record-data"/>
         </span>
         <xsl:if test="following-sibling::*[1][local-name()='c']">
             <br/>
         </xsl:if>
     </xsl:template>
-    <xsl:template match="fcs:kw" mode="record-data">
+    <xsl:template match="kwic:kw|fcs:kw" mode="record-data">
         <xsl:text> </xsl:text>
         <span class="kw hilight">
             <xsl:apply-templates mode="record-data"/>
