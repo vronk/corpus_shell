@@ -3,6 +3,7 @@ function PanelManager ()
   this.Panels = new Array();
   this.ProfileName = "default";
   this.UsedPanels = new Array();
+  this.UsedSearchPanelTitles = new Array();
 
   //events
   this.onUpdated = null;
@@ -19,6 +20,7 @@ function PanelManager ()
   {
     this.Panels[panelId] = this.GetNewMainPanelObject(panelId, position, url, title, zIndex);
     this.AddPanelId(panelId);
+    this.AddSearchPanelTitle(title);
     this.TriggerChangedEvent("Mainpanel added: " + panelId);
   }
 
@@ -287,8 +289,10 @@ function PanelManager ()
 
   this.RemoveMainPanel = function(panelId)
   {
+    var panel = this.Panels[panelId];
     delete this.Panels[panelId];
     this.RemovePanelId(panelId);
+    this.RemoveSearchPanelTitle(panel.Title);
     this.TriggerChangedEvent("");
   }
 
@@ -349,9 +353,26 @@ function PanelManager ()
     return 'panel' + i;
   }
 
+  this.GetNewSearchPanelTitle = function()
+  {
+    var i = 1;
+
+    while (this.UsedSearchPanelTitles.indexOf('Search ' + i) != -1)
+    {
+      i++;
+    }
+
+    return 'Search ' + i;
+  }
+
   this.AddPanelId = function(panelId)
   {
     this.UsedPanels.push(panelId);
+  }
+
+  this.AddSearchPanelTitle = function(title)
+  {
+    this.UsedSearchPanelTitles.push(title);
   }
 
   this.RemovePanelId = function(panelId)
@@ -360,6 +381,14 @@ function PanelManager ()
     if (idx == -1) return;
 
     delete this.UsedPanels[idx];
+  }
+
+  this.RemoveSearchPanelTitle = function(title)
+  {
+    var idx = this.UsedSearchPanelTitles.indexOf(title);
+    if (idx == -1) return;
+
+    delete this.UsedSearchPanelTitles[idx];
   }
 
   this.RefreshUsedPanels = function()
@@ -378,6 +407,17 @@ function PanelManager ()
     }
   }
 
+  this.RefreshUsedSearchPanelTitles = function()
+  {
+    this.UsedSearchPanelTitles.length = 0;
+
+    for (var key in this.Panels)
+    {
+      var panel = PanelController.Panels[key];
+      this.AddSearchPanelTitle(panel.Title);
+    }
+  }
+
   this.ExistsMainPanel = function(panelId)
   {
     var main = this.Panels[panelId];
@@ -391,7 +431,6 @@ function PanelManager ()
 
     return panel != null;
   }
-
 
   this.IsPinned = function(panelId)
   {

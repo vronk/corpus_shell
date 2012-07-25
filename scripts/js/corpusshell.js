@@ -468,7 +468,7 @@ function StartSearch(elem)
   $(parElem).find(".hitcount").text("-");
 
   var url = "http://corpus3.aac.ac.at/switch";
-  var xcontext = SearchConfig[sele]['x-context'];
+  var xcontext = GetResourceName(sele);
 
   var urlStr = url + "?operation=searchRetrieve&query=" + sstr + "&x-context=" + xcontext +
                "&x-format=html&version=1.2";
@@ -900,7 +900,7 @@ function OpenNewSearchPanel(config)
   var wid = "525px";
   var hgt = "600px";
   var maxZidx = GetMaxZIndex();
-  var panelTitle = "Search " + searchPanelCount;
+  var panelTitle = PanelController.GetNewSearchPanelTitle();
 
   CreateNewSearchPanel(panelName, left, top, wid, hgt, maxZidx + 1, panelTitle, "", config)
   var position = GetPanelPosition('#' + panelName);
@@ -1178,8 +1178,26 @@ function TogglePanelList()
   $(listContainer).css('width', '165px');
   $(listContainer).css('border-collapse', 'collapse');
 
+  var sortedKeys = new Array();
   for (panelName in PanelController.Panels)
   {
+    sortedKeys.push(panelName);
+  }
+
+  sortedKeys.sort(function(idA, idB)
+  {
+    var objA = PanelController.Panels[idA];
+    var objB = PanelController.Panels[idB];
+
+    var a = objA.Title;
+    var b = objB.Title;
+
+    return a < b ? -1 : (a > b ? 1 : 0);
+  });
+
+  for (var i = 0; i < sortedKeys.length; i++)
+  {
+    var panelName = sortedKeys[i];
     var tr = document.createElement('tr');
     var td = document.createElement('td');
     var a = document.createElement('a');
@@ -1260,6 +1278,8 @@ function LoadProfile(name)
   }
   updating = false;
   PanelController.RefreshUsedPanels();
+  PanelController.RefreshUsedSearchPanelTitles();
+  RefreshPanelList();
 }
 
 function ClearPanels()
@@ -1330,4 +1350,53 @@ function DeleteProfile(profileName)
     SaveUserData(userId);
     RefreshProfileCombo();
   }
+}
+
+function RefreshIndexes()
+{
+  for (var i = 0; i < SearchConfig.length; i++)
+  {
+    var resName = SearchConfig[i]["x-context"];
+    ResourceController.AddResource(resName, SearchConfig[i]["DisplayText"]);
+    GetIndexes(resName);
+  }
+}
+
+function GetIndexes(resName)
+{
+  $.ajax(
+  {
+    type: 'GET',
+    url: "fcs/aggregator/switch.php",
+    dataType: 'xml',
+    data : {operation: 'explain', 'x-context': resName, version: '1.2'},
+    complete: function(xml)
+    {
+      $(xml.responseXML).find("index").each(function ()
+      {
+         var idxName = $(this).find("map name").text();
+         var idxTitle = $(this).find("title[lang='en']").text();
+         var searchable = $(this).attr("search");
+         var scanable = $(this).attr("scan");
+         var sortable = $(this).attr("sort");
+
+         ResourceController.AddIndex(resName, idxName, idxTitle, searchable, scanable, sortable);
+      }
+      );
+    }
+  }
+  );
+}
+
+function GetResourceName(idx)
+{
+  return SearchConfig[idx]["x-context"];
+}
+
+function GetIndexesFromSearchCombo()
+{
+  var sele = parseInt($(parElem).find(".searchcombo").val());
+  var resource = GetResourceName(sele);
+
+  return ResourceController.GetLabelValueArray(resource);
 }
