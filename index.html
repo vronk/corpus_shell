@@ -6,34 +6,52 @@
     <link rel="stylesheet" type="text/css" href="scripts/style/jquery.sbscroller.css" />
     <link rel="stylesheet" type="text/css" href="scripts/style/corpusshell.css" />
 
-    <script type="text/javascript" src="scripts/js/jquery-1.6.2.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
     <script type="text/javascript" src="scripts/js/ui/jquery.ui.core.js"></script>
     <script type="text/javascript" src="scripts/js/ui/jquery.ui.widget.js"></script>
     <script type="text/javascript" src="scripts/js/ui/jquery.ui.mouse.js"></script>
     <script type="text/javascript" src="scripts/js/ui/jquery.ui.draggable.js"></script>
     <script type="text/javascript" src="scripts/js/ui/jquery.ui.resizable.js"></script>
-    <script type="text/javascript" src="scripts/js/jquery.cookie-modified.js"></script>
+    <script type="text/javascript" src="scripts/js/json.js"></script>
+    <script type="text/javascript" src="scripts/js/jquery.store.js"></script>
     <script type="text/javascript" src="scripts/js/jquery.mousewheel.min.js"></script>
     <script type="text/javascript" src="scripts/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="scripts/js/jquery.sbscroller.js"></script>
     <script type="text/javascript" src="scripts/js/corpusshell.config.php"></script>
-    <script type="text/javascript" src="scripts/js/corpusshell.new.js"></script>
+    <script type="text/javascript" src="scripts/js/profilemanager.js"></script>
+    <script type="text/javascript" src="scripts/js/panelmanager.js"></script>
+    <script type="text/javascript" src="scripts/js/ressourcemanager.js"></script>
+    <script type="text/javascript" src="scripts/js/corpusshell.js"></script>
   </head>
   <body>
     <div id="sidebar">
-    	<table class="sidebar">
-    		<tr>
-    			<td class="sidebar">
-    				 <h3>ICLTT Corpus Shell</h3>
-    				 <div style="padding: 10px; height: 100%;" id="searchbuttons">
-      				<a href="#" onclick="OpenNewSearchPanel($('#searchbuttons .searchcombo').val());" class="sidebar">New search panel</a>
-      			</div>
-    			</td>
-    			<td class="sidebartoggle" onclick="ToggleSideBar();" onmouseover="ToggleSideBarHiLight(1);" onmouseout="ToggleSideBarHiLight(0);">
-    				<img id="sidebaricon" src="scripts/style/img/sidebargrip.left.png" />
-    			</td>
-    		</tr>
-    	</table>
+     	<table class="sidebar">
+     		 <tr>
+      		 	<td class="sidebar">
+      		 		 <h3>ICLTT Corpus Shell</h3>
+      		 		 <div style="padding: 10px;" id="searchbuttons">
+         				<a href="#" onclick="OpenNewSearchPanel($('#searchbuttons .searchcombo').val());" class="sidebar">New search panel</a>
+         			</div>
+      		 		 <div style="padding: 10px;" id="openpanels">
+         				<a href="#" onclick="TogglePanelList();" class="sidebar" id="TogglePanelListButton">Show panel list</a>
+         			</div>
+         			<div style="padding: 10px;" id="profilebuttons">
+         			 <a href="#" onclick="LoadProfile($('#profilebuttons .searchcombo').val());" class="sidebar" id="profileload">Load selected profile</a>
+         			 <a href="#" onclick="DeleteProfile($('#profilebuttons .searchcombo').val());" style="margin-top: 5px;" class="sidebar" id="profiledel">Delete selected profile</a>
+         			 <a href="#" onclick="SaveProfileAs($('#profilebuttons #newprofilename').val());" style="margin-top: 10px;" class="sidebar" id="profilesave">Save current profile as ...</a>
+         			 <a href="#" onclick="CreateNewProfile($('#profilebuttons #newprofilename').val());" style="margin-top: 5px;" class="sidebar" id="profilenew">Create new profile</a>
+         			 <input type="text" class="searchstring" id="newprofilename" style="margin: 5px 0px;"/>
+         			 <a href="#" onclick="GetUserData(userId);" style="margin-top: 10px;" class="sidebar">Refresh user profiles</a>
+         			</div>
+      		 		 <div style="padding: 10px;" id="indexes">
+         				<a href="#" onclick="RefreshIndexes();" class="sidebar" id="RefreshIndexesButton">Refresh indexes</a>
+         			</div>
+      		 	</td>
+      		 	<td class="sidebartoggle" onclick="ToggleSideBar();" onmouseover="ToggleSideBarHiLight(1);" onmouseout="ToggleSideBarHiLight(0);">
+      		 		<img id="sidebaricon" src="scripts/style/img/sidebargrip.left.png" />
+      		 	</td>
+     		 </tr>
+     	</table>
     </div>
     <div id="messagebox"></div>
 
