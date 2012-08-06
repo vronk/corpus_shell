@@ -6,7 +6,7 @@
   <xsl:output method="xml" indent="yes"/>
 
   <xsl:template match="/">
-    <sru:scanResponse xmlns:sru="http://www.loc.gov/standards/sru/">
+    <sru:scanResponse >
       <sru:version>1.2</sru:version>
       <sru:terms>
         <xsl:for-each select="config/server">
