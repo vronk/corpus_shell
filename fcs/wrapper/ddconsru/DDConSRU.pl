@@ -15,6 +15,8 @@ use XML::LibXML;
 
 my $configFile = 'ddc.config';
 
+our $xmlCache = "/srv/www/htdocs/cstest/xmlCache.pl";
+
 ##------------------------------------------------------------------------------
 ## Constants & Globals
 ##------------------------------------------------------------------------------
