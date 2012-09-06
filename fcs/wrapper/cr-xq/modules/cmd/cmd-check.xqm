@@ -50,8 +50,7 @@ declare function cmdcheck:check($x-context as xs:string+, $config as node() ) as
     
     let $start-time := util:system-dateTime()
 	
-    let $data-collection := repo-utils:context-to-collection($x-context, $config),        
-        $stat-profiles := cmdcheck:scan-profiles($data-collection), 
+    let $stat-profiles := cmdcheck:scan-profiles($x-context, $config), 
 (:        $check-linking := cmdcheck:check-linking($data-collection),:)
         $duration := util:system-dateTime() - $start-time    
     
@@ -67,19 +66,31 @@ declare function cmdcheck:check($x-context as xs:string+, $config as node() ) as
 
 TODO: match with cmd-terms and diagnostics
 :)
-declare function cmdcheck:scan-profiles($context as node()*) as item()* {
-      (: try- to handle namespace problem - primitively :)  
-    let $ns-uri := namespace-uri($context[1]/*)  
+declare function cmdcheck:scan-profiles($x-context as xs:string, $config as node()) as item()* {
+      (: try- to handle namespace problem - primitively :) 
+      
+    let $context := repo-utils:context-to-collection($x-context, $config),
+        $ns-uri := namespace-uri($context[1]/*)  
             (: dynamically declare a namespace for the next step, if one is defined in current context 
        $dummy := if (exists($ns-uri)) then util:declare-namespace("",$ns-uri) else () :)
        (: this is now trying to overcome the default-ns issue, by accepting with and without ns :)
 
-(:        $dummy := util:declare-namespace("",xs:anyURI(""))       :)
-(:    let $profiles := util:eval("$context//(MdProfile|cmd:MdProfile)/text()"):)
-(: taking :)
-    let $profiles := $context//cmd:CMD/concat(cmd:Header/cmd:MdProfile/text(), '#', cmd:Components/*[1]/local-name())
-    let $distinct-profiles := distinct-values($profiles)
-    let $profiles-summary := for $profile in $distinct-profiles            
+let $profiles-summary := 
+        if (not(exists($context))) then
+            diag:diagnostics("general-error", concat("scan-profiles: no context: ", $x-context))
+         else
+            (:        $dummy := util:declare-namespace("",xs:anyURI(""))       :)
+            (:    let $profiles := util:eval("$context//(MdProfile|cmd:MdProfile)/text()"):)
+                    let $is-ns-cmd := ($ns-uri = xs:anyURI("http://www.clarin.eu/cmd/") ) 
+                let $profiles := 
+                                      if ($is-ns-cmd) then 
+                                            $context//cmd:CMD/concat(cmd:Header/cmd:MdProfile/text(), '#', cmd:Components/*[1]/local-name())
+                                      else
+                                            let $dummy := util:declare-namespace("",xs:anyURI($ns-uri))  
+                                            return util:eval("$context//CMD/concat(Header/MdProfile/text(), '#', Components/*[1]/local-name())")
+                                                 
+            let $distinct-profiles := distinct-values($profiles)
+           return for $profile in $distinct-profiles            
 (:                                let $profile-name := util:eval("$context[.//(MdProfile|cmd:MdProfile)/text() = $profile][1]//(Components|cmd:Components)/*/name()"):)
                                 let $profile-name := substring-after($profile, '#') 
                                 let $profile-id := substring-before($profile, '#')
@@ -90,25 +101,28 @@ declare function cmdcheck:scan-profiles($context as node()*) as item()* {
                                            <sru:displayTerm>{$profile-name}</sru:displayTerm>
                                            { if ($profile-id eq '') then
                                                     <sru:extraTermData>
-                                                        { diag:diagnostics("profile-missing", $profile-name) }
+                                                        { (diag:diagnostics("profile-missing", $profile-name),
+                                                           if (not($is-ns-cmd)) then diag:diagnostics("unknown-namespace", $ns-uri)
+                                                                        else ()
+                                                        )}
                                                     </sru:extraTermData>
                                                   else ()
                                                   }
                                          </sru:term>
-    let $count-all := count($distinct-profiles)                                        
+    let $count-all := count($profiles-summary)                                        
     return
-        <sru:scanResponse xmlns:sru="http://www.loc.gov/zing/srw/" xmlns:fcs="http://clarin.eu/fcs/1.0">
-              <sru:version>1.2</sru:version>              
-              <sru:terms>              
-                {$profiles-summary }
-               </sru:terms>
-               <sru:extraResponseData>
-                     <fcs:countTerms>{$count-all}</fcs:countTerms>
-                 </sru:extraResponseData>
-                 <sru:echoedScanRequest>                      
-                      <sru:scanClause>cmd.profile</sru:scanClause>
-                  </sru:echoedScanRequest>
-           </sru:scanResponse>    
+                    <sru:scanResponse xmlns:sru="http://www.loc.gov/zing/srw/" xmlns:fcs="http://clarin.eu/fcs/1.0">
+                          <sru:version>1.2</sru:version>              
+                          <sru:terms>              
+                            {$profiles-summary }
+                           </sru:terms>
+                           <sru:extraResponseData>
+                                 <fcs:countTerms>{$count-all}</fcs:countTerms>
+                             </sru:extraResponseData>
+                             <sru:echoedScanRequest>                      
+                                  <sru:scanClause>cmd.profile</sru:scanClause>
+                              </sru:echoedScanRequest>
+                       </sru:scanResponse>    
 };
 
 
