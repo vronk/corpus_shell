@@ -15,6 +15,9 @@ declare namespace cmd = "http://www.clarin.eu/cmd/";
 
 declare variable $crday:docTypeTerms := "Terms";
 declare variable $crday:defaultMaxDepth:= 8;
+(: just analyze a subsequence of: :)
+declare variable $crday:maxAyRecords:= 1000;  
+declare variable $crday:restrictAyRecordsSize:= true();
 
 
 (:~ overload function with default format-param = htmlpage:)
@@ -36,8 +39,7 @@ declare function crday:display-overview($config-path as xs:string, $format as xs
            
         let $opt := util:declare-option("exist:serialize", "media-type=text/html method=xhtml")
         
-(:    {for $target in $config//target return <th>{xs:string($target/@key)}</th>}</tr>:)
-let $overview :=  <table><tr><th>collection</th><th>path</th><th>size</th><th>base-elem</th><th>indexes</th><th>tests</th><th>struct</th></tr>
+let $overview :=  <table class="show"><tr><th>collection</th><th>path</th><th>size</th><th>base-elem</th><th>indexes</th><th>tests</th><th>struct</th></tr>
            { for $map in $mappings//map[@key]
                     let $map-key := $map/xs:string(@key),
                         $map-dbcoll-path := $map/xs:string(@path),
@@ -56,9 +58,9 @@ let $overview :=  <table><tr><th>collection</th><th>path</th><th>size</th><th>ba
                     return <tr>
                         <td>{$map-key}</td>
                         <td>{$map-dbcoll-path}</td>
-                        <td>{count($map-dbcoll)}</td>
+                        <td align="right">{count($map-dbcoll)}</td>
                         <td>{$map/xs:string(@base_elem)}</td>
-                        <td>{count($map/index)}</td>                        
+                        <td align="right">{count($map/index)}</td>                        
                         <td>{$queries} [<a href="{concat($invoke-href,'query-run')}" >run</a>]</td>                        
                         <td>{$structure} [<a href="{concat($invoke-href,'struct-run')}" >run</a>]</td>
                         </tr>
@@ -76,6 +78,60 @@ let $overview :=  <table><tr><th>collection</th><th>path</th><th>size</th><th>ba
                    $overview
                 else            
                    repo-utils:serialise-as($overview, $format, 'html', $config, ())
+};
+
+
+declare function crday:get-fcs-resource-scan($config-path as xs:string, $run-flag as xs:boolean, $format as xs:string ) as item()* {
+
+  let $config := doc($config-path), 
+    $name := repo-utils:gen-cache-id("index", ('', 'fcs.resource', 'text'), xs:string(1)),
+    $result := 
+    if (repo-utils:is-in-cache($name, $config) and not($run-flag)) then
+        repo-utils:get-from-cache($name, $config)
+    else
+        let $data := crday:gen-fcs-resource-scan($config)
+        return repo-utils:store-in-cache($name, $data,$config)
+        
+  return if ($format eq 'raw') then
+            $result
+         else            
+          repo-utils:serialise-as($result, $format, 'scan', $config, ())    
+};
+
+(:~ gen fcs-resource scan out of mappings :)
+declare function crday:gen-fcs-resource-scan($config as node()) as item()* {
+
+       let $mappings := doc(repo-utils:config-value($config, 'mappings'))
+           
+(:        let $opt := util:declare-option("exist:serialize", "media-type=text/html method=xhtml"):)
+        
+let $map2terms := for $map in $mappings//map[@key]
+                    let $context-key := $map/xs:string(@key),
+                        $context-label := if ($map/@label) then $map/xs:string(@label) else $map/xs:string(@key), 
+                        $map-dbcoll-path := $map/xs:string(@path),
+(:                        $map-dbcoll:= if ($map-dbcoll-path ne '' and xmldb:collection-available (($map-dbcoll-path,"")[1])) then collection($map-dbcoll-path) else (),                      :)
+                         $map-dbcoll:= repo-utils:context-to-collection($context-key, $config)                            
+                     return <sru:term>
+                            <sru:value>{ $context-key }</sru:value>
+                            <sru:numberOfRecords>{count($map-dbcoll)}</sru:numberOfRecords>
+                            <sru:displayTerm>{$context-label}</sru:displayTerm>                           
+                          </sru:term>
+    
+    let $count-all := count($map2terms)                                        
+    return
+        <sru:scanResponse xmlns:sru="http://www.loc.gov/zing/srw/" xmlns:fcs="http://clarin.eu/fcs/1.0">
+              <sru:version>1.2</sru:version>              
+              <sru:terms>              
+                {$map2terms }
+               </sru:terms>
+               <sru:extraResponseData>
+                     <fcs:countTerms>{$count-all}</fcs:countTerms>
+                 </sru:extraResponseData>
+                 <sru:echoedScanRequest>                      
+                      <sru:scanClause>fcs.resource</sru:scanClause>
+                  </sru:echoedScanRequest>
+           </sru:scanResponse>   
+
 };
 
 
@@ -134,7 +190,6 @@ declare function crday:gen-query-internal($queries, $context as node()*, $x-cont
 (:      $dummy := if (exists($ns-uri)) then util:declare-namespace("",$ns-uri) else () :)
     let $dummy := util:declare-namespace("",xs:anyURI($ns-uri))    
 
-
     let $start-time := util:system-dateTime()	
     let $upd-dummy :=  
         for $xpath in $xpaths            
@@ -157,8 +212,10 @@ declare function crday:get-ay-xml($config as node(), $x-context as xs:string+, $
     if (repo-utils:is-in-cache($name, $config) and not($run-flag)) then
         repo-utils:get-from-cache($name, $config)
     else
+       
       let $context := repo-utils:context-to-collection($x-context, $config)
-      return if (exists($context)) then
+             (: prevent running on whole default collection - rather do it context by context :)
+      return if (exists($context) and $x-context ne '') then
                     let $data := crday:gen-ay-xml($context, $init-xpath, $max-depth)
                     return repo-utils:store-in-cache($name, $data,$config)
                   else 
@@ -189,17 +246,21 @@ declare function crday:gen-ay-xml($context as item()*, $path as xs:string, $dept
   :)
   if (not(exists($path))) then
         diag:diagnostics("general-error", "ay-xml: no starting path provided") 
-    else 
+    else
+        
         let $ns-uri := namespace-uri($context[1]/*),
-            $qname := $context[1]/*/name(),
-            $prefix := if (exists(prefix-from-QName($qname))) then prefix-from-QName($qname) else "",
-            $dummy := if (exists($ns-uri)) then util:declare-namespace($prefix,$ns-uri) else ()
+            $local-name := $context[1]/*/local-name(),
+(:            $prefix := if (exists(prefix-from-QName($qname))) then prefix-from-QName($qname) else "",:)
+            $dummy := if (exists($ns-uri)) then util:declare-namespace("",$ns-uri) else ()
         
         let $full-path := if (starts-with($path,'/') or $path = '') then
                              fn:concat("$context", $path)
                             else     fn:concat("$context/descendant-or-self::", $path)
-                                 
-       let $path-nodes := util:eval($full-path )
+
+       let $path-nodes := if ($crday:restrictAyRecordsSize) then
+                               subsequence(util:eval($full-path), 1, $crday:maxAyRecords)
+                            else 
+                               util:eval($full-path)
        
        let $entries := crday:elem-r($path-nodes, $path, $ns-uri, $depth, $depth),
      (:      $coll-names-value := if (fn:empty($collections)) then () else attribute colls {fn:string-join($collections, ",")},:)
