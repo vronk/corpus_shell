@@ -25,4 +25,9 @@
         <message>Query syntax error</message>
         <details>{$param}</details>
     </diagnostic>
+    <diagnostic xmlns="http://www.loc.gov/zing/srw/diagnostic/" key="profile-missing">
+        <uri>info:cmd/diagnostic/1/20</uri>
+        <message>Missing profile reference</message>
+        <details>{$param}</details>
+    </diagnostic>
 </diagnostics>
