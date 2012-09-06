@@ -54,7 +54,9 @@ declare function fcs:repo($config-file as xs:string) as item()* {
         (: if query-parameter not present, 'explain' as DEFAULT operation, otherwise 'searchRetrieve' :)
     $operation :=  if ($query eq "") then request:get-parameter("operation", $fcs:explain)
                     else request:get-parameter("operation", $fcs:searchRetrieve),
-    $x-format := request:get-parameter("x-format", $repo-utils:responseFormatXml),
+                    (: take only first format-argument (otherwise gives problems down the line) 
+                    TODO: diagnostics :)
+    $x-format := (request:get-parameter("x-format", $repo-utils:responseFormatXml))[1],
     $x-context := request:get-parameter("x-context", ""),
     (:
     $query-collections := 
@@ -163,9 +165,10 @@ declare function fcs:scan($scan-clause  as xs:string, $x-context as xs:string+, 
 	 (: WATCHME: this is quite unreliable, it relies on manual (urn-like) creation of the ids for the resources)  
 	   it won't work once the id become PIDs 
 	   this is only used for generating the cache-id to store the resultset :)
-	 let $short-xcontext := substring-after($x-context, concat(repo-utils:config-value($config, 'explain'),':'))
-	 let $sanitized-xcontext := if ($short-xcontext='') then repo-utils:sanitize-name($x-context) else $short-xcontext   
-    let $index-doc-name := repo-utils:gen-cache-id("index", ($sanitized-xcontext, $index-name, $sort, $max-depth),""),
+(:	 let $short-xcontext := substring-after($x-context, concat(repo-utils:config-value($config, 'explain'),':'))
+	 let $sanitized-xcontext := if ($short-xcontext='') then repo-utils:sanitize-name($x-context) else $short-xcontext :)
+	 let $sanitized-xcontext := repo-utils:sanitize-name($x-context) 
+    let $index-doc-name := repo-utils:gen-cache-id("index", ($sanitized-xcontext, $index-name, $sort, $max-depth)),
   
   (: get the base-index from cache, or create and cache :)
   $index-scan := if (repo-utils:is-in-cache($index-doc-name, $config)) then
@@ -178,7 +181,7 @@ declare function fcs:scan($scan-clause  as xs:string, $x-context as xs:string+, 
                   (: just a hack for now, handling of special indexes should be put solved in some more easily extensible way :)  
                 else if ($index-name eq 'cmd.profile') then
                     let $context := repo-utils:context-to-collection($x-context, $config)
-                    return  cmdcheck:scan-profiles($context)
+                    return  cmdcheck:scan-profiles($context, $config)
                 else
                     fcs:do-scan-default($scan-clause, $index-xpath, $x-context, $sort, $config)         
 
@@ -264,15 +267,23 @@ declare function fcs:search-retrieve($query as xs:string, $x-context as xs:strin
                            else ()
     
         let	$result-count := fn:count($results),         
-        $ordered-result := fcs:sort-result($results, $query, $x-context, $config),                              
+(: deactivated ordering -> TODO: optional
+        $ordered-result := fcs:sort-result($results, $query, $x-context, $config),                              :)
+        $ordered-result := $results,
         $result-seq := fn:subsequence($ordered-result, $startRecord, $maximumRecords),
         
         $seq-count := fn:count($result-seq),        
         $end-time := util:system-dateTime(),
     
         $xpath-query-no-base-elem := fcs:transform-query ($query, $x-context, $config, false()),
+(:      startdd trying to invert the base-elem handling
+        $xpath-query-with-base-elem := fcs:transform-query ($query, $x-context, $config, true()),
+        $xpath-query-base-elem := substring-after($xpath-query-with-base-elem , $xpath-query
+        :)
+        (: temporarily deactivated match-seq 
         $match := util:eval (concat("$results", $xpath-query-no-base-elem)),
-        $match-seq := util:eval (concat("$result-seq", $xpath-query-no-base-elem)),
+        $match-seq := util:eval (concat("$result-seq", $xpath-query-no-base-elem)),:)
+        $match-seq := (),
         $result-seq-match := fcs:highlight-result($result-seq, $match-seq, $x-context, $config),
         (:$match := (),
         $result-seq-match := $result-seq,:)
@@ -308,7 +319,7 @@ declare function fcs:search-retrieve($query as xs:string, $x-context as xs:strin
           </sru:echoedSearchRetrieveRequest>
           <sru:extraResponseData>
           	<fcs:returnedRecords>{$seq-count}</fcs:returnedRecords>
-          	<fcs:numberOfMatches>{count($match)}</fcs:numberOfMatches>
+            <fcs:numberOfMatches>{ () (: count($match) :)}</fcs:numberOfMatches>
     		<fcs:duration>{($end-time - $start-time, $end-time2 - $end-time) }</fcs:duration>
     		<fcs:transformedQuery>{ $xpath-query }</fcs:transformedQuery>
           </sru:extraResponseData>
@@ -369,7 +380,7 @@ declare function fcs:format-record-data($record-data as node(), $data-view as xs
                              <fcs:ResourceFragment type="next" pid="{$rf-next}" ref="{$rf-next-ref}"  />)
                         else ()
                      
-    let $dv-title := <fcs:DataView type="title">{$title}</fcs:DataView>                      
+    let $dv-title := <fcs:DataView type="title">{$title[1]}</fcs:DataView>                      
 
     return if ($data-view = 'raw') then $record-data 
             else <fcs:Resource pid="{$resource-pid}" >
@@ -495,9 +506,9 @@ if $index-param = "" return the map-element,
 declare function fcs:get-mapping($index as xs:string, $x-context as xs:string+, $config) as node()* {
     let $mappings := doc(repo-utils:config-value($config, 'mappings')),
     
-    $context-map := if (exists($mappings//map[xs:string(@key) eq $x-context])) then 
-                                $mappings//map[xs:string(@key) eq $x-context]
-                            else $mappings//map[xs:string(@key) eq 'default'],    
+    $context-map := if (exists($mappings//map[xs:string(@key) = $x-context])) then 
+                                $mappings//map[xs:string(@key) = $x-context]
+                            else $mappings//map[xs:string(@key) = 'default'],    
     $context-index := $context-map/index[xs:string(@key) eq $index]
     
     
@@ -525,8 +536,6 @@ declare function fcs:indexes-in-query($cql as xs:string, $x-context as xs:string
 (:~ evaluate given index on given piece of data
 used when formatting record-data, to put selected pieces of data (indexes) into the results record 
 
-FIXME: takes just first @use-param - this prevents from creating invalid xpath, but is very unreliable wrt to the returned data 
-
 @returns result of evaluating given index's path on given data. or empty node if no mapping index was found
 :)
 declare function fcs:apply-index($data, $index as xs:string, $x-context as xs:string+, $config) as item()* {
@@ -541,6 +550,9 @@ declare function fcs:apply-index($data, $index as xs:string, $x-context as xs:st
 
 (:~ gets the mapping for the index and creates an xpath (UNION)
 
+FIXME: takes just first @use-param - this prevents from creating invalid xpath, but is very unreliable wrt to the returned data
+       also tried to make a union but problems with values like: 'xs:string(@value)' (union operand is not a node sequence [source: String])
+
 @param $index index-key as known to mappings 
 
 @returns xpath-equivalent of given index as defined in mappings; multiple xpaths are translated to a UNION, 
@@ -550,7 +562,13 @@ declare function fcs:apply-index($data, $index as xs:string, $x-context as xs:st
 declare function fcs:index-as-xpath($index as xs:string, $x-context as xs:string+, $config) as xs:string {    
     let $index-map := fcs:get-mapping($index, $x-context, $config )        
      return if (exists($index-map)) then
-                        let $match-on := if (exists($index-map/@use) ) then concat('/', xs:string($index-map/@use)) else ''
+       (:                 let $match-on := if (exists($index-map/@use) ) then 
+                                            if (count($index-map/@use) > 1) then  
+                                               concat('/(', string-join($index-map/@use,'|'),')')
+                                            else concat('/', xs:string($index-map/@use)) 
+                                         else '' :)
+                                  let $match-on := if (exists($index-map/@use) ) then concat('/', xs:string($index-map[1]/@use)) else ''
+                                  
                         let $indexes := if (count($index-map/path) > 1) then  
                                             translate(concat('(', string-join($index-map/path,'|'),')', $match-on),'.','/')
                                             else translate(concat($index-map/path, $match-on),'.','/')
@@ -568,9 +586,13 @@ declare function fcs:highlight-result($result as node()*, $match as node()*, $x-
     
 (:    let $indexes := fcs:indexes-in-query($query, $x-context, $config):)
     
-    (: if any of the indexes matches on an attribute, use the custom highlighting, else use the kwic-module :) 
+    (: if the kwic-module already did its work, just give that back, 
+            else use the custom highlighting:) 
+     
+    (:temporarily deactivated for performance
     let $processed-result := if (exists($default-expand//exist:match)) then $default-expand
-                               else fcs:process-result($result, $match)                                                       
+                               else fcs:process-result($result, $match):)
+      let $processed-result := $default-expand                               
 (:                    else  :)
                      (: "highlight-matches=elements"):)
     
