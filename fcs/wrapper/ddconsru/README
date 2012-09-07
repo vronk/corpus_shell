@@ -21,6 +21,7 @@ translates them to the queries as DDC-API expects them
 and parses the result and translates it back to format expected by the FCS/SRU-protocol.
 
 It uses the Template perl-module for generating the response.
+(install via CPAN)
 
 
 == How to use it  ==
@@ -43,7 +44,9 @@ Then you have to adapt your configuration.
 
 == Config ==
 
-the <server>-element stores obviously the information about the ddc-server
+Take the ddc.config.dist rename it to ddc.config and edit it like following:
+
+The <server>-element stores obviously the information about the ddc-server
        
    <key>{key}</key>
    <ip>{ddc-server ip}</ip>
@@ -78,4 +81,8 @@ Within FCS this is meant as a request to list available resource in an endpoint.
 	 DDC also provides its own powerful query language.
 	 There needs to be translation between those two.
 
+* Harmonize the ddc-perl-api [http://corpus3.aac.ac.at/trac/ticket/45]
+	 Currently ddconsru works on a customized version of ddc-perl-api (source on corpus3).
+	 We should be able to read from the ?default ddc-perl-api and work any customizations on top of that.
+	
 
