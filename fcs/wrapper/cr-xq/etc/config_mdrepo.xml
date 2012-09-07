@@ -13,7 +13,7 @@
     <property key="scripts.path">/db/cr/xsl/</property>
     <property key="default.dataview">metadata</property>
     <property key="scan.xsl">scan2view.xsl</property>
-    <property key="searchRetrieve.xsl">result2view_v1.xsl</property>
+    <property key="searchRetrieve.xsl">result2view_v2.xsl</property>
     <property key="explain.xsl">explain2view.xsl</property>
     <property key="html.xsl">misc/html2view.xsl</property>
     <property key="table.xsl">misc/xml2htmltable.xsl</property>
