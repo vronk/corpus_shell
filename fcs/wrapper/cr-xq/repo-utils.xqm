@@ -148,21 +148,22 @@ declare function repo-utils:store($collection as xs:string, $doc-name as xs:stri
 };
 
 
-
+declare function repo-utils:gen-cache-id($type-name as xs:string, $keys as xs:string+, $depth as xs:string) as xs:string {   
+    repo-utils:gen-cache-id($type-name , ($keys, $depth) )
+};  
 (:~ Create document name with md5-hash for selected collections (or types) for reuse.
 :)
-declare function repo-utils:gen-cache-id($type-name as xs:string, $keys as xs:string+, $depth as xs:string) as xs:string {
-  let $name-prefix := fn:concat($type-name, $depth),
-       $sanitized-names := for $key in $keys return repo-utils:sanitize-name($key)
+declare function repo-utils:gen-cache-id($type-name as xs:string, $keys as xs:string+) as xs:string {  
+       let $sanitized-names := for $key in $keys return repo-utils:sanitize-name($key)
     return
 (:    fn:concat($name-prefix, "-", util:hash(string-join($sorted-names, ""), "MD5"), $repo-utils:xmlExt):)
-    fn:concat($name-prefix, "-", string-join($sanitized-names, "-"), $repo-utils:xmlExt)
+    fn:concat($type-name, "-", string-join($sanitized-names, "-"), $repo-utils:xmlExt)
 };
 
 (:~ wipes out problematic characters from names
 :)
 declare function repo-utils:sanitize-name($name as xs:string) as xs:string {
-    translate($name, ":",'_')
+    translate($name, ":/",'_')
 };
 
 declare function repo-utils:serialise-as($item as node()?, $format as xs:string, $operation as xs:string, $config) as item()? {
@@ -173,8 +174,8 @@ declare function repo-utils:serialise-as($item as node()?, $format as xs:string,
 
 @param $parameters optional additional parameters to be passed to xsl  
 :)
-declare function repo-utils:serialise-as($item as node()?, $format as xs:string, $operation as xs:string, $config, $parameters as node()* ) as item()? {
-      if ($format eq $repo-utils:responseFormatJSon) then
+declare function repo-utils:serialise-as($item as node()?, $format as xs:string, $operation as xs:string, $config, $parameters as node()* ) as item()? {        
+        if ($format eq $repo-utils:responseFormatJSon) then
 	       let $option := util:declare-option("exist:serialize", "method=json media-type=application/json")
 	       return $item
 	    else if (contains($format, $repo-utils:responseFormatHTML)) then
