@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<config>
+   <server>
+       <key>clarin.at:icltt:ddc</key>
+       <ip>192.168.0.5</ip>
+       <port>50000</port>
+       <displayText>Text corpora by ICLTT on DDC</displayText>
+       <corpora>
+           <item>
+              <key>clarin.at:icltt:ddc:traum_deu</key>
+              <name>traum_deu</name>
+              <displayText>Freud: Die Traumdeutung, German</displayText>
+              <dataview type="external" ref="http://corpus3.aac.ac.at/parcorp/index.php?secid=" />
+              <index label="Lemma" key="l">0</index>
+              <index label="PoS" key="p">1</index>
+              <index label="Word" key="w">2</index>
+              <index label="Sentence" key="s">3</index>
+           </item>
+           <item>
+              <key>clarin.at:icltt:ddc:traum_russ</key>
+              <name>traum_russ</name>
+              <displayText>Freud: Die Traumdeutung, Russian</displayText>
+              <dataview type="external" ref="http://corpus3.aac.ac.at/parcorp/index.php?secid=" />
+              <index label="Lemma" key="l">0</index>
+              <index label="PoS" key="p">1</index>
+              <index label="Word" key="w">2</index>
+              <index label="Sentence" key="s">3</index>
+           </item>           
+       </corpora>
+   </server>   
+</config>
