@@ -48,15 +48,19 @@ declare function fcs:repo($config-file as xs:string) as item()* {
     $config := if (doc-available($config-file)) then doc($config-file) 
                         else diag:diagnostics("general-error", concat("config not available: ", $config-file)) ,
         
-        (: accept "q" as synonym to query-param; "query" overrides:)
+    $key := request:get-parameter("key", "index"),        
+        (: accept "q" as synonym to query-param; "query" overrides:)    
     $q := request:get-parameter("q", ""),
     $query := request:get-parameter("query", $q),    
         (: if query-parameter not present, 'explain' as DEFAULT operation, otherwise 'searchRetrieve' :)
-    $operation :=  if ($query eq "") then request:get-parameter("operation", $fcs:explain)
+(:    $operation :=  if ($query eq "") then request:get-parameter("operation", $fcs:explain):)
+    (: trying without explain as default operation, to get to the static-content by default :)
+    $operation :=  if ($query eq "") then request:get-parameter("operation", "html")
                     else request:get-parameter("operation", $fcs:searchRetrieve),
-                    (: take only first format-argument (otherwise gives problems down the line) 
-                    TODO: diagnostics :)
-    $x-format := (request:get-parameter("x-format", $repo-utils:responseFormatXml))[1],
+      
+    (: take only first format-argument (otherwise gives problems down the line) 
+        TODO: diagnostics :)
+    $x-format := (request:get-parameter("x-format", $repo-utils:responseFormatHTML))[1],
     $x-context := request:get-parameter("x-context", ""),
     (:
     $query-collections := 
@@ -101,12 +105,27 @@ declare function fcs:repo($config-file as xs:string) as item()* {
             (: return cr:search-retrieve($cql-query, $query-collections, $format, xs:integer($start-item), xs:integer($max-items)) :)
             return fcs:search-retrieve($cql-query, $x-context, xs:integer($start-item), xs:integer($max-items), $x-dataview, $config)
     else 
-      diag:diagnostics("unsupported-operation", $operation)
-       
+      fcs:static($key, $x-context, $config)
+    
    return  repo-utils:serialise-as($result, $x-format, $operation, $config)
    
 };
 
+
+(:~ Strictly speaking not part of the FCS-protocol, 
+this function delivers static content, to be returned as HTML.
+: @param $content-id required, identifies the content to be returned. The id is matched against id-attribute in the {config:static.path}-collection
+: @param $x-context not used right now! probably not needed 
+: @returns found static data or nothing 
+:)
+declare function fcs:static($content-id as xs:string+, $x-context as xs:string*, $config) as item()* {
+    let $context := if ($x-context) then $x-context
+                    else repo-utils:config-value($config, 'explain')
+    let $static-dbcoll := collection(repo-utils:config-value($config,'static.path'))     
+   let $data := $static-dbcoll//*[@id=$content-id]
+    
+    return $data
+};
 
 (:~ handles the explain-operation requests.
 : @param $x-context optional, identifies a resource to return the explain-record for. (Accepts both MD-PID or Res-PID (MdSelfLink or ResourceRef/text))

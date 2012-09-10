@@ -7,6 +7,7 @@
     <property key="data.path">/db/mdrepo-data</property>
     <property key="cache.path">/db/mdrepo-data/_indexes</property>
     <property key="metadata.path">/db/mdrepo-data/_cmd</property>
+    <property key="static.path">/db/mdrepo-data/_static</property>
     <property key="index.prefix">/db/mdrepo-data/_indexes/index_</property>
     <property key="tests.path">/db/cr/modules/cmd/testset_cmd2.xml</property>
     <property key="log.path">/db/cr-logs</property>
