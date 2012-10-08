@@ -26,6 +26,8 @@ var userId = null;
 var searchPanelCount = 1;
 $.storage = new $.store();
 var Indexes = null;
+var baseURL = "/cs2/corpus_shell";
+
 
 $(function()
 {
@@ -70,7 +72,7 @@ var PanelCount = 0;
 
 function GetUserId()
 {
-  $.getJSON('http://corpus3.aac.ac.at/cs2/corpus_shell/main/utils/getUserId.php', function(data)
+  $.getJSON(baseURL + '/main/utils/getUserId.php', function(data)
   {
      userId = data.id;
      $.storage.set("userId", userId);
@@ -82,13 +84,13 @@ function GetUserData(userId)
   $.ajax(
   {
       type: 'POST',
-      url: "http://corpus3.aac.ac.at/cs2/corpus_shell/main/utils/getUserData.php",
+      url: baseURL + "/main/utils/getUserData.php",
       dataType: 'json',
       data : {uid: userId},
       complete: function(data, textStatus)
       {
         var result = JSON.parse(data.responseText, null);
-        if (result == undefined || result == null || result == false)
+        if (result == undefined || result == null || result == false || result == "" )
           result = new Array();
 
         ProfileController.Profiles = result;
@@ -233,7 +235,10 @@ function SaveUserData(userid)
   $.ajax(
   {
       type: 'POST',
-      url: "http://corpus3.aac.ac.at/cs2/corpus_shell/main/utils/saveUserData.php",
+//      CHANGE THIS FOR RELEASE
+//      url: "http://corpus3.aac.ac.at/sru/switch.php",
+      url: baseURL + "/main/utils/saveUserData.php",
+
       dataType: 'xml',
       data : {uid: userid, data: dataStr},
       complete: function(xml, textStatus)
@@ -499,7 +504,7 @@ function CreateNewProfile(newName)
     SaveUserData(userId);
     RefreshProfileCombo(newName);
   }
-}
+}	
 
 function DeleteProfile(profileName)
 {
