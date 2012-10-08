@@ -93,19 +93,18 @@ function PanelManager (container, searchConfig)
 
   //getters
 
-  //gets or adds main panel
   //function:   this.GetMainPanel(parentId)
   //parameters: panelId - unique panel identifier
-  //purpose:
+  //purpose:    gets or adds main panel
   //returns:    -
-  this.GetMainPanel = function(parentId)
+  this.GetMainPanel = function(panelId)
   {
-    var main = this.Panels[parentId];
+    var main = this.Panels[panelId];
 
     if (main == undefined)
     {
-      this.AddMainPanel(parentId);
-      main = this.Panels[parentId];
+      this.AddMainPanel(panelId);
+      main = this.Panels[panelId];
     }
 
     return main;
