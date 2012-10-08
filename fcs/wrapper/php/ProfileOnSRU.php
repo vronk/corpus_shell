@@ -3,17 +3,13 @@
 error_reporting(E_ALL);
 
  //load configuration
- include "config.php";
+ include "../../utils/php/config.php";
 
  //load database and user data
  include $dbConfigFile;
 
  if (isset($_GET['x-type']) && trim($_GET['x-type']) == "fcs")
    $responseTemplate = $responseTemplateFcs;
-
- //required values for the templates
- $recordSchema = "http://clarin.eu/fcs/1.0/resource.xsd";
- $version = "1.2";
 
  function diagnostics($dgId, $dgDetails)
  {

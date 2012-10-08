@@ -17,4 +17,9 @@
                              
   //path to template engine   
   $vlibPath =                $fcsRoot . 'utils/php/vlib/vlibTemplate.php';
+
+  //required values for the templates
+ $recordSchema = "http://clarin.eu/fcs/1.0/Resource.xsd";
+ $version = "1.2";
+
 ?>

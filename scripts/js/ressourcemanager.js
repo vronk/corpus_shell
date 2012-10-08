@@ -116,7 +116,11 @@ function ResourceManager()
         hStr += '<tr><td rowspan="2" style="width: 15px;"></td>';
         var idx = resource.Indexes[key];
         hStr += '<td class="dotted" colspan="3">' + idx.Title + ' (' + idx.Name + ')</td></tr>';
-        hStr += '<tr><td class="dottedr is' + idx.Searchable + '">search</td>';
+
+        hStr += '<tr><td class="dottedr is' + idx.Searchable + '"';
+        if (idx.Searchable == true)
+          hStr += ' style="cursor: pointer;" click="PanelController.OpenNewSearchPanel(' + resource.Name + ');"';
+        hStr += '>search</td>';
         hStr += '<td class="dottedr is' + idx.Scanable + '">scan</td>';
         hStr += '<td class="dottedr is' + idx.Sortable + '">sort</td></tr>';
         hStr += '<tr><td colspan="3" style="height: 10px;"></td></tr>'

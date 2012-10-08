@@ -5,7 +5,7 @@
 "Width":"525px",
 "Height":"600px"},
 "Panels":[],
-"Url":"http://corpus3.aac.ac.at/switch?operation=searchRetrieve&query=p=*&x-context=arz_eng_006&x-format=html&version=1.2",
+"Url":"http://corpus3.aac.ac.at/switch?operation=searchRetrieve&query=Haus&x-context=arz_eng_006&x-format=html&version=1.2",
 "ZIndex":2}},
 "test-matej":{"Panel1":{"Id":"Panel1",
 "Title":"Search 1",
