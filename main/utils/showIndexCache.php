@@ -3,13 +3,9 @@
 	loads indexCache.json and returns a html representation of the imported array
 */
 
-  //const
-  $cacheFileName = "../../scripts/js/indexCache.json";
+  //configuration
+  include "../../fcs/utils/php/config.php";
 
-  $configUrl = "../../fcs/aggregator/switch.config";
-  $localhost = "corpus3.aac.ac.at";
-
-  $ddcConfig = "../../fcs/aggregator/fcs.resource.config.php";
   $ddcConfigFound = false;
 
   function GetNodeValue($node, $tagName)
@@ -23,21 +19,21 @@
      return "";
   }
 
-  if (file_exists($ddcConfig))
+  if (file_exists($fcsConfig))
   {
-    include $ddcConfig;
+    include $fcsConfig;
     $ddcConfigFound = true;
   }
 
 
   function GenerateConfigDictionary()
   {
-    global $configUrl;
+    global $switchConfig;
     global $configName;
     global $ddcConfigFound;
 
     $doc = new DOMDocument;
-    $doc->Load($configUrl);
+    $doc->Load($switchConfig);
 
     $retArray = array();
 
@@ -78,13 +74,12 @@
   }
 
   //load file content into $indexes variable
-  $indexes = file_get_contents($cacheFileName, true);
+  $indexes = file_get_contents($indexCacheFileName, true);
   //transform into a multi dimensional array
   $content = json_decode($indexes);
 
   //load config file for resources' labels
   $configDict = GenerateConfigDictionary();
-
 
   //generate html code
   header('Content-Type: text/html; charset=utf-8');

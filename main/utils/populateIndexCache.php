@@ -6,15 +6,9 @@
 	new feature: add items of type == "fcs.resource"
 */
 
-//  CHANGE THIS FOR RELEASE
-//  $configUrl = "../../sru/switch.config";
-  $configUrl = "../../fcs/aggregator/switch.config";
-  $localhost = "corpus3.aac.ac.at";
+  include "../../fcs/utils/php/config.php";
 
-  $ddcConfig = "../../fcs/aggregator/fcs.resource.config.php";
   $ddcConfigFound = false;
-
-  $cacheFileName = "../../scripts/js/indexCache.json";
 
   function GetNodeValue($node, $tagName)
   {
@@ -102,9 +96,9 @@
     return $idxArray;
   }
 
-  if (file_exists($ddcConfig))
+  if (file_exists($fcsConfig))
   {
-    include $ddcConfig;
+    include $fcsConfig;
     $ddcConfigFound = true;
   }
 
@@ -112,7 +106,7 @@
   print "Starting queries ...\n";
 
   $doc = new DOMDocument;
-  $doc->Load($configUrl);
+  $doc->Load($switchConfig);
 
   $xpath = new DOMXPath($doc);
   $query = '//item';
@@ -150,22 +144,22 @@
   //print $content;
 
   //open/create file
-  if (!$handle = fopen($cacheFileName, "w"))
+  if (!$handle = fopen($indexCacheFileName, "w"))
   {
-    print  "\nCannot open/create file ($cacheFileName)";
+    print  "\nCannot open/create file ($indexCacheFileName)";
     exit;
   }
 
   //write json string to cache file
   if (fwrite($handle, $content) === FALSE)
   {
-      print "\nCannot write to file ($cacheFileName)";
+      print "\nCannot write to file ($indexCacheFileName)";
       exit;
   }
 
   //close file and save it
   fclose($handle);
 
-  print "\nIndexCache written to file (" . realpath($cacheFileName) . ")";
+  print "\nIndexCache written to file (" . realpath($indexCacheFileName) . ")";
 
 ?>
