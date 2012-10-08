@@ -855,6 +855,9 @@ function PanelManager (container, searchConfig)
     var maxZidx = this.GetMaxZIndex() + 1;
     var panelTitle = this.GetNewSearchPanelTitle();
 
+    if (isNaN(config))
+      config = this.GetSearchIdx(config);
+
     var newPanel = new Panel(panelName, "search", panelTitle, "", position, false, maxZidx, this.Container, this, config);
     newPanel.CreatePanel();
 
