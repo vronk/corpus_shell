@@ -26,7 +26,9 @@ var userId = null;
 var searchPanelCount = 1;
 $.storage = new $.store();
 var Indexes = null;
-var baseURL = "/cs2/corpus_shell";
+
+// is now set in params.js
+//var baseURL = "/cs2/corpus_shell";
 
 
 $(function()
