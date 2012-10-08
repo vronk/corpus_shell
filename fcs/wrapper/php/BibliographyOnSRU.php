@@ -75,13 +75,28 @@ error_reporting(E_ALL);
 
     require_once $vlibPath;
 
+    $queryParts = explode("=", $query);
+    //print_r($queryParts);
+
+    if (count($queryParts) < 2)
+    {
+      unset($queryParts);
+      $queryParts[0] = "vicavTaxonomy";
+      $queryParts[1] = $query;
+    }
+
+    if ($queryParts[0] == "vicavTaxonomy")
+      $xPath = "biblStruct-note-index-term-vicavTaxonomy-";
+    else if ($queryParts[0] == "id")
+      $xPath = "biblStruct-xml:id";
+
     $db = mysql_connect($server, $user, $password);
     if (!$db)
       diagnostics('MySQl Connection Error', 'Failed to connect to database: ' . mysql_error());
     mysql_select_db($database, $db);
 
-    $sqlstr = "SELECT DISTINCT b.id, b.entry FROM vicav_bibl_001 b, vicav_bibl_001_ndx ndx ";
-    $sqlstr.= "WHERE ndx.xpath='biblStruct-note-index-index-term-' AND ndx.txt LIKE '%$query%' AND ndx.id=b.id ";
+    $sqlstr = "SELECT DISTINCT b.id, b.entry FROM vicav_bibl_002 b, vicav_bibl_002_ndx ndx ";
+    $sqlstr.= "WHERE ndx.xpath='$xPath' AND ndx.txt='$queryParts[1]' AND ndx.id=b.id ";
 
     //print "sqlstr: '$sqlstr'";
 

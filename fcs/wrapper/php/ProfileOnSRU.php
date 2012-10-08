@@ -141,7 +141,10 @@ error_reporting(E_ALL);
     $maximumRecords = "";
 
   if (isset($_GET['query']) && trim($_GET['query']) != "")
+  {
     $query = trim($_GET['query']);
+    $query = str_replace("|", "#", $query);
+  }
   else
     $query = "";
 
