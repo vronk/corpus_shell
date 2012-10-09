@@ -450,10 +450,11 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
     $(parElem).find(".searchresults").addClass("cmd loading").text("");
     $(parElem).find(".hitcount").text("-");
 
-    var url = "http://corpus3.aac.ac.at/switch";
+    
     var xcontext = this.PanelController.GetResourceName(sele);
-
-    var urlStr = url + "?operation=searchRetrieve&query=" + sstr + "&x-context=" + xcontext +
+								
+								/* url +  */
+    var urlStr = switchURL + "?operation=searchRetrieve&query=" + sstr + "&x-context=" + xcontext +
                  "&x-format=html&version=1.2";
 
     this.SetUrl(urlStr);
@@ -463,7 +464,7 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
     $.ajax(
     {
         type: 'GET',
-        url: url,
+        url: switchURL,
         dataType: 'xml',
         data : {operation: 'searchRetrieve', query: sstr, 'x-context': xcontext, 'x-format': 'html', version: '1.2'},
         complete: function(xml, textStatus)

@@ -6,3 +6,4 @@
  */
 
 var baseURL = "/cs/corpus_shell";
+var switchURL = baseURL + "/fcs/aggregator/switch.php";
