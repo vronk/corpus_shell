@@ -28,56 +28,96 @@ switch_php [fontsize=24 ];
 populateIndexCache_php;
 initconfigcache_php;
 diagnostics_php;
+fcs_resource_to_php_xsl;
+_userdata [label="*UserData_php"];
+_php_wrapper;
 
 /* config */
 node [shape=none];
-switch_config;
-config_php;
+switch_config [fontcolor=red];
+config_php [fontcolor=red];
 fcs_resource_config_php;
-params_js;
+params_js [fontcolor=red];
 corpusshell_js;
 
 /* data? */
 node [shape=box];
 indexCache_json;
 index_html [fontsize=24 ];
-
+showIndexCache_php;
 	
-	subgraph cluster_ddconsru {
-		label="ddconsru";				
-	
-		
-	}
-	
+/*
 	subgraph cluster_aggregator {
-		label="aggregator";
-		
+		label="fcs/aggregator";
+		initconfigcache_php;
+		fcs_resource_config_php;
+		switch_php;		
+		switch_config;
 	}
 
-	subgraph cluster_fcs_php{
-		label="fcs php";
-		
+	subgraph cluster_fcs_utils_php{
+		label="fcs/utils/php";
+		  config_php;
+		  diagnostics_php;
+		  fcs_resource_to_php_xsl;
 	}
 
+subgraph cluster_fcs_wrapper_php{
+		label="fcs/wrapper/php";
+		  _php_wrapper;
+	}
+
+	subgraph cluster_main {
+		label="main/utils";				
+	
+		populateIndexCache_php;
+		showIndexCache_php;
+		_userdata;
+	}
+
+
+	subgraph cluster_js {
+		label="scripts/js";				
+	
+		params_js;
+		corpusshell_js;
+		indexCache_json;
+		
+	}
+*/
 
 /* usedBy */
 /* edge [label="usedBy"]; */
 config_php -> switch_php;
+config_php -> _php_wrapper;
+config_php -> populateIndexCache_php;
+config_php -> showIndexCache_php;
+config_php -> initconfigcache_php;
+config_php -> _userdata;
 switch_config -> switch_php;
 switch_config -> populateIndexCache_php;
-config_php -> populateIndexCache_php;
+
+
 populateIndexCache_php -> indexCache_json;
 diagnostics_php -> switch_php;
 switch_config -> initconfigcache_php -> fcs_resource_config_php -> switch_php;
+fcs_resource_config_php -> populateIndexCache_php;
+fcs_resource_to_php_xsl -> initconfigcache_php  [constraint=false];
 
-params_js -> index_html;
+params_js -> corpusshell_js;
 corpusshell_js -> index_html;
-indexCache_json -> index_html;
+/* indexCache_json -> showIndexCache_php  [constraint=false];  */
+indexCache_json -> showIndexCache_php; 
 
+diagnostics_php -> _php_wrapper [style=dashed, color=red, label="should use?", constraint=false];
 
 edge [label="accesses", arrowhead=none, arrowtail="open"];
 /* seen reversed */
-switch_php -> index_html;
+switch_php -> corpusshell_js;
+_userdata -> corpusshell_js;
+indexCache_json -> corpusshell_js;
+ 
+
 
 /* contains */
 edge [arrowhead=none, arrowtail=none, label=""];
