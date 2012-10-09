@@ -1,0 +1,87 @@
+/* 
+
+dot -oc_s_dep.png -Tpng c_s_dep.dot
+
+*/
+digraph c_s_places {
+  label="corpus_shell script dependencies";
+	rankdir=LR;
+	/* size="10,11";	
+	ranksep=1.3;*/
+	nodesep=0.7;	 
+	fontsize=16;
+	node [fontsize=20];
+	
+
+	/* graph [compound=true,
+		mclimit=4,		
+		remincross=true,
+		nodesep = 0.1;	
+	size="12,12";		
+	];
+	*/
+
+
+/* scripts */
+node [shape="ellipse"];
+switch_php;
+populateIndexCache_php;
+initconfigcache_php [fontcolor=red];
+diagnostics_php;
+
+/* config */
+node [shape=none];
+switch_config;
+config_php;
+fcs_resource_config_php [fontcolor=red];
+params_js;
+corpusshell_js;
+
+/* data? */
+node [shape=box];
+indexCache_json;
+index_html;
+
+	
+	subgraph cluster_ddconsru {
+		label="ddconsru";				
+	
+		
+	}
+	
+	subgraph cluster_aggregator {
+		label="aggregator";
+		
+	}
+
+	subgraph cluster_fcs_php{
+		label="fcs php";
+		
+	}
+
+
+/* usedBy */
+/* edge [label="usedBy"]; */
+config_php -> switch_php;
+switch_config -> switch_php;
+switch_config -> populateIndexCache_php;
+config_php -> populateIndexCache_php;
+populateIndexCache_php -> indexCache_json;
+diagnostics_php -> switch_php;
+switch_config -> initconfigcache_php -> fcs_resource_config_php -> switch_php;
+
+params_js -> index_html;
+corpusshell_js -> index_html;
+indexCache_json -> index_html;
+
+
+edge [label="accesses", arrowhead=none, arrowtail="open"];
+/* seen reversed */
+switch_php -> index_html;
+
+/* contains */
+edge [arrowhead=none, arrowtail=none, label=""];
+
+
+
+}
