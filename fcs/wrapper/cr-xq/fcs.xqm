@@ -39,14 +39,17 @@ declare variable $fcs:scanSortText as xs:string := "text";
 declare variable $fcs:scanSortSize as xs:string := "size";
 declare variable $fcs:indexXsl := doc('index.xsl');
 declare variable $fcs:kwicWidth := 30;
+declare variable $fcs:sys-config-file := "/db/cr/conf/config-system.xml";
 
 (:~ The main entry-point. Processes request-parameters 
 @returns the result document (in xml, html or json)
 :)
 declare function fcs:repo($config-file as xs:string) as item()* {
   let
-    $config := if (doc-available($config-file)) then doc($config-file) 
+    $sys-config := if (doc-available($fcs:sys-config-file)) then doc($fcs:sys-config-file) else (),
+    $config := if (doc-available($config-file)) then (doc($config-file), $sys-config) 
                         else diag:diagnostics("general-error", concat("config not available: ", $config-file)) ,
+        
         
     $key := request:get-parameter("key", "index"),        
         (: accept "q" as synonym to query-param; "query" overrides:)    
@@ -55,12 +58,12 @@ declare function fcs:repo($config-file as xs:string) as item()* {
         (: if query-parameter not present, 'explain' as DEFAULT operation, otherwise 'searchRetrieve' :)
 (:    $operation :=  if ($query eq "") then request:get-parameter("operation", $fcs:explain):)
     (: trying without explain as default operation, to get to the static-content by default :)
-    $operation :=  if ($query eq "") then request:get-parameter("operation", "html")
+    $operation :=  if ($query eq "") then request:get-parameter("operation", "static")
                     else request:get-parameter("operation", $fcs:searchRetrieve),
       
     (: take only first format-argument (otherwise gives problems down the line) 
         TODO: diagnostics :)
-    $x-format := (request:get-parameter("x-format", $repo-utils:responseFormatHTML))[1],
+    $x-format := (request:get-parameter("x-format", $repo-utils:responseFormatHTMLpage))[1],
     $x-context := request:get-parameter("x-context", ""),
     (:
     $query-collections := 
