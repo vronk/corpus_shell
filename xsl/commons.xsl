@@ -8,7 +8,10 @@
         <change on="2011-12-04" type="created" by="vr">based on cmd_functions.xsl but retrofitted back to 1.0</change>
         </history>        
     -->
-    <xsl:include href="commons_v1.xsl"/>
+    <xsl:import href="commons_v1.xsl"/>
+    <xsl:template name="contexts-doc">
+        <xsl:copy-of select="if (doc-available($contexts_url)) then doc($contexts_url) else ()"/>
+    </xsl:template>
  
     <!--
         convenience-wrapper to formURL-template

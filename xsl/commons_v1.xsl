@@ -16,7 +16,9 @@
     <xsl:variable name="dict">
         <dict/>
     </xsl:variable>
-    <xsl:variable name="contexts" select="document($contexts_url)"/>
+    <xsl:variable name="contexts">
+        <xsl:call-template name="contexts-doc"/>
+    </xsl:variable>
    
 	<!-- common starting point for all stylesheet; cares for unified html-envelope
 		and passes back to the individual stylesheets for the content (via template: continue-root) -->
@@ -106,6 +108,9 @@
             <br/>
             <xsl:value-of select="diag:uri"/>
         </p>
+    </xsl:template>
+    <xsl:template name="contexts-doc">
+        <xsl:copy-of select="document($contexts_url)"/>
     </xsl:template>
         
     <!-- generates a select-option list of available contexts  
