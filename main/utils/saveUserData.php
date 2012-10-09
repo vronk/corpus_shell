@@ -7,7 +7,7 @@
   {
     print "<msg>ok</msg>";
 
-    $path = $csRoot + "main/utils/userdata/";
+    $path = $docRoot.$csRoot."main/utils/userdata/";
 
     $uid = trim($_POST['uid']);
     $data = trim($_POST['data']);

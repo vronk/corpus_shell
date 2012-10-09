@@ -114,7 +114,7 @@ function LoadIndexCache()
     ResourceController.AddResource(resName, SearchConfig[i]["DisplayText"]);
   }
 
-  $.getJSON('http://corpus3.aac.ac.at/cs2/corpus_shell/scripts/js/indexCache.json', function(data)
+  $.getJSON(baseURL + '/scripts/js/indexCache.json', function(data)
   {
     $.each(data, function(key, val)
     {
