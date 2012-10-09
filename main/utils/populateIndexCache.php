@@ -35,8 +35,11 @@
 
   function GetScanResult($resName)
   {
+  	global $switchUrl; 
+  	
     print "ResName --- >  $resName\n";
     $url = $switchUrl."?operation=explain&x-context=".$resName."&version=1.2";
+    print $url;
     $doc = new DOMDocument();
     $doc->load($url);
 
