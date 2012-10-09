@@ -841,7 +841,7 @@ function PanelManager (container, searchConfig)
   //parameters: -
   //purpose:
   //returns:    -
-  this.OpenNewSearchPanel = function(config)
+  this.OpenNewSearchPanel = function(config, searchstr)
   {
     var panelName = this.GetNewPanelId();
     var panelCount = this.Panels.length;
@@ -859,7 +859,7 @@ function PanelManager (container, searchConfig)
       config = this.GetSearchIdx(config);
 
     var newPanel = new Panel(panelName, "search", panelTitle, "", position, false, maxZidx, this.Container, this, config);
-    newPanel.CreatePanel();
+    newPanel.CreatePanel(searchstr);
 
     this.PanelObjects[panelName] = newPanel;
     this.AddMainPanel(panelName, position, undefined, panelTitle, maxZidx + 1);

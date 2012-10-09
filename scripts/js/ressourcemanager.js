@@ -119,7 +119,7 @@ function ResourceManager()
 
         hStr += '<tr><td class="dottedr is' + idx.Searchable + '"';
         if (idx.Searchable == true)
-          hStr += ' style="cursor: pointer;" onclick="PanelController.OpenNewSearchPanel(\'' + resource.Name + '\');"';
+          hStr += ' style="cursor: pointer;" onclick="PanelController.OpenNewSearchPanel(\'' + resource.Name + '\', \'' +  idx.Name + '=\');"';
         hStr += '>search</td>';
         hStr += '<td class="dottedr is' + idx.Scanable + '">scan</td>';
         hStr += '<td class="dottedr is' + idx.Sortable + '">sort</td></tr>';

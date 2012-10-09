@@ -21,6 +21,7 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
   this.ZIndex = zIndex;
   this.Container = container;
   this.PanelController = panelController;
+  this.Config = config;
 
   /* methods */
 
@@ -30,10 +31,10 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
   //            depending on the value of this.Type either this.CreateNewSearchPanel()
   //            or this.CreateNewSubPanel() is called
   //returns:    -
-  this.CreatePanel = function()
+  this.CreatePanel = function(searchstr)
   {
     if (this.Type == "search")
-      this.CreateNewSearchPanel(config);
+      this.CreateNewSearchPanel(this.Config, searchstr);
     else
       this.CreateNewSubPanel();
   }
@@ -191,11 +192,12 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
       $(this.GetCssId()).find(".scroll-pane").height(hgt - 25);
   }
 
-  //function:   this.CreateNewSearchPanel(configIdx)
+  //function:   this.CreateNewSearchPanel(configIdx, searchStr)
   //parameters: configIdx - selected index of SearchCombo
+  //            searchStr - search string to inserted in search input
   //purpose:    creates a new search panel
   //returns:    -
-  this.CreateNewSearchPanel = function(configIdx)
+  this.CreateNewSearchPanel = function(configIdx, searchStr)
   {
     var searchPanel = document.createElement('div');
 
@@ -221,6 +223,11 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
       var xContext = urlObj['x-context'];
       configIdx = this.PanelController.GetSearchIdx(xContext);
       query = urlObj['query'];
+    }
+    else
+    {
+      if (searchStr != undefined)
+        query = searchStr;
     }
 
     $(searchPanel).append(this.GenerateSearchInputs(configIdx, query));
