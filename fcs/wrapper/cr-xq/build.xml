@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xdb="http://exist-db.org/ant" default="xar" name="cr-xq">
+    
+    <property name="build.dir" location="build"/>
+    
+        
+    <target name="xar">
+    		<ant dir="conf"/>
+        <mkdir dir="${build.dir}"/>
+        
+        <zip basedir="." destfile="${build.dir}/cr-xq-0.1.xar" 
+            includes="*.xml, *.xsl, *.xql, *.xqm, modules/**">
+            <zipfileset dir="../../../scripts" prefix="scripts"/>
+            <zipfileset dir="../../../xsl" prefix="xsl"/>
+        </zip>
+        
+<!--        <delete dir="${build.dir}/temp"/>-->
+    </target>
+	<target name="clean">
+		<delete dir="${build.dir}"/>
+	</target>
+	
+<!-- only tested yet - not in production! 
+ant test-xdb -Dexist.user=admin -Dexist.pwd=pwd
+-->	
+	<property name="server.dir" value="C:\apps\exist2"/>
+
+	<path id="classpath.core">
+		<fileset dir="${server.dir}/lib/core">
+		    <include name="*.jar"/>
+		</fileset>
+		<pathelement path="${server.dir}/exist.jar"/>
+		<pathelement path="${server.dir}/exist-optional.jar"/>
+	</path>
+
+	<typedef resource="org/exist/ant/antlib.xml" uri="http://exist-db.org/ant">
+		<classpath refid="classpath.core"/>
+	</typedef>
+	
+	<target name="test-xdb" >
+
+		<xdb:xquery  xmlns:xdb="http://exist-db.org/ant"
+			uri="xmldb:exist://localhost:8682/exist/xmlrpc/db"
+			user="${exist.user}" password="${exist.pwd}">			
+			
+			let $data-path := "/db/cr-test2"
+			  return	xmldb:create-collection("/", $data-path)				
+		</xdb:xquery>
+
+	</target>
+	
+</project>
