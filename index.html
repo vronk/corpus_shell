@@ -2,21 +2,27 @@
   <head>
    <!-- <link rel="stylesheet" type="text/css" href="scripts/style/base/jquery.ui.all.css" />
      <link rel="stylesheet" type="text/css" href="scripts/style/demos.css" /> -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <link rel="stylesheet" type="text/css" href="scripts/style/base/jquery.ui.css" />
     <link rel="stylesheet" type="text/css" href="scripts/style/base/jquery.ui.resizable.css" />
     <link rel="stylesheet" type="text/css" href="scripts/style/jquery.sbscroller.css" />
     <link rel="stylesheet" type="text/css" href="scripts/style/corpusshell.css" />
 
-    <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+    <script type="text/javascript" src="scripts/js/jquery.min.js"></script>
     <script type="text/javascript" src="scripts/js/ui/jquery.ui.core.js"></script>
     <script type="text/javascript" src="scripts/js/ui/jquery.ui.widget.js"></script>
     <script type="text/javascript" src="scripts/js/ui/jquery.ui.mouse.js"></script>
     <script type="text/javascript" src="scripts/js/ui/jquery.ui.draggable.js"></script>
     <script type="text/javascript" src="scripts/js/ui/jquery.ui.resizable.js"></script>
+    <script type="text/javascript" src="scripts/js/ui/jquery.ui.autocomplete.js"></script>
     <script type="text/javascript" src="scripts/js/json.js"></script>
+    <script type="text/javascript" src="scripts/js/panel.js"></script>
     <script type="text/javascript" src="scripts/js/jquery.store.js"></script>
     <script type="text/javascript" src="scripts/js/jquery.mousewheel.min.js"></script>
     <script type="text/javascript" src="scripts/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="scripts/js/jquery.sbscroller.js"></script>
+    <script type="text/javascript" src="scripts/js/params.js"></script>
     <script type="text/javascript" src="scripts/js/corpusshell.config.php"></script>
     <script type="text/javascript" src="scripts/js/profilemanager.js"></script>
     <script type="text/javascript" src="scripts/js/panelmanager.js"></script>
@@ -30,7 +36,7 @@
       		 	<td class="sidebar">
       		 		 <h3>ICLTT Corpus Shell</h3>
       		 		 <div style="padding: 10px;" id="searchbuttons">
-         				<a href="#" onclick="OpenNewSearchPanel($('#searchbuttons .searchcombo').val());" class="sidebar">New search panel</a>
+         				<a href="#" onclick="PanelController.OpenNewSearchPanel($('#searchbuttons .searchcombo').val());" class="sidebar">New search panel</a>
          			</div>
       		 		 <div style="padding: 10px;" id="openpanels">
          				<a href="#" onclick="TogglePanelList();" class="sidebar" id="TogglePanelListButton">Show panel list</a>
@@ -44,7 +50,14 @@
          			 <a href="#" onclick="GetUserData(userId);" style="margin-top: 10px;" class="sidebar">Refresh user profiles</a>
          			</div>
       		 		 <div style="padding: 10px;" id="indexes">
+         				<!--
          				<a href="#" onclick="RefreshIndexes();" class="sidebar" id="RefreshIndexesButton">Refresh indexes</a>
+         				<a href="#" onclick="LoadIndexCache();" style="margin-top: 10px;" class="sidebar" id="LoadIndexesButton">Load indexes</a>
+
+         				<a href="#" onclick="LoadIndexCache();" class="sidebar" id="LoadIndexesButton">Load indexes</a>
+         				<a href="#" onclick="ShowIndexCache();" style="margin-top: 5px;" class="sidebar" id="ShowIndexesButton">Show indexes</a>
+         				-->
+         				<a href="#" onclick="ShowIndexCache();" class="sidebar" id="ShowIndexesButton">Show indexes</a>
          			</div>
       		 	</td>
       		 	<td class="sidebartoggle" onclick="ToggleSideBar();" onmouseover="ToggleSideBarHiLight(1);" onmouseout="ToggleSideBarHiLight(0);">

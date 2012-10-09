@@ -1,0 +1,9 @@
+
+/**
+ * @fileOverview a default version of the params-file for instance specific configuration.
+ * Currently only setting the baseURL variable
+ * you have to rename it to param.js and adapt it to your situation
+ */
+
+var baseURL = "/cs/corpus_shell";
+var switchURL = baseURL + "/fcs/aggregator/switch.php";

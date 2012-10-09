@@ -2,7 +2,7 @@
   
   //load configuration
   //include "../../wrapper/php/config.php";
-  include "/srv/www/htdocs/cs2/corpus_shell/fcs/wrapper/php/config.php";
+  include "config.php";
 
   //SRU version
   $version = "1.2";

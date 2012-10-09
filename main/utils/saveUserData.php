@@ -1,11 +1,13 @@
 <?php
+  
+  include "../../fcs/utils/php/config.php";
 
   print_r($_POST);
   if (isset($_POST['uid']) && trim($_POST['uid']) != "" && isset($_POST['data']) && trim($_POST['data']) != "")
   {
     print "<msg>ok</msg>";
 
-    $path = "/srv/www/htdocs/cs2/corpus_shell/main/utils/userdata/";
+    $path = $docRoot.$csRoot."main/utils/userdata/";
 
     $uid = trim($_POST['uid']);
     $data = trim($_POST['data']);

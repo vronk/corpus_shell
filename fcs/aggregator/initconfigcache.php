@@ -3,7 +3,7 @@
     this script generates a php cache file 
     (that gets included by switch.php as configuration information)
     
-    first the config file ($configUrl) is parsed and all items having the type 
+    first the config file ($switchConfig - set in config.php) is parsed and all items having the type 
     $type (eg. "fcs.resource") are collected. afterwards their endpoints are 
     queried with the params "?operation=scan&scanClause=".$type
     
@@ -11,11 +11,15 @@
     $xslfile.
     
     at last the results of all queries/transformations are merged and written 
-    to the php file $filename. 
+    to the php file $fcsConfig (set in config.php) 
     
     2012-feb by Andy Basch
     */
-  
+
+
+  //load config file
+  include "../utils/php/config.php";
+ 
 
   //get the node value of the first occurrence of $tagName
   //in the children of $node
@@ -39,35 +43,33 @@
   
   //generate success message and display the generated script 
   //with links to all queried endpoints
-  function success($filename, $urls, $content)
+  function success($fcsConfig, $urls, $content)
   {
     echo "<html><head><title>Success!</title></head><body>";
-    echo "Success - file was generated successfully<br>$filename<br><br>";
+    echo "Success - file was generated successfully<br>$fcsConfig<br><br>";
     echo "<br>$urls<br>";
     echo '<pre>' . str_replace("<", "&lt;", $content) . '</pre></body></html>';
   }
 
-  //to speed up xslt the servername ist replaced by "localhost"
+  
   $localhost = "corpus3.aac.ac.at";
-  //target file name
-  $filename = "/srv/www/htdocs/cs2/corpus_shell/fcs/aggregator/fcs.resource.config.php";
-  //config file that is parsed below
-  $configUrl = "/srv/www/htdocs/cs2/corpus_shell/fcs/aggregator/switch.config";
   
   //only process config-items of this type
   $type ="fcs.resource";
 
   //xsl file used to transform the query result into php code
-  $xslfile = "http://corpus3.aac.ac.at/cs2/corpus_shell/fcs/utils/php/fcs.resource.to.php.xsl";
+  //$xslfile = "http://corpus3.aac.ac.at/cs2/corpus_shell/fcs/utils/php/fcs.resource.to.php.xsl";
+  $xslfile = $webRoot."fcs/utils/php/fcs.resource.to.php.xsl";  
+  
   $xslfile = str_replace($localhost, "localhost",  $xslfile);
   
   $content = "";
   $urls = "";
 
   
-  //load the config file $configUrl
+  //load the config file $switchConfig
   $doc = new DOMDocument;
-  $doc->Load($configUrl);
+  $doc->Load($switchConfig);
 
   $xpath = new DOMXPath($doc);
   
@@ -111,13 +113,13 @@
      }
   }
   
-  //write xslt results to the above defined file $filename
-  $handle = fopen($filename, "w"); 
+  //write xslt results to the above defined file $fcsConfig
+  $handle = fopen($fcsConfig, "w"); 
   $content = '<?php' . "\n    " . '$configName = array();'. /* "\n    " . '$configContext = array();' . */ "\n\n    " . $content . "\n?>";
   fwrite($handle, $content);    
   fclose($handle);
   
   //after everything is done, display a success message ...
   //... and the generated php code
-  success($filename, $urls, $content); 
+  success($fcsConfig, $urls, $content); 
 ?>

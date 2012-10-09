@@ -6,11 +6,10 @@
   //$sruMode = "loose";
 
   //definition of constants
-  $configUrl = "switch.config";
-  $localhost = "corpus3.aac.ac.at";
-  $scriptsUrl = "http://corpus3.aac.ac.at/cs2/corpus_shell/scripts";
-  $fcsConfig = "fcs.resource.config.php";
   $fcsConfigFound = false;
+
+  //load config file
+  include "../utils/php/config.php";
 
   //needed to return sru compliant error messages
   include "../utils/php/diagnostics.php";
@@ -67,11 +66,11 @@
   //get default xsl style sheets
   function GetDefaultStyles()
   {
-    global $configUrl;
+    global $switchConfig;
     global $globalStyles;
 
     $doc = new DOMDocument;
-    $doc->Load($configUrl);
+    $doc->Load($switchConfig);
 
     $xpath = new DOMXPath($doc);
     $query = '//styles';
@@ -89,14 +88,14 @@
     }
   }
 
-  //opens $configUrl and searches for an <item> with a <name> value that
+  //opens $switchConfig and searches for an <item> with a <name> value that
   //equals $context - returns configuration infos for the found node in
   //an array
   function GetConfig($context)
   {
-    global $configUrl;
+    global $switchConfig;
     $doc = new DOMDocument;
-    $doc->Load($configUrl);
+    $doc->Load($switchConfig);
 
     $xpath = new DOMXPath($doc);
     $query = '//item';
@@ -137,14 +136,14 @@
   //used in ReturnScan();
   function GetCompleteConfig()
   {
-    global $configUrl;
+    global $switchConfig;
     global $fcsConfigFound;
 
     $configArray = array();
 
-    //open $configUrl (switch.config)
+    //open $switchConfig (switch.config)
     $doc = new DOMDocument;
-    $doc->Load($configUrl);
+    $doc->Load($switchConfig);
 
     //pick all item tags
     $xpath = new DOMXPath($doc);
@@ -317,7 +316,7 @@
   function ReplaceLocalHost($url)
   {
     global $localhost;
-    return str_replace($localhost, "localhost",  $url);
+    return str_replace($localhost, "127.0.0.1",  $url);
   }
 
   function GetDomDocument($url)
@@ -479,7 +478,7 @@
     }
   }
 
-  //load default xsl style sheets from $configUrl
+  //load default xsl style sheets from $switchConfig
   GetDefaultStyles();
 
   // params SRU

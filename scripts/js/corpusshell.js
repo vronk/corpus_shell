@@ -25,21 +25,25 @@ var updating = false;
 var userId = null;
 var searchPanelCount = 1;
 $.storage = new $.store();
-var baseURL = "/cs/corpus_shell";
+var Indexes = null;
+
+// is now set in params.js
+//var baseURL = "/cs2/corpus_shell";
+
 
 $(function()
 {
     $('.scroll-container .data-view.full a').live("click", function (event) {
          event.preventDefault();
-         OpenSubPanel(this, $(this).attr('href'), true, "text");
+         PanelController.OpenSubPanel(this, $(this).attr('href'), true, "text");
       });
     $('.scroll-container .data-view.image a').live("click", function (event) {
          event.preventDefault();
-         OpenSubPanel(this, $(this).attr('href'), true, "image");
+         PanelController.OpenSubPanel(this, $(this).attr('href'), true, "image");
       });
     $('.scroll-container .navigation a').live("click", function (event) {
          event.preventDefault();
-         OpenSubPanel(this, $(this).attr('href'), true, "text");
+         PanelController.OpenSubPanel(this, $(this).attr('href'), true, "text");
       });
 
     userId = $.storage.get("userId");
@@ -53,12 +57,12 @@ $(function()
     GetUserData(userId);
 
     updating = false;
+    LoadIndexCache();
 
     PanelController.onUpdated = function (changeText)
     {
        if (!updating)
        {
-         //alert("onChanged triggered!, changed: " + changeText);
          RefreshPanelList();
          ProfileController.SetProfile(PanelController.ProfileName, PanelController.Panels);
          SaveUserData(userId);
@@ -98,6 +102,35 @@ function GetUserData(userId)
       }
   }
   );
+}
+
+function LoadIndexCache()
+{
+  ResourceController.ClearResources();
+
+  for (var i = 0; i < SearchConfig.length; i++)
+  {
+    var resName = SearchConfig[i]["x-context"];
+    ResourceController.AddResource(resName, SearchConfig[i]["DisplayText"]);
+  }
+
+  $.getJSON(baseURL + '/scripts/js/indexCache.json', function(data)
+  {
+    $.each(data, function(key, val)
+    {
+      for(var index in val)
+      {
+        var item = val[index];
+
+        if (item.searchable == "true") item.searchable = true; else item.searchable = false;
+        if (item.scanable == "true") item.scanable = true; else item.scanable = false;
+        if (item.sortable == "true") item.sortable = true; else item.sortable = false;
+
+        ResourceController.AddIndex(key, item.idxName, item.idxTitle, item.searchable, item.scanable, item.sortable);
+      }
+    });
+
+  });
 }
 
 function json_encode(inVal)
@@ -207,6 +240,7 @@ function SaveUserData(userid)
 //      CHANGE THIS FOR RELEASE
 //      url: "http://corpus3.aac.ac.at/sru/switch.php",
       url: baseURL + "/main/utils/saveUserData.php",
+
       dataType: 'xml',
       data : {uid: userid, data: dataStr},
       complete: function(xml, textStatus)
@@ -244,130 +278,8 @@ function ToggleSideBarHiLight(hi)
     $(".sidebartoggle").css("background-color", "#214F75");
 }
 
-function GetPanelPosition(panel)
-{
-  var position = new Object();
-  position["Left"] = $(panel).css("left");
-  position["Top"] = $(panel).css("top");
-  position["Width"] = $(panel).css("width");
-  position["Height"] = $(panel).css("height");
-
-  return position;
-}
-
-function SavePanelPositon(panel)
-{
-  var panelId = $(panel).attr("id");
-
-  var position = GetPanelPosition(panel);
-  PanelController.SetPanelPosition(panelId, position);
-}
-
-function LoadPanelPosition(panel)
-{
-  var panelId = $(panel).attr("id");
-
-  return PanelController.GetPanelPosition(panelId);
-}
-
-function GetMinZIndex()
-{
-  var minZidx = Math.pow(2, 32) - 1;
-  $( ".draggable" ).each(function(index)
-  {
-     var zIdx = parseInt($(this).css("z-index"));
-     if (zIdx < minZidx)
-       minZidx = zIdx;
-  });
-  return minZidx;
-}
-
-function GetMaxZIndex()
-{
-  LowerZIndex();
-  var maxZidx = 0;
-  $( ".draggable" ).each(function(index)
-  {
-     var zIdx = parseInt($(this).css("z-index"));
-     if (zIdx > maxZidx)
-       maxZidx = zIdx;
-  });
-  return maxZidx;
-}
-
-function LowerZIndex()
-{
-  var minZidx = GetMinZIndex();
-  if (minZidx > 1)
-  {
-    var diff = minZidx - 1;
-    $( ".draggable" ).each(function(index)
-    {
-       var zIdx = parseInt($(this).css("z-index"));
-       var newZIdx = zIdx - diff;
-       $(this).css("z-index", newZIdx);
-       var panelId = $(this).attr('id');
-       PanelController.SetPanelZIndex(panelId, newZIdx);
-    });
-  }
-}
-
-function BringToFront(panel)
-{
-  var maxZidx = GetMaxZIndex();
-  $(panel).css("z-index",maxZidx + 1);
-}
-
-function InitDraggable(divid)
-{
-  $(divid)
-  .resizable({ containment: "parent", aspectRatio: false,
-             resize: function(event, ui)
-             {
-               BringToFront(this);
-               var hgt = parseInt($(this).css("height").replace(/px/g, ""));
-               if ($(this).find(".searchstring").length != 0)
-                 $(this).find(".scroll-pane").css("height", hgt - 105 + "px");
-               else
-                 $(this).find(".scroll-pane").css("height", hgt - 35 + "px");
-
-
-               RefreshScrollPane(this);
-
-               var wid = parseInt($(this).css("width").replace(/px/g, ""));
-               $(this).find(".scroll-content").css("width", wid - 16 + "px");
-
-               SavePanelPositon(this);
-             }
-             })
-  .draggable({ handle: "p", containment: "parent",  snap: true,
-             start: function(event, ui)
-             {
-               BringToFront(this);
-             } ,
-             stop: function(event, ui)
-             {
-               SavePanelPositon(this);
-             }
-             });
-}
-
-function InitScrollPane(parElem)
-{
-  //$(".jspScrollable").removeClass("jspScrollable");
-  //$('.scroll-pane').jScrollPane({autoReinitialise: true});
-  var srdiv = $(parElem).find(".searchresults");
-  $(srdiv).sbscroller({ mousewheel: true});
-}
-
-function RefreshScrollPane(parElem)
-{
-  $(parElem).find(".searchresults").sbscroller('refresh');
-}
-
 $(function()
 {
-  //OpenNewSearchPanel(-1);
   var scombo = GenerateSearchCombo(0);
   $(scombo).css("margin-top", "5px");
   $("#searchbuttons").append(scombo);
@@ -401,20 +313,6 @@ function GenerateProfileCombo(idx, selEntry)
         $(profileoption).attr("selected", "selected");
     }
 
-    /*
-    var currentTime = new Date();
-    var hours = currentTime.getHours();
-    var minutes = currentTime.getMinutes();
-    var seconds = currentTime.getSeconds();
-
-    if (minutes < 10)
-      minutes = "0" + minutes;
-
-    if (seconds < 10)
-      seconds = "0" + seconds;
-
-    $(profileoption).text(profiles[pos] + ' - ' + hours + ':' + minutes + ':' + seconds);
-    */
     $(profileoption).text(profiles[pos]);
     $(profilecombo).append(profileoption);
     i++;
@@ -432,392 +330,6 @@ function RefreshProfileCombo(selEntry)
 
   var htmlstr = $(pcombo).html();
   $('#profilecombo').html(htmlstr);
-}
-
-function GetUrlParams(url)
-{
-  var urlParams = {};
-  if (url != undefined)
-  {
-    var match;
-    var pl     = /\+/g;  // Regex for replacing addition symbol with a space
-    var search = /([^&=]+)=?([^&]*)/g;
-    var decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); };
-
-    var query  = "";
-    var qmPos = url.indexOf('?');
-    if (qmPos != -1)
-      query = url.substr(qmPos + 1);
-    else
-      query = url;
-
-    while (match = search.exec(query))
-       urlParams[decode(match[1])] = decode(match[2]);
-  }
-
-  return urlParams;
-}
-
-function StartSearch(elem)
-{
-  var parElem = $(elem).parents(".draggable");
-  var sstr = $(parElem).find(".searchstring").val();
-  var sele = parseInt($(parElem).find(".searchcombo").val());
-
-  // empty result-pane and indicate loading
-  $(parElem).find(".searchresults").addClass("cmd loading").text("");
-  $(parElem).find(".hitcount").text("-");
-
-  // var url = "http://corpus3.aac.ac.at/switch";
-  var url = "http://193.170.82.207/cs/corpus_shell/fcs/aggregator/switch.php";
-  var xcontext = GetResourceName(sele);
-
-  var urlStr = url + "?operation=searchRetrieve&query=" + sstr + "&x-context=" + xcontext +
-               "&x-format=html&version=1.2";
-
-  PanelController.SetPanelUrl($(parElem).attr("id"), urlStr);
-
-  $.ajax(
-  {
-      type: 'GET',
-//      CHANGE THIS FOR RELEASE
-//      url: "http://corpus3.aac.ac.at/sru/switch.php",
-      url: url,
-      dataType: 'xml',
-      data : {operation: 'searchRetrieve', query: sstr, 'x-context': xcontext, 'x-format': 'html', version: '1.2'},
-      complete: function(xml, textStatus)
-      {
-        var resultPane = $(parElem).find(".searchresults");
-        resultPane.removeClass("cmd loading");
-
-        var hstr = xml.responseText;
-        hstr = hstr.replace(/&amp;/g, "&");
-
-        //What does this do??
-        if ($(parElem).find(".searchresults .scroll-content").length > 0)
-        {
-          $(parElem).find(".searchresults .scroll-content").html(hstr);
-          RefreshScrollPane(parElem);
-        }
-        else
-        {
-          $(resultPane).html(hstr);
-          InitScrollPane(parElem);
-        }
-        var hits = $(resultPane).find(".result-header").attr("data-numberOfRecords")
-        $(parElem).find(".hitcount").text(hits);
-        $(resultPane).find(".result-header").hide();
-      }
-  }
-  );
-}
-
-function LoadBatch(elem)
-{
-  var parElem = $(elem).parents(".draggable");
-  var recordcount = parseInt($(parElem).find(".recordcount").val());
-  var startrecord = parseInt($(parElem).find(".startrecord").val());
-  var maxrecord = parseInt($(parElem).find(".maxrecord").val());
-
-  if (recordcount > 0 && startrecord > 0 && startrecord < recordcount)
-  {
-     Search(elem, startrecord, maxrecord);
-  }
-}
-
-function Search(elem, startrecord, maxrecord)
-{
-  var parElem = $(elem).parents(".draggable");
-  var sstr = $(parElem).find(".searchstring").val();
-
-  // empty result-pane and indicate loading
-  $(parElem).find(".searchresults").addClass("cmd loading").text("");
-  $(parElem).find(".hitcount").text("-");
-
-  $.ajax(
-  {
-      type: 'GET',
-//      CHANGE THIS FOR RELEASE
-//      url: "http://corpus3.aac.ac.at/sru/switch.php",
-      url: "fcs/aggregator/switch.php",
-//          url: "/ddconsru",
-      dataType: 'xml',
-      data : {operation: 'searchRetrieve', query: SearchConfig[sele]['x-context'] + '=' + sstr, startRecord: startrecord, maximumRecords: maxrecord, 'x-context': SearchConfig[sele]['x-context'], 'x-format': 'html', version: '1.2'},
-      complete: function(xml, textStatus)
-      {
-        var resultPane = $(parElem).find(".searchresults")
-        resultPane.removeClass("cmd loading");
-
-        var hstr = xml.responseText;
-        hstr = hstr.replace(/&amp;/g, "&");
-
-        if ($(parElem).find(".searchresults .scroll-content").length > 0)
-        {
-          $(parElem).find(".searchresults .scroll-content").html(hstr);
-          RefreshScrollPane(parElem);
-        }
-        else
-        {
-          $(parElem).find(".searchresults").html(hstr);
-          InitScrollPane(parElem);
-        }
-        $(parElem).find(".hitcount").text($(".recordcount").val());
-      }
-  }
-  );
-}
-
-function LoadPreviousBatch(elem)
-{
-  var parElem = $(elem).parents(".draggable");
-  var recordcount = parseInt($(parElem).find(".recordcount").val());
-  var startrecord = parseInt($(parElem).find(".startrecord").val());
-  var maxrecord = parseInt($(parElem).find(".maxrecord").val());
-
-  if (recordcount > 0)
-  {
-    if (startrecord - maxrecord > 0)
-    {
-      $(parElem).find(".startrecord").val(startrecord - maxrecord);
-      Search(elem, startrecord - maxrecord, maxrecord);
-    }
-    else if (startrecord - maxrecord <= 0)
-    {
-      $(parElem).find(".startrecord").val(1);
-      Search(1, maxrecord);
-    }
-  }
-}
-
-function LoadNextBatch(elem)
-{
-  var parElem = $(elem).parents(".draggable");
-  var recordcount = parseInt($(parElem).find(".recordcount").val());
-  var startrecord = parseInt($(parElem).find(".startrecord").val());
-  var maxrecord = parseInt($(parElem).find(".maxrecord").val());
-
-  if (startrecord + maxrecord < recordcount)
-  {
-    $(parElem).find(".startrecord").val(startrecord + maxrecord);
-    Search(elem, startrecord + maxrecord, maxrecord);
-  }
-}
-
-function GetFullText(elem, filename)
-{
-  $.ajax(
-  {
-      type: 'GET',
-      url: filename,
-      dataType: 'xml',
-      complete: function(xml, textStatus)
-      {
-        var responseText = xml.responseText;
-
-        //strip unnecessary header
-        //responseText = $(responseText).find("div.data-view.full");
-        responseText = $(responseText).find(".title, .data-view, .navigation");
-
-        if ($(elem).find(".scroll-content").length > 0)
-        {
-          $(elem).find(".scroll-content").html(responseText);
-          RefreshScrollPane(elem);
-        }
-        else
-        {
-          $(elem).find(".searchresults").html(responseText);
-          InitScrollPane(elem);
-        }
-      }
-  }
-  );
-}
-
-function GetFacsimile(elem, filename)
-{
-  if ($(elem).find(".searchresults .scroll-content").length > 0)
-  {
-    $(elem).find(".searchresults .scroll-content").html('<img src="' + filename + '" />');
-    RefreshScrollPane(elem);
-  }
-  else
-  {
-    $(elem).find(".searchresults").html('<img src="' + filename + '" />');
-    InitScrollPane(elem);
-  }
-}
-
-function GeneratePanelTitle(titlestring, pin, pinned)
-{
-  var titlep = document.createElement('p');
-  $(titlep).addClass("ui-widget-header");
-
-  var titletable = document.createElement('table');
-  $(titletable).css("width", "100%");
-
-  var titletr = document.createElement('tr');
-  var lefttd = document.createElement('td');
-  $(lefttd).text(titlestring);
-
-  if (pin == 1)
-  {
-     var pintd = document.createElement('td');
-     $(pintd).css("width", "17px");
-
-     var pina = document.createElement('a');
-     $(pina).attr("href", "#");
-
-     if (pinned == true)
-       $(pina).attr("onclick", "PinPanel(this, 1);");
-     else
-       $(pina).attr("onclick", "PinPanel(this, 2);");
-     $(pina).addClass("noborder");
-
-     var pinimg = document.createElement('img');
-
-     if (pinned == true)
-       $(pinimg).attr("src", "scripts/style/img/pin.color.png");
-     else
-       $(pinimg).attr("src", "scripts/style/img/pin.gray.png");
-
-     $(pinimg).addClass("titletopiconpin");
-     $(pinimg).addClass("noborder");
-  }
-
-  var righttd1 = document.createElement('td');
-  $(righttd1).css("width", "17px");
-
-  var maxa = document.createElement('a');
-  $(maxa).attr("href", "#");
-  $(maxa).attr("onclick", "MaximizePanel(this);");
-  $(maxa).addClass("noborder");
-
-  var maximg = document.createElement('img');
-  $(maximg).attr("src", "scripts/style/img/n.win_max.png");
-  $(maximg).addClass("titletopiconmax");
-  $(maximg).addClass("noborder");
-
-  var righttd2 = document.createElement('td');
-  $(righttd2).css("width", "17px");
-
-  var closea = document.createElement('a');
-  $(closea).attr("href", "#");
-  $(closea).attr("onclick", "ClosePanel(this);");
-  $(closea).addClass("noborder");
-
-  var closeimg = document.createElement('img');
-  $(closeimg).attr("src", "scripts/style/img/n.win_close.png");
-  $(closeimg).addClass("titletopiconclose");
-  $(closeimg).addClass("noborder");
-
-  $(maxa).append(maximg);
-  $(closea).append(closeimg);
-
-  $(righttd1).append(maxa);
-  $(righttd2).append(closea);
-
-  $(titletr).append(lefttd);
-
-  if (pin == 1)
-  {
-    $(pina).append(pinimg);
-    $(pintd).append(pina);
-
-    $(titletr).append(pintd);
-  }
-
-  $(titletr).append(righttd1);
-  $(titletr).append(righttd2);
-
-  $(titletable).append(titletr);
-  $(titlep).append(titletable);
-
-  return titlep;
-}
-
-function GenerateSearchNavigation()
-{
-  var navtable = document.createElement('table');
-  $(navtable).addClass("navigation");
-
-  var navtr = document.createElement('tr');
-  var navigationtitle = document.createElement('td');
-  $(navigationtitle).text("Search results");
-  $(navigationtitle).addClass("navigationtitle");
-
-  var navigationmain = document.createElement('td');
-  $(navigationmain).addClass("navigationmain");
-  $(navigationmain).append("<i>hits:</i>&nbsp;");
-
-  var hitcount = document.createElement('span');
-  $(hitcount).addClass("hitcount");
-  $(hitcount).text("0");
-
-  $(navigationmain).append(hitcount);
-  $(navigationmain).append(";&nbsp;<i>from:</i>&nbsp;");
-
-  var startrecord = document.createElement('input');
-  $(startrecord).addClass("startrecord");
-  $(startrecord).attr("type","text");
-  $(startrecord).val("1");
-
-  $(navigationmain).append(startrecord);
-  $(navigationmain).append("&nbsp;<i>max:</i>&nbsp;");
-
-  var maxrecord = document.createElement('input');
-  $(maxrecord).addClass("maxrecord");
-  $(maxrecord).attr("type","text");
-  $(maxrecord).val("10");
-
-  $(navigationmain).append(maxrecord);
-
-  var loada = document.createElement('a');
-  $(loada).addClass("noborder");
-
-  var loadimg = document.createElement('img');
-  $(loadimg).addClass("navigationicon");
-  $(loadimg).attr("src", "scripts/style/img/n.arrow_right_b.png");
-
-  $(loada).append(loadimg);
-
-  var preva = document.createElement('a');
-  $(preva).addClass("noborder");
-
-  var previmg = document.createElement('img');
-  $(previmg).addClass("navigationicon");
-  $(previmg).attr("src", "scripts/style/img/n.arrow_left.png");
-
-  $(preva).append(previmg);
-
-  var nexta = document.createElement('a');
-  $(nexta).addClass("noborder");
-
-  var nextimg = document.createElement('img');
-  $(nextimg).addClass("navigationicon");
-  $(nextimg).attr("src", "scripts/style/img/n.arrow_right.png");
-
-  $(nexta).append(nextimg);
-
-  $(navigationmain).append(loada);
-  $(navigationmain).append(preva);
-  $(navigationmain).append(nexta);
-
-  $(navtr).append(navigationtitle);
-  $(navtr).append(navigationmain);
-
-  $(navtable).append(navtr);
-
-  return navtable;
-}
-
-function GetSearchIdx(xContext)
-{
-  for (var idx = 0; idx < SearchConfig.length; idx++)
-  {
-    if (SearchConfig[idx]['x-context'] == xContext)
-      return idx;
-  }
-  return 0;
 }
 
 function GenerateSearchCombo(config)
@@ -840,310 +352,14 @@ function GenerateSearchCombo(config)
   return searchcombo;
 }
 
-function GenerateSearchInputs(configIdx, searchStr)
+function split( val )
 {
-  var searchdiv = document.createElement('div');
-  $(searchdiv).addClass("searchdiv");
-  $(searchdiv).text("Search for ");
-
-  var searchstring = document.createElement('input');
-  $(searchstring).addClass("searchstring");
-  $(searchstring).attr("type", "text");
-
-  if (searchStr != undefined)
-    $(searchstring).val(searchStr);
-
-  var buttondiv = document.createElement('div');
-  $(buttondiv).css('float', 'right');
-
-  var searchbutton = document.createElement('input');
-  $(searchbutton).addClass("searchbutton");
-  $(searchbutton).attr("type", "button");
-  $(searchbutton).attr("value", "Go");
-  $(searchbutton).attr("onclick", "StartSearch(this);");
-
-  var searchcombo = GenerateSearchCombo(configIdx);
-
-  $(searchdiv).append(searchstring);
-  $(searchdiv).append(" in ");
-  $(searchdiv).append(searchcombo);
-  $(searchdiv).append(" ");
-  $(buttondiv).append(searchbutton);
-  $(searchdiv).append(buttondiv);
-
-  $(searchstring).keyup(function(event)
-  {
-    if(event.keyCode == 13)
-      $(searchbutton).click();
-  });
-
-  $(searchcombo).keyup(function(event)
-  {
-    if(event.keyCode == 13)
-      $(searchbutton).click();
-  });
-
-  return searchdiv;
+  return val.split( /=\s*/ );
 }
 
-function GenerateSearchResultsDiv()
+function extractLast( term )
 {
-  var resultdiv = document.createElement('div');
-  //$(resultdiv).addClass("scroll-pane");
-  $(resultdiv).addClass("searchresults");
-  return resultdiv;
-}
-
-function OpenNewSearchPanel(config)
-{
-  var panelName = PanelController.GetNewPanelId();
-  var left = 200 + 20*PanelCount + "px";
-  var top = 10 + 20*PanelCount +  "px";
-  var wid = "525px";
-  var hgt = "600px";
-  var maxZidx = GetMaxZIndex();
-  var panelTitle = PanelController.GetNewSearchPanelTitle();
-
-  CreateNewSearchPanel(panelName, left, top, wid, hgt, maxZidx + 1, panelTitle, "", config)
-  var position = GetPanelPosition('#' + panelName);
-
-  PanelController.AddMainPanel(panelName, position, undefined, panelTitle, maxZidx + 1);
-  searchPanelCount++;
-}
-
-function CreateNewSearchPanelObj(panelObj)
-{
-  if (panelObj != undefined)
-  {
-    CreateNewSearchPanel(panelObj.Id, panelObj.Position.Left, panelObj.Position.Top, panelObj.Position.Width,
-                         panelObj.Position.Height, panelObj.ZIndex, panelObj.Title, panelObj.Url, 0);
-  }
-}
-
-function CreateNewSearchPanel(id, left, top, wid, hgt, zIdx, title, url, config)
-{
-  var searchpanel = document.createElement('div');
-
-  $(searchpanel).addClass("draggable ui-widget-content whiteback");
-  $(searchpanel).attr("id", id);
-  $(searchpanel).attr("onclick", "BringToFront(this);");
-  $(searchpanel).css("position", "absolute");
-  $(searchpanel).css("left", left);
-  $(searchpanel).css("top", top);
-  $(searchpanel).css("width", wid);
-  $(searchpanel).css("height", hgt);
-  $(searchpanel).css("z-index", zIdx);
-
-  var titlep = GeneratePanelTitle(title, 0, false);
-  $(searchpanel).append(titlep);
-
-  var query = "";
-  if (url != undefined && url != "")
-  {
-    var urlObj = GetUrlParams(url);
-    var xContext = urlObj['x-context'];
-    config = GetSearchIdx(xContext);
-    query = urlObj['query'];
-  }
-
-  $(searchpanel).append(GenerateSearchInputs(config, query));
-  $(searchpanel).append(GenerateSearchNavigation());
-
-  var searchResultDiv = GenerateSearchResultsDiv();
-  var newHeight = parseInt(hgt.replace(/px/g, "")) - 105;
-  $(searchResultDiv).css("height", newHeight + "px");
-  $(searchpanel).append(searchResultDiv);
-
-  $("#snaptarget").append(searchpanel);
-  InitDraggable(searchpanel);
-}
-
-function CreateNewSubPanelObj(panelObj)
-{
-  if (panelObj == undefined) return;
-
-  return CreateNewSubPanel(panelObj.Id, panelObj.Position.Left, panelObj.Position.Top,
-                             panelObj.Position.Width, panelObj.Position.Height, panelObj.ZIndex,
-                             panelObj.Title, panelObj.Url, panelObj.Pinned, panelObj.Type);
-}
-
-function CreateNewSubPanel(panelId, left, top, wid, hgt, zIdx, title, url, pinned, type)
-{
-  var newPanel = document.createElement('div');
-  $(newPanel).addClass("draggable ui-widget-content whiteback");
-
-  $(newPanel).attr("id", panelId);
-  $(newPanel).attr("onclick", "BringToFront(this);");
-  $(newPanel).css("position", "absolute");
-
-  $(newPanel).css("left", left);
-  $(newPanel).css("top", top);
-  $(newPanel).css("width", wid);
-  $(newPanel).css("height", hgt);
-  $(newPanel).css("z-index", zIdx);
-
-  var titlep = GeneratePanelTitle(title, 1, pinned);
-  $(newPanel).append(titlep);
-  var searchResultDiv = GenerateSearchResultsDiv();
-  $(searchResultDiv).css('height', $(newPanel).height() - 35);
-  $(newPanel).append(searchResultDiv);
-
-  $("#snaptarget").append(newPanel);
-  CorrectSearchResultHeight(newPanel);
-
-  if (type == "image")
-    GetFacsimile(newPanel, url);
-  else if (type == "text")
-    GetFullText(newPanel, url);
-
-  InitDraggable(newPanel);
-
-  return newPanel;
-}
-
-function OpenSubPanel(elem, filename, pinned, type)
-{
-  var paneldiv = $(elem).parents(".draggable");
-  var parentId = $(paneldiv).attr('id');
-
-  var panel;
-
-  if (type == "image")
-  {
-    panel = PanelController.GetPinnedImagePanelId(parentId);
-    filename = filename.replace(/xml/g, "jpg");
-  }
-  else if (type == "text")
-    panel = PanelController.GetPinnedTextPanelId(parentId);
-
-  if (panel == null)
-  {
-    var panelId = PanelController.GetNewPanelId();
-
-    var parentId = $(paneldiv).attr('id');
-
-    var wid = parseInt($(paneldiv).css("width").replace(/px/g, ""));
-    var lef = parseInt($(paneldiv).css("left").replace(/px/g, ""));
-
-    var left = lef + wid + 15 + "px";
-    var top = $(paneldiv).css("top");
-    var width = "350px";
-    var height = $(paneldiv).css("height");
-
-    var zIdx = GetMaxZIndex() + 1;
-    var panelTitle = "";
-
-    if (type == "image")
-      panelTitle = "Facsimile";
-    else if (type == "text")
-      panelTitle = "Full text";
-
-    var newPanel = CreateNewSubPanel(panelId, left, top, width, height, zIdx, panelTitle, filename, pinned, type)
-
-    var position = GetPanelPosition(newPanel);
-    if (type == "image")
-      PanelController.AddImagePanel(parentId, panelId, pinned, position, filename, panelTitle, zIdx);
-    else if (type == "text")
-      PanelController.AddTextPanel(parentId, panelId, pinned, position, filename, panelTitle, zIdx);
-  }
-  else
-  {
-    var newPanel = $('#' + panel);
-    PanelController.SetPanelUrl(panel, filename);
-
-    if (type == "image")
-      GetFacsimile(newPanel, filename);
-    else if (type == "text")
-      GetFullText(newPanel, filename);
-
-    InitDraggable(newPanel);
-  }
-}
-
-function MaximizePanel(titlep)
-{
-  var paneldiv = $(titlep).parents(".draggable");
-  $(paneldiv).css("left", "5px");
-  $(paneldiv).css("top", "0px");
-  var wid = $("#mainpanel").width();
-  var hgt = $("#mainpanel").height();
-  $(paneldiv).css("width", wid-30);
-  $(paneldiv).css("height", hgt-25);
-
-  var maxZidx = GetMaxZIndex();
-  $(paneldiv).css("z-index",maxZidx + 1);
-
-  //var hgt = parseInt($(paneldiv).css("height").replace(/px/g, ""));
-  //$(paneldiv).find(".scroll-pane").css("height", hgt - 150 + "px");
-
-  CorrectSearchResultHeight(paneldiv);
-
-  $(titlep).find(".titletopiconmax").attr("src", "scripts/style/img/n.win_norm.png");
-  $(titlep).find(".titletopiconmax").parent().attr("onclick", "NormalizePanel(this);");
-}
-
-function NormalizePanel(titlep)
-{
-  var paneldiv = $(titlep).parents(".draggable");
-  var pos = LoadPanelPosition(paneldiv);
-
-  if (pos)
-  {
-    $(paneldiv).css("left", pos.Left);
-    $(paneldiv).css("top", pos.Top);
-    $(paneldiv).css("width", pos.Width);
-    $(paneldiv).css("height", pos.Height);
-
-    var maxZidx = GetMaxZIndex();
-    $(paneldiv).css("z-index",maxZidx + 1);
-  }
-
-  //var hgt = parseInt($(paneldiv).css("height").replace(/px/g, ""));
-  //$(paneldiv).find(".scroll-pane").css("height", hgt - 150 + "px");
-
-  CorrectSearchResultHeight(paneldiv);
-
-  $(titlep).find(".titletopiconmax").attr("src", "scripts/style/img/n.win_max.png");
-  $(titlep).find(".titletopiconmax").parent().attr("onclick", "MaximizePanel(this);");
-}
-function ClosePanel(titlep)
-{
-  var paneldiv = $(titlep).parents(".draggable");
-  var panelId = $(paneldiv).attr('id');
-
-  $(paneldiv).remove();
-  PanelController.RemovePanel(panelId);
-}
-
-function PinPanel(elem, col)
-{
-  var paneldiv = $(elem).parents(".draggable");
-  var panelId = $(paneldiv).attr('id');
-
-  if (col == 1)
-  {
-    $(paneldiv).find(".titletopiconpin").attr("src", "scripts/style/img/pin.gray.png");
-    $(paneldiv).find(".titletopiconpin").removeClass("pinned");
-    $(paneldiv).find(".titletopiconpin").parent().attr("onclick", "PinPanel(this, 2);");
-    PanelController.SetPanelNotPinned(panelId);
-  }
-  else
-  {
-    $(paneldiv).find(".titletopiconpin").attr("src", "scripts/style/img/pin.color.png");
-    $(paneldiv).find(".titletopiconpin").addClass("pinned");
-    $(paneldiv).find(".titletopiconpin").parent().attr("onclick", "PinPanel(this, 1);");
-    PanelController.SetPanelPinned(panelId);
-  }
-
-}
-
-function CorrectSearchResultHeight(paneldiv)
-{
-  var hgt = parseInt($(paneldiv).css("height").replace(/px/g, ""));
-  if ($(paneldiv).find(".searchstring").length != 0)
-    $(paneldiv).find(".scroll-pane").css("height", hgt - 105 + "px");
-  else
-    $(paneldiv).find(".scroll-pane").css("height", hgt - 25 + "px");
+		return split( term ).pop();
 }
 
 function RefreshPanelList()
@@ -1208,7 +424,7 @@ function TogglePanelList()
 
     $(a).addClass('sidebar');
     $(a).attr('href','#');
-    $(a).attr('onclick','BringToFront("#' + panelName + '");');
+    $(a).attr('onclick','PanelController.BringToFront("' + panelName + '");');
     $(a).css('display', 'block');
     $(a).css('padding-top', '2px');
     $(a).css('padding-bottom', '2px');
@@ -1231,7 +447,7 @@ function TogglePanelList()
 
         $(aSub).addClass('sidebar');
         $(aSub).attr('href','#');
-        $(aSub).attr('onclick','BringToFront("#' + subPanelName + '");');
+        $(aSub).attr('onclick','PanelController.BringToFront("' + subPanelName + '");');
         $(aSub).css('display', 'block');
         $(aSub).css('padding-top', '2px');
         $(aSub).css('padding-bottom', '2px');
@@ -1255,49 +471,9 @@ function TogglePanelList()
 function LoadProfile(name)
 {
   updating = true;
-  ClearPanels();
-  PanelController.Panels = ProfileController.GetProfile(name);
-  PanelController.ProfileName = name;
-
-  searchPanelCount = 0;
-  PanelCount = 0;
-
-  for (var key in PanelController.Panels)
-  {
-    searchPanelCount++;
-    PanelCount++;
-    var panel = PanelController.Panels[key];
-    CreateNewSearchPanelObj(panel);
-    if (panel.Url != undefined && panel.Url != "")
-      StartSearch("#" + panel.Id + " .searchbutton");
-
-    for (var subKey in panel.Panels)
-    {
-      PanelCount++;
-      var subPanel = panel.Panels[subKey];
-      CreateNewSubPanelObj(subPanel);
-    }
-  }
+  PanelController.LoadProfile(name, ProfileController.GetProfile(name));
   updating = false;
-  PanelController.RefreshUsedPanels();
-  PanelController.RefreshUsedSearchPanelTitles();
   RefreshPanelList();
-}
-
-function ClearPanels()
-{
-   $("div.draggable").each(function()
-   {
-     $(this).remove();
-   });
-   PanelCount = 0;
-   searchPanelCount = 1;
-}
-
-function RemoveAllPanels()
-{
-  ClearPanels();
-  PanelController.RemoveAllPanels();
 }
 
 function SaveProfileAs(newName)
@@ -1330,7 +506,7 @@ function CreateNewProfile(newName)
     SaveUserData(userId);
     RefreshProfileCombo(newName);
   }
-}
+}	
 
 function DeleteProfile(profileName)
 {
@@ -1390,15 +566,50 @@ function GetIndexes(resName)
   );
 }
 
-function GetResourceName(idx)
-{
-  return SearchConfig[idx]["x-context"];
-}
-
 function GetIndexesFromSearchCombo()
 {
   var sele = parseInt($(parElem).find(".searchcombo").val());
   var resource = GetResourceName(sele);
 
   return ResourceController.GetLabelValueArray(resource);
+}
+
+function ShowIndexCache()
+{
+  if ($('#indexList').length != 0)
+  {
+     $('#openIndexList').remove();
+     $('#ShowIndexesButton').text('Show indexes');
+     return true;
+  }
+
+  $('#openIndexList').remove();
+  $('#ShowIndexesButton').text('Hide indexes');
+
+  var hStr = ResourceController.GetIndexCache();
+
+   $('#ShowIndexesButton').after(hStr);
+
+  $('#openIndexList').css('padding', '10px 0px');
+  $('#openIndexList').css('border-left', '1px dotted #666666');
+  $('#openIndexList').css('border-right', '1px dotted #666666');
+  $('#openIndexList').css('border-bottom', '1px dotted #666666');
+
+
+  //$('#indexList').css('margin-left', '15px');
+  $('#indexList').css('width', '162px');
+  $('#indexList').css('border-collapse', 'collapse');
+
+  $('#openIndexList td.dotted.b').css('font-weight', 'bold');
+  $('#openIndexList td.dotted').css('color', '#000000');
+  $('#openIndexList td.dotted').css('vertical-align', 'top');
+  $('#openIndexList td.dotted').css('border-top', '1px dotted #666666');
+
+  $('#openIndexList td.dottedr.isfalse').css('color', '#999999');
+  $('#openIndexList td.dottedr.isfalse').css('text-decoration', 'line-through');
+  $('#openIndexList td.dottedr.istrue').css('color', '#000000');
+
+
+  $('#openIndexList td.dottedr').css('vertical-align', 'top');
+  $('#openIndexList td.dottedr').css('text-align', 'right');
 }
