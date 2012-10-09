@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<repo:meta xmlns="http://exist-db.org/xquery/repo" xmlns:repo="http://exist-db.org/xquery/repo">
+    <repo:description>content repository, supporting FCS-protocol; part of corpus_shell</repo:description>
+    <repo:author>Matej Durco</repo:author>
+    <repo:website/>
+    <repo:status>alpha</repo:status>
+    <repo:license>GNU-LGPL</repo:license>
+    <repo:copyright>true</repo:copyright>
+    <repo:type>application</repo:type>
+    <repo:target>/db/cr</repo:target>
+<!--    <repo:prepare>pre-install.xql</repo:prepare>-->
+<!--    <repo:finish>cr-init.xql</repo:finish> -->
+<!--    <repo:permissions user="admin" password="" group="dba" mode="0775"/>-->
+</repo:meta>
