@@ -20,7 +20,8 @@ declare variable $repo-utils:xmlExt as xs:string := ".xml";
 declare variable $repo-utils:responseFormatXml as xs:string := "xml";
 declare variable $repo-utils:responseFormatJSon as xs:string := "json";
 declare variable $repo-utils:responseFormatText as xs:string := "text";
-declare variable $repo-utils:responseFormatHTML as xs:string := "htmlpage";
+declare variable $repo-utils:responseFormatHTML as xs:string := "html";
+declare variable $repo-utils:responseFormatHTMLpage as xs:string := "htmlpage";
 
 
 declare function repo-utils:config-value($config, $key as xs:string) as xs:string* {
