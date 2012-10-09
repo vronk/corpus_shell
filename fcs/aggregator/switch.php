@@ -316,7 +316,7 @@
   function ReplaceLocalHost($url)
   {
     global $localhost;
-    return str_replace($localhost, "localhost",  $url);
+    return str_replace($localhost, "127.0.0.1",  $url);
   }
 
   function GetDomDocument($url)
