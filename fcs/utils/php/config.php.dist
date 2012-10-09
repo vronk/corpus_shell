@@ -25,7 +25,8 @@
 
   $localhost =               "corpus3.aac.ac.at";
   $webRoot =                 "http://" . $localhost . "/" . $csRoot;
-  $scriptsUrl =              $webRoot . "scripts";
+  $switchUrl =							 $webRoot . "fcs/aggregator/switch.php";
+  $scriptsUrl =              $webRoot . "scripts";  
   $fcsConfig =               $fcsRoot . "aggregator/fcs.resource.config.php";
   $switchConfig =            $fcsRoot . "aggregator/switch.config";
   $indexCacheFileName =      $docRoot . $csRoot . "scripts/js/indexCache.json";

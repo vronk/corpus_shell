@@ -36,7 +36,7 @@
   function GetScanResult($resName)
   {
     print "ResName --- >  $resName\n";
-    $url = "http://localhost/switch?operation=explain&x-context=$resName&version=1.2";
+    $url = $switchUrl."?operation=explain&x-context=".$resName."&version=1.2";
     $doc = new DOMDocument();
     $doc->load($url);
 
