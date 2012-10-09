@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <property key="log.path">/db/cr-logs</property>
+    <property key="scripts.path">/db/cr/xsl/</property>
+    <property key="scan.xsl">scan2view.xsl</property>
+    <property key="searchRetrieve.xsl">result2view_v2.xsl</property>
+    <property key="explain.xsl">explain2view.xsl</property>
+    <property key="html.xsl">misc/html2view.xsl</property>
+    <property key="static.xsl">misc/static2view.xsl</property>
+    <property key="table.xsl">misc/xml2htmltable.xsl</property>
+    <property key="default.xsl">misc/xml2view.xsl</property>
+    <property key="test.xsl">misc/test2view.xsl</property>
+    <property key="terms.xsl">misc/terms2view.xsl</property>
+    <property key="log.path">/db/cr-logs</property>
+</config>

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map>
+    <map key="default">
+        <!-- very bad idea to give * as default PLUS default base-elem !!! 
+        <index key="cql.serverChoice" base_elem="*">*</index>
+        -->
+        <index key="cql.serverChoice" base_elem="p">
+            <path>p</path>
+        </index>
+        <index key="fcs.resource" type="explicit"/>
+        <index key="cmd.collection" base_elem="CMD" type="explicit" status="indexed">
+            <path>MdSelfLink</path>
+        </index>
+        <index key="resource-pid">
+            <path>'clarin.at:icltt:cr'</path>
+        </index>
+    </map>
+    <map key="univie.at:cpas" path="/db/cr-data/cpas" base_elem="">
+        <index key="text">
+            <path>tei:bibl</path>
+            <path>tei:event</path>
+            <path>tei:person</path>
+            <path>tei:place</path>
+            <path>tei:div</path>
+        </index>
+        <index key="cql.serverChoice">
+            <path>tei:bibl</path>
+            <path>tei:event</path>
+            <path>tei:person</path>
+            <path>tei:place</path>
+            <path>tei:div</path>
+        </index>
+        <index key="title" use="xs:string(@value)">
+            <path>persName</path>
+        </index>
+        <index key="geo" use="text()" link="http://maps.google.at/?q=">
+            <path>tei:geo</path>
+            <path>geo</path>
+        </index>
+        <index key="resource-pid">
+            <path>'univie.at:cpas'</path>
+        </index>
+        <index key="resourcefragment-pid" use="@xml:id">
+            <path>tei:person</path>
+            <path>tei:bibl</path>
+            <path>tei:event</path>
+            <path>tei:place</path>
+        </index>
+    </map>
+    <map key="clarin.at:icltt:cr:stb" path="/db/cr-data/stb" base_elem="div" sort="diary-day">
+<!--        [@type='diary-day'] the attribute taken out of the base-elem, because of bug? with util:expand-->
+        <index status="indexed" key="cql.serverChoice">
+            <path>p</path>
+        </index>
+        <index key="diary-day" use="@value">
+            <path>div[@type='diary-day']/p/date[1]</path>
+        </index>
+        <index key="diary-month" use="substring(xs:string(@value),1,7)">
+            <path>div[@type='diary-day']//date[1]</path>
+        </index>
+        <index key="diary-year" use="substring(xs:string(@value),1,4)">
+            <path>div[@type='diary-day']//date[1]</path>
+        </index>
+        <index key="text">
+            <path>div[@type='diary-day']</path>
+        </index>
+        <index status="indexed" key="personName">
+            <path>persName</path>
+        </index>
+        <index key="person" use="@key" base_elem="p" link="?x-format=html&amp;x-context=clarin.at%3Aicltt%3Acr%3Aaac-names&amp;query=persId=">
+            <path>persName</path>
+        </index>
+        <index key="placeName"> <!--use="text()"-->
+            <path>placeName</path>
+        </index>
+        <!-- -->
+        <index key="title" use="xs:string(@value)">
+            <path>date[1]</path>
+        </index>
+        <index key="resource-pid">
+            <path>'clarin.at:icltt:cr:stb'</path>
+        </index>
+        <index key="resourcefragment-pid" use="@value">
+            <path>date[1]</path>
+        </index>
+    </map>
+    <map key="clarin.at:icltt:cr:aac-names" path="/db/cr-data/aac_names" base_elem="tei:person">
+        <index key="resource-pid">
+            <path>'clarin.at:icltt:cr:aac-names'</path>
+        </index>
+        <index key="resourcefragment-pid" use="@xml:id">
+            <path>tei:person</path>
+        </index>
+        <index key="persId" use="@xml:id" link="?x-format=html&amp;x-context=clarin.at%3Aicltt%3Acr%3Astb&amp;query=person=">
+            <path>tei:person</path>
+        </index>
+        <index key="cql.serverChoice">
+            <path>tei:person</path>
+        </index>
+        <index key="personName" status="indexed">
+            <path>tei:persName</path>
+        </index>
+        <index key="title">
+            <path>tei:persName</path>
+        </index>
+        <index key="occupation">
+            <path>tei:occupation</path>
+        </index>
+        <index key="sex">
+            <path>tei:sex</path>
+        </index>
+        <index key="birth-place">
+            <path>tei:birth/tei:placeName</path>
+        </index>
+        <index key="death-place">
+            <path>tei:death/tei:placeName</path>
+        </index>
+        <index key="birth-date" use="xs:string(@when)">
+            <path>tei:birth</path>
+        </index>
+        <index key="death-date" use="xs:string(@when)">
+            <path>tei:death</path>
+        </index>
+        <index key="diary-day" use="@target">
+            <path>tei:link</path>
+        </index>  <!-- which persons, occurred in which diary day  -->
+    </map>
+    <map key="clarin.at:icltt:cr:barock" path="/db/cr-data/barock" base_elem="p">
+        <index key="cql.serverChoice">
+            <path>*</path>
+        </index>
+        <index key="ref">
+            <path>rs</path>
+        </index>
+    </map>
+</map>

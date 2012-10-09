@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<info xml:lang="en">
+    <div id="index">
+        <a class="template" href="query-input">query-input</a>
+        <a class="request" href="static/welcome?format=htmldetail">Welcome</a>
+        <a class="request" href="collection/htmllist?repository=clarin.at-mirror&amp;collection=&amp;maxdepth=1">collections clarin.at</a>
+        <a class="request" href="collection/htmllist?repository=gu.se-main&amp;collection=&amp;maxdepth=1">collections gu.se-main</a>
+    </div>
+</info>

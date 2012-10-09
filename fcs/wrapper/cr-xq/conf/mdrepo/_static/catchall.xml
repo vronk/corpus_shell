@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<info xml:lang="en">
+    <div id="catchall">
+        <div class="error">Invalid request.<br/> Try a simple query or browse through the collections.</div>
+<!-- TODO: mirror the request -->
+        <a class="template" href="query-input">query-input</a>
+	<!--		<a class="request" href="/collections?repository=clarin.at-mirror&collection=&maxdepth=1&format=htmllist">collections clarin.at</a>		-->
+    </div>
+</info>

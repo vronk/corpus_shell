@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<collection xmlns="http://exist-db.org/collection-config/1.0">
+    <index xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xqdoc="http://www.xqdoc.org/1.0">
+        <!--        <fulltext default="none" attributes="no"/>-->
+        <lucene>
+            <analyzer class="org.apache.lucene.analysis.standard.StandardAnalyzer"/>
+            <text qname="div"/>
+            <text qname="p"/>
+            <text qname="placeName"/>
+            <text qname="persName"/>
+            <text qname="tei:persName"/>
+            <text qname="tei:placeName"/>
+            <text qname="forename"/>
+            <text match="//persName/@xml:id"/>
+            <text match="@xml:id"/>
+        </lucene>
+        <create qname="@value" type="xs:string"/>
+        <create qname="@type" type="xs:string"/>
+        <create qname="@xml:id" type="xs:string"/>
+        <create qname="div" type="xs:string"/>
+        <create qname="p" type="xs:string"/>
+        <create qname="tei:person" type="xs:string"/>
+        <create qname="tei:persName" type="xs:string"/>
+    </index>
+</collection>

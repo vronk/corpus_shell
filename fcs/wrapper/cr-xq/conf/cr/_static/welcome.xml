@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<info xml:lang="en">
+    <div id="welcome">
+        <h2>Welcome to ICLTT Content Repository</h2>
+        <p>This repository contains some of the language resources of the institute and allows to search and browse in them.</p>
+        <p>It is one part of the institute's framework for publishing language resources, the <a href="">corpus_shell</a>.</p>
+        <h3>Resources overview</h3>
+        <p>Following resources are available in this repository:</p>
+        <ul>
+            <li>Schnitzler Tagebuch</li>
+        </ul>
+        <dl>
+            <dt>
+                <a href="queries">Example queries</a>
+            </dt>
+            <dd>overview of possible query-types</dd>
+            <dt>
+                <a href="info">About</a>
+            </dt>
+            <dd>explanatory, introductory docs</dd>
+        </dl>
+    </div>
+</info>

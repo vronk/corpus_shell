@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xdb="http://exist-db.org/ant" default="xar" name="cr-xq-conf">
+     
+    <property name="conf" value="default"/>
+    <property name="deploy.base.url" location="http://localhost:8080/exist/cr"/>
+    
+    <target name="xar" depends="conf-cond, xar-one, xar-all" >
+    	<description>package either specific configuration, or all configurations </description>
+    </target>
+    
+    <target name="xar-one" unless="${conf.all}" >
+        <mkdir dir="${build.dir}"/>
+        <zip basedir="." destfile="${build.dir}/cr-xq-0.1-conf-${conf}.xar" 
+            includes="*.xml,${conf}/**">            
+        </zip>
+    </target>
+    
+    <target name="xar-all" if="${conf.all}">
+        <mkdir dir="${build.dir}"/>
+        <zip basedir="." destfile="${build.dir}/cr-xq-0.1-conf-all.xar" 
+            includes="*.xml,**">            
+        </zip>
+    </target>
+    
+    <target name="conf-cond" >
+    	<condition property="conf.all">
+    			<equals arg1="${conf}" arg2="all" />
+    	</condition>
+    </target>
+
+</project>
