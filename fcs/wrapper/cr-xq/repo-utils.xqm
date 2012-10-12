@@ -2,6 +2,7 @@ module namespace repo-utils = "http://aac.ac.at/content_repository/utils";
 
 import module namespace xdb="http://exist-db.org/xquery/xmldb";
 import module namespace diag =  "http://www.loc.gov/zing/srw/diagnostic/" at  "modules/diagnostics/diagnostics.xqm";
+import module namespace request="http://exist-db.org/xquery/request";
 
 (:~ HELPER functions - configuration, caching, data-access
 :)
@@ -23,9 +24,23 @@ declare variable $repo-utils:responseFormatText as xs:string := "text";
 declare variable $repo-utils:responseFormatHTML as xs:string := "html";
 declare variable $repo-utils:responseFormatHTMLpage as xs:string := "htmlpage";
 
+declare variable $repo-utils:sys-config-file := "conf/config-system.xml";
+
+declare function repo-utils:base-url($config) as xs:string* {
+    let $server-base := if (repo-utils:config-value($config, 'server.base') = '') then ''  else repo-utils:config-value($config, 'server.base')
+    let $config-base-url := if (repo-utils:config-value($config, 'base.url') = '') then request:get-uri() else repo-utils:config-value($config, 'base.url')
+    return concat($server-base, $config-base-url)
+};  
+
+declare function repo-utils:config($config-file as xs:string) as node()* {
+let $sys-config := if (doc-available($repo-utils:sys-config-file)) then doc($repo-utils:sys-config-file) else (),
+    $config := if (doc-available($config-file)) then (doc($config-file), $sys-config) 
+                        else diag:diagnostics("general-error", concat("config not available: ", $config-file))
+    return $config
+};
 
 declare function repo-utils:config-value($config, $key as xs:string) as xs:string* {
-    $config//property[@key=$key]
+    ($config[not(@type='system')]//property[@key=$key], $config[@type='system']//property[@key=$key])[1]
 };
 
 (:~ Get value of a param based on a key, from config or from request-param (precedence) :)
@@ -184,7 +199,7 @@ declare function repo-utils:serialise-as($item as node()?, $format as xs:string,
 	           let $res := transform:transform($item,$xslDoc, 
               			<parameters><param name="format" value="{$format}"/>
               			            <param name="x-context" value="{repo-utils:param-value($config, 'x-context', '' )}"/>
-              			            <param name="base_url" value="{repo-utils:config-value($config, 'base.url')}"/>
+              			            <param name="base_url" value="{repo-utils:base-url($config)}"/>
               			            <param name="mappings-file" value="{repo-utils:config-value($config, 'mappings')}"/>
               			            <param name="scripts_url" value="{repo-utils:config-value($config, 'scripts.url')}"/>
               			             <param name="site_name" value="{repo-utils:config-value($config, 'site.name')}"/>

@@ -39,18 +39,15 @@ declare variable $fcs:scanSortText as xs:string := "text";
 declare variable $fcs:scanSortSize as xs:string := "size";
 declare variable $fcs:indexXsl := doc('index.xsl');
 declare variable $fcs:kwicWidth := 30;
-declare variable $fcs:sys-config-file := "/db/cr/conf/config-system.xml";
 
-(:~ The main entry-point. Processes request-parameters 
+(:~ The main entry-point. Processes request-parameters
+regards config given as parameter + the predefined sys-config
 @returns the result document (in xml, html or json)
 :)
 declare function fcs:repo($config-file as xs:string) as item()* {
-  let
-    $sys-config := if (doc-available($fcs:sys-config-file)) then doc($fcs:sys-config-file) else (),
-    $config := if (doc-available($config-file)) then (doc($config-file), $sys-config) 
-                        else diag:diagnostics("general-error", concat("config not available: ", $config-file)) ,
-        
-        
+  let    
+    $config := repo-utils:config($config-file),   
+     
     $key := request:get-parameter("key", "index"),        
         (: accept "q" as synonym to query-param; "query" overrides:)    
     $q := request:get-parameter("q", ""),
