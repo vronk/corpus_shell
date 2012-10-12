@@ -41,7 +41,7 @@
     <xsl:param name="debug" select="true()"/>
     <xsl:param name="mappings-file" select="'xmldb:///db/cr/etc/mappings.xml'"/>
     <xsl:variable name="context-param" select="'x-context'"/>
-    <xsl:variable name="mappings" select="doc($mappings-file)/map"/>
+    <xsl:variable name="mappings" select="if (doc-available($mappings-file)) then doc($mappings-file)/map else ()"/>
     <xsl:variable name="context-mapping" select="$mappings//map[@key][xs:string(@key) eq $x-context]"/>
     <xsl:variable name="default-mapping" select="$mappings//map[@key][xs:string(@key) eq 'default']"/>
     <xsl:variable name="ws">
