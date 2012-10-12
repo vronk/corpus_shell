@@ -28,8 +28,8 @@ eXist
   the way this module is linked into the application is specific to eXist.
 
 cql-java.jar 
-  get the library at: http://zing.z3950.org/cql/java/
-  (We are using  Version 1.7 from 2010-07-27)
+  get the library at: http://www.indexdata.com/cql-java
+  (We are currently using version 1.10 from 2012-03-19)
 
 config/mappings
   the functions in the module rely on configuration-information in the main application:
@@ -73,3 +73,7 @@ Installation
 	 
 	 This actually only does the first step: translates CQL to XCQL.
 	 But if it works, it means the java-lib-binding is working.
+	 
+	 
+Note: In the current (2.x) version of eXist, cql is already integrated as a module, 
+so you can skip steps 1. and 2.

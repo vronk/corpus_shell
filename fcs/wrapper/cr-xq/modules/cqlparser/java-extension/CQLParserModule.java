@@ -1,6 +1,6 @@
 /*
  * eXist Open Source Native XML Database
- * Copyright (C) 2005-09 The eXist Project
+ * Copyright (C) 2012 The eXist Project
  * http://exist-db.org
  *
  * This program is free software; you can redistribute it and/or
@@ -17,7 +17,7 @@
  * along with this program; if not, write to the Free Software Foundation
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *  
- *  $Id: SimpleQLModule.java 13685 2011-01-29 17:30:17Z deliriumsky $
+ *  $Id: CQLParserModule.java 16689 2012-06-18 18:24:45Z ellefj $
  */
 package org.exist.xquery.modules.cqlparser;
 
@@ -27,9 +27,10 @@ import org.exist.xquery.AbstractInternalModule;
 import org.exist.xquery.FunctionDef;
 
 /**
- * Module function definitions for a CQL parser.
+ * Module function definitions for a Contextual Query Language (CQL) parser.
  *
  * @author matej
+ * @author ljo
  *
  *
  */
@@ -38,8 +39,8 @@ public class CQLParserModule extends AbstractInternalModule {
     public final static String NAMESPACE_URI = "http://exist-db.org/xquery/cqlparser";
     
     public final static String PREFIX = "cqlparser";
-    public final static String INCLUSION_DATE = "2012-02-13";
-    public final static String RELEASED_IN_VERSION = "eXist-1.5.0dev";
+    public final static String INCLUSION_DATE = "2012-06-18";
+    public final static String RELEASED_IN_VERSION = "eXist-2.1";
 
 
     private final static FunctionDef[] functions = {
@@ -62,7 +63,7 @@ public class CQLParserModule extends AbstractInternalModule {
     }
 
     public String getDescription() {
-        return "A module for a simple query language parser";
+        return "A module for a Contextual Query Language (CQL) parser";
     }
 
     public String getReleaseVersion() {

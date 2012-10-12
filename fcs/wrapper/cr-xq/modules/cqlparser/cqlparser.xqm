@@ -19,7 +19,8 @@ or a diagnostic, on parsing error
 :)
 declare function cql:cql-to-xcql($cql-expression as xs:string) {
     try {
-        util:parse(cqlparser:parse-cql($cql-expression, "XCQL"))
+         (: util:parse(cqlparser:parse-cql($cql-expression, "XCQL")) :)
+         cqlparser:parse-cql($cql-expression, "XCQL")
     }
        catch err:XPTY0004 
     {
