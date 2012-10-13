@@ -7,10 +7,9 @@
     <property key="data.path">/db/cr-data</property>
     <property key="cache.path">/db/cr-data/_indexes</property>
     <property key="metadata.path">/db/cr-data/_cmd</property>
-    <property key="static.path">/db/cr-data/_static</property>    
+    <property key="static.path">/db/cr/conf/cr/_static</property>
     <property key="index.prefix">/db/cr-data/_indexes/index_</property>
-
-    <property key="base.url">http://localhost:8682/exist/cr</property>
-    <property key="scripts.url">http://localhost:8682/exist/cr-scripts/</property>
-    <property key="site.logo">http://localhost:8682/exist/cr-scripts/style/logo_c_s.png</property>
+    <property key="base.url">/cr/cr.xql</property>
+    <property key="scripts.url">/exist/cr-scripts/</property>
+    <property key="site.logo">/exist/cr-scripts/style/logo_c_s.png</property>
 </config>
