@@ -11,7 +11,7 @@
     <target name="xar-one" unless="${conf.all}" >
         <mkdir dir="${build.dir}"/>
         <zip basedir="." destfile="${build.dir}/cr-xq-0.1-conf-${conf}.xar" 
-            includes="*.xml,${conf}/**">            
+            includes="*.xml,*.xql,${conf}/**">            
         </zip>
     </target>
     
