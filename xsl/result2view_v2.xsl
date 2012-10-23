@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:diag="http://www.loc.gov/zing/srw/diagnostic/" xmlns:utils="http://aac.ac.at/content_repository/utils" xmlns:saxon="http://saxon.sf.net/" xmlns:sru="http://www.loc.gov/zing/srw/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fcs="http://clarin.eu/fcs/1.0" xmlns:exsl="http://exslt.org/common" version="2.0" exclude-result-prefixes="saxon xs exsl diag sru fcs">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:sru="http://www.loc.gov/zing/srw/" xmlns:saxon="http://saxon.sf.net/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fcs="http://clarin.eu/fcs/1.0" xmlns:exsl="http://exslt.org/common" xmlns:diag="http://www.loc.gov/zing/srw/diagnostic/" xmlns:utils="http://aac.ac.at/content_repository/utils" version="2.0" exclude-result-prefixes="saxon xs exsl diag sru fcs">
     
 <!--   
     <purpose> generate html view of a sru-result-set  (eventually in various formats).</purpose>
 <history>  
 <change on="2011-12-06" type="created" by="vr">based on cmdi/scripts/mdset2view.xsl retrofitted for XSLT 1.0</change>	
-</history> 
+</history>   
  -->   
     <!--  method="xhtml" is saxon-specific! prevents  collapsing empty <script> tags, that makes browsers choke -->
     <xsl:output method="xml" media-type="text/xhtml" indent="yes" encoding="UTF-8" doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"/>
@@ -26,7 +26,7 @@
                 </xsl:if>
                 <xsl:apply-templates select="sru:records" mode="list"/>
     <!-- switch mode depending on the $format-parameter -->        
-                <!--<xsl:choose> 
+                <!--<xsl:choose>   
                     <xsl:when test="contains($format,'htmltable')">
                         <xsl:apply-templates select="records" mode="table"/>
                     </xsl:when>
@@ -36,7 +36,7 @@
                     <xsl:when test="contains($format, 'htmlpagelist')">
                         <xsl:apply-templates select="records" mode="list"/>
                     </xsl:when>
-                    <xsl:otherwise>mdset2view: unrecognized format: <xsl:value-of select="$format"/>
+                     <xsl:otherwise>mdset2view: unrecognized format: <xsl:value-of select="$format"/>
                     </xsl:otherwise>
                 </xsl:choose>-->
             </div>
@@ -69,7 +69,7 @@
                     </span>;
 	        </xsl:for-each> 
                 <!--<span class="label">duration: </span>
-                <span class="value">
+                <span class="value"> 
                     <xsl:value-of select="sru:extraResponseData/fcs:duration"/>
                     </span>;-->
             </div>
@@ -171,5 +171,18 @@
     </xsl:template>
     <xsl:template match="diag:diagnostic">
         <xsl:value-of select="diag:message"/> (<xsl:value-of select="diag:uri"/>)
+    </xsl:template>
+    <xsl:template name="callback-header">
+        <script type="text/javascript">
+            $(function()
+            {
+            $(".inline-wrap").live("mouseover", function(event) {
+                $(this).find(".attributes").show();
+                });
+                $(".inline-wrap").live("mouseout", function(event) {
+                $(this).find(".attributes").hide();
+                });
+            });
+        </script>
     </xsl:template>
 </xsl:stylesheet>
