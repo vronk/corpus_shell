@@ -116,7 +116,8 @@
     <!-- generates a select-option list of available contexts  
     -->
     <xsl:template name="contexts-select">
-<!--        <xsl:value-of select="document($contexts_url)" />-->
+        
+<!--            DEBUG: contexts_url:<xsl:copy-of select="$contexts_url" />-->
         <select name="x-context">
             <xsl:if test="$contexts">
                 <xsl:for-each select="$contexts//sru:terms/sru:term">
