@@ -230,18 +230,18 @@
                             </xsl:if>
                         </xsl:for-each>
                     </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:value-of select="concat('ft:query(', $match-on, ', ')"/>
-                        <xsl:text>&lt;term&gt;</xsl:text>
-                        <xsl:value-of select="$sanitized_term"/>
-                        <xsl:text>&lt;/term&gt;)</xsl:text>
-                    </xsl:otherwise>
                     <!--<xsl:otherwise>
+                        <xsl:value-of select="concat('ft:query(', $match-on, ', ')"/>
+                        <xsl:text><term></xsl:text>
+                        <xsl:value-of select="$sanitized_term"/>
+                        <xsl:text></term>)</xsl:text>
+                    </xsl:otherwise>-->
+                    <xsl:otherwise>
                         <xsl:value-of select="concat('ft:query(', $match-on, ', ')"/>
                         <xsl:text>'</xsl:text>
                         <xsl:value-of select="$sanitized_term"/>
                         <xsl:text>')</xsl:text>
-                    </xsl:otherwise>-->
+                    </xsl:otherwise>
                 </xsl:choose>
             </xsl:when>
             <xsl:when test="value='='">
@@ -292,7 +292,12 @@
 <!--               <xsl:copy-of select="$mappings//index[$ix_string eq xs:string(@key)]" />
                     work-around a bug in transform:transform with copy-of on doc($data)
                     http://exist.2174344.n4.nabble.com/transform-transform-error-with-doc-when-document-contains-attributes-td4186440.html                -->
-                <xsl:apply-templates select="$mappings//index[$ix_string eq xs:string(@key)]" mode="copy"/>
+                <xsl:variable name="matching_indexes">
+                    <xsl:apply-templates select="$mappings//index[$ix_string eq xs:string(@key)]" mode="copy"/>
+                </xsl:variable>
+                <index key="{$ix_string}">
+                    <xsl:copy-of select="$matching_indexes//path"/>
+                </index>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:copy-of select="$ix"/>
