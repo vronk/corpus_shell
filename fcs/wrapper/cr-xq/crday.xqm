@@ -33,7 +33,8 @@ declare function crday:display-overview($config-path as xs:string) as item()* {
 :)
 declare function crday:display-overview($config-path as xs:string, $format as xs:string ) as item()* {
 
-       let $config := doc($config-path), 
+(:       let $config := doc($config-path), :)
+         let $config := repo-utils:config($config-path),
            $mappings := doc(repo-utils:config-value($config, 'mappings')),
            $baseadminurl := repo-utils:config-value($config, 'admin.url') 
            
