@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:sru="http://www.loc.gov/zing/srw/" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:exist="http://exist.sourceforge.net/NS/exist" version="1.0" exclude-result-prefixes="exist">
+<xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:aac="urn:general" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:sru="http://www.loc.gov/zing/srw/" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:exist="http://exist.sourceforge.net/NS/exist" version="1.0" exclude-result-prefixes="exist html aac tei">
 
 <!-- 
  stylesheet for formatting TEI-elements  inside a FCS/SRU-result.
@@ -14,14 +14,17 @@ the named templates are at the bottom.
     
     <!-- some special elements retained in data, due to missing correspondencies in tei 
         if it will get more, we should move to separate file -->
-    <xsl:template match="aac_HYPH1" mode="record-data">
+    <xsl:template match="aac_HYPH1 | aac:HYPH1" mode="record-data">
         <xsl:apply-templates/>
+        <xsl:text> </xsl:text>
     </xsl:template>
-    <xsl:template match="aac_HYPH2" mode="record-data">
+    <xsl:template match="aac_HYPH2  | aac:HYPH2" mode="record-data">
         <xsl:apply-templates/>
+        <xsl:text> </xsl:text>
     </xsl:template>
-    <xsl:template match="aac_HYPH3" mode="record-data">
+    <xsl:template match="aac_HYPH3  | aac:HYPH3" mode="record-data">
         <xsl:apply-templates/>
+        <xsl:text> </xsl:text>
     </xsl:template>
     <xsl:template match="address | tei:address" mode="record-data">
         <address>
@@ -43,6 +46,11 @@ the named templates are at the bottom.
     <xsl:template match="bibl | tei:bibl" mode="record-data">
         <xsl:call-template name="inline"/>
     </xsl:template>
+    <xsl:template match="cit | tei:cit" mode="record-data">
+        <quote>
+            <xsl:apply-templates mode="record-data"/>
+        </quote>
+    </xsl:template>
     <xsl:template match="date|tei:date" mode="record-data">
         <span class="date">
             <!--<xsl:value-of select="."/>-->
@@ -55,6 +63,7 @@ the named templates are at the bottom.
             <xsl:apply-templates mode="record-data"/>
         </xsl:copy>
     </xsl:template>
+
    
   <!-- 
      TODO: this has to be broken down to individual children-elements.
@@ -142,6 +151,11 @@ the named templates are at the bottom.
             </div>
         </div>
     </xsl:template>
+    <xsl:template match="foreign | tei:foreign" mode="record-data">
+        <div lang="{@lang}">
+            <xsl:apply-templates mode="record-data"/>
+        </div>
+    </xsl:template>
     <xsl:template match="geo | tei:geo" mode="record-data">
         <xsl:call-template name="inline"/>
     </xsl:template>
@@ -182,7 +196,11 @@ the named templates are at the bottom.
     </xsl:template>
     
     <!-- for STB: dont want seg -->
-    <xsl:template match="seg | tei:seg" mode="record-data"/>
+<!--    <xsl:template match="seg | tei:seg" mode="record-data"/>-->
+    <xsl:template match="seg | tei:seg" mode="record-data">
+        <xsl:call-template name="inline"/>
+    </xsl:template>
+    
     <!-- handing over to aac:stand.xsl -->
     <!--<xsl:template match="seg" mode="record-data">
         <xsl:apply-templates select="."/>
@@ -247,5 +265,17 @@ the named templates are at the bottom.
                 <xsl:value-of select="@target"/>
             </a>
         </li>
+    </xsl:template>
+    <xsl:template match="w|tei:w" mode="record-data">
+        <xsl:call-template name="inline"/>
+        <!--<span class="w-wrap" >        
+        <xsl:if test="@*">
+            <span class="attributes" style="display:none;">
+                <xsl:value-of select="concat(@lemma,' ',@type)" />
+<!-\-                <xsl:apply-templates select="@*" mode="format-attr"/>-\->
+            </span>
+        </xsl:if>
+         <xsl:call-template name="inline" />
+        </span>-->
     </xsl:template>
 </xsl:stylesheet>
