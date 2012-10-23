@@ -24,7 +24,7 @@
     <xsl:param name="numberOfMatches" select="/sru:searchRetrieveResponse/sru:extraResponseData/fcs:numberOfMatches"/>
     <xsl:param name="mode" select="'html'"/>
     <xsl:param name="scanClause" select="''"/>
-    <xsl:param name="contexts_url" select="concat($base_url,'?operation=scan&amp;scanClause=fcs.resource&amp;sort=text&amp;version=1.2')"/>
+    <xsl:param name="contexts_url" select="concat($base_url,'?operation=scan&amp;scanClause=fcs.resource&amp;sort=text&amp;version=1.2&amp;x-format=xml')"/>
     <xsl:param name="mappings-file" select="''"/>
     <xsl:variable name="context-param" select="'x-context'"/>
     <xsl:variable name="mappings" select="document($mappings-file)/map"/>
