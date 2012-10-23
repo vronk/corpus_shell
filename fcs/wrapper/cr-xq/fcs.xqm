@@ -351,7 +351,7 @@ declare function fcs:search-retrieve($query as xs:string, $x-context as xs:strin
     
 };
 
-declare function fcs:format-record-data($record-data as node(), $data-view as xs:string*, $x-context as xs:string*, $config as node()) as item()*  {
+declare function fcs:format-record-data($record-data as node(), $data-view as xs:string*, $x-context as xs:string*, $config) as item()*  {
 (:    let $record-data := util:expand($record, ""):)
                         (:	      cmdcoll:get-md-collection-name($raw-record-data):)
 	let $title := fcs:apply-index ($record-data, "title",$x-context, $config)	   

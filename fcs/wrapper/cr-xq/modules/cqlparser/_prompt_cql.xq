@@ -8,7 +8,7 @@ xquery version "1.0";
      (:   let $xcql := cql:cql-to-xcql("personName any haus and (birth-place=Wien or death-place=Wien)") :)
         let $xcql := cql:cql-to-xcql($cql)
         let $x-context := 'clarin.eu:mdrepo' (: 'clarin.at:icltt:cr:aac-names' :)        
-        let $config := doc("/db/cr/etc/config_mdrepo.xml")
+        let $config := doc("/db/cr/conf/mdrepo/config.xml")
         let $mappings-file := repo-utils:config-value($config, 'mappings') (: 'xmldb:///db/cr/etc/mappings_mdrepo.xml' :)
         let $context := repo-utils:context-to-collection($x-context, $config)
         (:let $context :=  collection('/db/mdrepo-data') :)
@@ -21,6 +21,7 @@ xquery version "1.0";
 (:  cql:cql2xpath or person = Adler :)
 let $result := util:eval("$context//(teiHeader/fileDesc/titleStmt/title|teiHeader/fileDesc/sourceDesc/biblStruct/monogr/title)[. eq 'Kochschule']")
 
-return (concat("$context",$xpath1),util:eval(concat("$context",$xpath1))) 
-(: $context//(titleStmt)[contains(.,'Wien')]
+return $xcql
+(:  return (concat("$context",$xpath1),util:eval(concat("$context",$xpath1)))   :)
+ (: $context//(titleStmt)[contains(.,'Wien')]
 $context//(Components)[ft:query(.,'Wien')]:)
