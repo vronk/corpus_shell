@@ -48,11 +48,12 @@ declare function cql:cql2xpath($cql-expression as xs:string, $x-context as xs:st
   
 };
 
-(:~ a version that accepts mappings-file as param
+(:~ a version that accepts mappings-file as param, but complains if the file does not exist
 :)
 declare function cql:cql2xpath($cql-expression as xs:string, $x-context as xs:string, $mappings as xs:string)  as item() {
-    let $xcql := cql:cql-to-xcql($cql-expression)
-      return if (not($xcql instance of element(diagnostics))) then
+    let $xcql := if (doc-available($mappings)) then  cql:cql-to-xcql($cql-expression)
+                    else diag:diagnostics("mappings-missing", $mappings)
+      return if (not($xcql[1] instance of element(diagnostics))) then                
                 transform:transform ($xcql, $cql:transform-doc, 
                     <parameters><param name="x-context" value="{$x-context}" />
                         <param name="mappings-file" value="{$mappings}" /></parameters> )
