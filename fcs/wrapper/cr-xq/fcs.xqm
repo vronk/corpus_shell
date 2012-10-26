@@ -199,8 +199,8 @@ declare function fcs:scan($scan-clause  as xs:string, $x-context as xs:string+, 
                     return cmdcoll:colls($starting-handle, $max-depth, cmdcoll:base-dbcoll($config))
                   (: just a hack for now, handling of special indexes should be put solved in some more easily extensible way :)  
                 else if ($index-name eq 'cmd.profile') then
-                    let $context := repo-utils:context-to-collection($x-context, $config)
-                    return  cmdcheck:scan-profiles($context, $config)
+(:                    let $context := repo-utils:context-to-collection($x-context, $config):)
+                    cmdcheck:scan-profiles($x-context, $config)
                 else
                     fcs:do-scan-default($scan-clause, $index-xpath, $x-context, $sort, $config)         
 
