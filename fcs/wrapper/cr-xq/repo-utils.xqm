@@ -224,3 +224,19 @@ let $option := util:declare-option("exist:serialize", "method=xhtml media-type=t
           
 	          	(: $item :)
 
+(:
+testing when trying to log import 2012-10-24 - not used
+declare function repo-utils:write-log ($action as xs:string, $dataset as xs:string) {
+
+			let $log-doc := repo-utils:config 
+			let $data := <log timestamp="{$timestamp}">{current-dateTime()}
+			             </log>
+			  return	xmldb:store($data-path, "test.log", $data )
+			  
+	let $time := util:system-dateTime()	
+    let $upd-dummy :=  
+        update insert <xpath key="{$xpath/@key}" label="{$xpath/@label}" dur="{$duration}">{$answer}</xpath> into $result-doc/result
+
+    return $result-doc
+			  
+};:)
