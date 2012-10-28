@@ -359,7 +359,7 @@ declare function fcs:format-record-data($record-data as node(), $data-view as xs
 	let $resourcefragment-pid := fcs:apply-index ($record-data, "resourcefragment-pid",$x-context, $config)	
 	(: to repeat current $x-format param-value in the constructed requested :)
 	let $x-format := request:get-parameter("x-format", $repo-utils:responseFormatXml)
-	let $resourcefragment-ref := if (exists($resourcefragment-pid)) then concat('?operation=searchRetrieve&amp;query=resourcefragment-pid="', xmldb:encode-uri($resourcefragment-pid), '"&amp;x-dataview=full&amp;x-context=', $x-context)
+	let $resourcefragment-ref := if (exists($resourcefragment-pid)) then concat('?operation=searchRetrieve&amp;query=pid="', replace(xmldb:encode-uri(replace($resourcefragment-pid,'//','__')),'__','//'), '"&amp;x-dataview=full&amp;x-context=', $x-context)
 	                                      else ""
 	
     let $kwic := if ('kwic' = $data-view) then
