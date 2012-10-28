@@ -27,7 +27,7 @@ declare variable $cmdcheck:root-coll := "root";
 
 declare function cmdcheck:run-stats($config-path as xs:string) as item()* {
 
-       let $config := doc($config-path), 
+       let $config := repo-utils:config($config-path), 
            $mappings := doc(repo-utils:config-value($config, 'mappings'))
         
         let $opt := util:declare-option("exist:serialize", "media-type=text/html method=xhtml")
@@ -39,11 +39,32 @@ declare function cmdcheck:run-stats($config-path as xs:string) as item()* {
                 return $scan-cmd-profile
 };
 
+(:~
+generate a mapping out of the db-collection structure
+and store it to conf
+:)
+declare function cmdcheck:collection-to-mapping($config,$x-context as xs:string+ ) as item()* {
+    
+    let $config-path := util:collection-name($config)
+    let $context-path := repo-utils:context-to-collection-path($x-context, $config)
+
+    let $maps :=  <map>{ for $dataset-coll in xmldb:get-child-collections($context-path)
+                      for $provider-coll in xmldb:get-child-collections(concat($context-path,'/',$dataset-coll))
+                          return 
+                          <map key="{$provider-coll}" label="{translate($provider-coll,'_', ' ')}" path="{concat($context-path,'/',$dataset-coll,'/',$provider-coll)}"/>
+                }</map>
+    
+     let $store := repo-utils:store($config-path ,  'mappings_auto.xml', $maps, true())    
+    return $store     
+};
+
+
+
 (:~ currently not used -> DEPRECATE? 
 init-function meant to call individual functions actually doing something.
 at least it resolves x-context to a nodeset
 :)
-declare function cmdcheck:check($x-context as xs:string+, $config as node() ) as item()* {
+declare function cmdcheck:check($x-context as xs:string+, $config ) as item()* {
     
     let $log-file-name := concat('log_checks_', repo-utils:sanitize-name($x-context), '.xml')
     let $log-path := repo-utils:config-value($config, 'log.path')
@@ -66,7 +87,7 @@ declare function cmdcheck:check($x-context as xs:string+, $config as node() ) as
 
 TODO: match with cmd-terms and diagnostics
 :)
-declare function cmdcheck:scan-profiles($x-context as xs:string, $config) as item()* {
+declare function cmdcheck:scan-profiles($x-context as xs:string, $config as node()*) as item()* {
       (: try- to handle namespace problem - primitively :) 
       
     let $context := repo-utils:context-to-collection($x-context, $config),
@@ -81,13 +102,15 @@ let $profiles-summary :=
          else
             (:        $dummy := util:declare-namespace("",xs:anyURI(""))       :)
             (:    let $profiles := util:eval("$context//(MdProfile|cmd:MdProfile)/text()"):)
-                    let $is-ns-cmd := ($ns-uri = xs:anyURI("http://www.clarin.eu/cmd/") ) 
+(:                    let $is-ns-cmd := ($ns-uri = xs:anyURI("http://www.clarin.eu/cmd/") ) 
+            just scan cmd-ns, otherwise got bad errors, when some not cmd-data was in given db-collection :)
+                        let $is-ns-cmd := true()
                 let $profiles := 
                                       if ($is-ns-cmd) then 
-                                            $context//cmd:CMD/concat((cmd:Header/cmd:MdProfile/text())[1], '#', if (exists(cmd:Components/*[1])) then cmd:Components/*[1]/local-name() else 'ERROR' )
+                                            $context//cmd:CMD/concat((cmd:Header/cmd:MdProfile)[1]/text(), '#', if(exists(cmd:Components/*[1])) then cmd:Components/*[1]/local-name() else 'ERROR' )
                                       else
                                             let $dummy := util:declare-namespace("",xs:anyURI($ns-uri))  
-                                            return util:eval("$context//CMD/concat((Header/MdProfile/text())[1], '#', Components/*[1]/local-name())")
+                                            return util:eval("$context//CMD/concat(Header/MdProfile/text(), '#', Components/*[1]/local-name())")
                                                  
             let $distinct-profiles := distinct-values($profiles)
            return for $profile in $distinct-profiles            
@@ -128,7 +151,7 @@ let $profiles-summary :=
 
 declare function cmdcheck:display-overview($config-path as xs:string) as item()* {
 
-   let $config := doc($config-path),
+   let $config := repo-utils:config($config-path),
        $dummy := util:declare-namespace("",xs:anyURI("")),
        $mappings := doc(repo-utils:config-value($config, 'mappings'))
 (:       $baseurl := repo-utils:config-value($config, 'base.url'),:)

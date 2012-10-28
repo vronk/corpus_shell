@@ -5,7 +5,7 @@ import module namespace cmdcheck = "http://clarin.eu/cmd/check" at "/db/cr/modul
 import module namespace diag =  "http://www.loc.gov/zing/srw/diagnostic/" at  "modules/diagnostics/diagnostics.xqm";
 import module namespace smc = "http://clarin.eu/smc" at "/db/cr/modules/smc/smc.xqm";
 
-let $config-path := request:get-parameter("config", "/db/cr/etc/config_mdrepo.xml"),
+let $config-path := request:get-parameter("config", "/db/cr/conf/mdrepo/config.xml"),
     $op := request:get-parameter("operation", ""),
     $config := doc($config-path), 
     $format := request:get-parameter("x-format",'htmlpage'),
@@ -15,8 +15,11 @@ let $config-path := request:get-parameter("config", "/db/cr/etc/config_mdrepo.xm
                     cmdcheck:display-overview($config-path)                    
                 else if (contains ($op, 'mappings-overview')) then                    
                     smc:mappings-overview($config, $format)
+                else if ($op = 'gen-mappings') then                
+                    cmdcheck:collection-to-mapping($config, $x-context)
                 else if (contains ($op, 'mappings')) then                    
                     smc:get-mappings($config, $x-context, (contains($op, 'run')), $format)                    
+                
                 else 
                     diag:diagnostics("unsupported-operation", $op)
 (:                    else cmdcheck:run-stats($config-path):)
