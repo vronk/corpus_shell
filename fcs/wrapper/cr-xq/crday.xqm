@@ -37,12 +37,16 @@ declare function crday:display-overview($config-path as xs:string, $format as xs
          let $config := repo-utils:config($config-path),
            $mappings := doc(repo-utils:config-value($config, 'mappings')),
            $baseadminurl := repo-utils:config-value($config, 'admin.url') 
-           
+          
+         let $is-admin-user := not(xmldb:get-current-user() = 'guest')
+          
         let $opt := util:declare-option("exist:serialize", "media-type=text/html method=xhtml")
         
-let $overview :=  <table class="show"><tr><th>collection</th><th>path</th><th>size</th><th>base-elem</th><th>indexes</th><th>tests</th><th>struct</th></tr>
+        (:<th>path</th>                        <td>{$map-dbcoll-path}</td>:)
+let $overview :=  <table class="show"><tr><th>collection</th><th>size</th><th>base-elem</th><th>indexes</th><th>tests</th><th>struct</th></tr>
            { for $map in $mappings//map[@key]
                     let $map-key := $map/xs:string(@key),
+                        $map-label := $map/xs:string(@label),
                         $map-dbcoll-path := $map/xs:string(@path),
 (:                        $map-dbcoll:= if ($map-dbcoll-path ne '' and xmldb:collection-available (($map-dbcoll-path,"")[1])) then collection($map-dbcoll-path) else (),                      :)
                           $map-dbcoll:= repo-utils:context-to-collection($map-key, $config),
@@ -56,14 +60,14 @@ let $overview :=  <table class="show"><tr><th>collection</th><th>path</th><th>si
                         $structure := if (repo-utils:is-in-cache($sturct-doc-name, $config)) then                                                
                                                 <a href="{concat($invoke-href,'struct-view')}" >view</a>                                             
                                               else ()
+                    order by $map-key
                     return <tr>
-                        <td>{$map-key}</td>
-                        <td>{$map-dbcoll-path}</td>
+                        <td>{$map-label}</td>                        
                         <td align="right">{count($map-dbcoll)}</td>
                         <td>{$map/xs:string(@base_elem)}</td>
                         <td align="right">{count($map/index)}</td>                        
-                        <td>{$queries} [<a href="{concat($invoke-href,'query-run')}" >run</a>]</td>                        
-                        <td>{$structure} [<a href="{concat($invoke-href,'struct-run')}" >run</a>]</td>
+                        <td>{$queries} { if ($is-admin-user) then <a href="{concat($invoke-href,'query-run')}" >run</a> else '' }</td>                        
+                        <td>{$structure} { if ($is-admin-user) then <a href="{concat($invoke-href,'struct-run')}" >run</a> else '' }</td>
                         </tr>
                         }
         </table>
@@ -100,7 +104,7 @@ declare function crday:get-fcs-resource-scan($config-path as xs:string, $run-fla
 };
 
 (:~ gen fcs-resource scan out of mappings :)
-declare function crday:gen-fcs-resource-scan($config as node()) as item()* {
+declare function crday:gen-fcs-resource-scan($config as node()*) as item()* {
 
        let $mappings := doc(repo-utils:config-value($config, 'mappings'))
            
@@ -140,7 +144,7 @@ let $map2terms := for $map in $mappings//map[@key]
 
 @param format [raw, htmlpage, html] - raw: return only the produced table, html* : serialize as html
 :)
-declare function crday:get-query-internal($config as node(), $x-context as xs:string, $run-flag as xs:boolean, $format as xs:string ) as item()* {
+declare function crday:get-query-internal($config as node()*, $x-context as xs:string, $run-flag as xs:boolean, $format as xs:string ) as item()* {
 
     let $testset := doc(repo-utils:config-value($config, 'tests.path')),
     
@@ -182,8 +186,10 @@ declare function crday:gen-query-internal($queries, $context as node()*, $x-cont
     (:    let $context := repo-utils:context-to-collection($x-context, $config)       
 	   $context:= collection("/db/mdrepo-data/cmdi-providers"),	   :)
 
-    let $result-store := xmldb:store($result-path ,  $result-filename, <result test="{$queries//test/xs:string(@id)}" context="{$x-context}" ></result>),
-        $result-doc:= doc($result-store)
+(:    let $result-store := xmldb:store($result-path ,  $result-filename, <result test="{$queries//test/xs:string(@id)}" context="{$x-context}" ></result>),:)
+        let $result := <result test="{$queries//test/xs:string(@id)}" context="{$x-context}" ></result>    
+        let $result-doc := repo-utils:store($result-path , $result-filename, $result, true())    
+(:        $result-doc:= doc($result-store):)
 
     let $ns-uri := namespace-uri($context[1]/*)        	           
       (: dynamically declare a default namespace for the xpath-evaluation, if one is defined in current context 
@@ -206,7 +212,7 @@ declare function crday:gen-query-internal($queries, $context as node()*, $x-cont
 
 @param format [raw, htmlpage, html] - raw: return only the produced table, html* : serialize as html
 :)
-declare function crday:get-ay-xml($config as node(), $x-context as xs:string+, $init-xpath as xs:string, $max-depth as xs:integer, $run-flag as xs:boolean, $format as xs:string ) as item()? {
+declare function crday:get-ay-xml($config as node()*, $x-context as xs:string+, $init-xpath as xs:string, $max-depth as xs:integer, $run-flag as xs:boolean, $format as xs:string ) as item()? {
 	
   let $name := repo-utils:gen-cache-id("structure", ($x-context, $init-xpath), xs:string($max-depth)),
     $result := 
@@ -317,7 +323,7 @@ declare function crday:elem-r($path-nodes as node()*, $path as xs:string, $ns as
 
 
 (:~ return doc-name out of context and testset (from config) or empty string if testset does not exist :)
-declare function crday:check-queries-doc-name($config as node(), $x-context as xs:string) as xs:string {
+declare function crday:check-queries-doc-name($config as node()*, $x-context as xs:string) as xs:string {
 let $testset := doc(repo-utils:config-value($config, 'tests.path')),
     $testset-name := if (exists($testset)) then util:document-name($testset) else (),
     $sanitized-xcontext := repo-utils:sanitize-name($x-context)  
