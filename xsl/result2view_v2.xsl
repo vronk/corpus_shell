@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:sru="http://www.loc.gov/zing/srw/" xmlns:saxon="http://saxon.sf.net/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fcs="http://clarin.eu/fcs/1.0" xmlns:exsl="http://exslt.org/common" xmlns:diag="http://www.loc.gov/zing/srw/diagnostic/" xmlns:utils="http://aac.ac.at/content_repository/utils" version="2.0" exclude-result-prefixes="saxon xs exsl diag sru fcs">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:diag="http://www.loc.gov/zing/srw/diagnostic/" xmlns:utils="http://aac.ac.at/content_repository/utils" xmlns:sru="http://www.loc.gov/zing/srw/" xmlns:saxon="http://saxon.sf.net/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fcs="http://clarin.eu/fcs/1.0" xmlns:exsl="http://exslt.org/common" version="2.0" exclude-result-prefixes="saxon xs exsl diag sru fcs">
     
 <!--   
     <purpose> generate html view of a sru-result-set  (eventually in various formats).</purpose>
@@ -19,11 +19,14 @@
     </xsl:variable>
     <xsl:template name="continue-root">
         <xsl:for-each select="sru:searchRetrieveResponse">
-            <xsl:apply-templates select="sru:diagnostics"/>
             <div>
-                <xsl:if test="contains($format, 'htmlpage')">
+                <xsl:apply-templates select="sru:diagnostics"/>
+            
+                <!--actually we want the header all of the time, no?
+                    <xsl:if test="contains($format, 'htmlpage')">
                     <xsl:call-template name="header"/>
-                </xsl:if>
+                    </xsl:if>-->
+                <xsl:call-template name="header"/>
                 <xsl:apply-templates select="sru:records" mode="list"/>
     <!-- switch mode depending on the $format-parameter -->        
                 <!--<xsl:choose>   
