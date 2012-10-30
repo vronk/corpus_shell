@@ -15,7 +15,7 @@ declare namespace xhtml="http://www.w3.org/1999/xhtml";
     
  :)
 declare variable $fcs-tests:config := doc("config.xml");
-declare variable $fcs-tests:cr-config := doc("/db/cr/etc/config.xml");
+declare variable $fcs-tests:cr-config := repo-utils:config("/db/cr/conf/cr/config.xml");
 declare variable $fcs-tests:run-config := "run-config.xml";
 declare variable $fcs-tests:testsets-coll := "/db/cr/modules/testing/testsets/";
 declare variable $fcs-tests:results-coll := "/db/cr/modules/testing/results/";
@@ -84,7 +84,7 @@ declare function fcs-tests:run-testset($target  as xs:string, $testset-key as xs
                             (: distinguish the testset, that the testing-module can process
                                and the home-made test-doc, that tests URLs :)
                             return if (exists($tests)) then
-                                        t:run-testSet($tests)
+                                        t:run-testSet($tests, ())
                                      else
                                         fcs-tests:test-rest($testset)
                        else
