@@ -24,8 +24,8 @@ let $testset := request:get-parameter("testset", ())
 let $operation := request:get-parameter("operation", ())
 let $messages := ""
 return
-    if ($operation eq "run") then        
-        let $run := fcs-tests:run-testset($target, $testset)
+    if ($operation eq "run" or $operation eq "run-store") then        
+        let $run := fcs-tests:run-testset($target, $testset, $operation)
         return fcs-tests:display-page($target, $testset, $operation)
     else
         fcs-tests:display-page($target, $testset,$operation)

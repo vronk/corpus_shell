@@ -21,10 +21,11 @@ declare variable $fcs-tests:testsets-coll := "/db/cr/modules/testing/testsets/";
 declare variable $fcs-tests:results-coll := "/db/cr/modules/testing/results/";
 declare variable $fcs-tests:href-prefix := "tests.xql";
 
-(: this function is accessed by the testing-code to get configuration-options from the run-config :)
+(:~ this function is accessed by the testing-code to get configuration-options from the run-config :)
 declare function fcs-tests:config-value($key as xs:string) as xs:string* {
             let $config := doc(concat($fcs-tests:testsets-coll, $fcs-tests:run-config))/config
                 return if ($key eq "testset") then  xs:string($config//testset/@key)
+                        else if ($key eq "operation") then $config//property[@key='operation']/text()
                         else $config//target/text()
 };
 
@@ -70,12 +71,14 @@ declare function fcs-tests:get-testset($testset as xs:string) as item()* {
 Generates a run-config out of the full config based on the parameters.
 @param $target identifying key of the target  as set in the config
 @param $testset-key identifying key of the testset as set in the config (that also has to be the name of the testset-file)
+@param $operation run or run-store; with `run-store` also the fetched individual results stored, the final result is stored anyway
 :)
-declare function fcs-tests:run-testset($target  as xs:string, $testset-key as xs:string) as item()* {
+declare function fcs-tests:run-testset($target  as xs:string, $testset-key as xs:string, $operation as xs:string) as item()* {
     
     (: preparing a configuration for given run, based on the parameters :)
     let $run-config := <config>{($fcs-tests:config//target[xs:string(@key) = $target],
-                                $fcs-tests:config//testset[xs:string(@key) = $testset-key])}</config>
+                                $fcs-tests:config//testset[xs:string(@key) = $testset-key],
+                                <property key="operation">{$operation}</property>)}</config>
     let $store := repo-utils:store($fcs-tests:testsets-coll, $fcs-tests:run-config, $run-config, true())
     let $testset := fcs-tests:get-testset($testset-key)
     let $start-time := util:system-dateTime()
@@ -140,13 +143,19 @@ typeswitch ($x)
 
 (:~ executes one URL-test. 
 
-Issues one http-call to the target-url in the a@href-attribute, stores the incoming result and evaluates the associated xpaths  
+Issues one http-call to the target-url in the a@href-attribute, stores the incoming result (only if $operation='run-store') and evaluates the associated xpaths  
 
 expects:
    <div class="test" id="search-haus">
       <a class="request" href="?operation=searchRetrieve&amp;query=Haus">search: Haus</a>
       <span class="check xpath">//sru:numberOfRecords</span>
    </div>
+ or rather ?:
+    <test id="clarin-at-mdrepo">
+        <a class="request" href="http://clarin.aac.ac.at/exist9/apps/mdrepo/index.html">clarin-at mdrepo</a>
+        <xpath key="html">exists($result-data//html)</xpath>
+        <xpath key="xhtml">exists($result-data//xhtml:html)</xpath>            
+    </test> 
    
 @returns the requested-url, results of the xpath-evaluations as a div-list and any diagnostics
 :)     
@@ -156,11 +165,12 @@ declare function fcs-tests:process-request($test as node()) as item()* {
         $test-id := xs:string($test/@id),
         $target := fcs-tests:config-value("target"), 
         $target-key := fcs-tests:config-key("target"),
+        $operation := fcs-tests:config-value("operation"),
         $request := concat($target, xs:string($a/@href))    
     let $a-processed := <a href="{$request}">{$a/text()}</a>
     let $result-data := httpclient:get(xs:anyURI($request), false(), () )
                             
-    let $store := fcs-tests:store-result($target-key, $test-id, $result-data)
+    let $store := if ($operation eq 'run-store') then fcs-tests:store-result($target-key, $test-id, $result-data) else ()
     
     (: evaluate all xpaths defined for given request :) 
     let $check := for $xpath in $test/xpath 
@@ -180,6 +190,7 @@ declare function fcs-tests:process-request($test as node()) as item()* {
 return ($a-processed, $check, $wrapped-diag) 
 };
 
+
 declare function fcs-tests:store-result($target as xs:string, $testset as xs:string, $result as node()) as item()* { 
     fcs-tests:store-result ($target, $testset, "", $result)
 };
@@ -197,7 +208,9 @@ declare function fcs-tests:store-result($target as xs:string, $testset as xs:str
 return $store-result
 };
 
-
+(:~ generates a html-view of the resulting testset
+relies on repo-utils serialization function, expecting a stylesheet with the key: <b>test2view</b>
+:)
 declare function fcs-tests:format-result($result as node()) as item()* {
     
     if ($result[self::element(diagnostics)]) then
@@ -209,6 +222,8 @@ declare function fcs-tests:format-result($result as node()) as item()* {
                 t:format-testResult($result) :)
 };
 
+(:~ generates the html-page displaying either the overview, or the result of selected testset 
+:)
 declare function fcs-tests:display-page($target  as xs:string, $testset as xs:string, $operation) as item()* {
 
     let $result := fcs-tests:get-result($target, $testset)        
@@ -259,6 +274,7 @@ declare function fcs-tests:display-page($target  as xs:string, $testset as xs:st
                 <label>test-set</label>
                     <select name="operation">
                        <option value="run" >{if ($operation = 'run') then attribute selected { "selected" } else ()} run</option>
+                       <option value="run-store" >{if ($operation = 'run-store') then attribute selected { "selected" } else ()} run-store</option>
                        <option value="view" > {if ($operation = 'view') then attribute selected { "selected" } else ()} view</option>                    
                        <option value="overview" > {if ($operation = 'overview') then attribute selected { "selected" } else ()} overview</option>
                     </select>                
