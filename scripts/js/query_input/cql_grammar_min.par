@@ -1,0 +1,555 @@
+/~
+Grammar for Common Query Language (CQL) statements
+
+Description:
+  The best description of CQL comes from the CQL homepage at the Library of Congress
+  http://www.loc.gov/standards/sru/specs/cql.html
+
+
+Backus Naur Form (BNF) definition for CQL.
+["::=" represents "is defined as"]
+
+sortedQuery 	     ::= 	prefixAssignment sortedQuery | scopedClause ['sortby' sortSpec]
+sortSpec 	        ::= 	sortSpec singleSpec | singleSpec
+singleSpec 	      ::= 	index [modifierList]
+
+cqlQuery 	        ::= 	prefixAssignment cqlQuery | scopedClause
+prefixAssignment 	::= 	'>' prefix '=' uri | '>' uri
+scopedClause 	    ::= 	scopedClause booleanGroup searchClause | searchClause
+booleanGroup 	    ::= 	boolean [modifierList]
+boolean 	         ::= 	'and' | 'or' | 'not' | 'prox'
+searchClause 	    ::= 	'(' cqlQuery ')' | index relation searchTerm | searchTerm
+relation 	        ::= 	comparitor [modifierList]
+comparitor 	      ::= 	comparitorSymbol | namedComparitor
+comparitorSymbol 	::= 	'=' | '>' | '<' | '>=' | '<=' | '<>' | '=='
+namedComparitor 	 ::= 	identifier
+modifierList 	    ::= 	modifierList modifier | modifier
+modifier 	        ::= 	'/' modifierName [comparitorSymbol modifierValue]
+prefix, uri,
+modifierName,
+modifierValue,
+searchTerm,
+index 	           ::= 	term
+term 	            ::= 	identifier | 'and' | 'or' | 'not' | 'prox' | 'sortby'
+identifier 	      ::= 	charString1 | charString2
+charString1 	     ::= 	Any sequence of characters that does not include any of the
+                       following:
+
+                           whitespace
+                           ( (open parenthesis )
+                           ) (close parenthesis)
+                           =
+                           <
+                           >
+                           '"' (double quote)
+                           /
+
+                       If the final sequence is a reserved word, that token is returned
+                       instead. Note that '.' (period) may be included, and a sequence of
+                       digits is also permitted. Reserved words are 'and', 'or', 'not',
+                       and 'prox' (case insensitive). When a reserved word is used in a
+                       search term, case is preserved.
+
+charString2 	     ::= 	Double quotes enclosing a sequence of any characters except double
+                       quote (unless preceded by backslash (\)). Backslash escapes the
+                       character following it. The resultant value includes all backslash
+                       characters except those releasing a double quote (this allows other
+                       systems to interpret the backslash character). The surrounding double
+                       quotes are not included.
+~/
+
+
+[*
+
+var user_input;
+
+function UserInput(obj)
+{
+	this.input_obj= obj;
+	this.input_string = "";
+	this.default_op = "groupand";
+	this.err_string = "";
+
+	this.nodes = new Array();
+	this.tokens = new Array();
+ this.offsets = new Array();
+
+	this.cql = function () { return this.rootNode() ? this.rootNode().cql : ""; };
+	this.verbose = function (curpos) { return this.translateNode(this.rootNode(), 'verbose',curpos); };
+	// this.lastTokenIx = function () { return ((this.tokens.length > this.pos.length) ? this.tokens.length : this.pos.length ) - 1; };
+	this.rootNode = function () {return (this.nodes.length==0 ? null : this.nodes[this.nodes.length - 1]);};
+	this.parseInput = parseInput;
+	this.verboseParse =verboseParse;
+	this.tokenAt = tokenAt;
+	this.userValueAt = userValueAt;
+	this.tokenTypesAt = tokenTypesAt;
+	this.hasTokenTypeAt = hasTokenTypeAt;
+	this.replaceTokenAt = replaceTokenAt;
+	this.setGroupAt = setGroupAt;
+	this.translateNode = translateNode;
+
+
+}
+
+function parseInput(str) {
+	if (str) {
+		this.input_string = str;
+	} else if (this.input_obj) {
+		this.input_string = this.input_obj.value;
+	} else {
+		this.input_string = "";
+		this.err_string = "Nothing to parse";
+		return false;
+	}
+
+	this.err_string = "";
+	this.nodes = [];
+	this.tokens = [];
+
+	user_input = this;
+
+	var error_offsets = new Array();
+	var error_lookaheads = new Array();
+	var error_count = 0;
+	if( ( error_count = __parse( this.input_string, error_offsets, error_lookaheads ) ) > 0 ) {
+				for( var i = 0; i < error_count; i++ )
+						this.err_string += "bei <span class=\"error\">" + this.input_string.substr( error_offsets[i] ) + "</span> (pos: " + error_offsets[i] + ")" + " wird " +
+						error_lookaheads[i].join(' oder ') + " erwartet <br/>" ;
+	}
+}
+
+/* *************************** */
+/* functions called from parse */
+
+function offset (info) {
+	return info.offset;
+}
+
+//Structs
+function NODE()
+{
+	var type;
+	var userval;
+	var userx;
+	var cql;
+	var start;
+	var len;
+	var end;
+	var children;
+	var parent;
+}
+
+/* builds a (simplified, opportunistic) parsing-tree, collecting the cql on the fly,
+   thus the root node has the whole cql-query.
+  paste %1["children"] as children param to flatten the siblings
+*/
+function createNode( type, user_value, user_string, cql, offset, children ) {
+	var n = new NODE();
+	n.type = type;
+	n.userval = user_value;
+	n.userx= user_string;
+	n.cql = cql;
+
+	n.len = n.userx.length;
+	// special handling (or hacking?) for the right-end-nodes, otherwise shift one, for 0-based indexing
+	// (the offset seems somehow not to increment at the end of the string anymore)
+
+	if (offset==user_input.input_string.length) {
+		offset = (user_string == user_input.input_string.substring(offset-n.len)) ? offset : offset -1;
+	} else {
+		offset = offset -1;
+	}
+	/*
+	//(offset==n.len)
+	//offset = (offset==user_input.input_string.length) ? offset : offset - 1;
+	//if offset = (offset==n.len) ? offset : offset - 1;
+	//offset = (offset==n.len) ? offset : offset - 1;
+	*/
+	n.start = offset - n.len;
+	n.end = offset;
+	n.children = [];
+
+	if (n.userval!="") user_input.tokens.push(n);
+
+	for( var i = 5; i < arguments.length; i++ )
+	{
+			n.children = n.children.concat(arguments[i])
+	}
+
+	// every child has the right to know its parent.
+	for( var i = 0; i < n.children.length; i++ ) {
+			n.children[i].parent = n;
+	}
+	//output(n.type + n.children.length );
+	output("DEBUG:cN(): " + n.type + ":" + n.value + ": " + n.children.length);
+	user_input.nodes.push(n);
+	return n;
+}
+
+// from terminal part, one gets the right offset = beginning of the token
+// i am sure this can be done better
+function createLeafNode ( type, user_value, user_string, cql, offset) {
+	var n = new NODE();
+	n.type = type;
+	n.userval = user_value;
+	n.userx= user_string;
+	n.cql = cql;
+
+
+	n.len = n.userx.length;
+	// special handling (or hacking?) for the right-end-nodes, otherwise shift one, for 0-based indexing
+	// (the offset seems somehow not to increment at the end of the string anymore)
+
+
+	n.start = offset;
+	n.end = offset + n.len;
+	n.children = [];
+
+
+	if (n.userval!="") user_input.tokens.push(n);
+
+	user_input.nodes.push(n);
+	return n;
+}
+
+function tokenAt(ix) {
+	//output ("ix: " + ix);
+	//output ("tokens.length:" + this.tokens.length);
+	for( var i = 0; i < this.tokens.length; i++ )	{
+		if (this.tokens[i].start <= ix && this.tokens[i].end >= ix) return i;
+	}
+	return -1;
+}
+
+// process default connector
+function resolveBag(n) {
+
+	n.type=user_input.default_op;
+
+	var pattern = resolveKey(user_input.default_op, 'cql');
+	var fix = pattern.split("\%s");
+	var prefix="", infix="", sufix="";
+	if (fix.length==1) {
+		infix = fix[0];
+	} else if (fix.length==2) {
+		prefix=fix[0];
+		sufix=fix[1];
+	} else if (fix.length==3) {
+		prefix=fix[0];
+		infix = fix[1];
+		sufix=fix[2];
+	}
+	var cql = prefix;
+	for( var i = 0; i < n.children.length; i++ ) {
+		 cql = cql +	n.children[i].cql;
+		 if (i != (n.children.length-1)) cql = cql + infix;
+	}
+	cql = cql + sufix;
+
+	return cql;
+}
+
+/* ************************** */
+/* functions used after parse */
+
+function verboseParse () {
+		x = "input_string:" + this.input_string + "\n";
+		x = x + "err: " + this.err_string + "\n";
+		x = x + "token-len:" + this.tokens.length + "\n";
+		x = x + "cql:" + this.cql() + "\n";
+	  x = x + "nodes:\n";
+	  x = x +  formatNode(this.nodes[this.nodes.length -1]);
+	  return x;
+}
+
+function userValueAt(ix) {
+	var n = this.tokens[this.tokenAt(ix)]
+	if (typeof n== "undefined") {
+		return "";
+	} else {
+		return n.userval;
+	}
+}
+
+ // boolean if the n.type of token or one of its parents = @type
+function hasTokenTypeAt(ix,type) {
+
+	var tts = this.tokenTypesAt(ix);
+	for(var i = 0; i < tts.length; i++) if(tts[i] == type) return true;
+  return false;
+}
+
+// return array of types (also of parents) for token at position @ix
+function tokenTypesAt(ix) {
+	 var n = this.tokens[this.tokenAt(ix)]
+
+	if (typeof n== "undefined") {
+		return [];
+	} else {
+		return tokenTypes(n);
+	}
+}
+
+// return array of types (also of parents)
+function tokenTypes(n) {
+	if (n.parent) {
+		var tt = [n.type];
+		return tt.concat(tokenTypes(n.parent));
+  } else {
+  	return n.type;
+	}
+}
+
+function replaceTokenAt(ix,new_token) {
+
+	var new_q= this.input_string;
+
+	var old_node = this.tokens[this.tokenAt(ix)];
+//		output(ix + ": " + this.tokenAt(ix) + "-" + this.tokens[this.tokenAt(ix)]);
+
+	if (old_node) {
+	//	output(formatNode(old_node));
+		var new_q= this.input_string.substring(0, old_node.start) + new_token + this.input_string.substring(old_node.end);
+	}	else {
+		var new_q= this.input_string.substring(0, ix ) + new_token + this.input_string.substring(ix);
+	}
+
+	return new_q;
+
+}
+
+// not working yet
+function setGroupAt(startPos, endPos, conn_type) {
+	var new_q= this.input_string;
+
+// replace only full tokens
+  var startIx = this.tokenAt(startPos);
+  var endIx = this.tokenAt(endPos);
+
+
+  // !  dict_entry.user - changed!
+  var pattern = resolveKey(conn_type, 'user');
+
+	var fix = pattern.split("\%s");
+	var prefix="", infix="", sufix="";
+	if (fix.length==1) {
+		infix = fix[0];
+	} else if (fix.length==2) {
+		prefix=fix[0];
+		sufix=fix[1];
+	} else if (fix.length==3) {
+		prefix=fix[0];
+		infix = fix[1];
+		sufix=fix[2];
+	}
+
+	var new_q= this.input_string.substring(0, this.tokens[startIx].start);
+	new_q = new_q + prefix;
+
+  for (var i = startIx; i < endIx; i++) {
+  	var old_node = this.tokens[i];
+  	new_q = new_q + old_node.userx;
+   	if (i != (endIx - 1)) new_q = new_q + infix;
+  }
+  new_q = new_q + sufix + this.input_string.substring(this.tokens[endIx].end);
+
+  return new_q;
+}
+
+function formatNode(n,prefix) {
+	if (!prefix) prefix="";
+	x = prefix + n.type + ": " + n.userval + ", " + n.userx + ", " + n.cql + " at " + n.start + "-" + n.end + ", len: " + n.len /* + n.cql + n.children */ + "\n";
+		if (n.children) {
+			if (n.children.length>0) {
+			 x = x + prefix + "{\n";
+				for( var i = 0; i < n.children.length; i++ )
+					x = x + prefix + formatNode(n.children[i],prefix + "  " );
+	 		 x = x + prefix + "}\n";
+	 		}
+	 	}
+ 	return x;
+}
+
+function translateNode(n, mode, curpos) {
+	 // output("n:" + formatNode(n," "));
+	if (n == null) return "";
+
+	var key = "", pattern="", userval="";
+
+	if (n.type=='pos') {
+		userval = resolveUserToken('pos',n.userval,mode);
+		pattern = dict['pos'][mode];
+	} else {
+		key = n.type;
+		pattern = resolveKey(key, mode);
+		userval = n.userval;
+	}
+
+	if (!pattern) pattern = "%s"; // default: fill uservalx
+
+	//output("pattern:" + pattern);
+	var fix = pattern.split("\%s");
+
+	var prefix=fix[0] ? fix[0] : "" ;
+	var infix=fix[1] ? fix[1] : "" ;
+	var sufix=fix[2] ? fix[2] : "" ;
+
+
+	var x ="";
+
+	if (userval) {			// should be only on leaves;
+		var uservalx;
+		if (mode=="verbose") {
+			uservalx = "<span class='user_token'>" + userval + "</span>";
+		} else {
+			uservalx = userval ;
+	  }
+	  // highlight curent Token
+	  if (mode=="verbose" && n == this.tokens[this.tokenAt(curpos)]) {
+	  	x = x + "<span class='highlight'>" + sprintf(pattern, uservalx) + "</span>";
+		} else {
+			x = x + sprintf(pattern, uservalx);
+	  }
+	}
+	// this should be xor (userval or children)
+	if (n.children) {
+		if (curpos >= n.start && curpos <= n.end) {
+			prefix = "<span class='highlight2'>" + prefix + "</span>";
+			infix = "<span class='highlight2'>" + infix + "</span>";
+			sufix = "<span class='highlight2'>" + sufix + "</span>";
+		}
+		//output (n.children.length);
+		if (n.children.length>0) {
+			x = x + prefix;
+			for( var i = 0; i < n.children.length; i++ ) {
+				var child = this.translateNode(n.children[i],mode,curpos);
+				if (child.length>0) {
+					x = x + child;
+					if (i != (n.children.length-1)) x = x + infix;
+				}
+			}
+			x = x + sufix;
+ 		}
+
+	}
+
+ 	return x;
+}
+
+function TestCql (inputStr)
+{
+  if (inputStr)
+  {
+    var testUserInput = new UserInput();
+    testUserInput.parseInput(inputStr);
+    return testUserInput;
+  }
+
+  return null;
+}
+
+
+*]
+
+
+/~ --- Token definitions --- ~/
+
+/~ Characters to be ignored ~/
+! ' |\r|\n|\t';
+
+  '(and|AND)'    AND      [* %match = createLeafNode("logopand", '', %match, ' and ', %offset); *]
+  ;
+  '(or|OR)'      OR       [* %match = createLeafNode("logopor", '', %match, ' or ', %offset); *]
+  ;
+
+  '='            EQ       [* %match = createLeafNode("equals", '=', %match, ' = ', offset(info)); *]
+  ;
+
+  '\(' BRACKETOPEN;
+  '\)' BRACKETCLOSE;
+
+  '[A-ZÄÖÜa-z_äöüß]+'      ALPHA
+  ;
+  '[0-9]+'                 INT      [* %match = parseInt( %match ); *]
+  ;
+  '"'                      QUOTE;
+
+##
+
+/~ --- Grammar specification --- ~/
+
+
+cqlQuery            : indexStr identifier                       [* %%= createNode("cqlQuery", "", %1['userx'] + %2['userx'], %1['cql'] + %2['cql'], offset(info), %1, %2); *]
+                    | identifier                                [* %%= createNode("cqlQuery", "", %1['userx'], %1['cql'], offset(info), %1); *]
+                    | identifier AND cqlQuery
+                    | indexStr identifier AND cqlQuery
+                    | identifier OR cqlQuery
+                    | indexStr identifier OR cqlQuery
+                    ;
+indexStr            : alphaNum relation        [* %%= createNode("indexStr", "", %1['userx'] + %2['userx'], %1['cql'] + %2['cql'], offset(info), %1, %2); *]
+                    ;
+relation            : EQ                       [* %%= createNode("relation", "=", %1['userx'], %1['cql'], offset(info), %1); *]
+                    ;
+identifier          : charString1              [* %%= createNode("identifier", "", %1['userx'], %1['cql'], offset(info), %1['children']); *]
+                    | charString2              [* %%= createNode("identifier", "", %1['userx'], %1['cql'], offset(info), %1['children']); *]
+                    ;
+alphaNum            : ALPHA                    [* %%= createNode("alphanum", %1, %1, %1, offset(info)); *]
+                    | INT
+                    ;
+charString1         : alphaNum                  [* %%= createNode("charString", "", %1['userx'], %1['cql'], offset(info), %1); *]
+                    ;
+charString2         : QUOTE alphaNum QUOTE      [* %%= createNode("charString", "", %1 + %2['userx'] + %3,  '"' + %2['cql'] + '"', offset(info)); *]
+                    ;
+
+[*
+
+// invocation for testing (webenv with prompt or commandline with arguments)
+
+var input_str="";
+var test_user_input;
+
+if (typeof inProduction =="undefined") {
+
+ if (typeof arguments != "undefined") {
+ 		if (arguments[0]) input_str = arguments[0];
+ }
+ if (input_str=="" && typeof prompt== 'function' ) {
+ 	 input_str= prompt( "Please enter a string to be parsed:", "" );
+ }
+
+ if (input_str) {
+	 	test_user_input = new UserInput();
+	 	test_user_input.parseInput(input_str);
+		//output ("test: " + test_user_input.test);
+		output (test_user_input.verboseParse());
+ }
+}
+
+function test(ix) {
+	var ui = new UserInput();
+	if (ix) {
+		if (dict.test[ix]) {
+			ui.parseInput(dict.test[ix]);
+			output (ui.verboseParse());
+		}
+		return;
+	}
+	for( var i = 0; i < dict.test.length; i++ )	{
+			ui.parseInput(dict.test[i]);
+			output (ui.verboseParse());
+	}
+}
+
+function output (x) {
+	if (typeof console != 'undefined') {
+		console.log(x);
+	} else if (typeof print == 'function') {
+		print (x);
+	} else if (typeof alert == 'function') {
+		alert(x);
+	}
+
+}
+
+
+*]
