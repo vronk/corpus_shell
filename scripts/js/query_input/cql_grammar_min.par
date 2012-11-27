@@ -462,7 +462,7 @@ function TestCql (inputStr)
   '(or|OR)'      OR       [* %match = createLeafNode("logopor", '', %match, ' or ', %offset); *]
   ;
 
-  '='            EQ       [* %match = createLeafNode("equals", '=', %match, ' = ', offset(info)); *]
+  '='            EQ       /~  [* %match = createLeafNode("equals", '=', %match, ' = ', offset(info)); *] ~/
   ;
 
   '\(' BRACKETOPEN;
@@ -479,26 +479,34 @@ function TestCql (inputStr)
 /~ --- Grammar specification --- ~/
 
 
-cqlQuery            : indexStr identifier                       [* %%= createNode("cqlQuery", "", %1['userx'] + %2['userx'], %1['cql'] + %2['cql'], offset(info), %1, %2); *]
-                    | identifier                                [* %%= createNode("cqlQuery", "", %1['userx'], %1['cql'], offset(info), %1); *]
-                    | identifier AND cqlQuery
-                    | indexStr identifier AND cqlQuery
-                    | identifier OR cqlQuery
-                    | indexStr identifier OR cqlQuery
+cqlQuery            : searchClause                       [* %%= createNode("cqlQuery", "", %1['userx'], %1['cql'], offset(info), %1); *]
                     ;
-indexStr            : alphaNum relation        [* %%= createNode("indexStr", "", %1['userx'] + %2['userx'], %1['cql'] + %2['cql'], offset(info), %1, %2); *]
+                    
+searchClause 				: index relation searchTerm    	[* %%= createNode("searchClause", "", %1['userx'] + %2['userx'] + %3['userx'], %1['cql'] + %2['cql'] + %3['cql'], offset(info), %1, %2, %3); *]
+										| searchTerm 										[* %%= createNode("searchClause", "", %1['userx'], %1['cql'], offset(info), %1); *]
                     ;
-relation            : EQ                       [* %%= createNode("relation", "=", %1['userx'], %1['cql'], offset(info), %1); *]
+index           	  : term   										[* %%= createNode("index", "", %1['userx'], %1['cql'], offset(info), %1); *]
                     ;
+
+searchTerm          : term   										[* %%= createNode("searchTerm", "", %1['userx'], %1['cql'], offset(info), %1); *]
+                    ;
+relation            : comparitor               [* %%= createNode("relation", "", %1['userx'], %1['cql'], offset(info), %1); *]
+                    ;
+                    
+comparitor 					: EQ                    	[* %%= createNode("comparitor", %1, %1, %1, offset(info)); *]
+										;
+term								: identifier							[* %%= createNode("term", "", %1['userx'], %1['cql'], offset(info), %1['children']); *]
+										;
 identifier          : charString1              [* %%= createNode("identifier", "", %1['userx'], %1['cql'], offset(info), %1['children']); *]
                     | charString2              [* %%= createNode("identifier", "", %1['userx'], %1['cql'], offset(info), %1['children']); *]
-                    ;
-alphaNum            : ALPHA                    [* %%= createNode("alphanum", %1, %1, %1, offset(info)); *]
-                    | INT
                     ;
 charString1         : alphaNum                  [* %%= createNode("charString", "", %1['userx'], %1['cql'], offset(info), %1); *]
                     ;
 charString2         : QUOTE alphaNum QUOTE      [* %%= createNode("charString", "", %1 + %2['userx'] + %3,  '"' + %2['cql'] + '"', offset(info)); *]
+                    ;
+
+alphaNum            : ALPHA                    [* %%= createNode("alphanum", %1, %1, %1, offset(info)); *]
+                    | INT
                     ;
 
 [*
