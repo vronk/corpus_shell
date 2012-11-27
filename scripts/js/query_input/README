@@ -1,0 +1,42 @@
+
+****************
+ query_input
+****************
+
+This is (will be) a separate javascript module, that allows customizable query_input,
+main feature being the ability to parse the input on the fly, 
+with a pure javascript parser.
+Currently, the parser supports (a simplified version of) SRU/CQL:
+http://www.loc.gov/standards/sru/specs/cql.html
+
+and is being generated with the jscc library:
+http://jscc.phorward-software.com/
+
+Files:
+	cql_grammar.par
+			The source file for the parser, with the grammar and 
+			the invocation code and functions that are called during the parsing, to generate a parse tree
+
+	cql_parser.js
+			the generated parser in javascript
+
+	dict.js
+	    a helper file, containing a dictionary allowing to translate the parse tree into a verbose form.
+	    currently, this is an old version from previous project, 
+	    mainly added to be able to call the containing function (translateNode())
+	    
+The generation call (once you install jscc):
+>jscc -o cql_parser.js cql_grammar.par
+
+Dependencies
+Next to JSCC, obviously, to generate the javascript code, 
+on runtime following external code is used:
+
+jquery.caret.js
+  browser-safe implementation of the caret position in a field
+ 		https://raw.github.com/DrPheltRight/jquery-caret/master/jquery.caret.js
+
+webtoolkit.sprintf.js
+  an js implementation of the formatting function sprintf
+  (alternative:
+  http://www.diveintojavascript.com/projects/javascript-sprintf
