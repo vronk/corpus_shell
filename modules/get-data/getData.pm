@@ -4,8 +4,8 @@ use Template;
 use List::Util qw(first);
 use File::Basename;
 
-our $xmlCache = "/srv/www/htdocs/cstest/xmlCache.pl";
-our $imgCache = "/srv/www/htdocs/cstest/imgCache.pl";
+our $xmlCache = "caches/xmlCache.pl";
+our $imgCache = "caches/imgCache.pl";
 
 our $templatePath = "tmpl";
 
