@@ -136,7 +136,7 @@ declare function local:dispatch($x as node()) as node()*
 {
 typeswitch ($x)
   case text() return $x
-  case element (test) return element div {$x/@*, attribute class {"test"}, fcs-tests:process-request($x)}  
+  case element (test) return element div {$x/@*, attribute class {"test"}, fcs-tests:process-test($x)}  
   case element() return element {$x/name()} {$x/@*, local:passthru($x)}  
   default return local:passthru($x)
 };
@@ -159,18 +159,38 @@ expects:
    
 @returns the requested-url, results of the xpath-evaluations as a div-list and any diagnostics
 :)     
-declare function fcs-tests:process-request($test as node()) as item()* {
+declare function fcs-tests:process-test($test as node()) as item()* {
     
     let $a := $test/a,
         $test-id := xs:string($test/@id),
+        $test-list := xs:string($test/@list),
+        $list-doc := if (doc-available($test-list)) then doc($test-list) else (),
         $target := fcs-tests:config-value("target"), 
         $target-key := fcs-tests:config-key("target"),
-        $operation := fcs-tests:config-value("operation"),
-        $request := concat($target, xs:string($a/@href))    
-    let $a-processed := <a href="{$request}">{$a/text()}</a>
+        $operation := fcs-tests:config-value("operation")
+
+
+    return if (empty($list-doc)) then 
+                let $request := concat($target, xs:string($a/@href))                
+                return fcs-tests:process-request ($test, $request, $a/text(), $target-key, $test-id, $operation)
+            else 
+            (: if we have a list, iterate over the items of the list and run a request for each :)
+                for $i at $c in $list-doc/lst/*
+                  let $q := xs:string($i/@q),
+                            (: has to have the varaible there - currenlty only supports $q-variable :)   
+                      $request := concat($target,  replace(xs:string($a/@href), '%q', xmldb:encode($q))),
+                      $i-id := if ($i/@id) then xs:string($i/@id) else $c,
+                      $request-id := concat($test-id, $i-id),
+                      $a-text := replace(xs:string($a/text()), '%q', $q)
+                  return fcs-tests:process-request ($test, $request, $a-text, $target-key, $request-id, $operation)
+};
+
+declare function fcs-tests:process-request($test, $request as xs:string, $a-text as xs:string, $target-key as xs:string, $request-id as xs:string, $operation as xs:string) as item()* { 
+            
+    let $a-processed := <a href="{$request}">{$a-text}</a>
     let $result-data := httpclient:get(xs:anyURI($request), false(), () )
                             
-    let $store := if ($operation eq 'run-store') then fcs-tests:store-result($target-key, $test-id, $result-data) else ()
+    let $store := if ($operation eq 'run-store') then fcs-tests:store-result($target-key, $request-id, $result-data) else ()
     
     (: evaluate all xpaths defined for given request :) 
     let $check := for $xpath in $test/xpath 
@@ -182,7 +202,7 @@ declare function fcs-tests:process-request($test as node()) as item()* {
                     </div>
                     
      (: checking extra for diagnostics :)
-     let $http-status := $result-data/httpclient:response/@statusCode     
+     let $http-status := $result-data//xs:string(@statusCode)     
      let $diag := ($result-data//diag:diagnostic, $result-data//exception, 
                 if ($http-status ne '200') then <http-status>{$http-status}</http-status> else ())      
       let $wrapped-diag := if (exists($diag)) then 
@@ -244,6 +264,7 @@ declare function fcs-tests:display-page($target  as xs:string, $testset as xs:st
                     <li><a href="collectresults.xql">Results</a></li>
                 </ul>--> 
                 <h1>FCS - test suite</h1>
+                <a href="?operation=overview">overview</a>
             </div>
             
             <div id="content">

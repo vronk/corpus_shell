@@ -19,9 +19,9 @@ let $tests := doc(concat("testsets/", $testset-name, ".xml"))//TestSet
 (: t:run-testSet($tests)
 t:format-testResult($store):)
 
-let $target := request:get-parameter("target", ())
-let $testset := request:get-parameter("testset", ())
-let $operation := request:get-parameter("operation", ())
+let $target := request:get-parameter("target", "0")
+let $testset := request:get-parameter("testset", "0")
+let $operation := request:get-parameter("operation", "overview")
 let $messages := ""
 return
     if ($operation eq "run" or $operation eq "run-store") then        
