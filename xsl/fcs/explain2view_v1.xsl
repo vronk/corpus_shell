@@ -12,7 +12,7 @@
         </history>
        
     -->
-    <xsl:import href="commons_v1.xsl"/>
+    <xsl:import href="../commons_v1.xsl"/>
     <xsl:output method="html"/>
     <xsl:param name="lang" select="'de'"/>
     <xsl:decimal-format name="european" decimal-separator="," grouping-separator="."/>
