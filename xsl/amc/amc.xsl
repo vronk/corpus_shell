@@ -128,11 +128,10 @@
                     </xsl:with-param>
                 </xsl:call-template>
                 -->
-                <script type="text/javascript" src="{concat($scripts-dir, 'js/jquery.min.js')}"></script>
-                <script type="text/javascript" src="{concat($scripts-dir, 'js/jquery-ui.min.js')}"></script>
-                <script type="text/javascript" src="file:/C:/Users/m/3/external/javascript/__jquery.tablesorter/jquery-latest.js"></script>
-                <script type="text/javascript" src="file:/C:/Users/m/3/external/javascript/__jquery.tablesorter/jquery.tablesorter.js"></script>
-                <script type="text/javascript" src="file:/C:/Users/m/3/external/javascript/jquery-uitablefilter/jquery.uitablefilter.js"></script>
+                <script type="text/javascript" src="{concat($scripts-dir, 'js/jquery/jquery.min.js')}"></script>
+                <script type="text/javascript" src="{concat($scripts-dir, 'js/jquery/jquery-ui.min.js')}"></script>
+                <script type="text/javascript" src="{concat($scripts-dir, 'js/jquery/jquery.tablesorter.js')}"></script>
+                <script type="text/javascript" src="{concat($scripts-dir, 'js/jquery/jquery.uitablefilter.js')}"></script>
                 
                 <script type="text/javascript" src="{concat($scripts-dir, 'js/amc.js')}"></script>
                 
