@@ -3,22 +3,29 @@ module namespace fcs-tests  = "http://clarin.eu/fcs/1.0/tests";
 
 import module namespace httpclient = "http://exist-db.org/xquery/httpclient";
 import module namespace t="http://exist-db.org/xquery/testing";
-import module namespace repo-utils = "http://aac.ac.at/content_repository/utils" at  "/db/cr/repo-utils.xqm";
+import module namespace repo-utils = "http://aac.ac.at/content_repository/utils" at  "../../repo-utils.xqm";
 
 declare namespace zr="http://explain.z3950.org/dtd/2.1/";
 declare namespace sru = "http://www.loc.gov/zing/srw/";
 declare namespace fcs = "http://clarin.eu/fcs/1.0";
 declare namespace diag = "http://www.loc.gov/zing/srw/diagnostic/";
 declare namespace xhtml="http://www.w3.org/1999/xhtml"; 
+declare namespace rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"; 
+declare namespace skos="http://www.w3.org/2004/02/skos/core#";
 
 (: sample input:
     
  :)
 declare variable $fcs-tests:config := doc("config.xml");
-declare variable $fcs-tests:cr-config := repo-utils:config("/db/cr/conf/cr/config.xml");
+declare variable $fcs-tests:cr-config := repo-utils:config("../../conf/cr/config.xml");
 declare variable $fcs-tests:run-config := "run-config.xml";
-declare variable $fcs-tests:testsets-coll := "/db/cr/modules/testing/testsets/";
-declare variable $fcs-tests:results-coll := "/db/cr/modules/testing/results/";
+(: avoid absolute paths - but probably this should be a config-option anyway
+declare variable $fcs-tests:testsets-coll := "/db/apps/cr/modules/testing/testsets/";
+declare variable $fcs-tests:results-coll := "/db/apps/cr/modules/testing/results/";:)
+declare variable $fcs-tests:testsets-coll := "testsets/";
+declare variable $fcs-tests:results-coll := "results/";
+
+
 declare variable $fcs-tests:href-prefix := "tests.xql";
 
 (:~ this function is accessed by the testing-code to get configuration-options from the run-config :)
