@@ -1,0 +1,36 @@
+/* dot -oprocessing.png -Tpng processing.dot */ 
+digraph create_mappings {
+label="get-data processing";
+rankdir=TB;
+compound=true;
+
+/* variable */
+node [shape=none];
+
+
+
+/* functions */
+node [shape=ellipse];
+initcaches_php;
+GetData_pm;
+DDConSRU_pl;
+
+/* data */
+node [shape=box];
+cacheconfig_php;
+xmlCache_pl;
+imgCache_pl;
+
+
+cacheconfig_php -> initcaches_php;
+initcaches_php -> xmlCache_pl;
+initcaches_php -> imgCache_pl;
+xmlCache_pl -> GetData_pm  [dir=back,label=uses];
+imgCache_pl -> GetData_pm [dir=back,label=uses];
+GetData_pm -> DDConSRU_pl [dir=back,label=imports];
+
+edge  [style=dashed];
+
+/* makes the layout unnice */
+/* query_dataset_xml -> overall_result_html [style=invisible]; */
+}
