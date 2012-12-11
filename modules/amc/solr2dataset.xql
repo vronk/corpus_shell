@@ -11,7 +11,7 @@ xquery version "1.0";
     let $output-dir := "/db/apps/testing/" 
     let $output-file := "VWB-lemmas_onAMC_all.dataset.xml"
       (: let $data := subsequence(collection("/db/apps/cr/modules/testing/results/corpus207-solr4-8985"),1,20)   :)
-    let $data := collection("/db/apps/cr/modules/testing/results/corpus207-solr4-8985")  
+    let $data := collection("/db/apps/cr/modules/testing/results/corpus207-solr4-8985") 
       
     (: let $data := collection("/db/cr/modules/testing/results/local-solr4")      :)
     
@@ -63,12 +63,13 @@ xquery version "1.0";
                                     div $all-value * $percentile-base * $decimal-base) div $decimal-base, :)
                         $freq := ($result//dataseries[not(@type='base')]/value[@label=$all-label]/xs:string(@rel_formatted))[1],
                         $all-value := ($result//dataseries[not(@type='base')]/value[@label=$all-label])[1],
+                        $hits-value := <value label="hits" >{$numberOfHits}</value>,
                         $values := for $val in $result//dataseries[not(@type='base')]/
                                         value[not(@label=$all-label)][not(contains(@label,' '))]  
                                         order by $val/ancestor::dataset/@name descending, xs:string($val/@label)
-                                        return <value label="{concat($val/ancestor::dataset/@name, xs:string($val/@label))}" >{$val/@*[not(name()='label')]}</value>
+                                        return <value label="{concat($val/ancestor::dataset/@name, ':', xs:string($val/@label))}" >{$val/@*[not(name()='label')]}</value>
                 (: ,$numberOfRecords, translate($numberOfHits,'.',','), translate($freq,'.',','),  $values),';') :)
-        return <dataseries name="{$q}">{($all-value, $values)}</dataseries>
+        return <dataseries name="{$q}" hits="{number($numberOfHits)}">{($all-value, $values)}</dataseries>
     
         
     (:  for processing directly the solr-response
