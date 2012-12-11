@@ -153,7 +153,7 @@ return $store-result
 
 (:<options><option key="update">yes</option></options>:)
 declare function repo-utils:store($collection as xs:string, $doc-name as xs:string, $data as node(), $overwrite as xs:boolean) as item()* {
-  let $clarin-writer := fn:doc("/db/cr/writer.xml"),
+  let $clarin-writer := fn:doc("writer.xml"),
   $dummy := xdb:login($collection, $clarin-writer//write-user/text(), $clarin-writer//write-user-cred/text())
 
   let $rem := if ($overwrite and doc-available(concat($collection, $doc-name))) then xdb:remove($collection, $doc-name) else ()
