@@ -6,7 +6,7 @@
   xmlns:my="myFunctions"
   extension-element-prefixes="exsl xs xd">
   
-  <xsl:import href="solr-helpers.xsl"/>
+  <xsl:import href="amc-helpers.xsl"/>
   
   <xd:doc scope="stylesheet">
     <xd:desc>
