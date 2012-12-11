@@ -52,13 +52,6 @@
     
     <xd:doc xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl">
         <xd:desc>
-            <xd:p>prefix for <xd:i>js</xd:i> and <xd:i>css</xd:i> scripts used in html-header</xd:p>
-        </xd:desc>
-    </xd:doc>
-    <xsl:param name="scripts-dir" select="'/solr/collection1/admin/file?file=/scripts/'" />
-    
-    <xd:doc xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl">
-        <xd:desc>
             <xd:p>invokes appropriate template (<xd:ref name="pivot2data" type="template"></xd:ref> or <xd:ref name="qx2data" type="template"></xd:ref>) to generate a unified internal representation of the data 
                  (<xd:ref>dataset</xd:ref> nodeset in the <xd:ref>chart-data</xd:ref> variable), creates the html-boilerplate
                 and calls the templates to produce the table and chart representation of the data.</xd:p>
@@ -122,12 +115,14 @@
         #infovis {height: 90%; width: 100%;}
         .value { text-align: right; }
         </style> 
-                <!--<xsl:call-template name="chart-google" >
-                    <xsl:with-param name="data" >                        
-                            <xsl:apply-templates select="exsl:node-set($chart-data)[1]" mode="invert" />                                               
-                    </xsl:with-param>
-                </xsl:call-template>
-                -->
+                <xsl:if test="contains($parts,'chart')" >
+                   <xsl:call-template name="chart-google" >
+                       <xsl:with-param name="data" >                        
+                               <xsl:apply-templates select="exsl:node-set($chart-data)[1]" mode="invert" />                                               
+                       </xsl:with-param>
+                   </xsl:call-template>
+                </xsl:if>
+                
                 <script type="text/javascript" src="{concat($scripts-dir, 'js/jquery/jquery.min.js')}"></script>
                 <script type="text/javascript" src="{concat($scripts-dir, 'js/jquery/jquery-ui.min.js')}"></script>
                 <script type="text/javascript" src="{concat($scripts-dir, 'js/jquery/jquery.tablesorter.js')}"></script>
@@ -143,20 +138,24 @@
                 </form>
                 <xsl:apply-templates  mode="query-input"/>
                 
-                <xsl:apply-templates select="exsl:node-set($chart-data)" mode="data2table">
-<!--                    <xsl:with-param name="data" select="$chart-data"></xsl:with-param>-->
-                </xsl:apply-templates>
-              <!--  
-                <div id="infovis-wrapper" >
-                    <div id="infovis-navi" >
+                <xsl:if test="contains($parts,'table')" >
+                    <xsl:apply-templates select="exsl:node-set($chart-data)" mode="data2table">
+    <!--                    <xsl:with-param name="data" select="$chart-data"></xsl:with-param>-->
+                    </xsl:apply-templates>
+                </xsl:if>
+                
+                <xsl:if test="contains($parts,'chart')" >
+                    <div id="infovis-wrapper" >
+                        <div id="infovis-navi" >
                             <xsl:for-each select="exsl:node-set($chart-data)//dataset" >
                                 <a onclick="drawChart({position() - 1})" ><xsl:value-of select="@name"/></a>
                             </xsl:for-each>
-                        <a onclick="toggleStacked();" >stacked</a>
-                     </div>
-                    <div id="infovis" ></div>
-                </div>
-               --> 
+                            <a onclick="toggleStacked();" >stacked</a>
+                        </div>
+                        <div id="infovis" ></div>
+                 </div>
+                </xsl:if> 
+               
                                
                 <!-- <table >
                     <xsl:call-template name="table-header"></xsl:call-template>
