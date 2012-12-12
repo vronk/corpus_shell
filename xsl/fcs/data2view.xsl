@@ -12,7 +12,7 @@
     -->
 <!--    <xsl:include href="data2view_cmd.xsl"/>-->
     <xsl:include href="data2view_tei.xsl"/>
-    <xsl:include href="stand_weiss.xsl"/>
+    <xsl:include href="../stand_weiss.xsl"/>
    
 <!-- default starting-point -->
     <xsl:template match="sru:recordData" mode="record-data">
