@@ -9,7 +9,7 @@
     <link rel="stylesheet" type="text/css" href="scripts/style/jquery.sbscroller.css" />
     <link rel="stylesheet" type="text/css" href="scripts/style/corpusshell.css" />
 
-    <script type="text/javascript" src="scripts/js/jquery.min.js"></script>
+    <script type="text/javascript" src="scripts/js/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="scripts/js/ui/jquery.ui.core.js"></script>
     <script type="text/javascript" src="scripts/js/ui/jquery.ui.widget.js"></script>
     <script type="text/javascript" src="scripts/js/ui/jquery.ui.mouse.js"></script>
@@ -18,10 +18,10 @@
     <script type="text/javascript" src="scripts/js/ui/jquery.ui.autocomplete.js"></script>
     <script type="text/javascript" src="scripts/js/json.js"></script>
     <script type="text/javascript" src="scripts/js/panel.js"></script>
-    <script type="text/javascript" src="scripts/js/jquery.store.js"></script>
-    <script type="text/javascript" src="scripts/js/jquery.mousewheel.min.js"></script>
-    <script type="text/javascript" src="scripts/js/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="scripts/js/jquery.sbscroller.js"></script>
+    <script type="text/javascript" src="scripts/js/jquery/jquery.store.js"></script>
+    <script type="text/javascript" src="scripts/js/jquery/jquery.mousewheel.min.js"></script>
+    <script type="text/javascript" src="scripts/js/jquery/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="scripts/js/jquery/jquery.sbscroller.js"></script>
     <script type="text/javascript" src="scripts/js/params.js"></script>
     <script type="text/javascript" src="scripts/js/corpusshell.config.php"></script>
     <script type="text/javascript" src="scripts/js/profilemanager.js"></script>
@@ -52,12 +52,13 @@
       		 		 <div style="padding: 10px;" id="indexes">
          				<!--
          				<a href="#" onclick="RefreshIndexes();" class="sidebar" id="RefreshIndexesButton">Refresh indexes</a>
-         				<a href="#" onclick="LoadIndexCache();" style="margin-top: 10px;" class="sidebar" id="LoadIndexesButton">Load indexes</a>
-
          				<a href="#" onclick="LoadIndexCache();" class="sidebar" id="LoadIndexesButton">Load indexes</a>
-         				<a href="#" onclick="ShowIndexCache();" style="margin-top: 5px;" class="sidebar" id="ShowIndexesButton">Show indexes</a>
          				-->
          				<a href="#" onclick="ShowIndexCache();" class="sidebar" id="ShowIndexesButton">Show indexes</a>
+         			</div>
+         			<div style="padding: 10px;" id="userdata">
+         			  <span style="color: #000000; width: 100%;">Link to your profiles: </span> <br/>
+         			  <input style="width: 100%;" type="text" value="" id="userid" onclick="this.select();"/>
          			</div>
       		 	</td>
       		 	<td class="sidebartoggle" onclick="ToggleSideBar();" onmouseover="ToggleSideBarHiLight(1);" onmouseout="ToggleSideBarHiLight(0);">
