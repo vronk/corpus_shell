@@ -3,7 +3,7 @@
 error_reporting(E_ALL);
 
  //load configuration
- include "../../utils/php/config.php";
+ include "../utils-php/config.php";
 
  //load database and user data
  include $dbConfigFile;

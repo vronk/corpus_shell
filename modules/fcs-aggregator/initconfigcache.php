@@ -18,7 +18,7 @@
 
 
   //load config file
-  include "../utils/php/config.php";
+  include "../utils-php/config.php";
  
 
   //get the node value of the first occurrence of $tagName
@@ -59,9 +59,10 @@
 
   //xsl file used to transform the query result into php code
   //$xslfile = "http://corpus3.aac.ac.at/cs2/corpus_shell/fcs/utils/php/fcs.resource.to.php.xsl";
-  $xslfile = $webRoot."fcs/utils/php/fcs.resource.to.php.xsl";  
+  //$xslfile = $webRoot."fcs/utils/php/fcs.resource.to.php.xsl";  
+  $xslfile = "fcs.resource.to.php.xsl";  
   
-  $xslfile = str_replace($localhost, "localhost",  $xslfile);
+  //$xslfile = str_replace($localhost, "localhost",  $xslfile);
   
   $content = "";
   $urls = "";

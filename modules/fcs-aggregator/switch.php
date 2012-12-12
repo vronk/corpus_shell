@@ -9,10 +9,10 @@
   $fcsConfigFound = false;
 
   //load config file
-  include "../utils/php/config.php";
+  include "../utils-php/config.php";
 
   //needed to return sru compliant error messages
-  include "../utils/php/diagnostics.php";
+  include "../utils-php/diagnostics.php";
 
   //array containing default xsl style sheets
   $globalStyles = array ("searchRetrieve" => "", "scan" => "", "explain" => "", "default" => "");

@@ -6,7 +6,7 @@
 	new feature: add items of type == "fcs.resource"
 */
 
-  include "../../fcs/utils/php/config.php";
+  include "../utils-php/config.php";
 
   $ddcConfigFound = false;
 

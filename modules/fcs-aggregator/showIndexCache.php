@@ -4,7 +4,7 @@
 */
 
   //configuration
-  include "../../fcs/utils/php/config.php";
+  include "../utils-php/config.php";
 
   $ddcConfigFound = false;
 

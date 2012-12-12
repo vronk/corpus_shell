@@ -1,20 +1,21 @@
 <?php
   
-  include "../../fcs/utils/php/config.php";
+  include "../utils-php/config.php";
 
   print_r($_POST);
   if (isset($_POST['uid']) && trim($_POST['uid']) != "" && isset($_POST['data']) && trim($_POST['data']) != "")
   {
     print "<msg>ok</msg>";
 
-    $path = $docRoot.$csRoot."main/utils/userdata/";
+    //moved to config.php
+    //$path = $docRoot.$csRoot."main/utils/userdata/";
 
     $uid = trim($_POST['uid']);
     $data = trim($_POST['data']);
 
     print "uid: $uid";
 
-    $filename = $path . $uid . ".json";
+    $filename = $userdataPath . $uid . ".json";
 
     $handle = fopen($filename, "w");
     fwrite($handle, $data);
