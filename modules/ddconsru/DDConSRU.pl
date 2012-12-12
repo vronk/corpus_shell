@@ -1,6 +1,10 @@
 #!/usr/bin/perl -w
 
-use lib qw(.);
+# adding the directory of this script 
+# (is not the same as cwd, when running on server)
+# only necessary when running as cgi-script
+
+use lib "/srv/www/perl-lib";
 use DDC;
 use Getopt::Long qw(:config no_ignore_case);
 use Pod::Usage;
@@ -8,7 +12,8 @@ use CGI qw(param);
 use Encode;
 use Template;
 use Diagnostics;
-use ReturnData;
+use lib "/srv/www/htdocs/cs2/corpus_shell/modules/get-data";
+use getData;
 #use XML::Simple qw(:strict);
 
 use XML::LibXML;
@@ -33,8 +38,6 @@ my $localhost = "corpus3.aac.ac.at";
 my $cgi = new CGI;
 my $url = $cgi->url(-query => 1);
 
-$url =~ s/localhost/$localhost/g;
-
 $url =~ s/&amp;/&/g;
 $url =~ s/;/&/g;
 $url = URLDecode($url);
@@ -46,6 +49,10 @@ $url =~ s/query=.*//g;
 $url =~ s/x-format=.*&amp;/&amp;/g;
 $url =~ s/x-format=.*//g;
 $url =~ s/(&amp;)+/&amp;/g;
+
+$url =~ s/localhost/$localhost/g;
+$url =~ s/127\.0\.0\.1/$localhost/g;
+
 
 #$recordIdBase = "http://corpus3.aac.ac.at/ddconsru?operation=searchRetrieve&x-context=clarin.at:icltt:ddc:barock&query=__query__";
 
@@ -126,6 +133,8 @@ $sh = param("query");
     {
       $pageToken = substr($query, $idx + 4);
     }
+
+
   }
 
 $sh = param("x-format");
@@ -165,58 +174,82 @@ if ($context ne "")
   my $parser = XML::LibXML->new();
   my $doc    = $parser->parse_file($configFile);
 
-
-  foreach my $item ($doc->findnodes('//item'))
+  my ($serverKey) = $doc->findnodes('/config/server/key');
+  if ($serverKey->to_literal eq $context)
   {
-    my($key) = $item->findnodes('./key');
-    if ($key->to_literal eq $context)
+    $context = "";
+
+    ## ###########################################################
+    ## this is not working yet!
+    ## need to get server address and port
+    ## ###########################################################
+
+  }
+  else
+  {
+    foreach my $item ($doc->findnodes('//item'))
     {
-    	 # get the internal name of the corpus (to be given to ddc as context)
-      my($name) = $item->findnodes('./name');
-      $context =  $name->to_literal;
-      my($par) = $key->findnodes('../../../ip');
-      $server = $par->to_literal;
-      my($par1) = $key->findnodes('../../../port');
-      $port = $par1->to_literal;
-
-      if ($item->exists('./fileMask'))
+      my($key) = $item->findnodes('./key');
+      if ($key->to_literal eq $context)
       {
-        my($mask) = $item->findnodes('./fileMask');
-        $fileMask = $mask->to_literal;
-      }
+      	 # get the internal name of the corpus (to be given to ddc as context)
+        my($name) = $item->findnodes('./name');
+        $context =  $name->to_literal;
+        my($par) = $key->findnodes('../../../ip');
+        $server = $par->to_literal;
+        my($par1) = $key->findnodes('../../../port');
+        $port = $par1->to_literal;
 
-      if ($item->exists('./dataview[@type=\'external\']/@ref'))
-      {
-        my($eLink) = $item->findnodes('./dataview[@type=\'external\']/@ref');
-        $extLink = $eLink->to_literal;
-      }
+        if ($item->exists('./fileMask'))
+        {
+          my($mask) = $item->findnodes('./fileMask');
+          $fileMask = $mask->to_literal;
+        }
 
-      if ($item->exists('./dataview[@type=\'full\']/@ref'))
-      {
-        my($fLink) = $item->findnodes('./dataview[@type=\'full\']/@ref');
-        $fullLink = $fLink->to_literal;
-      }
+        if ($item->exists('./dataview[@type=\'external\']/@ref'))
+        {
+          my($eLink) = $item->findnodes('./dataview[@type=\'external\']/@ref');
+          $extLink = $eLink->to_literal;
+        }
 
-      if ($item->exists('./index[@key=\'w\']'))
-      {
-        my($wordIndex) = $item->findnodes('./index[@key=\'w\']');
-        $wIdx = $wordIndex->to_literal;
-      }
+        if ($item->exists('./dataview[@type=\'full\']/@ref'))
+        {
+          my($fLink) = $item->findnodes('./dataview[@type=\'full\']/@ref');
+          $fullLink = $fLink->to_literal;
+        }
 
-      if ($item->exists('./index[@key=\'s\']'))
-      {
-        my($sentIndex) = $item->findnodes('./index[@key=\'s\']');
-        $sIdx = $sentIndex->to_literal;
-      }
+        if ($item->exists('./index[@key=\'w\']'))
+        {
+          my($wordIndex) = $item->findnodes('./index[@key=\'w\']');
+          $wIdx = $wordIndex->to_literal;
+        }
 
-      if ($item->exists('./index[@key=\'f\']'))
-      {
-        my($fileIndex) = $item->findnodes('./index[@key=\'f\']');
-        $fIdx = $fileIndex->to_literal;
-      }
+        if ($item->exists('./index[@key=\'s\']'))
+        {
+          my($sentIndex) = $item->findnodes('./index[@key=\'s\']');
+          $sIdx = $sentIndex->to_literal;
+        }
 
-      my($txt) = $item->findnodes('./displayText');
-      $displayText = $txt->to_literal;
+        if ($item->exists('./index[@key=\'f\']'))
+        {
+          my($fileIndex) = $item->findnodes('./index[@key=\'f\']');
+          $fIdx = $fileIndex->to_literal;
+        }
+
+        foreach my $indexItem ($item->findnodes('./index[@key]'))
+        {
+          my $key = $indexItem->findvalue('./@key');
+
+          ##print STDERR "---- key: $key ---- query: $query ---- \n";
+          if (($query =~ m/$key=/) && ($query !~ m/\$$key=/))
+          {
+            $query =~ s/$key=/\$$key=/g;
+          }
+        }
+
+        my($txt) = $item->findnodes('./displayText');
+        $displayText = $txt->to_literal;
+      }
     }
   }
   if ($oldContext eq $context)
@@ -233,7 +266,6 @@ $url =~ s/http:\/\/$localhost\/ddconsru/$fullLink/g;
 # http://www.loc.gov/standards/sru/resources/diagnostics-list.html
 #if (! $operation eq 'explain' || operation eq 'searchRetrieve')
 #	$d = new Diagnostics(4);
-
 
  $query =~ s/_s_/;/g;
  $query =~ s/_q_/"/g; #"
@@ -303,16 +335,16 @@ if (($operation eq "searchRetrieve") and ($pageToken ne ""))
 {
   if ($xformat eq "img")
   {
-    ReturnData::getImageByPid($fileMask, $pageToken);
+    GetData::getImageByPid($fileMask, $pageToken);
   }
   else
   {
-    ReturnData::getXmlByPid($fileMask, $pageToken, $oldContext);
+    GetData::getXmlByPid($fileMask, $pageToken, $oldContext);
   }
   return;
 }
 
-print "Content-Type: text/xml\n\n";
+
 
 our $dclient = DDC::Client::Distributed->new(connect=>{PeerAddr=>$server,PeerPort=>$port},
 					     start=>$startRecord,
@@ -320,23 +352,42 @@ our $dclient = DDC::Client::Distributed->new(connect=>{PeerAddr=>$server,PeerPor
 					     timeout=>$timeout,
 					    );
 
+print STDERR "---- ddc config PeerAddr: $server, PeerPort: $port ---- \n";
+
+##print STDERR "---- ddc reality PeerAddr: $serverAddr, PeerPort: $port ---- \n";
+
+
 $res = 1;
 $resNum = 0;
 $DDC::Format::Text::resultLineNumber = 0;
 
 # apply restricting to free texts (for anonymous users)  - to be inline with deployed webapps
-if ($context)
+if (($context) && ($context ne ""))
 {
  	$query_suffix = ':'.$context;
+}
+else
+{
+  $query_suffix = "";
 }
 $query_= $query.$query_suffix;
 
 $dclient->open() or $res = 0;
-if ($res == 1) {
-	($hits_count, $hits) = $dclient->query02($query_) ;
-	#$hits = $dclient->query_01($query) or $res = 2;
-	$resNum = $#hits;
- }
+if ($res == 1)
+{
+   print "Content-Type: text/xml\n\n";
+   ($hits_count, $hits) = $dclient->query02($query_) ;
+  	#$hits = $dclient->query_01($query) or $res = 2;
+  	$resNum = $#hits;
+}
+else
+{
+   ## 2 - System temporarily unavailable
+   Diagnostics::diagnostics(2, $oldContext);
+   return;
+}
+
+print STDERR "---- ddc $hits_count ---- \n";
 
 $fmt = DDC::Format::Text->new(columns=>$columns,start=>$startRecord);
 
