@@ -262,7 +262,12 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
     $(newPanel).css("height", this.Position.Height);
     $(newPanel).css("z-index", this.ZIndex);
 
-    var titlep = this.GeneratePanelTitle(this.Title, 1, this.Pinned);
+    var usePin = 1;
+
+    if (this.Type == "content")
+      usePin = 0;
+
+    var titlep = this.GeneratePanelTitle(this.Title, usePin, this.Pinned);
     $(newPanel).append(titlep);
     var searchResultDiv = this.GenerateSearchResultsDiv();
     $(searchResultDiv).css('height', $(newPanel).height() - 35);
@@ -273,7 +278,7 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
 
     if (this.Type == "image")
       this.GetFacsimile();
-    else if (this.Type == "text")
+    else if ((this.Type == "text") || (this.Type == "content"))
       this.GetFullText();
 
     this.InitDraggable();
@@ -378,7 +383,7 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
 
   //function:   this.GetFullText()
   //parameters: -
-  //purpose:    loads this.Url via AJAX an places the content of the remote file
+  //purpose:    loads this.Url via AJAX and places the content of the remote file
   //            inside the searchresult div; afterwards initializes/refreshes the
   //            scrollbar
   //returns:    -
@@ -396,7 +401,7 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
         {
           var responseText = xml.responseText;
 
-          responseText = $(responseText).find(".title, .data-view, .navigation");
+          responseText = $(responseText).find(".title, .data-view, .navigation, .content");
 
           if ($(elem).find(".scroll-content").length > 0)
           {
@@ -450,9 +455,9 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
     $(parElem).find(".searchresults").addClass("cmd loading").text("");
     $(parElem).find(".hitcount").text("-");
 
-    
+
     var xcontext = this.PanelController.GetResourceName(sele);
-								
+
 								/* url +  */
     var urlStr = switchURL + "?operation=searchRetrieve&query=" + sstr + "&x-context=" + xcontext +
                  "&x-format=html&version=1.2";

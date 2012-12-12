@@ -38,11 +38,11 @@ function PanelManager (container, searchConfig)
 
   //function:   this.AddMainPanel(panelId, position, url, title, zIndex)
   //parameters: panelId - unique panel identifier
-  //purpose:
+  //purpose:    adds a parent/main panel to the list of panels (this.Panels)
   //returns:    -
-  this.AddMainPanel = function(panelId, position, url, title, zIndex)
+  this.AddMainPanel = function(panelId, type, position, url, title, zIndex)
   {
-    this.Panels[panelId] = this.GetNewMainPanelObject(panelId, position, url, title, zIndex);
+    this.Panels[panelId] = this.GetNewMainPanelObject(panelId, type, position, url, title, zIndex);
     this.AddPanelId(panelId);
     this.AddSearchPanelTitle(title);
     this.TriggerChangedEvent("Mainpanel added: " + panelId);
@@ -50,7 +50,7 @@ function PanelManager (container, searchConfig)
 
   //function:   this.AddImagePanel(parentId, panelId, pinned, position, url, title, zIndex)
   //parameters: panelId - unique panel identifier
-  //purpose:
+  //purpose:    adds an image panel to the list of panels (this.Panels[parentId].Panels)
   //returns:    -
   this.AddImagePanel = function(parentId, panelId, pinned, position, url, title, zIndex)
   {
@@ -59,7 +59,7 @@ function PanelManager (container, searchConfig)
 
   //function:   this.AddTextPanel(parentId, panelId, pinned, position, url, title, zIndex)
   //parameters: panelId - unique panel identifier
-  //purpose:
+  //purpose:    adds a text panel to the list of panels (this.Panels[parentId].Panels)
   //returns:    -
   this.AddTextPanel = function(parentId, panelId, pinned, position, url, title, zIndex)
   {
@@ -68,7 +68,7 @@ function PanelManager (container, searchConfig)
 
   //function:   this.AddSubPanel(parentId, panelId, pinned, position, url, title, zIndex, type)
   //parameters: panelId - unique panel identifier
-  //purpose:
+  //purpose:    adds a subpanel to the list of panels (this.Panels[parentId].Panels)
   //returns:    -
   this.AddSubPanel = function(parentId, panelId, pinned, position, url, title, zIndex, type)
   {
@@ -113,8 +113,8 @@ function PanelManager (container, searchConfig)
   //gets subpanel, if it doesn't exist, returns null
   //function:   this.GetSubPanel(parentId, panelId)
   //parameters: panelId - unique panel identifier
-  //purpose:
-  //returns:    -
+  //purpose:    searches for subpanel by panelId
+  //returns:    if found, returns the panel else null
   this.GetSubPanel = function(parentId, panelId)
   {
     if (parentId != "")
@@ -137,8 +137,9 @@ function PanelManager (container, searchConfig)
 
   //function:   this.GetMainFromSubPanel(panelId)
   //parameters: panelId - unique panel identifier
-  //purpose:
-  //returns:    -
+  //purpose:    searches for the corresponding parent panel to a given
+  //            panelId of a subpanel
+  //returns:    if found, returns the panel else null
   this.GetMainFromSubPanel = function(panelId)
   {
      for (var key in this.Panels)
@@ -153,8 +154,9 @@ function PanelManager (container, searchConfig)
 
   //function:   this.GetMainIdFromSubPanel(panelId)
   //parameters: panelId - unique panel identifier
-  //purpose:
-  //returns:    -
+  //purpose:    searches for the corresponding parent panelId to a given
+  //            panelId of a subpanel
+  //returns:    if found, returns the parent panelId else null
   this.GetMainIdFromSubPanel = function(panelId)
   {
      for (var key in this.Panels)
@@ -169,8 +171,9 @@ function PanelManager (container, searchConfig)
 
   //function:   this.GetPanel(panelId)
   //parameters: panelId - unique panel identifier
-  //purpose:
-  //returns:    -
+  //purpose:    searches for a panel without knowing wether it is a main or a
+  //            sub panel
+  //returns:    if found, returns the panel else null
   this.GetPanel = function(panelId)
   {
     var panel = null;
@@ -510,15 +513,16 @@ function PanelManager (container, searchConfig)
   }
 
   //helpers
-  //function:   this.GetNewMainPanelObject(panelId, position, url, title, zIndex)
+  //function:   this.GetNewMainPanelObject(panelId, type, position, url, title, zIndex)
   //parameters: panelId - unique panel identifier
   //purpose:
   //returns:    -
-  this.GetNewMainPanelObject = function(panelId, position, url, title, zIndex)
+  this.GetNewMainPanelObject = function(panelId, type, position, url, title, zIndex)
   {
     var obj = new Object();
     obj["Id"] = panelId;
     obj["Title"] = title;
+    obj["Type"] = type;
     obj["Position"] = position;
     obj["Panels"] = new Array();
     obj["Url"] = url;
@@ -565,20 +569,20 @@ function PanelManager (container, searchConfig)
     return 'panel' + i;
   }
 
-  //function:   this.GetNewSearchPanelTitle()
+  //function:   this.GetNewPanelTitle(titlePart)
   //parameters: -
   //purpose:
   //returns:    -
-  this.GetNewSearchPanelTitle = function()
+  this.GetNewPanelTitle = function(titlePart)
   {
     var i = 1;
 
-    while (this.UsedSearchPanelTitles.indexOf('Search ' + i) != -1)
+    while (this.UsedSearchPanelTitles.indexOf(titlePart + ' ' + i) != -1)
     {
       i++;
     }
 
-    return 'Search ' + i;
+    return titlePart + ' ' + i;
   }
 
   //function:   this.AddPanelId(panelId)
@@ -844,7 +848,7 @@ function PanelManager (container, searchConfig)
   this.OpenNewSearchPanel = function(config, searchstr)
   {
     var panelName = this.GetNewPanelId();
-    var panelCount = this.Panels.length;
+    var panelCount = this.GetPanelCount();
 
     var position = new Object();
     position["Left"] = 200 + 20*panelCount + "px";
@@ -853,7 +857,7 @@ function PanelManager (container, searchConfig)
     position["Height"] = "600px";
 
     var maxZidx = this.GetMaxZIndex() + 1;
-    var panelTitle = this.GetNewSearchPanelTitle();
+    var panelTitle = this.GetNewPanelTitle("Search");
 
     if (isNaN(config))
       config = this.GetSearchIdx(config);
@@ -862,7 +866,47 @@ function PanelManager (container, searchConfig)
     newPanel.CreatePanel(searchstr);
 
     this.PanelObjects[panelName] = newPanel;
-    this.AddMainPanel(panelName, position, undefined, panelTitle, maxZidx + 1);
+    this.AddMainPanel(panelName, "search", position, undefined, panelTitle, maxZidx + 1);
+  }
+
+
+  //function:   this.OpenNewScanPanel(config)
+  //parameters: -
+  //purpose:
+  //returns:    -
+  this.OpenNewScanPanel = function(config, scanIdx)
+  {
+    var urlStr = "/switch?operation=scan&x-format=html&x-context=" + config +
+                 "&version=1.2&scanClause=" + scanIdx;
+    this.OpenNewContentPanel(urlStr, "Scan");
+  }
+
+  //function:   this.OpenNewContentPanel(config, titlePart)
+  //parameters: -
+  //purpose:
+  //returns:    -
+  this.OpenNewContentPanel = function(url, titlePart)
+  {
+    var panelName = this.GetNewPanelId();
+    var panelCount = this.GetPanelCount();
+
+    var position = new Object();
+    position["Left"] = 200 + 20*panelCount + "px";
+    position["Top"] = 10 + 20*panelCount +  "px";
+    position["Width"] = "525px";
+    position["Height"] = "600px";
+
+    var maxZidx = this.GetMaxZIndex() + 1;
+    if (titlePart == undefined)
+      titlePart = "Content";
+
+    var panelTitle = this.GetNewPanelTitle(titlePart);
+
+    var newPanel = new Panel(panelName, "content", panelTitle, url, position, false, maxZidx, this.Container, this, undefined);
+    newPanel.CreatePanel();
+
+    this.PanelObjects[panelName] = newPanel;
+    this.AddMainPanel(panelName, "content", position, url, panelTitle, maxZidx + 1);
   }
 
   //function:   this.CreateNewSearchPanelObj(panelObj)
@@ -874,7 +918,22 @@ function PanelManager (container, searchConfig)
     if (panelObj == undefined) return;
 
     var maxZidx = this.GetMaxZIndex() + 1;
-    var newPanel = new Panel(panelObj.Id, "search", panelObj.Title, panelObj.Url, panelObj.Position, false, maxZidx ,this.Container, this, 0);
+    var newPanel = new Panel(panelObj.Id, panelObj.Type, panelObj.Title, panelObj.Url, panelObj.Position, false, maxZidx ,this.Container, this, 0);
+    newPanel.CreatePanel();
+
+    this.PanelObjects[panelObj.Id] = newPanel;
+  }
+
+  //function:   this.CreateNewContentPanelObj(panelObj)
+  //parameters: -
+  //purpose:
+  //returns:    -
+  this.CreateNewContentPanelObj = function(panelObj)
+  {
+    if (panelObj == undefined) return;
+
+    var maxZidx = this.GetMaxZIndex() + 1;
+    var newPanel = new Panel(panelObj.Id, panelObj.Type, panelObj.Title, panelObj.Url, panelObj.Position, false, maxZidx ,this.Container, this, 0);
     newPanel.CreatePanel();
 
     this.PanelObjects[panelObj.Id] = newPanel;
@@ -1046,6 +1105,18 @@ function PanelManager (container, searchConfig)
     return this.SearchConfig[idx]["x-context"];
   }
 
+  this.GetPanelCount = function()
+  {
+    var cnt = 0;
+
+    for (var key in this.Panels)
+    {
+      cnt++;
+    }
+
+    return cnt;
+  }
+
   //function:   this.LoadProfile(name, panels)
   //parameters: -
   //purpose:
@@ -1059,12 +1130,20 @@ function PanelManager (container, searchConfig)
     for (var key in this.Panels)
     {
       var panel = this.Panels[key];
-      this.CreateNewSearchPanelObj(panel);
-      if (panel.Url != undefined && panel.Url != "")
+      if ((panel.Type == undefined) || (panel.Type == "search"))
       {
-        var panelObj = this.GetPanelObj(panel.Id);
-        if (panelObj != undefined)
-          panelObj.StartSearch();
+        panel['Type'] = "search";
+        this.CreateNewSearchPanelObj(panel);
+        if (panel.Url != undefined && panel.Url != "")
+        {
+          var panelObj = this.GetPanelObj(panel.Id);
+          if (panelObj != undefined)
+            panelObj.StartSearch();
+        }
+      }
+      else if (panel.Type == "content")
+      {
+        this.CreateNewContentPanelObj(panel);
       }
 
       for (var subKey in panel.Panels)

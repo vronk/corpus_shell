@@ -8,10 +8,10 @@
 
 //  CHANGE THIS FOR RELEASE
 //  $configUrl = "../../sru/switch.config";
-  $configUrl = "../../fcs/aggregator/switch.config";
+  $configUrl = "../../modules/fcs-aggregator/switch.config";
   $localhost = "corpus3.aac.ac.at";
 
-  $ddcConfig = "../../fcs/aggregator/fcs.resource.config.php";
+  $ddcConfig = "../../modules/fcs-aggregator/fcs.resource.config.php";
   $ddcConfigFound = false;
 
   function GetNodeValue($node, $tagName)

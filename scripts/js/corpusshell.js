@@ -30,6 +30,31 @@ var Indexes = null;
 // is now set in params.js
 //var baseURL = "/cs2/corpus_shell";
 
+function GetUrlParams(url)
+{
+  var urlParams = {};
+  if (url != undefined)
+  {
+    var match;
+    var pl     = /\+/g;  // Regex for replacing addition symbol with a space
+    var search = /([^&=]+)=?([^&]*)/g;
+    var decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); };
+
+    var query  = "";
+    var qmPos = url.indexOf('?');
+    if (qmPos != -1)
+      query = url.substr(qmPos + 1);
+    else
+      query = url;
+
+    while (match = search.exec(query))
+       urlParams[decode(match[1])] = decode(match[2]);
+  }
+
+  return urlParams;
+}
+
+
 
 $(function()
 {
@@ -41,12 +66,25 @@ $(function()
          event.preventDefault();
          PanelController.OpenSubPanel(this, $(this).attr('href'), true, "image");
       });
+    $('.scroll-container a.value-caller').live("click", function (event) {
+         event.preventDefault();
+         PanelController.OpenSubPanel(this, '/switch' + $(this).attr('href') + '&version=1.2&x-context=clarin.at:icltt:cr:stb', true, "text");
+      });
     $('.scroll-container .navigation a').live("click", function (event) {
          event.preventDefault();
          PanelController.OpenSubPanel(this, $(this).attr('href'), true, "text");
       });
 
-    userId = $.storage.get("userId");
+    var urlParams = GetUrlParams(location.search);
+    if (urlParams['userId'] && urlParams['userId'] != "")
+    {
+      userId = urlParams['userId'];
+    }
+
+    if (userId == null)
+    {
+      userId = $.storage.get("userId");
+    }
 
     if (userId == null)
     {
@@ -68,13 +106,26 @@ $(function()
          SaveUserData(userId);
        }
     }
+
+    $("#userid").val(GenerateUseridLink(userId));
 });
 
 var PanelCount = 0;
 
+function GenerateUseridLink(userId)
+{
+  var url = document.URL;
+  var pos = url.indexOf("?");
+
+  if (pos != -1)
+    url = url.substr(0, pos);
+
+  return url + "?userId=" + userId;
+}
+
 function GetUserId()
 {
-  $.getJSON(baseURL + '/main/utils/getUserId.php', function(data)
+  $.getJSON(baseURL + userData + "getUserId.php", function(data)
   {
      userId = data.id;
      $.storage.set("userId", userId);
@@ -86,7 +137,7 @@ function GetUserData(userId)
   $.ajax(
   {
       type: 'POST',
-      url: baseURL + "/main/utils/getUserData.php",
+      url: baseURL + userData + "getUserData.php",
       dataType: 'json',
       data : {uid: userId},
       complete: function(data, textStatus)
@@ -239,7 +290,7 @@ function SaveUserData(userid)
       type: 'POST',
 //      CHANGE THIS FOR RELEASE
 //      url: "http://corpus3.aac.ac.at/sru/switch.php",
-      url: baseURL + "/main/utils/saveUserData.php",
+      url: baseURL + userData + "saveUserData.php",
 
       dataType: 'xml',
       data : {uid: userid, data: dataStr},
@@ -506,7 +557,7 @@ function CreateNewProfile(newName)
     SaveUserData(userId);
     RefreshProfileCombo(newName);
   }
-}	
+}
 
 function DeleteProfile(profileName)
 {
