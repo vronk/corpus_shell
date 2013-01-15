@@ -81,16 +81,17 @@
             </xsl:variable>
             <!-- if base query  add relative freqs --> 
             <xsl:choose>
+                <!-- if incoming preprocessed data --> 
+                <xsl:when test="/dataset or /result/dataset or /multiresult/dataset">
+                    <xsl:copy-of select="/"/>
+                </xsl:when>
                 <xsl:when test="//*[contains(@name,'baseq')]">
                     <xsl:call-template name="data2reldata">
                         <xsl:with-param name="query-data" select="$query-data"></xsl:with-param>
                         <xsl:with-param name="base-query" select="//*[contains(@name,'baseq')]" />
                     </xsl:call-template>
                 </xsl:when>
-                <!-- if incoming preprocessed data --> 
-                <xsl:when test="/dataset or /multiresult/dataset">
-                    <xsl:copy-of select="/"/>
-                </xsl:when>
+                
                 <xsl:otherwise>
                     <xsl:copy-of select="$query-data"/>
                 </xsl:otherwise>
@@ -115,6 +116,7 @@
         #infovis {height: 90%; width: 100%;}
         .value { text-align: right; }
         </style> 
+<!--                <xsl:apply-templates select="exsl:node-set($chart-data)[1]" mode="invert" />-->
                 <xsl:if test="contains($parts,'chart')" >
                    <xsl:call-template name="chart-google" >
                        <xsl:with-param name="data" >                        
@@ -151,6 +153,7 @@
                                 <a onclick="drawChart({position() - 1})" ><xsl:value-of select="@name"/></a>
                             </xsl:for-each>
                             <a onclick="toggleStacked();" >stacked</a>
+                            <a onclick="toggleLayout();" >layout</a>
                         </div>
                         <div id="infovis" ></div>
                  </div>
