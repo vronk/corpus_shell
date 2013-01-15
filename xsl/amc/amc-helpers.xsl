@@ -206,7 +206,7 @@
         </xd:desc>
         <xd:param name="dataset"></xd:param>
     </xd:doc>
-    <xsl:template match="dataset" mode="invert">
+    <xsl:template match="dataset" mode="invert-old">
         <xsl:param name="dataset" select="."></xsl:param>
         <dataset name="{@name}">
             <labels>
@@ -223,6 +223,49 @@
                     <xsl:for-each select="$dataset//value[@label=$curr_label_old]">                            
                         <value label="{../@name}" formatted="{@formatted}" >
                             <xsl:if test="../@type"><xsl:attribute name="type" select="../@type"></xsl:attribute></xsl:if>
+                            <xsl:value-of select="."/>
+                        </value>
+                    </xsl:for-each>
+                </dataseries>
+            </xsl:for-each>
+        </dataset>
+    </xsl:template>
+    
+    <xd:doc>
+        <xd:desc>
+            <xd:p>inverts the dataset, i.e. labels will get dataseries and vice versa</xd:p>
+            <xd:p>needed mainly for AreaChart display.</xd:p>
+            <xd:p>tries to cater for inconsistent structure (@key, @name, @label ...)
+            once all data is harmonized (according to dataset.xsd), we can get rid of it</xd:p>
+        </xd:desc>
+        <xd:param name="dataset"></xd:param>
+    </xd:doc>
+    <!-- -->
+    <xsl:template match="dataset" mode="invert">
+        <xsl:param name="dataset" select="."/>
+        <dataset>
+            <xsl:copy-of select="@*"/>
+            <labels>
+                <xsl:for-each select="dataseries">
+                    <label>
+                        <xsl:if test="@type">
+                            <xsl:attribute name="type" select="@type"/>
+                        </xsl:if>
+                        <xsl:if test="@key">
+                            <xsl:attribute name="key" select="@key"/>
+                        </xsl:if>
+                        <xsl:value-of select="(@name, @label ,@key)[1]"/>
+                    </label>
+                </xsl:for-each>
+            </labels>
+            <xsl:for-each select="labels/label">
+                <xsl:variable name="curr_label_old" select="(@key, text())[1]"/>
+                <dataseries key="{$curr_label_old}" label="{text()}">
+                    <xsl:for-each select="$dataset//value[$curr_label_old=@key or $curr_label_old=@label]">
+                        <value key="{(../@name, ../@label,../@key)[not(.='')][1]}">
+                            <xsl:copy-of select="@*[not(.='')]"/>
+                            <!-- formatted="{@formatted}"
+                <xsl:if test="../@type"><xsl:attribute name="type" select="../@type"></xsl:attribute></xsl:if>-->
                             <xsl:value-of select="."/>
                         </value>
                     </xsl:for-each>
