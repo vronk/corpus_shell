@@ -40,14 +40,14 @@ let $sys-config := if (doc-available($repo-utils:sys-config-file)) then doc($rep
 };
 
 declare function repo-utils:config-value($config, $key as xs:string) as xs:string* {
-    ($config[not(@type='system')]//property[@key=$key], $config[@type='system']//property[@key=$key])[1]
+    ($config[not(@type='system')]//(param|property)[@key=$key], $config[@type='system']//property[@key=$key])[1]
 };
 
 (:~ Get value of a param based on a key, from config or from request-param (precedence) :)
 declare function repo-utils:param-value($config, $key as xs:string, $default as xs:string) as xs:string* {
     
     let $param := request:get-parameter($key, $default)
-    return if ($param) then $param else $config//property[@key=$key]
+    return if ($param) then $param else $config//(param|property)[@key=$key]
 };
 
 (:~ returns db-collection (as nodeset) based on the identifier in x-context, looked up in the mapping or default collection as defined in config 
