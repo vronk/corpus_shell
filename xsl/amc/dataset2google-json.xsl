@@ -3,6 +3,8 @@
   xmlns:exsl="http://exslt.org/common"
   xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl" 
   extension-element-prefixes="exsl xd">
+  <!--<xsl:import href="amc-params.xsl"  />
+  <xsl:import href="amc-helpers.xsl"  />-->
   <xd:doc scope="stylesheet">
     <xd:desc>
       <xd:p><xd:b>Created on:</xd:b> 2012-09-26</xd:p>
@@ -13,7 +15,7 @@
   
   <!--<xsl:output method="text" indent="yes" omit-xml-declaration="no"
     media-type="application/json; charset=UTF-8" encoding="utf-8" />-->
- 
+
   
   <xd:doc xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl">
     <xd:desc>
@@ -21,7 +23,11 @@
       <xd:p>the chart will be generated inside a div#infovis </xd:p>
       <xd:p>expects div#infovis and still need to invoke init()-function (onload or onclick somewhere) </xd:p>
     </xd:desc>
-  </xd:doc>  
+  </xd:doc>
+  
+
+  
+  
   <xsl:template name="chart-google" >
     <xsl:param name="data" ></xsl:param>
     
@@ -37,6 +43,7 @@
         var data_arr = [<xsl:copy-of select="$json-data"/>];
       
       var curr_stacked =true;
+      var curr_layout ='pie';
       var chart = null;
       var curr_chart_ix = 0;
       
@@ -48,8 +55,13 @@
         curr_chart_ix=data_ix;        
         
         var data = google.visualization.arrayToDataTable(data_arr[data_ix]);
-        chart = new google.visualization.AreaChart(document.getElementById('infovis'));
-        chart.draw(data, options);
+        if (options["layout"]=='pie') {
+          chart = new google.visualization.PieChart(document.getElementById('infovis'));
+          chart.draw(data, options);
+        } else {
+          chart = new google.visualization.AreaChart(document.getElementById('infovis'));
+          chart.draw(data, options);
+        }
       }
       
       function toggleStacked () {
@@ -57,10 +69,16 @@
         drawChart(curr_chart_ix, getOptions(curr_stacked));
      }
      
+     function toggleLayout() {
+        if (curr_layout=='pie'){ curr_layout = 'area' } else { curr_layout='pie'};
+        drawChart(curr_chart_ix, getOptions());
+     }
+     
       function getOptions(stacked) { 
         var options = {
+            layout: curr_layout,
             title: '<xsl:value-of select="exsl:node-set($data)/dataset/@name" />',               
-            isStacked: stacked
+            isStacked: curr_stacked
           };
         return options; 
       }      
@@ -90,9 +108,10 @@
     <xsl:text>], </xsl:text>    
   </xsl:template>
   
-  <xsl:template match="dataseries[not(@name='all')]" mode="chart-google">
-    <xsl:text>['</xsl:text><xsl:value-of select="@name" /><xsl:text>', </xsl:text>
-    <xsl:apply-templates mode="chart-google"></xsl:apply-templates>    
+  <xsl:template match="dataseries[not(@name='all' or @key='all')][value]" mode="chart-google">
+    <xsl:text>['</xsl:text><xsl:value-of select="(@name,@label,@key)[1]" /><xsl:text>', </xsl:text>
+    <xsl:apply-templates mode="chart-google"
+        select="value[not(@key=current()/../labels/label[@type='base'])]"></xsl:apply-templates>    
     <xsl:text>]</xsl:text>
     <xsl:if test="not(position()=last())">, 
     </xsl:if>    
@@ -104,7 +123,7 @@
   </xsl:template>
   
   <xsl:template match="value[not(@label='all')][not(@type='base')]" mode="chart-google">      
-    <xsl:value-of select="." />
+    <xsl:value-of select="(@rel,@abs,.)[1]" />
     <xsl:if test="not(position()=last())">, </xsl:if>    
   </xsl:template>
 
