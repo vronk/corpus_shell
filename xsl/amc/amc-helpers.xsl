@@ -175,6 +175,55 @@
     <xsl:template match="text()" mode="link"/>
     
     
+    <xd:doc xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl">
+        <xd:desc>
+            <xd:p>generate a tabled form out of the params</xd:p>
+        </xd:desc>
+    </xd:doc>
+    <xsl:template name="query-input" match="lst[@name='params']" mode="query-input">
+        <form>        
+            <table border="0">                
+                <xsl:apply-templates mode="form" />
+            </table>
+            <input type="submit" value="search" />
+            <xsl:call-template name="link" />
+        </form>
+    </xsl:template>
+    
+    <xd:doc xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl">
+        <xd:desc>
+            <xd:p></xd:p>
+        </xd:desc>
+    </xd:doc>
+    <xsl:template match="lst[@name='params']/str" mode="form" >
+        <tr><td border="0"><xsl:value-of select="@name" />:</td>
+            <td><input type="text" name="{@name}"  value="{.}" /></td></tr>
+    </xsl:template>
+    
+    <xd:doc xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl">
+        <xd:desc>
+            <xd:p></xd:p>
+        </xd:desc>
+    </xd:doc>
+    <xsl:template match="lst[@name='params']/arr" mode="form" >
+        <tr><td border="0"><xsl:value-of select="@name" />:</td>
+            <td><xsl:apply-templates  mode="form" />
+            </td></tr>
+    </xsl:template>
+    
+    <xd:doc xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl">
+        <xd:desc>
+            <xd:p></xd:p>
+        </xd:desc>
+    </xd:doc>
+    <xsl:template match="lst[@name='params']/arr/str" mode="form"  >        
+        <input type="text" name="{../@name}"  value="{.}" /><br/>        
+    </xsl:template>
+    
+    <xsl:template match="text()" mode="query-input"/>
+    <xsl:template match="text()" mode="form"/>
+    
+    
     <xd:doc>
         <xd:desc>
             <xd:p>flatten array to node-sequence</xd:p>
@@ -194,7 +243,8 @@
                 <xsl:copy-of select="*" />                    
             </xsl:when>
             <xsl:otherwise>
-                <xsl:copy-of select="exsl:node-set(.)" />
+<!--                <xsl:copy-of select="exsl:node-set(.)" />-->
+                <xsl:copy-of select="." />
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
