@@ -1,6 +1,6 @@
 #!/usr/bin/perl -w
 
-# adding the directory of this script 
+# adding the directory of this script
 # (is not the same as cwd, when running on server)
 # only necessary when running as cgi-script
 
@@ -18,7 +18,7 @@ use getData;
 
 use XML::LibXML;
 
-my $configFile = 'ddc.config';
+my $configFile = '/srv/www/htdocs/cs2/corpus_shell/modules/ddconsru/ddc.config';
 
 our $xmlCache = "/srv/www/htdocs/cstest/xmlCache.pl";
 
@@ -172,21 +172,38 @@ my $oldContext = $context;
 if ($context ne "")
 {
   my $parser = XML::LibXML->new();
-  my $doc    = $parser->parse_file($configFile);
-
-  my ($serverKey) = $doc->findnodes('/config/server/key');
-  if ($serverKey->to_literal eq $context)
+  if (!(-e $configFile))
   {
-    $context = "";
-
-    ## ###########################################################
-    ## this is not working yet!
-    ## need to get server address and port
-    ## ###########################################################
-
+    print STDERR "---- File NOT found: $configFile ---- \n";
   }
-  else
+  my $doc = $parser->parse_file($configFile);
+
+  my $serverFound = 0;
+  foreach my $serverNode ($doc->findnodes('//server'))
   {
+    my($key) = $serverNode->findnodes('./key');
+    if ($key->to_literal eq $context)
+    {
+      my $str = $key->to_literal;
+      print STDERR "---- Server found: $str ---- \n";
+
+      $serverFound = 1;
+      $context = "";
+
+      my($par) = $serverNode->findnodes('./ip');
+      $server = $par->to_literal;
+      print STDERR "---- Server found: $server ---- \n";
+
+      my($par1) = $serverNode->findnodes('./port');
+      $port = $par1->to_literal;
+      print STDERR "---- Server found: $port ---- \n";
+    }
+  }
+
+  if ($serverFound == 0)
+  {
+    print STDERR "---- Server NOT found: $context ---- \n";
+
     foreach my $item ($doc->findnodes('//item'))
     {
       my($key) = $item->findnodes('./key');
@@ -252,6 +269,9 @@ if ($context ne "")
       }
     }
   }
+
+  print STDERR "---- Error: $oldContext -- $context ---- \n";
+
   if ($oldContext eq $context)
   {
     ##search index was not found
@@ -343,8 +363,6 @@ if (($operation eq "searchRetrieve") and ($pageToken ne ""))
   }
   return;
 }
-
-
 
 our $dclient = DDC::Client::Distributed->new(connect=>{PeerAddr=>$server,PeerPort=>$port},
 					     start=>$startRecord,
