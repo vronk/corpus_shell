@@ -12,15 +12,79 @@ var debug=true;
 
 $(function()
 {
-	query_input_field = $('#' + query_input_field_id );
-	
-	query_input_field.on("keyup",interpret_query);
+	query_input_field = $('#' + query_input_field_id);
+
+	query_input_field.on("keyup",handleKeyUp);
+	query_input_field.autocomplete({
+  				minLength: 0,
+  				focus: function() {
+  					// prevent value inserted on focus
+  					return false;
+  				},
+  				select: function(event, ui) {
+  					var terms = split(this.value);
+  					// remove the current input
+  					terms.pop();
+  					// add the selected item
+  					terms.push(ui.item.value);
+  					// add placeholder to get the comma-and-space at the end
+  					terms.push("");
+
+  					var allterms = terms.join("=");
+  				 if (allterms[allterms.length-1] == "=")
+  					  this.value = allterms.substr(0, allterms.length-1);
+  					else
+  					  this.value = allterms;
+
+  					return false;
+  				}
+  			});
 
 	 if (user_input==null) {
- 		user_input = new UserInput(query_input_field); 		
+ 		user_input = new UserInput(query_input_field);
  	 }
 
 });
+
+function split(val)
+{
+  return val.split(/[= ]\s*/);
+}
+
+function extractLastTerm(term)
+{
+		return split(term).pop();
+}
+
+function handleKeyUp(e)
+{
+  var retVal = interpret_query(e);
+
+  var availableTags = new Array();
+  if (query_input_field.val() == "" || query_input_field.onTerm)
+  {
+    availableTags.push("all");
+    availableTags.push("w");
+    availableTags.push("p");
+    availableTags.push("l");
+    availableTags.push("idx");
+  }
+  else if (!query_input_field.onIndex)
+  {
+    availableTags.push("andy");
+    availableTags.push("anna");
+    availableTags.push("charly");
+    availableTags.push("daniel");
+    availableTags.push("matej");
+  }
+
+  query_input_field.autocomplete("option", "source", function(request, response)
+                {
+                    response($.ui.autocomplete.filter(availableTags, extractLastTerm(request.term)));
+                });
+
+  return retVal;
+}
 
 
 function interpret_query(e) {
@@ -28,14 +92,14 @@ function interpret_query(e) {
 	if (!e) var e = window.event;
 
 		//the idea to jump to the option_block on arrow-up
-//	if (e.keyCode==38) { 
+//	if (e.keyCode==38) {
 	 	//$('queryform').word_type.focus();
-	
+
 //			$('word_type_only_this_wf').focus();
 //	 	return false;
-	//} else 
-	if (e.keyCode==13) { 
-	 			query_input_field.focus();	 	
+	//} else
+	if (e.keyCode==13) {
+	 			query_input_field.focus();
 	 	return false;
 	 } else {
 	 	return interpret();
@@ -44,97 +108,97 @@ function interpret_query(e) {
 
 function interpret(force) {
 
-	//enhance (ie-safe) the input-element (textarea) with cursor-related properties	
+	//enhance (ie-safe) the input-element (textarea) with cursor-related properties
 	//cursor(query_input_field);
-	
+
 	var curpos = query_input_field.caret();
-	
+
 	// only parse if content changed
-	if ((user_input.input_string != query_input_field.val()) || force)		{						
+	if ((user_input.input_string != query_input_field.val()) || force)		{
 		//user_input.changed = true;
-		user_input.parseInput(query_input_field.val())		
+		user_input.parseInput(query_input_field.val())
 	} else {
-		//user_input.changed = false;		
+		//user_input.changed = false;
 	}
-	
-	//output( "current user_input.input_string:" +  user_input.input_string );
-	//output( "current cursor:" +  curpos );
+
+	//output("current user_input.input_string:" +  user_input.input_string);
+	//output("current cursor:" +  curpos);
 	//output("currentTokenIx:" + currentTokenIx(user_input));
 
   var atEnd = (curpos == query_input_field.textLen);
   //user_query.onWord = (user_input.input_string[curpos ]!=" ") && !atEnd;
   query_input_field.onIndex = user_input.hasTokenTypeAt(curpos ,'index');
   query_input_field.onTerm = user_input.hasTokenTypeAt(curpos ,'searchTerm')
- 
+
 	// if (user_query.onWord) {
-			
+
  // $('query_cql').value =  user_input.cql();
- $('#errordiv').html("curpos:" + curpos + "; " + user_input.verbose(curpos)  + "<br/>" + user_input.err_string + "<br/>" + 
- 									 "tokenTypesAt:" + user_input.tokenTypesAt(curpos ) + "<br/>" + 
-									"query_input_field.onIndex" + query_input_field.onIndex + "<br/>" + 
-									"query_input_field.onTerm" + query_input_field.onTerm);
- 
- 			
+ $('#errordiv').html("curpos:" + curpos + "; " + user_input.verbose(curpos)  + "<br/>" + user_input.err_string + "<br/>" +
+ 									 "tokenTypesAt:" + user_input.tokenTypesAt(curpos) + "<br/>" +
+									"query_input_field.onIndex " + query_input_field.onIndex + "<br/>" +
+									"query_input_field.onTerm " + query_input_field.onTerm);
+
+
 /*	if (mode=="verbose" && debug) {
 		tx += "<br/>t.len: " + user_input.tokens.length + "; curpos : " + curpos;
 		tx += "; currTokenIx:" + user_input.tokenAt(curpos);
  */
- 
+
 }
 
 
 // precondition: interpret {cursor, parse} = current user_input
-function apply_opt (type, key) {	
-		
+function apply_opt (type, key) {
+
 	if (!user_query.cursorPosition) cursor(user_query);
-		
-	//var snippet = dict[type][key]['user'];	
-	//snippet = sprintf(dict[type]['user'], snippet); //wrap type-prefix/sufix, especially for POS	
+
+	//var snippet = dict[type][key]['user'];
+	//snippet = sprintf(dict[type]['user'], snippet); //wrap type-prefix/sufix, especially for POS
 	var snippet = resolveKey (key, 'user');
 	var curPos = user_query.cursorPosition;
 	var new_qstr=user_query.value;
-	
-	if (type=='conn') {		
+
+	if (type=='conn') {
 		if (user_query.selectedText) {
 			if (user_query.selectedText.length>0) {
-				output(user_query.selectedText + user_query.s, user_query.e );			
-				//new_qstr= user_input.setGroupAt(user_query.s, user_query.e);		
+				output(user_query.selectedText + user_query.s, user_query.e);
+				//new_qstr= user_input.setGroupAt(user_query.s, user_query.e);
 	  	} else {
 	  		user_input.default_op = key;
-	  		selectOption('conn' , key); 
+	  		selectOption('conn' , key);
 	  	}
 	  } else {
 	  	user_input.default_op = key;
-	  	selectOption('conn' , key); 
+	  	selectOption('conn' , key);
 	  }
-	} else {		
+	} else {
 		if (user_query.selectedText) {
 			if (user_query.selectedText.length>0) {
 				new_qstr= user_query.beforeCursor + sprintf(snippet,user_query.selectedText) + user_query.afterCursor ;
-		  } else {	  		
-		  	new_qstr= user_input.replaceTokenAt(curPos , sprintf(snippet,user_input.userValueAt(curPos)));	
+		  } else {
+		  	new_qstr= user_input.replaceTokenAt(curPos , sprintf(snippet,user_input.userValueAt(curPos)));
 	  	}
 	  } else {
-	  	new_qstr= user_input.replaceTokenAt(curPos , sprintf(snippet,user_input.userValueAt(curPos)));	
+	  	new_qstr= user_input.replaceTokenAt(curPos , sprintf(snippet,user_input.userValueAt(curPos)));
 	  }
 	}
-	user_query.value = new_qstr;	
-	setCursorAt(user_query, curPos);	
+	user_query.value = new_qstr;
+	setCursorAt(user_query, curPos);
 	interpret(true);
-				
+
 }
 
 // possible values for from, to : key|user|cql|verbose|example
 //example arguments: Adjektiv, user, cql
 // OBSOLETED by resolveKey()
 function translate_token(token, from, to) {
-	
-	//user_input.tokens		
+
+	//user_input.tokens
 	var dict_part = dict['pos'];
-	for (entry in dict_part) {				
+	for (entry in dict_part) {
 		var key = entry.toString();
-		if (dict_part[key][from]==token) {			
-		 return dict_part[key][to];			
+		if (dict_part[key][from]==token) {
+		 return dict_part[key][to];
 		}
 	}
 	return token;
@@ -142,43 +206,43 @@ function translate_token(token, from, to) {
 
 function code_optionlist(type) {
 
-	var wrapper_div = $('opt_' + type);	
+	var wrapper_div = $('opt_' + type);
 	var dict_part = dict[type];
-	
-	if (wrapper_div && dict_part) {  	
+
+	if (wrapper_div && dict_part) {
 		var xli="<table border='0' class='forpos'";
-		
-	  //for (var i=0; i<dict_part.length; i++) {	  		
-	  for (entry in dict_part) {	
-	  		//<option>" + dict_part[i] + "</option>";	
+
+	  //for (var i=0; i<dict_part.length; i++) {
+	  for (entry in dict_part) {
+	  		//<option>" + dict_part[i] + "</option>";
 	  		var key = entry.toString();
 	  		//hacking
 	  		if ((type=='pos' && dict_part[key].user) || dict_part[key].label) {
 	 				xli += "<tr id='wraper_" + type + "_type_" + key + "' class='select' ><td onclick=\"apply_opt('" + type + "','" + key + "')\" >" ;
 	 				if (type=='pos') {
-	 					xli += dict_part[key].user + "</td><td>" + dict_part[key].verbose + "</td></tr>"; 	 				 				 			
-	 				} else {	 					
-	 					xli	+= "<input type='radio' name='" + type + "_type' onchange=\"apply_opt('" + type + "','" + key + "')\" value='" + key + "' >" ;	 					
-	 					xli += dict_part[key].label + "</input></td></tr>"; 	 				 				 			
+	 					xli += dict_part[key].user + "</td><td>" + dict_part[key].verbose + "</td></tr>";
+	 				} else {
+	 					xli	+= "<input type='radio' name='" + type + "_type' onchange=\"apply_opt('" + type + "','" + key + "')\" value='" + key + "' >" ;
+	 					xli += dict_part[key].label + "</input></td></tr>";
 	 				}
 	 			}
 		}
-		
-		xli += "</table>";		
+
+		xli += "</table>";
 		return xli;
 	}
 }
 
 function selectOption (type, curval) {
-	  
-    var fs = $$('input[name="' + type + '_type"]')		
+
+    var fs = $$('input[name="' + type + '_type"]')
     var wraper_key, wraper;
     output(fs.length);
 		for(var i=0; i<fs.length; i++) {
 			wraper_key = 'wraper_' + type + '_type_' + fs[i].value ;
-			
+
 			output("fsivalue:" + fs[i].value);
-			wraper = $(wraper_key);		
+			wraper = $(wraper_key);
 			if (fs[i].value==curval) {
 				fs[i].checked = true;
 				if (wraper) wraper.className = "selected";
@@ -195,11 +259,11 @@ function selectOption (type, curval) {
 function selectedOption (ctrl) {
 	    for (var i=0; i < ctrl.length; i++) if (ctrl[i].checked) return ctrl[i].value;
     return false;
-        
+
 }
 
 
-//enhance (ie-safe) the input-element (textarea) with cursor-related properties	
+//enhance (ie-safe) the input-element (textarea) with cursor-related properties
 var os = 0
 var oe = 0
 function cursor(o) {
@@ -211,10 +275,10 @@ function cursor(o) {
 	o.s = s;
 	o.e = e;
 	//	availLength.firstChild.nodeValue = o.getAttribute('maxLength') - t.length
-	//output (s + ":" +  e + "-" + t.substring(s, e).replace(/ /g, '\xa0') + "-");	
+	//output (s + ":" +  e + "-" + t.substring(s, e).replace(/ /g, '\xa0') + "-");
 	o.beforeCursor = t.substring(0, s).replace(/ /g, '\xa0') //|| '\xa0'
-	o.selectedText = t.substring(s, e).replace(/ /g, '\xa0')  //|| '\xa0'	
-	o.afterCursor = t.substring(e).replace(/ /g, '\xa0') //|| '\xa0'	
+	o.selectedText = t.substring(s, e).replace(/ /g, '\xa0')  //|| '\xa0'
+	o.afterCursor = t.substring(e).replace(/ /g, '\xa0') //|| '\xa0'
 //	o.markedText = o.beforeCursor '<cs>' + o.selectedText + '<ce>' + o.afterCursor;
 	os = s
 	oe = e
@@ -238,21 +302,21 @@ function getSelectionEnd(o) {
 	} else return o.selectionEnd
 }
 
-function setCursorAt(obj, pos) { 
-    if(obj.createTextRange) { 
+function setCursorAt(obj, pos) {
+    if(obj.createTextRange) {
         /* Create a TextRange, set the internal pointer to
            a specified position and show the cursor at this
            position
-        */ 
-        var range = obj.createTextRange(); 
-        range.move("character", pos); 
-        range.select(); 
-    } else if(obj.selectionStart) { 
+        */
+        var range = obj.createTextRange();
+        range.move("character", pos);
+        range.select();
+    } else if(obj.selectionStart) {
         /* Gecko is a little bit shorter on that. Simply
            focus the element and set the selection to a
            specified position
-        */ 
-        obj.focus(); 
-        obj.setSelectionRange(pos, pos); 
-		} 
-} 
+        */
+        obj.focus();
+        obj.setSelectionRange(pos, pos);
+		}
+}
