@@ -143,7 +143,7 @@ function NODE()
    thus the root node has the whole cql-query.
   paste %1["children"] as children param to flatten the siblings
 */
-function createNode( type, user_value, user_string, cql, offset, children ) {
+function createNode( type, user_value, user_string, cql, start, children ) {
 	var n = new NODE();
 	n.type = type;
 	n.userval = user_value;
@@ -154,19 +154,21 @@ function createNode( type, user_value, user_string, cql, offset, children ) {
 	// special handling (or hacking?) for the right-end-nodes, otherwise shift one, for 0-based indexing
 	// (the offset seems somehow not to increment at the end of the string anymore)
 
+	/*
 	if (offset==user_input.input_string.length) {
 		offset = (user_string == user_input.input_string.substring(offset-n.len)) ? offset : offset -1;
 	} else {
 		offset = offset -1;
 	}
+	*/
 	/*
 	//(offset==n.len)
 	//offset = (offset==user_input.input_string.length) ? offset : offset - 1;
 	//if offset = (offset==n.len) ? offset : offset - 1;
 	//offset = (offset==n.len) ? offset : offset - 1;
 	*/
-	n.start = offset - n.len;
-	n.end = offset;
+	n.start = start;
+	n.end = start + n.len;
 	n.children = [];
 
 	if (n.userval!="") user_input.tokens.push(n);
@@ -181,14 +183,14 @@ function createNode( type, user_value, user_string, cql, offset, children ) {
 			n.children[i].parent = n;
 	}
 	//output(n.type + n.children.length );
-	output("DEBUG:cN(): " + n.type + ":" + n.value + ": " + n.children.length);
+	output("DEBUG:cN(): " + n.type + ":" + n.userval + ": " + n.children.length);
 	user_input.nodes.push(n);
 	return n;
 }
 
 // from terminal part, one gets the right offset = beginning of the token
 // i am sure this can be done better
-function createLeafNode ( type, user_value, user_string, cql, offset) {
+function createLeafNode ( type, user_value, user_string, cql, start) {
 	var n = new NODE();
 	n.type = type;
 	n.userval = user_value;
@@ -200,9 +202,8 @@ function createLeafNode ( type, user_value, user_string, cql, offset) {
 	// special handling (or hacking?) for the right-end-nodes, otherwise shift one, for 0-based indexing
 	// (the offset seems somehow not to increment at the end of the string anymore)
 
-
-	n.start = offset;
-	n.end = offset + n.len;
+	n.start = start;
+	n.end = start + n.len;
 	n.children = [];
 
 
@@ -462,50 +463,51 @@ function TestCql (inputStr)
   '(or|OR)'      OR       [* %match = createLeafNode("logopor", '', %match, ' or ', %offset); *]
   ;
 
-  '='            EQ       /~  [* %match = createLeafNode("equals", '=', %match, ' = ', offset(info)); *] ~/
+  '='            EQ       [* %match = createLeafNode("equals", '=', %match, ' = ', %offset); *]
   ;
 
   '\(' BRACKETOPEN;
   '\)' BRACKETCLOSE;
 
-  '[A-ZÄÖÜa-z_äöüß]+'      ALPHA
+  '[A-ZÄÖÜa-z_äöüß]+'      ALPHA    [* %match = createLeafNode("alpha", %match, %match, %match, %offset); *]
   ;
   '[0-9]+'                 INT      [* %match = parseInt( %match ); *]
   ;
-  '"'                      QUOTE;
+  '"'                      QUOTE    [* %match = createLeafNode("quote", %match, %match, %match, %offset); *]
+  ;
 
 ##
 
 /~ --- Grammar specification --- ~/
 
 
-cqlQuery            : searchClause                       [* %%= createNode("cqlQuery", "", %1['userx'], %1['cql'], offset(info), %1); *]
-                    ;
-                    
-searchClause 				: index relation searchTerm    	[* %%= createNode("searchClause", "", %1['userx'] + %2['userx'] + %3['userx'], %1['cql'] + %2['cql'] + %3['cql'], offset(info), %1, %2, %3); *]
-										| searchTerm 										[* %%= createNode("searchClause", "", %1['userx'], %1['cql'], offset(info), %1); *]
-                    ;
-index           	  : term   										[* %%= createNode("index", "", %1['userx'], %1['cql'], offset(info), %1); *]
+cqlQuery            : searchClause               [* %%= createNode("cqlQuery", "", %1['userx'], %1['cql'], %1['start'], %1); *]
                     ;
 
-searchTerm          : term   										[* %%= createNode("searchTerm", "", %1['userx'], %1['cql'], offset(info), %1); *]
+searchClause 				   : index relation searchTerm    	[* %%= createNode("searchClause", "", %1['userx'] + %2['userx'] + %3['userx'], %1['cql'] + %2['cql'] + %3['cql'], %1['start'], %1, %2, %3); *]
+										          | searchTerm 										[* %%= createNode("searchClause", "", %1['userx'], %1['cql'], %1['start'], %1); *]
                     ;
-relation            : comparitor               [* %%= createNode("relation", "", %1['userx'], %1['cql'], offset(info), %1); *]
-                    ;
-                    
-comparitor 					: EQ                    	[* %%= createNode("comparitor", %1, %1, %1, offset(info)); *]
-										;
-term								: identifier							[* %%= createNode("term", "", %1['userx'], %1['cql'], offset(info), %1['children']); *]
-										;
-identifier          : charString1              [* %%= createNode("identifier", "", %1['userx'], %1['cql'], offset(info), %1['children']); *]
-                    | charString2              [* %%= createNode("identifier", "", %1['userx'], %1['cql'], offset(info), %1['children']); *]
-                    ;
-charString1         : alphaNum                  [* %%= createNode("charString", "", %1['userx'], %1['cql'], offset(info), %1); *]
-                    ;
-charString2         : QUOTE alphaNum QUOTE      [* %%= createNode("charString", "", %1 + %2['userx'] + %3,  '"' + %2['cql'] + '"', offset(info)); *]
+index           	   : term   										[* %%= createNode("index", "", %1['userx'], %1['cql'], %1['start'], %1); *]
                     ;
 
-alphaNum            : ALPHA                    [* %%= createNode("alphanum", %1, %1, %1, offset(info)); *]
+searchTerm          : term   										[* %%= createNode("searchTerm", "", %1['userx'], %1['cql'], %1['start'], %1); *]
+                    ;
+relation            : comparitor               [* %%= createNode("relation", "", %1['userx'], %1['cql'], %1['start'], %1); *]
+                    ;
+
+comparitor 					    : EQ                    	[* %%= createNode("comparitor", "", %1['userx'], %1['cql'], %1['start'], %1); *]
+										          ;
+term								        : identifier							[* %%= createNode("term", "", %1['userx'], %1['cql'], %1['start'], %1['children']); *]
+										          ;
+identifier          : charString1              [* %%= createNode("identifier", "", %1['userx'], %1['cql'], %1['start'], %1['children']); *]
+                    | charString2              [* %%= createNode("identifier", "", %1['userx'], %1['cql'], %1['start'], %1['children']); *]
+                    ;
+charString1         : alphaNum                  [* %%= createNode("charString", "", %1['userx'], %1['cql'], %1['start'], %1); *]
+                    ;
+charString2         : QUOTE alphaNum QUOTE      [* %%= createNode("charString", "", %1 + %2['userx'] + %3,  '"' + %2['cql'] + '"', %1['start']); *]
+                    ;
+
+alphaNum            : ALPHA                    [* %%= createNode("alphanum", "", %1['userx'], %1['cql'], %1['start'], %1); *]
                     | INT
                     ;
 
