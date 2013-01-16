@@ -17,13 +17,14 @@ declare namespace skos="http://www.w3.org/2004/02/skos/core#";
     
  :)
 declare variable $fcs-tests:config := doc("config.xml");
-declare variable $fcs-tests:cr-config := repo-utils:config("../../conf/cr/config.xml");
+declare variable $fcs-tests:cr-config := repo-utils:config("/db/apps/cr/conf/cr/config.xml");
 declare variable $fcs-tests:run-config := "run-config.xml";
 (: avoid absolute paths - but probably this should be a config-option anyway
+not possible, because when passed to fcs:repo-utils, it does not know, where they are: :)
 declare variable $fcs-tests:testsets-coll := "/db/apps/cr/modules/testing/testsets/";
-declare variable $fcs-tests:results-coll := "/db/apps/cr/modules/testing/results/";:)
-declare variable $fcs-tests:testsets-coll := "testsets/";
-declare variable $fcs-tests:results-coll := "results/";
+declare variable $fcs-tests:results-coll := "/db/apps/cr/modules/testing/results/";
+(:declare variable $fcs-tests:testsets-coll := "testsets/";
+declare variable $fcs-tests:results-coll := "results/";:)
 
 
 declare variable $fcs-tests:href-prefix := "tests.xql";
