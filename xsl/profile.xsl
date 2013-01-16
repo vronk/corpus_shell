@@ -20,13 +20,21 @@
             </xsl:if>
          </h3>
 
-         <xsl:for-each select="//text/body/head/name">
-            <div style="margin-left:30px">
-            <xsl:if test="position()&gt;1">
-               ‒  <xsl:value-of select="."/>
-             </xsl:if>
-             </div>
-         </xsl:for-each>
+         <table>
+            <tr>
+               <td style="background:white;text-align:right;padding-right: 5px">Official name:</td>
+               <td style="background:white; font-style: italic;"><xsl:value-of select="//text/body/head/name[@xml:lang='ara-x-DMG']"/></td>
+               <td style="background:white;width: 10px"> </td>
+               <td style="background:white;font-size:larger"><xsl:value-of select="//text/body/head/name[@xml:lang='ara']"/></td>
+
+            </tr>
+            <tr style="backgound:white">
+               <td style="background:white;text-align:right;padding-right: 5px">Local name:</td>
+               <td style="background:white; font-style: italic;"><xsl:value-of select="//text/body/head/name[@type='latLoc']"/></td>
+               <td style="background:white;width: 10px"> </td>
+               <td style="background:white;font-size:larger"><xsl:value-of select="//text/body/head/name[@type='araLoc']"/></td>
+            </tr>
+         </table>
 
          <br/>
 
@@ -34,12 +42,12 @@
            <xsl:apply-templates select="//div[@type='typology']"/>
         <br/>
 
-        <h4>Overview</h4>
-           <xsl:apply-templates select="//div[@type='researchHistory']"/>
+        <h4>General</h4>
+           <xsl:apply-templates select="//div[@type='general']"/>
         <br/>
 
          <xsl:if test="//div[@type='grammars']">
-           <h4>Grammars</h4>
+           <h4>Research</h4>
            <xsl:apply-templates select="//div[@type='grammars']"/>
            <br/>
         </xsl:if>
@@ -63,26 +71,34 @@
         </xsl:if>
 
          <xsl:if test="//div[@type='sampleText']">
-           <h4>Annotated sample texts</h4>
+           <h4>Texts</h4>
             Basic phrases <a><xsl:attribute name="href">#URL#sampletext=<xsl:value-of select="//div[@type='sampleText']/ptr/@target"/></xsl:attribute><xsl:text>→ </xsl:text></a>
             <br/>
         </xsl:if>
 
          <xsl:if test="//div[@type='dictionary']">
            <h4>Dictionary</h4>
-           <xsl:value-of select="//div[@type='dictionary']"/> <a><xsl:attribute name="href">#URL#dict=<xsl:value-of select="//div[@type='dictionary']/ptr/@target"/></xsl:attribute><xsl:text>→ </xsl:text></a>
-            <br/>
+           <xsl:for-each select="//div[@type='dictionary']/p">
+             <xsl:value-of select="."/>
+             <xsl:choose>
+               <xsl:when test="starts-with(./ptr/@target,'http')">
+                   <a target="_blank">
+                    <xsl:attribute name="href"><xsl:value-of select="./ptr/@target"/></xsl:attribute>
+                    <xsl:text>→ </xsl:text>
+                   </a>
+               </xsl:when>
+               <xsl:otherwise>
+                   <a><xsl:attribute name="href">#URL#dict=<xsl:value-of select="./ptr/@target"/></xsl:attribute><xsl:text>→ </xsl:text></a>
+               </xsl:otherwise>
+             </xsl:choose>
+             <br/>
+           </xsl:for-each>
         </xsl:if>
 
          <xsl:if test="//div[@type='bibliography']">
            <h4>Bibliography</h4>
            <xsl:value-of select="//div[@type='bibliography']"/> <a><xsl:attribute name="href">#URL#biblio=<xsl:value-of select="//div[@type='bibliography']/ptr/@target"/></xsl:attribute><xsl:text>→ </xsl:text></a>
             <br/>
-        </xsl:if>
-
-        <xsl:if test="//fileDesc/author">
-            <br/>
-           <p style="text-align: right; padding-right: 20px">(Contributed by <xsl:value-of select="//fileDesc/author"/>)</p>
         </xsl:if>
       </div>
     </xsl:template>
