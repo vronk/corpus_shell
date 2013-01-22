@@ -31,6 +31,7 @@ diagnostics_php;
 fcs_resource_to_php_xsl;
 _userdata [label="*UserData_php"];
 _php_wrapper;
+corpusshell_config_php;
 
 /* config */
 node [shape=none];
@@ -46,7 +47,7 @@ indexCache_json;
 index_html [fontsize=24 ];
 showIndexCache_php;
 	
-/*
+
 	subgraph cluster_aggregator {
 		label="fcs-aggregator";
 		initconfigcache_php;
@@ -82,9 +83,10 @@ subgraph cluster_fcs_wrapper_php{
 		params_js;
 		corpusshell_js;
 		indexCache_json;
+		corpusshell_config_php;
 		
 	}
-*/
+
 
 /* usedBy */
  edge [dir=back, label="uses"];
@@ -105,17 +107,21 @@ fcs_resource_to_php_xsl -> initconfigcache_php;
 
 indexCache_json -> showIndexCache_php; 
 
+switch_config -> corpusshell_config_php;
+fcs_resource_config_php corpusshell_config_php;
+
 diagnostics_php -> _php_wrapper [style=dashed, color=red, label="should use?"];
+
+params_js -> corpusshell_js;
+corpusshell_js -> index_html;
+corpusshell_config_php -> corpusshell_js;
+
 
 /* generates */
  edge [dir=forward, label="generates"];
 
 populateIndexCache_php -> indexCache_json;
 initconfigcache_php -> fcs_resource_config_php;
-
-
-params_js -> corpusshell_js;
-corpusshell_js -> index_html;
 
 
 
