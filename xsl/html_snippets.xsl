@@ -17,7 +17,7 @@
         <link href="{$scripts_url}/style/jquery/clarindotblue/jquery-ui-1.8.5.custom.css" type="text/css" rel="stylesheet"/>
         <link href="{$scripts_url}/style/cmds-ui.css" type="text/css" rel="stylesheet"/>
         <link href="{$scripts_url}/style/cr.css" type="text/css" rel="stylesheet"/>
-        <script type="text/javascript" src="{$scripts_url}/js/jquery-1.6.2.js"/>
+        <script type="text/javascript" src="{$scripts_url}/js/jquery/jquery-1.6.2.js"/>
         <!--        <xsl:if test="contains($format,'htmljspage')">
             <link href="{$base_dir}/style/jquery/jquery-treeview/jquery.treeview.css" rel="stylesheet"/>        
             </xsl:if>-->
@@ -33,44 +33,52 @@
                 </div>
             </div>
             <div id="top-menu">
-                <div id="user">
-                    <xsl:variable name="link_toggle_js">
-                        <xsl:call-template name="formURL">
-                            <xsl:with-param name="format">
-                                <xsl:choose>
-                                    <xsl:when test="contains($format,'htmljspage')">htmlpage</xsl:when>
-                                    <xsl:otherwise>htmljspage</xsl:otherwise>
-                                </xsl:choose>
-                            </xsl:with-param>
-                        </xsl:call-template>
-                    </xsl:variable>
-                    <xsl:choose>
-                        <xsl:when test="contains($format,'htmljspage')">
-                            <a href="{$link_toggle_js}"> none js </a>
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <a href="{$link_toggle_js}"> js </a>
-                        </xsl:otherwise>
-                    </xsl:choose>
-                    <xsl:choose>
-                        <xsl:when test="$user = ''">
-                            <a href="workspace.jsp">    login</a>
-                        </xsl:when>
-                        <xsl:otherwise>
-							User: <b>
-                                <xsl:value-of select="$user"/>
-                            </b>
-                            <a href="logout.jsp">    logout</a>
-                        </xsl:otherwise>
-                    </xsl:choose>
-                    <a target="_blank" href="static/info"> docs</a>
-                </div>
-                <div id="notify" class="cmds-elem-plus note">
-                    <div id="notifylist" class="note"/>
-                </div>
+                <xsl:call-template name="top-menu"></xsl:call-template>
             </div>
         </div>
     </xsl:template>
+    
+    
+    <xsl:template name="top-menu">
+        
+            <div id="user">
+                <xsl:variable name="link_toggle_js">
+                    <xsl:call-template name="formURL">
+                        <xsl:with-param name="format">
+                            <xsl:choose>
+                                <xsl:when test="contains($format,'htmljspage')">htmlpage</xsl:when>
+                                <xsl:otherwise>htmljspage</xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:with-param>
+                    </xsl:call-template>
+                </xsl:variable>
+                <xsl:choose>
+                    <xsl:when test="contains($format,'htmljspage')">
+                        <a href="{$link_toggle_js}"> none js </a>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <a href="{$link_toggle_js}"> js </a>
+                    </xsl:otherwise>
+                </xsl:choose>
+                <xsl:choose>
+                    <xsl:when test="$user = ''">
+                        <a href="workspace.jsp">    login</a>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        User: <b>
+                            <xsl:value-of select="$user"/>
+                        </b>
+                        <a href="logout.jsp">    logout</a>
+                    </xsl:otherwise>
+                </xsl:choose>
+                <a target="_blank" href="static/info"> docs</a>
+            </div>
+            <div id="notify" class="cmds-elem-plus note">
+                <div id="notifylist" class="note"/>
+            </div>
+        
+    </xsl:template>
+    
     <xsl:template name="query-input">
     
 	<!-- QUERYSEARCH - BLOCK -->
