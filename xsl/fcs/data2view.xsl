@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:sru="http://www.loc.gov/zing/srw/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fcs="http://clarin.eu/fcs/1.0" xmlns:kwic="http://clarin.eu/fcs/1.0/kwic" xmlns:exist="http://exist.sourceforge.net/NS/exist" version="2.0" exclude-result-prefixes="xs sru exist tei fcs">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:sru="http://www.loc.gov/zing/srw/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fcs="http://clarin.eu/fcs/1.0" xmlns:kwic="http://clarin.eu/fcs/1.0/kwic" xmlns:exist="http://exist.sourceforge.net/NS/exist" version="2.0" 
+    exclude-result-prefixes="#all">
+<!--    exclude-result-prefixes="xs sru exist tei fcs kwic"-->
 
     <!-- 
         <purpose> provide more specific handling of sru-result-set recordData</purpose>
@@ -11,7 +13,7 @@
         </history>
     -->
 <!--    <xsl:include href="data2view_cmd.xsl"/>-->
-    <xsl:import href="../amc/dataset2view.xsl"/>
+<!--    <xsl:import href="../amc/dataset2view.xsl"/>-->
     <xsl:include href="data2view_tei.xsl"/>
 <!--    <xsl:include href="../stand_weiss.xsl"/>-->
    
@@ -198,7 +200,7 @@
         </xsl:variable>
         <span class="inline-wrap">
             <xsl:if test="descendant-or-self::*/@*">
-                <div class="attributes" style="display:none;">
+                <span class="attributes" style="display:none;">
                     <table>
                         <xsl:for-each-group select="descendant-or-self::*" group-by="name()">
                             <tr>
@@ -211,24 +213,26 @@
                             <tr>
                                 <td>
                                     <xsl:for-each select="current-group()">
-                                        <table style="float:left">
-                                            <xsl:for-each select="@*">
-                                                <tr>
-                                                    <td class="label">
-                                                        <xsl:value-of select="name()"/>
-                                                    </td>
-                                                    <td class="value">
-                                                        <xsl:value-of select="."/>
-                                                    </td>
-                                                </tr>
-                                            </xsl:for-each>
-                                        </table>
+                                        <xsl:if test="@*" >
+                                          <table style="float:left">
+                                              <xsl:for-each select="@*">
+                                                  <tr>
+                                                      <td class="label">
+                                                          <xsl:value-of select="name()"/>
+                                                      </td>
+                                                      <td class="value">
+                                                          <xsl:value-of select="."/>
+                                                      </td>
+                                                  </tr>
+                                              </xsl:for-each>
+                                          </table>
+                                         </xsl:if>
                                     </xsl:for-each>
                                 </td>
                             </tr>
                         </xsl:for-each-group>
                     </table>
-                </div>
+                </span>
             </xsl:if>
             <xsl:copy-of select="$inline-elem"/>
         </span>
