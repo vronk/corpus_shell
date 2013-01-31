@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:aac="urn:general" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:sru="http://www.loc.gov/zing/srw/" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:exist="http://exist.sourceforge.net/NS/exist" version="1.0" exclude-result-prefixes="exist html aac tei">
+<xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:aac="urn:general" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:sru="http://www.loc.gov/zing/srw/" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:exist="http://exist.sourceforge.net/NS/exist" version="1.0" 
+    exclude-result-prefixes="#all">
 
 <!-- 
  stylesheet for formatting TEI-elements  inside a FCS/SRU-result.
@@ -58,12 +59,17 @@ the named templates are at the bottom.
 <!--            <span class="note">[<xsl:value-of select="@value"/>]</span>-->
         </span>
     </xsl:template>
-    <xsl:template match="div|p|tei:div|tei:p" mode="record-data">
-        <xsl:copy>
+    <xsl:template match="div|tei:div" mode="record-data">
+        <div>
             <xsl:apply-templates mode="record-data"/>
-        </xsl:copy>
+        </div>
     </xsl:template>
-
+    <xsl:template match="p|tei:p" mode="record-data">
+        <p>
+            <xsl:apply-templates mode="record-data"/>
+        </p>
+    </xsl:template>
+    
    
   <!-- 
      TODO: this has to be broken down to individual children-elements.
@@ -189,6 +195,9 @@ the named templates are at the bottom.
         </xsl:copy>
     </xsl:template>
     <xsl:template match="persName | placeName | tei:persName | tei:placeName" mode="record-data">
+        <xsl:call-template name="inline"/>
+    </xsl:template>
+    <xsl:template match="quote | tei:quote" mode="record-data">
         <xsl:call-template name="inline"/>
     </xsl:template>
     <xsl:template match="rs | tei:rs" mode="record-data">
