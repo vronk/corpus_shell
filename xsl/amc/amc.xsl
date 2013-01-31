@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
-    xmlns:exsl="http://exslt.org/common"
-    extension-element-prefixes="exsl">
+    xmlns:exsl="http://exslt.org/common"  xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl" 
+    extension-element-prefixes="exsl xd">
     
    <xsl:import href="solr2dataset.xsl"/>
     <xsl:import href="dataset2table.xsl"/>
     <xsl:import href="dataset2google-json.xsl"/>
    
-    <xd:doc xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet">
+    <xd:doc scope="stylesheet">
         <xd:desc>
             <xd:p><xd:b>Created on:</xd:b>  2012-09-28</xd:p>
             <xd:p><xd:b>Author:</xd:b> matej</xd:p>
@@ -46,10 +47,16 @@
         </xd:desc>
     </xd:doc>
     
-<xsl:output method="html" indent="yes" omit-xml-declaration="no"
+<!--<xsl:output method="xml" indent="yes" omit-xml-declaration="no"
         media-type="text/html; charset=UTF-8" encoding="utf-8" />
-
-    
+        doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
+media-type="text/xhtml"
+    <xsl:output method="xml" media-type="text/html" indent="yes" encoding="UTF-8"  />
+-->    
+    <xsl:output method="xhtml"  
+        doctype-public="-//W3C//DTD XHTML 1.0 Transitional//
+        EN" indent="yes"/>
+    <xsl:preserve-space elements="script"/>
     <xd:doc xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl">
         <xd:desc>
             <xd:p>invokes appropriate template (<xd:ref name="pivot2data" type="template"></xd:ref> or <xd:ref name="qx2data" type="template"></xd:ref>) to generate a unified internal representation of the data 
@@ -100,7 +107,7 @@
         </xsl:variable>
         
         
-        <html>
+        <html xmlns="http://www.w3.org/1999/xhtml">
             <head>
                 <link rel="stylesheet" type="text/css" href="{concat($scripts-dir, 'style/jquery.ui.resizable.css')}" />
                 <link rel="stylesheet" type="text/css" href="{concat($scripts-dir, 'style/jquery.ui.all.css')}" />
@@ -139,6 +146,8 @@
                     <input type="text" id="filter" />
                 </form>
                 <xsl:apply-templates  mode="query-input"/>
+                
+<!--      DEBUG:               <xsl:copy-of select="$chart-data" />-->
                 
                 <xsl:if test="contains($parts,'table')" >
                     <xsl:apply-templates select="exsl:node-set($chart-data)" mode="data2table">
