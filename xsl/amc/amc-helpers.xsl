@@ -83,6 +83,13 @@
     </xsl:function>
     
     
+    <!-- taken from cmd2graph.xsl -> smc_functions.xsl -->
+    <xsl:function name="my:normalize">
+        <xsl:param name="value" />		
+        <xsl:value-of select="translate($value,'*/-.'',$@={}:[]()#>&lt; ','XZ__')" />		
+    </xsl:function>
+    
+    
     <xd:doc >
         <xd:desc>
             <xd:p>does the sub-calls </xd:p>
