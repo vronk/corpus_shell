@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:transform xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:sru="http://www.loc.gov/zing/srw/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fcs="http://clarin.eu/fcs/1.0" exclude-result-prefixes="xs" version="1.0">
+<xsl:transform xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:sru="http://www.loc.gov/zing/srw/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fcs="http://clarin.eu/fcs/1.0" exclude-result-prefixes="#all" version="1.0">
     <xsl:param name="user"/>
 
     <!-- baseUrl for constructing
@@ -9,7 +9,7 @@
     <xsl:param name="base_url" select="''"/>
     <!--<xsl:param name="base_url">http://clarin.aac.ac.at/exist7/rest/db/content_repository</xsl:param>
         <xsl:param name="base_dir">http://corpus3.aac.ac.at/cs/</xsl:param>-->
-    <xsl:param name="scripts_url" select="''"/>
+    <xsl:param name="scripts_url" select="'scripts'"/>
     <!-- http://clarin.aac.ac.at/exist7/rest/db/content_repository/scripts</xsl:param> -->
     <xsl:param name="site_logo" select="concat($scripts_url, 'style/logo_c_s.png')"/>
     <xsl:param name="site_name">Repository</xsl:param>
@@ -28,7 +28,8 @@
     <xsl:param name="contexts_url" select="concat($base_url,'?operation=scan&amp;scanClause=fcs.resource&amp;sort=text&amp;version=1.2&amp;x-format=xml')"/>
     <xsl:param name="mappings-file" select="''"/>
     <xsl:variable name="context-param" select="'x-context'"/>
-    <xsl:variable name="mappings" select="document($mappings-file)/map"/>
+    <xsl:variable name="mappings" select="document($mappings-file, /)/map"/>
+    <!-- this would work in XSLT-2.0:   <xsl:variable name="mappings" select="if (doc-available($mappings-file)) then doc($mappings-file)/map else ()"/>-->
     <xsl:variable name="context-mapping" select="$mappings//map[@key][xs:string(@key) = $x-context]"/>
     <xsl:variable name="default-mapping" select="$mappings//map[@key][xs:string(@key) = 'default']"/>
 </xsl:transform>
