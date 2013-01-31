@@ -1,0 +1,113 @@
+<project name="c_s-xsl-tests" xmlns:au="antlib:org.apache.ant.antunit">
+
+	<property name="scripts.dir" location="C:\Users\m\3\7utils"/>
+	<import file="${scripts.dir}\build.xml" />   
+
+	<property name="in.dir" location="input"/>
+	<property name="output-actual.dir" location="output-actual"/>
+	<property name="output-expected.dir" location="output-expected"/>
+	<property name="webscripts_url" value="../../../scripts/"/>
+	
+	<!-- is called prior to the test -->
+	<target name="setup">
+		<delete dir="${output-actual.dir}"/>
+		<mkdir dir="${output-actual.dir}"/>
+	</target>
+	
+	<!-- is called after the test, even if that caused an error -->
+	<!--<target name="tearDown">
+		<delete file="${foo}" quiet="true"/>
+	</target>-->
+	
+	<target name="tests" description="the tests sequence (defined and sequentially executed)" depends="setup">
+<!--		<property name="tests" value="fcs/result2view_v2,fcs/scan2view_v2,dataset/amc.pivot_facetDocsrcRessort_c20" ></property>-->
+<!--		<property name="tests" value="dataset/amc.pivot_facetDocsrcRessort_c20,dataset/amc.facetRegion_c20,dataset/amc.facetRegionYear_c20" ></property>-->
+		<property name="tests" value="fcs/result2view_v2,fcs/scan2view_v2,
+									  dataset/amc.pivot_facetDocsrcRessort_c20,
+									  dataset/amc.facetRegion_c20,
+									  dataset/amc.facetRegionYear_c20,
+									  dataset/dataset2view.amc-vwb-abend" ></property>
+		
+		<foreach list="${tests}" target="one-test" param="keyx" />
+		
+	</target>		
+	
+	<taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
+	
+	<!-- actual one test (parametrized) -->
+	<target name="one-test" >
+		<!-- trim whitespaces -->
+		<propertyregex property="key" input="${keyx}" regexp="\s*(.*)\s*" 			
+			select="\1"			defaultvalue="Error"  override="true"/>
+		
+		<echo message="test: ${key}" />
+		
+		<!-- extract the substring determining the stylesheet -->
+		<propertyregex property="stylesheet" input="${key}" regexp="([^\.]*)\.?(.*)" 			
+			select="\1"			defaultvalue="Error"  override="true"/>
+		
+		<echo>stylesheet: ${stylesheet}.xsl</echo>
+		<saxon-xslt style="../xsl/${stylesheet}.xsl" in="${in.dir}/${key}.xml" out="${output-actual.dir}/${key}.html" force="true">
+			<param name="format" expression="htmlpage"/>
+<!--	important to provide the mappings file  (e.g. for links resolving)		-->
+			<param name="mappings-file" expression="mappings.xml"/>
+			<param name="scripts-dir" expression="${webscripts_url}"/>
+			<param name="scripts_url" expression="${webscripts_url}"/>
+		</saxon-xslt>
+		
+		<condition property="isFileSame" value="yes" else="no">
+			<filesmatch file1="${output-actual.dir}/${key}.html" file2="${output-expected.dir}/${key}.html"/>
+		</condition >
+		
+		<antcall target="xmldiff" >
+			<param name="file1" location="${output-expected.dir}/${key}.html" />
+			<param name="file2" location="${output-actual.dir}/${key}.html" />
+			<param name="key" value="${key}" />
+		</antcall>
+		
+		<echo>test ${key} match: ${isFileSame}</echo>
+		<!--
+		<au:assertFileExists file="${output-actual.dir}/${key}.html"/>
+		<au:assertFilesMatch message="! MISMATCH: ${key} " actual="${output-actual.dir}/${key}.html" expected="${output-expected.dir}/${key}.html"/>
+		-->
+	</target>
+	
+	<property name="package" value="org.diffxml"/>
+	<property name="diffxml.dir" value="C:/apps/diffxml"/>	
+	<property name="diffxml.class" value="${package}.diffxml.DiffXML"/>
+	<property name="patch.class" value="${package}/patchxml/PatchXML"/>
+	
+	<!-- Classpath -->
+	<path id="xmldiff-classpath">
+		<pathelement location="${diffxml.dir}"/>
+		<pathelement location="${diffxml.dir}/lib/diffxml.jar"/>
+	</path>
+	
+	<target name="xmldiff" description="uses diffxml to compare files">
+		<!--<echo message="Executing: diffxml -q ${patchOut.file} ${test2.file}"/>
+		<echo message="An exit status of 0 confirms that the compared files are equivalent."/>-->
+		
+		<!--
+		<saxon-xslt style="${scripts.dir}/misc/copy.xsl" in="${file1}" out="${file1}.xml"
+			force="true">
+		</saxon-xslt>
+		<saxon-xslt style="${scripts.dir}/misc/copy.xsl" in="${file2}" out="${file2}.xml"
+			force="true">
+		</saxon-xslt>
+		-->
+		
+		<java classname="${diffxml.class}" 
+			dir="${diffxml.dir}" 
+			fork="yes"
+			classpathref="xmldiff-classpath"
+			failonerror="false"
+			output="${output-actual.dir}/${key}_diff.xml"
+			>
+
+<!--			<arg value="-q"/>  -->
+			<arg value="${file1}"/>  
+			<arg value="${file2}"/>  
+		</java>
+	</target>
+	
+</project>
