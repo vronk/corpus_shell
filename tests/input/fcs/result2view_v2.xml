@@ -1,0 +1,87 @@
+<sru:searchRetrieveResponse xmlns:sru="http://www.loc.gov/zing/srw/">
+    <sru:numberOfRecords>40</sru:numberOfRecords>
+    <sru:echoedSearchRetrieveRequest>
+        <sru:version>1.2</sru:version>
+        <sru:query>Baum</sru:query>
+        <fcs:x-context xmlns:fcs="http://clarin.eu/fcs/1.0">clarin.at:icltt:cr:stb</fcs:x-context>
+        <fcs:x-dataview xmlns:fcs="http://clarin.eu/fcs/1.0"/>
+        <sru:startRecord>1</sru:startRecord>
+        <sru:maximumRecords>1</sru:maximumRecords>
+        <sru:query>Baum</sru:query>
+        <sru:baseUrl>http://localhost:8686/exist/rest/db/cr/cr.xql</sru:baseUrl>
+    </sru:echoedSearchRetrieveRequest>
+    <sru:extraResponseData>
+        <fcs:returnedRecords xmlns:fcs="http://clarin.eu/fcs/1.0">1</fcs:returnedRecords>
+        <fcs:numberOfMatches xmlns:fcs="http://clarin.eu/fcs/1.0"/>
+        <fcs:duration xmlns:fcs="http://clarin.eu/fcs/1.0">PT0.015S PT0.024S</fcs:duration>
+        <fcs:transformedQuery xmlns:fcs="http://clarin.eu/fcs/1.0">//p[ft:query(., 'Baum')]/ancestor-or-self::div</fcs:transformedQuery>
+    </sru:extraResponseData>
+    <sru:records>
+        <sru:record>
+            <sru:recordSchema>http://clarin.eu/fcs/1.0/Resource.xsd</sru:recordSchema>
+            <sru:recordPacking>xml</sru:recordPacking>
+            <sru:recordData>
+                <fcs:Resource xmlns:fcs="http://clarin.eu/fcs/1.0" pid="clarin/at:icltt:cr:stb">
+                    <fcs:ResourceFragment pid="1923-02-15" ref="?operation=searchRetrieve&amp;query=resourcefragment-pid=&#34;1923-02-15&#34;&amp;x-dataview=full&amp;x-context=clarin.at:icltt:cr:stb">
+                        <fcs:DataView type="title">1923-02-15</fcs:DataView>
+                        <fcs:DataView type="full">
+                            <div type="diary-day">
+                                <p>
+                                    <date value="1923-02-15">15/2</date> Träume u. a., daß ich mit <persName key="p_19822" xml:id="pNt_68603">
+                                        <forename>Heini</forename>
+                                    </persName> in irgend einer fremden Stadt 
+in einer Buchhandlung bin. Ich finde einzelne Bände von einem 
+<placeName type="country" xml:id="pl_14549">französ.</placeName>
+                                    <persName key="p_19439" type="att" xml:id="pNt_68604">
+                                        <surname>Rousseau’schen</surname>
+                                    </persName> Roman (D.: lese <persName key="p_21578" xml:id="pNt_68605">
+                                        <surname>Zola</surname>
+                                    </persName> von <persName key="p_16469" xml:id="pNt_68606">
+                                        <forename>Lucy</forename>
+                                    </persName> übersetzte 
+<bibl>Nana</bibl> mit mäßigem Behagen!) – ärgere mich; (er heißt Madame – 
+A. und ein Frauenname, der mit A anfängt), äußere zu <persName key="p_19822" xml:id="pNt_68607">
+                                        <forename>Heini</forename>
+                                    </persName>: 
+So was kann doch nur bei <persName key="p_16069" xml:id="pNt_68608">
+                                        <surname>Heller</surname>
+                                    </persName> vorkommen (er ist zugleich sichtbar, 
+aber mit langem weißen Bart, entfernt und unhöflich) – man denke 
+sich z. B., daß man in einer <placeName type="city" xml:id="pl_14550">Pariser</placeName> Buchhandlung von <persName key="p_19694" xml:id="pNt_68609">
+                                        <surname>Schillers</surname>
+                                    </persName>
+                                    <bibl>Geisterseher</bibl> nur einige lose Bände fände.– Dann les ich einen Brief 
+an mich, von <persName key="p_14199" xml:id="pNt_68610">
+                                        <forename>Gusti</forename>
+                                        <surname>Glümer</surname>
+                                    </persName>;– eine Seite, am Schluß heißt es 
+(ungefähr): „Es geht Ihnen sehr gut, wie man hört. Die Weiber sind 
+hinter Ihnen her.“ Und dann, eine Zeile für sich: <exist:match xmlns:exist="http://exist.sourceforge.net/NS/exist">Baum</exist:match>, blühe!– (<persName key="p_17510" xml:id="pNt_68611">
+                                        <forename>V.</forename>
+                                        <surname>L.</surname>
+                                    </persName> 
+telef. mir neulich aus <placeName type="city" xml:id="pl_14551">Edlach</placeName>, sie „blühe“.) (Die Deutung wurde 
+durch einen folgenden (oder vorhergehenden?) Traum noch klarer.)</p>
+                                <p rend="indent">Dictirt an den <bibl type="self">drei Novellen</bibl>.–</p>
+                                <p rend="indent">Nm. mit <persName key="p_19822" xml:id="pNt_68612">
+                                        <forename>Heini</forename>
+                                    </persName> eine <persName key="p_20157" xml:id="pNt_68613">
+                                        <surname>Skriabin</surname>
+                                    </persName> Symphonie (<bibl>Dritte</bibl>) und <bibl>Vierte</bibl>
+                                    <persName key="p_13555" xml:id="pNt_68614">
+                                        <surname>Beethoven</surname>
+                                    </persName>, der 
+<persName key="p_18881" xml:id="pNt_68615">
+                                        <forename>Kolap</forename>
+                                    </persName> vorgespielt.</p>
+                                <p rend="indent">Den Nachm. ziemlich vertrödelt.–</p>
+</div>
+                        </fcs:DataView>
+                    </fcs:ResourceFragment>
+                </fcs:Resource>
+            </sru:recordData>
+            <sru:recordPosition>1</sru:recordPosition>
+            <sru:recordIdentifier>?operation=searchRetrieve&amp;query=resourcefragment-pid="1923-02-15"&amp;x-dataview=full&amp;x-context=clarin.at:icltt:cr:stb</sru:recordIdentifier>
+        </sru:record>
+    </sru:records>
+</sru:searchRetrieveResponse>

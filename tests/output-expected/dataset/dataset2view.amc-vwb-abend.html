@@ -1,0 +1,1005 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <title xmlns=""></title>
+      <meta xmlns="" http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <link xmlns="" href="../../../scripts//style/jquery/clarindotblue/jquery-ui-1.8.5.custom.css" type="text/css" rel="stylesheet">
+      <link xmlns="" href="../../../scripts//style/cmds-ui.css" type="text/css" rel="stylesheet">
+      <link xmlns="" href="../../../scripts//style/cr.css" type="text/css" rel="stylesheet"><script xmlns="" type="text/javascript" src="../../../scripts//js/jquery/jquery-1.6.2.js"></script><link xmlns="" rel="stylesheet" type="text/css" href="../../../scripts/style/jquery.ui.resizable.css">
+      <link xmlns="" rel="stylesheet" type="text/css" href="../../../scripts/style/jquery.ui.all.css"><style xmlns="" type="text/css">
+        table { border-collapse:collapse;  border:1px solid grey }
+        td {padding: 3px; border:1px solid grey}
+        div.infovis-wrapper {border: 1px solid grey; margin: 20px; padding: 5px; height:350px; width:700px;}
+        .infovis {height: 90%; width: 100%;}
+        .value { text-align: right; }
+        </style><script xmlns="" type="text/javascript" src="../../../scripts/js/jquery/jquery.min.js"></script><script xmlns="" type="text/javascript" src="../../../scripts/js/jquery/jquery-ui.min.js"></script><script xmlns="" type="text/javascript" src="../../../scripts/js/jquery/jquery.tablesorter.js"></script><script xmlns="" type="text/javascript" src="../../../scripts/js/jquery/jquery.uitablefilter.js"></script><script xmlns="" type="text/javascript" src="../../../scripts/js/google-jsapi.js"></script><script xmlns="" type="text/javascript" src="../../../scripts/js/google-corechart.js"></script><script xmlns="" type="text/javascript">
+                var data= {};
+                var options = {}; 
+                var chart = {};
+      
+      // copied locally instead as: google-corechart.js
+      //google.load("visualization", "1", {packages:["corechart"]});
+      
+            function drawChart(dataset) {        
+            var target_container_selector = "chart-" +  dataset;
+            
+               if (options[dataset]["layout"]=='pie') {
+               chart[dataset] = new google.visualization.PieChart(document.getElementById(target_container_selector));
+               chart[dataset].draw(data[dataset], options[dataset]);
+               } else {
+               chart[dataset] = new google.visualization.AreaChart(document.getElementById(target_container_selector));
+               chart[dataset].draw(data[dataset], options[dataset]);
+               }
+            }
+     
+     function toggleLayout(dataset) {
+        if (options[dataset]["layout"]=='pie') { options[dataset]["layout"] = 'area' } else { options[dataset]["layout"]='pie'};
+        drawChart(dataset);
+     }
+      
+    </script></head>
+   <body>
+      <div xmlns="" class="cmds-ui-block" id="titlelogin">
+         <div id="logo"><a href=""><img src="../../../scripts/style/logo_c_s.png" alt="Repository"></a><div id="site-name">Repository</div>
+         </div>
+         <div id="top-menu">
+            <div id="user"><a href="?operation=searchRetrieve&amp;query=Abend&amp;startRecord=1&amp;maximumRecords=10&amp;x-format=htmljspage"> js </a><a href="workspace.jsp">    login</a><a target="_blank" href="static/info"> docs</a></div>
+            <div id="notify" class="cmds-elem-plus note">
+               <div id="notifylist" class="note"></div>
+            </div>
+         </div>
+      </div>
+      <h1></h1>
+      <div xmlns="">
+         <div class="infovis-wrapper">
+            <div id="infovis-navi-region1"><a onclick="toggleLayout('region1');">layout</a></div>
+            <div class="infovis" id="chart-region1"></div>
+         </div><script type="text/javascript">
+      // allow for multiple datasets (for every facet)
+        //var data_arr = [ $json-data
+      
+      data["region1"] = google.visualization.arrayToDataTable([['count', 'Abend' ], ['_EMPTY_', 0.00015097227292501124], 
+    ['amitte', 0.00021747566899215045], 
+    ['aost', 0.000204113820347845], 
+    ['asuedost', 0.0005038318153609562], 
+    ['awest', 0.0002269241903052352]])
+      options["region1"] = {
+                          layout: "pie",
+                          title: 'region1'
+                    }  
+      
+      google.setOnLoadCallback(drawChart('region1'));
+     
+      
+        </script><div id="dataset-">
+            <h3 class="title"></h3>
+            <table class="show">
+               <thead>
+                  <tr>
+                     <th>key</th>
+                     <th>tokens-sum</th>
+                     <th>Abend</th>
+                  </tr>
+               </thead>
+               <tr>
+                  <td>all</td>
+               </tr>
+               <tr>
+                  <td>_EMPTY_</td>
+                  <td class="number value">2.583.706.216</td>
+                  <td class="number value">390.068</td>
+                  <td class="value number">150,97</td>
+               </tr>
+               <tr>
+                  <td>amitte</td>
+                  <td class="number value">312.710.844</td>
+                  <td class="number value">68.007</td>
+                  <td class="value number">217,48</td>
+               </tr>
+               <tr>
+                  <td>amitte_aost</td>
+               </tr>
+               <tr>
+                  <td>aost</td>
+                  <td class="number value">650.578.191</td>
+                  <td class="number value">132.792</td>
+                  <td class="value number">204,11</td>
+               </tr>
+               <tr>
+                  <td>asuedost</td>
+                  <td class="number value">444.912.356</td>
+                  <td class="number value">224.161</td>
+                  <td class="value number">503,83</td>
+               </tr>
+               <tr>
+                  <td>asuedost_asuedost</td>
+               </tr>
+               <tr>
+                  <td>awest</td>
+                  <td class="number value">407.400.374</td>
+                  <td class="number value">92.449</td>
+                  <td class="value number">226,92</td>
+               </tr>
+            </table>
+         </div>
+         <div class="infovis-wrapper">
+            <div id="infovis-navi-region2"><a onclick="toggleLayout('region2');">layout</a></div>
+            <div class="infovis" id="chart-region2"></div>
+         </div><script type="text/javascript">
+      // allow for multiple datasets (for every facet)
+        //var data_arr = [ $json-data
+      
+      data["region2"] = google.visualization.arrayToDataTable([['count', 'Abend strict' ], ['_EMPTY_', 0.00010456103651685451], 
+    ['amitte', 0.00014394767838623467], 
+    ['aost', 0.00011901720818674046], 
+    ['asuedost', 0.00015289977696191472], 
+    ['awest', 0.0001548476732620771]])
+      options["region2"] = {
+                          layout: "pie",
+                          title: 'region2'
+                    }  
+      
+      google.setOnLoadCallback(drawChart('region2'));
+     
+      
+        </script><div id="dataset-">
+            <h3 class="title"></h3>
+            <table class="show">
+               <thead>
+                  <tr>
+                     <th>key</th>
+                     <th>tokens-sum</th>
+                     <th>Abend strict</th>
+                  </tr>
+               </thead>
+               <tr>
+                  <td>all</td>
+               </tr>
+               <tr>
+                  <td>_EMPTY_</td>
+                  <td class="number value">2.583.706.216</td>
+                  <td class="number value">270.155</td>
+                  <td class="value number">104,56</td>
+               </tr>
+               <tr>
+                  <td>amitte</td>
+                  <td class="number value">312.710.844</td>
+                  <td class="number value">45.014</td>
+                  <td class="value number">143,95</td>
+               </tr>
+               <tr>
+                  <td>amitte_aost</td>
+               </tr>
+               <tr>
+                  <td>aost</td>
+                  <td class="number value">650.578.191</td>
+                  <td class="number value">77.430</td>
+                  <td class="value number">119,02</td>
+               </tr>
+               <tr>
+                  <td>asuedost</td>
+                  <td class="number value">444.912.356</td>
+                  <td class="number value">68.027</td>
+                  <td class="value number">152,9</td>
+               </tr>
+               <tr>
+                  <td>asuedost_asuedost</td>
+               </tr>
+               <tr>
+                  <td>awest</td>
+                  <td class="number value">407.400.374</td>
+                  <td class="number value">63.085</td>
+                  <td class="value number">154,85</td>
+               </tr>
+            </table>
+         </div>
+         <div class="infovis-wrapper">
+            <div id="infovis-navi-docsrc3"><a onclick="toggleLayout('docsrc3');">layout</a></div>
+            <div class="infovis" id="chart-docsrc3"></div>
+         </div><script type="text/javascript">
+      // allow for multiple datasets (for every facet)
+        //var data_arr = [ $json-data
+      
+      data["docsrc3"] = google.visualization.arrayToDataTable([['count', 'Abend' ], ['academia', 0.000035558163154186864], 
+    ['apa', 0.00013427907672815037], 
+    ['arbeitw', 0.000033772742512037696], 
+    ['augustin', 0.0001792406442389193], 
+    ['bauernzt', 0.00009003078912862458], 
+    ['bvz', 0.0001403173558511463], 
+    ['datum', 0.00009204299165711496], 
+    ['diewir', 0.000030845171099058146], 
+    ['echo', 0.00009499524490094345], 
+    ['emedia', 0.000044208057014495366], 
+    ['falter', 0.00018059050009729022], 
+    ['formatdb', 0.0000967942614716136], 
+    ['furche', 0.00009078110955147942], 
+    ['gewinn', 0.000052689097230588825], 
+    ['grazer', 0.00028055158294701323], 
+    ['heute', 0.0001917338865631939], 
+    ['hor', 0.00009847337175887838], 
+    ['im', 0.00002487227777030924], 
+    ['kleine', 0.0005825346498516226], 
+    ['konsum', 0.0000810613076987019], 
+    ['krone', 0.0002206447738592928], 
+    ['ktnmonat', 0.000352791822857641], 
+    ['ktz', 0.0002149238033999211], 
+    ['kurier', 0.00022688212474755853], 
+    ['kw', 0.00013038859737286653], 
+    ['medianet', 0.00011734717895811249], 
+    ['news', 0.0001335304071735517], 
+    ['noen', 0.00021462125922516417], 
+    ['nvb', 0.00023885178679519586], 
+    ['nvt', 0.00020485919776574985], 
+    ['oberrund', 0.000225861878203034], 
+    ['oereiche', 0.00028304821786961584], 
+    ['ooen', 0.00019402286381450763], 
+    ['ots', 0.00008693610496779152], 
+    ['presse', 0.00013378513622219488], 
+    ['profil', 0.00009584835348356884], 
+    ['sbgw', 0.00022416570259327834], 
+    ['sn', 0.00015024514173019173], 
+    ['soli', 0.00008444697785378006], 
+    ['sportztg', 0.00006945124588182995], 
+    ['standard', 0.0000908410175656188], 
+    ['stmonat', 0.00020634890729281897], 
+    ['svz', 0.00025951779780146705], 
+    ['trend', 0.00004886768792645132], 
+    ['tt', 0.00024265680462382975], 
+    ['ttkomp', 0.0001548649123848847], 
+    ['tvmedia', 0.0001225521149585313], 
+    ['vn', 0.00022261427263338743], 
+    ['wiblatt', 0.00008789886951933466], 
+    ['wiener', 0.00014642321787669478], 
+    ['wienerin', 0.00022346381741879083], 
+    ['woman', 0.00026485697665355816], 
+    ['wz', 0.00017174033469795474]])
+      options["docsrc3"] = {
+                          layout: "pie",
+                          title: 'docsrc3'
+                    }  
+      
+      google.setOnLoadCallback(drawChart('docsrc3'));
+     
+      
+        </script><div id="dataset-">
+            <h3 class="title"></h3>
+            <table class="show">
+               <thead>
+                  <tr>
+                     <th>key</th>
+                     <th>tokens-sum</th>
+                     <th>Abend</th>
+                  </tr>
+               </thead>
+               <tr>
+                  <td>all</td>
+               </tr>
+               <tr>
+                  <td>academia</td>
+                  <td class="number value">449.967</td>
+                  <td class="number value">16</td>
+                  <td class="value number">35,56</td>
+               </tr>
+               <tr>
+                  <td>apa</td>
+                  <td class="number value">630.976.933</td>
+                  <td class="number value">84.727</td>
+                  <td class="value number">134,28</td>
+               </tr>
+               <tr>
+                  <td>arbeitw</td>
+                  <td class="number value">2.842.529</td>
+                  <td class="number value">96</td>
+                  <td class="value number">33,77</td>
+               </tr>
+               <tr>
+                  <td>augustin</td>
+                  <td class="number value">5.411.719</td>
+                  <td class="number value">970</td>
+                  <td class="value number">179,24</td>
+               </tr>
+               <tr>
+                  <td>bauernzt</td>
+                  <td class="number value">2.854.579</td>
+                  <td class="number value">257</td>
+                  <td class="value number">90,03</td>
+               </tr>
+               <tr>
+                  <td>bvz</td>
+                  <td class="number value">84.650.968</td>
+                  <td class="number value">11.878</td>
+                  <td class="value number">140,32</td>
+               </tr>
+               <tr>
+                  <td>datum</td>
+                  <td class="number value">1.846.963</td>
+                  <td class="number value">170</td>
+                  <td class="value number">92,04</td>
+               </tr>
+               <tr>
+                  <td>diewir</td>
+                  <td class="number value">2.236.979</td>
+                  <td class="number value">69</td>
+                  <td class="value number">30,85</td>
+               </tr>
+               <tr>
+                  <td>echo</td>
+                  <td class="number value">6.558.223</td>
+                  <td class="number value">623</td>
+                  <td class="value number">95</td>
+               </tr>
+               <tr>
+                  <td>emedia</td>
+                  <td class="number value">6.763.473</td>
+                  <td class="number value">299</td>
+                  <td class="value number">44,21</td>
+               </tr>
+               <tr>
+                  <td>falter</td>
+                  <td class="number value">26.590.546</td>
+                  <td class="number value">4.802</td>
+                  <td class="value number">180,59</td>
+               </tr>
+               <tr>
+                  <td>formatdb</td>
+                  <td class="number value">24.939.495</td>
+                  <td class="number value">2.414</td>
+                  <td class="value number">96,79</td>
+               </tr>
+               <tr>
+                  <td>furche</td>
+                  <td class="number value">17.448.564</td>
+                  <td class="number value">1.584</td>
+                  <td class="value number">90,78</td>
+               </tr>
+               <tr>
+                  <td>gewinn</td>
+                  <td class="number value">12.184.684</td>
+                  <td class="number value">642</td>
+                  <td class="value number">52,69</td>
+               </tr>
+               <tr>
+                  <td>grazer</td>
+                  <td class="number value">2.373.895</td>
+                  <td class="number value">666</td>
+                  <td class="value number">280,55</td>
+               </tr>
+               <tr>
+                  <td>heute</td>
+                  <td class="number value">13.638.695</td>
+                  <td class="number value">2.615</td>
+                  <td class="value number">191,73</td>
+               </tr>
+               <tr>
+                  <td>hor</td>
+                  <td class="number value">13.059.368</td>
+                  <td class="number value">1.286</td>
+                  <td class="value number">98,47</td>
+               </tr>
+               <tr>
+                  <td>im</td>
+                  <td class="number value">4.864.854</td>
+                  <td class="number value">121</td>
+                  <td class="value number">24,87</td>
+               </tr>
+               <tr>
+                  <td>kleine</td>
+                  <td class="number value">347.991.317</td>
+                  <td class="number value">202.717</td>
+                  <td class="value number">582,53</td>
+               </tr>
+               <tr>
+                  <td>konsum</td>
+                  <td class="number value">3.392.494</td>
+                  <td class="number value">275</td>
+                  <td class="value number">81,06</td>
+               </tr>
+               <tr>
+                  <td>krone</td>
+                  <td class="number value">342.564.198</td>
+                  <td class="number value">75.585</td>
+                  <td class="value number">220,64</td>
+               </tr>
+               <tr>
+                  <td>ktnmonat</td>
+                  <td class="number value">2.202.432</td>
+                  <td class="number value">777</td>
+                  <td class="value number">352,79</td>
+               </tr>
+               <tr>
+                  <td>ktz</td>
+                  <td class="number value">84.509.020</td>
+                  <td class="number value">18.163</td>
+                  <td class="value number">214,92</td>
+               </tr>
+               <tr>
+                  <td>kurier</td>
+                  <td class="number value">303.695.146</td>
+                  <td class="number value">68.903</td>
+                  <td class="value number">226,88</td>
+               </tr>
+               <tr>
+                  <td>kurier_</td>
+               </tr>
+               <tr>
+                  <td>kw</td>
+                  <td class="number value">3.811.683</td>
+                  <td class="number value">497</td>
+                  <td class="value number">130,39</td>
+               </tr>
+               <tr>
+                  <td>medianet</td>
+                  <td class="number value">24.832.297</td>
+                  <td class="number value">2.914</td>
+                  <td class="value number">117,35</td>
+               </tr>
+               <tr>
+                  <td>news</td>
+                  <td class="number value">30.045.591</td>
+                  <td class="number value">4.012</td>
+                  <td class="value number">133,53</td>
+               </tr>
+               <tr>
+                  <td>noen</td>
+                  <td class="number value">519.790.073</td>
+                  <td class="number value">111.558</td>
+                  <td class="value number">214,62</td>
+               </tr>
+               <tr>
+                  <td>nvb</td>
+                  <td class="number value">78.115.388</td>
+                  <td class="number value">18.658</td>
+                  <td class="value number">238,85</td>
+               </tr>
+               <tr>
+                  <td>nvt</td>
+                  <td class="number value">78.839.516</td>
+                  <td class="number value">16.151</td>
+                  <td class="value number">204,86</td>
+               </tr>
+               <tr>
+                  <td>oberrund</td>
+                  <td class="number value">7.646.266</td>
+                  <td class="number value">1.727</td>
+                  <td class="value number">225,86</td>
+               </tr>
+               <tr>
+                  <td>oereiche</td>
+                  <td class="number value">89.482.987</td>
+                  <td class="number value">25.328</td>
+                  <td class="value number">283,05</td>
+               </tr>
+               <tr>
+                  <td>ooen</td>
+                  <td class="number value">178.736.667</td>
+                  <td class="number value">34.679</td>
+                  <td class="value number">194,02</td>
+               </tr>
+               <tr>
+                  <td>ots</td>
+                  <td class="number value">279.872.212</td>
+                  <td class="number value">24.331</td>
+                  <td class="value number">86,94</td>
+               </tr>
+               <tr>
+                  <td>presse</td>
+                  <td class="number value">178.592.336</td>
+                  <td class="number value">23.893</td>
+                  <td class="value number">133,79</td>
+               </tr>
+               <tr>
+                  <td>profil</td>
+                  <td class="number value">34.116.392</td>
+                  <td class="number value">3.270</td>
+                  <td class="value number">95,85</td>
+               </tr>
+               <tr>
+                  <td>sbgw</td>
+                  <td class="number value">18.441.715</td>
+                  <td class="number value">4.134</td>
+                  <td class="value number">224,17</td>
+               </tr>
+               <tr>
+                  <td>sn</td>
+                  <td class="number value">166.880.604</td>
+                  <td class="number value">25.073</td>
+                  <td class="value number">150,25</td>
+               </tr>
+               <tr>
+                  <td>soli</td>
+                  <td class="number value">757.872</td>
+                  <td class="number value">64</td>
+                  <td class="value number">84,45</td>
+               </tr>
+               <tr>
+                  <td>sportztg</td>
+                  <td class="number value">7.616.854</td>
+                  <td class="number value">529</td>
+                  <td class="value number">69,45</td>
+               </tr>
+               <tr>
+                  <td>standard</td>
+                  <td class="number value">178.905.966</td>
+                  <td class="number value">16.252</td>
+                  <td class="value number">90,84</td>
+               </tr>
+               <tr>
+                  <td>stmonat</td>
+                  <td class="number value">2.229.234</td>
+                  <td class="number value">460</td>
+                  <td class="value number">206,35</td>
+               </tr>
+               <tr>
+                  <td>svz</td>
+                  <td class="number value">17.208.839</td>
+                  <td class="number value">4.466</td>
+                  <td class="value number">259,52</td>
+               </tr>
+               <tr>
+                  <td>trend</td>
+                  <td class="number value">10.681.905</td>
+                  <td class="number value">522</td>
+                  <td class="value number">48,87</td>
+               </tr>
+               <tr>
+                  <td>tt</td>
+                  <td class="number value">175.095.028</td>
+                  <td class="number value">42.488</td>
+                  <td class="value number">242,66</td>
+               </tr>
+               <tr>
+                  <td>ttkomp</td>
+                  <td class="number value">5.152.878</td>
+                  <td class="number value">798</td>
+                  <td class="value number">154,86</td>
+               </tr>
+               <tr>
+                  <td>tvmedia</td>
+                  <td class="number value">9.897.830</td>
+                  <td class="number value">1.213</td>
+                  <td class="value number">122,55</td>
+               </tr>
+               <tr>
+                  <td>vn</td>
+                  <td class="number value">140.166.215</td>
+                  <td class="number value">31.203</td>
+                  <td class="value number">222,61</td>
+               </tr>
+               <tr>
+                  <td>wiblatt</td>
+                  <td class="number value">58.100.861</td>
+                  <td class="number value">5.107</td>
+                  <td class="value number">87,9</td>
+               </tr>
+               <tr>
+                  <td>wiener</td>
+                  <td class="number value">3.797.212</td>
+                  <td class="number value">556</td>
+                  <td class="value number">146,42</td>
+               </tr>
+               <tr>
+                  <td>wienerin</td>
+                  <td class="number value">5.146.247</td>
+                  <td class="number value">1.150</td>
+                  <td class="value number">223,46</td>
+               </tr>
+               <tr>
+                  <td>woman</td>
+                  <td class="number value">8.634.849</td>
+                  <td class="number value">2.287</td>
+                  <td class="value number">264,86</td>
+               </tr>
+               <tr>
+                  <td>wz</td>
+                  <td class="number value">142.668.873</td>
+                  <td class="number value">24.502</td>
+                  <td class="value number">171,74</td>
+               </tr>
+            </table>
+         </div>
+         <div class="infovis-wrapper">
+            <div id="infovis-navi-docsrc4"><a onclick="toggleLayout('docsrc4');">layout</a></div>
+            <div class="infovis" id="chart-docsrc4"></div>
+         </div><script type="text/javascript">
+      // allow for multiple datasets (for every facet)
+        //var data_arr = [ $json-data
+      
+      data["docsrc4"] = google.visualization.arrayToDataTable([['count', 'Abend strict' ], ['academia', 0.000024446237168503467], 
+    ['apa', 0.00011016726026654924], 
+    ['arbeitw', 0.000017589970058352968], 
+    ['augustin', 0.00010883787572858088], 
+    ['bauernzt', 0.00005044526706039665], 
+    ['bvz', 0.00008674443037674418], 
+    ['datum', 0.00005739151244502462], 
+    ['diewir', 0.00002101047886457584], 
+    ['echo', 0.00006266941517542176], 
+    ['emedia', 0.00001951660042111501], 
+    ['falter', 0.00010101334511897575], 
+    ['formatdb', 0.00005024159470751112], 
+    ['furche', 0.00005072050628349703], 
+    ['gewinn', 0.000030201850125944996], 
+    ['grazer', 0.00016765695197133823], 
+    ['heute', 0.00012303229891129613], 
+    ['hor', 0.00005421395583614766], 
+    ['im', 0.000014800033053407153], 
+    ['kleine', 0.00015067329970190033], 
+    ['konsum', 0.000032129754687849117], 
+    ['krone', 0.00013996792507779812], 
+    ['ktnmonat', 0.00021430854618894024], 
+    ['ktz', 0.00015935577054378337], 
+    ['kurier', 0.00016920586541083538], 
+    ['kw', 0.00008054184988625759], 
+    ['medianet', 0.00006169384974736731], 
+    ['news', 0.00007511917472350602], 
+    ['noen', 0.00012329208141687614], 
+    ['nvb', 0.00016291284375365324], 
+    ['nvt', 0.00014273299191740345], 
+    ['oberrund', 0.000118358424883466], 
+    ['oereiche', 0.00020311123498816596], 
+    ['ooen', 0.00012399806023013734], 
+    ['ots', 0.000058165831768964614], 
+    ['presse', 0.00007085970363252318], 
+    ['profil', 0.00005598481808979097], 
+    ['sbgw', 0.0001191863121190193], 
+    ['sn', 0.00009409721455706141], 
+    ['soli', 0.00004090400489792472], 
+    ['sportztg', 0.000048707773576859945], 
+    ['standard', 0.000058611796098515796], 
+    ['stmonat', 0.00011797774482176389], 
+    ['svz', 0.00019850264157855157], 
+    ['trend', 0.000022280669974129147], 
+    ['tt', 0.00016154656316111956], 
+    ['ttkomp', 0.00011488725329805984], 
+    ['tvmedia', 0.00006193276708126933], 
+    ['vn', 0.0001568780322704726], 
+    ['wiblatt', 0.000057245279032956156], 
+    ['wiener', 0.00007795192894154975], 
+    ['wienerin', 0.0001082342141758839], 
+    ['woman', 0.00011418844730232109], 
+    ['wz', 0.00012547936787865423]])
+      options["docsrc4"] = {
+                          layout: "pie",
+                          title: 'docsrc4'
+                    }  
+      
+      google.setOnLoadCallback(drawChart('docsrc4'));
+     
+      
+        </script><div id="dataset-">
+            <h3 class="title"></h3>
+            <table class="show">
+               <thead>
+                  <tr>
+                     <th>key</th>
+                     <th>tokens-sum</th>
+                     <th>Abend strict</th>
+                  </tr>
+               </thead>
+               <tr>
+                  <td>all</td>
+               </tr>
+               <tr>
+                  <td>academia</td>
+                  <td class="number value">449.967</td>
+                  <td class="number value">11</td>
+                  <td class="value number">24,45</td>
+               </tr>
+               <tr>
+                  <td>apa</td>
+                  <td class="number value">630.976.933</td>
+                  <td class="number value">69.513</td>
+                  <td class="value number">110,17</td>
+               </tr>
+               <tr>
+                  <td>arbeitw</td>
+                  <td class="number value">2.842.529</td>
+                  <td class="number value">50</td>
+                  <td class="value number">17,59</td>
+               </tr>
+               <tr>
+                  <td>augustin</td>
+                  <td class="number value">5.411.719</td>
+                  <td class="number value">589</td>
+                  <td class="value number">108,84</td>
+               </tr>
+               <tr>
+                  <td>bauernzt</td>
+                  <td class="number value">2.854.579</td>
+                  <td class="number value">144</td>
+                  <td class="value number">50,45</td>
+               </tr>
+               <tr>
+                  <td>bvz</td>
+                  <td class="number value">84.650.968</td>
+                  <td class="number value">7.343</td>
+                  <td class="value number">86,74</td>
+               </tr>
+               <tr>
+                  <td>datum</td>
+                  <td class="number value">1.846.963</td>
+                  <td class="number value">106</td>
+                  <td class="value number">57,39</td>
+               </tr>
+               <tr>
+                  <td>diewir</td>
+                  <td class="number value">2.236.979</td>
+                  <td class="number value">47</td>
+                  <td class="value number">21,01</td>
+               </tr>
+               <tr>
+                  <td>echo</td>
+                  <td class="number value">6.558.223</td>
+                  <td class="number value">411</td>
+                  <td class="value number">62,67</td>
+               </tr>
+               <tr>
+                  <td>emedia</td>
+                  <td class="number value">6.763.473</td>
+                  <td class="number value">132</td>
+                  <td class="value number">19,52</td>
+               </tr>
+               <tr>
+                  <td>falter</td>
+                  <td class="number value">26.590.546</td>
+                  <td class="number value">2.686</td>
+                  <td class="value number">101,01</td>
+               </tr>
+               <tr>
+                  <td>formatdb</td>
+                  <td class="number value">24.939.495</td>
+                  <td class="number value">1.253</td>
+                  <td class="value number">50,24</td>
+               </tr>
+               <tr>
+                  <td>furche</td>
+                  <td class="number value">17.448.564</td>
+                  <td class="number value">885</td>
+                  <td class="value number">50,72</td>
+               </tr>
+               <tr>
+                  <td>gewinn</td>
+                  <td class="number value">12.184.684</td>
+                  <td class="number value">368</td>
+                  <td class="value number">30,2</td>
+               </tr>
+               <tr>
+                  <td>grazer</td>
+                  <td class="number value">2.373.895</td>
+                  <td class="number value">398</td>
+                  <td class="value number">167,66</td>
+               </tr>
+               <tr>
+                  <td>heute</td>
+                  <td class="number value">13.638.695</td>
+                  <td class="number value">1.678</td>
+                  <td class="value number">123,03</td>
+               </tr>
+               <tr>
+                  <td>hor</td>
+                  <td class="number value">13.059.368</td>
+                  <td class="number value">708</td>
+                  <td class="value number">54,21</td>
+               </tr>
+               <tr>
+                  <td>im</td>
+                  <td class="number value">4.864.854</td>
+                  <td class="number value">72</td>
+                  <td class="value number">14,8</td>
+               </tr>
+               <tr>
+                  <td>kleine</td>
+                  <td class="number value">347.991.317</td>
+                  <td class="number value">52.433</td>
+                  <td class="value number">150,67</td>
+               </tr>
+               <tr>
+                  <td>konsum</td>
+                  <td class="number value">3.392.494</td>
+                  <td class="number value">109</td>
+                  <td class="value number">32,13</td>
+               </tr>
+               <tr>
+                  <td>krone</td>
+                  <td class="number value">342.564.198</td>
+                  <td class="number value">47.948</td>
+                  <td class="value number">139,97</td>
+               </tr>
+               <tr>
+                  <td>ktnmonat</td>
+                  <td class="number value">2.202.432</td>
+                  <td class="number value">472</td>
+                  <td class="value number">214,31</td>
+               </tr>
+               <tr>
+                  <td>ktz</td>
+                  <td class="number value">84.509.020</td>
+                  <td class="number value">13.467</td>
+                  <td class="value number">159,36</td>
+               </tr>
+               <tr>
+                  <td>kurier</td>
+                  <td class="number value">303.695.146</td>
+                  <td class="number value">51.387</td>
+                  <td class="value number">169,21</td>
+               </tr>
+               <tr>
+                  <td>kurier_</td>
+               </tr>
+               <tr>
+                  <td>kw</td>
+                  <td class="number value">3.811.683</td>
+                  <td class="number value">307</td>
+                  <td class="value number">80,54</td>
+               </tr>
+               <tr>
+                  <td>medianet</td>
+                  <td class="number value">24.832.297</td>
+                  <td class="number value">1.532</td>
+                  <td class="value number">61,69</td>
+               </tr>
+               <tr>
+                  <td>news</td>
+                  <td class="number value">30.045.591</td>
+                  <td class="number value">2.257</td>
+                  <td class="value number">75,12</td>
+               </tr>
+               <tr>
+                  <td>noen</td>
+                  <td class="number value">519.790.073</td>
+                  <td class="number value">64.086</td>
+                  <td class="value number">123,29</td>
+               </tr>
+               <tr>
+                  <td>nvb</td>
+                  <td class="number value">78.115.388</td>
+                  <td class="number value">12.726</td>
+                  <td class="value number">162,91</td>
+               </tr>
+               <tr>
+                  <td>nvt</td>
+                  <td class="number value">78.839.516</td>
+                  <td class="number value">11.253</td>
+                  <td class="value number">142,73</td>
+               </tr>
+               <tr>
+                  <td>oberrund</td>
+                  <td class="number value">7.646.266</td>
+                  <td class="number value">905</td>
+                  <td class="value number">118,36</td>
+               </tr>
+               <tr>
+                  <td>oereiche</td>
+                  <td class="number value">89.482.987</td>
+                  <td class="number value">18.175</td>
+                  <td class="value number">203,11</td>
+               </tr>
+               <tr>
+                  <td>ooen</td>
+                  <td class="number value">178.736.667</td>
+                  <td class="number value">22.163</td>
+                  <td class="value number">124</td>
+               </tr>
+               <tr>
+                  <td>ots</td>
+                  <td class="number value">279.872.212</td>
+                  <td class="number value">16.279</td>
+                  <td class="value number">58,17</td>
+               </tr>
+               <tr>
+                  <td>presse</td>
+                  <td class="number value">178.592.336</td>
+                  <td class="number value">12.655</td>
+                  <td class="value number">70,86</td>
+               </tr>
+               <tr>
+                  <td>profil</td>
+                  <td class="number value">34.116.392</td>
+                  <td class="number value">1.910</td>
+                  <td class="value number">55,98</td>
+               </tr>
+               <tr>
+                  <td>sbgw</td>
+                  <td class="number value">18.441.715</td>
+                  <td class="number value">2.198</td>
+                  <td class="value number">119,19</td>
+               </tr>
+               <tr>
+                  <td>sn</td>
+                  <td class="number value">166.880.604</td>
+                  <td class="number value">15.703</td>
+                  <td class="value number">94,1</td>
+               </tr>
+               <tr>
+                  <td>soli</td>
+                  <td class="number value">757.872</td>
+                  <td class="number value">31</td>
+                  <td class="value number">40,9</td>
+               </tr>
+               <tr>
+                  <td>sportztg</td>
+                  <td class="number value">7.616.854</td>
+                  <td class="number value">371</td>
+                  <td class="value number">48,71</td>
+               </tr>
+               <tr>
+                  <td>standard</td>
+                  <td class="number value">178.905.966</td>
+                  <td class="number value">10.486</td>
+                  <td class="value number">58,61</td>
+               </tr>
+               <tr>
+                  <td>stmonat</td>
+                  <td class="number value">2.229.234</td>
+                  <td class="number value">263</td>
+                  <td class="value number">117,98</td>
+               </tr>
+               <tr>
+                  <td>svz</td>
+                  <td class="number value">17.208.839</td>
+                  <td class="number value">3.416</td>
+                  <td class="value number">198,5</td>
+               </tr>
+               <tr>
+                  <td>trend</td>
+                  <td class="number value">10.681.905</td>
+                  <td class="number value">238</td>
+                  <td class="value number">22,28</td>
+               </tr>
+               <tr>
+                  <td>tt</td>
+                  <td class="number value">175.095.028</td>
+                  <td class="number value">28.286</td>
+                  <td class="value number">161,55</td>
+               </tr>
+               <tr>
+                  <td>ttkomp</td>
+                  <td class="number value">5.152.878</td>
+                  <td class="number value">592</td>
+                  <td class="value number">114,89</td>
+               </tr>
+               <tr>
+                  <td>tvmedia</td>
+                  <td class="number value">9.897.830</td>
+                  <td class="number value">613</td>
+                  <td class="value number">61,93</td>
+               </tr>
+               <tr>
+                  <td>vn</td>
+                  <td class="number value">140.166.215</td>
+                  <td class="number value">21.989</td>
+                  <td class="value number">156,88</td>
+               </tr>
+               <tr>
+                  <td>wiblatt</td>
+                  <td class="number value">58.100.861</td>
+                  <td class="number value">3.326</td>
+                  <td class="value number">57,25</td>
+               </tr>
+               <tr>
+                  <td>wiener</td>
+                  <td class="number value">3.797.212</td>
+                  <td class="number value">296</td>
+                  <td class="value number">77,95</td>
+               </tr>
+               <tr>
+                  <td>wienerin</td>
+                  <td class="number value">5.146.247</td>
+                  <td class="number value">557</td>
+                  <td class="value number">108,23</td>
+               </tr>
+               <tr>
+                  <td>woman</td>
+                  <td class="number value">8.634.849</td>
+                  <td class="number value">986</td>
+                  <td class="value number">114,19</td>
+               </tr>
+               <tr>
+                  <td>wz</td>
+                  <td class="number value">142.668.873</td>
+                  <td class="number value">17.902</td>
+                  <td class="value number">125,48</td>
+               </tr>
+            </table>
+         </div>
+      </div>
+   </body>
+</html>

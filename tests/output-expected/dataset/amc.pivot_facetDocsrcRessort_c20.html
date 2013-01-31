@@ -1,0 +1,628 @@
+<?xml version="1.0" encoding="utf-8"?><html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="Content-Type" content="text/xml; charset=UTF-8; charset=utf-8" />
+      <link rel="stylesheet" type="text/css"
+            href="../../../scripts/style/jquery.ui.resizable.css" />
+      <link rel="stylesheet" type="text/css"
+            href="../../../scripts/style/jquery.ui.all.css" /><style type="text/css">
+        table { border-collapse:collapse;  border:1px solid grey }
+        td {padding: 3px; border:1px solid grey}
+        div#infovis-wrapper {border: 1px solid grey; margin: 20px; padding: 5px; height:450px; width:800px;}
+        #infovis {height: 90%; width: 100%;}
+        .value { text-align: right; }
+        </style><script xmlns="" type="text/javascript">
+         // allow for multiple datasets (for every facet)
+         //var data_arr = [ $json-data
+         
+         data["1"] = google.visualization.arrayToDataTable([['count', 'a' , 'aa' , 'bezirk' , 'c' , 'chr' , 'chronik' , 'ci' , 'fussball' , 'i' , 'ii' , 'kultur' , 'lok' , 'lokal' ,
+         'spo' , 'sport' , 'w' , 'wa' , 'wir' , 'wirtschaft' ], ['apa', 2566238, 731754, 658462, 0, 0, 687130, 0, 0, 344746, 0, 275155,
+         275155, 0, 0, 0, 0, 0, 642933, 431701, 0, 0], 
+         ['bvz', 480671, 0, 0, 480427, 96950, 0, 0, 12202, 0, 118384, 0, 0, 10858, 0, 0, 0, 27044, 0, 0, 270, 2544], 
+         ['heute', 190838, 0, 0, 97783, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 28644, 0, 0, 0, 7968], 
+         ['kleine', 2163549, 0, 0, 1022397, 97, 0, 15369, 0, 0, 0, 0, 0, 69492, 467029, 46505, 252524, 259416, 0, 0, 51753, 23476],
+         
+         ['krone', 2228073, 0, 0, 448209, 0, 0, 0, 0, 0, 0, 0, 0, 7402, 0, 298645, 187387, 187399, 0, 0, 6523, 6527], 
+         ['ktz', 568560, 50, 0, 0, 0, 50, 0, 13, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+         ['kurier', 1312799, 0, 0, 154030, 0, 0, 571345, 412140, 0, 0, 0, 0, 70015, 0, 0, 180767, 169086, 0, 0, 92877, 88216], 
+         ['noen', 3408998, 0, 0, 2750515, 601448, 0, 0, 68018, 0, 428941, 0, 0, 117580, 150, 0, 0, 336131, 0, 0, 5403, 22410], 
+         ['nvb', 552855, 0, 0, 53382, 0, 0, 15976, 16084, 0, 0, 0, 2, 19897, 0, 0, 40433, 40701, 0, 0, 24501, 26509], 
+         ['nvt', 375728, 0, 0, 97844, 0, 0, 48191, 8469, 0, 0, 0, 0, 26036, 53624, 75682, 55281, 75919, 0, 0, 6461, 6206], 
+         ['oereiche', 496075, 0, 0, 0, 0, 3, 0, 38, 0, 180, 0, 0, 8219, 0, 0, 0, 40920, 0, 0, 0, 8533], 
+         ['ooen', 911703, 3, 0, 167370, 711, 0, 12393, 12393, 0, 0, 0, 0, 50929, 119503, 130598, 69265, 106011, 0, 0, 54881, 58248],
+         
+         ['ots', 858292, 34494, 1387, 0, 0, 302269, 0, 0, 287797, 0, 467817, 467814, 0, 0, 0, 0, 0, 257755, 80029, 0, 0], 
+         ['presse', 636965, 0, 0, 88476, 0, 0, 56982, 53403, 0, 0, 0, 0, 5471, 0, 0, 36172, 36421, 0, 0, 75638, 0], 
+         ['sn', 825911, 94, 0, 366369, 0, 2, 29433, 29458, 0, 0, 29, 19, 44940, 78212, 78212, 100318, 100870, 40, 0, 41906, 56114],
+         
+         ['standard', 551005, 0, 0, 177211, 0, 0, 31324, 31351, 0, 0, 0, 0, 26821, 0, 0, 38001, 37374, 0, 0, 61205, 61324], 
+         ['tt', 1019204, 1, 0, 587601, 0, 0, 10487, 0, 0, 0, 29, 0, 22730, 132960, 2683, 63247, 87305, 4, 0, 0, 38130], 
+         ['vn', 772477, 0, 0, 346434, 0, 0, 43615, 11178, 0, 0, 0, 31, 29459, 114341, 127024, 105569, 158125, 0, 0, 38454, 0], 
+         ['wiblatt', 271032, 0, 0, 88259, 0, 1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 29895], 
+         ['wz', 492557, 0, 0, 216747, 0, 0, 18414, 20322, 0, 0, 0, 0, 28433, 0, 0, 23578, 32990, 0, 0, 36926, 48313]])
+         options["1"] = {
+         layout: "pie",
+         title: '1'
+         }  
+         
+         google.setOnLoadCallback(drawChart('1'));
+         
+         
+         
+      </script><script type="text/javascript" src="../../../scripts/js/jquery/jquery.min.js"></script><script type="text/javascript" src="../../../scripts/js/jquery/jquery-ui.min.js"></script><script type="text/javascript" src="../../../scripts/js/jquery/jquery.tablesorter.js"></script><script type="text/javascript" src="../../../scripts/js/jquery/jquery.uitablefilter.js"></script><script type="text/javascript" src="../../../scripts/js/amc.js"></script></head>
+   <body>
+      <h1>amc search interface</h1>
+      <form id="filter-form"><input type="text" id="filter" /></form>
+      <form>
+         <table border="0">
+            <tr>
+               <td border="0">facet:</td>
+               <td><input type="text" name="facet" value="true" /></td>
+            </tr>
+            <tr>
+               <td border="0">indent:</td>
+               <td><input type="text" name="indent" value="yes" /></td>
+            </tr>
+            <tr>
+               <td border="0">q:</td>
+               <td><input type="text" name="q" value="*:*" /></td>
+            </tr>
+            <tr>
+               <td border="0">facet.limit:</td>
+               <td><input type="text" name="facet.limit" value="20" /></td>
+            </tr>
+            <tr>
+               <td border="0">facet.field:</td>
+               <td><input type="text" name="facet.field" value="ressort" /><br /><input type="text" name="facet.field" value="docsrc" /><br /></td>
+            </tr>
+            <tr>
+               <td border="0">facet.pivot:</td>
+               <td><input type="text" name="facet.pivot" value="ressort,docsrc" /></td>
+            </tr>
+            <tr>
+               <td border="0">rows:</td>
+               <td><input type="text" name="rows" value="0" /></td>
+            </tr>
+         </table><input type="submit" value="search" /><a xmlns="" xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl" xmlns:my="myFunctions"
+            href="?facet=true&amp;indent=yes&amp;q=*:*&amp;facet.limit=20&amp;facet.field=ressort&amp;facet.field=docsrc&amp;facet.pivot=ressort,docsrc&amp;rows=0&amp;">?facet=true&amp;indent=yes&amp;q=*:*&amp;facet.limit=20&amp;facet.field=ressort&amp;facet.field=docsrc&amp;facet.pivot=ressort,docsrc&amp;rows=0&amp;</a>
+      </form>
+      <div xmlns="" id="dataset-ressort,docsrc-XX">
+         <h3 class="title">ressort,docsrc *:*</h3>
+         <table class="show">
+            <thead>
+               <tr>
+                  <th>key</th>
+                  <th>all</th>
+                  <th>apa</th>
+                  <th>bvz</th>
+                  <th>heute</th>
+                  <th>kleine</th>
+                  <th>krone</th>
+                  <th>ktz</th>
+                  <th>kurier</th>
+                  <th>noen</th>
+                  <th>nvb</th>
+                  <th>nvt</th>
+                  <th>oereiche</th>
+                  <th>ooen</th>
+                  <th>ots</th>
+                  <th>presse</th>
+                  <th>sn</th>
+                  <th>standard</th>
+                  <th>tt</th>
+                  <th>vn</th>
+                  <th>wiblatt</th>
+                  <th>wz</th>
+               </tr>
+            </thead>
+            <tr>
+               <td>all</td>
+               <td class="number value">21.771.001</td>
+               <td class="number value">2.566.238</td>
+               <td class="number value">480.671</td>
+               <td class="number value">190.838</td>
+               <td class="number value">2.163.549</td>
+               <td class="number value">2.228.073</td>
+               <td class="number value">568.560</td>
+               <td class="number value">1.312.799</td>
+               <td class="number value">3.408.998</td>
+               <td class="number value">552.855</td>
+               <td class="number value">375.728</td>
+               <td class="number value">496.075</td>
+               <td class="number value">911.703</td>
+               <td class="number value">858.292</td>
+               <td class="number value">636.965</td>
+               <td class="number value">825.911</td>
+               <td class="number value">551.005</td>
+               <td class="number value">1.019.204</td>
+               <td class="number value">772.477</td>
+               <td class="number value">271.032</td>
+               <td class="number value">492.557</td>
+            </tr>
+            <tr>
+               <td>a</td>
+               <td class="number value">766.405</td>
+               <td class="number value">731.754</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">50</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">3</td>
+               <td class="number value">34.494</td>
+               <td class="number value">-</td>
+               <td class="number value">94</td>
+               <td class="number value">-</td>
+               <td class="number value">1</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+            </tr>
+            <tr>
+               <td>aa</td>
+               <td class="number value">659.849</td>
+               <td class="number value">658.462</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">1.387</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+            </tr>
+            <tr>
+               <td>all</td>
+               <td class="number value">7.609.105</td>
+               <td class="number value">-</td>
+               <td class="number value">480.427</td>
+               <td class="number value">97.783</td>
+               <td class="number value">1.022.397</td>
+               <td class="number value">448.209</td>
+               <td class="number value">-</td>
+               <td class="number value">154.030</td>
+               <td class="number value">2.750.515</td>
+               <td class="number value">53.382</td>
+               <td class="number value">97.844</td>
+               <td class="number value">-</td>
+               <td class="number value">167.370</td>
+               <td class="number value">-</td>
+               <td class="number value">88.476</td>
+               <td class="number value">366.369</td>
+               <td class="number value">177.211</td>
+               <td class="number value">587.601</td>
+               <td class="number value">346.434</td>
+               <td class="number value">88.259</td>
+               <td class="number value">216.747</td>
+            </tr>
+            <tr>
+               <td>bezirk</td>
+               <td class="number value">699.214</td>
+               <td class="number value">-</td>
+               <td class="number value">96.950</td>
+               <td class="number value">-</td>
+               <td class="number value">97</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">601.448</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">711</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+            </tr>
+            <tr>
+               <td>c</td>
+               <td class="number value">989.461</td>
+               <td class="number value">687.130</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">50</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">3</td>
+               <td class="number value">-</td>
+               <td class="number value">302.269</td>
+               <td class="number value">-</td>
+               <td class="number value">2</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">1</td>
+               <td class="number value">-</td>
+            </tr>
+            <tr>
+               <td>chr</td>
+               <td class="number value">853.529</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">15.369</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">571.345</td>
+               <td class="number value">-</td>
+               <td class="number value">15.976</td>
+               <td class="number value">48.191</td>
+               <td class="number value">-</td>
+               <td class="number value">12.393</td>
+               <td class="number value">-</td>
+               <td class="number value">56.982</td>
+               <td class="number value">29.433</td>
+               <td class="number value">31.324</td>
+               <td class="number value">10.487</td>
+               <td class="number value">43.615</td>
+               <td class="number value">-</td>
+               <td class="number value">18.414</td>
+            </tr>
+            <tr>
+               <td>chronik</td>
+               <td class="number value">680.175</td>
+               <td class="number value">-</td>
+               <td class="number value">12.202</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">13</td>
+               <td class="number value">412.140</td>
+               <td class="number value">68.018</td>
+               <td class="number value">16.084</td>
+               <td class="number value">8.469</td>
+               <td class="number value">38</td>
+               <td class="number value">12.393</td>
+               <td class="number value">-</td>
+               <td class="number value">53.403</td>
+               <td class="number value">29.458</td>
+               <td class="number value">31.351</td>
+               <td class="number value">-</td>
+               <td class="number value">11.178</td>
+               <td class="number value">-</td>
+               <td class="number value">20.322</td>
+            </tr>
+            <tr>
+               <td>ci</td>
+               <td class="number value">632.543</td>
+               <td class="number value">344.746</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">287.797</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+            </tr>
+            <tr>
+               <td>fussball</td>
+               <td class="number value">547.519</td>
+               <td class="number value">-</td>
+               <td class="number value">118.384</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">428.941</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">180</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+            </tr>
+            <tr>
+               <td>i</td>
+               <td class="number value">743.038</td>
+               <td class="number value">275.155</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">467.817</td>
+               <td class="number value">-</td>
+               <td class="number value">29</td>
+               <td class="number value">-</td>
+               <td class="number value">29</td>
+               <td class="number value">-</td>
+               <td class="number value">2</td>
+               <td class="number value">-</td>
+            </tr>
+            <tr>
+               <td>ii</td>
+               <td class="number value">743.024</td>
+               <td class="number value">275.155</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">2</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">467.814</td>
+               <td class="number value">-</td>
+               <td class="number value">19</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">31</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+            </tr>
+            <tr>
+               <td>kultur</td>
+               <td class="number value">587.688</td>
+               <td class="number value">-</td>
+               <td class="number value">10.858</td>
+               <td class="number value">-</td>
+               <td class="number value">69.492</td>
+               <td class="number value">7.402</td>
+               <td class="number value">-</td>
+               <td class="number value">70.015</td>
+               <td class="number value">117.580</td>
+               <td class="number value">19.897</td>
+               <td class="number value">26.036</td>
+               <td class="number value">8.219</td>
+               <td class="number value">50.929</td>
+               <td class="number value">-</td>
+               <td class="number value">5.471</td>
+               <td class="number value">44.940</td>
+               <td class="number value">26.821</td>
+               <td class="number value">22.730</td>
+               <td class="number value">29.459</td>
+               <td class="number value">-</td>
+               <td class="number value">28.433</td>
+            </tr>
+            <tr>
+               <td>lok</td>
+               <td class="number value">965.820</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">467.029</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">150</td>
+               <td class="number value">-</td>
+               <td class="number value">53.624</td>
+               <td class="number value">-</td>
+               <td class="number value">119.503</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">78.212</td>
+               <td class="number value">-</td>
+               <td class="number value">132.960</td>
+               <td class="number value">114.341</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+            </tr>
+            <tr>
+               <td>lokal</td>
+               <td class="number value">790.176</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">46.505</td>
+               <td class="number value">298.645</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">75.682</td>
+               <td class="number value">-</td>
+               <td class="number value">130.598</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">78.212</td>
+               <td class="number value">-</td>
+               <td class="number value">2.683</td>
+               <td class="number value">127.024</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+            </tr>
+            <tr>
+               <td>spo</td>
+               <td class="number value">1.165.826</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">252.524</td>
+               <td class="number value">187.387</td>
+               <td class="number value">-</td>
+               <td class="number value">180.767</td>
+               <td class="number value">-</td>
+               <td class="number value">40.433</td>
+               <td class="number value">55.281</td>
+               <td class="number value">-</td>
+               <td class="number value">69.265</td>
+               <td class="number value">-</td>
+               <td class="number value">36.172</td>
+               <td class="number value">100.318</td>
+               <td class="number value">38.001</td>
+               <td class="number value">63.247</td>
+               <td class="number value">105.569</td>
+               <td class="number value">-</td>
+               <td class="number value">23.578</td>
+            </tr>
+            <tr>
+               <td>sport</td>
+               <td class="number value">1.779.814</td>
+               <td class="number value">-</td>
+               <td class="number value">27.044</td>
+               <td class="number value">28.644</td>
+               <td class="number value">259.416</td>
+               <td class="number value">187.399</td>
+               <td class="number value">-</td>
+               <td class="number value">169.086</td>
+               <td class="number value">336.131</td>
+               <td class="number value">40.701</td>
+               <td class="number value">75.919</td>
+               <td class="number value">40.920</td>
+               <td class="number value">106.011</td>
+               <td class="number value">-</td>
+               <td class="number value">36.421</td>
+               <td class="number value">100.870</td>
+               <td class="number value">37.374</td>
+               <td class="number value">87.305</td>
+               <td class="number value">158.125</td>
+               <td class="number value">-</td>
+               <td class="number value">32.990</td>
+            </tr>
+            <tr>
+               <td>w</td>
+               <td class="number value">900.732</td>
+               <td class="number value">642.933</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">257.755</td>
+               <td class="number value">-</td>
+               <td class="number value">40</td>
+               <td class="number value">-</td>
+               <td class="number value">4</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+            </tr>
+            <tr>
+               <td>wa</td>
+               <td class="number value">511.730</td>
+               <td class="number value">431.701</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">80.029</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+            </tr>
+            <tr>
+               <td>wir</td>
+               <td class="number value">513.124</td>
+               <td class="number value">-</td>
+               <td class="number value">270</td>
+               <td class="number value">-</td>
+               <td class="number value">51.753</td>
+               <td class="number value">6.523</td>
+               <td class="number value">-</td>
+               <td class="number value">92.877</td>
+               <td class="number value">5.403</td>
+               <td class="number value">24.501</td>
+               <td class="number value">6.461</td>
+               <td class="number value">-</td>
+               <td class="number value">54.881</td>
+               <td class="number value">-</td>
+               <td class="number value">75.638</td>
+               <td class="number value">41.906</td>
+               <td class="number value">61.205</td>
+               <td class="number value">-</td>
+               <td class="number value">38.454</td>
+               <td class="number value">-</td>
+               <td class="number value">36.926</td>
+            </tr>
+            <tr>
+               <td>wirtschaft</td>
+               <td class="number value">519.551</td>
+               <td class="number value">-</td>
+               <td class="number value">2.544</td>
+               <td class="number value">7.968</td>
+               <td class="number value">23.476</td>
+               <td class="number value">6.527</td>
+               <td class="number value">-</td>
+               <td class="number value">88.216</td>
+               <td class="number value">22.410</td>
+               <td class="number value">26.509</td>
+               <td class="number value">6.206</td>
+               <td class="number value">8.533</td>
+               <td class="number value">58.248</td>
+               <td class="number value">-</td>
+               <td class="number value">-</td>
+               <td class="number value">56.114</td>
+               <td class="number value">61.324</td>
+               <td class="number value">38.130</td>
+               <td class="number value">-</td>
+               <td class="number value">29.895</td>
+               <td class="number value">48.313</td>
+            </tr>
+         </table>
+      </div>
+      <div id="infovis-wrapper">
+         <div id="infovis-navi"><a onclick="drawChart(0)"></a><a onclick="toggleStacked();">stacked</a><a onclick="toggleLayout();">layout</a></div>
+         <div id="infovis"></div>
+      </div>
+   </body>
+</html>

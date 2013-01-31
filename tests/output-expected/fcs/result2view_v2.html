@@ -1,0 +1,725 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <title xmlns="">Result Set</title>
+      <meta xmlns="" http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+      <link xmlns=""
+            href="../../../scripts//style/jquery/clarindotblue/jquery-ui-1.8.5.custom.css"
+            type="text/css"
+            rel="stylesheet"/>
+      <link xmlns="" href="../../../scripts//style/cmds-ui.css" type="text/css"
+            rel="stylesheet"/>
+      <link xmlns="" href="../../../scripts//style/cr.css" type="text/css" rel="stylesheet"/>
+      <script xmlns="" type="text/javascript"
+              src="../../../scripts//js/jquery/jquery-1.6.2.js"/>
+      <script xmlns="" type="text/javascript">
+            $(function()
+            {
+            $(".inline-wrap").live("mouseover", function(event) {
+                $(this).find(".attributes").show();
+                });
+                $(".inline-wrap").live("mouseout", function(event) {
+                $(this).find(".attributes").hide();
+                });
+            });
+        </script>
+   </head>
+   <body>
+      <div xmlns="" class="cmds-ui-block" id="titlelogin">
+         <div id="logo">
+            <a href="">
+               <img src="../../../scripts/style/logo_c_s.png" alt="Repository"/>
+            </a>
+            <div id="site-name">Repository</div>
+         </div>
+         <div id="top-menu">
+            <div id="user">
+               <a href="?operation=searchRetrieve&amp;query=Baum&amp;x-context=clarin.at:icltt:cr:stb&amp;startRecord=1&amp;maximumRecords=1&amp;x-format=htmljspage"> js </a>
+               <a href="workspace.jsp">    login</a>
+               <a target="_blank" href="static/info"> docs</a>
+            </div>
+            <div id="notify" class="cmds-elem-plus note">
+               <div id="notifylist" class="note"/>
+            </div>
+         </div>
+      </div>
+      <h1>Result Set</h1>
+      <div xmlns="">
+         <div class="result-header" data-numberOfRecords="40">
+            <div class="cmds-ui-block init-show" id="querysearch">
+               <div class="header ui-widget-header ui-state-default ui-corner-top">
+                Search
+            </div>
+               <div class="content" id="query-input">
+                  <form id="searchretrieve" action="" method="get">
+                     <input type="hidden" name="x-format" value="htmlpage"/>
+                     <table class="cmds-ui-elem-stretch">
+                        <tr>
+                           <td colspan="2">
+                              <label>Context</label>
+                              <select name="x-context"/>
+                              <input type="text" id="input-simplequery" name="query" value="Baum"
+                                     class="queryinput active"/>
+                              <div id="searchclauselist" class="queryinput inactive"/>
+                           </td>
+                           <td>
+                              <input type="submit" value="submit" id="submit-query"/>
+                              <br/>
+                              <span id="switch-input" class="cmd"/>
+                              <label>Complex query</label>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td valign="top">
+                              <div id="collections-widget" class="c-widget"/>
+                           </td>
+                           <td valign="top">
+                              <span class="label">from:</span>
+                              <span>
+                                 <input type="text" name="startRecord" class="value start_record paging-input"
+                                        value="1"/>
+                              </span>
+                              <span class="label">max:</span>
+                              <span>
+                                 <input type="text" name="maximumRecords" class="value maximum_records paging-input"
+                                        value="1"/>
+                              </span>
+                              <input type="submit" value="" class="cmd cmd_reload"/>
+                           </td>
+                           <td/>
+                        </tr>
+                     </table>
+                  </form>
+               </div>
+            </div>
+            <span class="label">showing </span>
+            <span class="value hilight">1</span>
+            <span class="label"> out of </span>
+            <span class="value hilight">40</span>
+            <span class="label"> entries (with </span>
+            <span class="value hilight"/>
+            <span class="label"> hits)</span>
+            <div class="note">
+               <span class="label">sru:version: </span>
+               <span class="value">1.2</span>;
+	        <span class="label">sru:query: </span>
+               <span class="value">Baum</span>;
+	        <span class="label">fcs:x-context: </span>
+               <span class="value">clarin.at:icltt:cr:stb</span>;
+	        <span class="label">fcs:x-dataview: </span>
+               <span class="value"/>;
+	        <span class="label">sru:startRecord: </span>
+               <span class="value">1</span>;
+	        <span class="label">sru:maximumRecords: </span>
+               <span class="value">1</span>;
+	        <span class="label">sru:query: </span>
+               <span class="value">Baum</span>;
+	        <span class="label">sru:baseUrl: </span>
+               <span class="value">http://localhost:8686/exist/rest/db/cr/cr.xql</span>;
+	        <span class="label">fcs:returnedRecords: </span>
+               <span class="value">1</span>;
+	        <span class="label">fcs:numberOfMatches: </span>
+               <span class="value"/>;
+	        <span class="label">fcs:duration: </span>
+               <span class="value">PT0.015S PT0.024S</span>;
+	        <span class="label">fcs:transformedQuery: </span>
+               <span class="value">//p[ft:query(., 'Baum')]/ancestor-or-self::div</span>;
+	        </div>
+         </div>
+         <table class="show">
+            <thead>
+               <tr>
+                  <th>pos</th>
+                  <th>record</th>
+               </tr>
+            </thead>
+            <tbody>
+               <tr>
+                  <td rowspan="2" valign="top">
+                     <a class="internal"
+                        href="?operation=searchRetrieve&amp;query=resourcefragment-pid=&#34;1923-02-15&#34;&amp;x-dataview=full&amp;x-context=clarin.at:icltt:cr:stb&amp;x-format=htmlpage">1</a>
+                  </td>
+                  <td>
+                     <div class="title">1923-02-15</div>
+                  </td>
+               </tr>
+               <tr>
+                  <td>
+                     <div>
+                        <div class="navigation"/>
+                        <div class="data-view full">
+                            <div xmlns="http://www.w3.org/1999/xhtml">
+                                <p>
+                                    <span class="date">15/2</span> Träume u. a., daß ich mit <span xmlns="" class="inline-wrap">
+                                    <span class="attributes" style="display:none;">
+                                       <table>
+                                          <tr>
+                                             <td colspan="2">persName</td>
+                                          </tr>
+                                          <tr>
+                                             <td>
+                                                <table style="float:left">
+                                                   <tr>
+                                                      <td class="label">key</td>
+                                                      <td class="value">p_19822</td>
+                                                   </tr>
+                                                   <tr>
+                                                      <td class="label">xml:id</td>
+                                                      <td class="value">pNt_68603</td>
+                                                   </tr>
+                                                </table>
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td colspan="2">forename</td>
+                                          </tr>
+                                          <tr>
+                                             <td/>
+                                          </tr>
+                                       </table>
+                                    </span>
+                                    <a href="?x-format=html&amp;x-context=clarin.at%3Aicltt%3Acr%3Aaac-names&amp;query=persId=p_19822">
+                                       <span class="persName forename ">
+                                         Heini 
+                                     </span>
+                                    </a>
+                                 </span> in irgend einer fremden Stadt 
+in einer Buchhandlung bin. Ich finde einzelne Bände von einem 
+<span xmlns="" class="inline-wrap">
+                                    <span class="attributes" style="display:none;">
+                                       <table>
+                                          <tr>
+                                             <td colspan="2">placeName</td>
+                                          </tr>
+                                          <tr>
+                                             <td>
+                                                <table style="float:left">
+                                                   <tr>
+                                                      <td class="label">type</td>
+                                                      <td class="value">country</td>
+                                                   </tr>
+                                                   <tr>
+                                                      <td class="label">xml:id</td>
+                                                      <td class="value">pl_14549</td>
+                                                   </tr>
+                                                </table>
+                                             </td>
+                                          </tr>
+                                       </table>
+                                    </span>
+                                    <span class="placeName ">französ. </span>
+                                 </span>
+                                    <span xmlns="" class="inline-wrap">
+                                    <span class="attributes" style="display:none;">
+                                       <table>
+                                          <tr>
+                                             <td colspan="2">persName</td>
+                                          </tr>
+                                          <tr>
+                                             <td>
+                                                <table style="float:left">
+                                                   <tr>
+                                                      <td class="label">key</td>
+                                                      <td class="value">p_19439</td>
+                                                   </tr>
+                                                   <tr>
+                                                      <td class="label">type</td>
+                                                      <td class="value">att</td>
+                                                   </tr>
+                                                   <tr>
+                                                      <td class="label">xml:id</td>
+                                                      <td class="value">pNt_68604</td>
+                                                   </tr>
+                                                </table>
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td colspan="2">surname</td>
+                                          </tr>
+                                          <tr>
+                                             <td/>
+                                          </tr>
+                                       </table>
+                                    </span>
+                                    <a href="?x-format=html&amp;x-context=clarin.at%3Aicltt%3Acr%3Aaac-names&amp;query=persId=p_19439">
+                                       <span class="persName surname ">
+                                         Rousseau’schen 
+                                     </span>
+                                    </a>
+                                 </span> Roman (D.: lese <span xmlns="" class="inline-wrap">
+                                    <span class="attributes" style="display:none;">
+                                       <table>
+                                          <tr>
+                                             <td colspan="2">persName</td>
+                                          </tr>
+                                          <tr>
+                                             <td>
+                                                <table style="float:left">
+                                                   <tr>
+                                                      <td class="label">key</td>
+                                                      <td class="value">p_21578</td>
+                                                   </tr>
+                                                   <tr>
+                                                      <td class="label">xml:id</td>
+                                                      <td class="value">pNt_68605</td>
+                                                   </tr>
+                                                </table>
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td colspan="2">surname</td>
+                                          </tr>
+                                          <tr>
+                                             <td/>
+                                          </tr>
+                                       </table>
+                                    </span>
+                                    <a href="?x-format=html&amp;x-context=clarin.at%3Aicltt%3Acr%3Aaac-names&amp;query=persId=p_21578">
+                                       <span class="persName surname ">
+                                         Zola 
+                                     </span>
+                                    </a>
+                                 </span> von <span xmlns="" class="inline-wrap">
+                                    <span class="attributes" style="display:none;">
+                                       <table>
+                                          <tr>
+                                             <td colspan="2">persName</td>
+                                          </tr>
+                                          <tr>
+                                             <td>
+                                                <table style="float:left">
+                                                   <tr>
+                                                      <td class="label">key</td>
+                                                      <td class="value">p_16469</td>
+                                                   </tr>
+                                                   <tr>
+                                                      <td class="label">xml:id</td>
+                                                      <td class="value">pNt_68606</td>
+                                                   </tr>
+                                                </table>
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td colspan="2">forename</td>
+                                          </tr>
+                                          <tr>
+                                             <td/>
+                                          </tr>
+                                       </table>
+                                    </span>
+                                    <a href="?x-format=html&amp;x-context=clarin.at%3Aicltt%3Acr%3Aaac-names&amp;query=persId=p_16469">
+                                       <span class="persName forename ">
+                                         Lucy 
+                                     </span>
+                                    </a>
+                                 </span> übersetzte 
+<span xmlns="" class="inline-wrap">
+                                    <span class="bibl ">Nana </span>
+                                 </span> mit mäßigem Behagen!) – ärgere mich; (er heißt Madame – 
+A. und ein Frauenname, der mit A anfängt), äußere zu <span xmlns="" class="inline-wrap">
+                                    <span class="attributes" style="display:none;">
+                                       <table>
+                                          <tr>
+                                             <td colspan="2">persName</td>
+                                          </tr>
+                                          <tr>
+                                             <td>
+                                                <table style="float:left">
+                                                   <tr>
+                                                      <td class="label">key</td>
+                                                      <td class="value">p_19822</td>
+                                                   </tr>
+                                                   <tr>
+                                                      <td class="label">xml:id</td>
+                                                      <td class="value">pNt_68607</td>
+                                                   </tr>
+                                                </table>
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td colspan="2">forename</td>
+                                          </tr>
+                                          <tr>
+                                             <td/>
+                                          </tr>
+                                       </table>
+                                    </span>
+                                    <a href="?x-format=html&amp;x-context=clarin.at%3Aicltt%3Acr%3Aaac-names&amp;query=persId=p_19822">
+                                       <span class="persName forename ">
+                                         Heini 
+                                     </span>
+                                    </a>
+                                 </span>: 
+So was kann doch nur bei <span xmlns="" class="inline-wrap">
+                                    <span class="attributes" style="display:none;">
+                                       <table>
+                                          <tr>
+                                             <td colspan="2">persName</td>
+                                          </tr>
+                                          <tr>
+                                             <td>
+                                                <table style="float:left">
+                                                   <tr>
+                                                      <td class="label">key</td>
+                                                      <td class="value">p_16069</td>
+                                                   </tr>
+                                                   <tr>
+                                                      <td class="label">xml:id</td>
+                                                      <td class="value">pNt_68608</td>
+                                                   </tr>
+                                                </table>
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td colspan="2">surname</td>
+                                          </tr>
+                                          <tr>
+                                             <td/>
+                                          </tr>
+                                       </table>
+                                    </span>
+                                    <a href="?x-format=html&amp;x-context=clarin.at%3Aicltt%3Acr%3Aaac-names&amp;query=persId=p_16069">
+                                       <span class="persName surname ">
+                                         Heller 
+                                     </span>
+                                    </a>
+                                 </span> vorkommen (er ist zugleich sichtbar, 
+aber mit langem weißen Bart, entfernt und unhöflich) – man denke 
+sich z. B., daß man in einer <span xmlns="" class="inline-wrap">
+                                    <span class="attributes" style="display:none;">
+                                       <table>
+                                          <tr>
+                                             <td colspan="2">placeName</td>
+                                          </tr>
+                                          <tr>
+                                             <td>
+                                                <table style="float:left">
+                                                   <tr>
+                                                      <td class="label">type</td>
+                                                      <td class="value">city</td>
+                                                   </tr>
+                                                   <tr>
+                                                      <td class="label">xml:id</td>
+                                                      <td class="value">pl_14550</td>
+                                                   </tr>
+                                                </table>
+                                             </td>
+                                          </tr>
+                                       </table>
+                                    </span>
+                                    <span class="placeName ">Pariser </span>
+                                 </span> Buchhandlung von <span xmlns="" class="inline-wrap">
+                                    <span class="attributes" style="display:none;">
+                                       <table>
+                                          <tr>
+                                             <td colspan="2">persName</td>
+                                          </tr>
+                                          <tr>
+                                             <td>
+                                                <table style="float:left">
+                                                   <tr>
+                                                      <td class="label">key</td>
+                                                      <td class="value">p_19694</td>
+                                                   </tr>
+                                                   <tr>
+                                                      <td class="label">xml:id</td>
+                                                      <td class="value">pNt_68609</td>
+                                                   </tr>
+                                                </table>
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td colspan="2">surname</td>
+                                          </tr>
+                                          <tr>
+                                             <td/>
+                                          </tr>
+                                       </table>
+                                    </span>
+                                    <a href="?x-format=html&amp;x-context=clarin.at%3Aicltt%3Acr%3Aaac-names&amp;query=persId=p_19694">
+                                       <span class="persName surname ">
+                                         Schillers 
+                                     </span>
+                                    </a>
+                                 </span>
+                                    <span xmlns="" class="inline-wrap">
+                                    <span class="bibl ">Geisterseher </span>
+                                 </span> nur einige lose Bände fände.– Dann les ich einen Brief 
+an mich, von <span xmlns="" class="inline-wrap">
+                                    <span class="attributes" style="display:none;">
+                                       <table>
+                                          <tr>
+                                             <td colspan="2">persName</td>
+                                          </tr>
+                                          <tr>
+                                             <td>
+                                                <table style="float:left">
+                                                   <tr>
+                                                      <td class="label">key</td>
+                                                      <td class="value">p_14199</td>
+                                                   </tr>
+                                                   <tr>
+                                                      <td class="label">xml:id</td>
+                                                      <td class="value">pNt_68610</td>
+                                                   </tr>
+                                                </table>
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td colspan="2">forename</td>
+                                          </tr>
+                                          <tr>
+                                             <td/>
+                                          </tr>
+                                          <tr>
+                                             <td colspan="2">surname</td>
+                                          </tr>
+                                          <tr>
+                                             <td/>
+                                          </tr>
+                                       </table>
+                                    </span>
+                                    <a href="?x-format=html&amp;x-context=clarin.at%3Aicltt%3Acr%3Aaac-names&amp;query=persId=p_14199">
+                                       <span class="persName forename surname ">
+                                         Gusti 
+                                         Glümer 
+                                     </span>
+                                    </a>
+                                 </span>;– eine Seite, am Schluß heißt es 
+(ungefähr): „Es geht Ihnen sehr gut, wie man hört. Die Weiber sind 
+hinter Ihnen her.“ Und dann, eine Zeile für sich: <span xmlns="" class="hilight match">Baum</span>, blühe!– (<span xmlns="" class="inline-wrap">
+                                    <span class="attributes" style="display:none;">
+                                       <table>
+                                          <tr>
+                                             <td colspan="2">persName</td>
+                                          </tr>
+                                          <tr>
+                                             <td>
+                                                <table style="float:left">
+                                                   <tr>
+                                                      <td class="label">key</td>
+                                                      <td class="value">p_17510</td>
+                                                   </tr>
+                                                   <tr>
+                                                      <td class="label">xml:id</td>
+                                                      <td class="value">pNt_68611</td>
+                                                   </tr>
+                                                </table>
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td colspan="2">forename</td>
+                                          </tr>
+                                          <tr>
+                                             <td/>
+                                          </tr>
+                                          <tr>
+                                             <td colspan="2">surname</td>
+                                          </tr>
+                                          <tr>
+                                             <td/>
+                                          </tr>
+                                       </table>
+                                    </span>
+                                    <a href="?x-format=html&amp;x-context=clarin.at%3Aicltt%3Acr%3Aaac-names&amp;query=persId=p_17510">
+                                       <span class="persName forename surname ">
+                                         V. 
+                                         L. 
+                                     </span>
+                                    </a>
+                                 </span> 
+telef. mir neulich aus <span xmlns="" class="inline-wrap">
+                                    <span class="attributes" style="display:none;">
+                                       <table>
+                                          <tr>
+                                             <td colspan="2">placeName</td>
+                                          </tr>
+                                          <tr>
+                                             <td>
+                                                <table style="float:left">
+                                                   <tr>
+                                                      <td class="label">type</td>
+                                                      <td class="value">city</td>
+                                                   </tr>
+                                                   <tr>
+                                                      <td class="label">xml:id</td>
+                                                      <td class="value">pl_14551</td>
+                                                   </tr>
+                                                </table>
+                                             </td>
+                                          </tr>
+                                       </table>
+                                    </span>
+                                    <span class="placeName ">Edlach </span>
+                                 </span>, sie „blühe“.) (Die Deutung wurde 
+durch einen folgenden (oder vorhergehenden?) Traum noch klarer.)</p>
+                                <p>Dictirt an den <span xmlns="" class="inline-wrap">
+                                    <span class="attributes" style="display:none;">
+                                       <table>
+                                          <tr>
+                                             <td colspan="2">bibl</td>
+                                          </tr>
+                                          <tr>
+                                             <td>
+                                                <table style="float:left">
+                                                   <tr>
+                                                      <td class="label">type</td>
+                                                      <td class="value">self</td>
+                                                   </tr>
+                                                </table>
+                                             </td>
+                                          </tr>
+                                       </table>
+                                    </span>
+                                    <span class="bibl ">drei Novellen </span>
+                                 </span>.–</p>
+                                <p>Nm. mit <span xmlns="" class="inline-wrap">
+                                    <span class="attributes" style="display:none;">
+                                       <table>
+                                          <tr>
+                                             <td colspan="2">persName</td>
+                                          </tr>
+                                          <tr>
+                                             <td>
+                                                <table style="float:left">
+                                                   <tr>
+                                                      <td class="label">key</td>
+                                                      <td class="value">p_19822</td>
+                                                   </tr>
+                                                   <tr>
+                                                      <td class="label">xml:id</td>
+                                                      <td class="value">pNt_68612</td>
+                                                   </tr>
+                                                </table>
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td colspan="2">forename</td>
+                                          </tr>
+                                          <tr>
+                                             <td/>
+                                          </tr>
+                                       </table>
+                                    </span>
+                                    <a href="?x-format=html&amp;x-context=clarin.at%3Aicltt%3Acr%3Aaac-names&amp;query=persId=p_19822">
+                                       <span class="persName forename ">
+                                         Heini 
+                                     </span>
+                                    </a>
+                                 </span> eine <span xmlns="" class="inline-wrap">
+                                    <span class="attributes" style="display:none;">
+                                       <table>
+                                          <tr>
+                                             <td colspan="2">persName</td>
+                                          </tr>
+                                          <tr>
+                                             <td>
+                                                <table style="float:left">
+                                                   <tr>
+                                                      <td class="label">key</td>
+                                                      <td class="value">p_20157</td>
+                                                   </tr>
+                                                   <tr>
+                                                      <td class="label">xml:id</td>
+                                                      <td class="value">pNt_68613</td>
+                                                   </tr>
+                                                </table>
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td colspan="2">surname</td>
+                                          </tr>
+                                          <tr>
+                                             <td/>
+                                          </tr>
+                                       </table>
+                                    </span>
+                                    <a href="?x-format=html&amp;x-context=clarin.at%3Aicltt%3Acr%3Aaac-names&amp;query=persId=p_20157">
+                                       <span class="persName surname ">
+                                         Skriabin 
+                                     </span>
+                                    </a>
+                                 </span> Symphonie (<span xmlns="" class="inline-wrap">
+                                    <span class="bibl ">Dritte </span>
+                                 </span>) und <span xmlns="" class="inline-wrap">
+                                    <span class="bibl ">Vierte </span>
+                                 </span>
+                                    <span xmlns="" class="inline-wrap">
+                                    <span class="attributes" style="display:none;">
+                                       <table>
+                                          <tr>
+                                             <td colspan="2">persName</td>
+                                          </tr>
+                                          <tr>
+                                             <td>
+                                                <table style="float:left">
+                                                   <tr>
+                                                      <td class="label">key</td>
+                                                      <td class="value">p_13555</td>
+                                                   </tr>
+                                                   <tr>
+                                                      <td class="label">xml:id</td>
+                                                      <td class="value">pNt_68614</td>
+                                                   </tr>
+                                                </table>
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td colspan="2">surname</td>
+                                          </tr>
+                                          <tr>
+                                             <td/>
+                                          </tr>
+                                       </table>
+                                    </span>
+                                    <a href="?x-format=html&amp;x-context=clarin.at%3Aicltt%3Acr%3Aaac-names&amp;query=persId=p_13555">
+                                       <span class="persName surname ">
+                                         Beethoven 
+                                     </span>
+                                    </a>
+                                 </span>, der 
+<span xmlns="" class="inline-wrap">
+                                    <span class="attributes" style="display:none;">
+                                       <table>
+                                          <tr>
+                                             <td colspan="2">persName</td>
+                                          </tr>
+                                          <tr>
+                                             <td>
+                                                <table style="float:left">
+                                                   <tr>
+                                                      <td class="label">key</td>
+                                                      <td class="value">p_18881</td>
+                                                   </tr>
+                                                   <tr>
+                                                      <td class="label">xml:id</td>
+                                                      <td class="value">pNt_68615</td>
+                                                   </tr>
+                                                </table>
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td colspan="2">forename</td>
+                                          </tr>
+                                          <tr>
+                                             <td/>
+                                          </tr>
+                                       </table>
+                                    </span>
+                                    <a href="?x-format=html&amp;x-context=clarin.at%3Aicltt%3Acr%3Aaac-names&amp;query=persId=p_18881">
+                                       <span class="persName forename ">
+                                         Kolap 
+                                     </span>
+                                    </a>
+                                 </span> vorgespielt.</p>
+                                <p>Den Nachm. ziemlich vertrödelt.–</p>
+                           </div>
+                        </div>
+                     </div>
+                  </td>
+               </tr>
+            </tbody>
+         </table>
+      </div>
+   </body>
+</html>
