@@ -181,7 +181,7 @@
     </xsl:param>    
     <xsl:param name="pivot-data" select="$source-data/response/lst[@name = 'facet_counts']/lst[@name = 'facet_pivot']/arr" />
 
-    <dataset name="{$pivot-fields} {$query}">
+    <dataset key="{$pivot-fields}-{my:normalize($query)}" label="{$pivot-fields} {$query}">
       <xsl:call-template name="facets2labels">
         <xsl:with-param name="facet-list" select="$facet2-list"></xsl:with-param>
       </xsl:call-template>
@@ -230,12 +230,12 @@
     <xsl:param name="facet-list"></xsl:param>
     <xsl:param name="all-value" select=".//result/@numFound"></xsl:param>
     
-      <dataseries name="{$dataseries-title}">
+      <dataseries key="{$dataseries-title}">
         <value label="_all_" formatted="{my:format-number($all-value,$number-format-default)}" >
           <xsl:value-of select="$all-value"/>
         </value>
       <xsl:for-each select="$facet-list/*" >
-        <value label="{if(xs:string(@name)='') then '_EMPTY_' else xs:string(@name)}" formatted="{my:format-number(.,$number-format-default)}" >
+        <value label="{if(xs:string(@name)='') then '_EMPTY_' else translate(xs:string(@name),'~ ','__')}" formatted="{my:format-number(.,$number-format-default)}" >
           <xsl:value-of select="." />
         </value>
       </xsl:for-each>    
