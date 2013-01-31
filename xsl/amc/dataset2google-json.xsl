@@ -56,8 +56,8 @@
         </xd:desc>
     </xd:doc>
     <xsl:template name="callback-header-chart">
-        <script type="text/javascript" src="{concat($scripts-dir, 'google-jsapi.js')}"/>
-        <script type="text/javascript" src="{concat($scripts-dir, 'google-corechart.js')}"/>
+        <script type="text/javascript" src="{concat($scripts-dir, 'js/google-jsapi.js')}"/>
+        <script type="text/javascript" src="{concat($scripts-dir, 'js/google-corechart.js')}"/>
         <script type="text/javascript">
                 var data= {};
                 var options = {}; 
