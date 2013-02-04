@@ -10,7 +10,12 @@
     -->
     <xsl:import href="commons_v1.xsl"/>
     <xsl:template name="contexts-doc">
-        <xsl:copy-of select="if (doc-available($contexts_url)) then doc($contexts_url) else ()"/>
+        <xsl:if test="not(doc-available(resolve-uri($contexts_url)))">
+            <xsl:message>ERROR: context not available: <xsl:value-of select="resolve-uri($contexts_url)"/>
+                base-uri:  <xsl:value-of select="base-uri()"/>
+            </xsl:message>
+        </xsl:if>
+        <xsl:copy-of select="if (doc-available(resolve-uri($contexts_url))) then doc(resolve-uri($contexts_url)) else ()"/>
     </xsl:template>
  
     <!--
