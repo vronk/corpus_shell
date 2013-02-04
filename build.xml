@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<!-- ====================================================================== 
+     Date:     2013-01     
+     Project:  corpus_shell
+     ====================================================================== -->
+
+<project name="corpus_shell" basedir=".">
+	
+    <description>
+           targets for corpus_shell
+    </description>
+	
+	
+<!--	<property name="cache.dir" value="data2" />-->
+	<property name="out.dir" value="output" />
+	<property name="docs.dir" value="docs" />
+	<property name="xsl.dir" value="xsl/" />
+	
+	
+	<property name="scripts.dir" location="C:\Users\m\3\7utils"/>
+	
+	<import file="${scripts.dir}\build.xml" />   
+	
+	
+	<target name="gen-docs" depends="gen-build-info,gen-jsdocs">
+	</target>
+	
+	<target name="gen-jsdocs" >
+		<ant antfile="${scripts.dir}\build_docs.xml" target="gen-jsdoc">
+			
+			<property name="src.dir" location="scripts/js/query_input/qi.js" />
+			<property name="docs.dir" location="docs/js/query_input"/>
+		</ant>		
+	</target>
+	
+	<target name="gen-jsdocs2" >
+		<ant antfile="${scripts.dir}\build_docs.xml" target="gen-jsdoc">
+			<property name="src.dir" location="../../code/fromMDService2/scripts/" />
+			<property name="docs.dir" location="../../code/fromMDService2/docs"/>
+		</ant>
+	</target>
+	
+	<target name="gen-xsldocs" >
+		<property name="out.fn" value="c_s-xsl"></property>
+		<ant antfile="${scripts.dir}\build_docs.xml" target="ay-xsl">
+			<property name="in.dir" location="${xsl.dir}" />
+			<property name="file.prefix" value="../.." />
+			<property name="title" value="${out.fn}" />
+<!--			<property name="parts" value="imports" />-->
+			<property name="parts" value="imports, params, templates, functions" />
+			<property name="out.dir" location="${docs.dir}/xsltdocs"/>
+			<property name="out.fn" value="${out.fn}"/>
+			
+		</ant>
+		<ant antfile="${scripts.dir}\build_docs.xml" target="gen-dep-graph">
+			<property name="work.dir" location="${docs.dir}/xsltdocs" />
+			<property name="in.file" value="${out.fn}.xml"/>
+			<property name="title" value="${out.fn}-imports" />
+			<property name="parts" value="imports" />
+			<property name="out.fn" value="${out.fn}-imports"/>
+		</ant>		
+		
+	</target>    	
+	
+	<target name="gen-build-info" >
+		<ant antfile="${scripts.dir}\build.xml" target="gen-build-info">
+			<property name="in.dir" location="" />
+			<property name="other.build" value="build_init"/>
+			<property name="out.dir" location="docs"/>
+		</ant>
+	</target>
+	
+	
+	
+</project>
+
