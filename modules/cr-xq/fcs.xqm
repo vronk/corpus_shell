@@ -360,7 +360,7 @@ declare function fcs:format-record-data($record-data as node(), $data-view as xs
 	let $resourcefragment-pid := fcs:apply-index ($record-data, "resourcefragment-pid",$x-context, $config)	
 	(: to repeat current $x-format param-value in the constructed requested :)
 	let $x-format := request:get-parameter("x-format", $repo-utils:responseFormatXml)
-	let $resourcefragment-ref := if (exists($resourcefragment-pid)) then concat('?operation=searchRetrieve&amp;query=pid="', replace(xmldb:encode-uri(replace($resourcefragment-pid,'//','__')),'__','//'), '"&amp;x-dataview=full&amp;x-context=', $x-context)
+	let $resourcefragment-ref := if (exists($resourcefragment-pid)) then concat('?operation=searchRetrieve&amp;query=resourcefragment-pid="', replace(xmldb:encode-uri(replace($resourcefragment-pid,'//','__')),'__','//'), '"&amp;x-dataview=full&amp;x-context=', $x-context)
 	                                      else ""
 	
     let $kwic := if ('kwic' = $data-view) then
@@ -390,11 +390,22 @@ declare function fcs:format-record-data($record-data as node(), $data-view as xs
                                                  else "title"
                            (: WATCHME: this only works if default-sort and title index are the same :)
                            (:important is the $responsePosition=2 :)
-                          let $prev-next-scan := fcs:scan(concat($sort-index, '=', $title),$x-context, 1,3,2,1,'text',$config)  
-                          let $rf-prev := $prev-next-scan//sru:terms/sru:term[1]/sru:value
-                          let $rf-next := $prev-next-scan//sru:terms/sru:term[3]/sru:value                                
-                          let $rf-prev-ref := concat('?operation=searchRetrieve&amp;query=resourcefragment-pid="', xmldb:encode-uri($rf-prev), '"&amp;x-dataview=full&amp;x-dataview=navigation&amp;x-context=', $x-context)                                                 
-                          let $rf-next-ref:= concat('?operation=searchRetrieve&amp;query=resourcefragment-pid="', xmldb:encode-uri($rf-next), '"&amp;x-dataview=full&amp;x-dataview=navigation&amp;x-context=', $x-context)
+                          let $prev-next-scan := fcs:scan(concat($sort-index, '=', $title),$x-context, 1,3,2,1,'text',$config)
+                                    (: handle also edge situations 
+                                        expect maximum 3 terms, on the edges only 2 terms:)
+                          let $rf-prev := if (count($prev-next-scan//sru:terms/sru:term) = 3
+                                            or not($prev-next-scan//sru:terms/sru:term[1]/sru:value = $title)) then
+                                                 $prev-next-scan//sru:terms/sru:term[1]/sru:value
+                                            else ""
+                                                 
+                          let $rf-next := if (count($prev-next-scan//sru:terms/sru:term) = 3) then
+                                                $prev-next-scan//sru:terms/sru:term[3]/sru:value
+                                             else if (not($prev-next-scan//sru:terms/sru:term[2]/sru:value = $title)) then
+                                                 $prev-next-scan//sru:terms/sru:term[2]/sru:value
+                                            else "" 
+                                
+                          let $rf-prev-ref := if (not($rf-prev='')) then concat('?operation=searchRetrieve&amp;query=resourcefragment-pid="', xmldb:encode-uri($rf-prev), '"&amp;x-dataview=full&amp;x-dataview=navigation&amp;x-context=', $x-context) else ""                                                 
+                          let $rf-next-ref:= if (not($rf-next='')) then concat('?operation=searchRetrieve&amp;query=resourcefragment-pid="', xmldb:encode-uri($rf-next), '"&amp;x-dataview=full&amp;x-dataview=navigation&amp;x-context=', $x-context) else ""
                            return
                              (<fcs:ResourceFragment type="prev" pid="{$rf-prev}" ref="{$rf-prev-ref}"  />,
                              <fcs:ResourceFragment type="next" pid="{$rf-next}" ref="{$rf-next-ref}"  />)
