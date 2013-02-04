@@ -26,10 +26,13 @@ declare variable $repo-utils:responseFormatHTMLpage as xs:string := "htmlpage";
 
 declare variable $repo-utils:sys-config-file := "conf/config-system.xml";
 
+(:~ not solved yet - look at cr-xq/core/config.xqm: config:param-value('base-url') !  :)
 declare function repo-utils:base-url($config) as xs:string* {
-    let $server-base := if (repo-utils:config-value($config, 'server.base') = '') then ''  else repo-utils:config-value($config, 'server.base')
+    (:let $server-base := if (repo-utils:config-value($config, 'server.base') = '') then ''  else repo-utils:config-value($config, 'server.base')
     let $config-base-url := if (repo-utils:config-value($config, 'base.url') = '') then request:get-uri() else repo-utils:config-value($config, 'base.url')
-    return concat($server-base, $config-base-url)
+    return concat($server-base, $config-base-url):)
+    let $url := request:get-url()
+    return $url
 };  
 
 declare function repo-utils:config($config-file as xs:string) as node()* {
