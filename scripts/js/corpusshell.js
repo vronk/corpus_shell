@@ -30,6 +30,7 @@ var Indexes = null;
 // is now set in params.js
 //var baseURL = "/cs2/corpus_shell";
 
+/** get params from the uri */
 function GetUrlParams(url)
 {
   var urlParams = {};

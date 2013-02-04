@@ -9,6 +9,9 @@
  * last change:  2012.10.02
  */
 
+/** creates a panel in corpus_shell
+@constructor
+*/
 function Panel(id, type, title, url, position, pinned, zIndex, container, panelController, config)
 {
   /* public properties */

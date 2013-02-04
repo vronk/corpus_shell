@@ -1,6 +1,6 @@
 
 /* 
-obsoleted by corpusshell.config.php ??
+OBSOLETED by corpusshell.config.php
 */
 
 var SearchConfig = new Array();
