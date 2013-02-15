@@ -320,7 +320,8 @@
                 <dataseries key="{$curr_label_old}" label="{text()}">
                     <xsl:for-each select="$dataset//value[$curr_label_old=@key or $curr_label_old=@label]">
                         <value key="{(../@name, ../@label,../@key)[not(.='')][1]}">
-                            <xsl:copy-of select="@*[not(.='')]"/>
+                            <!-- copy other (value) attributes, but not the key or label --> 
+                            <xsl:copy-of select="@*[not(.='')][not(name()=('key','label'))]"/>
                             <!-- formatted="{@formatted}"
                 <xsl:if test="../@type"><xsl:attribute name="type" select="../@type"></xsl:attribute></xsl:if>-->
                             <xsl:value-of select="."/>
