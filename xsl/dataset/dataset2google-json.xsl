@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:exsl="http://exslt.org/common" xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl" version="1.0" extension-element-prefixes="exsl xd">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:exsl="http://exslt.org/common" xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    version="2.0" extension-element-prefixes="exsl xd xs">
   <!--<xsl:import href="amc-params.xsl"  />
   <xsl:import href="amc-helpers.xsl"  />-->
     <xd:doc scope="stylesheet">
@@ -28,14 +29,16 @@
 <!--        <xsl:with-param name="data" select="$data" ></xsl:with-param>-->
             </xsl:apply-templates>
         </xsl:variable>
+        <!-- try to guess appropriate layout, simply area-chart if two dimensional = more than one dataseries -->
+        <xsl:variable name="layout" select="if (count($data//dataseries[not(@type='base')]) &gt; 1) then 'area' else 'pie' "/>
+<!--        DEBUG:<xsl:value-of select="count($data//dataseries)" />-->
         <xsl:variable name="dataset-name" select="concat(@name,position())"/>
         <script type="text/javascript">
-      // allow for multiple datasets (for every facet)
-        //var data_arr = [ $json-data
       
+      // allow for multiple datasets (for every facet)
       data["<xsl:value-of select="$dataset-name"/>"] = google.visualization.arrayToDataTable(<xsl:copy-of select="$json-data"/>)
       options["<xsl:value-of select="$dataset-name"/>"] = {
-                          layout: "pie",
+                          layout: "<xsl:value-of select="$layout"/>",
                           title: '<xsl:value-of select="$dataset-name"/>'
                     }  
       
@@ -87,8 +90,11 @@
     </xsl:template>
     <xsl:template match="dataset" mode="data2chart-google">
         <xsl:param name="data" select="."/>
+        <xsl:variable name="inverted-data">
+            <xsl:apply-templates select="$data" mode="invert"/>
+        </xsl:variable>
         <xsl:text>[</xsl:text>
-        <xsl:apply-templates select="$data" mode="chart-google"/>
+        <xsl:apply-templates select="$inverted-data" mode="chart-google"/>
         <xsl:text>]</xsl:text>
         <xsl:if test="not(position()=last())">, 
     </xsl:if>
@@ -101,23 +107,26 @@
         <xsl:apply-templates mode="chart-google"/>
         <xsl:text>], </xsl:text>
     </xsl:template>
-    <xsl:template match="dataseries[not(@name='all' or @key='all')][value]" mode="chart-google">
-        <xsl:text>['</xsl:text>
-        <xsl:value-of select="(@name,@label,@key)[1]"/>
-        <xsl:text>', </xsl:text>
-        <xsl:apply-templates mode="chart-google" select="value[not(@key=current()/../labels/label[@type='base'])]"/>
-        <xsl:text>]</xsl:text>
-        <xsl:if test="not(position()=last())">, 
+    <xsl:template match="dataseries[value]" mode="chart-google">
+        <xsl:if test="not(xs:string(@name)=$all-label or @key=$all-label)" >
+           <xsl:text>['</xsl:text>
+           <xsl:value-of select="(@name,@label,@key)[1]"/>
+           <xsl:text>', </xsl:text>
+           <xsl:apply-templates mode="chart-google" select="value[not(@key=current()/../labels/label[@type='base'])]"/>
+           <xsl:text>]</xsl:text>
+           <xsl:if test="not(position()=last())">, 
     </xsl:if>
+        </xsl:if>
     </xsl:template>
-    <xsl:template match="label[not(.='all')][not(@type='base')]" mode="chart-google">
+    <xsl:template match="label[not(.=$all-label)][not(@type='base')]" mode="chart-google">
         <xsl:text>'</xsl:text>
         <xsl:value-of select="."/>
         <xsl:text>' </xsl:text>
         <xsl:if test="not(position()=last())">, </xsl:if>
     </xsl:template>
-    <xsl:template match="value[not(@label='all')][not(@type='base')]" mode="chart-google">
+    <xsl:template match="value[not(xs:string(@key)=$all-label)][not(@type='base')]" mode="chart-google">
         <xsl:value-of select="(@rel,@abs,.)[1]"/>
+        <!--DEBUG:<xsl:value-of select="@key"/>-->
         <xsl:if test="not(position()=last())">, </xsl:if>
     </xsl:template>
 

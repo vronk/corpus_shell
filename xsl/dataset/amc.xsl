@@ -5,9 +5,12 @@
     extension-element-prefixes="exsl xd">
     
    <xsl:import href="solr2dataset.xsl"/>
-    <xsl:import href="dataset2table.xsl"/>
-    <xsl:import href="dataset2google-json.xsl"/>
-   
+    <!--<xsl:import href="dataset2table.xsl"/>
+    <xsl:import href="dataset2google-json.xsl"/>-->
+    <xsl:import href="dataset2view.xsl"/>
+    <xsl:import href="solr-hits2html.xsl"/>
+    
+    
     <xd:doc scope="stylesheet">
         <xd:desc>
             <xd:p><xd:b>Created on:</xd:b>  2012-09-28</xd:p>
@@ -111,27 +114,35 @@ media-type="text/xhtml"
             <head>
                 <link rel="stylesheet" type="text/css" href="{concat($scripts-dir, 'style/jquery.ui.resizable.css')}" />
                 <link rel="stylesheet" type="text/css" href="{concat($scripts-dir, 'style/jquery.ui.all.css')}" />
+                <link rel="stylesheet" type="text/css" href="{concat($scripts-dir, 'style/jquery/clarindotblue/jquery-ui-1.8.5.custom.css')}" />
+                <link rel="stylesheet" type="text/css" href="{concat($scripts-dir, 'style/cmds-ui.css')}" />
+                
                 <!--
                   	<xsl:call-template name="chart-jit" >
                         <xsl:with-param name="facet-list" select="//lst[@name='facet_fields']/lst[1]"></xsl:with-param>
                   	</xsl:call-template>
                 -->                    
+                <!--table { border-collapse:collapse;  border:1px solid grey }
+        td {padding: 3px; border:1px solid grey}-->
                 <style type="text/css">
-        table { border-collapse:collapse;  border:1px solid grey }
-        td {padding: 3px; border:1px solid grey}
+        
         div#infovis-wrapper {border: 1px solid grey; margin: 20px; padding: 5px; height:450px; width:800px;}
         #infovis {height: 90%; width: 100%;}
         .value { text-align: right; }
         </style> 
-<!--                <xsl:apply-templates select="exsl:node-set($chart-data)[1]" mode="invert" />-->
+                <!--DEBUG: <xsl:apply-templates select="$chart-data" mode="invert" />
+                DEBUG: <xsl:copy-of select="$chart-data" />-->
+                
                 <xsl:if test="contains($parts,'chart')" >
-                   <xsl:call-template name="chart-google" >
+                    <xsl:call-template name="callback-header-chart" />
+                      
+               <!--    <xsl:call-template name="chart-google" >
                        <xsl:with-param name="data" >                        
                                <xsl:apply-templates select="exsl:node-set($chart-data)[1]" mode="invert" />                                               
                        </xsl:with-param>
-                   </xsl:call-template>
+                   </xsl:call-template>-->
                 </xsl:if>
-                
+               
                 <script type="text/javascript" src="{concat($scripts-dir, 'js/jquery/jquery.min.js')}"></script>
                 <script type="text/javascript" src="{concat($scripts-dir, 'js/jquery/jquery-ui.min.js')}"></script>
                 <script type="text/javascript" src="{concat($scripts-dir, 'js/jquery/jquery.tablesorter.js')}"></script>
@@ -142,16 +153,25 @@ media-type="text/xhtml"
             </head>
             <body >
                 <h1>amc search interface</h1>
-                <form id="filter-form">
-                    <input type="text" id="filter" />
-                </form>
+                
                 <xsl:apply-templates  mode="query-input"/>
                 
 <!--      DEBUG:               <xsl:copy-of select="$chart-data" />-->
                 
+                <xsl:for-each select="$chart-data">
+                                <xsl:call-template name="continue-root"></xsl:call-template>
+                </xsl:for-each>
+                
+                <xsl:if test="contains($parts,'hits') and exists(/response/result/doc)" >
+                    <xsl:call-template name="hits"></xsl:call-template>
+                </xsl:if>                    
+                <!--
                 <xsl:if test="contains($parts,'table')" >
+                <form id="filter-form">
+                    <input type="text" id="filter" />
+                </form>
                     <xsl:apply-templates select="exsl:node-set($chart-data)" mode="data2table">
-    <!--                    <xsl:with-param name="data" select="$chart-data"></xsl:with-param>-->
+    <!-\-                    <xsl:with-param name="data" select="$chart-data"></xsl:with-param>-\->
                     </xsl:apply-templates>
                 </xsl:if>
                 
@@ -167,7 +187,7 @@ media-type="text/xhtml"
                         <div id="infovis" ></div>
                  </div>
                 </xsl:if> 
-               
+               -->
                                
                 <!-- <table >
                     <xsl:call-template name="table-header"></xsl:call-template>
