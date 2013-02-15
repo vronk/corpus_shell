@@ -197,7 +197,7 @@
         </li>
     </xsl:template>
     
-    
+    <!-- moved to amc-helpers.xsl
     <xsl:template match="dataset" mode="invert">
         <xsl:param name="dataset" select="."/>
         <dataset>
@@ -221,13 +221,13 @@
                     <xsl:for-each select="$dataset//value[$curr_label_old=@key or $curr_label_old=@label]">
                         <value key="{(../@name, ../@label,../@key)[not(.='')][1]}">
                             <xsl:copy-of select="@*[not(.='')]"/>
-              <!-- formatted="{@formatted}"
-                <xsl:if test="../@type"><xsl:attribute name="type" select="../@type"></xsl:attribute></xsl:if>-->
+              <!-\- formatted="{@formatted}"
+                <xsl:if test="../@type"><xsl:attribute name="type" select="../@type"></xsl:attribute></xsl:if>-\->
                             <xsl:value-of select="."/>
                         </value>
                     </xsl:for-each>
                 </dataseries>
             </xsl:for-each>
         </dataset>
-    </xsl:template>
+    </xsl:template>-->
 </xsl:stylesheet>
