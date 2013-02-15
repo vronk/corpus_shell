@@ -78,9 +78,7 @@
                 <div class="infovis" id="chart-{$dataset-name}"/>
             </div>
             <xsl:call-template name="chart-google">
-                <xsl:with-param name="data">
-                    <xsl:apply-templates select="$corrected-dataset" mode="invert"/>
-                </xsl:with-param>
+                <xsl:with-param name="data" select="$corrected-dataset"/>                
             </xsl:call-template>
         </xsl:if>
         <xsl:if test="contains($parts,'table')">
