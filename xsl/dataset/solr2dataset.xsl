@@ -181,7 +181,7 @@
     </xsl:param>    
     <xsl:param name="pivot-data" select="$source-data/response/lst[@name = 'facet_counts']/lst[@name = 'facet_pivot']/arr" />
 
-    <dataset key="{$pivot-fields}-{my:normalize($query)}" label="{$pivot-fields} {$query}">
+    <dataset name="{$pivot-fields}-{my:normalize($query)}" label="{$pivot-fields} {$query}">
       <xsl:call-template name="facets2labels">
         <xsl:with-param name="facet-list" select="$facet2-list"></xsl:with-param>
       </xsl:call-template>
@@ -209,7 +209,7 @@
   <xsl:template name="facets2labels">
     <xsl:param name="facet-list"></xsl:param>    
     <labels>  
-      <label>all</label>
+      <label><xsl:value-of select="$all-label" /></label>
       <xsl:for-each select="exsl:node-set($facet-list)/*" >
           <label><xsl:value-of select="if(xs:string(@name)='') then '_EMPTY_' else translate(xs:string(@name),'~ ','__')" /></label>        
       </xsl:for-each>      
@@ -230,8 +230,8 @@
     <xsl:param name="facet-list"></xsl:param>
     <xsl:param name="all-value" select=".//result/@numFound"></xsl:param>
     
-      <dataseries key="{$dataseries-title}">
-        <value label="_all_" formatted="{my:format-number($all-value,$number-format-default)}" >
+      <dataseries name="{$dataseries-title}">
+        <value label="{$all-label}" formatted="{my:format-number($all-value,$number-format-default)}" >
           <xsl:value-of select="$all-value"/>
         </value>
       <xsl:for-each select="$facet-list/*" >
@@ -254,7 +254,7 @@
     <xsl:param name="facet2-list"></xsl:param>
     
     <dataseries name="{*[@name = 'value']}" >        
-      <value label="all" formatted="{my:format-number(*[@name = 'count'],$number-format-default)}" >
+      <value label="{$all-label}" formatted="{my:format-number(*[@name = 'count'],$number-format-default)}" >
         <xsl:value-of select="*[@name = 'count']"/>
       </value>        
       
@@ -304,7 +304,7 @@
       <xsl:variable name="curr_dataseries" select="string(@name)" />
       
     <dataseries name="{@name}" >        
-      <value label="all" formatted="{my:format-number(.,$number-format-default)}" >
+      <value label="{$all-label}" formatted="{my:format-number(.,$number-format-default)}" >
         <xsl:value-of select="."/>
       </value>        
       
@@ -543,25 +543,26 @@
     </xsl:variable>
     
     <!--  retrieve base-result via subrequest -->
-    <xsl:variable name="base-result" >
+<!--    <xsl:variable name="base-result" >
       <xsl:call-template name="subrequest">
         <xsl:with-param name="link" select="$default-base-data-path" />
       </xsl:call-template>
-    </xsl:variable>
-<!--    <xsl:variable name="base-result" >-->
+    </xsl:variable>-->
+    <xsl:variable name="base-result" >
       <!-- allow for fall-back on the cached default-base-data  -->
-      <!--<xsl:choose>
-<!-\-        <xsl:when test="empty($base-call1)">-\->
-        <xsl:when test="$reldata=1"> <!-\- not reliable!! testing-\-> 
-          <xsl:call-template name="subrequest">
-            <xsl:with-param name="link" select="$default-base-data-path" />
-          </xsl:call-template>
+      <xsl:choose>
+        <xsl:when test="$base-call1/*">
+<!--        <xsl:when test="$reldata=1"> <!-\- not reliable!! testing-\-> -->
+          <xsl:copy-of select="$base-call1" />
+
         </xsl:when>
         <xsl:otherwise>
-          <xsl:copy-of select="$base-call1" />
+          <xsl:call-template name="subrequest">
+            <xsl:with-param name="link" select="$default-base-data-path" />
+          </xsl:call-template>          
         </xsl:otherwise>
       </xsl:choose>
-    </xsl:variable>-->
+    </xsl:variable>
     
     <xsl:variable name="base-dataset" >           
       <xsl:call-template name="result2dataset-wrapper">
