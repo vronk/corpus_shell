@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:sru="http://www.loc.gov/zing/srw/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fcs="http://clarin.eu/fcs/1.0" xmlns:kwic="http://clarin.eu/fcs/1.0/kwic" xmlns:exist="http://exist.sourceforge.net/NS/exist" version="2.0" 
-    exclude-result-prefixes="#all">
+<xsl:stylesheet xmlns:kwic="http://clarin.eu/fcs/1.0/kwic" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:sru="http://www.loc.gov/zing/srw/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fcs="http://clarin.eu/fcs/1.0" xmlns:exist="http://exist.sourceforge.net/NS/exist" version="2.0" exclude-result-prefixes="#all">
 <!--    exclude-result-prefixes="xs sru exist tei fcs kwic"-->
 
     <!-- 
@@ -12,7 +11,7 @@
         <change on="2011-11-14" type="created" by="vr">based on cmdi/scripts/xml2view.xsl</change>	
         </history>
     -->
-<!--    <xsl:include href="data2view_cmd.xsl"/>-->
+    <xsl:include href="data2view_cmd.xsl"/>
 <!--    <xsl:import href="../amc/dataset2view.xsl"/>-->
     <xsl:include href="data2view_tei.xsl"/>
 <!--    <xsl:include href="../stand_weiss.xsl"/>-->
@@ -25,16 +24,18 @@
     
 <!-- default fallback: display the xml-structure-->
     <xsl:template match="*" mode="record-data">
-        <xsl:variable name="overrides">
-            <xsl:apply-imports></xsl:apply-imports>
+        <!--<xsl:variable name="overrides">
+            <xsl:apply-imports/>
         </xsl:variable>
         <xsl:choose>
-            <xsl:when test="$overrides"><xsl:copy-of select="$overrides"></xsl:copy-of></xsl:when>
+            <xsl:when test="$overrides">
+                <xsl:copy-of select="$overrides"/>
+            </xsl:when>
             <xsl:otherwise>
                 <xsl:apply-templates select="." mode="format-xmlelem"/>
             </xsl:otherwise>
-        </xsl:choose>
-        
+        </xsl:choose>-->
+        <xsl:apply-templates select="." mode="format-xmlelem"/>
     </xsl:template>
 
  <!-- hide meta-information about the record from output-->
@@ -213,20 +214,20 @@
                             <tr>
                                 <td>
                                     <xsl:for-each select="current-group()">
-                                        <xsl:if test="@*" >
-                                          <table style="float:left">
-                                              <xsl:for-each select="@*">
-                                                  <tr>
-                                                      <td class="label">
-                                                          <xsl:value-of select="name()"/>
-                                                      </td>
-                                                      <td class="value">
-                                                          <xsl:value-of select="."/>
-                                                      </td>
-                                                  </tr>
-                                              </xsl:for-each>
-                                          </table>
-                                         </xsl:if>
+                                        <xsl:if test="@*">
+                                            <table style="float:left">
+                                                <xsl:for-each select="@*">
+                                                    <tr>
+                                                        <td class="label">
+                                                            <xsl:value-of select="name()"/>
+                                                        </td>
+                                                        <td class="value">
+                                                            <xsl:value-of select="."/>
+                                                        </td>
+                                                    </tr>
+                                                </xsl:for-each>
+                                            </table>
+                                        </xsl:if>
                                     </xsl:for-each>
                                 </td>
                             </tr>
