@@ -20,7 +20,7 @@
             <xd:p>baseurl for the subrequests</xd:p>
         </xd:desc>
     </xd:doc>
-    <xsl:param name="baseurl" select="'http://193.170.82.207:8984/solr/select?'"/>
+    <xsl:param name="baseurl" select="'http://193.170.82.207:8985/solr/select?'"/>
     <xd:doc>
         <xd:desc>
             <xd:p>if the base-data with the baseq cannot be retrieved (e.g. network-error) 
@@ -54,7 +54,7 @@
             <xd:p>recognized values: chart,table</xd:p>
         </xd:desc>
     </xd:doc>
-    <xsl:param name="parts" select="my:params('parts','chart, table')" />
+    <xsl:param name="parts" select="my:params('parts','chart, table, hits')" />
     
     
     <xd:doc>
@@ -85,4 +85,6 @@
         </xd:desc>
     </xd:doc>
     <xsl:param name="percentile-unit" select="'ppm articles'" /> <!-- ppm, % -->
+    
+    <xsl:param name="all-label" select="'all'" /> <!-- ppm, % -->
     </xsl:stylesheet>
