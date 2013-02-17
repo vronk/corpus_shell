@@ -27,7 +27,7 @@ declare variable $repo-utils:responseFormatHTMLpage as xs:string := "htmlpage";
 declare variable $repo-utils:sys-config-file := "conf/config-system.xml";
 
 (:~ not solved yet - look at cr-xq/core/config.xqm: config:param-value('base-url') !  :)
-declare function repo-utils:base-url($config) as xs:string* {
+declare function repo-utils:base-url($config as item()*) as xs:string* {
     (:let $server-base := if (repo-utils:config-value($config, 'server.base') = '') then ''  else repo-utils:config-value($config, 'server.base')
     let $config-base-url := if (repo-utils:config-value($config, 'base.url') = '') then request:get-uri() else repo-utils:config-value($config, 'base.url')
     return concat($server-base, $config-base-url):)
@@ -261,6 +261,28 @@ declare function repo-utils:xsl-doc($operation as xs:string, $format as xs:strin
         return $xsldoc
 };
 	          	(: $item :)
+
+(:~ helper function. Performs multiple replacements, using pairs of replace parameters. based on standard xpath2 function replace() 
+taken from: http://www.xqueryfunctions.com/xq/functx_replace-multi.html
+:)
+declare function repo-utils:replace-multi   ( $arg as xs:string? ,    $changeFrom as xs:string* ,    $changeTo as xs:string* )  as xs:string? {
+       
+   if (count($changeFrom) > 0)
+   then repo-utils:replace-multi(
+          replace($arg, $changeFrom[1],
+                  repo-utils:if-absent($changeTo[1],'')),
+          $changeFrom[position() > 1],
+          $changeTo[position() > 1])
+   else $arg
+ } ;
+ 
+ (:~ used by replace-multi()
+taken from: http://www.xqueryfunctions.com/xq/functx_if-absent.html
+:)
+declare function repo-utils:if-absent ( $arg as item()* , $value as item()* )  as item()* {
+    if (exists($arg)) then $arg else $value
+ } ;
+
 
 (:
 testing when trying to log import 2012-10-24 - not used
