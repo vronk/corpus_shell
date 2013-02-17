@@ -54,37 +54,38 @@
             </a>
         </li>
     </xsl:template>
+    <xsl:template match="@ComponentId" mode="format-attr"/>
     <xsl:function name="util:encodePID">
         <xsl:param name="pid"/>
         <xsl:value-of select="encode-for-uri(replace(replace($pid,'/','%2F'),'\.','%2E'))"/>
     </xsl:function>
-    <xsl:function name="util:formURL">
+    <!--  <xsl:function name="util:formURL">
         <xsl:param name="action"/>
         <xsl:param name="format"/>
         <xsl:param name="q"/>
         <xsl:variable name="param_q">
             <xsl:if test="$q != ''">
-                <xsl:value-of select="concat('&amp;query=',$q)"/>
+                <xsl:value-of select="concat('&query=',$q)"/>
             </xsl:if>
         </xsl:variable>
         <xsl:variable name="param_repository">
             <xsl:if test="$x-context != ''">
-                <xsl:value-of select="concat('&amp;repository=',$x-context)"/>
+                <xsl:value-of select="concat('&repository=',$x-context)"/>
             </xsl:if>
         </xsl:variable>
         <xsl:variable name="param_startRecord">
             <xsl:if test="$startRecord != ''">
-                <xsl:value-of select="concat('&amp;startRecord=',$startRecord)"/>
+                <xsl:value-of select="concat('&startRecord=',$startRecord)"/>
             </xsl:if>
         </xsl:variable>
         <xsl:variable name="param_maximumRecords">
             <xsl:if test="$maximumRecords != ''">
-                <xsl:value-of select="concat('&amp;maximumRecords=',$maximumRecords)"/>
+                <xsl:value-of select="concat('&maximumRecords=',$maximumRecords)"/>
             </xsl:if>
         </xsl:variable>
         <xsl:choose>
             <xsl:when test="$action=''">
-                <xsl:value-of select="concat($base_url, '/?q=', $q, '&amp;x-context=', $x-context)"/>
+                <xsl:value-of select="concat($base_url, '/?q=', $q, '&x-context=', $x-context)"/>
             </xsl:when>
             <xsl:when test="$q=''">
                 <xsl:value-of select="concat($base_url, '/',$action, '/', $format)"/>
@@ -100,5 +101,5 @@
                 </xsl:choose>
             </xsl:otherwise>
         </xsl:choose>
-    </xsl:function>
+    </xsl:function>-->
 </xsl:stylesheet>
