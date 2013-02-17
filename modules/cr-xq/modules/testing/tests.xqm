@@ -3,30 +3,22 @@ module namespace fcs-tests  = "http://clarin.eu/fcs/1.0/tests";
 
 import module namespace httpclient = "http://exist-db.org/xquery/httpclient";
 import module namespace t="http://exist-db.org/xquery/testing";
-import module namespace repo-utils = "http://aac.ac.at/content_repository/utils" at  "../../repo-utils.xqm";
+import module namespace repo-utils = "http://aac.ac.at/content_repository/utils" at  "/db/cr/repo-utils.xqm";
 
 declare namespace zr="http://explain.z3950.org/dtd/2.1/";
 declare namespace sru = "http://www.loc.gov/zing/srw/";
 declare namespace fcs = "http://clarin.eu/fcs/1.0";
 declare namespace diag = "http://www.loc.gov/zing/srw/diagnostic/";
 declare namespace xhtml="http://www.w3.org/1999/xhtml"; 
-declare namespace rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"; 
-declare namespace skos="http://www.w3.org/2004/02/skos/core#";
 
 (: sample input:
     
  :)
 declare variable $fcs-tests:config := doc("config.xml");
-declare variable $fcs-tests:cr-config := repo-utils:config("/db/apps/cr/conf/cr/config.xml");
+declare variable $fcs-tests:cr-config := repo-utils:config("/db/cr/conf/cr/config.xml");
 declare variable $fcs-tests:run-config := "run-config.xml";
-(: avoid absolute paths - but probably this should be a config-option anyway
-not possible, because when passed to fcs:repo-utils, it does not know, where they are: :)
-declare variable $fcs-tests:testsets-coll := "/db/apps/cr/modules/testing/testsets/";
-declare variable $fcs-tests:results-coll := "/db/apps/cr/modules/testing/results/";
-(:declare variable $fcs-tests:testsets-coll := "testsets/";
-declare variable $fcs-tests:results-coll := "results/";:)
-
-
+declare variable $fcs-tests:testsets-coll := "/db/cr/modules/testing/testsets/";
+declare variable $fcs-tests:results-coll := "/db/cr/modules/testing/results/";
 declare variable $fcs-tests:href-prefix := "tests.xql";
 
 (:~ this function is accessed by the testing-code to get configuration-options from the run-config :)
@@ -144,28 +136,24 @@ declare function local:dispatch($x as node()) as node()*
 {
 typeswitch ($x)
   case text() return $x
-  case element (test) return element div {$x/@*, attribute class {"test"}, fcs-tests:process-test($x)}  
+  case element (test) return element div {$x/@*[not(name()=('username','password'))], attribute class {"test"}, fcs-tests:process-test($x)}  
   case element() return element {$x/name()} {$x/@*, local:passthru($x)}  
   default return local:passthru($x)
 };
 
-(:~ executes one URL-test. 
+(:~ executes a rest-test. 
 
-Issues one http-call to the target-url in the a@href-attribute, stores the incoming result (only if $operation='run-store') and evaluates the associated xpaths  
+if the test references a list, iterate over the items of the list and run a request for each
+(substituting the values from the list in the request)
+the substituted request is passed to fcs-tests:process-request() for actual execution
 
 expects:
    <div class="test" id="search-haus">
       <a class="request" href="?operation=searchRetrieve&amp;query=Haus">search: Haus</a>
       <span class="check xpath">//sru:numberOfRecords</span>
    </div>
- or rather ?:
-    <test id="clarin-at-mdrepo">
-        <a class="request" href="http://clarin.aac.ac.at/exist9/apps/mdrepo/index.html">clarin-at mdrepo</a>
-        <xpath key="html">exists($result-data//html)</xpath>
-        <xpath key="xhtml">exists($result-data//xhtml:html)</xpath>            
-    </test> 
    
-@returns the requested-url, results of the xpath-evaluations as a div-list and any diagnostics
+@returns the (sequence of) requested-url as link, results of the xpath-evaluations as a div-list and any diagnostics
 :)     
 declare function fcs-tests:process-test($test as node()) as item()* {
     
@@ -184,22 +172,42 @@ declare function fcs-tests:process-test($test as node()) as item()* {
             else 
             (: if we have a list, iterate over the items of the list and run a request for each :)
                 for $i at $c in $list-doc/lst/*
-                  let $q := xs:string($i/@q),
-                            (: has to have the varaible there - currenlty only supports $q-variable :)   
-                      $request := concat($target,  replace(xs:string($a/@href), '%q', xmldb:encode($q))),
+                  let $request := concat($target,  fcs-tests:subst(xs:string($a/@href), $i)),
                       $i-id := if ($i/@id) then xs:string($i/@id) else $c,
                       $request-id := concat($test-id, $i-id),
-                      $a-text := replace(xs:string($a/text()), '%q', $q)
+                      $a-text := fcs-tests:subst(xs:string($a/text()), $i)
                   return fcs-tests:process-request ($test, $request, $a-text, $target-key, $request-id, $operation)
 };
 
+(:~ executes one URL-test. 
+
+Issues one http-call to the target-url in the a@href-attribute, stores the incoming result (only if $operation='run-store') and evaluates the associated xpaths  
+
+@param $test div[@class='test']-element
+@param $request resolved (substituted) link
+@param $a-text resolved (substituted) text for the link
+@param $target-key identifier of the target (will be used as directory, when storing the result)
+@param $request-id identifier of the request (will be used as the name of the file, when storing the result)
+
+@returns the requested-url as link, results of the xpath-evaluations as a div-list and any diagnostics
+:) 
 declare function fcs-tests:process-request($test, $request as xs:string, $a-text as xs:string, $target-key as xs:string, $request-id as xs:string, $operation as xs:string) as item()* { 
             
     let $a-processed := <a href="{$request}">{$a-text}</a>
-    let $result-data := httpclient:get(xs:anyURI($request), false(), () )
-                            
-    let $store := if ($operation eq 'run-store') then fcs-tests:store-result($target-key, $request-id, $result-data) else ()
+    let $username := if ($test/@username) then $test/xs:string(@username)  else ""  
+    let $password := if ($test/@password) then $test/xs:string(@password) else "" 
     
+    let $headers := if ($username='') then () else
+                            let $auth := concat("Basic ", util:base64-encode(concat($username, ':', $password)))
+                            return <headers><header name="Authorization" value="{$auth}"/></headers>
+                            
+    let $result-data := httpclient:get(xs:anyURI($request), false(), $headers )
+                            
+    let $store := if ($operation eq 'run-store') then fcs-tests:store-result($target-key, $request-id, $result-data//httpclient:body/*) else ()
+    let $cache-uri := if (exists($store)) then
+    <a href="{concat($target-key, "/", $request-id, ".xml")}" >cache</a> else ()
+(:    <a href="{fcs-tests:get-result-paths($target-key, $request-id) else ():)
+(:    let $cache-uri := if (exists($store)) then <a href="{concat(repo-utils:base-url(()), document-uri($store))}" > cache </a> else ():)
     (: evaluate all xpaths defined for given request :) 
     let $check := for $xpath in $test/xpath 
                     let $evald := util:eval($xpath/text())
@@ -215,7 +223,7 @@ declare function fcs-tests:process-request($test, $request as xs:string, $a-text
                 if ($http-status ne '200') then <http-status>{$http-status}</http-status> else ())      
       let $wrapped-diag := if (exists($diag)) then 
                 <diagnostics type="{string-join($diag/name(),',')}" >{$diag}</diagnostics> else ()                     
-return ($a-processed, $check, $wrapped-diag) 
+return ($a-processed, $cache-uri, $check, $wrapped-diag) 
 };
 
 
@@ -224,6 +232,9 @@ declare function fcs-tests:store-result($target as xs:string, $testset as xs:str
 };
 
 
+(:~ stores the result of a testset 
+@returns reference to the stored document (as the underlying function repo-utils:store())
+:)
 declare function fcs-tests:store-result($target as xs:string, $testset as xs:string, $test as xs:string, $result as node()) as item()* {
 (: create collection for results for one target :)
    let $create-coll := if (not(xmldb:collection-available(concat($fcs-tests:results-coll, $target)))) then 
@@ -347,3 +358,25 @@ declare function fcs-tests:display-overview() as item()* {
                     </tr>
             }</table>
 };
+
+
+(:~ helper function for substituting a string with values from a substitution-element
+? should be probably moved to repo-utils
+
+@param $string string with %-keys in it (eg: "My name is %name") 
+@param $substset an element with attributes and subelements that will be used for substitution (their name being use for matching the %-keys in the string
+                 (eg <subst name="Homer" />)
+@return the original string, with %-keys replaced by values from the substitution element (if found,  otherwise the %-key stays unchanged)
+          (eg "My name is Homer")      
+:)
+declare function fcs-tests:subst($string as xs:string, $substset)
+    {
+        let $substkeys := for $substi in $substset/(*|@*) return concat('%', $substi/name())
+        let $substvalues := for $substi in $substset/(*|@*) return 
+                            if (ends-with($substi/name(),'url')) then xmldb:encode(xs:string($substi)) else xs:string($substi)
+        
+        (: let $temp := replace($string, concat('%', $substkey), $substvalue) 
+        return if count($substset local:subst($temp, $substset/*[position() > 1]) :)
+        return repo-utils:replace-multi ($string, $substkeys, $substvalues)
+        
+    };
