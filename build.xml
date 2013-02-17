@@ -46,7 +46,6 @@
 			<property name="in.dir" location="${xsl.dir}" />
 			<property name="file.prefix" value="../.." />
 			<property name="title" value="${out.fn}" />
-<!--			<property name="parts" value="imports" />-->
 			<property name="parts" value="imports, params, templates, functions" />
 			<property name="out.dir" location="${docs.dir}/xsltdocs"/>
 			<property name="out.fn" value="${out.fn}"/>
@@ -54,18 +53,24 @@
 		</ant>
 		<ant antfile="${scripts.dir}\build_docs.xml" target="gen-dep-graph">
 			<property name="work.dir" location="${docs.dir}/xsltdocs" />
-			<property name="in.file" value="${out.fn}.xml"/>
+			<property name="in.file" value="${docs.dir}/xsltdocs/${out.fn}.xml"/>
 			<property name="title" value="${out.fn}-imports" />
 			<property name="parts" value="imports" />
 			<property name="out.fn" value="${out.fn}-imports"/>
 		</ant>		
 		
+		<ant antfile="${scripts.dir}\build_docs.xml" target="gen-dep-graph-each">
+			<property name="in.dir" location="${xsl.dir}" />
+			<property name="parts" value="imports, params, templates, functions" />
+			<property name="work.dir" location="${docs.dir}/xsltdocs/xslts"/>			
+		</ant>
 	</target>    	
+	
 	
 	<target name="gen-build-info" >
 		<ant antfile="${scripts.dir}\build.xml" target="gen-build-info">
 			<property name="in.dir" location="" />
-			<property name="other.build" value="build_init"/>
+			<property name="other.build" value="build"/>
 			<property name="out.dir" location="docs"/>
 		</ant>
 	</target>
