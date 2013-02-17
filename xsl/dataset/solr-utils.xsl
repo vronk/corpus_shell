@@ -4,10 +4,15 @@
     xmlns:exsl="http://exslt.org/common"
     xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl"
     xmlns:my="myFunctions"
-    extension-element-prefixes="exsl xs" 
+    xmlns="http://www.w3.org/1999/xhtml"
+    exclude-result-prefixes="exsl xs xd my" 
     version="2.0">
     
     <xsl:import href="amc-params.xsl"/> 
+    
+    <xsl:output method="xhtml"  
+        doctype-public="-//W3C//DTD XHTML 1.0 Transitional//
+        EN" indent="yes"/>
     
     <xd:doc scope="stylesheet">
         <xd:desc>
@@ -181,6 +186,18 @@
     </xd:doc>
     <xsl:template match="text()" mode="link"/>
     
+    <xd:doc >
+        <xd:desc>
+            <xd:p>generate a header for the response (params, result-info)</xd:p>
+        </xd:desc>
+    </xd:doc>
+    <xsl:template name="response-header" >
+        <!--<xsl:for-each select="result">-->
+        <div class="response-header">
+            <xsl:apply-templates  mode="query-input"/>
+            <span class="label">hits: </span><span class="value hilight"><xsl:value-of select="my:format-number(//result/@numFound, '#.###')" /></span>
+        </div>
+    </xsl:template>
     
     <xd:doc xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl">
         <xd:desc>
@@ -203,7 +220,7 @@
         </xd:desc>
     </xd:doc>
     <xsl:template match="lst[@name='params']/str" mode="form" >
-        <tr><td border="0"><xsl:value-of select="@name" />:</td>
+        <tr><td border="0" ><xsl:value-of select="@name" />:</td>
             <td><input type="text" name="{@name}"  value="{.}" /></td></tr>
     </xsl:template>
     
@@ -213,7 +230,7 @@
         </xd:desc>
     </xd:doc>
     <xsl:template match="lst[@name='params']/arr" mode="form" >
-        <tr><td border="0"><xsl:value-of select="@name" />:</td>
+        <tr><td border="0" valign="top"><xsl:value-of select="@name" />:</td>
             <td><xsl:apply-templates  mode="form" />
             </td></tr>
     </xsl:template>
@@ -300,7 +317,8 @@
     <!-- -->
     <xsl:template match="dataset" mode="invert">
         <xsl:param name="dataset" select="."/>
-        <dataset>
+        <!-- for now, make dataset without explicit namespace, for that need to override the current xhtml default ns -->
+        <dataset xmlns="">
             <xsl:copy-of select="@*"/>
             <labels>
                 <xsl:for-each select="dataseries">
