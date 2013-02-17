@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:sru="http://www.loc.gov/zing/srw/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fcs="http://clarin.eu/fcs/1.0" version="1.0" exclude-result-prefixes="xs sru fcs">
+<xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:sru="http://www.loc.gov/zing/srw/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fcs="http://clarin.eu/fcs/1.0" version="1.0" exclude-result-prefixes="xs sru fcs">
 
 <!-- 
 <purpose>pieces of html wrapped in templates, to be reused by other stylesheets</purpose>
@@ -17,7 +17,7 @@
         <link href="{$scripts_url}/style/jquery/clarindotblue/jquery-ui-1.8.5.custom.css" type="text/css" rel="stylesheet"/>
         <link href="{$scripts_url}/style/cmds-ui.css" type="text/css" rel="stylesheet"/>
         <link href="{$scripts_url}/style/cr.css" type="text/css" rel="stylesheet"/>
-        <script type="text/javascript" src="{$scripts_url}/js/jquery-1.6.2.js"/>
+        <script type="text/javascript" src="{$scripts_url}/js/jquery/jquery-1.6.2.js"/>
         <!--        <xsl:if test="contains($format,'htmljspage')">
             <link href="{$base_dir}/style/jquery/jquery-treeview/jquery.treeview.css" rel="stylesheet"/>        
             </xsl:if>-->
