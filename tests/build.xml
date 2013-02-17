@@ -7,11 +7,17 @@
 	<property name="output-actual.dir" location="output-actual"/>
 	<property name="output-expected.dir" location="output-expected"/>
 	<property name="webscripts_url" value="../../../scripts/"/>
+	<property name="successful-tests.file" value="success.txt"/>
+	<property name="failed-tests.file" value="failed.txt"/>
 	
 	<!-- is called prior to the test -->
 	<target name="setup">
 		<delete dir="${output-actual.dir}"/>
 		<mkdir dir="${output-actual.dir}"/>
+		<echo file="${successful-tests.file}">successful tests:
+</echo>
+		<echo file="${failed-tests.file}">failed tests:
+</echo>
 	</target>
 	
 	<!-- is called after the test, even if that caused an error -->
@@ -20,19 +26,45 @@
 	</target>-->
 	
 	<target name="tests" description="the tests sequence (defined and sequentially executed)" depends="setup">
-<!--		<property name="tests" value="fcs/result2view_v2,fcs/scan2view_v2,dataset/amc.pivot_facetDocsrcRessort_c20" ></property>-->
-<!--		<property name="tests" value="dataset/amc.pivot_facetDocsrcRessort_c20,dataset/amc.facetRegion_c20,dataset/amc.facetRegionYear_c20" ></property>-->
-		<property name="tests" value="fcs/result2view_v2,fcs/scan2view_v2,
-									  dataset/amc.pivot_facetDocsrcRessort_c20,
-									  dataset/amc.facetRegion_c20,
-									  dataset/amc.facetRegionYear_c20,
-									  dataset/dataset2view.amc-vwb-abend" ></property>
+			
+<!--			obsolete: dataset/amc.pivot_facetDocsrcRessort_c20						  -->
+		<property name="tests" value="dataset/amc.searchResult_hl_Haus,
+			dataset/amc.facetRegion_c20,dataset/amc.facetRegionYear_c20,
+			dataset/amc.facetRegionYear_Haus_baseq,
+			dataset/amc.pivot_facetDocsrcYear_small,
+			dataset/amc.pivot_facetDocsrcRegion,dataset/amc.pivot_facetDocsrcYear,
+			dataset/dataset2view.amc-vwb-abend,
+			dataset/solr2dataset.stats_overall_20121206,dataset/amc.stats_overall_20121206,
+			fcs/result2view_v2,fcs/scan2view_v2" ></property>
 		
 		<foreach list="${tests}" target="one-test" param="keyx" />
+		
+		<property name="fail-count">0</property>
+		<loadfile property="success"
+			srcFile="${successful-tests.file}">
+			<filterchain>
+				<countfilter property="success-count" contains=" -" override="true"/>
+			</filterchain>
+		</loadfile>
+		<loadfile property="fail"
+			srcFile="${failed-tests.file}">
+			<filterchain>
+				<countfilter property="fail-count" contains=" -" override="true"/>
+			</filterchain>
+		</loadfile>
+		<echo >${success}</echo>
+		<echo >success-count: ${success-count}</echo>
+		<echo >------------------------</echo>
+		<echo >${fail}</echo>
+		<echo >fail-count: ${fail-count}</echo>
 		
 	</target>		
 	
 	<taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
+	
+	<typedef name="countfilter"
+		classname="net.sf.antcount.filters.CountFilter"
+		classpath="antcount.jar" />
 	
 	<!-- actual one test (parametrized) -->
 	<target name="one-test" >
@@ -46,16 +78,28 @@
 		<propertyregex property="stylesheet" input="${key}" regexp="([^\.]*)\.?(.*)" 			
 			select="\1"			defaultvalue="Error"  override="true"/>
 		
+		<property name="mappings.file_" location="input/fcs/mappings.xml"></property>
+		<property name="base-data.file_" location="input/dataset/stats_base.xml"></property>
+		
+		
+		<propertyregex property="mappings.file" input="${mappings.file_}" regexp="\\" 			
+			replace="/"			defaultvalue="Error"  override="true"/>
+		
+		<propertyregex property="base-data.file" input="${base-data.file_}" regexp="\\" 			
+			replace="/"			defaultvalue="Error"  override="true"/>
+		
 		<echo>stylesheet: ${stylesheet}.xsl</echo>
 		<saxon-xslt style="../xsl/${stylesheet}.xsl" in="${in.dir}/${key}.xml" out="${output-actual.dir}/${key}.html" force="true">
 			<param name="format" expression="htmlpage"/>
 <!--	important to provide the mappings file  (e.g. for links resolving)		-->
-			<param name="mappings-file" expression="mappings.xml"/>
+			<param name="mappings-file" expression="file:/${mappings.file}"/>
 			<param name="scripts-dir" expression="${webscripts_url}"/>
 			<param name="scripts_url" expression="${webscripts_url}"/>
+			<param name="baseurl" expression="http://localhost:8983/solr/collection2/select?"/>
+			<param name="default-base-data-path" expression="file:/${base-data.file}"/>
 		</saxon-xslt>
 		
-		<condition property="isFileSame" value="yes" else="no">
+		<condition property="isFileSame" value="true" else="false">
 			<filesmatch file1="${output-actual.dir}/${key}.html" file2="${output-expected.dir}/${key}.html"/>
 		</condition >
 		
@@ -65,12 +109,30 @@
 			<param name="key" value="${key}" />
 		</antcall>
 		
-		<echo>test ${key} match: ${isFileSame}</echo>
+		<echo>${key} : ${isFileSame} </echo>
+		
+		<if>
+			<istrue value="${isFileSame}"/>
+			<then>
+				<echo append="true" file="${successful-tests.file}"> - ${key}
+</echo>
+			</then>
+			<else>
+				<echo append="true" file="${failed-tests.file}"> - ${key} = ${stylesheet}.xsl
+</echo>
+			</else>
+		</if> 
+		
+<!--		<echo file="matched.txt">test ${key} match: ${isFileSame}</echo>-->
+		
 		<!--
 		<au:assertFileExists file="${output-actual.dir}/${key}.html"/>
 		<au:assertFilesMatch message="! MISMATCH: ${key} " actual="${output-actual.dir}/${key}.html" expected="${output-expected.dir}/${key}.html"/>
 		-->
+		
 	</target>
+	
+	
 	
 	<property name="package" value="org.diffxml"/>
 	<property name="diffxml.dir" value="C:/apps/diffxml"/>	
