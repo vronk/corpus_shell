@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<response>
+
+<lst name="responseHeader">
+  <int name="status">0</int>
+  <int name="QTime">0</int>
+  <lst name="params">
+    <str name="facet">true</str>
+    <str name="indent">yes</str>
+    <str name="q">Haus</str>
+    <str name="facet.limit">500</str>
+    <str name="baseq">*:*</str>
+    <arr name="facet.field">
+      <str>year</str>
+      <str>docsrc</str>
+    </arr>
+    <str name="rows">0</str>
+  </lst>
+</lst>
+<result name="response" numFound="1888" start="0">
+</result>
+<lst name="facet_counts">
+  <lst name="facet_queries"/>
+  <lst name="facet_fields">
+    <lst name="year">
+      <int name="2011">872</int>
+      <int name="2008">666</int>
+      <int name="2006">248</int>
+      <int name="2012">102</int>
+    </lst>
+    <lst name="docsrc">
+      <int name="falter">1538</int>
+      <int name="noen">248</int>
+      <int name="bauernzt">102</int>
+    </lst>
+  </lst>
+  <lst name="facet_dates"/>
+  <lst name="facet_ranges"/>
+</lst>
+</response>

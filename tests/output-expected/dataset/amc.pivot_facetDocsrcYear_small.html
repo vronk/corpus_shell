@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?><html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8; charset=utf-8" />
+      <link rel="stylesheet" type="text/css"
+            href="../../../scripts/style/jquery.ui.resizable.css" />
+      <link rel="stylesheet" type="text/css"
+            href="../../../scripts/style/jquery.ui.all.css" />
+      <link rel="stylesheet" type="text/css"
+            href="../../../scripts/style/jquery/clarindotblue/jquery-ui-1.8.5.custom.css" />
+      <link rel="stylesheet" type="text/css" href="../../../scripts/style/cmds-ui.css" /><style type="text/css">
+        
+        div.infovis-wrapper {border: 1px solid grey; margin: 20px; padding: 5px; height:350px; width:800px;}
+        .infovis {height: 90%; width: 100%;}
+        .value { text-align: right; }
+        </style><script type="text/javascript" src="../../../scripts/js/jquery/jquery.min.js"></script><script type="text/javascript" src="../../../scripts/js/jquery/jquery-ui.min.js"></script><script type="text/javascript" src="../../../scripts/js/google-jsapi.js"></script><script type="text/javascript" src="../../../scripts/js/google-corechart.js"></script><script type="text/javascript" src="../../../scripts/js/chart.js"></script></head>
+   <body>
+      <h1>amc search interface</h1>
+      <div class="response-header">
+         <form>
+            <table border="0">
+               <tr>
+                  <td border="0">facet:</td>
+                  <td><input type="text" name="facet" value="true" /></td>
+               </tr>
+               <tr>
+                  <td border="0">indent:</td>
+                  <td><input type="text" name="indent" value="yes" /></td>
+               </tr>
+               <tr>
+                  <td border="0">q:</td>
+                  <td><input type="text" name="q" value="*:*" /></td>
+               </tr>
+               <tr>
+                  <td border="0">facet.limit:</td>
+                  <td><input type="text" name="facet.limit" value="500" /></td>
+               </tr>
+               <tr>
+                  <td border="0" valign="top">facet.field:</td>
+                  <td><input type="text" name="facet.field" value="year" /><br /><input type="text" name="facet.field" value="docsrc" /><br /></td>
+               </tr>
+               <tr>
+                  <td border="0">facet.pivot:</td>
+                  <td><input type="text" name="facet.pivot" value="docsrc,year" /></td>
+               </tr>
+               <tr>
+                  <td border="0">rows:</td>
+                  <td><input type="text" name="rows" value="0" /></td>
+               </tr>
+            </table><input type="submit" value="search" /><a href="?facet=true&amp;indent=yes&amp;q=*:*&amp;facet.limit=500&amp;facet.field=year&amp;facet.field=docsrc&amp;facet.pivot=docsrc,year&amp;rows=0&amp;">?facet=true&amp;indent=yes&amp;q=*:*&amp;facet.limit=500&amp;facet.field=year&amp;facet.field=docsrc&amp;facet.pivot=docsrc,year&amp;rows=0&amp;</a></form><span class="label">hits: </span><span class="value hilight">19.056</span></div>
+      <div>
+         <div class="infovis-wrapper">
+            <div id="infovis-navi-docsrcyear_XX1"><a onclick="toggleLayout('docsrcyear_XX1');">layout</a></div>
+            <div class="infovis" id="chart-docsrcyear_XX1"></div>
+         </div><script type="text/javascript">
+      
+      // allow for multiple datasets (for every facet)
+      data["docsrcyear_XX1"] = google.visualization.arrayToDataTable([['count', 'bauernzt' , 'falter' , 'noen' ], ['2006', 0, 0, 4106], 
+    ['2008', 0, 5056, 0], 
+    ['2011', 0, 7302, 0], 
+    ['2012', 2592, 0, 0]])
+      options["docsrcyear_XX1"] = {
+                          layout: "area",
+                          title: 'docsrcyear_XX1'
+                    }  
+      
+      google.setOnLoadCallback(drawChart('docsrcyear_XX1'));
+     
+      
+        </script><div id="table-docsrcyear_XX1">
+            <h3 class="title">docsrc,year-XX</h3>
+            <table class="show">
+               <thead>
+                  <tr>
+                     <th>key</th>
+                     <th>all</th>
+                     <th>bauernzt</th>
+                     <th>falter</th>
+                     <th>noen</th>
+                  </tr>
+               </thead>
+               <tr>
+                  <td>all</td>
+                  <td class="number value">19.056</td>
+                  <td class="number value">2.592</td>
+                  <td class="number value">12.358</td>
+                  <td class="number value">4.106</td>
+               </tr>
+               <tr>
+                  <td>2006</td>
+                  <td class="number value">4.106</td>
+                  <td class="number value">-</td>
+                  <td class="number value">-</td>
+                  <td class="number value">4.106</td>
+               </tr>
+               <tr>
+                  <td>2008</td>
+                  <td class="number value">5.056</td>
+                  <td class="number value">-</td>
+                  <td class="number value">5.056</td>
+                  <td class="number value">-</td>
+               </tr>
+               <tr>
+                  <td>2011</td>
+                  <td class="number value">7.302</td>
+                  <td class="number value">-</td>
+                  <td class="number value">7.302</td>
+                  <td class="number value">-</td>
+               </tr>
+               <tr>
+                  <td>2012</td>
+                  <td class="number value">2.592</td>
+                  <td class="number value">2.592</td>
+                  <td class="number value">-</td>
+                  <td class="number value">-</td>
+               </tr>
+            </table>
+         </div>
+      </div>
+   </body>
+</html>

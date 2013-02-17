@@ -1,0 +1,4037 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<response>
+
+<lst name="responseHeader">
+  <int name="status">0</int>
+  <int name="QTime">1139</int>
+  <lst name="params">
+    <str name="facet">true</str>
+    <str name="indent">yes</str>
+    <str name="q">*:*</str>
+    <str name="facet.limit">-1</str>
+    <arr name="facet.field">
+      <str>docsrc</str>
+      <str>year</str>
+    </arr>
+    <str name="facet.pivot">docsrc,year</str>
+    <str name="rows">0</str>
+  </lst>
+</lst>
+<result name="response" numFound="28225011" start="0">
+</result>
+<lst name="facet_counts">
+  <lst name="facet_queries"/>
+  <lst name="facet_fields">
+    <lst name="docsrc">
+      <int name="academia">776</int>
+      <int name="apa">4249739</int>
+      <int name="arbeitw">4337</int>
+      <int name="augustin">8540</int>
+      <int name="bauernzt">12543</int>
+      <int name="bvz">480671</int>
+      <int name="datum">1850</int>
+      <int name="diewir">4783</int>
+      <int name="echo">13435</int>
+      <int name="emedia">28219</int>
+      <int name="falter">62033</int>
+      <int name="formatdb">93025</int>
+      <int name="furche">38039</int>
+      <int name="gewinn">22885</int>
+      <int name="grazer">19165</int>
+      <int name="heute">190838</int>
+      <int name="hor">50214</int>
+      <int name="im">11470</int>
+      <int name="kleine">2566181</int>
+      <int name="konsum">8583</int>
+      <int name="krone">2812142</int>
+      <int name="ktnmonat">7048</int>
+      <int name="ktz">607557</int>
+      <int name="kurier">1891163</int>
+      <int name="kurier~">1</int>
+      <int name="kw">21265</int>
+      <int name="medianet">126945</int>
+      <int name="news">75822</int>
+      <int name="noen">4157300</int>
+      <int name="nvb">646784</int>
+      <int name="nvt">493390</int>
+      <int name="oberrund">19216</int>
+      <int name="oereiche">496075</int>
+      <int name="ooen">1096481</int>
+      <int name="ots">1306586</int>
+      <int name="presse">1041557</int>
+      <int name="profil">84026</int>
+      <int name="sbgw">109449</int>
+      <int name="sn">1158795</int>
+      <int name="soli">2751</int>
+      <int name="sportztg">35176</int>
+      <int name="standard">724825</int>
+      <int name="stmonat">7838</int>
+      <int name="svz">132824</int>
+      <int name="trend">25500</int>
+      <int name="tt">1246938</int>
+      <int name="ttkomp">29744</int>
+      <int name="tvmedia">38486</int>
+      <int name="vn">973290</int>
+      <int name="wiblatt">343569</int>
+      <int name="wiener">9146</int>
+      <int name="wienerin">17365</int>
+      <int name="woman">29563</int>
+      <int name="wz">589068</int>
+    </lst>
+    <lst name="year">
+      <int name="1990">173328</int>
+      <int name="1991">252611</int>
+      <int name="1992">463010</int>
+      <int name="1993">464139</int>
+      <int name="1994">585253</int>
+      <int name="1995">508028</int>
+      <int name="1996">769480</int>
+      <int name="1997">997535</int>
+      <int name="1998">1091365</int>
+      <int name="1999">1149261</int>
+      <int name="2000">1247194</int>
+      <int name="2001">1325533</int>
+      <int name="2002">1609871</int>
+      <int name="2003">1715248</int>
+      <int name="2004">1751177</int>
+      <int name="2005">1744410</int>
+      <int name="2006">1782449</int>
+      <int name="2007">1906581</int>
+      <int name="2008">1967806</int>
+      <int name="2009">1881146</int>
+      <int name="2010">2005990</int>
+      <int name="2011">2036011</int>
+      <int name="2012">797585</int>
+    </lst>
+  </lst>
+  <lst name="facet_dates"/>
+  <lst name="facet_ranges"/>
+  <lst name="facet_pivot">
+    <arr name="docsrc,year">
+      <lst>
+        <str name="field">docsrc</str>
+        <str name="value">academia</str>
+        <int name="count">776</int>
+        <arr name="pivot">
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2008</str>
+            <int name="count">197</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2009</str>
+            <int name="count">170</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2010</str>
+            <int name="count">185</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2011</str>
+            <int name="count">150</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2012</str>
+            <int name="count">74</int>
+          </lst>
+        </arr>
+      </lst>
+      <lst>
+        <str name="field">docsrc</str>
+        <str name="value">apa</str>
+        <int name="count">4249739</int>
+        <arr name="pivot">
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1990</str>
+            <int name="count">132986</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1991</str>
+            <int name="count">142196</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1992</str>
+            <int name="count">148892</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1993</str>
+            <int name="count">155231</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1994</str>
+            <int name="count">168430</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1995</str>
+            <int name="count">175228</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1996</str>
+            <int name="count">188357</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1997</str>
+            <int name="count">184084</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1998</str>
+            <int name="count">192791</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1999</str>
+            <int name="count">195306</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2000</str>
+            <int name="count">208297</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2001</str>
+            <int name="count">207396</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2002</str>
+            <int name="count">209388</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2003</str>
+            <int name="count">215322</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2004</str>
+            <int name="count">218395</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2005</str>
+            <int name="count">220887</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2006</str>
+            <int name="count">220123</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2007</str>
+            <int name="count">213006</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2008</str>
+            <int name="count">209518</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2009</str>
+            <int name="count">197416</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2010</str>
+            <int name="count">187427</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2011</str>
+            <int name="count">186424</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2012</str>
+            <int name="count">72639</int>
+          </lst>
+        </arr>
+      </lst>
+      <lst>
+        <str name="field">docsrc</str>
+        <str name="value">arbeitw</str>
+        <int name="count">4337</int>
+        <arr name="pivot">
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2000</str>
+            <int name="count">389</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2001</str>
+            <int name="count">401</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2002</str>
+            <int name="count">317</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2003</str>
+            <int name="count">336</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2004</str>
+            <int name="count">355</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2005</str>
+            <int name="count">374</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2006</str>
+            <int name="count">379</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2007</str>
+            <int name="count">344</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2008</str>
+            <int name="count">435</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2009</str>
+            <int name="count">367</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2010</str>
+            <int name="count">260</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2011</str>
+            <int name="count">295</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2012</str>
+            <int name="count">85</int>
+          </lst>
+        </arr>
+      </lst>
+      <lst>
+        <str name="field">docsrc</str>
+        <str name="value">augustin</str>
+        <int name="count">8540</int>
+        <arr name="pivot">
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2003</str>
+            <int name="count">842</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2004</str>
+            <int name="count">817</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2005</str>
+            <int name="count">830</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2006</str>
+            <int name="count">956</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2007</str>
+            <int name="count">1039</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2008</str>
+            <int name="count">989</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2009</str>
+            <int name="count">884</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2010</str>
+            <int name="count">931</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2011</str>
+            <int name="count">894</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2012</str>
+            <int name="count">358</int>
+          </lst>
+        </arr>
+      </lst>
+      <lst>
+        <str name="field">docsrc</str>
+        <str name="value">bauernzt</str>
+        <int name="count">12543</int>
+        <arr name="pivot">
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2010</str>
+            <int name="count">3196</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2011</str>
+            <int name="count">6755</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2012</str>
+            <int name="count">2592</int>
+          </lst>
+        </arr>
+      </lst>
+      <lst>
+        <str name="field">docsrc</str>
+        <str name="value">bvz</str>
+        <int name="count">480671</int>
+        <arr name="pivot">
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2003</str>
+            <int name="count">4243</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2004</str>
+            <int name="count">58726</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2005</str>
+            <int name="count">52952</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2006</str>
+            <int name="count">49939</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2007</str>
+            <int name="count">54101</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2008</str>
+            <int name="count">51249</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2009</str>
+            <int name="count">50107</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2010</str>
+            <int name="count">61416</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2011</str>
+            <int name="count">65205</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2012</str>
+            <int name="count">32733</int>
+          </lst>
+        </arr>
+      </lst>
+      <lst>
+        <str name="field">docsrc</str>
+        <str name="value">datum</str>
+        <int name="count">1850</int>
+        <arr name="pivot">
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2007</str>
+            <int name="count">500</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2008</str>
+            <int name="count">410</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2009</str>
+            <int name="count">337</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2010</str>
+            <int name="count">283</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2011</str>
+            <int name="count">230</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2012</str>
+            <int name="count">90</int>
+          </lst>
+        </arr>
+      </lst>
+      <lst>
+        <str name="field">docsrc</str>
+        <str name="value">diewir</str>
+        <int name="count">4783</int>
+        <arr name="pivot">
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2003</str>
+            <int name="count">335</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2004</str>
+            <int name="count">488</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2005</str>
+            <int name="count">557</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2006</str>
+            <int name="count">650</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2007</str>
+            <int name="count">605</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2008</str>
+            <int name="count">568</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2009</str>
+            <int name="count">586</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2010</str>
+            <int name="count">556</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2011</str>
+            <int name="count">332</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2012</str>
+            <int name="count">106</int>
+          </lst>
+        </arr>
+      </lst>
+      <lst>
+        <str name="field">docsrc</str>
+        <str name="value">echo</str>
+        <int name="count">13435</int>
+        <arr name="pivot">
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2004</str>
+            <int name="count">1360</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2005</str>
+            <int name="count">397</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2006</str>
+            <int name="count">1478</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2007</str>
+            <int name="count">2120</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2008</str>
+            <int name="count">2996</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2009</str>
+            <int name="count">1686</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2010</str>
+            <int name="count">1623</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2011</str>
+            <int name="count">1406</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2012</str>
+            <int name="count">369</int>
+          </lst>
+        </arr>
+      </lst>
+      <lst>
+        <str name="field">docsrc</str>
+        <str name="value">emedia</str>
+        <int name="count">28219</int>
+        <arr name="pivot">
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2000</str>
+            <int name="count">63</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2001</str>
+            <int name="count">1507</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2002</str>
+            <int name="count">1669</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2003</str>
+            <int name="count">2307</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2004</str>
+            <int name="count">2780</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2005</str>
+            <int name="count">3394</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2006</str>
+            <int name="count">2233</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2007</str>
+            <int name="count">2509</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2008</str>
+            <int name="count">3166</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2009</str>
+            <int name="count">2635</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2010</str>
+            <int name="count">2500</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2011</str>
+            <int name="count">2576</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2012</str>
+            <int name="count">880</int>
+          </lst>
+        </arr>
+      </lst>
+      <lst>
+        <str name="field">docsrc</str>
+        <str name="value">falter</str>
+        <int name="count">62033</int>
+        <arr name="pivot">
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1998</str>
+            <int name="count">1202</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1999</str>
+            <int name="count">3144</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2000</str>
+            <int name="count">3485</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2001</str>
+            <int name="count">3537</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2002</str>
+            <int name="count">3441</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2003</str>
+            <int name="count">3490</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2004</str>
+            <int name="count">3550</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2005</str>
+            <int name="count">4313</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2006</str>
+            <int name="count">4440</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2007</str>
+            <int name="count">4442</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2008</str>
+            <int name="count">5056</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2009</str>
+            <int name="count">5189</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2010</str>
+            <int name="count">6869</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2011</str>
+            <int name="count">7302</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2012</str>
+            <int name="count">2573</int>
+          </lst>
+        </arr>
+      </lst>
+      <lst>
+        <str name="field">docsrc</str>
+        <str name="value">formatdb</str>
+        <int name="count">93025</int>
+        <arr name="pivot">
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1998</str>
+            <int name="count">1204</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1999</str>
+            <int name="count">4408</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2000</str>
+            <int name="count">3867</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2001</str>
+            <int name="count">4951</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2002</str>
+            <int name="count">6563</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2003</str>
+            <int name="count">7236</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2004</str>
+            <int name="count">7461</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2005</str>
+            <int name="count">6795</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2006</str>
+            <int name="count">7550</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2007</str>
+            <int name="count">7724</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2008</str>
+            <int name="count">8312</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2009</str>
+            <int name="count">8093</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2010</str>
+            <int name="count">7982</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2011</str>
+            <int name="count">8097</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2012</str>
+            <int name="count">2782</int>
+          </lst>
+        </arr>
+      </lst>
+      <lst>
+        <str name="field">docsrc</str>
+        <str name="value">furche</str>
+        <int name="count">38039</int>
+        <arr name="pivot">
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1998</str>
+            <int name="count">2345</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1999</str>
+            <int name="count">2441</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2000</str>
+            <int name="count">2861</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2001</str>
+            <int name="count">2781</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2002</str>
+            <int name="count">2588</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2003</str>
+            <int name="count">2612</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2004</str>
+            <int name="count">2598</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2005</str>
+            <int name="count">2645</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2006</str>
+            <int name="count">2535</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2007</str>
+            <int name="count">2631</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2008</str>
+            <int name="count">2529</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2009</str>
+            <int name="count">2885</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2010</str>
+            <int name="count">2728</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2011</str>
+            <int name="count">2788</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2012</str>
+            <int name="count">1072</int>
+          </lst>
+        </arr>
+      </lst>
+      <lst>
+        <str name="field">docsrc</str>
+        <str name="value">gewinn</str>
+        <int name="count">22885</int>
+        <arr name="pivot">
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1998</str>
+            <int name="count">909</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1999</str>
+            <int name="count">880</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2000</str>
+            <int name="count">1094</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2001</str>
+            <int name="count">1265</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2002</str>
+            <int name="count">1712</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2003</str>
+            <int name="count">2147</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2004</str>
+            <int name="count">1959</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2005</str>
+            <int name="count">1625</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2006</str>
+            <int name="count">1556</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2007</str>
+            <int name="count">1798</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2008</str>
+            <int name="count">1929</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2009</str>
+            <int name="count">1841</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2010</str>
+            <int name="count">1702</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2011</str>
+            <int name="count">1680</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2012</str>
+            <int name="count">788</int>
+          </lst>
+        </arr>
+      </lst>
+      <lst>
+        <str name="field">docsrc</str>
+        <str name="value">grazer</str>
+        <int name="count">19165</int>
+        <arr name="pivot">
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2008</str>
+            <int name="count">4585</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2009</str>
+            <int name="count">4712</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2010</str>
+            <int name="count">4275</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2011</str>
+            <int name="count">4042</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2012</str>
+            <int name="count">1551</int>
+          </lst>
+        </arr>
+      </lst>
+      <lst>
+        <str name="field">docsrc</str>
+        <str name="value">heute</str>
+        <int name="count">190838</int>
+        <arr name="pivot">
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2007</str>
+            <int name="count">27265</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2008</str>
+            <int name="count">36138</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2009</str>
+            <int name="count">38766</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2010</str>
+            <int name="count">40603</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2011</str>
+            <int name="count">34560</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2012</str>
+            <int name="count">13506</int>
+          </lst>
+        </arr>
+      </lst>
+      <lst>
+        <str name="field">docsrc</str>
+        <str name="value">hor</str>
+        <int name="count">50214</int>
+        <arr name="pivot">
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2000</str>
+            <int name="count">4165</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2001</str>
+            <int name="count">5042</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2002</str>
+            <int name="count">3788</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2003</str>
+            <int name="count">4036</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2004</str>
+            <int name="count">4757</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2005</str>
+            <int name="count">4903</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2006</str>
+            <int name="count">5007</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2007</str>
+            <int name="count">4913</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2008</str>
+            <int name="count">3752</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2009</str>
+            <int name="count">2879</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2010</str>
+            <int name="count">2862</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2011</str>
+            <int name="count">3008</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2012</str>
+            <int name="count">1102</int>
+          </lst>
+        </arr>
+      </lst>
+      <lst>
+        <str name="field">docsrc</str>
+        <str name="value">im</str>
+        <int name="count">11470</int>
+        <arr name="pivot">
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1999</str>
+            <int name="count">159</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2000</str>
+            <int name="count">1394</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2001</str>
+            <int name="count">1309</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2002</str>
+            <int name="count">1245</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2003</str>
+            <int name="count">1176</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2004</str>
+            <int name="count">1030</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2005</str>
+            <int name="count">1057</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2006</str>
+            <int name="count">863</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2007</str>
+            <int name="count">747</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2008</str>
+            <int name="count">662</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2009</str>
+            <int name="count">478</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2010</str>
+            <int name="count">594</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2011</str>
+            <int name="count">494</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2012</str>
+            <int name="count">262</int>
+          </lst>
+        </arr>
+      </lst>
+      <lst>
+        <str name="field">docsrc</str>
+        <str name="value">kleine</str>
+        <int name="count">2566181</int>
+        <arr name="pivot">
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1996</str>
+            <int name="count">44602</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1997</str>
+            <int name="count">117963</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1998</str>
+            <int name="count">118634</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1999</str>
+            <int name="count">121433</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2000</str>
+            <int name="count">117806</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2001</str>
+            <int name="count">131093</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2002</str>
+            <int name="count">132450</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2003</str>
+            <int name="count">177451</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2004</str>
+            <int name="count">177987</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2005</str>
+            <int name="count">184295</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2006</str>
+            <int name="count">190075</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2007</str>
+            <int name="count">204585</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2008</str>
+            <int name="count">207497</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2009</str>
+            <int name="count">199387</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2010</str>
+            <int name="count">185321</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2011</str>
+            <int name="count">187723</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2012</str>
+            <int name="count">67879</int>
+          </lst>
+        </arr>
+      </lst>
+      <lst>
+        <str name="field">docsrc</str>
+        <str name="value">konsum</str>
+        <int name="count">8583</int>
+        <arr name="pivot">
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1996</str>
+            <int name="count">437</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1997</str>
+            <int name="count">432</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1998</str>
+            <int name="count">406</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1999</str>
+            <int name="count">388</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2000</str>
+            <int name="count">386</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2001</str>
+            <int name="count">521</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2002</str>
+            <int name="count">619</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2003</str>
+            <int name="count">533</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2004</str>
+            <int name="count">478</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2005</str>
+            <int name="count">487</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2006</str>
+            <int name="count">600</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2007</str>
+            <int name="count">537</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2008</str>
+            <int name="count">594</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2009</str>
+            <int name="count">621</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2010</str>
+            <int name="count">671</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2011</str>
+            <int name="count">619</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2012</str>
+            <int name="count">254</int>
+          </lst>
+        </arr>
+      </lst>
+      <lst>
+        <str name="field">docsrc</str>
+        <str name="value">krone</str>
+        <int name="count">2812142</int>
+        <arr name="pivot">
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1994</str>
+            <int name="count">130572</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1995</str>
+            <int name="count">141213</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1996</str>
+            <int name="count">145772</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1997</str>
+            <int name="count">145893</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1998</str>
+            <int name="count">20619</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2000</str>
+            <int name="count">447</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2002</str>
+            <int name="count">153323</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2003</str>
+            <int name="count">190942</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2004</str>
+            <int name="count">192635</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2005</str>
+            <int name="count">189002</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2006</str>
+            <int name="count">222190</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2007</str>
+            <int name="count">243846</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2008</str>
+            <int name="count">241447</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2009</str>
+            <int name="count">212087</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2010</str>
+            <int name="count">238741</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2011</str>
+            <int name="count">247971</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2012</str>
+            <int name="count">95442</int>
+          </lst>
+        </arr>
+      </lst>
+      <lst>
+        <str name="field">docsrc</str>
+        <str name="value">ktnmonat</str>
+        <int name="count">7048</int>
+        <arr name="pivot">
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2005</str>
+            <int name="count">570</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2006</str>
+            <int name="count">1177</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2007</str>
+            <int name="count">940</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2008</str>
+            <int name="count">850</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2009</str>
+            <int name="count">912</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2010</str>
+            <int name="count">1095</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2011</str>
+            <int name="count">1213</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2012</str>
+            <int name="count">291</int>
+          </lst>
+        </arr>
+      </lst>
+      <lst>
+        <str name="field">docsrc</str>
+        <str name="value">ktz</str>
+        <int name="count">607557</int>
+        <arr name="pivot">
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1999</str>
+            <int name="count">38997</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2000</str>
+            <int name="count">41796</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2001</str>
+            <int name="count">41526</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2002</str>
+            <int name="count">47246</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2003</str>
+            <int name="count">45436</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2004</str>
+            <int name="count">48894</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2005</str>
+            <int name="count">51869</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2006</str>
+            <int name="count">48298</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2007</str>
+            <int name="count">46668</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2008</str>
+            <int name="count">45376</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2009</str>
+            <int name="count">42187</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2010</str>
+            <int name="count">47429</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2011</str>
+            <int name="count">46295</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2012</str>
+            <int name="count">15540</int>
+          </lst>
+        </arr>
+      </lst>
+      <lst>
+        <str name="field">docsrc</str>
+        <str name="value">kurier</str>
+        <int name="count">1891163</int>
+        <arr name="pivot">
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1992</str>
+            <int name="count">148078</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1993</str>
+            <int name="count">138369</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1994</str>
+            <int name="count">110623</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1995</str>
+            <int name="count">53657</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1996</str>
+            <int name="count">48498</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1997</str>
+            <int name="count">26816</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1998</str>
+            <int name="count">21380</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1999</str>
+            <int name="count">30943</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2000</str>
+            <int name="count">32458</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2001</str>
+            <int name="count">33894</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2002</str>
+            <int name="count">105073</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2003</str>
+            <int name="count">122564</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2004</str>
+            <int name="count">129314</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2005</str>
+            <int name="count">125269</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2006</str>
+            <int name="count">134750</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2007</str>
+            <int name="count">131887</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2008</str>
+            <int name="count">126770</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2009</str>
+            <int name="count">106075</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2010</str>
+            <int name="count">107743</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2011</str>
+            <int name="count">115594</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2012</str>
+            <int name="count">41408</int>
+          </lst>
+        </arr>
+      </lst>
+      <lst>
+        <str name="field">docsrc</str>
+        <str name="value">kurier~</str>
+        <int name="count">1</int>
+        <arr name="pivot">
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2004</str>
+            <int name="count">1</int>
+          </lst>
+        </arr>
+      </lst>
+      <lst>
+        <str name="field">docsrc</str>
+        <str name="value">kw</str>
+        <int name="count">21265</int>
+        <arr name="pivot">
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1996</str>
+            <int name="count">1918</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1997</str>
+            <int name="count">2137</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1998</str>
+            <int name="count">1756</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1999</str>
+            <int name="count">1535</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2000</str>
+            <int name="count">1291</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2001</str>
+            <int name="count">1067</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2002</str>
+            <int name="count">1129</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2003</str>
+            <int name="count">1139</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2004</str>
+            <int name="count">785</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2005</str>
+            <int name="count">938</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2006</str>
+            <int name="count">953</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2007</str>
+            <int name="count">1071</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2008</str>
+            <int name="count">1183</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2009</str>
+            <int name="count">1376</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2010</str>
+            <int name="count">1103</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2011</str>
+            <int name="count">1258</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2012</str>
+            <int name="count">626</int>
+          </lst>
+        </arr>
+      </lst>
+      <lst>
+        <str name="field">docsrc</str>
+        <str name="value">medianet</str>
+        <int name="count">126945</int>
+        <arr name="pivot">
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2002</str>
+            <int name="count">4512</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2003</str>
+            <int name="count">5646</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2004</str>
+            <int name="count">5794</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2005</str>
+            <int name="count">5920</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2006</str>
+            <int name="count">13680</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2007</str>
+            <int name="count">20090</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2008</str>
+            <int name="count">23587</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2009</str>
+            <int name="count">14377</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2010</str>
+            <int name="count">13237</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2011</str>
+            <int name="count">13761</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2012</str>
+            <int name="count">6341</int>
+          </lst>
+        </arr>
+      </lst>
+      <lst>
+        <str name="field">docsrc</str>
+        <str name="value">news</str>
+        <int name="count">75822</int>
+        <arr name="pivot">
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1999</str>
+            <int name="count">4084</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2000</str>
+            <int name="count">4414</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2001</str>
+            <int name="count">5001</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2002</str>
+            <int name="count">5307</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2003</str>
+            <int name="count">7400</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2004</str>
+            <int name="count">7896</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2005</str>
+            <int name="count">6767</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2006</str>
+            <int name="count">5792</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2007</str>
+            <int name="count">6040</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2008</str>
+            <int name="count">5729</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2009</str>
+            <int name="count">5408</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2010</str>
+            <int name="count">5031</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2011</str>
+            <int name="count">4998</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2012</str>
+            <int name="count">1955</int>
+          </lst>
+        </arr>
+      </lst>
+      <lst>
+        <str name="field">docsrc</str>
+        <str name="value">noen</str>
+        <int name="count">4157300</int>
+        <arr name="pivot">
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1995</str>
+            <int name="count">42960</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1996</str>
+            <int name="count">113953</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1997</str>
+            <int name="count">89513</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1998</str>
+            <int name="count">253463</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1999</str>
+            <int name="count">248413</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2000</str>
+            <int name="count">279099</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2001</str>
+            <int name="count">307600</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2002</str>
+            <int name="count">285226</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2003</str>
+            <int name="count">284905</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2004</str>
+            <int name="count">262538</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2005</str>
+            <int name="count">247412</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2006</str>
+            <int name="count">254823</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2007</str>
+            <int name="count">238040</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2008</str>
+            <int name="count">249575</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2009</str>
+            <int name="count">245173</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2010</str>
+            <int name="count">295166</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2011</str>
+            <int name="count">314900</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2012</str>
+            <int name="count">144541</int>
+          </lst>
+        </arr>
+      </lst>
+      <lst>
+        <str name="field">docsrc</str>
+        <str name="value">nvb</str>
+        <int name="count">646784</int>
+        <arr name="pivot">
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1997</str>
+            <int name="count">12987</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1998</str>
+            <int name="count">40075</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1999</str>
+            <int name="count">40867</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2000</str>
+            <int name="count">39467</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2001</str>
+            <int name="count">42169</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2002</str>
+            <int name="count">48057</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2003</str>
+            <int name="count">53072</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2004</str>
+            <int name="count">50561</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2005</str>
+            <int name="count">50776</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2006</str>
+            <int name="count">37265</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2007</str>
+            <int name="count">36094</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2008</str>
+            <int name="count">42901</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2009</str>
+            <int name="count">37148</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2010</str>
+            <int name="count">48827</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2011</str>
+            <int name="count">50687</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2012</str>
+            <int name="count">15831</int>
+          </lst>
+        </arr>
+      </lst>
+      <lst>
+        <str name="field">docsrc</str>
+        <str name="value">nvt</str>
+        <int name="count">493390</int>
+        <arr name="pivot">
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1997</str>
+            <int name="count">41091</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1998</str>
+            <int name="count">40838</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1999</str>
+            <int name="count">35733</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2000</str>
+            <int name="count">32428</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2001</str>
+            <int name="count">33551</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2002</str>
+            <int name="count">36097</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2003</str>
+            <int name="count">33951</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2004</str>
+            <int name="count">32635</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2005</str>
+            <int name="count">34003</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2006</str>
+            <int name="count">32975</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2007</str>
+            <int name="count">31699</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2008</str>
+            <int name="count">21688</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2009</str>
+            <int name="count">22131</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2010</str>
+            <int name="count">26774</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2011</str>
+            <int name="count">27375</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2012</str>
+            <int name="count">10421</int>
+          </lst>
+        </arr>
+      </lst>
+      <lst>
+        <str name="field">docsrc</str>
+        <str name="value">oberrund</str>
+        <int name="count">19216</int>
+        <arr name="pivot">
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2010</str>
+            <int name="count">2560</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2011</str>
+            <int name="count">11327</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2012</str>
+            <int name="count">5329</int>
+          </lst>
+        </arr>
+      </lst>
+      <lst>
+        <str name="field">docsrc</str>
+        <str name="value">oereiche</str>
+        <int name="count">496075</int>
+        <arr name="pivot">
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2006</str>
+            <int name="count">6492</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2007</str>
+            <int name="count">90195</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2008</str>
+            <int name="count">76001</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2009</str>
+            <int name="count">94460</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2010</str>
+            <int name="count">107353</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2011</str>
+            <int name="count">89102</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2012</str>
+            <int name="count">32472</int>
+          </lst>
+        </arr>
+      </lst>
+      <lst>
+        <str name="field">docsrc</str>
+        <str name="value">ooen</str>
+        <int name="count">1096481</int>
+        <arr name="pivot">
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1996</str>
+            <int name="count">32333</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1997</str>
+            <int name="count">41571</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1998</str>
+            <int name="count">53648</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1999</str>
+            <int name="count">57226</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2000</str>
+            <int name="count">60968</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2001</str>
+            <int name="count">63175</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2002</str>
+            <int name="count">69336</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2003</str>
+            <int name="count">68341</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2004</str>
+            <int name="count">64770</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2005</str>
+            <int name="count">63864</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2006</str>
+            <int name="count">69963</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2007</str>
+            <int name="count">64899</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2008</str>
+            <int name="count">74712</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2009</str>
+            <int name="count">90764</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2010</str>
+            <int name="count">94966</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2011</str>
+            <int name="count">91639</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2012</str>
+            <int name="count">34306</int>
+          </lst>
+        </arr>
+      </lst>
+      <lst>
+        <str name="field">docsrc</str>
+        <str name="value">ots</str>
+        <int name="count">1306586</int>
+        <arr name="pivot">
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1990</str>
+            <int name="count">29062</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1991</str>
+            <int name="count">30995</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1992</str>
+            <int name="count">35418</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1993</str>
+            <int name="count">39049</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1994</str>
+            <int name="count">43093</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1995</str>
+            <int name="count">45623</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1996</str>
+            <int name="count">50291</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1997</str>
+            <int name="count">53396</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1998</str>
+            <int name="count">59147</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1999</str>
+            <int name="count">62220</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2000</str>
+            <int name="count">68399</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2001</str>
+            <int name="count">64264</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2002</str>
+            <int name="count">60100</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2003</str>
+            <int name="count">59306</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2004</str>
+            <int name="count">63080</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2005</str>
+            <int name="count">66042</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2006</str>
+            <int name="count">68502</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2007</str>
+            <int name="count">77027</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2008</str>
+            <int name="count">80415</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2009</str>
+            <int name="count">77456</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2010</str>
+            <int name="count">75334</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2011</str>
+            <int name="count">72537</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2012</str>
+            <int name="count">25830</int>
+          </lst>
+        </arr>
+      </lst>
+      <lst>
+        <str name="field">docsrc</str>
+        <str name="value">presse</str>
+        <int name="count">1041557</int>
+        <arr name="pivot">
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1991</str>
+            <int name="count">12403</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1992</str>
+            <int name="count">40367</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1993</str>
+            <int name="count">42617</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1994</str>
+            <int name="count">44022</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1995</str>
+            <int name="count">45828</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1996</str>
+            <int name="count">52855</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1997</str>
+            <int name="count">54400</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1998</str>
+            <int name="count">56124</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1999</str>
+            <int name="count">55976</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2000</str>
+            <int name="count">56612</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2001</str>
+            <int name="count">69652</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2002</str>
+            <int name="count">43008</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2003</str>
+            <int name="count">41640</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2004</str>
+            <int name="count">42778</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2005</str>
+            <int name="count">52209</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2006</str>
+            <int name="count">54883</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2007</str>
+            <int name="count">54823</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2008</str>
+            <int name="count">49956</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2009</str>
+            <int name="count">46851</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2010</str>
+            <int name="count">53045</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2011</str>
+            <int name="count">51786</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2012</str>
+            <int name="count">19722</int>
+          </lst>
+        </arr>
+      </lst>
+      <lst>
+        <str name="field">docsrc</str>
+        <str name="value">profil</str>
+        <int name="count">84026</int>
+        <arr name="pivot">
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1994</str>
+            <int name="count">2482</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1995</str>
+            <int name="count">2106</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1996</str>
+            <int name="count">2121</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1997</str>
+            <int name="count">2781</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1998</str>
+            <int name="count">3142</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1999</str>
+            <int name="count">3753</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2000</str>
+            <int name="count">4021</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2001</str>
+            <int name="count">3645</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2002</str>
+            <int name="count">4834</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2003</str>
+            <int name="count">6438</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2004</str>
+            <int name="count">6397</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2005</str>
+            <int name="count">6282</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2006</str>
+            <int name="count">6229</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2007</str>
+            <int name="count">6065</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2008</str>
+            <int name="count">6033</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2009</str>
+            <int name="count">5449</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2010</str>
+            <int name="count">5175</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2011</str>
+            <int name="count">5086</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2012</str>
+            <int name="count">1987</int>
+          </lst>
+        </arr>
+      </lst>
+      <lst>
+        <str name="field">docsrc</str>
+        <str name="value">sbgw</str>
+        <int name="count">109449</int>
+        <arr name="pivot">
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2007</str>
+            <int name="count">2497</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2008</str>
+            <int name="count">21652</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2009</str>
+            <int name="count">23441</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2010</str>
+            <int name="count">25929</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2011</str>
+            <int name="count">26366</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2012</str>
+            <int name="count">9564</int>
+          </lst>
+        </arr>
+      </lst>
+      <lst>
+        <str name="field">docsrc</str>
+        <str name="value">sn</str>
+        <int name="count">1158795</int>
+        <arr name="pivot">
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1991</str>
+            <int name="count">26987</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1992</str>
+            <int name="count">49619</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1993</str>
+            <int name="count">48457</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1994</str>
+            <int name="count">45707</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1997</str>
+            <int name="count">46351</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1998</str>
+            <int name="count">55689</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1999</str>
+            <int name="count">60074</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2000</str>
+            <int name="count">65170</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2001</str>
+            <int name="count">71390</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2002</str>
+            <int name="count">82545</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2003</str>
+            <int name="count">81879</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2004</str>
+            <int name="count">66350</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2005</str>
+            <int name="count">64955</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2006</str>
+            <int name="count">64235</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2007</str>
+            <int name="count">59654</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2008</str>
+            <int name="count">64836</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2009</str>
+            <int name="count">59709</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2010</str>
+            <int name="count">63051</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2011</str>
+            <int name="count">60979</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2012</str>
+            <int name="count">21158</int>
+          </lst>
+        </arr>
+      </lst>
+      <lst>
+        <str name="field">docsrc</str>
+        <str name="value">soli</str>
+        <int name="count">2751</int>
+        <arr name="pivot">
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2001</str>
+            <int name="count">118</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2002</str>
+            <int name="count">283</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2003</str>
+            <int name="count">271</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2004</str>
+            <int name="count">276</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2005</str>
+            <int name="count">311</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2006</str>
+            <int name="count">310</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2007</str>
+            <int name="count">204</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2008</str>
+            <int name="count">235</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2009</str>
+            <int name="count">213</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2010</str>
+            <int name="count">237</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2011</str>
+            <int name="count">230</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2012</str>
+            <int name="count">63</int>
+          </lst>
+        </arr>
+      </lst>
+      <lst>
+        <str name="field">docsrc</str>
+        <str name="value">sportztg</str>
+        <int name="count">35176</int>
+        <arr name="pivot">
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1996</str>
+            <int name="count">2560</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1997</str>
+            <int name="count">2720</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1998</str>
+            <int name="count">2062</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1999</str>
+            <int name="count">1730</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2000</str>
+            <int name="count">551</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2001</str>
+            <int name="count">2150</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2002</str>
+            <int name="count">2414</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2003</str>
+            <int name="count">2503</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2004</str>
+            <int name="count">2836</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2005</str>
+            <int name="count">2469</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2006</str>
+            <int name="count">2075</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2007</str>
+            <int name="count">2134</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2008</str>
+            <int name="count">2069</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2009</str>
+            <int name="count">1798</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2010</str>
+            <int name="count">1973</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2011</str>
+            <int name="count">2306</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2012</str>
+            <int name="count">826</int>
+          </lst>
+        </arr>
+      </lst>
+      <lst>
+        <str name="field">docsrc</str>
+        <str name="value">standard</str>
+        <int name="count">724825</int>
+        <arr name="pivot">
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1990</str>
+            <int name="count">11280</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1991</str>
+            <int name="count">40030</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1992</str>
+            <int name="count">40636</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1993</str>
+            <int name="count">40416</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1994</str>
+            <int name="count">39535</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1995</str>
+            <int name="count">486</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1997</str>
+            <int name="count">316</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1998</str>
+            <int name="count">542</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1999</str>
+            <int name="count">579</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2000</str>
+            <int name="count">348</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2001</str>
+            <int name="count">627</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2002</str>
+            <int name="count">46860</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2003</str>
+            <int name="count">55562</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2004</str>
+            <int name="count">60182</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2005</str>
+            <int name="count">60299</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2006</str>
+            <int name="count">58836</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2007</str>
+            <int name="count">52985</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2008</str>
+            <int name="count">57066</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2009</str>
+            <int name="count">46695</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2010</str>
+            <int name="count">47315</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2011</str>
+            <int name="count">47039</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2012</str>
+            <int name="count">17191</int>
+          </lst>
+        </arr>
+      </lst>
+      <lst>
+        <str name="field">docsrc</str>
+        <str name="value">stmonat</str>
+        <int name="count">7838</int>
+        <arr name="pivot">
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2005</str>
+            <int name="count">1594</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2006</str>
+            <int name="count">1333</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2007</str>
+            <int name="count">1081</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2008</str>
+            <int name="count">1205</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2009</str>
+            <int name="count">960</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2010</str>
+            <int name="count">625</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2011</str>
+            <int name="count">718</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2012</str>
+            <int name="count">322</int>
+          </lst>
+        </arr>
+      </lst>
+      <lst>
+        <str name="field">docsrc</str>
+        <str name="value">svz</str>
+        <int name="count">132824</int>
+        <arr name="pivot">
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2007</str>
+            <int name="count">15139</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2008</str>
+            <int name="count">28053</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2009</str>
+            <int name="count">26786</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2010</str>
+            <int name="count">26176</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2011</str>
+            <int name="count">26613</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2012</str>
+            <int name="count">10057</int>
+          </lst>
+        </arr>
+      </lst>
+      <lst>
+        <str name="field">docsrc</str>
+        <str name="value">trend</str>
+        <int name="count">25500</int>
+        <arr name="pivot">
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1994</str>
+            <int name="count">789</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1995</str>
+            <int name="count">911</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1996</str>
+            <int name="count">1195</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1997</str>
+            <int name="count">1414</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1998</str>
+            <int name="count">1552</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1999</str>
+            <int name="count">1276</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2000</str>
+            <int name="count">1219</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2001</str>
+            <int name="count">1376</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2002</str>
+            <int name="count">1822</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2003</str>
+            <int name="count">1851</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2004</str>
+            <int name="count">1715</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2005</str>
+            <int name="count">1566</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2006</str>
+            <int name="count">2034</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2007</str>
+            <int name="count">1590</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2008</str>
+            <int name="count">1202</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2009</str>
+            <int name="count">1046</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2010</str>
+            <int name="count">1284</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2011</str>
+            <int name="count">1333</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2012</str>
+            <int name="count">325</int>
+          </lst>
+        </arr>
+      </lst>
+      <lst>
+        <str name="field">docsrc</str>
+        <str name="value">tt</str>
+        <int name="count">1246938</int>
+        <arr name="pivot">
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1996</str>
+            <int name="count">54796</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1997</str>
+            <int name="count">55235</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1998</str>
+            <int name="count">56219</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1999</str>
+            <int name="count">61484</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2000</str>
+            <int name="count">94799</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2001</str>
+            <int name="count">87436</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2002</str>
+            <int name="count">119021</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2003</str>
+            <int name="count">100727</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2004</str>
+            <int name="count">93656</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2005</str>
+            <int name="count">92817</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2006</str>
+            <int name="count">76112</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2007</str>
+            <int name="count">62093</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2008</str>
+            <int name="count">66651</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2009</str>
+            <int name="count">61378</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2010</str>
+            <int name="count">72701</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2011</str>
+            <int name="count">66521</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2012</str>
+            <int name="count">25292</int>
+          </lst>
+        </arr>
+      </lst>
+      <lst>
+        <str name="field">docsrc</str>
+        <str name="value">ttkomp</str>
+        <int name="count">29744</int>
+        <arr name="pivot">
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2008</str>
+            <int name="count">1954</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2009</str>
+            <int name="count">7780</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2010</str>
+            <int name="count">7945</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2011</str>
+            <int name="count">8578</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2012</str>
+            <int name="count">3487</int>
+          </lst>
+        </arr>
+      </lst>
+      <lst>
+        <str name="field">docsrc</str>
+        <str name="value">tvmedia</str>
+        <int name="count">38486</int>
+        <arr name="pivot">
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1999</str>
+            <int name="count">2212</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2000</str>
+            <int name="count">1982</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2001</str>
+            <int name="count">1951</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2002</str>
+            <int name="count">1765</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2003</str>
+            <int name="count">2122</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2004</str>
+            <int name="count">2010</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2005</str>
+            <int name="count">2111</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2006</str>
+            <int name="count">2409</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2007</str>
+            <int name="count">3037</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2008</str>
+            <int name="count">4087</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2009</str>
+            <int name="count">4231</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2010</str>
+            <int name="count">4023</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2011</str>
+            <int name="count">4077</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2012</str>
+            <int name="count">2469</int>
+          </lst>
+        </arr>
+      </lst>
+      <lst>
+        <str name="field">docsrc</str>
+        <str name="value">vn</str>
+        <int name="count">973290</int>
+        <arr name="pivot">
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1997</str>
+            <int name="count">71415</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1998</str>
+            <int name="count">62118</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1999</str>
+            <int name="count">67280</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2000</str>
+            <int name="count">70547</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2001</str>
+            <int name="count">69657</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2002</str>
+            <int name="count">68036</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2003</str>
+            <int name="count">66912</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2004</str>
+            <int name="count">61376</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2005</str>
+            <int name="count">57846</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2006</str>
+            <int name="count">56816</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2007</str>
+            <int name="count">57817</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2008</str>
+            <int name="count">57548</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2009</str>
+            <int name="count">54288</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2010</str>
+            <int name="count">55229</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2011</str>
+            <int name="count">66983</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2012</str>
+            <int name="count">29422</int>
+          </lst>
+        </arr>
+      </lst>
+      <lst>
+        <str name="field">docsrc</str>
+        <str name="value">wiblatt</str>
+        <int name="count">343569</int>
+        <arr name="pivot">
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1995</str>
+            <int name="count">16</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1996</str>
+            <int name="count">18041</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1997</str>
+            <int name="count">17988</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1998</str>
+            <int name="count">18080</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1999</str>
+            <int name="count">18412</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2000</str>
+            <int name="count">20634</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2001</str>
+            <int name="count">22265</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2002</str>
+            <int name="count">21495</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2003</str>
+            <int name="count">19311</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2004</str>
+            <int name="count">21465</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2005</str>
+            <int name="count">23644</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2006</str>
+            <int name="count">23089</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2007</str>
+            <int name="count">23101</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2008</str>
+            <int name="count">23615</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2009</str>
+            <int name="count">21460</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2010</str>
+            <int name="count">20451</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2011</str>
+            <int name="count">22227</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2012</str>
+            <int name="count">8275</int>
+          </lst>
+        </arr>
+      </lst>
+      <lst>
+        <str name="field">docsrc</str>
+        <str name="value">wiener</str>
+        <int name="count">9146</int>
+        <arr name="pivot">
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2001</str>
+            <int name="count">421</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2002</str>
+            <int name="count">753</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2003</str>
+            <int name="count">804</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2004</str>
+            <int name="count">849</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2005</str>
+            <int name="count">1029</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2006</str>
+            <int name="count">987</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2007</str>
+            <int name="count">639</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2008</str>
+            <int name="count">731</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2009</str>
+            <int name="count">466</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2010</str>
+            <int name="count">992</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2011</str>
+            <int name="count">1089</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2012</str>
+            <int name="count">386</int>
+          </lst>
+        </arr>
+      </lst>
+      <lst>
+        <str name="field">docsrc</str>
+        <str name="value">wienerin</str>
+        <int name="count">17365</int>
+        <arr name="pivot">
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2001</str>
+            <int name="count">499</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2002</str>
+            <int name="count">1090</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2003</str>
+            <int name="count">1818</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2004</str>
+            <int name="count">1992</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2005</str>
+            <int name="count">1794</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2006</str>
+            <int name="count">1671</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2007</str>
+            <int name="count">1934</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2008</str>
+            <int name="count">1543</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2009</str>
+            <int name="count">2009</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2010</str>
+            <int name="count">1215</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2011</str>
+            <int name="count">1401</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2012</str>
+            <int name="count">399</int>
+          </lst>
+        </arr>
+      </lst>
+      <lst>
+        <str name="field">docsrc</str>
+        <str name="value">woman</str>
+        <int name="count">29563</int>
+        <arr name="pivot">
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2003</str>
+            <int name="count">3059</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2004</str>
+            <int name="count">3427</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2005</str>
+            <int name="count">3494</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2006</str>
+            <int name="count">3167</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2007</str>
+            <int name="count">3320</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2008</str>
+            <int name="count">2936</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2009</str>
+            <int name="count">3169</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2010</str>
+            <int name="count">3119</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2011</str>
+            <int name="count">2937</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2012</str>
+            <int name="count">935</int>
+          </lst>
+        </arr>
+      </lst>
+      <lst>
+        <str name="field">docsrc</str>
+        <str name="value">wz</str>
+        <int name="count">589068</int>
+        <arr name="pivot">
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1996</str>
+            <int name="count">11751</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1997</str>
+            <int name="count">29032</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1998</str>
+            <int name="count">27420</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">1999</str>
+            <int name="count">28308</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2000</str>
+            <int name="count">26737</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2001</str>
+            <int name="count">42296</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2002</str>
+            <int name="count">36759</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2003</str>
+            <int name="count">35583</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2004</str>
+            <int name="count">44224</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2005</str>
+            <int name="count">44047</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2006</str>
+            <int name="count">43019</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2007</str>
+            <int name="count">41106</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2008</str>
+            <int name="count">45618</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2009</str>
+            <int name="count">44824</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2010</str>
+            <int name="count">38162</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2011</str>
+            <int name="count">36505</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2012</str>
+            <int name="count">13677</int>
+          </lst>
+        </arr>
+      </lst>
+    </arr>
+  </lst>
+</lst>
+</response>

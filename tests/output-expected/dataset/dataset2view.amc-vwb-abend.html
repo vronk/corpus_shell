@@ -1,45 +1,22 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//         EN">
 <html xmlns="http://www.w3.org/1999/xhtml">
    <head>
-      <title xmlns=""></title>
-      <meta xmlns="" http-equiv="Content-Type" content="text/html; charset=UTF-8">
-      <link xmlns="" href="../../../scripts//style/jquery/clarindotblue/jquery-ui-1.8.5.custom.css" type="text/css" rel="stylesheet">
-      <link xmlns="" href="../../../scripts//style/cmds-ui.css" type="text/css" rel="stylesheet">
-      <link xmlns="" href="../../../scripts//style/cr.css" type="text/css" rel="stylesheet"><script xmlns="" type="text/javascript" src="../../../scripts//js/jquery/jquery-1.6.2.js"></script><link xmlns="" rel="stylesheet" type="text/css" href="../../../scripts/style/jquery.ui.resizable.css">
-      <link xmlns="" rel="stylesheet" type="text/css" href="../../../scripts/style/jquery.ui.all.css"><style xmlns="" type="text/css">
+      <title></title>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+      <link href="../../../scripts//style/jquery/clarindotblue/jquery-ui-1.8.5.custom.css" type="text/css" rel="stylesheet"></link>
+      <link href="../../../scripts//style/cmds-ui.css" type="text/css" rel="stylesheet"></link>
+      <link href="../../../scripts//style/cr.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../../../scripts//js/jquery/jquery-1.6.2.js"></script><link rel="stylesheet" type="text/css" href="../../../scripts/style/jquery.ui.resizable.css"></link>
+      <link rel="stylesheet" type="text/css" href="../../../scripts/style/jquery.ui.all.css"></link><style type="text/css">
         table { border-collapse:collapse;  border:1px solid grey }
         td {padding: 3px; border:1px solid grey}
         div.infovis-wrapper {border: 1px solid grey; margin: 20px; padding: 5px; height:350px; width:700px;}
         .infovis {height: 90%; width: 100%;}
         .value { text-align: right; }
-        </style><script xmlns="" type="text/javascript" src="../../../scripts/js/jquery/jquery.min.js"></script><script xmlns="" type="text/javascript" src="../../../scripts/js/jquery/jquery-ui.min.js"></script><script xmlns="" type="text/javascript" src="../../../scripts/js/jquery/jquery.tablesorter.js"></script><script xmlns="" type="text/javascript" src="../../../scripts/js/jquery/jquery.uitablefilter.js"></script><script xmlns="" type="text/javascript" src="../../../scripts/js/google-jsapi.js"></script><script xmlns="" type="text/javascript" src="../../../scripts/js/google-corechart.js"></script><script xmlns="" type="text/javascript">
-                var data= {};
-                var options = {}; 
-                var chart = {};
-      
-      // copied locally instead as: google-corechart.js
-      //google.load("visualization", "1", {packages:["corechart"]});
-      
-            function drawChart(dataset) {        
-            var target_container_selector = "chart-" +  dataset;
-            
-               if (options[dataset]["layout"]=='pie') {
-               chart[dataset] = new google.visualization.PieChart(document.getElementById(target_container_selector));
-               chart[dataset].draw(data[dataset], options[dataset]);
-               } else {
-               chart[dataset] = new google.visualization.AreaChart(document.getElementById(target_container_selector));
-               chart[dataset].draw(data[dataset], options[dataset]);
-               }
-            }
-     
-     function toggleLayout(dataset) {
-        if (options[dataset]["layout"]=='pie') { options[dataset]["layout"] = 'area' } else { options[dataset]["layout"]='pie'};
-        drawChart(dataset);
-     }
-      
-    </script></head>
+        </style><script type="text/javascript" src="../../../scripts/js/jquery/jquery.min.js"></script><script type="text/javascript" src="../../../scripts/js/jquery/jquery-ui.min.js"></script><script type="text/javascript" src="../../../scripts/js/google-jsapi.js"></script><script type="text/javascript" src="../../../scripts/js/google-corechart.js"></script><script type="text/javascript" src="../../../scripts/js/chart.js"></script></head>
    <body>
-      <div xmlns="" class="cmds-ui-block" id="titlelogin">
-         <div id="logo"><a href=""><img src="../../../scripts/style/logo_c_s.png" alt="Repository"></a><div id="site-name">Repository</div>
+      <div class="cmds-ui-block" id="titlelogin">
+         <div id="logo"><a href=""><img src="../../../scripts/style/logo_c_s.png" alt="Repository"></img></a><div id="site-name">Repository</div>
          </div>
          <div id="top-menu">
             <div id="user"><a href="?operation=searchRetrieve&amp;query=Abend&amp;startRecord=1&amp;maximumRecords=10&amp;x-format=htmljspage"> js </a><a href="workspace.jsp">    login</a><a target="_blank" href="static/info"> docs</a></div>
@@ -49,14 +26,13 @@
          </div>
       </div>
       <h1></h1>
-      <div xmlns="">
+      <div>
          <div class="infovis-wrapper">
             <div id="infovis-navi-region1"><a onclick="toggleLayout('region1');">layout</a></div>
             <div class="infovis" id="chart-region1"></div>
          </div><script type="text/javascript">
-      // allow for multiple datasets (for every facet)
-        //var data_arr = [ $json-data
       
+      // allow for multiple datasets (for every facet)
       data["region1"] = google.visualization.arrayToDataTable([['count', 'Abend' ], ['_EMPTY_', 0.00015097227292501124], 
     ['amitte', 0.00021747566899215045], 
     ['aost', 0.000204113820347845], 
@@ -70,8 +46,8 @@
       google.setOnLoadCallback(drawChart('region1'));
      
       
-        </script><div id="dataset-">
-            <h3 class="title"></h3>
+        </script><div id="table-region1">
+            <h3 class="title">region</h3>
             <table class="show">
                <thead>
                   <tr>
@@ -125,9 +101,8 @@
             <div id="infovis-navi-region2"><a onclick="toggleLayout('region2');">layout</a></div>
             <div class="infovis" id="chart-region2"></div>
          </div><script type="text/javascript">
-      // allow for multiple datasets (for every facet)
-        //var data_arr = [ $json-data
       
+      // allow for multiple datasets (for every facet)
       data["region2"] = google.visualization.arrayToDataTable([['count', 'Abend strict' ], ['_EMPTY_', 0.00010456103651685451], 
     ['amitte', 0.00014394767838623467], 
     ['aost', 0.00011901720818674046], 
@@ -141,8 +116,8 @@
       google.setOnLoadCallback(drawChart('region2'));
      
       
-        </script><div id="dataset-">
-            <h3 class="title"></h3>
+        </script><div id="table-region2">
+            <h3 class="title">region</h3>
             <table class="show">
                <thead>
                   <tr>
@@ -196,9 +171,8 @@
             <div id="infovis-navi-docsrc3"><a onclick="toggleLayout('docsrc3');">layout</a></div>
             <div class="infovis" id="chart-docsrc3"></div>
          </div><script type="text/javascript">
-      // allow for multiple datasets (for every facet)
-        //var data_arr = [ $json-data
       
+      // allow for multiple datasets (for every facet)
       data["docsrc3"] = google.visualization.arrayToDataTable([['count', 'Abend' ], ['academia', 0.000035558163154186864], 
     ['apa', 0.00013427907672815037], 
     ['arbeitw', 0.000033772742512037696], 
@@ -260,8 +234,8 @@
       google.setOnLoadCallback(drawChart('docsrc3'));
      
       
-        </script><div id="dataset-">
-            <h3 class="title"></h3>
+        </script><div id="table-docsrc3">
+            <h3 class="title">docsrc</h3>
             <table class="show">
                <thead>
                   <tr>
@@ -600,9 +574,8 @@
             <div id="infovis-navi-docsrc4"><a onclick="toggleLayout('docsrc4');">layout</a></div>
             <div class="infovis" id="chart-docsrc4"></div>
          </div><script type="text/javascript">
-      // allow for multiple datasets (for every facet)
-        //var data_arr = [ $json-data
       
+      // allow for multiple datasets (for every facet)
       data["docsrc4"] = google.visualization.arrayToDataTable([['count', 'Abend strict' ], ['academia', 0.000024446237168503467], 
     ['apa', 0.00011016726026654924], 
     ['arbeitw', 0.000017589970058352968], 
@@ -664,8 +637,8 @@
       google.setOnLoadCallback(drawChart('docsrc4'));
      
       
-        </script><div id="dataset-">
-            <h3 class="title"></h3>
+        </script><div id="table-docsrc4">
+            <h3 class="title">docsrc</h3>
             <table class="show">
                <thead>
                   <tr>

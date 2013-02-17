@@ -28,83 +28,76 @@
                </tr>
                <tr>
                   <td border="0">q:</td>
-                  <td><input type="text" name="q" value="*:*" /></td>
+                  <td><input type="text" name="q" value="Haus" /></td>
                </tr>
                <tr>
                   <td border="0">facet.limit:</td>
-                  <td><input type="text" name="facet.limit" value="20" /></td>
+                  <td><input type="text" name="facet.limit" value="500" /></td>
+               </tr>
+               <tr>
+                  <td border="0">baseq:</td>
+                  <td><input type="text" name="baseq" value="*:*" /></td>
                </tr>
                <tr>
                   <td border="0" valign="top">facet.field:</td>
-                  <td><input type="text" name="facet.field" value="region" /><br /><input type="text" name="facet.field" value="year" /><br /></td>
+                  <td><input type="text" name="facet.field" value="year" /><br /><input type="text" name="facet.field" value="docsrc" /><br /></td>
                </tr>
                <tr>
                   <td border="0">rows:</td>
                   <td><input type="text" name="rows" value="0" /></td>
                </tr>
-            </table><input type="submit" value="search" /><a href="?facet=true&amp;indent=yes&amp;q=*:*&amp;facet.limit=20&amp;facet.field=region&amp;facet.field=year&amp;rows=0&amp;">?facet=true&amp;indent=yes&amp;q=*:*&amp;facet.limit=20&amp;facet.field=region&amp;facet.field=year&amp;rows=0&amp;</a></form><span class="label">hits: </span><span class="value hilight">21.771.001</span></div>
+            </table><input type="submit" value="search" /><a href="?facet=true&amp;indent=yes&amp;q=Haus&amp;facet.limit=500&amp;baseq=*:*&amp;facet.field=year&amp;facet.field=docsrc&amp;rows=0&amp;">?facet=true&amp;indent=yes&amp;q=Haus&amp;facet.limit=500&amp;baseq=*:*&amp;facet.field=year&amp;facet.field=docsrc&amp;rows=0&amp;</a></form><span class="label">hits: </span><span class="value hilight">1.888</span></div>
       <div>
          <div class="infovis-wrapper">
-            <div id="infovis-navi-region1"><a onclick="toggleLayout('region1');">layout</a></div>
-            <div class="infovis" id="chart-region1"></div>
+            <div id="infovis-navi-docsrc1"><a onclick="toggleLayout('docsrc1');">layout</a></div>
+            <div class="infovis" id="chart-docsrc1"></div>
          </div><script type="text/javascript">
       
       // allow for multiple datasets (for every facet)
-      data["region1"] = google.visualization.arrayToDataTable([['count', '*:*' ], ['_EMPTY_', 10864646], 
-    ['amitte', 1831405], 
-    ['amitte_aost', 26], 
-    ['aost', 4056002], 
-    ['asuedost', 2800616], 
-    ['asuedost_asuedost', 0], 
-    ['awest', 2218306]])
-      options["region1"] = {
+      data["docsrc1"] = google.visualization.arrayToDataTable([['count', 'Haus' ], ['bauernzt', 0.03935185185185185], 
+    ['falter', 0.12445379511247774], 
+    ['noen', 0.06039941548952752]])
+      options["docsrc1"] = {
                           layout: "pie",
-                          title: 'region1'
+                          title: 'docsrc1'
                     }  
       
-      google.setOnLoadCallback(drawChart('region1'));
+      google.setOnLoadCallback(drawChart('docsrc1'));
      
       
-        </script><div id="table-region1">
-            <h3 class="title">region</h3>
+        </script><div id="table-docsrc1">
+            <h3 class="title">docsrc</h3>
             <table class="show">
                <thead>
                   <tr>
                      <th>key</th>
                      <th>*:*</th>
+                     <th>Haus</th>
                   </tr>
                </thead>
                <tr>
                   <td>all</td>
-                  <td class="number value">21.771.001</td>
+                  <td class="number value">19.056</td>
+                  <td class="number value">1.888</td>
+                  <td class="value number">99.076,41</td>
                </tr>
                <tr>
-                  <td>_EMPTY_</td>
-                  <td class="number value">10.864.646</td>
+                  <td>bauernzt</td>
+                  <td class="number value">2.592</td>
+                  <td class="number value">102</td>
+                  <td class="value number">39.351,85</td>
                </tr>
                <tr>
-                  <td>amitte</td>
-                  <td class="number value">1.831.405</td>
+                  <td>falter</td>
+                  <td class="number value">12.358</td>
+                  <td class="number value">1.538</td>
+                  <td class="value number">124.453,8</td>
                </tr>
                <tr>
-                  <td>amitte_aost</td>
-                  <td class="number value">26</td>
-               </tr>
-               <tr>
-                  <td>aost</td>
-                  <td class="number value">4.056.002</td>
-               </tr>
-               <tr>
-                  <td>asuedost</td>
-                  <td class="number value">2.800.616</td>
-               </tr>
-               <tr>
-                  <td>asuedost_asuedost</td>
-                  <td class="number value">0</td>
-               </tr>
-               <tr>
-                  <td>awest</td>
-                  <td class="number value">2.218.306</td>
+                  <td>noen</td>
+                  <td class="number value">4.106</td>
+                  <td class="number value">248</td>
+                  <td class="value number">60.399,42</td>
                </tr>
             </table>
          </div>
@@ -114,19 +107,10 @@
          </div><script type="text/javascript">
       
       // allow for multiple datasets (for every facet)
-      data["year2"] = google.visualization.arrayToDataTable([['count', '*:*' ], ['2000', 1247194], 
-    ['2001', 1325533], 
-    ['2002', 1609871], 
-    ['2003', 1715248], 
-    ['2004', 1751177], 
-    ['2005', 1744410], 
-    ['2006', 1782449], 
-    ['2007', 1906581], 
-    ['2008', 1967806], 
-    ['2009', 1881146], 
-    ['2010', 2005990], 
-    ['2011', 2036011], 
-    ['2012', 797585]])
+      data["year2"] = google.visualization.arrayToDataTable([['count', 'Haus' ], ['2006', 0.06039941548952752], 
+    ['2008', 0.1317246835443038], 
+    ['2011', 0.11941933716789921], 
+    ['2012', 0.03935185185185185]])
       options["year2"] = {
                           layout: "pie",
                           title: 'year2'
@@ -142,63 +126,38 @@
                   <tr>
                      <th>key</th>
                      <th>*:*</th>
+                     <th>Haus</th>
                   </tr>
                </thead>
                <tr>
                   <td>all</td>
-                  <td class="number value">21.771.001</td>
-               </tr>
-               <tr>
-                  <td>2000</td>
-                  <td class="number value">1.247.194</td>
-               </tr>
-               <tr>
-                  <td>2001</td>
-                  <td class="number value">1.325.533</td>
-               </tr>
-               <tr>
-                  <td>2002</td>
-                  <td class="number value">1.609.871</td>
-               </tr>
-               <tr>
-                  <td>2003</td>
-                  <td class="number value">1.715.248</td>
-               </tr>
-               <tr>
-                  <td>2004</td>
-                  <td class="number value">1.751.177</td>
-               </tr>
-               <tr>
-                  <td>2005</td>
-                  <td class="number value">1.744.410</td>
+                  <td class="number value">19.056</td>
+                  <td class="number value">1.888</td>
+                  <td class="value number">99.076,41</td>
                </tr>
                <tr>
                   <td>2006</td>
-                  <td class="number value">1.782.449</td>
-               </tr>
-               <tr>
-                  <td>2007</td>
-                  <td class="number value">1.906.581</td>
+                  <td class="number value">4.106</td>
+                  <td class="number value">248</td>
+                  <td class="value number">60.399,42</td>
                </tr>
                <tr>
                   <td>2008</td>
-                  <td class="number value">1.967.806</td>
-               </tr>
-               <tr>
-                  <td>2009</td>
-                  <td class="number value">1.881.146</td>
-               </tr>
-               <tr>
-                  <td>2010</td>
-                  <td class="number value">2.005.990</td>
+                  <td class="number value">5.056</td>
+                  <td class="number value">666</td>
+                  <td class="value number">131.724,68</td>
                </tr>
                <tr>
                   <td>2011</td>
-                  <td class="number value">2.036.011</td>
+                  <td class="number value">7.302</td>
+                  <td class="number value">872</td>
+                  <td class="value number">119.419,34</td>
                </tr>
                <tr>
                   <td>2012</td>
-                  <td class="number value">797.585</td>
+                  <td class="number value">2.592</td>
+                  <td class="number value">102</td>
+                  <td class="value number">39.351,85</td>
                </tr>
             </table>
          </div>

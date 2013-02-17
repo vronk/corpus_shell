@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<response>
+
+<lst name="responseHeader">
+  <int name="status">0</int>
+  <int name="QTime">2</int>
+  <lst name="params">
+    <str name="facet">true</str>
+    <str name="indent">yes</str>
+    <str name="q">*:*</str>
+    <str name="facet.limit">500</str>
+    <arr name="facet.field">
+      <str>year</str>
+      <str>docsrc</str>
+    </arr>
+    <str name="facet.pivot">docsrc,year</str>
+    <str name="rows">0</str>
+  </lst>
+</lst>
+<result name="response" numFound="19056" start="0">
+</result>
+<lst name="facet_counts">
+  <lst name="facet_queries"/>
+  <lst name="facet_fields">
+    <lst name="year">
+      <int name="2011">7302</int>
+      <int name="2008">5056</int>
+      <int name="2006">4106</int>
+      <int name="2012">2592</int>
+    </lst>
+    <lst name="docsrc">
+      <int name="falter">12358</int>
+      <int name="noen">4106</int>
+      <int name="bauernzt">2592</int>
+    </lst>
+  </lst>
+  <lst name="facet_dates"/>
+  <lst name="facet_ranges"/>
+  <lst name="facet_pivot">
+    <arr name="docsrc,year">
+      <lst>
+        <str name="field">docsrc</str>
+        <str name="value">falter</str>
+        <int name="count">12358</int>
+        <arr name="pivot">
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2011</str>
+            <int name="count">7302</int>
+          </lst>
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2008</str>
+            <int name="count">5056</int>
+          </lst>
+        </arr>
+      </lst>
+      <lst>
+        <str name="field">docsrc</str>
+        <str name="value">noen</str>
+        <int name="count">4106</int>
+        <arr name="pivot">
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2006</str>
+            <int name="count">4106</int>
+          </lst>
+        </arr>
+      </lst>
+      <lst>
+        <str name="field">docsrc</str>
+        <str name="value">bauernzt</str>
+        <int name="count">2592</int>
+        <arr name="pivot">
+          <lst>
+            <str name="field">year</str>
+            <str name="value">2012</str>
+            <int name="count">2592</int>
+          </lst>
+        </arr>
+      </lst>
+    </arr>
+  </lst>
+</lst>
+</response>

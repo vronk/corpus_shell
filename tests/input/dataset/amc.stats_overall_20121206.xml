@@ -1,0 +1,1383 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<response>
+
+<lst name="responseHeader">
+  <int name="status">0</int>
+  <int name="QTime">14382</int>
+  <lst name="params">
+    <str name="fl">score</str>
+    <str name="indent">true</str>
+    <str name="tr">amc.xsl</str>
+    <str name="q">*:*</str>
+    <str name="stats">true</str>
+    <arr name="stats.field">
+      <str>tokens</str>
+      <str>zeilen</str>
+    </arr>
+    <arr name="stats.facet">
+      <str>docsrc</str>
+      <str>region</str>
+    </arr>
+    <str name="wt"/>
+    <str name="rows">0</str>
+  </lst>
+</lst>
+<result name="response" numFound="21771001" start="0" maxScore="1.0" />
+  
+<lst name="stats">
+  <lst name="stats_fields">
+    <lst name="tokens">
+      <double name="min">0.0</double>
+      <double name="max">45215.0</double>
+      <long name="count">21771001</long>
+      <long name="missing">0</long>
+      <double name="sum">4.399311452E9</double>
+      <double name="sumOfSquares">2.037091132388E12</double>
+      <double name="mean">202.07207982765698</double>
+      <double name="stddev">229.64296763719042</double>
+      <lst name="facets">
+        <lst name="region">
+          <lst name="awest">
+            <double name="min">0.0</double>
+            <double name="max">14316.0</double>
+            <long name="count">2218306</long>
+            <long name="missing">0</long>
+            <double name="sum">4.07400374E8</double>
+            <double name="sumOfSquares">1.74368636948E11</double>
+            <double name="mean">183.65382142950523</double>
+            <double name="stddev">211.83886632174202</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="">
+            <double name="min">0.0</double>
+            <double name="max">39876.0</double>
+            <long name="count">10864646</long>
+            <long name="missing">0</long>
+            <double name="sum">2.583706216E9</double>
+            <double name="sumOfSquares">1.423853182696E12</double>
+            <double name="mean">237.80859643287044</double>
+            <double name="stddev">272.94849676379755</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="amitte">
+            <double name="min">0.0</double>
+            <double name="max">16930.0</double>
+            <long name="count">1831405</long>
+            <long name="missing">0</long>
+            <double name="sum">3.12710844E8</double>
+            <double name="sumOfSquares">1.00670180382E11</double>
+            <double name="mean">170.7491483314723</double>
+            <double name="stddev">160.66601112047036</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="aost">
+            <double name="min">0.0</double>
+            <double name="max">45215.0</double>
+            <long name="count">4056002</long>
+            <long name="missing">0</long>
+            <double name="sum">6.50578191E8</double>
+            <double name="sumOfSquares">2.07110949449E11</double>
+            <double name="mean">160.39888318595504</double>
+            <double name="stddev">159.1698360221423</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="asuedost">
+            <double name="min">2.0</double>
+            <double name="max">25614.0</double>
+            <long name="count">2800616</long>
+            <long name="missing">0</long>
+            <double name="sum">4.44912356E8</double>
+            <double name="sumOfSquares">1.3108758383E11</double>
+            <double name="mean">158.8623202895363</double>
+            <double name="stddev">146.86547465495877</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="amitte aost">
+            <double name="min">47.0</double>
+            <double name="max">341.0</double>
+            <long name="count">26</long>
+            <long name="missing">0</long>
+            <double name="sum">3471.0</double>
+            <double name="sumOfSquares">599083.0</double>
+            <double name="mean">133.5</double>
+            <double name="stddev">73.67618339735033</double>
+            <lst name="facets"/>
+          </lst>
+        </lst>
+        <lst name="docsrc">
+          <lst name="kleine">
+            <double name="min">3.0</double>
+            <double name="max">25614.0</double>
+            <long name="count">2163549</long>
+            <long name="missing">0</long>
+            <double name="sum">3.47991317E8</double>
+            <double name="sumOfSquares">1.01159328397E11</double>
+            <double name="mean">160.8428175188082</double>
+            <double name="stddev">144.51919277031297</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="echo">
+            <double name="min">2.0</double>
+            <double name="max">7712.0</double>
+            <long name="count">13435</long>
+            <long name="missing">0</long>
+            <double name="sum">6558223.0</double>
+            <double name="sumOfSquares">7.390293065E9</double>
+            <double name="mean">488.1446222553033</double>
+            <double name="stddev">558.4045799013188</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="academia">
+            <double name="min">4.0</double>
+            <double name="max">3012.0</double>
+            <long name="count">776</long>
+            <long name="missing">0</long>
+            <double name="sum">449967.0</double>
+            <double name="sumOfSquares">4.75383853E8</double>
+            <double name="mean">579.854381443299</double>
+            <double name="stddev">526.0547212368851</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="wz">
+            <double name="min">0.0</double>
+            <double name="max">39876.0</double>
+            <long name="count">492557</long>
+            <long name="missing">0</long>
+            <double name="sum">1.42668873E8</double>
+            <double name="sumOfSquares">1.86443655043E11</double>
+            <double name="mean">289.64946798035555</double>
+            <double name="stddev">542.7944106747875</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="soli">
+            <double name="min">8.0</double>
+            <double name="max">1731.0</double>
+            <long name="count">2751</long>
+            <long name="missing">0</long>
+            <double name="sum">757872.0</double>
+            <double name="sumOfSquares">3.41678026E8</double>
+            <double name="mean">275.4896401308615</double>
+            <double name="stddev">219.82814895834488</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="wiblatt">
+            <double name="min">0.0</double>
+            <double name="max">3590.0</double>
+            <long name="count">271032</long>
+            <long name="missing">0</long>
+            <double name="sum">5.8100861E7</double>
+            <double name="sumOfSquares">2.0549015937E10</double>
+            <double name="mean">214.3690080876059</double>
+            <double name="stddev">172.8112062049372</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="woman">
+            <double name="min">0.0</double>
+            <double name="max">8637.0</double>
+            <long name="count">29563</long>
+            <long name="missing">0</long>
+            <double name="sum">8634849.0</double>
+            <double name="sumOfSquares">7.140773645E9</double>
+            <double name="mean">292.08297534079765</double>
+            <double name="stddev">395.2683944212552</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="ooen">
+            <double name="min">3.0</double>
+            <double name="max">16930.0</double>
+            <long name="count">911703</long>
+            <long name="missing">0</long>
+            <double name="sum">1.78736667E8</double>
+            <double name="sumOfSquares">6.6538014863E10</double>
+            <double name="mean">196.04703176363356</double>
+            <double name="stddev">185.8701591522441</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="noen">
+            <double name="min">2.0</double>
+            <double name="max">7666.0</double>
+            <long name="count">3408998</long>
+            <long name="missing">0</long>
+            <double name="sum">5.19790073E8</double>
+            <double name="sumOfSquares">1.44785685317E11</double>
+            <double name="mean">152.47591022347328</double>
+            <double name="stddev">138.64605160872355</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="ots">
+            <double name="min">10.0</double>
+            <double name="max">28560.0</double>
+            <long name="count">858292</long>
+            <long name="missing">0</long>
+            <double name="sum">2.79872212E8</double>
+            <double name="sumOfSquares">1.48386166692E11</double>
+            <double name="mean">326.0804155229223</double>
+            <double name="stddev">257.9865363197945</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="sportztg">
+            <double name="min">0.0</double>
+            <double name="max">6066.0</double>
+            <long name="count">26104</long>
+            <long name="missing">0</long>
+            <double name="sum">7616854.0</double>
+            <double name="sumOfSquares">3.984409984E9</double>
+            <double name="mean">291.7887680049035</double>
+            <double name="stddev">259.80356900319157</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="bauernzt">
+            <double name="min">3.0</double>
+            <double name="max">3010.0</double>
+            <long name="count">12543</long>
+            <long name="missing">0</long>
+            <double name="sum">2854579.0</double>
+            <double name="sumOfSquares">1.145788011E9</double>
+            <double name="mean">227.58343299051265</double>
+            <double name="stddev">198.89126628058102</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="profil">
+            <double name="min">2.0</double>
+            <double name="max">6548.0</double>
+            <long name="count">67641</long>
+            <long name="missing">0</long>
+            <double name="sum">3.4116392E7</double>
+            <double name="sumOfSquares">3.6289328676E10</double>
+            <double name="mean">504.3744474505108</double>
+            <double name="stddev">531.1398918765955</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="oberrund">
+            <double name="min">3.0</double>
+            <double name="max">4645.0</double>
+            <long name="count">19216</long>
+            <long name="missing">0</long>
+            <double name="sum">7646266.0</double>
+            <double name="sumOfSquares">5.351628048E9</double>
+            <double name="mean">397.91142797668607</double>
+            <double name="stddev">346.6573157666989</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="kw">
+            <double name="min">0.0</double>
+            <double name="max">11516.0</double>
+            <long name="count">13919</long>
+            <long name="missing">0</long>
+            <double name="sum">3811683.0</double>
+            <double name="sumOfSquares">1.750043003E9</double>
+            <double name="mean">273.8474746749048</double>
+            <double name="stddev">225.2592252926534</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="sn">
+            <double name="min">3.0</double>
+            <double name="max">3479.0</double>
+            <long name="count">825911</long>
+            <long name="missing">0</long>
+            <double name="sum">1.66880604E8</double>
+            <double name="sumOfSquares">5.9627767294E10</double>
+            <double name="mean">202.0564007502019</double>
+            <double name="stddev">177.11467523439694</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="sbgw">
+            <double name="min">2.0</double>
+            <double name="max">1555.0</double>
+            <long name="count">109449</long>
+            <long name="missing">0</long>
+            <double name="sum">1.8441715E7</double>
+            <double name="sumOfSquares">5.141463879E9</double>
+            <double name="mean">168.49596615775383</double>
+            <double name="stddev">136.32742351757676</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="trend">
+            <double name="min">2.0</double>
+            <double name="max">9518.0</double>
+            <long name="count">18363</long>
+            <long name="missing">0</long>
+            <double name="sum">1.0681905E7</double>
+            <double name="sumOfSquares">1.3351127477E10</double>
+            <double name="mean">581.7080542395033</double>
+            <double name="stddev">623.4610637926828</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="konsum">
+            <double name="min">0.0</double>
+            <double name="max">3178.0</double>
+            <long name="count">6920</long>
+            <long name="missing">0</long>
+            <double name="sum">3392494.0</double>
+            <double name="sumOfSquares">3.338223744E9</double>
+            <double name="mean">490.24479768786125</double>
+            <double name="stddev">492.0338389209223</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="grazer">
+            <double name="min">9.0</double>
+            <double name="max">754.0</double>
+            <long name="count">19165</long>
+            <long name="missing">0</long>
+            <double name="sum">2373895.0</double>
+            <double name="sumOfSquares">4.80595627E8</double>
+            <double name="mean">123.86616227498044</double>
+            <double name="stddev">98.66314817540133</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="bvz">
+            <double name="min">3.0</double>
+            <double name="max">7136.0</double>
+            <long name="count">480671</long>
+            <long name="missing">0</long>
+            <double name="sum">8.4650968E7</double>
+            <double name="sumOfSquares">2.925680682E10</double>
+            <double name="mean">176.1099962344306</double>
+            <double name="stddev">172.77709853791774</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="tvmedia">
+            <double name="min">0.0</double>
+            <double name="max">4282.0</double>
+            <long name="count">36274</long>
+            <long name="missing">0</long>
+            <double name="sum">9897830.0</double>
+            <double name="sumOfSquares">6.24603794E9</double>
+            <double name="mean">272.86293212769476</double>
+            <double name="stddev">312.63238419952296</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="krone">
+            <double name="min">2.0</double>
+            <double name="max">27053.0</double>
+            <long name="count">2228073</long>
+            <long name="missing">0</long>
+            <double name="sum">3.42564198E8</double>
+            <double name="sumOfSquares">1.4755339913E11</double>
+            <double name="mean">153.74909080627071</double>
+            <double name="stddev">206.36352918020032</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="oereiche">
+            <double name="min">2.0</double>
+            <double name="max">8140.0</double>
+            <long name="count">496075</long>
+            <long name="missing">0</long>
+            <double name="sum">8.9482987E7</double>
+            <double name="sumOfSquares">2.4333910631E10</double>
+            <double name="mean">180.3819724839994</double>
+            <double name="stddev">128.51172598269164</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="medianet">
+            <double name="min">0.0</double>
+            <double name="max">3100.0</double>
+            <long name="count">126945</long>
+            <long name="missing">0</long>
+            <double name="sum">2.4832297E7</double>
+            <double name="sumOfSquares">8.856994323E9</double>
+            <double name="mean">195.61461262751584</double>
+            <double name="stddev">177.49788670543077</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="wiener">
+            <double name="min">3.0</double>
+            <double name="max">5248.0</double>
+            <long name="count">9146</long>
+            <long name="missing">0</long>
+            <double name="sum">3797212.0</double>
+            <double name="sumOfSquares">3.617954442E9</double>
+            <double name="mean">415.1773452875574</double>
+            <double name="stddev">472.4721860352428</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="ttkomp">
+            <double name="min">3.0</double>
+            <double name="max">2167.0</double>
+            <long name="count">29744</long>
+            <long name="missing">0</long>
+            <double name="sum">5152878.0</double>
+            <double name="sumOfSquares">1.328106008E9</double>
+            <double name="mean">173.24092253899946</double>
+            <double name="stddev">120.99297078574891</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="hor">
+            <double name="min">2.0</double>
+            <double name="max">6808.0</double>
+            <long name="count">50214</long>
+            <long name="missing">0</long>
+            <double name="sum">1.3059368E7</double>
+            <double name="sumOfSquares">5.447569402E9</double>
+            <double name="mean">260.0742422431991</double>
+            <double name="stddev">202.11201209663557</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="arbeitw">
+            <double name="min">5.0</double>
+            <double name="max">4204.0</double>
+            <long name="count">4337</long>
+            <long name="missing">0</long>
+            <double name="sum">2842529.0</double>
+            <double name="sumOfSquares">3.467615429E9</double>
+            <double name="mean">655.4136499884713</double>
+            <double name="stddev">608.3261321838539</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="datum">
+            <double name="min">40.0</double>
+            <double name="max">7677.0</double>
+            <long name="count">1850</long>
+            <long name="missing">0</long>
+            <double name="sum">1846963.0</double>
+            <double name="sumOfSquares">3.449306645E9</double>
+            <double name="mean">998.3583783783783</double>
+            <double name="stddev">931.7939394466895</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="ktnmonat">
+            <double name="min">2.0</double>
+            <double name="max">3934.0</double>
+            <long name="count">7048</long>
+            <long name="missing">0</long>
+            <double name="sum">2202432.0</double>
+            <double name="sumOfSquares">1.738383532E9</double>
+            <double name="mean">312.4903518728717</double>
+            <double name="stddev">386.03124146935124</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="vn">
+            <double name="min">3.0</double>
+            <double name="max">10829.0</double>
+            <long name="count">772477</long>
+            <long name="missing">0</long>
+            <double name="sum">1.40166215E8</double>
+            <double name="sumOfSquares">6.3741332547E10</double>
+            <double name="mean">181.45034091629913</double>
+            <double name="stddev">222.691146192186</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="apa">
+            <double name="min">0.0</double>
+            <double name="max">4001.0</double>
+            <long name="count">2566238</long>
+            <long name="missing">0</long>
+            <double name="sum">6.30976933E8</double>
+            <double name="sumOfSquares">2.09731073391E11</double>
+            <double name="mean">245.8762332254452</double>
+            <double name="stddev">145.84903469278598</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="augustin">
+            <double name="min">2.0</double>
+            <double name="max">3381.0</double>
+            <long name="count">8540</long>
+            <long name="missing">0</long>
+            <double name="sum">5411719.0</double>
+            <double name="sumOfSquares">4.848618055E9</double>
+            <double name="mean">633.6907494145199</double>
+            <double name="stddev">407.68783054015194</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="wienerin">
+            <double name="min">2.0</double>
+            <double name="max">5055.0</double>
+            <long name="count">17365</long>
+            <long name="missing">0</long>
+            <double name="sum">5146247.0</double>
+            <double name="sumOfSquares">4.634253667E9</double>
+            <double name="mean">296.35744313273824</double>
+            <double name="stddev">423.1498656740892</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="formatdb">
+            <double name="min">0.0</double>
+            <double name="max">5658.0</double>
+            <long name="count">87413</long>
+            <long name="missing">0</long>
+            <double name="sum">2.4939495E7</double>
+            <double name="sumOfSquares">1.8016602543E10</double>
+            <double name="mean">285.3064761534326</double>
+            <double name="stddev">353.14388229882564</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="heute">
+            <double name="min">0.0</double>
+            <double name="max">1703.0</double>
+            <long name="count">190838</long>
+            <long name="missing">0</long>
+            <double name="sum">1.3638695E7</double>
+            <double name="sumOfSquares">1.688636919E9</double>
+            <double name="mean">71.4673964304803</double>
+            <double name="stddev">61.163443991072405</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="nvt">
+            <double name="min">0.0</double>
+            <double name="max">14316.0</double>
+            <long name="count">375728</long>
+            <long name="missing">0</long>
+            <double name="sum">7.8839516E7</double>
+            <double name="sumOfSquares">4.8023067058E10</double>
+            <double name="mean">209.8313567261423</double>
+            <double name="stddev">289.45536529654606</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="kurier">
+            <double name="min">3.0</double>
+            <double name="max">5663.0</double>
+            <long name="count">1312799</long>
+            <long name="missing">0</long>
+            <double name="sum">3.03695146E8</double>
+            <double name="sumOfSquares">1.58490857038E11</double>
+            <double name="mean">231.3340777986577</double>
+            <double name="stddev">259.25283312337916</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="diewir">
+            <double name="min">5.0</double>
+            <double name="max">3624.0</double>
+            <long name="count">4783</long>
+            <long name="missing">0</long>
+            <double name="sum">2236979.0</double>
+            <double name="sumOfSquares">2.051978373E9</double>
+            <double name="mean">467.69370687852813</double>
+            <double name="stddev">458.6082113142493</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="emedia">
+            <double name="min">0.0</double>
+            <double name="max">6700.0</double>
+            <long name="count">28219</long>
+            <long name="missing">0</long>
+            <double name="sum">6763473.0</double>
+            <double name="sumOfSquares">4.349183007E9</double>
+            <double name="mean">239.6779829193097</double>
+            <double name="stddev">310.9347149149089</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="kurier~">
+            <double name="min">21.0</double>
+            <double name="max">21.0</double>
+            <long name="count">1</long>
+            <long name="missing">0</long>
+            <double name="sum">21.0</double>
+            <double name="sumOfSquares">441.0</double>
+            <double name="mean">21.0</double>
+            <double name="stddev">0.0</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="standard">
+            <double name="min">3.0</double>
+            <double name="max">12731.0</double>
+            <long name="count">551005</long>
+            <long name="missing">0</long>
+            <double name="sum">1.78905966E8</double>
+            <double name="sumOfSquares">1.8828652251E11</double>
+            <double name="mean">324.69027685774176</double>
+            <double name="stddev">486.0981164214309</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="news">
+            <double name="min">0.0</double>
+            <double name="max">23993.0</double>
+            <long name="count">71738</long>
+            <long name="missing">0</long>
+            <double name="sum">3.0045591E7</double>
+            <double name="sumOfSquares">2.5261533933E10</double>
+            <double name="mean">418.8239287406953</double>
+            <double name="stddev">420.38672910540913</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="ktz">
+            <double name="min">3.0</double>
+            <double name="max">3561.0</double>
+            <long name="count">568560</long>
+            <long name="missing">0</long>
+            <double name="sum">8.450902E7</double>
+            <double name="sumOfSquares">2.4497151204E10</double>
+            <double name="mean">148.63694245110455</double>
+            <double name="stddev">144.89100777868126</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="im">
+            <double name="min">3.0</double>
+            <double name="max">8481.0</double>
+            <long name="count">11311</long>
+            <long name="missing">0</long>
+            <double name="sum">4864854.0</double>
+            <double name="sumOfSquares">4.403206612E9</double>
+            <double name="mean">430.09937229245867</double>
+            <double name="stddev">452.0154258521172</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="falter">
+            <double name="min">0.0</double>
+            <double name="max">45215.0</double>
+            <long name="count">57687</long>
+            <long name="missing">0</long>
+            <double name="sum">2.6590546E7</double>
+            <double name="sumOfSquares">2.692741912E10</double>
+            <double name="mean">460.9452042921282</double>
+            <double name="stddev">504.3003101924018</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="presse">
+            <double name="min">3.0</double>
+            <double name="max">6184.0</double>
+            <long name="count">636965</long>
+            <long name="missing">0</long>
+            <double name="sum">1.78592336E8</double>
+            <double name="sumOfSquares">9.4530335206E10</double>
+            <double name="mean">280.38014019608613</double>
+            <double name="stddev">264.1865082670821</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="nvb">
+            <double name="min">3.0</double>
+            <double name="max">3179.0</double>
+            <long name="count">552855</long>
+            <long name="missing">0</long>
+            <double name="sum">7.8115388E7</double>
+            <double name="sumOfSquares">2.0454497878E10</double>
+            <double name="mean">141.29453111575367</double>
+            <double name="stddev">130.5137137225499</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="furche">
+            <double name="min">3.0</double>
+            <double name="max">5031.0</double>
+            <long name="count">33253</long>
+            <long name="missing">0</long>
+            <double name="sum">1.7448564E7</double>
+            <double name="sumOfSquares">1.3871118474E10</double>
+            <double name="mean">524.7214988121373</double>
+            <double name="stddev">376.57731230924065</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="tt">
+            <double name="min">3.0</double>
+            <double name="max">6331.0</double>
+            <long name="count">1019204</long>
+            <long name="missing">0</long>
+            <double name="sum">1.75095028E8</double>
+            <double name="sumOfSquares">5.569838749E10</double>
+            <double name="mean">171.79586029882142</double>
+            <double name="stddev">158.54058430386854</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="gewinn">
+            <double name="min">2.0</double>
+            <double name="max">8374.0</double>
+            <long name="count">21096</long>
+            <long name="missing">0</long>
+            <double name="sum">1.2184684E7</double>
+            <double name="sumOfSquares">1.314881902E10</double>
+            <double name="mean">577.5826697004171</double>
+            <double name="stddev">538.2350122930688</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="svz">
+            <double name="min">0.0</double>
+            <double name="max">2923.0</double>
+            <long name="count">132824</long>
+            <long name="missing">0</long>
+            <double name="sum">1.7208839E7</double>
+            <double name="sumOfSquares">3.460432981E9</double>
+            <double name="mean">129.56121634644342</double>
+            <double name="stddev">96.26385573331989</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="stmonat">
+            <double name="min">4.0</double>
+            <double name="max">8880.0</double>
+            <long name="count">7838</long>
+            <long name="missing">0</long>
+            <double name="sum">2229234.0</double>
+            <double name="sumOfSquares">2.009650038E9</double>
+            <double name="mean">284.41362592498086</double>
+            <double name="stddev">418.9625339173331</double>
+            <lst name="facets"/>
+          </lst>
+        </lst>
+      </lst>
+    </lst>
+    <lst name="zeilen">
+      <double name="min">0.0</double>
+      <double name="max">5366.0</double>
+      <long name="count">17459777</long>
+      <long name="missing">4311224</long>
+      <double name="sum">4.33008502E8</double>
+      <double name="sumOfSquares">2.9558640368E10</double>
+      <double name="mean">24.800345502694565</double>
+      <double name="stddev">32.831376398005226</double>
+      <lst name="facets">
+        <lst name="region">
+          <lst name="awest">
+            <double name="min">0.0</double>
+            <double name="max">2549.0</double>
+            <long name="count">2084097</long>
+            <long name="missing">134209</long>
+            <double name="sum">5.0931507E7</double>
+            <double name="sumOfSquares">3.837549551E9</double>
+            <double name="mean">24.438165306125388</double>
+            <double name="stddev">35.27216314728331</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="">
+            <double name="min">0.0</double>
+            <double name="max">5366.0</double>
+            <long name="count">6989011</long>
+            <long name="missing">3875635</long>
+            <double name="sum">1.98185488E8</double>
+            <double name="sumOfSquares">1.7394057008E10</double>
+            <double name="mean">28.356728584344765</double>
+            <double name="stddev">41.04471328775975</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="amitte">
+            <double name="min">0.0</double>
+            <double name="max">2082.0</double>
+            <long name="count">1661479</long>
+            <long name="missing">169926</long>
+            <double name="sum">3.6326316E7</double>
+            <double name="sumOfSquares">1.605055452E9</double>
+            <double name="mean">21.863842997714688</double>
+            <double name="stddev">22.091012446685106</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="aost">
+            <double name="min">0.0</double>
+            <double name="max">1730.0</double>
+            <long name="count">3970115</long>
+            <long name="missing">85887</long>
+            <double name="sum">8.6288106E7</double>
+            <double name="sumOfSquares">3.924913232E9</double>
+            <double name="mean">21.73440970853489</double>
+            <double name="stddev">22.72069670342712</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="asuedost">
+            <double name="min">0.0</double>
+            <double name="max">3196.0</double>
+            <long name="count">2755049</long>
+            <long name="missing">45567</long>
+            <double name="sum">6.1276677E7</double>
+            <double name="sumOfSquares">2.797056553E9</double>
+            <double name="mean">22.24159243628698</double>
+            <double name="stddev">22.815767229952638</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="amitte aost">
+            <double name="min">5.0</double>
+            <double name="max">42.0</double>
+            <long name="count">26</long>
+            <long name="missing">0</long>
+            <double name="sum">408.0</double>
+            <double name="sumOfSquares">8572.0</double>
+            <double name="mean">15.692307692307692</double>
+            <double name="stddev">9.315660924568823</double>
+            <lst name="facets"/>
+          </lst>
+        </lst>
+        <lst name="docsrc">
+          <lst name="kleine">
+            <double name="min">1.0</double>
+            <double name="max">3196.0</double>
+            <long name="count">2159591</long>
+            <long name="missing">3958</long>
+            <double name="sum">4.7512471E7</double>
+            <double name="sumOfSquares">1.982217903E9</double>
+            <double name="mean">22.00068022139377</double>
+            <double name="stddev">20.828767226214445</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="echo">
+            <double name="min">0.0</double>
+            <double name="max">1813.0</double>
+            <long name="count">13435</long>
+            <long name="missing">0</long>
+            <double name="sum">766692.0</double>
+            <double name="sumOfSquares">1.0605406E8</double>
+            <double name="mean">57.066765909936734</double>
+            <double name="stddev">68.09987668585359</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="academia">
+            <double name="min">1.0</double>
+            <double name="max">358.0</double>
+            <long name="count">367</long>
+            <long name="missing">409</long>
+            <double name="sum">23136.0</double>
+            <double name="sumOfSquares">2948426.0</double>
+            <double name="mean">63.0408719346049</double>
+            <double name="stddev">63.80281240955449</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="wz">
+            <double name="min">0.0</double>
+            <double name="max">5366.0</double>
+            <long name="count">491260</long>
+            <long name="missing">1297</long>
+            <double name="sum">2.1191677E7</double>
+            <double name="sumOfSquares">4.652695059E9</double>
+            <double name="mean">43.13739567642389</double>
+            <double name="stddev">87.23601763446541</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="soli">
+            <double name="min">0.0</double>
+            <double name="max">258.0</double>
+            <long name="count">2293</long>
+            <long name="missing">458</long>
+            <double name="sum">84294.0</double>
+            <double name="sumOfSquares">5006492.0</double>
+            <double name="mean">36.76144788486699</double>
+            <double name="stddev">28.850297484054156</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="wiblatt">
+            <double name="min">0.0</double>
+            <double name="max">429.0</double>
+            <long name="count">231175</long>
+            <long name="missing">39857</long>
+            <double name="sum">6309861.0</double>
+            <double name="sumOfSquares">2.80606867E8</double>
+            <double name="mean">27.294737752784688</double>
+            <double name="stddev">21.652438517795865</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="woman">
+            <double name="min">0.0</double>
+            <double name="max">1721.0</double>
+            <long name="count">29563</long>
+            <long name="missing">0</long>
+            <double name="sum">1046376.0</double>
+            <double name="sumOfSquares">1.1332022E8</double>
+            <double name="mean">35.39478402056625</double>
+            <double name="stddev">50.79836447987727</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="ooen">
+            <double name="min">1.0</double>
+            <double name="max">2082.0</double>
+            <long name="count">911108</long>
+            <long name="missing">595</long>
+            <double name="sum">2.2265187E7</double>
+            <double name="sumOfSquares">1.065658833E9</double>
+            <double name="mean">24.43748381092033</double>
+            <double name="stddev">23.925709091938675</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="noen">
+            <double name="min">1.0</double>
+            <double name="max">1301.0</double>
+            <long name="count">3407443</long>
+            <long name="missing">1555</long>
+            <double name="sum">7.0989213E7</double>
+            <double name="sumOfSquares">2.952761543E9</double>
+            <double name="mean">20.83357315148045</double>
+            <double name="stddev">20.797226432177695</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="ots">
+            <double name="min">Infinity</double>
+            <double name="max">-Infinity</double>
+            <long name="count">0</long>
+            <long name="missing">858292</long>
+            <double name="sum">0.0</double>
+            <double name="sumOfSquares">0.0</double>
+            <double name="mean">NaN</double>
+            <double name="stddev">0.0</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="sportztg">
+            <double name="min">0.0</double>
+            <double name="max">708.0</double>
+            <long name="count">23783</long>
+            <long name="missing">2321</long>
+            <double name="sum">819628.0</double>
+            <double name="sumOfSquares">5.441096E7</double>
+            <double name="mean">34.462767523020645</double>
+            <double name="stddev">33.168853652252736</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="bauernzt">
+            <double name="min">Infinity</double>
+            <double name="max">-Infinity</double>
+            <long name="count">0</long>
+            <long name="missing">12543</long>
+            <double name="sum">0.0</double>
+            <double name="sumOfSquares">0.0</double>
+            <double name="mean">NaN</double>
+            <double name="stddev">0.0</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="profil">
+            <double name="min">0.0</double>
+            <double name="max">898.0</double>
+            <long name="count">61575</long>
+            <long name="missing">6066</long>
+            <double name="sum">3564168.0</double>
+            <double name="sumOfSquares">4.5139034E8</double>
+            <double name="mean">57.88336175395859</double>
+            <double name="stddev">63.08978896613889</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="oberrund">
+            <double name="min">Infinity</double>
+            <double name="max">-Infinity</double>
+            <long name="count">0</long>
+            <long name="missing">19216</long>
+            <double name="sum">0.0</double>
+            <double name="sumOfSquares">0.0</double>
+            <double name="mean">NaN</double>
+            <double name="stddev">0.0</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="kw">
+            <double name="min">0.0</double>
+            <double name="max">1361.0</double>
+            <long name="count">12066</long>
+            <long name="missing">1853</long>
+            <double name="sum">446443.0</double>
+            <double name="sumOfSquares">2.7784351E7</double>
+            <double name="mean">37.00008287750705</double>
+            <double name="stddev">30.55763409095011</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="sn">
+            <double name="min">1.0</double>
+            <double name="max">579.0</double>
+            <long name="count">672601</long>
+            <long name="missing">153310</long>
+            <double name="sum">1.6915144E7</double>
+            <double name="sumOfSquares">7.6557007E8</double>
+            <double name="mean">25.14885348074118</double>
+            <double name="stddev">22.48908916866093</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="sbgw">
+            <double name="min">1.0</double>
+            <double name="max">192.0</double>
+            <long name="count">109449</long>
+            <long name="missing">0</long>
+            <double name="sum">2204171.0</double>
+            <double name="sumOfSquares">7.1333551E7</double>
+            <double name="mean">20.138795237964715</double>
+            <double name="stddev">15.69020986125677</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="trend">
+            <double name="min">0.0</double>
+            <double name="max">1271.0</double>
+            <long name="count">16566</long>
+            <long name="missing">1797</long>
+            <double name="sum">1042487.0</double>
+            <double name="sumOfSquares">1.43721737E8</double>
+            <double name="mean">62.929313050827</double>
+            <double name="stddev">68.67235042565643</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="konsum">
+            <double name="min">0.0</double>
+            <double name="max">626.0</double>
+            <long name="count">6920</long>
+            <long name="missing">0</long>
+            <double name="sum">459292.0</double>
+            <double name="sumOfSquares">6.4110356E7</double>
+            <double name="mean">66.37167630057803</double>
+            <double name="stddev">69.71373759942617</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="grazer">
+            <double name="min">2.0</double>
+            <double name="max">108.0</double>
+            <long name="count">19165</long>
+            <long name="missing">0</long>
+            <double name="sum">276401.0</double>
+            <double name="sumOfSquares">6707247.0</double>
+            <double name="mean">14.422175841377511</double>
+            <double name="stddev">11.91562027932088</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="bvz">
+            <double name="min">1.0</double>
+            <double name="max">1070.0</double>
+            <long name="count">480671</long>
+            <long name="missing">0</long>
+            <double name="sum">1.161661E7</double>
+            <double name="sumOfSquares">5.99683052E8</double>
+            <double name="mean">24.167486700882723</double>
+            <double name="stddev">25.759068769870957</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="tvmedia">
+            <double name="min">0.0</double>
+            <double name="max">545.0</double>
+            <long name="count">32779</long>
+            <long name="missing">3495</long>
+            <double name="sum">954498.0</double>
+            <double name="sumOfSquares">6.8145914E7</double>
+            <double name="mean">29.119192165715855</double>
+            <double name="stddev">35.086472728937004</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="krone">
+            <double name="min">0.0</double>
+            <double name="max">2225.0</double>
+            <long name="count">2227469</long>
+            <long name="missing">604</long>
+            <double name="sum">4.0352191E7</double>
+            <double name="sumOfSquares">2.231027771E9</double>
+            <double name="mean">18.115713843829027</double>
+            <double name="stddev">25.95031577867995</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="oereiche">
+            <double name="min">1.0</double>
+            <double name="max">1982.0</double>
+            <long name="count">188927</long>
+            <long name="missing">307148</long>
+            <double name="sum">6977982.0</double>
+            <double name="sumOfSquares">6.23735894E8</double>
+            <double name="mean">36.93480550688891</double>
+            <double name="stddev">44.014718910464744</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="medianet">
+            <double name="min">0.0</double>
+            <double name="max">452.0</double>
+            <long name="count">126889</long>
+            <long name="missing">56</long>
+            <double name="sum">3052517.0</double>
+            <double name="sumOfSquares">1.35436577E8</double>
+            <double name="mean">24.05659277005887</double>
+            <double name="stddev">22.10535743164554</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="wiener">
+            <double name="min">0.0</double>
+            <double name="max">606.0</double>
+            <long name="count">9146</long>
+            <long name="missing">0</long>
+            <double name="sum">435330.0</double>
+            <double name="sumOfSquares">4.5831826E7</double>
+            <double name="mean">47.59785698666084</double>
+            <double name="stddev">52.40112240292758</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="ttkomp">
+            <double name="min">2.0</double>
+            <double name="max">362.0</double>
+            <long name="count">25644</long>
+            <long name="missing">4100</long>
+            <double name="sum">584465.0</double>
+            <double name="sumOfSquares">2.2042691E7</double>
+            <double name="mean">22.791491187022306</double>
+            <double name="stddev">18.4425169729193</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="hor">
+            <double name="min">0.0</double>
+            <double name="max">1294.0</double>
+            <long name="count">42906</long>
+            <long name="missing">7308</long>
+            <double name="sum">1346759.0</double>
+            <double name="sumOfSquares">7.1182273E7</double>
+            <double name="mean">31.388593669883</double>
+            <double name="stddev">25.957663655965185</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="arbeitw">
+            <double name="min">0.0</double>
+            <double name="max">555.0</double>
+            <long name="count">3590</long>
+            <long name="missing">747</long>
+            <double name="sum">299954.0</double>
+            <double name="sumOfSquares">4.8972758E7</double>
+            <double name="mean">83.55264623955432</double>
+            <double name="stddev">81.6225940197736</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="datum">
+            <double name="min">5.0</double>
+            <double name="max">823.0</double>
+            <long name="count">1850</long>
+            <long name="missing">0</long>
+            <double name="sum">208862.0</double>
+            <double name="sumOfSquares">4.2258558E7</double>
+            <double name="mean">112.89837837837838</double>
+            <double name="stddev">100.50811121107873</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="ktnmonat">
+            <double name="min">0.0</double>
+            <double name="max">640.0</double>
+            <long name="count">7048</long>
+            <long name="missing">0</long>
+            <double name="sum">263950.0</double>
+            <double name="sumOfSquares">2.547297E7</double>
+            <double name="mean">37.45034052213394</double>
+            <double name="stddev">47.03188689615219</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="vn">
+            <double name="min">1.0</double>
+            <double name="max">1663.0</double>
+            <long name="count">751114</long>
+            <long name="missing">21363</long>
+            <double name="sum">1.880108E7</double>
+            <double name="sumOfSquares">1.605573876E9</double>
+            <double name="mean">25.030927395841378</double>
+            <double name="stddev">38.87215995495012</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="apa">
+            <double name="min">Infinity</double>
+            <double name="max">-Infinity</double>
+            <long name="count">0</long>
+            <long name="missing">2566238</long>
+            <double name="sum">0.0</double>
+            <double name="sumOfSquares">0.0</double>
+            <double name="mean">NaN</double>
+            <double name="stddev">0.0</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="augustin">
+            <double name="min">0.0</double>
+            <double name="max">393.0</double>
+            <long name="count">8540</long>
+            <long name="missing">0</long>
+            <double name="sum">627621.0</double>
+            <double name="sumOfSquares">6.3357179E7</double>
+            <double name="mean">73.49192037470726</double>
+            <double name="stddev">44.92268206767486</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="wienerin">
+            <double name="min">0.0</double>
+            <double name="max">792.0</double>
+            <long name="count">17365</long>
+            <long name="missing">0</long>
+            <double name="sum">621047.0</double>
+            <double name="sumOfSquares">6.6889911E7</double>
+            <double name="mean">35.764295997696514</double>
+            <double name="stddev">50.72533226412231</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="formatdb">
+            <double name="min">0.0</double>
+            <double name="max">647.0</double>
+            <long name="count">81496</long>
+            <long name="missing">5917</long>
+            <double name="sum">2457381.0</double>
+            <double name="sumOfSquares">1.93969347E8</double>
+            <double name="mean">30.153394031608915</double>
+            <double name="stddev">38.35230996948196</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="heute">
+            <double name="min">0.0</double>
+            <double name="max">241.0</double>
+            <long name="count">98223</long>
+            <long name="missing">92615</long>
+            <double name="sum">744631.0</double>
+            <double name="sumOfSquares">1.0774977E7</double>
+            <double name="mean">7.581024810889507</double>
+            <double name="stddev">7.226874702515488</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="nvt">
+            <double name="min">0.0</double>
+            <double name="max">2549.0</double>
+            <long name="count">335166</long>
+            <long name="missing">40562</long>
+            <double name="sum">9543915.0</double>
+            <double name="sumOfSquares">1.108352551E9</double>
+            <double name="mean">28.475188414099282</double>
+            <double name="stddev">49.96045974846227</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="kurier">
+            <double name="min">0.0</double>
+            <double name="max">1232.0</double>
+            <long name="count">1311367</long>
+            <long name="missing">1432</long>
+            <double name="sum">3.8444926E7</double>
+            <double name="sumOfSquares">2.807527982E9</double>
+            <double name="mean">29.31667946501628</double>
+            <double name="stddev">35.79735104953457</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="diewir">
+            <double name="min">0.0</double>
+            <double name="max">457.0</double>
+            <long name="count">4783</long>
+            <long name="missing">0</long>
+            <double name="sum">277909.0</double>
+            <double name="sumOfSquares">3.1583549E7</double>
+            <double name="mean">58.10349153251098</double>
+            <double name="stddev">56.81506714971074</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="emedia">
+            <double name="min">0.0</double>
+            <double name="max">939.0</double>
+            <long name="count">28219</long>
+            <long name="missing">0</long>
+            <double name="sum">905595.0</double>
+            <double name="sumOfSquares">8.6693719E7</double>
+            <double name="mean">32.09167582125518</double>
+            <double name="stddev">45.19261187329251</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="kurier~">
+            <double name="min">5.0</double>
+            <double name="max">5.0</double>
+            <long name="count">1</long>
+            <long name="missing">0</long>
+            <double name="sum">5.0</double>
+            <double name="sumOfSquares">25.0</double>
+            <double name="mean">5.0</double>
+            <double name="stddev">0.0</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="standard">
+            <double name="min">1.0</double>
+            <double name="max">2083.0</double>
+            <long name="count">550346</long>
+            <long name="missing">659</long>
+            <double name="sum">2.1232978E7</double>
+            <double name="sumOfSquares">2.197121798E9</double>
+            <double name="mean">38.581143498817106</double>
+            <double name="stddev">50.037539204191624</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="news">
+            <double name="min">0.0</double>
+            <double name="max">2724.0</double>
+            <long name="count">64499</long>
+            <long name="missing">7239</long>
+            <double name="sum">2915902.0</double>
+            <double name="sumOfSquares">2.75053526E8</double>
+            <double name="mean">45.20848385246283</double>
+            <double name="stddev">47.12419002181896</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="ktz">
+            <double name="min">1.0</double>
+            <double name="max">647.0</double>
+            <long name="count">561388</long>
+            <long name="missing">7172</long>
+            <double name="sum">1.2953861E7</double>
+            <double name="sumOfSquares">7.48992621E8</double>
+            <double name="mean">23.074702344902278</double>
+            <double name="stddev">28.31500490393437</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="im">
+            <double name="min">0.0</double>
+            <double name="max">1245.0</double>
+            <long name="count">11311</long>
+            <long name="missing">0</long>
+            <double name="sum">599281.0</double>
+            <double name="sumOfSquares">6.6534613E7</double>
+            <double name="mean">52.982141278401556</double>
+            <double name="stddev">55.456805976695875</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="falter">
+            <double name="min">0.0</double>
+            <double name="max">1730.0</double>
+            <long name="count">52134</long>
+            <long name="missing">5553</long>
+            <double name="sum">2749467.0</double>
+            <double name="sumOfSquares">2.92555277E8</double>
+            <double name="mean">52.73846242375417</double>
+            <double name="stddev">53.200669375239684</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="presse">
+            <double name="min">2.0</double>
+            <double name="max">1112.0</double>
+            <long name="count">631639</long>
+            <long name="missing">5326</long>
+            <double name="sum">2.1454897E7</double>
+            <double name="sumOfSquares">1.437572981E9</double>
+            <double name="mean">33.96702388547889</double>
+            <double name="stddev">33.499013132672246</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="nvb">
+            <double name="min">1.0</double>
+            <double name="max">490.0</double>
+            <long name="count">544000</long>
+            <long name="missing">8855</long>
+            <double name="sum">1.0434634E7</double>
+            <double name="sumOfSquares">4.2955157E8</double>
+            <double name="mean">19.1813125</double>
+            <double name="stddev">20.535210799244485</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="furche">
+            <double name="min">0.0</double>
+            <double name="max">421.0</double>
+            <long name="count">28851</long>
+            <long name="missing">4402</long>
+            <double name="sum">1791743.0</double>
+            <double name="sumOfSquares">1.64065687E8</double>
+            <double name="mean">62.10332397490555</double>
+            <double name="stddev">42.77728020342638</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="tt">
+            <double name="min">1.0</double>
+            <double name="max">832.0</double>
+            <long name="count">971274</long>
+            <long name="missing">47930</long>
+            <double name="sum">2.197016E7</double>
+            <double name="sumOfSquares">1.098708506E9</double>
+            <double name="mean">22.619940408164947</double>
+            <double name="stddev">24.89060847564705</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="gewinn">
+            <double name="min">0.0</double>
+            <double name="max">747.0</double>
+            <long name="count">19297</long>
+            <long name="missing">1799</long>
+            <double name="sum">1285251.0</double>
+            <double name="sumOfSquares">1.59452365E8</double>
+            <double name="mean">66.60366896408769</double>
+            <double name="stddev">61.864485747639804</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="svz">
+            <double name="min">0.0</double>
+            <double name="max">365.0</double>
+            <long name="count">65647</long>
+            <long name="missing">67177</long>
+            <double name="sum">917195.0</double>
+            <double name="sumOfSquares">2.0603823E7</double>
+            <double name="mean">13.971620942312672</double>
+            <double name="stddev">10.89281486771196</double>
+            <lst name="facets"/>
+          </lst>
+          <lst name="stmonat">
+            <double name="min">0.0</double>
+            <double name="max">1216.0</double>
+            <long name="count">7838</long>
+            <long name="missing">0</long>
+            <double name="sum">269264.0</double>
+            <double name="sumOfSquares">3.3616186E7</double>
+            <double name="mean">34.35366164837969</double>
+            <double name="stddev">55.75926405194002</double>
+            <lst name="facets"/>
+          </lst>
+        </lst>
+      </lst>
+    </lst>
+  </lst>
+</lst>
+</response>
