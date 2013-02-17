@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:my="myFunctions" xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl" xmlns:exsl="http://exslt.org/common" version="2.0" extension-element-prefixes="my exsl xd">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:utils="http://aac.ac.at/corpus_shell/utils" xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl" xmlns:exsl="http://exslt.org/common" version="2.0" extension-element-prefixes="utils exsl xd"
+    xmlns="http://www.w3.org/1999/xhtml" >
+    
+    <xsl:import href="../utils.xsl"/>
+    
     <xd:doc scope="stylesheet">
         <xd:desc>
             <xd:p>
@@ -14,11 +18,12 @@
     <xsl:param name="mode"></xsl:param> 
 
 
-  <!-- taken from cmd2graph.xsl -->
-    <xsl:function name="my:normalize">
+  <!-- taken from cmd2graph.xsl  should be available at in helpers.xsl-->
+<!--    <xsl:function name="utils:normalize">
         <xsl:param name="value"/>
         <xsl:value-of select="translate($value,'*/-.'',$@={}:[]()#&gt;&lt; ','XZ__')"/>
-    </xsl:function>
+    </xsl:function>-->
+    
     <xsl:template match="/">
    <!-- some root element, to deliver well-formed x(ht)ml -->
         <div>
@@ -30,14 +35,15 @@
     </xsl:template>
     <xsl:template match="dataset" mode="data2table">
         <xsl:param name="data" select="."/>
+        <xsl:param name="dataset-name" select="concat(utils:normalize(@name),position())"/>
         <xsl:choose>
             <xsl:when test="$mode='dataseries-table'">
                 <xsl:apply-templates select="$data" mode="dataseries-table"/>
             </xsl:when>
             <xsl:otherwise>
-              <div id="dataset-{@key}" >
+                <div id="table-{$dataset-name}" >
                   <h3 class="title">
-                      <xsl:value-of select="$data/(@label,@key)[1]"/>
+                      <xsl:value-of select="$data/(@name,@label,@key)[1]"/>
                   </h3>
                   <table class="show">
                     
@@ -115,7 +121,7 @@
     <xsl:template match="dataseries" mode="dataseries-table">
   <!--  variable $labels not used yet, todo :  -->
         <xsl:variable name="labels" select="../labels"/>
-        <div id="{concat(my:normalize(../@key), '-', my:normalize(@key))}">
+        <div id="{concat(utils:normalize(../@key), '-', utils:normalize(@key))}">
             <table class="show">
                 <caption>
                     <xsl:value-of select="(@name,@label,@key)[not(.='')][1]"/>
@@ -191,7 +197,7 @@
     </xsl:template>
     
     <xsl:template match="li" mode="table">
-        <xsl:variable name="key" select="my:normalize(@key)"></xsl:variable>
+        <xsl:variable name="key" select="utils:normalize(@key)"></xsl:variable>
         <li>
             <a href=".?selected={$key}" data-key="{$key}" title="{(@title,$key)[1]}"><xsl:value-of select="."></xsl:value-of></a>
         </li>

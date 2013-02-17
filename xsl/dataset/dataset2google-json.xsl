@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:exsl="http://exslt.org/common" xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl" xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    version="2.0" extension-element-prefixes="exsl xd xs">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:utils="http://aac.ac.at/corpus_shell/utils" xmlns:exsl="http://exslt.org/common" xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns="http://www.w3.org/1999/xhtml" 
+    version="2.0" exclude-result-prefixes="exsl utils xs xd">
   <!--<xsl:import href="amc-params.xsl"  />
   <xsl:import href="amc-helpers.xsl"  />-->
     <xd:doc scope="stylesheet">
@@ -24,6 +25,7 @@
     </xd:doc>
     <xsl:template name="chart-google">
         <xsl:param name="data"/>
+        <xsl:param name="dataset-name" select="concat(utils:normalize(@name),position())"/>
         <xsl:variable name="json-data">
             <xsl:apply-templates select="$data" mode="data2chart-google">
 <!--        <xsl:with-param name="data" select="$data" ></xsl:with-param>-->
@@ -31,8 +33,8 @@
         </xsl:variable>
         <!-- try to guess appropriate layout, simply area-chart if two dimensional = more than one dataseries -->
         <xsl:variable name="layout" select="if (count($data//dataseries[not(@type='base')]) &gt; 1) then 'area' else 'pie' "/>
-<!--        DEBUG:<xsl:value-of select="count($data//dataseries)" />-->
-        <xsl:variable name="dataset-name" select="concat(@name,position())"/>
+        <!--DEBUG:<xsl:value-of select="count($data//dataseries)" />-->
+      
         <script type="text/javascript">
       
       // allow for multiple datasets (for every facet)
@@ -61,38 +63,15 @@
     <xsl:template name="callback-header-chart">
         <script type="text/javascript" src="{concat($scripts-dir, 'js/google-jsapi.js')}"/>
         <script type="text/javascript" src="{concat($scripts-dir, 'js/google-corechart.js')}"/>
-        <script type="text/javascript">
-                var data= {};
-                var options = {}; 
-                var chart = {};
-      
-      // copied locally instead as: google-corechart.js
-      //google.load("visualization", "1", {packages:["corechart"]});
-      
-            function drawChart(dataset) {        
-            var target_container_selector = "chart-" +  dataset;
-            
-               if (options[dataset]["layout"]=='pie') {
-               chart[dataset] = new google.visualization.PieChart(document.getElementById(target_container_selector));
-               chart[dataset].draw(data[dataset], options[dataset]);
-               } else {
-               chart[dataset] = new google.visualization.AreaChart(document.getElementById(target_container_selector));
-               chart[dataset].draw(data[dataset], options[dataset]);
-               }
-            }
-     
-     function toggleLayout(dataset) {
-        if (options[dataset]["layout"]=='pie') { options[dataset]["layout"] = 'area' } else { options[dataset]["layout"]='pie'};
-        drawChart(dataset);
-     }
-      
-    </script>
+        <script type="text/javascript" src="{concat($scripts-dir, 'js/chart.js')}"/>
     </xsl:template>
+    
     <xsl:template match="dataset" mode="data2chart-google">
         <xsl:param name="data" select="."/>
         <xsl:variable name="inverted-data">
             <xsl:apply-templates select="$data" mode="invert"/>
         </xsl:variable>
+<!--        DEBUG: <xsl:copy-of select="$inverted-data" />-->
         <xsl:text>[</xsl:text>
         <xsl:apply-templates select="$inverted-data" mode="chart-google"/>
         <xsl:text>]</xsl:text>

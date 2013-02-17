@@ -3,10 +3,10 @@
   xmlns:exsl="http://exslt.org/common"
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl"
-  xmlns:my="myFunctions"
-  extension-element-prefixes="exsl xs xd">
+  xmlns:utils="http://aac.ac.at/corpus_shell/utils"
+  extension-element-prefixes="exsl xs xd utils">
   
-  <xsl:import href="amc-helpers.xsl"/>
+  <xsl:import href="solr-utils.xsl"/>
   
   <xd:doc scope="stylesheet">
     <xd:desc>
@@ -181,7 +181,7 @@
     </xsl:param>    
     <xsl:param name="pivot-data" select="$source-data/response/lst[@name = 'facet_counts']/lst[@name = 'facet_pivot']/arr" />
 
-    <dataset name="{$pivot-fields}-{my:normalize($query)}" label="{$pivot-fields} {$query}">
+    <dataset name="{$pivot-fields}-{utils:normalize($query)}" label="{$pivot-fields} {$query}">
       <xsl:call-template name="facets2labels">
         <xsl:with-param name="facet-list" select="$facet2-list"></xsl:with-param>
       </xsl:call-template>
@@ -231,11 +231,11 @@
     <xsl:param name="all-value" select=".//result/@numFound"></xsl:param>
     
       <dataseries name="{$dataseries-title}">
-        <value label="{$all-label}" formatted="{my:format-number($all-value,$number-format-default)}" >
+        <value label="{$all-label}" formatted="{utils:format-number($all-value,$number-format-default)}" >
           <xsl:value-of select="$all-value"/>
         </value>
       <xsl:for-each select="$facet-list/*" >
-        <value label="{if(xs:string(@name)='') then '_EMPTY_' else translate(xs:string(@name),'~ ','__')}" formatted="{my:format-number(.,$number-format-default)}" >
+        <value label="{if(xs:string(@name)='') then '_EMPTY_' else translate(xs:string(@name),'~ ','__')}" formatted="{utils:format-number(.,$number-format-default)}" >
           <xsl:value-of select="." />
         </value>
       </xsl:for-each>    
@@ -254,7 +254,7 @@
     <xsl:param name="facet2-list"></xsl:param>
     
     <dataseries name="{*[@name = 'value']}" >        
-      <value label="{$all-label}" formatted="{my:format-number(*[@name = 'count'],$number-format-default)}" >
+      <value label="{$all-label}" formatted="{utils:format-number(*[@name = 'count'],$number-format-default)}" >
         <xsl:value-of select="*[@name = 'count']"/>
       </value>        
       
@@ -265,7 +265,7 @@
         <value label="{$curr_label}" >
           <xsl:choose>
           <xsl:when test="number($count)=number($count)" > <!-- test if number -->             
-            <xsl:attribute name="formatted" ><xsl:value-of select="my:format-number($count,$number-format-default)" /></xsl:attribute>
+            <xsl:attribute name="formatted" ><xsl:value-of select="utils:format-number($count,$number-format-default)" /></xsl:attribute>
             <xsl:value-of select="$count" />
           </xsl:when>
             <xsl:otherwise>               
@@ -304,7 +304,7 @@
       <xsl:variable name="curr_dataseries" select="string(@name)" />
       
     <dataseries name="{@name}" >        
-      <value label="{$all-label}" formatted="{my:format-number(.,$number-format-default)}" >
+      <value label="{$all-label}" formatted="{utils:format-number(.,$number-format-default)}" >
         <xsl:value-of select="."/>
       </value>        
       
@@ -316,7 +316,7 @@
           <value label="{$curr_label}" >
             <xsl:choose>
               <xsl:when test="number($count)=number($count)" > <!-- test if number -->             
-                <xsl:attribute name="formatted" ><xsl:value-of select="my:format-number($count,$number-format-default)" /></xsl:attribute>
+                <xsl:attribute name="formatted" ><xsl:value-of select="utils:format-number($count,$number-format-default)" /></xsl:attribute>
                 <xsl:value-of select="$count" />
               </xsl:when>
               <xsl:otherwise>               
@@ -482,7 +482,7 @@
             <xsl:for-each select="exsl:node-set($result)//response">
               <!-- TODO: facets not aligned! -->
               <!-- and a dataseries for every metrics in the response (min, max, sum...) -->
-              <xsl:variable name="metrics" select="distinct-values(lst[@name = 'stats']/*/lst[1]/lst[@name = 'facets']/lst[@name=$curr_facet]/lst/(double|long)/@name)[.=$statsx_metrics or $statsx_metrics=''] " ></xsl:variable>
+              <xsl:variable name="metrics" select="distinct-values(lst[@name = 'stats']/*/lst[1]/lst[@name = 'facets']/lst[@name=$curr_facet]/lst/(double|long)/@name)[.=$statsx_metrics or $statsx_metrics='all'] " ></xsl:variable>
               
               <!-- where the stat-fields data starts -->
               <xsl:variable name="stats-data" select="lst[@name = 'stats']/*/lst" />
@@ -490,6 +490,7 @@
               <!-- iterate over stat-fields -->
               <xsl:for-each select="lst[@name = 'stats']/*/lst">
                 <xsl:variable name="curr_field" select="@name" />
+<!--                DEBUG:<xsl:value-of select="concat($curr_facet, '-', $curr_field, '-', $metrics)"></xsl:value-of>-->
                 
                 <xsl:for-each select="$metrics">
                   <xsl:variable name="curr_metric" select="." />
@@ -625,7 +626,7 @@
     <xsl:variable name="base-value" select="exsl:node-set($base-data)//value[@label=current()/@label]"/>
     <xsl:variable name="relfreq" select=". div $base-value"/>        
     <value label="{@label}"  formatted="{@formatted}" abs="{.}" rel="{$relfreq}" 
-      rel_formatted="{my:format-number($relfreq * $percentile-base, $number-format-dec)}">
+      rel_formatted="{utils:format-number($relfreq * $percentile-base, $number-format-dec)}">
       <xsl:value-of select="round($relfreq * $percentile-base * $decimal-base) div $decimal-base"/>
     </value>
     

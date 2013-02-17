@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:exsl="http://exslt.org/common" version="1.0" extension-element-prefixes="exsl">
-    <xsl:import href="amc-helpers.xsl"/>
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:exsl="http://exslt.org/common"
+    xmlns:utils="http://aac.ac.at/corpus_shell/utils"
+    exclude-result-prefixes="exsl utils"
+    xmlns="http://www.w3.org/1999/xhtml" version="1.0" extension-element-prefixes="exsl">
+    <xsl:import href="solr-utils.xsl"/>
     <xsl:import href="dataset2table.xsl"/>
     <xsl:import href="dataset2google-json.xsl"/>
     <xsl:include href="../commons_v2.xsl"/>
@@ -30,7 +33,9 @@
             </xd:p>
         </xd:desc>
     </xd:doc>
-    <xsl:output method="html" indent="yes" omit-xml-declaration="no" media-type="text/html; charset=UTF-8" encoding="utf-8"/>
+    <xsl:output method="html" indent="yes" omit-xml-declaration="no" media-type="text/html; charset=UTF-8" encoding="utf-8"
+      
+    />
     <xsl:template name="continue-root">
         <div>
             <!--<xsl:call-template name="callback-header-dataset"></xsl:call-template>-->
@@ -66,7 +71,8 @@
         </xsl:variable>
 <!--            <xsl:apply-templates  mode="query-input"/>-->
 <!--            <xsl:copy-of select="$corrected-dataset"/>-->
-        <xsl:variable name="dataset-name" select="concat(@name,position())"/>
+        <xsl:variable name="dataset-name" select="concat(utils:normalize(@name),position())"/>
+        
         <xsl:if test="contains($parts,'chart')">
             <div class="infovis-wrapper">
                 <div id="infovis-navi-{$dataset-name}">
@@ -79,6 +85,7 @@
             </div>
             <xsl:call-template name="chart-google">
                 <xsl:with-param name="data" select="$corrected-dataset"/>                
+                <xsl:with-param name="dataset-name" select="$dataset-name"/>
             </xsl:call-template>
         </xsl:if>
         <xsl:if test="contains($parts,'table')">
@@ -86,6 +93,7 @@
                     <input type="text" id="filter" />
                 </form>-->
             <xsl:apply-templates select="$corrected-dataset" mode="data2table">
+                    <xsl:with-param name="dataset-name" select="$dataset-name"/>
                     <!--                    <xsl:with-param name="data" select="$chart-data"></xsl:with-param>-->
             </xsl:apply-templates>
         </xsl:if>
@@ -143,10 +151,12 @@
         </style>
         <script type="text/javascript" src="{concat($scripts-dir, 'js/jquery/jquery.min.js')}"/>
         <script type="text/javascript" src="{concat($scripts-dir, 'js/jquery/jquery-ui.min.js')}"/>
-        <xsl:if test="contains($parts,'table')">
+        
+        <!--currently not used
+            <xsl:if test="contains($parts,'table')">
             <script type="text/javascript" src="{concat($scripts-dir, 'js/jquery/jquery.tablesorter.js')}"/>
             <script type="text/javascript" src="{concat($scripts-dir, 'js/jquery/jquery.uitablefilter.js')}"/>
-        </xsl:if>
+        </xsl:if>-->
      
      <!-- it would be nicer, if this is in chart-xsl, but how to call it in a generic way -->
         <xsl:if test="contains($parts,'chart')">

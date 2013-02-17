@@ -3,11 +3,12 @@
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:exsl="http://exslt.org/common"
     xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl"
-    xmlns:my="myFunctions"
+    xmlns:utils="http://aac.ac.at/corpus_shell/utils"
     xmlns="http://www.w3.org/1999/xhtml"
-    exclude-result-prefixes="exsl xs xd my" 
+    exclude-result-prefixes="exsl xs xd utils" 
     version="2.0">
     
+    <xsl:import href="../utils.xsl"/>
     <xsl:import href="amc-params.xsl"/> 
     
     <xsl:output method="xhtml"  
@@ -22,27 +23,6 @@
             <xd:p>params moved to amc-params.xsl [2012-12-10]</xd:p>
         </xd:desc>
     </xd:doc>
-    
-    
-    <xsl:decimal-format decimal-separator="," grouping-separator="."/>
-    <xd:doc>
-        <xd:desc>
-            <xd:p></xd:p>
-        </xd:desc>
-    </xd:doc>
-    <xsl:variable name="number-format-dec" >#.##0,##</xsl:variable>    
-    <xd:doc>
-        <xd:desc>
-            <xd:p></xd:p>
-        </xd:desc>
-    </xd:doc>
-    <xsl:variable name="number-format-default" >#.###</xsl:variable>
-    <xd:doc>
-        <xd:desc>
-            <xd:p></xd:p>
-        </xd:desc>
-    </xd:doc>
-    <xsl:variable name="number-format-plain" >0,##</xsl:variable>
     
     <xd:doc>
         <xd:desc>
@@ -66,34 +46,11 @@
             <xd:p>access function to the params-list </xd:p>
         </xd:desc>
     </xd:doc>
-    <xsl:function name="my:params">
+    <xsl:function name="utils:params">
         <xsl:param name="param-name"></xsl:param>
         <xsl:param name="default-value"></xsl:param>
         <xsl:value-of select="if(exists($params/*[@name=$param-name])) then $params/*[@name=$param-name] else $default-value "></xsl:value-of>
     </xsl:function>
-    
-    <xd:doc>
-        <xd:desc>
-            <xd:p>convenience format-number function, 
-                if empty -> 0, else if not a number return the string</xd:p>
-        </xd:desc>
-    </xd:doc>
-    <xsl:function name="my:format-number">
-        <xsl:param name="number"></xsl:param>
-        <xsl:param name="pattern"></xsl:param>
-        <xsl:value-of select="
-            if (xs:string($number)='' or number($number) =0) then 0 else
-            if(number($number)=number($number)) then format-number($number,$pattern) 
-            else $number"></xsl:value-of>
-    </xsl:function>
-    
-    
-    <!-- taken from cmd2graph.xsl -> smc_functions.xsl -->
-    <xsl:function name="my:normalize">
-        <xsl:param name="value" />		
-        <xsl:value-of select="translate($value,'*/-.'',$@={}:[]()#>&lt; ','XZ__')" />		
-    </xsl:function>
-    
     
     <xd:doc >
         <xd:desc>
@@ -102,13 +59,6 @@
         </xd:desc>
         <xd:param name="q">the query string; default is the query of the original result </xd:param>
         <xd:param name="link">url to retrieve; overrides the q-param</xd:param>
-    </xd:doc>
-    <xd:doc>
-        <xd:desc>
-            <xd:p></xd:p>
-        </xd:desc>
-        <xd:param name="q"></xd:param>
-        <xd:param name="link"></xd:param>
     </xd:doc>
     <xsl:template name="subrequest" >
         <xsl:param name="q" select="//*[contains(@name,'q')]" />
@@ -124,9 +74,7 @@
                 <xsl:message>WARNING: subrequest failed! <xsl:value-of select="$link"></xsl:value-of></xsl:message>
             </xsl:otherwise>
         </xsl:choose>
-        
     </xsl:template>  
-    
     
     <xd:doc>
         <xd:desc>
@@ -195,7 +143,7 @@
         <!--<xsl:for-each select="result">-->
         <div class="response-header">
             <xsl:apply-templates  mode="query-input"/>
-            <span class="label">hits: </span><span class="value hilight"><xsl:value-of select="my:format-number(//result/@numFound, '#.###')" /></span>
+            <span class="label">hits: </span><span class="value hilight"><xsl:value-of select="utils:format-number(//result/@numFound, '#.###')" /></span>
         </div>
     </xsl:template>
     
@@ -273,82 +221,6 @@
         </xsl:choose>
     </xsl:template>
     
-    <xd:doc>
-        <xd:desc>
-            <xd:p>inverts the dataset, i.e. labels will get dataseries and vice versa</xd:p>
-            <xd:p>needed mainly for AreaChart display.</xd:p>
-        </xd:desc>
-        <xd:param name="dataset"></xd:param>
-    </xd:doc>
-    <xsl:template match="dataset" mode="invert-old">
-        <xsl:param name="dataset" select="."></xsl:param>
-        <dataset name="{@name}">
-            <labels>
-                <xsl:for-each select="dataseries">
-                    <label>
-                        <xsl:if test="@type"><xsl:attribute name="type" select="@type"></xsl:attribute></xsl:if>
-                        <xsl:value-of select="@name" />
-                    </label>
-                </xsl:for-each>
-            </labels>
-            <xsl:for-each select="labels/label">
-                <xsl:variable name="curr_label_old" select="text()" ></xsl:variable>
-                <dataseries name="{$curr_label_old}" >
-                    <xsl:for-each select="$dataset//value[@label=$curr_label_old]">                            
-                        <value label="{../@name}" formatted="{@formatted}" >
-                            <xsl:if test="../@type"><xsl:attribute name="type" select="../@type"></xsl:attribute></xsl:if>
-                            <xsl:value-of select="."/>
-                        </value>
-                    </xsl:for-each>
-                </dataseries>
-            </xsl:for-each>
-        </dataset>
-    </xsl:template>
-    
-    <xd:doc>
-        <xd:desc>
-            <xd:p>inverts the dataset, i.e. labels will get dataseries and vice versa</xd:p>
-            <xd:p>needed mainly for AreaChart display.</xd:p>
-            <xd:p>tries to cater for inconsistent structure (@key, @name, @label ...)
-            once all data is harmonized (according to dataset.xsd), we can get rid of it</xd:p>
-        </xd:desc>
-        <xd:param name="dataset"></xd:param>
-    </xd:doc>
-    <!-- -->
-    <xsl:template match="dataset" mode="invert">
-        <xsl:param name="dataset" select="."/>
-        <!-- for now, make dataset without explicit namespace, for that need to override the current xhtml default ns -->
-        <dataset xmlns="">
-            <xsl:copy-of select="@*"/>
-            <labels>
-                <xsl:for-each select="dataseries">
-                    <label>
-                        <xsl:if test="@type">
-                            <xsl:attribute name="type" select="@type"/>
-                        </xsl:if>
-                        <xsl:if test="@key">
-                            <xsl:attribute name="key" select="@key"/>
-                        </xsl:if>
-                        <xsl:value-of select="(@name, @label ,@key)[1]"/>
-                    </label>
-                </xsl:for-each>
-            </labels>
-            <xsl:for-each select="labels/label">
-                <xsl:variable name="curr_label_old" select="(@key, text())[1]"/>
-                <dataseries key="{$curr_label_old}" label="{text()}">
-                    <xsl:for-each select="$dataset//value[$curr_label_old=@key or $curr_label_old=@label]">
-                        <value key="{(../@name, ../@label,../@key)[not(.='')][1]}">
-                            <!-- copy other (value) attributes, but not the key or label --> 
-                            <xsl:copy-of select="@*[not(.='')][not(name()=('key','label'))]"/>
-                            <!-- formatted="{@formatted}"
-                <xsl:if test="../@type"><xsl:attribute name="type" select="../@type"></xsl:attribute></xsl:if>-->
-                            <xsl:value-of select="."/>
-                        </value>
-                    </xsl:for-each>
-                </dataseries>
-            </xsl:for-each>
-        </dataset>
-    </xsl:template>
     
 </xsl:stylesheet>
 

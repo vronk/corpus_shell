@@ -3,7 +3,7 @@
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:exsl="http://exslt.org/common"
     xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl"
-    xmlns:my="myFunctions"
+    xmlns:utils="http://aac.ac.at/corpus_shell/utils"
     extension-element-prefixes="exsl xs" 
     version="2.0">
     
@@ -44,7 +44,7 @@
             <xd:p>0|1</xd:p>
         </xd:desc>
     </xd:doc>
-    <xsl:param name="reldata" select="my:params('reldata',0)" />
+    <xsl:param name="reldata" select="utils:params('reldata',0)" />
     
     
     <xd:doc>
@@ -54,16 +54,18 @@
             <xd:p>recognized values: chart,table</xd:p>
         </xd:desc>
     </xd:doc>
-    <xsl:param name="parts" select="my:params('parts','chart, table, hits')" />
+    <xsl:param name="parts" select="utils:params('parts','chart, table, hits')" />
     
     
     <xd:doc>
         <xd:desc>
             <xd:p>optional string-list to restrict metrics processed from the <xd:a href="http://wiki.apache.org/solr/StatsComponent">stats-component</xd:a></xd:p>
-            <xd:p>allowed values:  min, max, sum, count, missing, sumOfSquares, mean, stddev </xd:p>
+            <xd:p>allowed values:  min, max, sum, count, missing, sumOfSquares, mean, stddev, all </xd:p>
+            <xd:p>default: 'sum'</xd:p>
+            <xd:p>'' takes none </xd:p>
         </xd:desc>
     </xd:doc>
-    <xsl:param name="statsx_metrics" select="my:params('statsx.metrics',0)"></xsl:param>
+    <xsl:param name="statsx_metrics" select="utils:params('statsx.metrics','sum')"></xsl:param>
     
     <xd:doc>
         <xd:desc>

@@ -16,7 +16,7 @@
             <xd:p><xd:b>Created on:</xd:b>  2012-09-28</xd:p>
             <xd:p><xd:b>Author:</xd:b> matej</xd:p>
             <xd:p>main stylesheet of the amc views, provides the html-boilerplate and calls the templates for actual processing of the data</xd:p>            
-            <xd:p>(originally called <xd:ref>apa.xsl</xd:ref> and <xd:ref>amc.xsl</xd:ref>)</xd:p>
+            <xd:p>(originally called <xd:ref>apa.xsl</xd:ref>)</xd:p>
             <xd:p>It processes the faceted results of any normal solr-request, but additionally it is able to treat specially two extra parameters:
                 <xd:i>qx</xd:i> and <xd:i>baseq</xd:i>.</xd:p>
             <xd:p>If the result contains facets (<code>lst[@name='facet_fields']/lst</code>),
@@ -109,7 +109,6 @@ media-type="text/xhtml"
             
         </xsl:variable>
         
-        
         <html xmlns="http://www.w3.org/1999/xhtml">
             <head>
                 <link rel="stylesheet" type="text/css" href="{concat($scripts-dir, 'style/jquery.ui.resizable.css')}" />
@@ -117,47 +116,42 @@ media-type="text/xhtml"
                 <link rel="stylesheet" type="text/css" href="{concat($scripts-dir, 'style/jquery/clarindotblue/jquery-ui-1.8.5.custom.css')}" />
                 <link rel="stylesheet" type="text/css" href="{concat($scripts-dir, 'style/cmds-ui.css')}" />
                 
-                <!--
-                  	<xsl:call-template name="chart-jit" >
-                        <xsl:with-param name="facet-list" select="//lst[@name='facet_fields']/lst[1]"></xsl:with-param>
-                  	</xsl:call-template>
-                -->                    
                 <!--table { border-collapse:collapse;  border:1px solid grey }
         td {padding: 3px; border:1px solid grey}-->
                 <style type="text/css">
         
-        div#infovis-wrapper {border: 1px solid grey; margin: 20px; padding: 5px; height:450px; width:800px;}
-        #infovis {height: 90%; width: 100%;}
+        div.infovis-wrapper {border: 1px solid grey; margin: 20px; padding: 5px; height:350px; width:800px;}
+        .infovis {height: 90%; width: 100%;}
         .value { text-align: right; }
         </style> 
                 <!--DEBUG: <xsl:apply-templates select="$chart-data" mode="invert" />
                 DEBUG: <xsl:copy-of select="$chart-data" />-->
+           
+                <script type="text/javascript" src="{concat($scripts-dir, 'js/jquery/jquery.min.js')}"></script>
+                <script type="text/javascript" src="{concat($scripts-dir, 'js/jquery/jquery-ui.min.js')}"></script>
+             
+                <!--currently not used
+                    <xsl:if test="contains($parts,'table')">
+                    <script type="text/javascript" src="{concat($scripts-dir, 'js/jquery/jquery.tablesorter.js')}"/>
+                    <script type="text/javascript" src="{concat($scripts-dir, 'js/jquery/jquery.uitablefilter.js')}"/>
+                </xsl:if>-->
                 
                 <xsl:if test="contains($parts,'chart')" >
                     <xsl:call-template name="callback-header-chart" />
-                      
-               <!--    <xsl:call-template name="chart-google" >
-                       <xsl:with-param name="data" >                        
-                               <xsl:apply-templates select="exsl:node-set($chart-data)[1]" mode="invert" />                                               
-                       </xsl:with-param>
-                   </xsl:call-template>-->
                 </xsl:if>
-               
-                <script type="text/javascript" src="{concat($scripts-dir, 'js/jquery/jquery.min.js')}"></script>
-                <script type="text/javascript" src="{concat($scripts-dir, 'js/jquery/jquery-ui.min.js')}"></script>
-                <script type="text/javascript" src="{concat($scripts-dir, 'js/jquery/jquery.tablesorter.js')}"></script>
-                <script type="text/javascript" src="{concat($scripts-dir, 'js/jquery/jquery.uitablefilter.js')}"></script>
                 
-                <script type="text/javascript" src="{concat($scripts-dir, 'js/amc.js')}"></script>
+<!--                <script type="text/javascript" src="{concat($scripts-dir, 'js/amc.js')}"></script>-->
                 
             </head>
             <body >
                 <h1>amc search interface</h1>
                 
-                <xsl:apply-templates  mode="query-input"/>
-                
+                <xsl:call-template name="response-header"/>
+
 <!--      DEBUG:               <xsl:copy-of select="$chart-data" />-->
-                
+    
+<!--    DEBUG: parts:<xsl:value-of select="$parts" />-->
+            <!-- displaying chart-data passed to dataset2view -->
                 <xsl:for-each select="$chart-data">
                                 <xsl:call-template name="continue-root"></xsl:call-template>
                 </xsl:for-each>
@@ -165,164 +159,10 @@ media-type="text/xhtml"
                 <xsl:if test="contains($parts,'hits') and exists(/response/result/doc)" >
                     <xsl:call-template name="hits"></xsl:call-template>
                 </xsl:if>                    
-                <!--
-                <xsl:if test="contains($parts,'table')" >
-                <form id="filter-form">
-                    <input type="text" id="filter" />
-                </form>
-                    <xsl:apply-templates select="exsl:node-set($chart-data)" mode="data2table">
-    <!-\-                    <xsl:with-param name="data" select="$chart-data"></xsl:with-param>-\->
-                    </xsl:apply-templates>
-                </xsl:if>
-                
-                <xsl:if test="contains($parts,'chart')" >
-                    <div id="infovis-wrapper" >
-                        <div id="infovis-navi" >
-                            <xsl:for-each select="exsl:node-set($chart-data)//dataset" >
-                                <a onclick="drawChart({position() - 1})" ><xsl:value-of select="@name"/></a>
-                            </xsl:for-each>
-                            <a onclick="toggleStacked();" >stacked</a>
-                            <a onclick="toggleLayout();" >layout</a>
-                        </div>
-                        <div id="infovis" ></div>
-                 </div>
-                </xsl:if> 
-               -->
-                               
-                <!-- <table >
-                    <xsl:call-template name="table-header"></xsl:call-template>
-                    <xsl:apply-templates select="response/lst[@name = 'facet_counts']/lst[@name = 'facet_pivot']/arr/lst" />
-                    </table> -->
+
             </body>
         </html>
     </xsl:template>
-    
-    <xd:doc xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl">
-        <xd:desc>
-            <xd:p></xd:p>
-        </xd:desc>
-    </xd:doc>
-    <xsl:template match="result" >
-        <span class="key">hits:</span><span class="value"><xsl:value-of select="@numFound" /></span>        
-        <xsl:apply-templates />
-    </xsl:template>
-    
-    <xd:doc xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl">
-        <xd:desc>
-            <xd:p></xd:p>
-        </xd:desc>
-    </xd:doc>
-    <xsl:template match="lst[@name='facet_fields']" >
-        <table><caption>facets</caption>
-            <tr>
-                <xsl:apply-templates mode="table-cell"/>
-            </tr>
-        </table>
-    </xsl:template>
-    
-    <xd:doc xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl">
-        <xd:desc>
-            <xd:p></xd:p>
-        </xd:desc>
-    </xd:doc>
-    <xsl:template match="lst[@name='facet_fields']/lst"  mode="table-cell">
-        <td valign="top">
-            <table><caption><xsl:value-of select="@name" /></caption>
-                <xsl:apply-templates mode="table-row" />
-            </table>
-        </td>
-    </xsl:template>
-    
-    <xd:doc xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl">
-        <xd:desc>
-            <xd:p></xd:p>
-        </xd:desc>
-    </xd:doc>
-    <xsl:template match="*[@name]" mode="table-row" >
-        <tr><td><xsl:value-of select="@name" /></td><td class="{name()}"><xsl:value-of select="." /></td></tr>
-    </xsl:template>
-    
-    
-    
-    <xd:doc xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl">
-        <xd:desc>
-            <xd:p></xd:p>
-        </xd:desc>
-    </xd:doc>
-    <xsl:template match="lst[@name='responseHeader']">	        
-        <div class="header">
-            <xsl:apply-templates/>
-            <span class="key">duration:</span><span class="value"><xsl:value-of select="int[@name='QTime']" /></span>            
-        </div>
-    </xsl:template>
-    
-    <xd:doc xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl">
-        <xd:desc>
-            <xd:p></xd:p>
-        </xd:desc>
-    </xd:doc>
-    <xsl:template name="query-input" match="lst[@name='params']" mode="query-input">
-        <form>        
-           <table border="0">                
-        <!--<xsl:choose>
-            <!-\- pivot mode (take first two facets) -\->
-            <xsl:when test="str[@name = 'facet.pivot']">                
-                
-            </xsl:when>
-            <!-\- multi query mode (n queries and one (first) facet -\->
-            <xsl:when test="str[contains(@name,'qx')]">
-                
-            </xsl:when>
-            <xsl:otherwise>
-                <xsl:apply-templates />
-            </xsl:otherwise>
-            </xsl:choose>-->
-               <xsl:apply-templates />
-            </table>
-            <input type="submit" value="search" />
-            <xsl:call-template name="link" />
-        </form>
-    </xsl:template>
-        
-    <xd:doc xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl">
-        <xd:desc>
-            <xd:p></xd:p>
-        </xd:desc>
-    </xd:doc>
-    <xsl:template match="lst[@name='params']/str" >
-        <tr><td border="0"><xsl:value-of select="@name" />:</td>
-            <td><input type="text" name="{@name}"  value="{.}" /></td></tr>
-    </xsl:template>
-    
-    <xd:doc xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl">
-        <xd:desc>
-            <xd:p></xd:p>
-        </xd:desc>
-    </xd:doc>
-    <xsl:template match="lst[@name='params']/arr" >
-        <tr><td border="0"><xsl:value-of select="@name" />:</td>
-            <td><xsl:apply-templates  />
-            </td></tr>
-    </xsl:template>
-    
-    <xd:doc xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl">
-        <xd:desc>
-            <xd:p></xd:p>
-        </xd:desc>
-    </xd:doc>
-    <xsl:template match="lst[@name='params']/arr/str" >        
-        <input type="text" name="{../@name}"  value="{.}" /><br/>        
-    </xsl:template>
-    
-    
-    <xd:doc xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl">
-        <xd:desc>
-            <xd:p></xd:p>
-        </xd:desc>
-    </xd:doc>
-    <xsl:template match="text()" />
-    
-    <xsl:template match="text()" mode="query-input"/>
     
     
 </xsl:stylesheet>
