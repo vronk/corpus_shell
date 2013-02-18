@@ -20,7 +20,7 @@
             <xd:p>baseurl for the subrequests</xd:p>
         </xd:desc>
     </xd:doc>
-    <xsl:param name="baseurl" select="'http://193.170.82.207:8985/solr/select?'"/>
+    <xsl:param name="baseurl" select="utils:params('baseurl','http://193.170.82.207:8985/solr/select?')"/>
     <xd:doc>
         <xd:desc>
             <xd:p>if the base-data with the baseq cannot be retrieved (e.g. network-error) 
