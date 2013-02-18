@@ -2,7 +2,8 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
         xmlns:saxon="http://saxon.sf.net/"    
 xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    exclude-result-prefixes="xs saxon"
+xmlns:utils="http://aac.ac.at/corpus_shell/utils"
+    exclude-result-prefixes="xs saxon utils"
     version="2.0">
 
     
@@ -13,9 +14,15 @@ xmlns:xs="http://www.w3.org/2001/XMLSchema"
     </xsl:template>
     
     <xsl:template match="result" mode="hits">
+        
+        <div class="result">
+            <h3>Result list: <xsl:value-of select="(.//*[@name='params']/*[@name='q'], utils:params('q','')) [1]" ></xsl:value-of></h3>
+            <span class="label">hits: </span><span class="value hilight"><xsl:value-of select="utils:format-number(@numFound, '#.###')" /></span>
+            <span class="label">start, count: </span><span class="value"><xsl:value-of select="@start" />, <xsl:value-of select="utils:params('rows','')" /></span>
         <table class="show-lines">
-            <xsl:apply-templates mode="hits"></xsl:apply-templates>
+            <xsl:apply-templates select="doc" mode="hits"></xsl:apply-templates>
         </table>
+        </div>
     </xsl:template>
     
     <xsl:template match="doc"  mode="hits">
@@ -48,7 +55,10 @@ xmlns:xs="http://www.w3.org/2001/XMLSchema"
     <xsl:template name="get-kwic" >
     <xsl:param name="id"></xsl:param>
     
+        <!-- 
         <xsl:variable name="highlights" select="//lst[@name='highlighting']/lst"></xsl:variable>
+        stay contextual for the case of a multiresult -->
+        <xsl:variable name="highlights" select="ancestor::result[@name='response']/lst[@name='highlighting']/lst"></xsl:variable>
         <xsl:choose>
             <xsl:when test="$highlights">
                 <xsl:variable name="match" select="$highlights[@name=$id]" />
