@@ -23,8 +23,19 @@
 
   
   <xsl:template match="/" >
+    
+    <xsl:call-template name="preprocess-solr-result" />
+      
+  </xsl:template>
+  
+  
+  <xsl:template name="preprocess-solr-result">
     <!--<result>
     reldata:<xsl:value-of select="$reldata" />-->
+    
+    <xsl:variable name="resolved-result">
+      <xsl:call-template name="resolve-qx"></xsl:call-template>
+    </xsl:variable>
     
     <xsl:variable name="datasets">
       <xsl:choose>
@@ -32,7 +43,8 @@
           <xsl:call-template name="data2reldata"></xsl:call-template>                
         </xsl:when>
         <xsl:otherwise>
-          <xsl:call-template name="qx2data"></xsl:call-template>
+          <!--<xsl:call-template name="qx2data"></xsl:call-template>-->
+          <xsl:copy-of select="$resolved-result//dataset" />
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
@@ -51,6 +63,8 @@
       numFound="{$numberOfRecords}" numHits="{$numberOfHits}">
       <xsl:copy-of select="$params"></xsl:copy-of>
         <xsl:copy-of select="$datasets"></xsl:copy-of>
+      <!-- copy in the hits -->
+      <xsl:copy-of select="$resolved-result//result[@name='response']" />
       </result>
   
   </xsl:template>
@@ -82,16 +96,17 @@
   </xsl:if>
   
 </xsl:template>
+  
+  
   <xd:doc>
     <xd:desc>
-      <xd:p>Generates a dataset with multiple queries (based on the <xd:b>qx</xd:b> parameter).</xd:p> 
-      <xd:p>First it creates a multiresult out of the original result and the results of the subrequests 
-        then lets convert the multiresult into a dataset representation.</xd:p>
+      <xd:p>resolves multiple queries (based on the <xd:b>qx</xd:b> parameter) with  subrequests </xd:p> 
+      <xd:p>it creates a multiresult out of the original result and the results of the subrequests.</xd:p>
     </xd:desc>
     <xd:param name="qx">additional queries</xd:param>
     <xd:param name="params">all the parameters of the original result, to be reused in the subrequest</xd:param>
   </xd:doc>
-  <xsl:template name="qx2data" >
+  <xsl:template name="resolve-qx" >
     <xsl:param name="qx" select="//*[contains(@name,'qx')]" />
     <xsl:param name="params" select="//lst[@name='params']" />
     
@@ -121,6 +136,48 @@
         </xsl:for-each>
       </result>
     </xsl:variable>
+
+    <result type="multi">
+     <xsl:call-template name="result2dataset-wrapper">
+       <xsl:with-param name="result" select="$multiresult"></xsl:with-param>
+     </xsl:call-template>
+      
+      <!-- copy-in the hit-results  --> 
+      <xsl:for-each select="$multiresult//result[@name='response']"  >
+          <xsl:copy>
+            <xsl:copy-of select="@*"></xsl:copy-of>
+            <!-- copy-in the params from response -->
+            <xsl:copy-of select="../lst[@name='responseHeader']" />
+            <xsl:copy-of select="*"></xsl:copy-of>
+            <!-- copy-in the highlighting sectino -->
+            <xsl:copy-of select="../lst[@name='highlighting']" />
+          </xsl:copy>
+      </xsl:for-each>
+    </result>
+
+  </xsl:template>
+  
+  
+  <xd:doc>
+    <xd:desc>
+      <xd:p>should be OBSOLETED by resolve-qx now </xd:p> 
+        <xd:p>Generates a dataset with multiple queries (based on the <xd:b>qx</xd:b> parameter).</xd:p> 
+      <xd:p>First it creates a multiresult out of the original result and the results of the subrequests 
+        then lets convert the multiresult into a dataset representation.</xd:p>
+    </xd:desc>
+    <xd:param name="qx">additional queries</xd:param>
+    <xd:param name="params">all the parameters of the original result, to be reused in the subrequest</xd:param>
+  </xd:doc>
+  <xsl:template name="qx2data" >
+    <xsl:param name="qx" select="//*[contains(@name,'qx')]" />
+    <xsl:param name="params" select="//lst[@name='params']" />
+
+    <xsl:variable name="multiresult">
+      <xsl:call-template name="resolve-qx">
+        <xsl:with-param name="qx" select="$qx" />
+        <xsl:with-param name="params" select="$params" />
+      </xsl:call-template>
+    </xsl:variable>
     
     <xsl:call-template name="result2dataset-wrapper">
       <xsl:with-param name="result" select="$multiresult"></xsl:with-param>
@@ -128,7 +185,6 @@
     
   </xsl:template>
   
-    
     
   <xd:doc >
     <xd:desc>

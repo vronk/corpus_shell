@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
     xmlns:exsl="http://exslt.org/common"  xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl" 
+    xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl"
+    xmlns:utils="http://aac.ac.at/corpus_shell/utils"
+     exclude-result-prefixes="exsl utils xd"
     extension-element-prefixes="exsl xd">
+    
     
    <xsl:import href="solr2dataset.xsl"/>
     <!--<xsl:import href="dataset2table.xsl"/>
@@ -68,30 +71,30 @@ media-type="text/xhtml"
         </xd:desc>
     </xd:doc>
     <xsl:template match="/">
-        
+        <!--
         <xsl:variable name="chart-data">            
             <xsl:variable name="query-data">
                 <xsl:choose>
-                    <!-- pivot mode (take first two facets) -->
+                    <!-\- pivot mode (take first two facets) -\->
                     <xsl:when test="//str[@name = 'facet.pivot']">                
                         <xsl:call-template name="pivot2data" >
-                            <!--<xsl:with-param name="facet1" >year</xsl:with-param>
-                                <xsl:with-param name="facet2" >docsrc</xsl:with-param>-->
+                            <!-\-<xsl:with-param name="facet1" >year</xsl:with-param>
+                                <xsl:with-param name="facet2" >docsrc</xsl:with-param>-\->
                         </xsl:call-template>  
                     </xsl:when>
-                    <!-- multi query mode (n queries and one (first) facet -->
-                    <!--<xsl:when test="//*[contains(@name,'qx')]">
+                    <!-\- multi query mode (n queries and one (first) facet -\->
+                    <!-\-<xsl:when test="//*[contains(@name,'qx')]">
                         <!-\-QX:<xsl:value-of select="//*[contains(@name,'qx')]"/>-\->  
                         <xsl:call-template name="qx2data" />
-                    </xsl:when>-->
+                    </xsl:when>-\->
                     <xsl:otherwise>
                         <xsl:call-template name="qx2data" />                    
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:variable>
-            <!-- if base query  add relative freqs --> 
+            <!-\- if base query  add relative freqs -\-> 
             <xsl:choose>
-                <!-- if incoming preprocessed data --> 
+                <!-\- if incoming preprocessed data -\-> 
                 <xsl:when test="/dataset or /result/dataset or /multiresult/dataset">
                     <xsl:copy-of select="/"/>
                 </xsl:when>
@@ -107,10 +110,26 @@ media-type="text/xhtml"
                 </xsl:otherwise>
             </xsl:choose>           
             
+        </xsl:variable>-->
+        
+        <xsl:variable name="solr-result-preprocessed">
+            <xsl:call-template name="preprocess-solr-result"></xsl:call-template>
+        </xsl:variable>
+        
+        <xsl:variable name="chart-data" select="$solr-result-preprocessed//dataset" />
+        <xsl:variable name="hits" select="$solr-result-preprocessed//result[@name='response']" />
+            
+        <xsl:variable name="title"
+            select="concat('amc: ', utils:params('q',''), 
+            if (not(utils:params('qx','')='')) then concat(' / ',utils:params('qx','')) else '', 
+            if (not(utils:params('facet.field','')='')) then concat(' - ',utils:params('facet.field','')) else '')">
+            
         </xsl:variable>
         
         <html xmlns="http://www.w3.org/1999/xhtml">
             <head>
+                
+                 <title><xsl:value-of select="$title"/></title>
                 <link rel="stylesheet" type="text/css" href="{concat($scripts-dir, 'style/jquery.ui.resizable.css')}" />
                 <link rel="stylesheet" type="text/css" href="{concat($scripts-dir, 'style/jquery.ui.all.css')}" />
                 <link rel="stylesheet" type="text/css" href="{concat($scripts-dir, 'style/jquery/clarindotblue/jquery-ui-1.8.5.custom.css')}" />
@@ -124,8 +143,6 @@ media-type="text/xhtml"
         .infovis {height: 90%; width: 100%;}
         .value { text-align: right; }
         </style> 
-                <!--DEBUG: <xsl:apply-templates select="$chart-data" mode="invert" />
-                DEBUG: <xsl:copy-of select="$chart-data" />-->
            
                 <script type="text/javascript" src="{concat($scripts-dir, 'js/jquery/jquery.min.js')}"></script>
                 <script type="text/javascript" src="{concat($scripts-dir, 'js/jquery/jquery-ui.min.js')}"></script>
@@ -144,20 +161,34 @@ media-type="text/xhtml"
                 
             </head>
             <body >
-                <h1>amc search interface</h1>
+                <h1><xsl:value-of select="$title" /></h1>
                 
                 <xsl:call-template name="response-header"/>
+                
+                <!--                 show this only, if the hits are not shown-->
+                <xsl:if test="not(contains($parts,'hits') and exists(/response/result/doc))" >
+                    <span class="label">hits: </span>
+                    <xsl:for-each select="$solr-result-preprocessed//result[@name='response']"  >                   
+                        <span class="value hilight"><xsl:value-of select="utils:format-number(@numFound, '#.###')" /></span>
+                        <xsl:if test="not(position()=last())" > / </xsl:if>
+                    </xsl:for-each>
+                </xsl:if>
+                
 
-<!--      DEBUG:               <xsl:copy-of select="$chart-data" />-->
-    
-<!--    DEBUG: parts:<xsl:value-of select="$parts" />-->
+                <!--                DEBUG: <xsl:apply-templates select="$chart-data" mode="invert" />-->
+                <!--                DEBUG: <xsl:copy-of select="$chart-data" />-->
+                <!--    DEBUG: parts:<xsl:value-of select="$parts" />-->
+                
             <!-- displaying chart-data passed to dataset2view -->
                 <xsl:for-each select="$chart-data">
                                 <xsl:call-template name="continue-root"></xsl:call-template>
                 </xsl:for-each>
                 
                 <xsl:if test="contains($parts,'hits') and exists(/response/result/doc)" >
-                    <xsl:call-template name="hits"></xsl:call-template>
+<!--                    <xsl:for-each select="//result[@name='response']">-->
+                        <xsl:call-template name="hits">
+                            <xsl:with-param name="data" select="$solr-result-preprocessed/*"></xsl:with-param>
+                        </xsl:call-template>
                 </xsl:if>                    
 
             </body>
