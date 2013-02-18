@@ -79,7 +79,14 @@
 <!--                        <a onclick="drawChart({position() - 1})" ><xsl:value-of select="@name"/></a>-->
                     
 <!--                    <a onclick="toggleStacked();" >stacked</a>-->
-                    <a onclick="toggleLayout('{$dataset-name}');">layout</a>
+<!--                    <a onclick="toggleLayout('{$dataset-name}');">layout</a>-->
+                    <select onchange="changeLayout('{$dataset-name}',$(this).val())"  name="select-layout-{$dataset-name}" class="select-layout" >
+                                <option value="pie">pie</option>
+                                <option value="column">column</option>
+                                <option value="bar">bar</option>
+                                <option value="line">line</option>
+                                <option value="area">area</option>
+                        </select>
                 </div>
                 <div class="infovis" id="chart-{$dataset-name}"/>
             </div>
