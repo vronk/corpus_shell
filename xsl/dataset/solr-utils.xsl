@@ -143,7 +143,7 @@
         <!--<xsl:for-each select="result">-->
         <div class="response-header">
             <xsl:apply-templates  mode="query-input"/>
-            <span class="label">hits: </span><span class="value hilight"><xsl:value-of select="utils:format-number(//result/@numFound, '#.###')" /></span>
+<!--            <span class="label">hits: </span><span class="value hilight"><xsl:value-of select="utils:format-number(//result/@numFound, '#.###')" /></span>-->
         </div>
     </xsl:template>
     
