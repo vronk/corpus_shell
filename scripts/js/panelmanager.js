@@ -1080,6 +1080,56 @@ function PanelManager (container, searchConfig)
     }
   }
 
+  //function:   this.StartSearchPrev(panelId)
+  //parameters: panelId - unique panel identifier
+  //purpose:
+  //returns:    -
+  this.StartSearchPrev = function(panelId)
+  {
+    var panel = this.GetPanelObj(panelId);
+
+    if (panel != undefined)
+    {
+      var start = parseInt($('#' + panelId).find('.startrecord').val());
+      var max = parseInt($('#' + panelId).find('.maxrecord').val());
+
+      if (!max || max <= 0) max = 10;
+      if (!start || start < 1) start = 1;
+
+      if (start - max > 0)
+        $('#' + panelId).find('.startrecord').val(start - max);
+
+      var url = panel.StartSearch();
+      this.SetPanelUrl(panelId, url);
+    }
+  }
+
+  //function:   this.StartSearchNext(panelId)
+  //parameters: panelId - unique panel identifier
+  //purpose:
+  //returns:    -
+  this.StartSearchNext = function(panelId)
+  {
+    var panel = this.GetPanelObj(panelId);
+
+    if (panel != undefined)
+    {
+      var start = parseInt($('#' + panelId).find('.startrecord').val());
+      var max = parseInt($('#' + panelId).find('.maxrecord').val());
+
+      if (!max || max <= 0) max = 10;
+      if (!start || start < 1) start = 1;
+
+      var hitCount = parseInt($('#' + panelId).find('.hitcount').html());
+
+      if (hitCount && start + max <= hitCount)
+        $('#' + panelId).find('.startrecord').val(start + max);
+
+      var url = panel.StartSearch();
+      this.SetPanelUrl(panelId, url);
+    }
+  }
+
   //SearchConfig methods
 
   //function:   this.GetSearchIdx(xContext)

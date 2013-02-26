@@ -20,9 +20,9 @@
         <xsl:for-each select="sru:searchRetrieveResponse">
             <xsl:apply-templates select="sru:diagnostics"/>
             <div>
-                <xsl:if test="contains($format, 'htmlpage')">
+                <!--<xsl:if test="contains($format, 'htmlpage')"> -->
                     <xsl:call-template name="header"/>
-                </xsl:if>
+                <!-- </xsl:if> -->
                 <xsl:apply-templates select="sru:records" mode="list"/>
     <!-- switch mode depending on the $format-parameter -->        
                 <!--<xsl:choose> 
@@ -45,7 +45,7 @@
         <div class="result-header" data-numberOfRecords="{$numberOfRecords}">
             <xsl:if test="contains($format, 'page')">
                 <xsl:call-template name="query-input"/>
-            </xsl:if>
+            
             <span class="label">showing </span>
             <span class="value hilight">
                 <xsl:value-of select="sru:extraResponseData/fcs:returnedRecords"/>
@@ -72,6 +72,7 @@
                     <xsl:value-of select="sru:extraResponseData/fcs:duration"/>
                     </span>;-->
             </div>
+            </xsl:if>
         </div>
     </xsl:template>
     <xsl:template match="sru:records" mode="list">

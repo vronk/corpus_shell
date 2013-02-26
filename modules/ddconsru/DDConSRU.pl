@@ -30,7 +30,7 @@ $hts = 0;
 # TODO: investigate
 #$query_suffix = " #within file"; # funnily changes the result, so that individual tokens don't get parsed correctly
 
-$query_suffix = " #has_field[availability,/^._s_/] #has_field[site,Wien]"; # vienna version
+$query_suffix = " #has_field[availability,/^._s_/]"; # vienna version #has_field[site,Wien]
 #$query_suffix = " :barock";
 
 my $localhost = "corpus3.aac.ac.at";
@@ -102,6 +102,7 @@ my $sTable = "";
 our $wIdx = "0";
 our $sIdx = "-1";
 our $fIdx = "-1";
+our $showIndexes = "";
 our $extLink = "";
 our $fullLink = "";
 
@@ -162,9 +163,9 @@ $sh = param("maximumTerms");
 
 if ($context eq "" && $operation eq "searchRetrieve")
 {
- 	#param "x-context" is missing
- 	Diagnostics::diagnostics(7, "x-context");
- 	return;
+  #param "x-context" is missing
+  Diagnostics::diagnostics(7, "x-context");
+  return;
 }
 
 my $oldContext = $context;
@@ -209,7 +210,7 @@ if ($context ne "")
       my($key) = $item->findnodes('./key');
       if ($key->to_literal eq $context)
       {
-      	 # get the internal name of the corpus (to be given to ddc as context)
+        # get the internal name of the corpus (to be given to ddc as context)
         my($name) = $item->findnodes('./name');
         $context =  $name->to_literal;
         my($par) = $key->findnodes('../../../ip');
@@ -253,6 +254,13 @@ if ($context ne "")
           $fIdx = $fileIndex->to_literal;
         }
 
+			if ($item->exists('./showIndexes'))
+        {
+          my($showIdnexes_node) = $item->findnodes('./showIndexes');
+          $showIndexes = $showIdnexes_node->to_literal;
+        }
+
+				# prepending "$" to (known) indices (if not already present)
         foreach my $indexItem ($item->findnodes('./index[@key]'))
         {
           my $key = $indexItem->findvalue('./@key');
@@ -285,7 +293,7 @@ $url =~ s/http:\/\/$localhost\/ddconsru/$fullLink/g;
 ### Diagnostics
 # http://www.loc.gov/standards/sru/resources/diagnostics-list.html
 #if (! $operation eq 'explain' || operation eq 'searchRetrieve')
-#	$d = new Diagnostics(4);
+# $d = new Diagnostics(4);
 
  $query =~ s/_s_/;/g;
  $query =~ s/_q_/"/g; #"
@@ -299,8 +307,8 @@ $url =~ s/http:\/\/$localhost\/ddconsru/$fullLink/g;
 #$query = '$p=NN:frs_03';
 #$query = 'Mythus'; # :freud_td_01';
 #$query = '$w=der:freud_td_01';
-	#$query = 'NEAR($l=gehen;$l=mit;3)';
-	#$query = 'NEAR($p=ADJA;$p=NN && $l=Katze;1)';
+ #$query = 'NEAR($l=gehen;$l=mit;3)';
+ #$query = 'NEAR($p=ADJA;$p=NN && $l=Katze;1)';
 
 #print $query;
 
@@ -309,46 +317,46 @@ if ($operation eq "explain" || !$operation)
 {
   print "Content-Type: text/xml\n\n";
 
- 	open(IN,'<'.$explain_file) || die "Can not open file $explain_file: $!";
+  open(IN,'<'.$explain_file) || die "Can not open file $explain_file: $!";
 
-		while(<IN>)
-		{
-  		next if ($_=~ /^#/);
-  		print "$_\n";
-		}
+  while(<IN>)
+  {
+    next if ($_=~ /^#/);
+    print "$_\n";
+  }
 
-		close IN;
-	 return;
+  close IN;
+  return;
 }
 
 ### Handle scan cmd-collections
 if ($operation eq "scan" )
 {
- 	if ($scanClause eq "fcs.resource" )
- 	{
- 		 print "Content-Type: text/xml\n\n";
+  if ($scanClause eq "fcs.resource" )
+  {
+    print "Content-Type: text/xml\n\n";
 
     open(IN,'<'.$scan_collections_file) || die "Can not open file $scan_collections_file: $!";
- 			while(<IN>)
- 			{
- 			  print "$_\n";
- 			}
- 			close IN;
- 	}
- 	elsif ($scanClause eq "fcs.toc" )
- 	{
- 		 fcsToc($oldContext, $fileMask, $displayText);
- 	}
- 	elsif (($responsePosition ne "") and ($maximumTerms ne "") and (index($scanClause, "=") ne -1))
- 	{
+    while(<IN>)
+    {
+      print "$_\n";
+    }
+    close IN;
+  }
+  elsif ($scanClause eq "fcs.toc" )
+  {
+    fcsToc($oldContext, $fileMask, $displayText);
+  }
+  elsif (($responsePosition ne "") and ($maximumTerms ne "") and (index($scanClause, "=") ne -1))
+  {
 
- 	}
- 	else
- 	{
- 		 Diagnostics::diagnostics(6, $scanClause) ; # unsupported parameter value
- 	}
+  }
+  else
+  {
+    Diagnostics::diagnostics(6, $scanClause) ; # unsupported parameter value
+  }
 
-		return;
+  return;
 }
 
 if (($operation eq "searchRetrieve") and ($pageToken ne ""))
@@ -365,10 +373,10 @@ if (($operation eq "searchRetrieve") and ($pageToken ne ""))
 }
 
 our $dclient = DDC::Client::Distributed->new(connect=>{PeerAddr=>$server,PeerPort=>$port},
-					     start=>$startRecord,
-					     limit=>$maximumRecords,
-					     timeout=>$timeout,
-					    );
+          start=>$startRecord,
+          limit=>$maximumRecords,
+          timeout=>$timeout,
+         );
 
 print STDERR "---- ddc config PeerAddr: $server, PeerPort: $port ---- \n";
 
@@ -382,7 +390,7 @@ $DDC::Format::Text::resultLineNumber = 0;
 # apply restricting to free texts (for anonymous users)  - to be inline with deployed webapps
 if (($context) && ($context ne ""))
 {
- 	$query_suffix = ':'.$context;
+  $query_suffix = ':'.$context;
 }
 else
 {
@@ -395,8 +403,8 @@ if ($res == 1)
 {
    print "Content-Type: text/xml\n\n";
    ($hits_count, $hits) = $dclient->query02($query_) ;
-  	#$hits = $dclient->query_01($query) or $res = 2;
-  	$resNum = $#hits;
+   #$hits = $dclient->query_01($query) or $res = 2;
+   $resNum = $#hits;
 }
 else
 {
@@ -417,7 +425,7 @@ $res =~ s/&/&amp;/g;
 #$sRes = "<records>".$res."</records>";
 #$sRes = @hits;
 
-#print $query_;
+#print "query_raw:".$query_;
 #$sRes = "<kwic>".$fmt->toString($hits)."</kwic>";
 #print $sRes;
 
@@ -433,6 +441,7 @@ my $vars = {
     hits => $hits,
     wIdx => $wIdx,
     sIdx => $sIdx,
+    showIndexes => $showIndexes,
     fIdx => $fIdx,
     url => $url,
     fileMask => $fileMask,
@@ -440,7 +449,8 @@ my $vars = {
     recordIdBase => $recordIdBase."&amp;startRecord=",
     resourceFragmentIdColumn => "4",
  #   res => $res,
-    parse_context => sub { my ($context, $kws, $wIdx, $sIdx, $extLink, $fIdx, $fileMask, $url) = @_; return parse_context($context, $kws, $wIdx, $sIdx, $extLink, $fIdx, $fileMask, $url)},
+    parse_context => sub { my ($context, $kws, $wIdx, $sIdx, $extLink, $fIdx, $fileMask, $url) = @_;
+     return parse_context($context, $kws, $wIdx, $sIdx, $extLink, $fIdx, $fileMask, $url)},
   };
 
 
@@ -460,103 +470,103 @@ $tt->process($response_template, $vars)
 
 sub parse_context($@)
 {
-	 my ($context, $kws, $wIdx, $sIdx, $extLink, $fIdx, $fileMask, $url) = @_;
-	 # print "DEBUG: context:".$context;
-	 # important to use @{$kws} later in code, otherwise it won't be handled correctly as an array.
-	 # ( man, it took time to find out.)
-	 # eg like this:
-	 #	for $i (@{$kws}) {		print $i;	}
+  my ($context, $kws, $wIdx, $sIdx, $extLink, $fIdx, $fileMask, $url) = @_;
+  # print "DEBUG: context:".$context;
+  # important to use @{$kws} later in code, otherwise it won't be handled correctly as an array.
+  # ( man, it took time to find out.)
+  # eg like this:
+  # for $i (@{$kws}) {  print $i; }
 
-	 # the simple split would be just on whitespaces:
-	 #	my @tokens = split (/ /, $context);
-	 # but we need a special handling for punctuation - due to ddc glueing punctuation together with the previous token.
-	 my @tokens = split (/(?:   						# therefore the parenthesis for alternative  |
-	 																			#  (?: - non capturing parenthesis
-	 												\s|           # this is the default for the whitespace
-	 												(?=[\,\.\!\/\(\:;\?][\#\^]\$))   # this captures the starting of a punct-token:  `.#$` or `,#$`
-	 										/x   #  /x modifier allows for comments and ignoring most whitespaces in the pattern
-	  												 # (?= ...  = lookahead assertion (splits before a pattern, but includes the pattern in the return
-	 												 # simple parenthesis, would split the punct-token once too often.
-	 				, $context);
+  # the simple split would be just on whitespaces:
+  # my @tokens = split (/ /, $context);
+  # but we need a special handling for punctuation - due to ddc glueing punctuation together with the previous token.
+  my @tokens = split (/(?:         # therefore the parenthesis for alternative  |
+                     #  (?: - non capturing parenthesis
+              \s|           # this is the default for the whitespace
+              (?=[\,\.\!\/\(\:;\?][\#\^]\$))   # this captures the starting of a punct-token:  `.#$` or `,#$`
+            /x   #  /x modifier allows for comments and ignoring most whitespaces in the pattern
+                # (?= ...  = lookahead assertion (splits before a pattern, but includes the pattern in the return
+               # simple parenthesis, would split the punct-token once too often.
+      , $context);
 
   my $wordrange = 5;
   my $kwIdx = -1;
 
-	 my @tiered_tokens;
-	 my $i =0;
-	 my $j =0;
+  my @tiered_tokens;
+  my $i =0;
+  my $j =0;
 
-		foreach (@tokens) {
-#		 print $_;
-		 @token_fields = split(/\#|\^/, $_);
-		 next if (@token_fields <= $wIdx);
-		 $w = $token_fields[$wIdx];
+  foreach (@tokens) {
+#   print $_;
+   @token_fields = split(/\#|\^/, $_);
+   next if (@token_fields <= $wIdx);
+   $w = $token_fields[$wIdx];
 
-		 if (($sIdx ne "-1") && ($extLink ne ""))
-		 {
-		   $token_fields[$sIdx] = $extLink . $token_fields[$sIdx];
-		 }
+   if (($sIdx ne "-1") && ($extLink ne ""))
+   {
+     $token_fields[$sIdx] = $extLink . $token_fields[$sIdx];
+   }
 
-		 if (($fIdx ne "-1") && ($fileMask ne ""))
-		 {
-		   my $hstr = $token_fields[$fIdx];
-		   $hstr =~ s/$fileMask//g;
-		   $hstr =~ s/\..*//g;
+   if (($fIdx ne "-1") && ($fileMask ne ""))
+   {
+     my $hstr = $token_fields[$fIdx];
+     $hstr =~ s/$fileMask//g;
+     $hstr =~ s/\..*//g;
 
-		   $hstr = $url . "&amp;query=toc=" . $hstr;
+     $hstr = $url . "&amp;query=toc=" . $hstr;
      $hstr =~ s/(&amp;)+/&amp;/g;
-		   $token_fields[$fIdx] = $hstr;
-		 }
+     $token_fields[$fIdx] = $hstr;
+   }
 
-		 # check if keyword is marked with &&,
-		 if ($w =~ /^&&/) {
-		 		$is_kw = 1;
-		 		# $w =~ s/^&&//;
-		 		$kwIdx = $i;
-		 } else {
-		 		$is_kw = 0;
-		 	}
+   # check if keyword is marked with &&,
+   if ($w =~ /^&&/) {
+     $is_kw = 1;
+     # $w =~ s/^&&//;
+     $kwIdx = $i;
+   } else {
+     $is_kw = 0;
+    }
 
-		 $w =~ s/&/&amp;/g;
-		 #$w = $token_field;
-		 # print $w;
+   $w =~ s/&/&amp;/g;
+   #$w = $token_field;
+   # print $w;
 
-		 		# this is fall-back for marking the keyword (if it was not marked with &&),
-		 		# to match it based on the matched keywords as (alternatively) returned by ddc
-		 $is_kw = $is_kw || grep { $_ eq $w } @{$kws};
-			my %token = ();
-			$token{"kw"} = $is_kw;
-		  # print "is_kw:".$is_kw;
+     # this is fall-back for marking the keyword (if it was not marked with &&),
+     # to match it based on the matched keywords as (alternatively) returned by ddc
+   $is_kw = $is_kw || grep { $_ eq $w } @{$kws};
+   my %token = ();
+   $token{"kw"} = $is_kw;
+    # print "is_kw:".$is_kw;
 
-		 # this should go easier, but had problems assigning the split-fields-array as one item in the tokens-array.
-		 $j=0;
-		 	foreach $f (@token_fields) {
-		 		#$tiered_tokens[$i][$j] = $f;
-		 		# remove if keyword is marked with &&
-		 		$f =~ s/&&//g;
-		 		$f =~ s/&/&amp;/g;
-		 		$token{$j} = $f;
-		 		$j++;
-		 	}
-		 	$tiered_tokens[$i] = \%token;
-		 	#print $tiered_tokens[$i];
-		$i++;
-	}
+   # this should go easier, but had problems assigning the split-fields-array as one item in the tokens-array.
+   $j=0;
+    foreach $f (@token_fields) {
+     #$tiered_tokens[$i][$j] = $f;
+     # remove if keyword is marked with &&
+     $f =~ s/&&//g;
+     $f =~ s/&/&amp;/g;
+     $token{$j} = $f;
+     $j++;
+    }
+    $tiered_tokens[$i] = \%token;
+    #print $tiered_tokens[$i];
+  $i++;
+ }
 
- 	if ($kwIdx != -1)
- 	{
- 	  if ($tiered_tokens < $kwIdx + $wordrange + 1)
- 	  {
- 	   splice(@tiered_tokens, $kwIdx + $wordrange + 1);
- 	  }
+  if ($kwIdx != -1)
+  {
+    if ($tiered_tokens < $kwIdx + $wordrange + 1)
+    {
+     splice(@tiered_tokens, $kwIdx + $wordrange + 1);
+    }
 
     if ($kwIdx - $wordrange > 0)
     {
       splice(@tiered_tokens,0,$kwIdx-$wordrange);
     }
- 	}
+  }
 
-		return @tiered_tokens;
+  return @tiered_tokens;
 }
 
 sub fcsToc()

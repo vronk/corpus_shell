@@ -24,16 +24,16 @@
   $recordSchema =            "http://clarin.eu/fcs/1.0/Resource.xsd";
   $version =                 "1.2";
 
-	// to speed up xslt the servername ist replaced by "localhost"
+ // to speed up xslt the servername ist replaced by "localhost"
   $localhost =               "corpus3.aac.ac.at";
   $webRoot =                 "http://" . $localhost . "/" . $csRoot;
-  $switchUrl =							        "http://" . $localhost . "/switch";
+  $switchUrl =               "http://" . $localhost . "/switch";
   $scriptsUrl =              $webRoot . "scripts";
   $fcsConfig =               $fcsRoot . "fcs-aggregator/fcs.resource.config.php";
   $switchConfig =            $fcsRoot . "fcs-aggregator/switch.config";
   $indexCacheFileName =      $docRoot . $csRoot . "scripts/js/indexCache.json";
 
-	$userdataPath = 					 $fcsRoot . "userdata/data/";
+  $userdataPath =            $fcsRoot . "userdata/data/";
   $ddcConfig =               $fcsRoot . "ddconsru/ddc.config";
   $ddcConfigXml =            $fcsRoot . "ddconsru/tmpl/sru_scan_fcs.resource.xml";
   $ddcConfigXsl =            $fcsRoot . "ddconsru/tmpl/sru_scan_fcs.resource.xsl";

@@ -25,14 +25,14 @@ error_reporting(E_ALL);
 
     require_once $vlibPath;
 
-   	$tmpl = new vlibTemplate($diagnosticsTemplate);
+    $tmpl = new vlibTemplate($diagnosticsTemplate);
 
-   	$tmpl->setvar('version', $version);
-   	$tmpl->setvar('diagnosticId', $diagnosticId);
-   	$tmpl->setvar('diagnosticMessage', $diagnosticMessage);
-   	$tmpl->setvar('diagnosticDetails', $diagnosticDetails);
+    $tmpl->setvar('version', $version);
+    $tmpl->setvar('diagnosticId', $diagnosticId);
+    $tmpl->setvar('diagnosticMessage', $diagnosticMessage);
+    $tmpl->setvar('diagnosticDetails', $diagnosticDetails);
 
-   	$tmpl->pparse();
+    $tmpl->pparse();
  }
 
  function explain()
@@ -42,8 +42,8 @@ error_reporting(E_ALL);
 
     require_once $vlibPath;
 
-   	$tmpl = new vlibTemplate($explainTemplate);
-   	$tmpl->pparse();
+    $tmpl = new vlibTemplate($explainTemplate);
+    $tmpl->pparse();
  }
 
  function decodecharrefs($str)
@@ -97,20 +97,20 @@ error_reporting(E_ALL);
 
     $numberOfRecords = mysql_num_rows($result);
 
-   	$tmpl = new vlibTemplate($responseTemplate);
+    $tmpl = new vlibTemplate($responseTemplate);
 
-   	$tmpl->setvar('version', $version);
-   	$tmpl->setvar('numberOfRecords', $numberOfRecords);
-   	$tmpl->setvar('query', $query);
-   	$tmpl->setvar('baseURL', $baseURL);
-   	$tmpl->setvar('nextRecordPosition', $nextRecordPosition);
-   	$tmpl->setvar('res', '1');
+    $tmpl->setvar('version', $version);
+    $tmpl->setvar('numberOfRecords', $numberOfRecords);
+    $tmpl->setvar('query', $query);
+    $tmpl->setvar('baseURL', $baseURL);
+    $tmpl->setvar('nextRecordPosition', $nextRecordPosition);
+    $tmpl->setvar('res', '1');
 
-   	$hits = array();
-   	$hitsMetaData = array();
-   	array_push($hitsMetaData, array('key' => 'copyright', 'value' => 'ICLTT'));
-   	$hstr = "Wiktionary entry: $query";
-   	array_push($hitsMetaData, array('key' => 'content', 'value' => $hstr));
+    $hits = array();
+    $hitsMetaData = array();
+    array_push($hitsMetaData, array('key' => 'copyright', 'value' => 'ICLTT'));
+    $hstr = "Wiktionary entry: $query";
+    array_push($hitsMetaData, array('key' => 'content', 'value' => $hstr));
 
     while ($line = mysql_fetch_row($result))
     {
@@ -127,7 +127,7 @@ error_reporting(E_ALL);
     }
 
     $tmpl->setloop('hits', $hits);
-   	$tmpl->pparse();
+    $tmpl->pparse();
  }
 
   //sru params
