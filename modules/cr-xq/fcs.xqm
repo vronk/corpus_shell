@@ -44,9 +44,10 @@ declare variable $fcs:kwicWidth := 30;
 regards config given as parameter + the predefined sys-config
 @returns the result document (in xml, html or json)
 :)
-declare function fcs:repo($config-file as xs:string) as item()* {
+(: declare function fcs:repo($config-file as xs:string) as item()* { :)
+declare function fcs:repo($config) as item()* {
   let    
-    $config := repo-utils:config($config-file),   
+    (: $config := repo-utils:config($config-file), :)   
      
     $key := request:get-parameter("key", "index"),        
         (: accept "q" as synonym to query-param; "query" overrides:)    

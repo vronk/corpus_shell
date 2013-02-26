@@ -1,0 +1,61 @@
+/* 
+
+dot -omodules_dependencies.png -Tpng modules_dependencies.dot
+
+*/
+digraph modules_dependencies {
+  label="corpus_shell module dependencies";
+	rankdir=LR;
+	/* size="10,11";	
+	ranksep=1.3;*/
+	nodesep=0.7;	 
+	fontsize=18;
+	node [fontsize=18];
+	graph [compound=true];
+
+	/* graph [compound=true,
+		mclimit=4,		
+		remincross=true,
+		nodesep = 0.1;	
+	size="12,12";		
+	];
+	*/
+
+
+/* packages */
+node [shape="box"];
+main;
+amc
+cr_xq;
+ddconsru;
+fcs_aggregator;
+get_data;
+mysqlonsru;
+userdata;
+utils_php;
+xsl;
+scripts;
+
+/* uses */
+main -> scripts;
+main -> fcs_aggregator;
+fcs_aggregator -> xsl;
+fcs_aggregator -> utils_php;
+mysqlonsru -> utils_php;
+userdata -> utils_php;
+scripts -> fcs_aggregator;
+ddconsru -> get_data;
+scripts -> userdata;
+
+cr_xq -> scripts;
+cr_xq -> xsl;
+
+amc -> xsl;
+
+/*
+fcs_aggregator -> ddconsru [style=dashed];
+fcs_aggregator -> mysqlonsru [style=dashed];
+fcs_aggregator -> cr_xq[style=dashed];
+*/
+
+}

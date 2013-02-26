@@ -5,6 +5,7 @@
     <!-- baseUrl for constructing
         //sru:baseUrl
     -->
+    <xsl:param name="title" select="''"/>
     <xsl:param name="base_url" select="''"/>
     <!--<xsl:param name="base_url">http://clarin.aac.ac.at/exist7/rest/db/content_repository</xsl:param>
         <xsl:param name="base_dir">http://corpus3.aac.ac.at/cs/</xsl:param>-->

@@ -11,8 +11,10 @@
         </history>
     -->
 <!--    <xsl:include href="data2view_cmd.xsl"/>-->
+    <xsl:import href="../amc/dataset2view.xsl"/>
     <xsl:include href="data2view_tei.xsl"/>
-    <xsl:include href="../stand_weiss.xsl"/>
+<!--    <xsl:include href="../stand_weiss.xsl"/>-->
+   
    
 <!-- default starting-point -->
     <xsl:template match="sru:recordData" mode="record-data">
@@ -21,7 +23,16 @@
     
 <!-- default fallback: display the xml-structure-->
     <xsl:template match="*" mode="record-data">
-        <xsl:apply-templates select="." mode="format-xmlelem"/>
+        <xsl:variable name="overrides">
+            <xsl:apply-imports></xsl:apply-imports>
+        </xsl:variable>
+        <xsl:choose>
+            <xsl:when test="$overrides"><xsl:copy-of select="$overrides"></xsl:copy-of></xsl:when>
+            <xsl:otherwise>
+                <xsl:apply-templates select="." mode="format-xmlelem"/>
+            </xsl:otherwise>
+        </xsl:choose>
+        
     </xsl:template>
 
  <!-- hide meta-information about the record from output-->

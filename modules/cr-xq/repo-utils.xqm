@@ -40,14 +40,20 @@ let $sys-config := if (doc-available($repo-utils:sys-config-file)) then doc($rep
 };
 
 declare function repo-utils:config-value($config, $key as xs:string) as xs:string* {
-    ($config[not(@type='system')]//property[@key=$key], $config[@type='system']//property[@key=$key])[1]
+    ($config/config[not(@type='system' or @type='module')]//(param|property)[@key=$key],
+      $config/config[@type='module']//(param|property)[@key=$key],
+      $config/config[@type='system']//(param|property)[@key=$key])[1]
 };
 
+(:declare function repo-utils:config-value($config, $key as xs:string) as xs:string* {
+    ($config[not(@type='system')]//(param|property)[@key=$key], $config[@type='system']//property[@key=$key])[1]
+};
+:)
 (:~ Get value of a param based on a key, from config or from request-param (precedence) :)
 declare function repo-utils:param-value($config, $key as xs:string, $default as xs:string) as xs:string* {
     
     let $param := request:get-parameter($key, $default)
-    return if ($param) then $param else $config//property[@key=$key]
+    return if ($param) then $param else $config//(param|property)[@key=$key]
 };
 
 (:~ returns db-collection (as nodeset) based on the identifier in x-context, looked up in the mapping or default collection as defined in config 
@@ -192,10 +198,26 @@ declare function repo-utils:serialise-as($item as node()?, $format as xs:string,
 :)
 declare function repo-utils:serialise-as($item as node()?, $format as xs:string, $operation as xs:string, $config, $parameters as node()* ) as item()? {        
         if ($format eq $repo-utils:responseFormatJSon) then
-	       let $option := util:declare-option("exist:serialize", "method=json media-type=application/json")
-	       return $item
+	       
+	       let $xslDoc := repo-utils:xsl-doc($operation, $format, $config )
+	       let $res := if ($xslDoc) then
+	                           let $option := util:declare-option("exist:serialize", "method=text media-type=application/json")
+	                           return       transform:transform($item,$xslDoc, 
+                                 			<parameters><param name="format" value="{$format}"/>
+                                 			            <param name="x-context" value="{repo-utils:param-value($config, 'x-context', '' )}"/>
+                                 			            <param name="base_url" value="{repo-utils:base-url($config)}"/>
+                                 			            <param name="mappings-file" value="{repo-utils:config-value($config, 'mappings')}"/>
+                                 			            <param name="scripts_url" value="{repo-utils:config-value($config, 'scripts.url')}"/>
+                                 			             <param name="site_name" value="{repo-utils:config-value($config, 'site.name')}"/>
+                                 			             <param name="site_logo" value="{repo-utils:config-value($config, 'site.logo')}"/>
+                                 			             {$parameters/param}
+                                 			</parameters>)
+                            else 
+                                let $option := util:declare-option("exist:serialize", "method=json media-type=application/json")    
+                                return $item
+	       return $res
 	    else if (contains($format, $repo-utils:responseFormatHTML)) then
-	           let $xslDoc := doc(concat(repo-utils:config-value($config, 'scripts.path'), repo-utils:config-value($config, concat($operation, ".xsl"))) )
+	           let $xslDoc := repo-utils:xsl-doc($operation, $format, $config )
 	           let $res := transform:transform($item,$xslDoc, 
               			<parameters><param name="format" value="{$format}"/>
               			            <param name="x-context" value="{repo-utils:param-value($config, 'x-context', '' )}"/>
@@ -221,7 +243,20 @@ let $option := util:declare-option("exist:serialize", "method=xhtml media-type=t
 	              else 
     	              util:declare-option("exist:serialize", "method=xml media-type=application/xml")
 :)
-          
+
+
+(:~ get appropriate xsl-stylesheet (based on operation and format)
+preference for a specific for operation-format, 
+default: operation :)
+declare function repo-utils:xsl-doc($operation as xs:string, $format as xs:string, $config) as item()? {        
+    let $scripts-path := repo-utils:config-value($config, 'scripts.path'),
+        $xsldoc := if (doc-available(concat($scripts-path, repo-utils:config-value($config, concat($operation, '-', $format, ".xsl"))))) then
+                          doc(concat($scripts-path, repo-utils:config-value($config, concat($operation, '-', $format, ".xsl"))))
+                      else if (doc-available(concat($scripts-path, repo-utils:config-value($config, concat($operation, ".xsl"))))) then
+                            doc (concat($scripts-path, repo-utils:config-value($config, concat($operation, ".xsl"))))
+                       else ()
+        return $xsldoc
+};
 	          	(: $item :)
 
 (:

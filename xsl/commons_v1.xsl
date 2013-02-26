@@ -8,7 +8,7 @@
 </history>
 
 -->
-    <xsl:include href="params.xsl"/>
+<!--    <xsl:include href="params.xsl"/>-->
     <xsl:include href="html_snippets.xsl"/>
 
 <!-- <xsl:param name="mode" select="'html'" /> -->

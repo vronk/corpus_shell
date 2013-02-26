@@ -146,7 +146,8 @@
     <xsl:param name="invert" select="false()"></xsl:param>    
 <!--    <xsl:param name="pivot-fields" select="$source-data//str[@name = 'facet.pivot']/text()" ></xsl:param>-->
     <xsl:param name="pivot-fields" select="$source-data/response/lst[@name = 'facet_counts']/lst[@name = 'facet_pivot']/arr/@name" ></xsl:param>    
-    <xsl:param name="query" select="$source-data//lst[@name='params']/*[@name='q']" ></xsl:param>    
+    <!-- use qkey as -->
+    <xsl:param name="query" select="($source-data//lst[@name='params']/*[@name='qkey'],$source-data//lst[@name='params']/*[@name='q'])[1]" ></xsl:param>    
     <xsl:param name="facet1" >
       <xsl:choose>
         <xsl:when test="$invert">
@@ -210,7 +211,7 @@
     <labels>  
       <label>all</label>
       <xsl:for-each select="exsl:node-set($facet-list)/*" >
-        <label> <xsl:value-of select="translate(@name,'~ ','__')" /></label>        
+          <label><xsl:value-of select="if(xs:string(@name)='') then '_EMPTY_' else translate(xs:string(@name),'~ ','__')" /></label>        
       </xsl:for-each>      
     </labels>
   </xsl:template>
@@ -427,7 +428,8 @@
             </xsl:for-each>
           </xsl:variable>
           <xsl:call-template name="facets2dataseries">        		        
-            <xsl:with-param name="dataseries-title" select=".//lst[@name='params']/*[@name='q']"></xsl:with-param>
+            <!-- prefer qkey as name of the dataseries -->
+            <xsl:with-param name="dataseries-title" select="(.//lst[@name='params']/*[@name='qkey'], .//lst[@name='params']/*[@name='q'])[1]"></xsl:with-param>
             <xsl:with-param name="facet-list" select="$curr_facet_list"></xsl:with-param>    
             <xsl:with-param name="all-value" select=".//result/@numFound"></xsl:with-param>
           </xsl:call-template>

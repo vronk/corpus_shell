@@ -204,9 +204,12 @@
                     <xsl:when test="contains($sanitized_term, ' ')">
                         <xsl:value-of select="concat('ft:query(', $match-on, ', ')"/>
 <!--                        <xsl:text>ft:query(.,<phrase></xsl:text>-->
-                        <xsl:text>&lt;phrase&gt;</xsl:text>
+                        <!-- <xsl:text><phrase></xsl:text>
+                        <xsl:value-of select="replace($sanitized_term,'"','')"/>
+                        <xsl:text></phrase>)</xsl:text> -->
+                        <xsl:text>'"</xsl:text>
                         <xsl:value-of select="replace($sanitized_term,'&#34;','')"/>
-                        <xsl:text>&lt;/phrase&gt;)</xsl:text>
+                        <xsl:text>"')</xsl:text>
                     </xsl:when>
                     <xsl:when test="contains($term,'%7C')"> <!-- contains: |  - but why simply remove? -->
                         <xsl:value-of select="concat('ft:query(', $match-on, ', ')"/>
