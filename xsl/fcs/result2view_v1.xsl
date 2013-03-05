@@ -7,7 +7,7 @@
 </history> 
  -->   
     <!--  method="xhtml" is saxon-specific! prevents  collapsing empty <script> tags, that makes browsers choke -->
-    <xsl:output method="xml" media-type="text/xhtml" indent="yes" encoding="UTF-8" doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"/>
+    <xsl:output method="xhtml" media-type="text/xhtml" indent="yes" encoding="UTF-8" doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"/>
     <xsl:include href="../commons_v1.xsl"/>
     <xsl:include href="data2view.xsl"/>
     <xsl:param name="title">
@@ -20,9 +20,9 @@
         <xsl:for-each select="sru:searchRetrieveResponse">
             <xsl:apply-templates select="sru:diagnostics"/>
             <div>
-                <xsl:if test="contains($format, 'htmlpage')">
+<!--                <xsl:if test="contains($format, 'htmlpage')">-->
                     <xsl:call-template name="header"/>
-                </xsl:if>
+<!--                </xsl:if>-->
                 <xsl:apply-templates select="sru:records" mode="list"/>
     <!-- switch mode depending on the $format-parameter -->        
                 <!--<xsl:choose> 
@@ -45,7 +45,7 @@
         <div class="result-header" data-numberOfRecords="{$numberOfRecords}">
             <xsl:if test="contains($format, 'page')">
                 <xsl:call-template name="query-input"/>
-            </xsl:if>
+            
             <span class="label">showing </span>
             <span class="value hilight">
                 <xsl:value-of select="sru:extraResponseData/fcs:returnedRecords"/>
@@ -72,6 +72,7 @@
                     <xsl:value-of select="sru:extraResponseData/fcs:duration"/>
                     </span>;-->
             </div>
+            </xsl:if>
         </div>
     </xsl:template>
     <xsl:template match="sru:records" mode="list">

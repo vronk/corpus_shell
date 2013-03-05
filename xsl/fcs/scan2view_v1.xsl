@@ -39,7 +39,7 @@
 </sample>
 -->
     <xsl:import href="../commons_v1.xsl"/>
-
+    <xsl:output method="xhtml" media-type="text/xhtml" indent="yes" encoding="UTF-8" doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"/>
 
     <!-- <xsl:param name="size_lowerbound">0</xsl:param>
 <xsl:param name="max_depth">0</xsl:param>

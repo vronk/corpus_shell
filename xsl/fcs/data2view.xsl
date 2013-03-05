@@ -11,7 +11,7 @@
         <change on="2011-11-14" type="created" by="vr">based on cmdi/scripts/xml2view.xsl</change>	
         </history>
     -->
-    <xsl:include href="data2view_cmd.xsl"/>
+    
 <!--    <xsl:import href="../amc/dataset2view.xsl"/>-->
     <xsl:include href="data2view_tei.xsl"/>
 <!--    <xsl:include href="../stand_weiss.xsl"/>-->
