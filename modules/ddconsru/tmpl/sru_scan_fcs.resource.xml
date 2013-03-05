@@ -1,10 +1,10 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0"?>
 <sru:scanResponse xmlns:sru="http://www.loc.gov/zing/srw/">
   <sru:version>1.2</sru:version>
   <sru:terms>
     <sru:term>
       <sru:value>clarin.at:icltt:ddc</sru:value>
-      <sru:numberOfRecords>3</sru:numberOfRecords>
+      <sru:numberOfRecords>4</sru:numberOfRecords>
       <sru:displayTerm>Text corpora by ICLTT on DDC</sru:displayTerm>
       <sru:extraTermData>
         <sru:terms>
@@ -19,6 +19,11 @@
             <sru:displayTerm>Freud: Die Traumdeutung, Russian</sru:displayTerm>
           </sru:term>
           <sru:term>
+            <sru:value>clarin.at:icltt:ddc:fackel</sru:value>
+            <sru:numberOfRecords>1</sru:numberOfRecords>
+            <sru:displayTerm>Die Fackel</sru:displayTerm>
+          </sru:term>
+          <sru:term>
             <sru:value>clarin.at:icltt:ddc:barock</sru:value>
             <sru:numberOfRecords>1</sru:numberOfRecords>
             <sru:displayTerm>Barocktexte</sru:displayTerm>
@@ -27,13 +32,18 @@
       </sru:extraTermData>
     </sru:term>
     <sru:term>
-      <sru:value>clarin.at:icltt:ddc</sru:value>
-      <sru:numberOfRecords>1</sru:numberOfRecords>
+      <sru:value>clarin.at:icltt:ddc06</sru:value>
+      <sru:numberOfRecords>2</sru:numberOfRecords>
       <sru:displayTerm>Text corpora by ICLTT on DDC</sru:displayTerm>
       <sru:extraTermData>
         <sru:terms>
           <sru:term>
-            <sru:value>clarin.at:icltt:ddc:c4</sru:value>
+            <sru:value>clarin.at:icltt:ddc06:c4</sru:value>
+            <sru:numberOfRecords>1</sru:numberOfRecords>
+            <sru:displayTerm>C4</sru:displayTerm>
+          </sru:term>
+          <sru:term>
+            <sru:value>clarin.at:icltt:ddc06:c4_vienna</sru:value>
             <sru:numberOfRecords>1</sru:numberOfRecords>
             <sru:displayTerm>C4 Vienna</sru:displayTerm>
           </sru:term>
@@ -44,7 +54,7 @@
   <sru:echoedScanRequest>
     <sru:version>1.2</sru:version>
     <sru:scanClause>fcs.resource</sru:scanClause>
-    <sru:responsePosition />
+    <sru:responsePosition/>
     <sru:maximumTerms>42</sru:maximumTerms>
   </sru:echoedScanRequest>
 </sru:scanResponse>

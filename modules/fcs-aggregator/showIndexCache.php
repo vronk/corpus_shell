@@ -1,6 +1,6 @@
 <?php
 /*
-	loads indexCache.json and returns a html representation of the imported array
+ loads indexCache.json and returns a html representation of the imported array
 */
 
   //configuration
