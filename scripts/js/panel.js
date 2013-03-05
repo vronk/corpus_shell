@@ -458,12 +458,20 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
     $(parElem).find(".searchresults").addClass("cmd loading").text("");
     $(parElem).find(".hitcount").text("-");
 
+    //get batch start and size
+    var start = parseInt($(parElem).find(".startrecord").val());
+    var max = parseInt($(parElem).find(".maxrecord").val());
 
     var xcontext = this.PanelController.GetResourceName(sele);
 
-								/* url +  */
+        /* url +  */
     var urlStr = switchURL + "?operation=searchRetrieve&query=" + sstr + "&x-context=" + xcontext +
                  "&x-format=html&version=1.2";
+
+    if (!max || max <= 0) max = 10;
+    if (!start || start < 1) start = 1;
+
+    urlStr += '&maximumRecords=' + max + '&startRecord=' + start;
 
     this.SetUrl(urlStr);
 
@@ -474,7 +482,7 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
         type: 'GET',
         url: switchURL,
         dataType: 'xml',
-        data : {operation: 'searchRetrieve', query: sstr, 'x-context': xcontext, 'x-format': 'html', version: '1.2'},
+        data : {operation: 'searchRetrieve', query: sstr, 'x-context': xcontext, 'x-format': 'html', version: '1.2', maximumRecords: max, startRecord: start},
         complete: function(xml, textStatus)
         {
           var resultPane = $(parElem).find(".searchresults");
@@ -526,36 +534,36 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
 
     $(searchstring)
       .bind( "keydown", function( event ) {
-   				if ( event.keyCode === $.ui.keyCode.TAB &&
-   						$( this ).data( "autocomplete" ).menu.active ) {
-   					event.preventDefault();
-   				}
-   			})
-  			.autocomplete({
-  				minLength: 0,
-  				source: //availableTags
-  				function( request, response ) {
-  					// delegate back to autocomplete, but extract the last term
-  					response( $.ui.autocomplete.filter(
-  						availableTags, extractLast( request.term ) ) );
-  				}
-  				,
-  				focus: function() {
-  					// prevent value inserted on focus
-  					return false;
-  				},
-  				select: function( event, ui ) {
-  					var terms = split( this.value );
-  					// remove the current input
-  					terms.pop();
-  					// add the selected item
-  					terms.push( ui.item.value );
-  					// add placeholder to get the comma-and-space at the end
-  					terms.push( "" );
-  					this.value = terms.join("=");
-  					return false;
-  				}
-  			});
+       if ( event.keyCode === $.ui.keyCode.TAB &&
+         $( this ).data( "autocomplete" ).menu.active ) {
+        event.preventDefault();
+       }
+      })
+     .autocomplete({
+      minLength: 0,
+      source: //availableTags
+      function( request, response ) {
+       // delegate back to autocomplete, but extract the last term
+       response( $.ui.autocomplete.filter(
+        availableTags, extractLast( request.term ) ) );
+      }
+      ,
+      focus: function() {
+       // prevent value inserted on focus
+       return false;
+      },
+      select: function( event, ui ) {
+       var terms = split( this.value );
+       // remove the current input
+       terms.pop();
+       // add the selected item
+       terms.push( ui.item.value );
+       // add placeholder to get the comma-and-space at the end
+       terms.push( "" );
+       this.value = terms.join("=");
+       return false;
+      }
+     });
 
     if (searchStr != undefined)
       $(searchstring).val(searchStr);
@@ -755,6 +763,8 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
 
     var loada = document.createElement('a');
     $(loada).addClass("noborder");
+    $(loada).attr("href", "#");
+    $(loada).attr("onclick", "PanelController.StartSearch('" + this.Id + "');");
 
     var loadimg = document.createElement('img');
     $(loadimg).addClass("navigationicon");
@@ -764,6 +774,8 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
 
     var preva = document.createElement('a');
     $(preva).addClass("noborder");
+    $(preva).attr("href", "#");
+    $(preva).attr("onclick", "PanelController.StartSearchPrev('" + this.Id + "');}");
 
     var previmg = document.createElement('img');
     $(previmg).addClass("navigationicon");
@@ -773,6 +785,8 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
 
     var nexta = document.createElement('a');
     $(nexta).addClass("noborder");
+    $(nexta).attr("href", "#");
+    $(nexta).attr("onclick", "PanelController.StartSearchNext('" + this.Id + "');");
 
     var nextimg = document.createElement('img');
     $(nextimg).addClass("navigationicon");
