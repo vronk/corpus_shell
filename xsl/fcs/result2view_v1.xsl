@@ -172,4 +172,5 @@
     <xsl:template match="diag:diagnostic">
         <xsl:value-of select="diag:message"/> (<xsl:value-of select="diag:uri"/>)
     </xsl:template>
+
 </xsl:stylesheet>
