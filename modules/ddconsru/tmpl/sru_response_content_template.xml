@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<sru:searchRetrieveResponse xmlns:diag="http://www.loc.gov/zing/srw/diagnostic/" xmlns:sru="http://www.loc.gov/zing/srw/"
+	xmlns:fcs="[% recordSchema %]" >
+  <sru:version>[% version %]</sru:version>
+  <sru:numberOfRecords>1</sru:numberOfRecords>
+  <echoedSearchRetrieveRequest>
+    <version>[% version %]</version>
+    <query>[% query %]</query>
+    <baseUrl>[% baseURL %]</baseUrl>
+  </echoedSearchRetrieveRequest>
+  <sru:records>
+     <sru:record>
+     		<sru:recordSchema>[% recordSchema %]</sru:recordSchema>
+     	  <sru:recordPacking>[% recordPacking %]</sru:recordPacking>
+			  <sru:recordData>
+			     	<fcs:Resource>
+							<fcs:ResourceFragment>
+							<fcs:DataView type="full" ref="">
+							   [% content %]
+							</fcs:DataView>
+							</fcs:ResourceFragment>
+       [% IF prevPid != "" %]
+       <fcs:ResourceFragment type="prev" pid="[% prevPid %]" ref="[% prevRef %]"/>
+       [% END %]
+       [% IF nextPid != "" %]
+       <fcs:ResourceFragment type="next" pid="[% nextPid %]" ref="[% nextRef %]"/>
+       [% END %]
+						</fcs:Resource>
+				</sru:recordData>
+				<sru:recordPosition>1</sru:recordPosition>
+				<sru:recordIdentifier>[% recordIdBase %]</sru:recordIdentifier>
+
+     	</sru:record>
+  <sru:nextRecordPosition>[% nextRecordPosition %]</sru:nextRecordPosition>
+	</sru:records>
+	<sru:res>[% res %]</sru:res>
+</sru:searchRetrieveResponse>
