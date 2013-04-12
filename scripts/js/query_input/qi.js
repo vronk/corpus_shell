@@ -65,6 +65,11 @@ $.fn.QueryInput = function (options)
                 case "autocomplete":
                   new_input = genAutocomplete (key, param);    
                   break;
+               case "cql":
+                  var cql_elems = genCQLInput(key, param);
+                  new_input = cql_elems[0];
+                  new_widget = cql_elems[1]; 
+                  break;
                 case "link":
                   new_input = genLink (key, param);    
                   break;
@@ -138,7 +143,7 @@ $.fn.QueryInput = function (options)
         return input;
     }
         
-    /** generating ou own comboboxes, because very annoying trying to use some of existing jquery plugins (easyui.combo, combobox, jquery-ui.autocomplete) */ 
+    /** generating our own comboboxes, because very annoying trying to use some of existing jquery plugins (easyui.combo, combobox, jquery-ui.autocomplete) */ 
     function genCombo (key, param_settings) {
     
         var select = $("<select id='widget-" + key + "' />")
@@ -152,15 +157,15 @@ $.fn.QueryInput = function (options)
         
         var input = $("<input />");
          $(input).attr("name",key)
-        
+   //     console.log(key, param_settings.static_source);
         if (param_settings.static_source) {
               //var scanURL = settings.fcs_source +  param_settings.index
-              var scanURL = param_settings.static_source.replace(/&amp;/g,'&');
+              var source_url = param_settings.static_source.replace(/&amp;/g,'&');
               // if static source - try to retrieve the data 
-              $.getJSON(scanURL, function(data) {
+              $.getJSON(source_url, function(data) {
                     param_settings.source = data.terms
                     $(input).autocomplete(param_settings);
-                  //  console.log($(input).autocomplete("option","source").length);
+                    //console.log($(input).autocomplete().source);
               });
         
              //param_settings.source = fcsScan;
@@ -171,6 +176,7 @@ $.fn.QueryInput = function (options)
         return input;
     }
 
+    
     function fcsScan(request, response) {
         response( $.ui.autocomplete.filter(
                           scan.terms, request.term ) );
