@@ -1,9 +1,11 @@
 /*********************/
 /* basic page layout */ 
-#header { height: 70px; }
-#top-menu {position: absolute; right: 20px; top: 10px; }
+/*#header { height: 70px; }*/
+#header { margin-bottom: 20px; }
+#top-menu {position: absolute; top: 50px; display:inline-block; padding-left: 20px; }
+#navigation {display:inline-block;}
 #left-menu {float: left; width:250px; height:500px; overflow:auto;}
-#main {margin-left:260px; /* max-width: .. */}
+/*#main {margin-left:260px; /\* max-width: .. *\/}*/
 #query-input { padding: 6px;  /* max-width: 600px; */ }
 #repositories {margin: 6px 0px; }
 #notify {display:none; /* max-width: 400px; position: relative; overflow: auto; height: 40px; */}
@@ -16,7 +18,7 @@ body, table { font-size: 12px; font-family: Helvetica,Tahoma,Arial,Verdana,sans-
 #welcome h3 { color: #014172;}
 .note { font-size: 0.9em; color: #9999aa; }
 .data {display: none; }
-.kwic em , .hilight { font-size: 1.1em; font-weight: bold}
+.kwic em , .hilight { font-size: 1.1em; font-weight: bold;  margin: 0 0.2em;}
 .error { color: #660000; border: 1px solid red; background-color: #ffcccc; }
 /* this is temporary for MdREcordView-Titlebar; -> move to ui-box-header */ 
 /* obsolete .box_heading { background-color: #014172;  color: #FAFAFF; font-weight: bold; padding: 2px; } 
@@ -27,8 +29,12 @@ a, .ui-widget-content a { text-decoration: none; color:#AC3333; }
 a.external {border-bottom: 1px solid #A6C9E2; }   
 label, .label, .cmds-elem-prop .label { font-size: 0.9em; color: #014172; font-style: italic; }
 ul { padding-left: 4px; list-style-type: none; margin: 0;}
-li { background: url('imgs/icon-dot-4.png') no-repeat; background-position: 0px 7px; padding-left: 8px;  } 
+li { background: url('imgs/icon-dot-4.png') no-repeat; background-position: 0px 7px; padding-left: 8px;  }
+#top-menu li { float: left; background: none;}
 a img { border:0;	}
+img.teaser { float:left; margin-right: 1em; margin-bottom: 1em;}
+div.teaser {clear:both; border-top: 1px solid #A6C9E2; padding: 1em 0; }
+
 tr.detailselection {background-color: #E6E9F0;}
 p {margin: 4px 0;}
 .treeview,
@@ -91,7 +97,7 @@ input, h.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget are
 .wwFormTable {width: 100%; }
 #input-simplequery { width: 85%; margin: 12px 0px 6px 0px; font-size: 1.2em;}
 #submit-query { font-size: 1.2em; font-weight: bold;}
-#searchclauselist {margin: 0px; display:none;}
+#searchclauselist {margin: 0px; /*display:none;*/}
 .searchclause {  }
 .and_level {border-top: 1px solid #9999cc; margin: 2px 0px;}
 .or_level {border: none ; }
@@ -174,8 +180,11 @@ a.cmd { width: auto; height:auto; top: 0px; }
 .cmd_next { background-image: url("imgs/cdb-icon-next.png");}
 
 @media print {
-	ul { list-style-type: disc;	} 
+/*	ul { list-style-type: disc;	} */	
+	button {display:none;}
+    .select-layout {display:none}
 }
+
 /* ui layout */
 	.base-west ,
 	.base-east ,
