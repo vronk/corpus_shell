@@ -12,10 +12,11 @@
         
     -->
     <xsl:import href="../commons_v2.xsl"/>
+    <xsl:include href="../fcs/data2view.xsl"/>
     <xsl:output method="html"/>
     <xsl:variable name="title" select="''"/>
     <xsl:template name="continue-root">
-        <xsl:apply-templates select="." mode="format-xmlelem">
+        <xsl:apply-templates select="." mode="record-data">
             <xsl:with-param name="strict" select="true()"/>
         </xsl:apply-templates>
     </xsl:template>
