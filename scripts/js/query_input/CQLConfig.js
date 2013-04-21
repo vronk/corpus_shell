@@ -17,8 +17,8 @@
 function CQLConfig(options) {
     var defaults = {"base_url": "fcs",  /* the _url will get this as first replace-pattern */
                     "explain_url": "%s?operation=explain&x-format=json",
-                    "scan_base_url": "%s?x-format=json&operation=scan&scanClause=%s&sort=size&maximumTerms=%d", /* call without pattern restriction (for initial call) */
-                    "scan_pattern_url": "%s?x-format=json&operation=scan&scanClause=%s=%s", /* placeholders will be replaced with index and (optional) pattern */
+                    "scan_base_url": "%s?x-context=&x-format=json&operation=scan&scanClause=%s&sort=size&maximumTerms=%d", /* call without pattern restriction (for initial call) */
+                    "scan_pattern_url": "%s?x-context=&x-format=json&operation=scan&scanClause=%s=%s", /* placeholders will be replaced with index and (optional) pattern */
                    "x_context": "",
                    "values_limit": 200,
                    "onLoaded": function(index) { console.log("loaded index: " + index) }
@@ -111,14 +111,15 @@ function CQLConfig(options) {
                          me.onLoaded.call(me, index);
                    });
              }
-        
+             
              // return filtered result if available
            if (this.values[index][pattern].hasOwnProperty("terms")) {
                    return  this.values[index][pattern].terms;
               } else { 
                     return this.values[index][pattern]; 
               }
-               
+             
+             
         } else {
           // only start loading if not called until now
           this.values[index] = {"status":"loading"};
