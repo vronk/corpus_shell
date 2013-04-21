@@ -146,9 +146,28 @@ $.fn.QueryInput = function (options)
     /** generating our own comboboxes, because very annoying trying to use some of existing jquery plugins (easyui.combo, combobox, jquery-ui.autocomplete) */ 
     function genCombo (key, param_settings) {
     
-        var select = $("<select id='widget-" + key + "' />")
-            select.attr("id", settings.input_prefix + key)
-        param_settings.values.forEach(function(v) { $(select).append("<option value='" + v +"' >" + v + "</option>") });
+        var select = $("<select id='widget-" + key + "' />");
+            //select.attr("id", settings.input_prefix + key)
+            
+       if (param_settings.static_source) {
+              //var scanURL = settings.fcs_source +  param_settings.index
+              var source_url = param_settings.static_source.replace(/&amp;/g,'&');
+              // if static source - try to retrieve the data 
+              $.getJSON(source_url, function(data) {
+                    param_settings.values = data.terms
+                    param_settings.values.forEach(function(v) { $(select).append("<option value='" + v.value +"' >" + v.label + "</option>") });
+                    //console.log($(input).autocomplete().source);
+              });
+        
+             //param_settings.source = fcsScan;
+        } else if (param_settings.values) {
+            //    $(input).autocomplete(param_settings);
+            param_settings.values.forEach(function(v) { $(select).append("<option value='" + v +"' >" + v + "</option>") });
+        } else { /* if no values,  rather make a textbox out of it? */ 
+          //select = 
+        }
+        
+        select.attr("id", settings.input_prefix + key)
         return select;
     }
 
