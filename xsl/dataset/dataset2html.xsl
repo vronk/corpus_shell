@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:diag="http://www.loc.gov/zing/srw/diagnostic/" xmlns:utils="http://aac.ac.at/content_repository/utils" xmlns:sru="http://www.loc.gov/zing/srw/" xmlns:saxon="http://saxon.sf.net/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fcs="http://clarin.eu/fcs/1.0" xmlns:exsl="http://exslt.org/common" version="2.0" exclude-result-prefixes="saxon xs exsl diag sru fcs utils">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:diag="http://www.loc.gov/zing/srw/diagnostic/" xmlns:utils="http://aac.ac.at/content_repository/utils" xmlns:sru="http://www.loc.gov/zing/srw/" xmlns:saxon="http://saxon.sf.net/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fcs="http://clarin.eu/fcs/1.0" xmlns:exsl="http://exslt.org/common" version="2.0" 
+    xmlns:ds="http://aac.ac.at/corpus_shell/dataset" exclude-result-prefixes="saxon xs exsl diag sru fcs utils ds">
     
 <!--   
     <purpose> generate html view of a dataset, basically use dataset2table but also use commons to wrap it in html.</purpose>
@@ -28,7 +29,7 @@
     </xsl:template>
     
     <xsl:template name="top-menu">
-        <xsl:for-each select="//dataset" >
+        <xsl:for-each select="//ds:dataset" >
                 <a href="#dataset-{@key}" ><xsl:value-of select="(@label,@key)[1]"></xsl:value-of></a> | 
             </xsl:for-each>
     </xsl:template>

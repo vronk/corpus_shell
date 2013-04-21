@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:utils="http://aac.ac.at/corpus_shell/utils" xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl" xmlns:exsl="http://exslt.org/common" version="2.0" extension-element-prefixes="utils exsl xd"
-    xmlns="http://www.w3.org/1999/xhtml" >
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:utils="http://aac.ac.at/corpus_shell/utils" xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl" xmlns:exsl="http://exslt.org/common" version="2.0" extension-element-prefixes="exsl"
+    exclude-result-prefixes="exsl xs utils xd ds"
+    xmlns:ds="http://aac.ac.at/corpus_shell/dataset"
+    xmlns="http://www.w3.org/1999/xhtml" xmlns:xs="http://www.w3.org/2001/XMLSchema">
     
     <xsl:import href="../utils.xsl"/>
     
@@ -33,7 +35,7 @@
     <xsl:template match="*" mode="data2table">
         <xsl:apply-templates select="*" mode="data2table"/>
     </xsl:template>
-    <xsl:template match="dataset" mode="data2table">
+    <xsl:template match="ds:dataset" mode="data2table">
         <xsl:param name="data" select="."/>
         <xsl:param name="dataset-name" select="concat(utils:normalize(@name),position())"/>
         <xsl:choose>
@@ -48,7 +50,7 @@
                   <table class="show">
                     
                     <xsl:choose>
-                        <xsl:when test="count($data/labels/label) &gt; count($data/dataseries)">
+                        <xsl:when test="count($data/ds:labels/ds:label) &gt; count($data/ds:dataseries)">
                             <xsl:variable name="inverted-dataset">
                 <!--<xsl:apply-templates select="exsl:node-set($data)" mode="invert"/>-->
                                 <xsl:apply-templates select="$data" mode="invert"/>
@@ -97,7 +99,7 @@
         
   </xsl:template>
   -->
-    <xsl:template match="labels" mode="table">
+    <xsl:template match="ds:labels" mode="table">
         <thead>
             <tr>
                 <th>key</th>
@@ -105,20 +107,20 @@
             </tr>
         </thead>
     </xsl:template>
-    <xsl:template match="dataseries" mode="table">
+    <xsl:template match="ds:dataseries" mode="table">
         <tr>
             <td>
                 <xsl:value-of select="(@name,@label,@key)[not(.='')][1]"/>
                 <xsl:if test="@type='reldata'">
                     <br/>
-                    <xsl:value-of select="ancestor::dataset/@percentile-unit"/>
+                    <xsl:value-of select="ancestor::ds:dataset/@percentile-unit"/>
                 </xsl:if>
             </td>
             <xsl:apply-templates mode="table"/>
         </tr>
     </xsl:template>
-    <xsl:template match="labels" mode="dataseries-table"/>
-    <xsl:template match="dataseries" mode="dataseries-table">
+    <xsl:template match="ds:labels" mode="dataseries-table"/>
+    <xsl:template match="ds:dataseries" mode="dataseries-table">
   <!--  variable $labels not used yet, todo :  -->
         <xsl:variable name="labels" select="../labels"/>
         <div id="{concat(utils:normalize(../@key), '-', utils:normalize(@key))}">
@@ -126,8 +128,8 @@
                 <caption>
                     <xsl:value-of select="(@name,@label,@key)[not(.='')][1]"/>
                 </caption>
-                <xsl:for-each select="value">
-                    <xsl:variable name="label" select="$labels/label[@key=current()/@key]/text()"></xsl:variable>
+                <xsl:for-each select="ds:value">
+                    <xsl:variable name="label" select="$labels/ds:label[@key=current()/@key]/text()"></xsl:variable>
                     <tr>
                         <td>
                             <xsl:value-of select="($label|@label|@key)[not(.='')][1]"/>
@@ -138,12 +140,13 @@
             </table>
         </div>
     </xsl:template>
-    <xsl:template match="label" mode="table">
-        <th>
+    <xsl:template match="ds:label" mode="table">
+        
+        <th colspan="{if (xs:string(@type)='reldata') then 2 else 1}" >
             <xsl:value-of select="(.|@key)[not(.='')][1]"/>
         </th>
     </xsl:template>
-    <xsl:template match="value" mode="table">
+    <xsl:template match="ds:value" mode="table">
         
         <xsl:variable name="val">
             <xsl:choose>
@@ -153,8 +156,8 @@
                 <xsl:when test="@abs">
                     <xsl:value-of select="@abs"/>
                 </xsl:when>
-                <xsl:when test="list">
-                    <xsl:value-of select="count(list/*)"/>
+                <xsl:when test="ds:list">
+                    <xsl:value-of select="count(ds:list/*)"/>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:value-of select="."/>
@@ -166,10 +169,10 @@
         </xsl:variable>
         <td class="{$class-number}">
             <xsl:choose>
-                <xsl:when test="list">
+                <xsl:when test="ds:list">
                     <a class="detail-caller" href=""><xsl:value-of select="$val"></xsl:value-of></a>
                     <div class="detail" >
-                        <xsl:apply-templates select="list" mode="table" />
+                        <xsl:apply-templates select="ds:list" mode="table" />
                     </div>
                 </xsl:when>
                 <xsl:otherwise>
@@ -190,13 +193,13 @@
       </xsl:if>-->
     </xsl:template>
     
-    <xsl:template match="list" mode="table">
+    <xsl:template match="ds:list" mode="table">
         <ul>
             <xsl:apply-templates select="*" mode="table" /> 
         </ul>
     </xsl:template>
     
-    <xsl:template match="li" mode="table">
+    <xsl:template match="ds:li" mode="table">
         <xsl:variable name="key" select="utils:normalize(@key)"></xsl:variable>
         <li>
             <a href=".?selected={$key}" data-key="{$key}" title="{(@title,$key)[1]}"><xsl:value-of select="."></xsl:value-of></a>
