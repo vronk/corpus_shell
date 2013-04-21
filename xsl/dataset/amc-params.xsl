@@ -27,7 +27,7 @@
                 this provides a link to the default base-data, which should be a cached version of an all-result (<code>*:*</code>) </xd:p>
         </xd:desc>
     </xd:doc>
-    <xsl:param name="default-base-data-path" select="'http://localhost:8985/solr/collection2/admin/file?file=/data-cache/stats_base.xml'" />
+    <xsl:param name="default-base-data-path" select="'http://193.170.82.207:8985/solr/admin/file?file=/data-cache/stats_base.xml'" />
     
     
     <xd:doc xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl">
@@ -35,7 +35,7 @@
             <xd:p>prefix for <xd:i>js</xd:i> and <xd:i>css</xd:i> scripts used in html-header</xd:p>
         </xd:desc>
     </xd:doc>
-    <xsl:param name="scripts-dir" select="'/solr/collection1/admin/file?file=/scripts/'" />
+    <xsl:param name="scripts-dir" select="utils:params('scripts-dir','../admin/file?file=/scripts/')" />
     
     <xd:doc>
         <xd:desc>
