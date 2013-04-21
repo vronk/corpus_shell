@@ -1,5 +1,8 @@
-
-span.bibl { font-style: italic; color: #000099;}
-span.persName ,span.person { font-weight: bold;  color: #009900; }
-
+
+span.bibl { font-style: italic; color: #000099;}
+span.persName ,span.person { font-weight: bold;  color: #009900; }
 span.placeName { font-weight: bold;  color: #990000; }
+span.rs { font-weight: bold;  color: #333366; }
+
+.inline-wrap {position: relative;}
+.inline-wrap .attributes { background-color: #CCCCFF; position: absolute; top: 1.5em; z-index:4; }
