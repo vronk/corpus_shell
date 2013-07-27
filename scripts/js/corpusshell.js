@@ -1,3 +1,11 @@
+/**
+ * @fileOverview Hmm 
+ */
+
+/**
+ * @module corpus_shell 
+ */
+
 if (!Array.prototype.indexOf)
 {
   Array.prototype.indexOf = function(elt /*, from*/)
@@ -56,7 +64,9 @@ function GetUrlParams(url)
 }
 
 
-
+/**
+ * Bind events using jQuery 
+ */
 $(function()
 {
     $('.scroll-container .data-view.full a').live("click", function (event) {
@@ -384,6 +394,12 @@ function RefreshProfileCombo(selEntry)
   $('#profilecombo').html(htmlstr);
 }
 
+/**
+ * @public
+ * @param config {number} Item that should be preselected.
+ * @desc Creates a combo box using all the items in {@link module:corpus_shell~SearchConfig}
+ * @return {Node} A select node with option child nodes. These selct nodes are of class searchcombo.
+ */
 function GenerateSearchCombo(config)
 {
   var searchcombo = document.createElement('select');

@@ -1,3 +1,16 @@
+/**
+ * @fileOverview Provides the ProfileManager class and the ProfileController object.
+ * @author Andy Basch
+ */
+
+/**
+ * @module corpus_shell 
+ */
+
+/**
+ * @classdesc A class for managing the profiles that contain queries and their layout.
+ * @constructor 
+ */
 function ProfileManager()
 {
   this.Profiles = new Array();
@@ -53,4 +66,7 @@ function ProfileManager()
   }
 }
 
+/**
+ * The ProfileController object. 
+ */
 var ProfileController = new ProfileManager();

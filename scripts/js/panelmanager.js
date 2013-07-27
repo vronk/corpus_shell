@@ -1,30 +1,76 @@
-/*
- * subject:      PanelManager class
- * purpose:      handles the panel management in corpus_shell
- *
- * dependencies: Panel - panel.js
- *               jQuery
- *
- * creator:      Andy Basch
+/**
+ * @fileOverview Provides tha PanelManager class and the global PanelController object. <br/>
+ * Entry point from index.html is {@link module:corpus_shell~PanelManager#OpenNewSearchPanel} <br/>
+ * Currently the target of all operations is the id selector of "#snaptarget" -> {@link module:corpus_shell~PanelController}</br>
  * last change:  2012.10.02
+ * @author      Andy Basch
+ * 
  */
 
+/**
+ * @module corpus_shell 
+ */
+
+/**
+ * Creates a PanelManager.
+ * @constructor
+ * @param container {string} A jQuery selector which selects the part of the page
+ *                           the panels appear in.
+ * @param searchConfig {array.<SearchConfigItem>} An array of x-context, DisplayText maps -> {@link module:corpus_shell~SearchConfig}
+ * @classdesc purpose:      handles the panel management in corpus_shell
+ *
+ * @requires corpus_shell~Panel
+ * @requires jQuery
+ *
+ */
 function PanelManager (container, searchConfig)
 {
-  /* public properties */
+  /**  
+   * @public
+   * @type {string}
+   * @desc A jQuery selector which selects the part of the page the panels appear in 
+   */
   this.Container = container;
+  /** 
+   * @public
+   * @type {array.<SearchConfigItem>}
+   */
   this.SearchConfig = searchConfig
 
+  /**
+   * @protected
+   * @type {map.<MainPanelObject>} 
+   * @desc A "map" (that is an object with ever extending dynamic properties) of parent/main panels created accessible by their unique id.
+   */
   this.Panels = new Array();
+  /** @protected */
   this.ProfileName = "default";
+  /** 
+   * @protected
+   * @type {array.<string>}
+   * @desc Array of all panel ids currently in use.
+   */
   this.UsedPanels = new Array();
+  /**
+   * @protected
+   * @type {array.<string>}
+   * @desc array of all search panel titles currently in use. 
+   */
   this.UsedSearchPanelTitles = new Array();
+  /** 
+   * @protected
+   * @type {map.<module:corpus_shell~Panel>}
+   * @desc A "map" (that is an object with ever extending dynamic properties) of panels accessible by their unique id.
+   */
   this.PanelObjects = new Array();
 
-  /* events */
+  /** @event */
   this.onUpdated = null;
 
-  /* event triggers */
+  /**
+   * Calls onUpdate if set. 
+   * @protected
+   */
   this.TriggerChangedEvent = function (change)
   {
     if (typeof this.onUpdated == "function")
@@ -36,10 +82,24 @@ function PanelManager (container, searchConfig)
 
   //adders
 
-  //function:   this.AddMainPanel(panelId, position, url, title, zIndex)
-  //parameters: panelId - unique panel identifier
-  //purpose:    adds a parent/main panel to the list of panels (this.Panels)
-  //returns:    -
+  /**
+   * @param {string} panelId A unique panel identifier.
+   * @param {string} type The type of pannel for which a main panel should be added.
+   * @param {Position} position The postion of the panel.
+   * @param {url} url A URL, may be undefined.
+   * @param {string} title The intelligable title of the main panel.
+   * @param {number} zIndex The height of the main panel object to be added.
+   * @desc
+   * <ol>
+   * <li>Creates a new {@link MainPanelObject} using the given parameters. -> {@link module:corpus_shell~PanelManager#GetNewMainPanelObject}</li>
+   * <li>Add this panel to the "map" of main panels. -> {@link module:corpus_shell~PanelManager#Panels}</li>
+   * <li>Add the panel id to the list of currently used panels (panel ids). -> {@link module:corpus_shell~PanelManager#AddPanelId}</li>
+   * <li>Add the panel title to the list of currently used search panel titles. -> {@link module:corpus_shell~PanelManager#AddSearchPanelTitle}</li>
+   * </ol>
+   * @summary purpose:    adds a parent/main panel to the list of panels.
+   * @fires module:corpus_shell~PanelManager#event:onUpdated
+   * @return    -
+   */
   this.AddMainPanel = function(panelId, type, position, url, title, zIndex)
   {
     this.Panels[panelId] = this.GetNewMainPanelObject(panelId, type, position, url, title, zIndex);
@@ -48,28 +108,54 @@ function PanelManager (container, searchConfig)
     this.TriggerChangedEvent("Mainpanel added: " + panelId);
   }
 
-  //function:   this.AddImagePanel(parentId, panelId, pinned, position, url, title, zIndex)
-  //parameters: panelId - unique panel identifier
-  //purpose:    adds an image panel to the list of panels (this.Panels[parentId].Panels)
-  //returns:    -
+  /**
+   * purpose:    adds an image panel to the list of panels (this.Panels[parentId].Panels)
+   * @see Panel.Panels
+   * @param parentId
+   * @param panelId unique panel identifier
+   * @param pinned
+   * @param position
+   * @param url
+   * @param title
+   * @param zIndex
+   * @return    -
+   */
   this.AddImagePanel = function(parentId, panelId, pinned, position, url, title, zIndex)
   {
     this.AddSubPanel(parentId, panelId, pinned, position, url, title, zIndex, "image");
   }
 
-  //function:   this.AddTextPanel(parentId, panelId, pinned, position, url, title, zIndex)
-  //parameters: panelId - unique panel identifier
-  //purpose:    adds a text panel to the list of panels (this.Panels[parentId].Panels)
-  //returns:    -
+  /**
+   * purpose:    adds a text panel to the list of panels (this.Panels[parentId].Panels)
+   * @see Panel.Panels
+   * @param parentId
+   * @param panelId unique panel identifier
+   * @param pinned
+   * @param position
+   * @param url
+   * @param title
+   * @param zIndex
+   * @return    -
+   */
   this.AddTextPanel = function(parentId, panelId, pinned, position, url, title, zIndex)
   {
     this.AddSubPanel(parentId, panelId, pinned, position, url, title, zIndex, "text");
   }
 
-  //function:   this.AddSubPanel(parentId, panelId, pinned, position, url, title, zIndex, type)
-  //parameters: panelId - unique panel identifier
-  //purpose:    adds a subpanel to the list of panels (this.Panels[parentId].Panels)
-  //returns:    -
+  /**
+   * purpose:    adds a subpanel to the list of panels (this.Panels[parentId].Panels)
+   * @see Panel.Panels
+   * @param parentId
+   * @param panelId unique panel identifier
+   * @param pinned
+   * @param position
+   * @param url
+   * @param title
+   * @param zIndex
+   * @param type
+   * @return    -
+   * @protected
+   */
   this.AddSubPanel = function(parentId, panelId, pinned, position, url, title, zIndex, type)
   {
     var parent = null;
@@ -93,10 +179,11 @@ function PanelManager (container, searchConfig)
 
   //getters
 
-  //function:   this.GetMainPanel(parentId)
-  //parameters: panelId - unique panel identifier
-  //purpose:    gets or adds main panel
-  //returns:    -
+  /**
+   * purpose:    gets or adds main panel
+   * @param panelId - unique panel identifier
+   * @return - 
+   */
   this.GetMainPanel = function(panelId)
   {
     var main = this.Panels[panelId];
@@ -110,11 +197,13 @@ function PanelManager (container, searchConfig)
     return main;
   }
 
-  //gets subpanel, if it doesn't exist, returns null
-  //function:   this.GetSubPanel(parentId, panelId)
-  //parameters: panelId - unique panel identifier
-  //purpose:    searches for subpanel by panelId
-  //returns:    if found, returns the panel else null
+  /**
+   * gets subpanel, if it doesn't exist, returns null
+   * purpose:    searches for subpanel by panelId
+   * @param parentId
+   * @param panelId - unique panel identifier
+   * @return    if found, returns the panel else null 
+   */
   this.GetSubPanel = function(parentId, panelId)
   {
     if (parentId != "")
@@ -135,11 +224,12 @@ function PanelManager (container, searchConfig)
     }
   }
 
-  //function:   this.GetMainFromSubPanel(panelId)
-  //parameters: panelId - unique panel identifier
-  //purpose:    searches for the corresponding parent panel to a given
-  //            panelId of a subpanel
-  //returns:    if found, returns the panel else null
+  /**
+   * purpose:    searches for the corresponding parent panel to a given
+   *             panelId of a subpanel
+   * @param panelId - unique panel identifier
+   * @return    if found, returns the panel else null
+   */
   this.GetMainFromSubPanel = function(panelId)
   {
      for (var key in this.Panels)
@@ -152,11 +242,12 @@ function PanelManager (container, searchConfig)
      return null;
   }
 
-  //function:   this.GetMainIdFromSubPanel(panelId)
-  //parameters: panelId - unique panel identifier
-  //purpose:    searches for the corresponding parent panelId to a given
-  //            panelId of a subpanel
-  //returns:    if found, returns the parent panelId else null
+  /**
+   * purpose:    searches for the corresponding parent panelId to a given
+   *             panelId of a subpanel
+   * @param panelId - unique panel identifier
+   * @return    if found, returns the parent panelId else null
+   */
   this.GetMainIdFromSubPanel = function(panelId)
   {
      for (var key in this.Panels)
@@ -169,11 +260,12 @@ function PanelManager (container, searchConfig)
      return null;
   }
 
-  //function:   this.GetPanel(panelId)
-  //parameters: panelId - unique panel identifier
-  //purpose:    searches for a panel without knowing wether it is a main or a
-  //            sub panel
-  //returns:    if found, returns the panel else null
+  /**
+   * purpose:    searches for a panel without knowing wether it is a main or a
+   *             sub panel
+   * @param panelId - unique panel identifier
+   * @return    if found, returns the panel else null
+   */
   this.GetPanel = function(panelId)
   {
     var panel = null;
@@ -187,46 +279,52 @@ function PanelManager (container, searchConfig)
     return panel;
   }
 
-  //function:   this.GetPinnedImagePanel(parentId)
-  //parameters: panelId - unique panel identifier
-  //purpose:
-  //returns:    -
+  /**
+   * purpose:
+   * @param panelId - unique panel identifier
+   * @return    sth. if found or else null
+   */
   this.GetPinnedImagePanel = function(parentId)
   {
     return this.GetPinnedPanel(parentId, "image");
   }
 
-  //function:   this.GetPinnedImagePanelId(parentId)
-  //parameters: panelId - unique panel identifier
-  //purpose:
-  //returns:    -
+  /**
+   * purpose:
+   * @param panelId - unique panel identifier
+   * @return    sth. if found or else null
+   */
   this.GetPinnedImagePanelId = function(parentId)
   {
     return this.GetPinnedPanelId(parentId, "image");
   }
 
-  //function:   this.GetPinnedTextPanel(parentId)
-  //parameters: panelId - unique panel identifier
-  //purpose:
-  //returns:    -
+  /**
+   * purpose:
+   * @param panelId - unique panel identifier
+   * @return    sth. or else null
+   */
   this.GetPinnedTextPanel = function(parentId)
   {
     return this.GetPinnedPanel(parentId, "text");
   }
 
-  //function:   this.GetPinnedTextPanelId(parentId)
-  //parameters: panelId - unique panel identifier
-  //purpose:
-  //returns:    -
+  /**
+   * purpose:
+   * @param panelId - unique panel identifier
+   * @return    sth. if found or else null
+   */
   this.GetPinnedTextPanelId = function(parentId)
   {
     return this.GetPinnedPanelId(parentId, "text");
   }
 
-  //function:   this.GetPinnedPanel(parentId, type)
-  //parameters: panelId - unique panel identifier
-  //purpose:
-  //returns:    -
+  /**
+   * purpose:
+   * @protected
+   * @param panelId - unique panel identifier
+   * @return  sth. if found or else null
+   */
   this.GetPinnedPanel = function(parentId, type)
   {
     if (this.ExistsMainPanel(parentId) == false)
@@ -247,10 +345,12 @@ function PanelManager (container, searchConfig)
     return null;
   }
 
-  //function:   this.GetPinnedPanelId(parentId, type)
-  //parameters: panelId - unique panel identifier
-  //purpose:
-  //returns:    -
+  /**
+   * purpose:
+   * @protected
+   * @param panelId - unique panel identifier
+   * @return    sth. if found or else null
+   */
   this.GetPinnedPanelId = function(parentId, type)
   {
     if (this.ExistsMainPanel(parentId) == false)
@@ -271,10 +371,11 @@ function PanelManager (container, searchConfig)
     return null;
   }
 
-  //function:   this.GetPanelPosition(panelId)
-  //parameters: panelId - unique panel identifier
-  //purpose:
-  //returns:    -
+  /**
+   * purpose:
+   * @param panelId - unique panel identifier
+   * @return    sth. if found or else null
+   */
   this.GetPanelPosition = function(panelId)
   {
     var panel = this.GetPanel(panelId);
@@ -285,10 +386,11 @@ function PanelManager (container, searchConfig)
       return null;
   }
 
-  //function:   this.GetPanelUrl(panelId)
-  //parameters: panelId - unique panel identifier
-  //purpose:
-  //returns:    -
+  /**
+   * purpose:
+   * @param panelId - unique panel identifier
+   * @return    sth. if found or else null
+   */
   this.GetPanelUrl = function(panelId)
   {
     var panel = this.GetPanel(panelId);
@@ -299,19 +401,21 @@ function PanelManager (container, searchConfig)
       return null;
   }
 
-  //function:   this.GetPanelDivFromElement(elem)
-  //parameters: -
-  //purpose:
-  //returns:    -
+  /**
+   * purpose:
+   * @param elem
+   * @return    sth.
+   */
   this.GetPanelDivFromElement = function(elem)
   {
     return $(titlep).parents(".draggable");
   }
 
-  //function:   this.InitScrollPane(panelId)
-  //parameters: panelId - unique panel identifier
-  //purpose:
-  //returns:    -
+  /**
+   * purpose:
+   * @param panelId - unique panel identifier
+   * @return    -
+   */
   this.InitScrollPane = function(panelId)
   {
     var panelObj = this.GetPanelObj(panelId);
@@ -319,10 +423,11 @@ function PanelManager (container, searchConfig)
       panelObj.InitScrollPane();
   }
 
-  //function:   this.RefreshScrollPane(panelId)
-  //parameters: panelId - unique panel identifier
-  //purpose:
-  //returns:    -
+  /**
+   * purpose:
+   * @param panelId - unique panel identifier
+   * @return    -
+   */
   this.RefreshScrollPane = function(panelId)
   {
     var panelObj = this.GetPanelObj(panelId);
@@ -332,10 +437,12 @@ function PanelManager (container, searchConfig)
 
   //setters
 
-  //function:   this.PinPanel(panelId, col)
-  //parameters: panelId - unique panel identifier
-  //purpose:
-  //returns:    -
+  /**
+   * purpose:
+   * @param panelId - unique panel identifier
+   * @param col
+   * @return    -
+   */
   this.PinPanel = function(panelId, col)
   {
     var panelObj = this.GetPanelObj(panelId);
@@ -348,28 +455,32 @@ function PanelManager (container, searchConfig)
       this.SetPanelPinned(panelId);
   }
 
-  //function:   this.SetPanelPinned(panelId)
-  //parameters: panelId - unique panel identifier
-  //purpose:
-  //returns:    -
+  /**
+   * purpose: Sets the pinned state of the specified panel.
+   * @param panelId - unique panel identifier
+   * @return    -
+   */
   this.SetPanelPinned = function(panelId)
   {
     this.SetPanelPinnedState(panelId, true);
   }
 
-  //function:   this.SetPanelNotPinned(panelId)
-  //parameters: panelId - unique panel identifier
-  //purpose:
-  //returns:    -
+  /**
+  * purpose: Clears the pinned state of the specified panel.
+  * @param panelId - unique panel identifier
+  * @return    -
+  */
   this.SetPanelNotPinned = function(panelId)
   {
     this.SetPanelPinnedState(panelId, false);
   }
 
-  //function:   this.SetPanelPinnedState(panelId, pinned)
-  //parameters: panelId - unique panel identifier
-  //purpose:
-  //returns:    -
+  /**
+  * purpose: Sets the pinned state of the specified panel according to pinned.
+  * @param panelId - unique panel identifier
+  * @param pinned {boolean} State to be set.
+  * @return    -
+  */
   this.SetPanelPinnedState = function(panelId, pinned)
   {
     var panel = this.GetSubPanel("", panelId);
@@ -381,10 +492,11 @@ function PanelManager (container, searchConfig)
     }
   }
 
-  //function:   this.SetPanelPosition(panelId, position)
-  //parameters: panelId - unique panel identifier
-  //purpose:
-  //returns:    -
+  /**
+  * @param panelId - unique panel identifier
+  * purpose:
+  * @return    -
+  */
   this.SetPanelPosition = function(panelId, position)
   {
     var panel = this.GetPanel(panelId);
@@ -396,10 +508,13 @@ function PanelManager (container, searchConfig)
     }
   }
 
-  //function:   this.SetPanelUrl(panelId, url)
-  //parameters: panelId - unique panel identifier
-  //purpose:
-  //returns:    -
+  /**
+  * @param {string} panelId Unique panel identifier
+  * @param {url} url A URL to store.
+  * @desc purpose: Updates a panel's url.
+  * @fires module:corpus_shell~PanelManager#event:onUpdated
+  * @return    -
+  */
   this.SetPanelUrl = function(panelId, url)
   {
     var panel = this.GetPanel(panelId);
@@ -411,10 +526,11 @@ function PanelManager (container, searchConfig)
     }
   }
 
-  //function:   this.SetPanelZIndex(panelId, zIndex)
-  //parameters: panelId - unique panel identifier
-  //purpose:
-  //returns:    -
+  /**
+  * @param panelId - unique panel identifier
+  * purpose:
+  * @return    -
+  */
   this.SetPanelZIndex = function(panelId, zIndex)
   {
     var panel = this.GetPanel(panelId);
@@ -432,19 +548,21 @@ function PanelManager (container, searchConfig)
   }
 
   //removers
-  //function:   this.ClosePanel(panelId)
-  //parameters: panelId - unique panel identifier
-  //purpose:
-  //returns:    -
+  /**
+  * @param panelId - unique panel identifier
+  * purpose:
+  * @return    -
+  */
   this.ClosePanel = function(panelId)
   {
     this.RemovePanel(panelId);
   }
 
-  //function:   this.RemovePanel(panelId)
-  //parameters: panelId - unique panel identifier
-  //purpose:
-  //returns:    -
+  /**
+  * @param panelId - unique panel identifier
+  * purpose:
+  * @return    -
+  */
   this.RemovePanel = function(panelId)
   {
     if (this.Panels[panelId] != undefined)
@@ -464,10 +582,11 @@ function PanelManager (container, searchConfig)
     }
   }
 
-  //function:   this.RemoveMainPanel(panelId)
-  //parameters: panelId - unique panel identifier
-  //purpose:
-  //returns:    -
+  /**
+  * @param panelId - unique panel identifier
+  * purpose:
+  * @return    -
+  */
   this.RemoveMainPanel = function(panelId)
   {
     var panel = this.Panels[panelId];
@@ -487,10 +606,11 @@ function PanelManager (container, searchConfig)
     this.TriggerChangedEvent("");
   }
 
-  //function:   this.RemoveSubPanel(parentId, panelId, triggerEvent)
-  //parameters: -
-  //purpose:
-  //returns:    -
+  /**
+  * @param -
+  * purpose:
+  * @return    -
+  */
   this.RemoveSubPanel = function(parentId, panelId, triggerEvent)
   {
     delete this.Panels[parentId].Panels[panelId];
@@ -502,10 +622,11 @@ function PanelManager (container, searchConfig)
     this.TriggerChangedEvent("");
   }
 
-  //function:   this.RemoveAllPanels()
-  //parameters: -
-  //purpose:
-  //returns:    -
+  /**
+  * @param -
+  * purpose:
+  * @return    -
+  */
   this.RemoveAllPanels = function()
   {
     for (var panelId in this.Panels)
@@ -513,10 +634,25 @@ function PanelManager (container, searchConfig)
   }
 
   //helpers
-  //function:   this.GetNewMainPanelObject(panelId, type, position, url, title, zIndex)
-  //parameters: panelId - unique panel identifier
-  //purpose:
-  //returns:    -
+  
+  /**
+   * @typedef {Object} MainPanelObject
+   * @property {string} Id The unique panel id of this panel. Used as an id for an HTML element and
+   * as a JavaScript objects property name.
+   * @property {string} Title The title of the panel.
+   * @property {string} Type The type of this panel.
+   * @property {Position} Position The position of this panel
+   * @property {array.<SubPanelObject>} Panels  All the sub panels within this panel.
+   * @property {url} Url A URL describing ???
+   * @property {number} ZIndex At which "heigh" this panel is on screen.
+   */
+  
+  /** 
+   * @private
+   * @param panelId - unique panel identifier
+   * @desc purpose: Constructong a {@link MainPanelObject}
+   * @return {MainPanelObject}
+   */
   this.GetNewMainPanelObject = function(panelId, type, position, url, title, zIndex)
   {
     var obj = new Object();
@@ -531,10 +667,24 @@ function PanelManager (container, searchConfig)
     return obj;
   }
 
-  //function:   this.GetNewPanelObject(panelId, type, pinned, position, url, title, zIndex)
-  //parameters: panelId - unique panel identifier
-  //purpose:
-  //returns:    -
+  /**
+   * @typedef {Object} SubPanelObject
+   * @property {string} Id The unique panel id of this panel. Used as an id for an HTML element and
+   * as a JavaScript objects property name.
+   * @property {string} Title The title of the panel.
+   * @property {string} Type The type of this panel.
+   * @property {boolean} Pinned If this panel is pinned down at the moment.
+   * @property {Position} Position The position of this panel
+   * @property {url} Url A URL describing ???
+   * @property {number} ZIndex At which "heigh" this panel is on screen.
+   */
+
+  /**
+   * @private
+   * @param panelId - unique panel identifier
+   * @desc purpose:	Constructing function of a {@link SubPanelObject}
+   * @return    {SubPanelObject}
+   */
   this.GetNewPanelObject = function(panelId, type, pinned, position, url, title, zIndex)
   {
     var obj = new Object();
@@ -553,10 +703,12 @@ function PanelManager (container, searchConfig)
     return obj;
   }
 
-  //function:   this.GetNewPanelId()
-  //parameters: -
-  //purpose:
-  //returns:    -
+  /**
+  * @private
+  * @desc purpose: Generate unique panel ids. <br/>
+  * <em>Note: These have to be valid ids for an HTML element and JavaScript objects property names!</em>
+  * @return {string} A dynamically generated unique panel id (that is panel + the next unused number = eg. panel815).
+  */
   this.GetNewPanelId = function()
   {
     var i = 1;
@@ -569,10 +721,12 @@ function PanelManager (container, searchConfig)
     return 'panel' + i;
   }
 
-  //function:   this.GetNewPanelTitle(titlePart)
-  //parameters: -
-  //purpose:
-  //returns:    -
+  /**
+   * @private
+   * @param titlePart {string} The first part of the title.
+   * @desc purpose: Generate a title for a panel.
+   * @return {string}
+   */
   this.GetNewPanelTitle = function(titlePart)
   {
     var i = 1;
@@ -585,28 +739,31 @@ function PanelManager (container, searchConfig)
     return titlePart + ' ' + i;
   }
 
-  //function:   this.AddPanelId(panelId)
-  //parameters: panelId - unique panel identifier
-  //purpose:
-  //returns:    -
+  /**
+  * @param {string} panelId A unique panel identifier.
+  * purpose: Add a panel id to the array of used panels. -> {@link module:corpus_shell~PanelManager#UsedPanels}
+  * @return    -
+  */
   this.AddPanelId = function(panelId)
   {
     this.UsedPanels.push(panelId);
   }
 
-  //function:   this.AddSearchPanelTitle(title)
-  //parameters: -
-  //purpose:
-  //returns:    -
+  /**
+  * @param {string} title Title to be added.
+  * @desc purpose: add title to the array of currently used titles. -> {@link module:corpus_shell~PanelManager#UsedSearchPanelTitles}
+  * @return    -
+  */
   this.AddSearchPanelTitle = function(title)
   {
     this.UsedSearchPanelTitles.push(title);
   }
 
-  //function:   this.RemovePanelId(panelId)
-  //parameters: panelId - unique panel identifier
-  //purpose:
-  //returns:    -
+  /**
+  * @param panelId - unique panel identifier
+  * purpose:
+  * @return    -
+  */
   this.RemovePanelId = function(panelId)
   {
     var idx = this.UsedPanels.indexOf(panelId);
@@ -615,10 +772,11 @@ function PanelManager (container, searchConfig)
     delete this.UsedPanels[idx];
   }
 
-  //function:   this.RemoveSearchPanelTitle(title)
-  //parameters: -
-  //purpose:
-  //returns:    -
+  /**
+  * @param -
+  * purpose:
+  * @return    -
+  */
   this.RemoveSearchPanelTitle = function(title)
   {
     var idx = this.UsedSearchPanelTitles.indexOf(title);
@@ -627,10 +785,11 @@ function PanelManager (container, searchConfig)
     delete this.UsedSearchPanelTitles[idx];
   }
 
-  //function:   this.RefreshUsedPanels()
-  //parameters: -
-  //purpose:
-  //returns:    -
+  /**
+  * @param -
+  * purpose:
+  * @return    -
+  */
   this.RefreshUsedPanels = function()
   {
     this.UsedPanels.length = 0;
@@ -647,10 +806,11 @@ function PanelManager (container, searchConfig)
     }
   }
 
-  //function:   this.RefreshUsedSearchPanelTitles()
-  //parameters: -
-  //purpose:
-  //returns:    -
+  /**
+  * @param -
+  * purpose:
+  * @return    -
+  */
   this.RefreshUsedSearchPanelTitles = function()
   {
     this.UsedSearchPanelTitles.length = 0;
@@ -662,10 +822,11 @@ function PanelManager (container, searchConfig)
     }
   }
 
-  //function:   this.ExistsMainPanel(panelId)
-  //parameters: panelId - unique panel identifier
-  //purpose:
-  //returns:    -
+  /**
+  * @param panelId - unique panel identifier
+  * purpose:
+  * @return    -
+  */
   this.ExistsMainPanel = function(panelId)
   {
     var main = this.Panels[panelId];
@@ -673,10 +834,11 @@ function PanelManager (container, searchConfig)
     return (main != undefined);
   }
 
-  //function:   this.IsSubPanel(panelId)
-  //parameters: panelId - unique panel identifier
-  //purpose:
-  //returns:    -
+  /**
+  * @param panelId - unique panel identifier
+  * purpose:
+  * @return    -
+  */
   this.IsSubPanel = function(panelId)
   {
     var panel = this.GetSubPanel("", panelId);
@@ -684,10 +846,11 @@ function PanelManager (container, searchConfig)
     return panel != null;
   }
 
-  //function:   this.IsPinned(panelId)
-  //parameters: panelId - unique panel identifier
-  //purpose:
-  //returns:    -
+  /**
+  * @param panelId - unique panel identifier
+  * purpose:
+  * @return    -
+  */
   this.IsPinned = function(panelId)
   {
     var panel = this.GetSubPanel("", panelId);
@@ -696,10 +859,11 @@ function PanelManager (container, searchConfig)
     return panel.Pinned;
   }
 
-  //function:   this.NormalizePanel(panelId)
-  //parameters: panelId - unique panel identifier
-  //purpose:
-  //returns:    -
+  /**
+  * @param panelId - unique panel identifier
+  * purpose:
+  * @return    -
+  */
   this.NormalizePanel = function(panelId)
   {
     var position = this.GetPanelPosition(panelId);
@@ -712,10 +876,11 @@ function PanelManager (container, searchConfig)
     }
   }
 
-  //function:   this.MaximizePanel(panelId)
-  //parameters: panelId - unique panel identifier
-  //purpose:
-  //returns:    -
+  /**
+  * @param panelId - unique panel identifier
+  * purpose:
+  * @return    -
+  */
   this.MaximizePanel = function(panelId)
   {
     var wid = $("#mainpanel").width();
@@ -735,10 +900,11 @@ function PanelManager (container, searchConfig)
     }
   }
 
-  //function:   this.GetMinZIndex()
-  //parameters: -
-  //purpose:
-  //returns:    -
+  /**
+  * @param -
+  * purpose:
+  * @return    -
+  */
   this.GetMinZIndex = function()
   {
     var minZidx = Math.pow(2, 32) - 1;
@@ -763,10 +929,10 @@ function PanelManager (container, searchConfig)
     return minZidx;
   }
 
-  //function:   this.GetMaxZIndex()
-  //parameters: -
-  //purpose:
-  //returns:    -
+  /**
+  * purpose: Get the z index of the currently top most panel(s). Looks for main and sub panels.
+  * @return {number}
+  */
   this.GetMaxZIndex = function()
   {
     this.LowerZIndex();
@@ -793,10 +959,11 @@ function PanelManager (container, searchConfig)
     return maxZidx;
   }
 
-  //function:   this.LowerZIndex()
-  //parameters: -
-  //purpose:
-  //returns:    -
+  /**
+  * @param -
+  * purpose:
+  * @return    -
+  */
   this.LowerZIndex = function()
   {
     var minZidx = this.GetMinZIndex();
@@ -826,10 +993,11 @@ function PanelManager (container, searchConfig)
     }
   }
 
-  //function:   this.BringToFront(panelId)
-  //parameters: panelId - unique panel identifier
-  //purpose:
-  //returns:    -
+  /**
+  * @param panelId - unique panel identifier
+  * purpose:
+  * @return    -
+  */
   this.BringToFront = function(panelId)
   {
     var maxZidx = this.GetMaxZIndex() + 1;
@@ -841,10 +1009,28 @@ function PanelManager (container, searchConfig)
       panelObj.SetZIndex(maxZidx);
   }
 
-  //function:   this.OpenNewSearchPanel(config)
-  //parameters: -
-  //purpose:
-  //returns:    -
+  /**
+   * @public
+   * @param {number|string} config The index of the {@link module:corpus_shell~SearchConfig} to use or <br/>
+   *                        may be an internal resource name.
+   * @param {string} [searchstr] The search string to execute in the new panel.
+   * @desc
+   * <ol> 
+   * <li>Fetches the next unique panel id -> {@link module:corpus_shell~PanelManager#GetNewPanelId}. </li>
+   * <li>Calculates an initial position as a {@link Position} object. <br/>
+   *     It uses a cascading effect {@link module:corpus_shell~PanelManager#GetPanelCount} and an initial size of 525px x 600px. </li>
+   * <li>Places the new window above all currently visible. -> {@link module:corpus_shell~PanelManager#GetMaxZIndex}</li>
+   * <li>Creates a new title for the panel using "Search" as a part of that title. -> {@link module:corpus_shell~PanelManager#GetNewPanelTitle}</li>
+   * <li>Converts the internal name to an index if necessary -> {@link module:corpus_shell~PanelManager#GetSearchIdx}.</li>
+   * <li>Creates a new {@link module:corpus_shell~Panel} object.</li>
+   * <li>Within this new panel create a new search sub panel and display it using {@link module:corpus_shell~Panel#CreatePanel}
+   * <li>Add the new panel to this object's "map" of all panels by its unique id. -> {@link module:corpus_shell~PanelManager#PanelObjects}</li>
+   * <li>Create a new main panel object for this panel in the map of main panel objects which is one above the created panel -> {@link module:corpus_shell~PanelManager#AddMainPanel}</li>
+   * </ol>
+   * @summary purpose: Creates a new search panel and registers it with this object.
+   * @fires module:corpus_shell~PanelManager#event:onUpdated
+   * @return    -
+   */
   this.OpenNewSearchPanel = function(config, searchstr)
   {
     var panelName = this.GetNewPanelId();
@@ -870,10 +1056,11 @@ function PanelManager (container, searchConfig)
   }
 
 
-  //function:   this.OpenNewScanPanel(config)
-  //parameters: -
-  //purpose:
-  //returns:    -
+  /**
+  * @param -
+  * purpose:
+  * @return    -
+  */
   this.OpenNewScanPanel = function(config, scanIdx)
   {
     var urlStr = "/switch?operation=scan&x-format=html&x-context=" + config +
@@ -881,10 +1068,11 @@ function PanelManager (container, searchConfig)
     this.OpenNewContentPanel(urlStr, "Scan");
   }
 
-  //function:   this.OpenNewContentPanel(config, titlePart)
-  //parameters: -
-  //purpose:
-  //returns:    -
+  /**
+  * @param -
+  * purpose:
+  * @return    -
+  */
   this.OpenNewContentPanel = function(url, titlePart)
   {
     var panelName = this.GetNewPanelId();
@@ -909,10 +1097,11 @@ function PanelManager (container, searchConfig)
     this.AddMainPanel(panelName, "content", position, url, panelTitle, maxZidx + 1);
   }
 
-  //function:   this.CreateNewSearchPanelObj(panelObj)
-  //parameters: -
-  //purpose:
-  //returns:    -
+  /**
+  * @param -
+  * purpose:
+  * @return    -
+  */
   this.CreateNewSearchPanelObj = function(panelObj)
   {
     if (panelObj == undefined) return;
@@ -924,10 +1113,11 @@ function PanelManager (container, searchConfig)
     this.PanelObjects[panelObj.Id] = newPanel;
   }
 
-  //function:   this.CreateNewContentPanelObj(panelObj)
-  //parameters: -
-  //purpose:
-  //returns:    -
+  /**
+  * @param -
+  * purpose:
+  * @return    -
+  */
   this.CreateNewContentPanelObj = function(panelObj)
   {
     if (panelObj == undefined) return;
@@ -939,10 +1129,11 @@ function PanelManager (container, searchConfig)
     this.PanelObjects[panelObj.Id] = newPanel;
   }
 
-  //function:   this.OpenSubPanel(elem, url, pinned, type)
-  //parameters: -
-  //purpose:
-  //returns:    -
+  /**
+  * @param -
+  * purpose:
+  * @return    -
+  */
   this.OpenSubPanel = function(elem, url, pinned, type)
   {
     var paneldiv = $(elem).parents(".draggable");
@@ -1012,10 +1203,11 @@ function PanelManager (container, searchConfig)
     }
   }
 
-  //function:   this.CreateNewSubPanelObj(panelObj)
-  //parameters: -
-  //purpose:
-  //returns:    -
+  /**
+  * @param -
+  * purpose:
+  * @return    -
+  */
   this.CreateNewSubPanelObj = function(panelObj)
   {
     if (panelObj == undefined) return;
@@ -1026,19 +1218,22 @@ function PanelManager (container, searchConfig)
   }
 
   //panelobject methods
-  //function:   this.GetPanelObj(panelId)
-  //parameters: panelId - unique panel identifier
-  //purpose:
-  //returns:    -
+  
+  /**
+  * @param panelId - unique panel identifier
+  * purpose:
+  * @return    -
+  */
   this.GetPanelObj = function(panelId)
   {
     return this.PanelObjects[panelId];
   }
 
-  //function:   this.RemovePanelObj(panelId)
-  //parameters: panelId - unique panel identifier
-  //purpose:
-  //returns:    -
+  /**
+  * @param panelId - unique panel identifier
+  * purpose:
+  * @return    -
+  */
   this.RemovePanelObj = function(panelId)
   {
     var panelObj = this.GetPanelObj(panelId);
@@ -1049,10 +1244,11 @@ function PanelManager (container, searchConfig)
     }
   }
 
-  //function:   this.UpdatePanelPosition(panelId)
-  //parameters: panelId - unique panel identifier
-  //purpose:
-  //returns:    -
+  /**
+  * @param panelId - unique panel identifier
+  * purpose:
+  * @return    -
+  */
   this.UpdatePanelPosition = function(panelId)
   {
     var panelObj = this.GetPanelObj(panelId);
@@ -1065,10 +1261,13 @@ function PanelManager (container, searchConfig)
      }
   }
 
-  //function:   this.StartSearch(panelId)
-  //parameters: panelId - unique panel identifier
-  //purpose:
-  //returns:    -
+  /**
+  * @param panelId - unique panel identifier
+  * @desc purpose: Store the search urls for all the searches started using the panels <br/>
+  * after executing them there. -> {@link module:corpus_shell~Panel#StartSearch}
+  * @fires module:corpus_shell~PanelManager#event:onUpdated
+  * @return    -
+  */
   this.StartSearch = function(panelId)
   {
     var panel = this.GetPanelObj(panelId);
@@ -1080,10 +1279,11 @@ function PanelManager (container, searchConfig)
     }
   }
 
-  //function:   this.StartSearchPrev(panelId)
-  //parameters: panelId - unique panel identifier
-  //purpose:
-  //returns:    -
+  /**
+  * @param panelId - unique panel identifier
+  * purpose:
+  * @return    -
+  */
   this.StartSearchPrev = function(panelId)
   {
     var panel = this.GetPanelObj(panelId);
@@ -1104,10 +1304,11 @@ function PanelManager (container, searchConfig)
     }
   }
 
-  //function:   this.StartSearchNext(panelId)
-  //parameters: panelId - unique panel identifier
-  //purpose:
-  //returns:    -
+  /**
+  * @param panelId - unique panel identifier
+  * purpose:
+  * @return    -
+  */
   this.StartSearchNext = function(panelId)
   {
     var panel = this.GetPanelObj(panelId);
@@ -1132,10 +1333,12 @@ function PanelManager (container, searchConfig)
 
   //SearchConfig methods
 
-  //function:   this.GetSearchIdx(xContext)
-  //parameters: -
-  //purpose:
-  //returns:    -
+  /**
+  * @param {string} xContext A context identifier that is not a number but an internal name.
+  * @desc purpose: finds the current index in {@link moduls:corpus_shell~SearchConfig} for a particular
+  * internal (resource) name.
+  * @return {number} The index matching the parameter or else 0
+  */
   this.GetSearchIdx = function(xContext)
   {
     for (var idx = 0; idx < this.SearchConfig.length; idx++)
@@ -1146,15 +1349,22 @@ function PanelManager (container, searchConfig)
     return 0;
   }
 
-  //function:   this.GetResourceName(idx)
-  //parameters: -
-  //purpose:
-  //returns:    -
+  /**
+  * @param {number} idx The index to get the internal resource name for.
+  * purpose: get an internal resource name for an index in {@link moduls:corpus_shell~SearchConfig}.
+  * @return {string} The internal resource name.
+  */
   this.GetResourceName = function(idx)
   {
     return this.SearchConfig[idx]["x-context"];
   }
 
+  // other helpers (place them elsewhere?)
+  
+  /**
+   * Returns the current number of (main) panels.
+   * @return {number} 
+   */
   this.GetPanelCount = function()
   {
     var cnt = 0;
@@ -1167,10 +1377,11 @@ function PanelManager (container, searchConfig)
     return cnt;
   }
 
-  //function:   this.LoadProfile(name, panels)
-  //parameters: -
-  //purpose:
-  //returns:    -
+  /**
+  * @param -
+  * purpose:
+  * @return    -
+  */
   this.LoadProfile = function(name, panels)
   {
     this.RemoveAllPanels();
@@ -1207,4 +1418,8 @@ function PanelManager (container, searchConfig)
   }
 }
 
+/**
+ * The controller object managing all the panels. Currently the target for
+ * its operation is an id selector of #snaptarget
+ */ 
 var PanelController = new PanelManager("#snaptarget", SearchConfig);

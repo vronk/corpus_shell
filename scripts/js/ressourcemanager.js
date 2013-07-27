@@ -1,3 +1,16 @@
+/**
+ * @fileOverview
+ *  
+ */
+
+/**
+ * @module corpus_shell 
+ */
+
+/**
+ * @classdesc hmm
+ * @constructor 
+ */
 function ResourceManager()
 {
   this.Resources = new Array();
@@ -142,4 +155,7 @@ function ResourceManager()
   }
 }
 
+/**
+ * The object 
+ */
 var ResourceController = new ResourceManager();
