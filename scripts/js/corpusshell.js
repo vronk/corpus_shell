@@ -1,11 +1,15 @@
 /**
- * @fileOverview Hmm 
+ * @fileOverview Contains all the helper methods that are called from index.html which do
+ * some preliminary checks and then delegate the work to the specialized classes. It also provides the ui logic for the sidebar.<br/>
+ * This file has some sections which are just instructions and are not wraped into a function block.
+ * Main entry points here are {@link module:corpus_shell~SaveProfileAs}, {@link module:corpus_shell~CreateNewProfile},
  */
 
 /**
  * @module corpus_shell 
  */
 
+// Adds an indexOf to every Array object if there isn't one at the moment.
 if (!Array.prototype.indexOf)
 {
   Array.prototype.indexOf = function(elt /*, from*/)
@@ -29,8 +33,22 @@ if (!Array.prototype.indexOf)
   };
 }
 
+/**
+ * A protection variable to disable updates initiated by {@link module:corpus_shell~PanelManager#onUpdated} while
+ * data is still retrieved from the server.
+ * @type {boolean} 
+ */
 var updating = false;
+
+/**
+ * The current user ID.
+ * @type {string}  
+ */
 var userId = null;
+/**
+ * Current count of search panels.
+ * @type {number} 
+ */
 var searchPanelCount = 1;
 $.storage = new $.store();
 var Indexes = null;
@@ -38,7 +56,11 @@ var Indexes = null;
 // is now set in params.js
 //var baseURL = "/cs2/corpus_shell";
 
-/** get params from the uri */
+/**
+ * @desc Get parameters from the supplied uri/url as a "map" (a JavaScript object which properties correspond to the parameters).
+ * @param {url} url Some url witch contains parameters to be converted to a "map".
+ * @return {map} Parameters in the url as a "map".  
+ */
 function GetUrlParams(url)
 {
   var urlParams = {};
@@ -65,9 +87,15 @@ function GetUrlParams(url)
 
 
 /**
- * Bind events using jQuery 
+ * <ol>
+ * <li>Bind events to DOM elements that may or may not exist in the current DOM tree using jQuery</li>
+ * <li>Tries to get a user id.</li>
+ * <li>Initiates asynchrounous loading of the profiles and the index data.</li>
+ * <li>Installs a handler for the {@link module:corpus_shell~PanelManager#event:onUpdated} event of {@link module:corpus_shell~PanelController}.</li>
+ * <li>Displays a URL which contains the current user ID in a DOM element designated by #userid</li>
+ * </ol>
  */
-$(function()
+function doOnDocumentReady ()
 {
     $('.scroll-container .data-view.full a').live("click", function (event) {
          event.preventDefault();
@@ -105,7 +133,7 @@ $(function()
     updating = true;
     GetUserData(userId);
 
-    updating = false;
+    // updating = false; doesn't make sense here. Belongs to the GetUserData AJAX callback?
     LoadIndexCache();
 
     PanelController.onUpdated = function (changeText)
@@ -119,10 +147,17 @@ $(function()
     }
 
     $("#userid").val(GenerateUseridLink(userId));
-});
+}
+$(doOnDocumentReady);
 
 var PanelCount = 0;
 
+/**
+ * @param {string} userId A user ID corpus_shell understands, maybe a UUID.
+ * @desc Adds the user ID as paramter userId to the URL of this document.
+ * @return {url} A URL which can be used to access corpus_shell directely with everything
+ * set up the same as when the user left. Can be used for eg. bookmarking.
+ */
 function GenerateUseridLink(userId)
 {
   var url = document.URL;
@@ -134,6 +169,10 @@ function GenerateUseridLink(userId)
   return url + "?userId=" + userId;
 }
 
+/**
+ * Tries to get a new user ID from the modules/userdata/getUserId.php script.
+ * @return {string} A user ID, maybe a UUID.
+ */
 function GetUserId()
 {
   $.getJSON(baseURL + userData + "getUserId.php", function(data)
@@ -143,6 +182,17 @@ function GetUserId()
   });
 }
 
+/**
+ * @summary Tries to retrieve profile settings saved on the server.<br/>
+ * If contacting the the script fails the browsers localstore is used.
+ * @desc Retrieval is done asynchronously so this function returns immediately and the actual result may be be valid later.
+ * <ol>
+ * <li>Interprets the server's answer as JSON and if this fails uses data from local store instead.</li>
+ * <li>Passes the data to {@link module:corpus_shell~ProfileController} as {@link module:corpus_shell~ProfileManager#Profiles}</li>
+ * </ol>
+ * @param {string} userId The user id for which the data should be retrieved. May be an UUID for example.
+ * @return -
+ */
 function GetUserData(userId)
 {
   $.ajax(
@@ -153,11 +203,22 @@ function GetUserData(userId)
       data : {uid: userId},
       complete: function(data, textStatus)
       {
-        var result = JSON.parse(data.responseText, null);
+        var result = null;
+        try {
+        	result = JSON.parse(data.responseText, null);
+        }
+        catch (e) {
+        	// make-it-work hack: if this is unintelligable go to the localstore and fetch data from there
+        	try {
+        	  var dataStr = $.storage.get(userId + "_Profiles");
+        	  result = JSON.parse(dataStr);
+        	} catch (e) {}
+        }
         if (result == undefined || result == null || result == false || result == "" )
           result = new Array();
 
         ProfileController.Profiles = result;
+        updating = false; // moved here from the doOnDocumentReady callback.
         var currentProfile = PanelController.ProfileName;
         RefreshProfileCombo(currentProfile);
         LoadProfile(currentProfile);
@@ -195,6 +256,12 @@ function LoadIndexCache()
   });
 }
 
+/**
+ * @param {Object} inVal Some arbitarily deep nested Object.
+ * @desc Provides a recursive algorithm to construct the json code needed to represent a hierarchical object structure.<br/>
+ * The actual recursive function is called _json_encode.
+ * @return {string} JSON string representing the object hierarchy.
+ */
 function json_encode(inVal)
 {
   return _json_encode(inVal).join('');
@@ -292,22 +359,30 @@ function _json_encode(inVal, out)
 	}
 }
 
+/**
+ * @desc Tries to save the users profile data to the server. As a backup saves the profile data to the local store.
+ * @param {string} userId  The user id for which the data should be saved. May be an UUID for example.
+ */
 function SaveUserData(userid)
 {
   var dataStr = json_encode(ProfileController.Profiles);
 
+  // Now save things locally, may be something goes wrong on transmission ...
+  // make-things-work hack: This only makes sense if we at least compare the local and the
+  // remote profile at load time and then use the newer one.
+  
+  $.storage.set(userId + "_Profiles", dataStr);
+  
   $.ajax(
   {
       type: 'POST',
-//      CHANGE THIS FOR RELEASE
-//      url: "http://corpus3.aac.ac.at/sru/switch.php",
       url: baseURL + userData + "saveUserData.php",
-
       dataType: 'xml',
       data : {uid: userid, data: dataStr},
       complete: function(xml, textStatus)
       {
-        //alert("user data saved: userid: " + userid);
+        // this almost ever succedes. Even if the php is only a locally downloaded copy with no php
+        // interpreter to run it, so it surely is no valid XML :-(
       }
   }
   );
@@ -536,6 +611,10 @@ function TogglePanelList()
   $('#TogglePanelListButton').after(openpanelslist);
 }
 
+/**
+ * @desc loads the profile with the given name.
+ * @param {string} name Name of an existing profile.
+ */
 function LoadProfile(name)
 {
   updating = true;
@@ -544,6 +623,10 @@ function LoadProfile(name)
   RefreshPanelList();
 }
 
+/**
+ * @desc Saves the current set of panels with a new name as a profile. Shows an error message box if no name is given.
+ * @param {string} newName A new name for the current set of panels.
+ */
 function SaveProfileAs(newName)
 {
   if (newName == "")
