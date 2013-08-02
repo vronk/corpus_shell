@@ -2,7 +2,10 @@
  * @fileOverview Contains all the helper methods that are called from index.html which do
  * some preliminary checks and then delegate the work to the specialized classes. It also provides the ui logic for the sidebar.<br/>
  * This file has some sections which are just instructions and are not wraped into a function block.
- * Main entry points here are {@link module:corpus_shell~SaveProfileAs}, {@link module:corpus_shell~CreateNewProfile},
+ * Main entry points here are {@link module:corpus_shell~doOnDocumentReady} which is passed to jQuery as the $(document).ready() handler,
+ * {@link module:corpus_shell~SaveProfileAs}, {@link module:corpus_shell~CreateNewProfile}, {@link module:corpus_shell~LoadProfile} and {@link module:corpus_shell~DeleteProfile}
+ * which are activated by correponding buttons in the side bar, {@link module:corpus_shell~GetUserData} which is used by the Refresh user profiles button and
+ * {@link module:corpus_shell~ShowIndexCache} which provides the Show/Hide indexes functionality.
  */
 
 /**
@@ -53,9 +56,6 @@ var searchPanelCount = 1;
 $.storage = new $.store();
 var Indexes = null;
 
-// is now set in params.js
-//var baseURL = "/cs2/corpus_shell";
-
 /**
  * @desc Get parameters from the supplied uri/url as a "map" (a JavaScript object which properties correspond to the parameters).
  * @param {url} url Some url witch contains parameters to be converted to a "map".
@@ -93,6 +93,8 @@ function GetUrlParams(url)
  * <li>Initiates asynchrounous loading of the profiles and the index data.</li>
  * <li>Installs a handler for the {@link module:corpus_shell~PanelManager#event:onUpdated} event of {@link module:corpus_shell~PanelController}.</li>
  * <li>Displays a URL which contains the current user ID in a DOM element designated by #userid</li>
+ * <li>Generates a drop down list with search targets using {@link module:corpus_shell~GenerateSearchCombo} into the DOM element designated by #searchbuttons and preselects the first item</li>
+ * <li>Generates a drop down list with profiles using {@link module:corpus_shell~GenerateProfileCombo} right after the DOM element designated by #profiledel and preselects the first item</li>
  * </ol>
  */
 function doOnDocumentReady ()
@@ -147,13 +149,20 @@ function doOnDocumentReady ()
     }
 
     $("#userid").val(GenerateUseridLink(userId));
+    
+    var scombo = GenerateSearchCombo(0);
+    $(scombo).css("margin-top", "5px");
+    $("#searchbuttons").append(scombo);
+
+    var pcombo = GenerateProfileCombo(0);
+    $("#profiledel").after(pcombo);
 }
 $(doOnDocumentReady);
 
 var PanelCount = 0;
 
 /**
- * @param {string} userId A user ID corpus_shell understands, maybe a UUID.
+ * @param {string} userId A user ID corpus_shell understands, maybe a GUID.
  * @desc Adds the user ID as paramter userId to the URL of this document.
  * @return {url} A URL which can be used to access corpus_shell directely with everything
  * set up the same as when the user left. Can be used for eg. bookmarking.
@@ -171,7 +180,7 @@ function GenerateUseridLink(userId)
 
 /**
  * Tries to get a new user ID from the modules/userdata/getUserId.php script.
- * @return {string} A user ID, maybe a UUID.
+ * @return {string} A user ID, maybe a GUID.
  */
 function GetUserId()
 {
@@ -190,7 +199,7 @@ function GetUserId()
  * <li>Interprets the server's answer as JSON and if this fails uses data from local store instead.</li>
  * <li>Passes the data to {@link module:corpus_shell~ProfileController} as {@link module:corpus_shell~ProfileManager#Profiles}</li>
  * </ol>
- * @param {string} userId The user id for which the data should be retrieved. May be an UUID for example.
+ * @param {string} userId The user id for which the data should be retrieved. May be an GUID for example.
  * @return -
  */
 function GetUserData(userId)
@@ -227,6 +236,9 @@ function GetUserData(userId)
   );
 }
 
+/**
+ * Loads the {@link module:corpus_shell~ResourceController}, a {@link module:corpus_shell~ResourceManager}, with data stored in indexCache.json.
+ */
 function LoadIndexCache()
 {
   ResourceController.ClearResources();
@@ -361,7 +373,7 @@ function _json_encode(inVal, out)
 
 /**
  * @desc Tries to save the users profile data to the server. As a backup saves the profile data to the local store.
- * @param {string} userId  The user id for which the data should be saved. May be an UUID for example.
+ * @param {string} userId  The user id for which the data should be saved. May be an GUID for example.
  */
 function SaveUserData(userid)
 {
@@ -388,6 +400,9 @@ function SaveUserData(userid)
   );
 }
 
+/**
+ * Provides the functionality for openning and closing the side bar.Changes the arrow shown. 
+ */
 function ToggleSideBar()
 {
   var left = $("#sidebar").css("left").replace(/px/g, "");
@@ -407,6 +422,10 @@ function ToggleSideBar()
   $("#sidebar").css("left", left+"px");
 }
 
+/**
+ * @param {number} hi If 1 the color will change to the highlighted state else to normal.
+ * @desc Provides the color change if the mouse is over the edge of the side bar. 
+ */
 function ToggleSideBarHiLight(hi)
 {
   if (hi == 1)
@@ -415,16 +434,12 @@ function ToggleSideBarHiLight(hi)
     $(".sidebartoggle").css("background-color", "#214F75");
 }
 
-$(function()
-{
-  var scombo = GenerateSearchCombo(0);
-  $(scombo).css("margin-top", "5px");
-  $("#searchbuttons").append(scombo);
-
-  var pcombo = GenerateProfileCombo(0);
-  $("#profiledel").after(pcombo);
-});
-
+/**
+ * @param {number} [idx] Index of an entry to be preselected.
+ * @param {string} [selEntry] Name of an entry to be preselected. If supplied idx is ignored.
+ * @desc Creates a drop down list containing all profiles known to {@link module:corpus_shell~ProfileController}.
+ * @return {Element} A select DOM Element which is usually realized as a drop down list. Its id is #profilecombo. This element is also of class .searchcombo.
+ */
 function GenerateProfileCombo(idx, selEntry)
 {
   var profilecombo = document.createElement('select');
@@ -461,6 +476,11 @@ function GenerateProfileCombo(idx, selEntry)
   return profilecombo;
 }
 
+/**
+ * @param {string} [selEntry] Name of the profile to be selected.
+ * @desc Replaces the DOM element with the id of #profilecombo with a newly generated one.
+ * @return -  
+ */
 function RefreshProfileCombo(selEntry)
 {
   var pcombo = GenerateProfileCombo(0, selEntry);
@@ -472,8 +492,8 @@ function RefreshProfileCombo(selEntry)
 /**
  * @public
  * @param config {number} Item that should be preselected.
- * @desc Creates a combo box using all the items in {@link module:corpus_shell~SearchConfig}
- * @return {Node} A select node with option child nodes. These selct nodes are of class searchcombo.
+ * @desc Creates a drop down list using all the items in {@link module:corpus_shell~SearchConfig}
+ * @return {Element} A select DOM element which is usually realized as a drop down list. These select nodes are of class .searchcombo.
  */
 function GenerateSearchCombo(config)
 {
@@ -514,6 +534,10 @@ function RefreshPanelList()
   }
 }
 
+/**
+ * Provides the functionality for showing a list of all currently shown panels and subpanels.
+ * With this list the panels can be brought to front by name.
+ */
 function TogglePanelList()
 {
   if ($('#panelList').length != 0)
@@ -642,6 +666,11 @@ function SaveProfileAs(newName)
   }
 }
 
+/**
+ * @param {string} newName Name of the profile to be createed.
+ * @desc Creates a new profile with the given name and saves that profile.
+ * @return -
+ */
 function CreateNewProfile(newName)
 {
   if (newName == "")
@@ -659,6 +688,12 @@ function CreateNewProfile(newName)
   }
 }
 
+/**
+ * @param {string} profileName Name of the profile to be deleted.
+ * @desc Deletes the given profile if it's not loaded and not the default profile.
+ * Asks the user to confirm before actually deleting. This also saves the new list of profiles.
+ * @return -
+ */
 function DeleteProfile(profileName)
 {
   if (PanelController.ProfileName == profileName)
@@ -725,6 +760,10 @@ function GetIndexesFromSearchCombo()
   return ResourceController.GetLabelValueArray(resource);
 }
 
+/**
+ * Provides the Show/Hide indexes functionality. The actual list is provided
+ * as an HTML snippet by {@link corpus_shell~ResourceManager#GetIndexCache}. 
+ */
 function ShowIndexCache()
 {
   if ($('#indexList').length != 0)

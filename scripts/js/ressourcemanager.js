@@ -1,6 +1,8 @@
 /**
- * @fileOverview
- *  
+ * @fileOverview Provides a managemant class for search endpoints and indexes {@link module:corpus_shell~ResourceManager} and a default object for this purpose {@link module:corpus_shell~ResourceController}.<br/>
+ * Main entry points are {@link module:corpus_shell~ResourceManager#AddResource} and {@link module:corpus_shell~ResourceManager#AddIndex} which are called
+ * from {@link module:corpus_shell~doOnDocumentReady}. {@link module:corpus_shell~ResourceManager#GetIndexCache} generates the box that is shown after a click on
+ * Show indexes. 
  */
 
 /**
@@ -8,24 +10,56 @@
  */
 
 /**
- * @classdesc hmm
+ * @classdesc Manages resources that is search endpoints and their possible inexes.
  * @constructor 
  */
 function ResourceManager()
 {
+  /**
+   * A "map" of all the known Resources.
+   * @type {map.<ResourceObject>}
+   */
   this.Resources = new Array();
 
+  /**
+   * @param {string} resname A resource name.
+   * @param {string} restitle A title for that resource
+   * @desc Adds the resource the the "map" of resources by the given name and stores the title.
+   * @return - 
+   */
   this.AddResource = function (resname, restitle)
   {
     this.Resources[resname] = this.GetNewResourceObject(resname, restitle);
   }
 
+  /**
+   * @param {string} resname A resource name.
+   * @param {string} idxname An index name.
+   * @param {booblean} searchable Is the index searchable?
+   * @param {boolean} scanable Is the index scanable?
+   * @param {boolean} sortable Is the index sortable?
+   * @desc Adds an index name and its properties to a resource if it exist.
+   * @return -  
+   */  
   this.AddIndex = function (resname, idxname, idxtitle, searchable, scanable, sortable)
   {
     if (this.Resources[resname] != undefined)
       this.Resources[resname].Indexes[idxname] = this.GetNewIndexObject(idxname, idxtitle, searchable, scanable, sortable);
   }
 
+  /**
+   * @typedef {Object} ResourceObject
+   * @property  {string} Name Name of the resource.
+   * @property {string} Title A intelligable title for the resource.
+   * @property {array.<IndexObject>} Indexes
+   */
+  
+  /**
+   * @param {string} name Name of the resource.
+   * @param {string} title A intelligable title for the resource.
+   * @desc Creates a new ResourceObject.
+   * @retrun {ResourceObject} The newly created ResourceObject. 
+   */
   this.GetNewResourceObject = function (name, title)
   {
     var newObj = new Object();
@@ -35,7 +69,24 @@ function ResourceManager()
 
     return newObj;
   }
-
+  /**
+   * @typedef {Object} IndexObject
+   * @property {string} Name Name of the resource this index belongs to.
+   * @property {string} Title Name of this index.
+   * @property {boolean} Searchable Is this index is searchable?
+   * @property {boolean} Scanable Is this index scannable?
+   * @property {boolean} Sortable Is this index sortable?
+   */
+  
+  /**
+   * @param {string} name Name of the resource this index belongs to.
+   * @param {string} title Name of this index.
+   * @param {boolean} searchable Is this index is searchable?
+   * @param {boolean} scanable Is this index scannable?
+   * @param {boolean} sortable Is this index sortable?
+   * @desc Creates a new IndexObject.
+   * @return {IndexObject} The newly created IndexObject.
+   */
   this.GetNewIndexObject = function (name, title, searchable, scanable, sortable)
   {
     var newObj = new Object();
@@ -47,7 +98,19 @@ function ResourceManager()
 
     return newObj;
   }
+  
+  /**
+   * @typedef {Object} LabelValueObject
+   * @property {string} label A label, corresponds to {@link IndexObject}.Title
+   * @property {string} value A value, corresponds to {@link IndexObject}.Name
+   */
 
+  /**
+   * @param {string} resname Name of a resource.
+   * @desc Returns an array of LabelValueObjects for the given resource name
+   * if that is found in ResourceManager's resources or else all known Index/Title pairs are returned.
+   * @return {array.<LabelValueObject>}
+   */
   this.GetLabelValueArray = function (resname)
   {
     var list = new Array();
@@ -99,6 +162,10 @@ function ResourceManager()
     return list;
   }
 
+  /**
+   * Delete all stored data recursively.
+   * @return -
+   */
   this.ClearResources = function ()
   {
     for (reskey in this.Resources)
@@ -113,6 +180,10 @@ function ResourceManager()
     }
   }
 
+  /**
+   * Creates an HTML snippet containing in a table in a div all the information about the resources.
+   * @return {string} An HTML snippet. 
+   */
   this.GetIndexCache = function ()
   {
     var hStr = '<div id="openIndexList" style="height: 250px; overflow: auto;"><table id="indexList">';
@@ -156,6 +227,6 @@ function ResourceManager()
 }
 
 /**
- * The object 
+ * The ResourceController object, an {@link module:corpus_shell~ResourceManager} instance.
  */
 var ResourceController = new ResourceManager();
