@@ -58,7 +58,7 @@ function ResourceManager()
    * @param {string} name Name of the resource.
    * @param {string} title A intelligable title for the resource.
    * @desc Creates a new ResourceObject.
-   * @retrun {ResourceObject} The newly created ResourceObject. 
+   * @return {ResourceObject} The newly created ResourceObject. 
    */
   this.GetNewResourceObject = function (name, title)
   {
