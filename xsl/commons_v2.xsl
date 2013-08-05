@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml"  xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:utils="http://aac.ac.at/content_repository/utils" version="2.0">
+<xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:utils="http://aac.ac.at/content_repository/utils" version="2.0">
     
     <!-- 
         <purpose>generic functions for SRU-result handling</purpose>
@@ -10,12 +10,12 @@
     -->
     <xsl:import href="commons_v1.xsl"/>
     <xsl:template name="contexts-doc">
-        <xsl:if test="not(doc-available(resolve-uri($contexts_url)))">
-            <xsl:message>ERROR: context not available: <xsl:value-of select="resolve-uri($contexts_url)"/>
+        <xsl:if test="not(doc-available(resolve-uri($contexts_url,$base_url)))">
+            <xsl:message>ERROR: context not available: <xsl:value-of select="resolve-uri($contexts_url,$base_url)"/>
                 base-uri:  <xsl:value-of select="base-uri()"/>
             </xsl:message>
         </xsl:if>
-        <xsl:copy-of select="if (doc-available(resolve-uri($contexts_url))) then doc(resolve-uri($contexts_url)) else ()"/>
+        <xsl:copy-of select="if (doc-available(resolve-uri($contexts_url,$base_url))) then doc(resolve-uri($contexts_url,$base_url)) else ()"/>
     </xsl:template>
  
     <!--

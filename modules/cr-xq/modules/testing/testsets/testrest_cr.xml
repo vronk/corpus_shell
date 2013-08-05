@@ -1,74 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <info xml:lang="en">
-    <h2>Test Content Repository </h2>
+    <div class="title">Test content-repository</div>
     <div>
-        <test id="search-cr-stb-date">
-            <a class="request" href="?operation=searchRetrieve&amp;query=persName=Adler&amp;x-context=clarin.at:icltt:cr:stb">search: persName=Adler in stb</a>
-            <xpath>$result-data//sru:numberOfRecords/text()</xpath>
+        <test id="list-projects">
+            <a class="request" href="">entry page</a>
+            <xpath key="root-elem">$result-data//httpclient:body/*/name()</xpath>
         </test>
-        <test id="scan-cr-diary-day">
-            <a class="request" href="?operation=scan&amp;scanClause=diary-day=1893-03-01&amp;x-context=clarin.at:icltt:cr:stb">scan:diary-day in stb</a>
-            <xpath key="has terms">count($result-data//sru:term) &gt; 0</xpath>
-            <xpath key="count terms">$result-data//sru:extraResponseData/fcs:countTerms/text()</xpath>
+        <test id="project-dict-gate">
+            <a class="request" href="dict-gate/">dict-gate entry page</a>
+            <xpath key="root-elem">$result-data//httpclient:body/*/name()</xpath>
+            <xpath key="site-name">$result-data//*[@id='site-name']//text()</xpath>
+            <xpath key="has site-name 'Dictionary Gate'">$result-data//*[@id='site-name']//text()=
+                'Dictionary Gate'</xpath>
+            <xpath key="welcome">$result-data//*[@id='welcome']//text()</xpath>
         </test>
-        <test id="scan-cr-navi">
-            <a class="request" href="?operation=scan&amp;scanClause=diary-day=1893-03-01&amp;x-context=clarin.at:icltt:cr:stb&amp;responsePosition=2&amp;maximumTerms=3">scan:diary-day (one before, one after)</a>
-            <xpath>exists($result-data//sru:term[1][sru:value/text()='1893-02-28'])</xpath>
-            <xpath>exists($result-data//sru:term[3][sru:value/text()='1893-03-02'])</xpath>
+        <test id="project-dict-gate-search">
+            <a class="request" href="dict-gate/index.html?query=Haus">dict-gate search Haus</a>
+            <xpath key="root-elem">$result-data//httpclient:body/*/name()</xpath>
+            <!--            <div class="result-header" data-numberofrecords="3">-->
+            <xpath key="namespace">$result-data//httpclient:body/*/namespace-uri()</xpath>
+            <xpath key="has numberOfRecords-attr">exists($result-data//*[@class='result-header']/@data-numberOfRecords)</xpath>
+            <xpath key="numberOfRecords-attr">$result-data//*[@class='result-header']/xs:string(@data-numberOfRecords)</xpath>
+            <xpath key="result-header">$result-data//*[@class='result-header']//text()</xpath>
         </test>
-        <h3>test Scan</h3>
-        <div>
-            <test id="scan-cr-person-name">
-                <a class="request" href="?operation=scan&amp;scanClause=personName&amp;x-context=clarin.at:icltt:cr">scan:personName in CR</a>
-                <xpath key="has terms">count($result-data//sru:term) &gt; 0</xpath>
-                <xpath key="count displayed terms">count($result-data//sru:term)</xpath>
-                <xpath key="count terms">$result-data//sru:extraResponseData/fcs:countTerms/text()</xpath>
-            </test>
-            <test id="scan-cr-person-name-stb">
-                <a class="request" href="?operation=scan&amp;scanClause=personName&amp;x-context=clarin.at:icltt:cr:stb">scan:personName in STB</a>
-                <xpath key="has terms">count($result-data//sru:term) &gt; 0</xpath>
-                <xpath key="count displayed terms">count($result-data//sru:term)</xpath>
-                <xpath key="count terms">$result-data//sru:extraResponseData/fcs:countTerms/text()</xpath>
-            </test>
-            <test id="scan-cr-person-name-stb-size">
-                <a class="request" href="?operation=scan&amp;scanClause=personName&amp;x-context=clarin.at:icltt:cr:stb&amp;sort=size">scan:personName in sort by size</a>
-                <xpath key="has terms">count($result-data//sru:term) &gt; 0</xpath>
-                <xpath key="numRec ordered">number($result-data//sru:term[1]/sru:numberOfRecords/text()) &gt;  $result-data//sru:term[position() &gt; 1]/sru:numberOfRecords/number(text())</xpath>
-                <xpath key="count displayed terms">count($result-data//sru:term)</xpath>
-                <xpath key="first entry">concat($result-data//sru:term[1]/sru:value, ' |', $result-data//sru:term[1]/sru:numberOfRecords, '|')</xpath>
-                <xpath key="second entry">concat($result-data//sru:term[2]/sru:value, ' |', $result-data//sru:term[2]/sru:numberOfRecords, '|')</xpath>
-            </test>
-            <test id="scan-cr-person-name-stb-starts-with">
-                <a class="request" href="?operation=scan&amp;scanClause=personName=Werf*&amp;x-context=clarin.at:icltt:cr:stb">scan:personName="Werf*" (starts-with) in STB</a>
-                <xpath key="has terms">count($result-data//sru:term) &gt; 0</xpath>
-                <xpath key="first term 'Werf'">starts-with($result-data//sru:term[1]/sru:value,'Werf')</xpath>
-                <xpath key="first entry">concat($result-data//sru:term[1]/sru:value, ' |', $result-data//sru:term[1]/sru:numberOfRecords, '|')</xpath>
-            </test>
-            <test id="scan-cr-person-name-stb-starts-with-size">
-                <a class="request" href="?operation=scan&amp;scanClause=personName=Wer*&amp;x-context=clarin.at:icltt:cr:stb&amp;sort=size">scan:personName="Wer*" (starts-with) in STB, sort by size</a>
-                <xpath key="has terms">count($result-data//sru:term) &gt; 0</xpath>
-                <xpath key="first term 'Wer'">starts-with($result-data//sru:term[1]/sru:value,'Wer')</xpath>
-                <xpath key="last term 'Wer'">starts-with($result-data//sru:term[last()]/sru:value,'Wer')</xpath>
-                <xpath key="count displayed terms">count($result-data//sru:term)</xpath>
-                <xpath key="numRec ordered">number($result-data//sru:term[1]/sru:numberOfRecords/text()) &gt;  $result-data//sru:term[position() &gt; 1]/sru:numberOfRecords/number(text())</xpath>
-                <xpath key="value ordered">$result-data//sru:term[1]/sru:value/text() &lt;  $result-data//sru:term[last()]/sru:value/text()</xpath>
-            </test>
-            <test id="scan-cr-person-name-stb-contains">
-                <a class="request" href="?operation=scan&amp;scanClause=personName=Werf&amp;x-context=clarin.at:icltt:cr:stb">scan:personName="Werf" (contains) in STB</a>
-                <xpath key="has terms">count($result-data//sru:term) &gt; 0</xpath>
-                <xpath key="first term 'Werf'">contains($result-data//sru:term[1]/sru:value,'Werf')</xpath>
-                <xpath key="last term 'Werf'">contains($result-data//sru:term[last()]/sru:value,'Werf')</xpath>
-                <xpath key="first entry">concat($result-data//sru:term[1]/sru:value, ' |', $result-data//sru:term[1]/sru:numberOfRecords, '|')</xpath>
-                <xpath key="value ordered">$result-data//sru:term[1]/sru:value/text() &lt;  $result-data//sru:term[last()]/sru:value/text()</xpath>
-            </test>
-            <test id="scan-cr-person-name-stb-contains">
-                <a class="request" href="?operation=scan&amp;scanClause=personName=Werf&amp;x-context=clarin.at:icltt:cr:stb&amp;sort=size">scan:personName="Wer" (contains) in STB, sort by size</a>
-                <xpath key="has terms">count($result-data//sru:term) &gt; 0</xpath>
-                <xpath key="first term 'Wer'">contains($result-data//sru:term[1]/sru:value,'Werf')</xpath>
-                <xpath key="last term 'Wer'">contains($result-data//sru:term[last()]/sru:value,'Werf')</xpath>
-                <xpath key="count displayed terms">count($result-data//sru:term)</xpath>
-                <xpath key="numRec ordered">number($result-data//sru:term[1]/sru:numberOfRecords/text()) &gt;  $result-data//sru:term[position() &gt; 1]/sru:numberOfRecords/number(text())</xpath>
-            </test>
-        </div>
+        <test id="project-dict-gate-search-fcs">
+            <a class="request" href="dict-gate/fcs?query=Haus&amp;x-format=xml">dict-gate search
+                Haus fcs</a>
+            <xpath key="root-elem">$result-data//httpclient:body/*/name()</xpath>
+            <xpath key="has sru:numberOfRecords">exists($result-data//sru:numberOfRecords)</xpath>
+            <xpath key="sru:numberOfRecords">$result-data//sru:numberOfRecords</xpath>
+        </test>
+        <test id="project-dict-gate-get">
+            <a class="request" href="dict-gate/get/at.icltt.cr.dict-gate.1">dict-gate get resource
+                id='at.icltt.cr.dict-gate.1'</a>
+            <xpath key="root-elem">$result-data//httpclient:body/*/name()</xpath>
+            <xpath key="namespace">$result-data//httpclient:body/*/namespace-uri()</xpath>
+            <xpath key="root-elem is TEI">exists($result-data//httpclient:body/TEI)</xpath>
+            <xpath key="numberOfRecords">$result-data//httpclient:body/*/xs:string(@xml:id)</xpath>
+        </test>
+        <test id="cr-get">
+            <a class="request" href="get/at.icltt.cr.dict-gate.1">default get resource
+                id='at.icltt.cr.dict-gate.1'</a>
+            <xpath key="root-elem">$result-data//httpclient:body/*/name()</xpath>
+            <xpath key="namespace">$result-data//httpclient:body/*/namespace-uri()</xpath>
+            <xpath key="root-elem is TEI">exists($result-data//httpclient:body/TEI)</xpath>
+            <xpath key="root-xml:id">$result-data//httpclient:body/*/xs:string(@xml:id)</xpath>
+        </test>
+        <test id="cr-get">
+            <a class="request" href="get/at.icltt.cr.dict-gate.1.cmd">default get metadata (as
+                resource) id='at.icltt.cr.dict-gate.1.cmd'</a>
+            <xpath key="root-elem">$result-data//httpclient:body/*/name()</xpath>
+            <xpath key="namespace">$result-data//httpclient:body/*/namespace-uri()</xpath>
+            <xpath key="namespace is cmd">$result-data//httpclient:body/*/namespace-uri() =
+                'http://www.clarin.eu/cmd/'</xpath>
+            <xpath key="root-elem is CMD">exists($result-data//httpclient:body/*[local-name()='CMD'])</xpath>
+            <xpath key="root-xml:id">$result-data//httpclient:body/*/xs:string(@xml:id)</xpath>
+        </test>
     </div>
 </info>

@@ -25,14 +25,18 @@
     <xsl:template match="serverInfo"/>
     <xsl:template match="schemaInfo"/>
     <xsl:template match="databaseInfo">
+        databaseInfo
         <h2>
-            <xsl:value-of select="title[@lang=$lang]"/>
+            <xsl:value-of select="(title[@lang=$lang],title)[1]"/>
         </h2>
         <div>
-            <xsl:value-of select="description[@lang=$lang]"/>
+            <xsl:value-of select="(description[@lang=$lang], description)[1]"/>
         </div>
     </xsl:template>
     <xsl:template match="indexInfo">
+        <div>
+            <a href="{concat('?operation=searchRetrieve&amp;query=test&amp;x-context=', $x-context, '&amp;x-format=', $format )}">search</a>
+        </div>
         <h3>Available indexes</h3>
         <ul class="indexInfo">
             <xsl:apply-templates select="index"/>

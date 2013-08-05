@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:sru="http://www.loc.gov/zing/srw/" xmlns:msxsl="urn:schemas-microsoft-com:xslt" version="1.0" exclude-result-prefixes="msxsl">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:sru="http://www.loc.gov/zing/srw/" xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:fcs="http://clarin.eu/fcs/1.0" version="1.0" exclude-result-prefixes="msxsl">
     <xsl:output method="xml" indent="yes"/>
     <xsl:template match="/">
         <sru:scanResponse>
@@ -25,6 +25,11 @@
                     </sru:extraTermData>
                 </sru:term>
             </sru:terms>
+            <sru:extraResponseData>
+                <fcs:countTerms>
+                    <xsl:value-of select="count(.//map[parent::map])"/>
+                </fcs:countTerms>
+            </sru:extraResponseData>
             <sru:echoedScanRequest>
                 <sru:version>1.2</sru:version>
                 <sru:scanClause>fcs.resource</sru:scanClause>

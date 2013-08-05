@@ -78,7 +78,8 @@ sample data:
         <xsl:text>
 "terms": [
 </xsl:text>
-        <xsl:apply-templates select="sru:term"/>
+        <!-- flatten ( => dont go deeper )  -->
+        <xsl:apply-templates select=".//sru:term"/>
         <xsl:text>]</xsl:text>
     </xsl:template>
     <xsl:template match="sru:term">
@@ -92,6 +93,7 @@ sample data:
         <xsl:value-of select="sru:numberOfRecords"/>
         <xsl:text>"}</xsl:text>
         <xsl:if test="not(position()=last())">, </xsl:if>
-        <xsl:apply-templates select="sru:extraTermData/sru:terms/sru:term"/>
+        
+<!--    dont go deeper, because flattened    <xsl:apply-templates select="sru:extraTermData/sru:terms/sru:term"/>-->
     </xsl:template>
 </xsl:stylesheet>

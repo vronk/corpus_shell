@@ -1,8 +1,8 @@
-.scroll-content {position:absolute;top:0;left:0}
-.slider-wrap{position:absolute;right:0;top:0;background-color:lightgrey;width:20px;}
-.slider-vertical{position:relative;height:100%}
-.ui-slider-handle{background-color:darkgray;width:20px;height:10px;margin:0 auto;display:block;position:absolute;}
-.ui-slider-handle img{border:none}
-.scrollbar-top{position:absolute;top:0;}
-.scrollbar-bottom{position:absolute;bottom:0;}
+.scroll-content {position:absolute;top:0;left:0}
+.slider-wrap{position:absolute;right:0;top:0;background-color:lightgrey;width:20px;}
+.slider-vertical{position:relative;height:100%}
+.ui-slider-handle{background-color:darkgray;width:20px;height:10px;margin:0 auto;display:block;position:absolute;}
+.ui-slider-handle img{border:none}
+.scrollbar-top{position:absolute;top:0;}
+.scrollbar-bottom{position:absolute;bottom:0;}
 .scrollbar-grip{position:absolute;top:50%;}

@@ -17,9 +17,17 @@
             <xpath key="count indexes">count($result-data//index)</xpath>
         </test>
         <test id="scan-fcs-resource">
-            <a class="request" href="?operation=scan&amp;scanClause=fcs.resource">scan: fcs.resource</a>
+            <a class="request" href="?operation=scan&amp;scanClause=fcs.resource&amp;version=1.2"
+                >scan: fcs.resource</a>
             <xpath>exists($result-data//sru:scanResponse)</xpath>
             <xpath key="count terms">count($result-data//sru:term)</xpath>
+        </test>
+        <p>What to ask!?</p>
+        <test id="scan-fcs-resource-json">
+            <a class="request"
+                href="?operation=scan&amp;x-format=json&amp;scanClause=dataset&amp;maximumTerms=100&amp;sort=size&amp;version=1.2"
+                >scan: dataset as json (dataset)</a>
+            <xpath>exists($result-data//sru:scanResponse)</xpath>
         </test>
     </div>
 </info>

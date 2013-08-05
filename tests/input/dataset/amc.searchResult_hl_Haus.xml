@@ -1,52 +1,1480 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <response>
-<lst name="responseHeader"><int name="status">0</int><int name="QTime">1546</int><lst name="params"><str name="hl.fragsize">100</str><str name="sort">random_1 desc</str><str name="q">inhalt:Haus</str><str name="hl.fl">inhalt</str><arr name="hl"><str>true</str><str>true</str></arr><str name="rows">20</str></lst></lst><result name="response" numFound="1787548" start="0"><doc><str name="id">KURIER_200811151741310086</str><date name="datum">2008-11-15T00:00:00Z</date><str name="year">2008</str><arr name="region"><str>agesamt</str></arr><arr name="ressort2"><str>leben</str></arr><int name="tokens">172</int><float name="quote_ratio">0.86178863</float><str name="vorspann">"Kurier" vom 15.11.2008 Seite: 18 Ressort: Leben</str><str name="titel">Babyschwimmen und Basteln</str><str name="inhalt">Wir haben überlegt, wo unsere Stärken liegen", sagt Elfriede Seiwald. Schnell hat sich herausgestellt, dass sich ihre Hebammen-Ausbildung gut in den Hotelbetrieb integrieren lässt. Jetzt nennt sich das gediegene Haus in den Kitzbüheler Alpen "Babymio" und bemüht sich mit umfassenden Angeboten um werdende und junge Mütter mit Anhang. Nachwuchs mit Freizeit ist auch in Wien umworben. So hat z. B. die Tanzschule Schwebach zahlreiche Kindertanzkurse im Programm; für Teilnehmer ab eineinhalb Jahren. Wer wissen will, was sonst in Wien freizeitmäßig los ist, erhält bei wienXtra, 1070, Museumplatz 1/Hof 2, umfassende Information. Ob Kindertheater, Kasperlvorführung, Naturwanderungen oder Bastelnachmittag - die Servicestelle hat für jedes Alter und für jeden Geschmack etwas parat. Bastler kommen bei den Sammelkursen von "tri-chem Kreativ" auf ihre Rechnung. "In unseren kostenlosen Kursen zeigen wir, wie man unsere Farben verwendet", erklärt Gabi Herglotz. Sie haften auf allen Materialen, auf Ton wie auch Wachs oder Textil, sie lassen sich drucken, walzen und sprühen. Eine Tube schafft acht Kilometer Linie und kostet 6,25 Euro. www.babymio.com, www.schwebach.at, www.wienXtra.at, www.tri-chem.at</str><arr name="ressort"><str>LEB</str><str>Leben</str></arr><str name="seite">18</str><arr name="mutation_txt"><str>
-Wi, Abend, Wi, Morgen
-</str></arr><arr name="deskriptor"><str>AIM_ZEIT</str></arr><str name="keys">SE_18 DA_20081115 MO_200811 JA_2008 RS_LEB DB_KURIER</str><int name="zeilen">23</int><str name="dachzeile">Freizeit</str><int name="zeitstempel">1226703600</int><str name="docsrc">KURIER</str><long name="_version_">1426736144095117312</long></doc><doc><str name="id">KURIER_200509200437090081</str><date name="datum">2005-09-20T00:00:00Z</date><str name="year">2005</str><arr name="region"><str>agesamt</str></arr><arr name="ressort2"><str>chronik</str></arr><int name="tokens">145</int><float name="quote_ratio">0.0068292683</float><arr name="quoted"><str>reicher</str></arr><str name="vorspann">"Kurier" vom 20.09.2005 Seite: 10 Ressort: Chronik</str><str name="titel">16-jähriger Schüler...</str><str name="inhalt">16-jähriger Schüler von Pkw erfasst Ein 16-Jähriger aus Wienersdorf wurde bei einem Verkehrsunfall auf der Vöslauer Straße in Baden verletzt. Der Schüler wollte sich mit Freunden unterhalten, die vom Fenster eines Hauses herab sahen und trat dabei auf die Fahrbahn. Ein Autofahrer konnte nicht mehr rechtzeitig bremsen. Der Schüler musste ins Badener Spital gebracht werden. Polizist brach sich bei Unfall Oberschenkel Ein 22-jähriger Grenzpolizist hat Montag Früh am Weg zur Arbeit bei Seyring, Bezirk Wien-Umgebung, mit seinem Auto einen Baum gerammt. Der Beamte war laut Polizei einem Reh ausgewichen, sein Auto war außer Kontrolle geraten. Der 22-Jährige musste von der Feuerwehr aus seinem Wagen befreit werden. Laut dem Polizeikommando in Klosterneuburg erlitt er eine Oberschenkelfraktur. Wieder Behinderung wegen einer Baustelle Baden ist um eine Baustelle "reicher". Seit gestern werden in der Radetzkystraße Fernwärmeleitungen ausgetauscht. Mit Behinderungen ist drei Wochen lang zu rechnen.</str><arr name="ressort"><str>CHR</str><str>Chronik</str></arr><str name="seite">10</str><arr name="mutation_txt"><str>
-N.Ö/Umgebung, Morgen
-</str></arr><arr name="deskriptor"><str>AIM_CHRONIK</str><str>AIM_ZEIT</str></arr><str name="keys">SE_10 DA_20050920 MO_200509 JA_2005 RS_CHR DB_KURIER S10T02.AS6</str><int name="zeilen">21</int><int name="zeitstempel">1127167200</int><str name="docsrc">KURIER</str><long name="_version_">1426733949790453760</long></doc><doc><str name="id">SVZ_201104089585C9C326</str><date name="datum">2011-04-08T00:00:00Z</date><str name="year">2011</str><arr name="region"><str>amitte</str></arr><arr name="ressort2"><str>lokal</str></arr><int name="tokens">41</int><float name="quote_ratio">0.112</float><arr name="quoted"><str>Extrem verblüffend</str><str>Glatzkopf</str></arr><str name="vorspann">"Salzburger Volkszeitung" Nr. 82/2011 vom 08.04.2011 Seite 4 Ressort: Lokal</str><str name="titel">Physikshow im Haus der Natur</str><str name="inhalt">Einen Streifzug durch die Physik kann man heute bei der Physikshow "Extrem verblüffend" um 10.30 Uhr im Haus der Natur unternehmen. Um 19 Uhr referiert Christiane Böhm über den "Glatzkopf" unter den Vögeln, den Waldrapp.</str><arr name="ressort"><str>Lokal</str></arr><str name="seite">4</str><arr name="ausgabe_txt"><str>
-82/2011
-</str></arr><str name="keys">SE_4 DA_20110408 MO_201104 JA_2011 RS_LOKAL DB_SVZ</str><arr name="publikation_txt"><str>
-SVZ
-</str></arr><str name="docsrc">SVZ</str><long name="_version_">1426761275022508032</long></doc><doc><str name="id">FALTER_200107181840400049</str><date name="datum">2001-07-18T00:00:00Z</date><str name="year">2001</str><arr name="region"><str>aost</str></arr><arr name="ressort2"><str>leben</str></arr><int name="tokens">233</int><float name="quote_ratio">0.009586579</float><arr name="quoted"><str>Cantina e l'arte</str></arr><str name="vorspann">"Falter" 29/01 vom 18.7.2001 Seite 66 Ressort: Stadtleben</str><str name="titel">Sideorders: Modern-Italiener</str><str name="inhalt">Die italienische Küche ist eine feine Sache. Das Ausmaß, in dem sie einem hierzulande gegenübertritt, hat aber schon fast was vom Strunz'schen Laufvirus. In letzter Zeit immer beliebter: kreative Modernisierungen von Risotto, Spaghetti &amp; Co, italo-asiatische Mischungen a la Los Angeles. Das muss freilich nicht grundsätzlich furchtbar sein: Daun Kinsky, 1., Freyung 4, Tel. 532 62 71, Mo-Sa 12-14.30, 18-22.30 Uhr. Jetzt kocht ein neuer Mann am Herd des Restaurants mit dem schönsten Hof der Stadt: Kurt Trobits brutzelt Garnelen-Gemüse-Tempura auf Sprossensalat, Wolfsbarsch mit Tomaten-Zucchini-Ragout, Risotto mit Flusskrebsen und Hummerfleisch oder getrüffelte Polenta mit Shiitake-Pilzen. Bordeaux, 9., Serviteng. 2, Tel. 315 63 63, Mo-Fr 12-15, Mo-Sa 18-1 Uhr. Mit Aurelio Nitsche kam ein Kreativbündel, das Dinge bereitet wie Kokosmilchrisotto mit gebratenen Garnelen, Curryschaumsuppe mit gebratener Prosciuttofeige oder Branzinofilet mit in Garnelensud gedünstetem Weißkraut und Petersilmousse. Sehr gut! Barbaros, 1., Kärntner Str. 19 (Steffl), Tel. 513 17 12, Mo-Sa 12-15, 18-1 Uhr. In dem Designerlokal mit dem tollen Ausblick (auf Dächer und FPÖ-Funktionäre) kocht Andreas Hanser Orangenrisotto mit Basilikum und Scampi oder Anglerfilet mit Knoblauch gespickt, Olivenpolenta und Artischockenchips. Beisl news Den besten Friulaner der Stadt gibt es wieder, wenngleich versteckt: Anton Mimras "Cantina e l'arte" zog ins Untergeschoß des Casino-Austria-Hauses, Dr. Karl Lueger-Ring 14 (die erste Tür links im Foyer). Mimra hat dort eigentlich nur eine Club-Lizenz und kaum eine Küche, was er kocht, ist aber nach wie vor genial.</str><arr name="ressort"><str>STA</str><str>Stadtleben</str></arr><str name="seite">66</str><arr name="ausgabe_txt"><str>
-29/01
-</str></arr><str name="keys">SE_66 DA_20010718 MO_200107 JA_2001 RS_STA DB_FALTER</str><int name="zeitstempel">995407200</int><str name="docsrc">FALTER</str><long name="_version_">1426689036130451456</long></doc><doc><str name="id">SN_200704032311170140</str><date name="datum">2007-04-03T00:00:00Z</date><str name="year">2007</str><arr name="ressort2"><str>sport</str></arr><int name="tokens">38</int><float name="quote_ratio">0.0</float><str name="vorspann">"Salzburger Nachrichten" vom 03.04.2007 Seite: 22 Ressort: Sport</str><str name="titel">RB Salzburg - Mattersb....</str><str name="inhalt">RB Salzburg - Mattersb. Salzburg sollte zu Hause siegen. RB Amateure - A. Wien Eine harte Nuss für die Austria. Milan - Bayern Die Klasse spricht für die Italiener. SN-Tipps: 1, 2, 1</str><arr name="ressort"><str>SPO</str><str>Sport</str></arr><str name="seite">22</str><str name="keys">SE_22 DA_20070403 MO_200704 JA_2007 RS_SPO DB_SN</str><int name="zeilen">7</int><int name="zeitstempel">1175551200</int><str name="docsrc">SN</str><long name="_version_">1426756622334558209</long></doc><doc><str name="id">FALTER_201005191632240098</str><date name="datum">2010-05-19T00:00:00Z</date><str name="year">2010</str><arr name="region"><str>aost</str></arr><arr name="ressort2"><str>allgemein</str><str>kultur</str></arr><int name="tokens">1205</int><float name="quote_ratio">0.27808785</float><arr name="quoted"><str>Sportstück</str><str>Die Autorin gibt nicht viele Anweisungen, das hat sie inzwischen gelernt. Machen Sie, was Sie wollen.</str><str>Diese Texte sind eine Provokation für das Theater</str><str>Und lange Zeit ist dem Theater ja auch nicht viel dazu eingefallen.</str><str>Wolken. Heim.</str><str>Wir</str><str>Inszenierung des Jahres</str><str>Wolken.Heim.</str><str>Rechnitz (Der Würgeengel)</str><str>Diese Texte versteht man beim Lesen grundsätzlich erst mal ganz schwer. In ihrer ganzen Vielschichtigkeit und Musikalität erschließen sie sich einem erst nach und nach. Das ist, wie wenn man in eine Höhle vorstößt und dort immer wieder neue Nebengänge oder Klangräume entdeckt. Das sind Expeditionen.</str><str>Rechnitz</str><str>Das war in diesem Fall noch schwerer als sonst.</str><str>Wir sind zu dem Schluss gekommen, dass da etwas ganz bewusst veröffentlicht wird. Der Text ist ein einziger Redeschwall, diese Figuren können gar nicht mehr aufhören, sich zu formulieren.</str><str>vierte Wand</str><str>Der Würgeengel</str><str>Bei Jelinek ist es umgekehrt</str><str>Die Herrschaft hat das Geschehen verlassen und die Dienstboten zurückgelassen – und die finden aus diesem Redegefängnis nicht mehr heraus.</str><str>Rechnitz</str><str>Wir haben zwei Drittel gestrichen, meinen aber dennoch, das Wesen des Textes bewahrt zu haben</str><str>Ich habe das Gefühl, dass Jelinek in einem Rauschzustand schreibt – und dass es ihr gar nicht unrecht ist, wenn man das als Theatermacher dann sozusagen für die Bühne lektoriert.</str><str>Jelineks Texte streicht man mit der Machete!</str><str>Die Kontrakte des Kaufmanns</str><str>Wirtschaftskomödie</str><str>Urlesung</str><str>Das Stück ist ja eine Waffe, die für einen ganz speziellen Kampf geschmiedet worden ist</str><str>Also wollten wir das einmal nach Wien stellen.</str><str>fertigen</str><str>Witze über die Frisur von Karl-Heinz Grasser versteht in Deutschland kein Mensch</str><str>Urlesung</str><str>Kontrakte</str><str>long version</str><str>Kontrakte</str><str>Chor der Greise</str><str>Das hat eine Penetranz und Redundanz, die ich selbst von Jelinek noch nicht kannte. Aber dann dachte ich, dass wahrscheinlich genau darin die Qualität des Textes liegt. Normalerweise versucht man natürlich, so etwas irgendwie konsumierbar zu machen. Dass ich das kann, habe ich schon öfter bewiesen. Diesmal wollte ich etwas finden, was dem Text seine Maßlosigkeit lässt.</str><str>Man könnte fast sagen, sie schreit danach, über die Szene geöffnet zu werden.</str><str>Nach drei Seiten Jelinek-Lektüre muss ich schreiend aus dem Fenster springen. Dieser Schrei ist dann die Inszenierung.</str><str>Gier</str></arr><str name="vorspann">"Falter" Nr. 20/10 vom 19.05.2010 Seite: 30 Ressort: Feuilleton</str><str name="titel">Eine Sprache, die nach der Bühne schreit</str><str name="inhalt">Seit Elfriede Jelinek keine Dramen mehr schreibt, ist sie am Theater erfolgreich. Zwei Regisseure erklären ein Phänomen Feature: Wolfgang Kralicek Vor zwölf Jahren hat es Elfriede Jelinek aufgegeben. Das damals veröffentlichte „Sportstück“ beginnt mit folgendem Hinweis an die Regie: „Die Autorin gibt nicht viele Anweisungen, das hat sie inzwischen gelernt. Machen Sie, was Sie wollen.“ Mit der ihr eigenen Selbstironie hat Jelinek damit eigentlich nur zum Ausdruck gebracht, was zumindest im deutschsprachigen Theater ohnedies Usus ist: Die Regisseure machen hier grundsätzlich, was sie wollen. Und Elfriede Jelinek ist damit meistens sehr gut gefahren: Je freier das Theater mit ihren Texten umgeht, desto besser. „Diese Texte sind eine Provokation für das Theater“, sagt der deutsche Regisseur Nicolas Stemann. „Und lange Zeit ist dem Theater ja auch nicht viel dazu eingefallen.“ Zum ersten Mal hatte die Autorin 1988 ein Stück geschrieben, dem man äußerlich nicht ansah, dass es ein Stück ist: In „Wolken. Heim.“ collagierte sie Texte von deutschen Dichtern und Denkern zu einem großen „Wir“-Text; Regieanweisungen, Figuren oder Dialoge sucht man darin vergebens. Interessanterweise war es ausgerechnet eine Inszenierung dieses Stücks, die Elfriede Jelinek als Theaterautorin zum Durchbruch verhalf. 1994 hatte der Schweizer Jossi Wieler am Deutschen Schauspielhaus in Hamburg für den scheinbar so abstrakten Text eine erstaunlich konkrete Form gefunden: In einem verlassenen Offizierskasino eroberten sich sechs Frauen die Welt (und die Sprache) ihrer abwesenden Männer und Väter. Die Aufführung wurde zur „Inszenierung des Jahres“ gewählt, und die vermeintlich so theaterfremde Jelinek wurde ab sofort auch als Dramatikerin ernst genommen. Der 58-jährige Wieler, der inzwischen fünf weitere Stücke der Autorin inszeniert hat, gilt heute – mit Stemann – als einer der führenden Jelinekologen unter den Theaterregisseuren. Die Wiener Festwochen, wo 1996 schon „Wolken.Heim.“ gastierte, zeigen heuer seine jüngste Jelinek-Arbeit: die im Herbst 2008 an den Münchner Kammerspielen herausgekommene Uraufführung von „Rechnitz (Der Würgeengel)“. Hintergrund des Textes ist ein NS-Massaker, das sich im März 1945 im burgenländischen Rechnitz zugetragen hat, als in einer Nacht rund 180 jüdische Zwangsarbeiter erschossen wurden. Die Täter waren Gäste eines in derselben Nacht von Margit von Batthyány auf Schloss Rechnitz gegebenen Fests. Jelineks Stück ist ein 150 Buchseiten langer Botenbericht, in dem es vor literarischen und anderen Anspielungen nur so wimmelt. Wenn man so einen Jelinek-Text liest, ist man zunächst einmal erschlagen. Regisseur Wieler geht es da nicht anders. „Diese Texte versteht man beim Lesen grundsätzlich erst mal ganz schwer. In ihrer ganzen Vielschichtigkeit und Musikalität erschließen sie sich einem erst nach und nach. Das ist, wie wenn man in eine Höhle vorstößt und dort immer wieder neue Nebengänge oder Klangräume entdeckt. Das sind Expeditionen.“ Wenn Wieler ein neues Jelinek-Stück in Händen hält, liest er es zunächst einmal laut und im Team; im Fall von „Rechnitz“ hat er sich den Text mit der Bühnenbildnerin Anja Rabes und der Dramaturgin Julia Lochte in mehreren Lese-Sessions erschlossen. „Das war in diesem Fall noch schwerer als sonst.“ Zunächst musste herausgefunden werden, wer da überhaupt spricht – und warum. „Wir sind zu dem Schluss gekommen, dass da etwas ganz bewusst veröffentlicht wird. Der Text ist ein einziger Redeschwall, diese Figuren können gar nicht mehr aufhören, sich zu formulieren.“ Wieler hat sich deshalb erstmals in einer seiner Jelinek-Inszenierungen entschlossen, die unsichtbare „vierte Wand“ des Theaters zu durchbrechen: Die Zuschauer werden direkt angesprochen. Was die Situation betrifft, gab der Untertitel den entscheidenden Hinweis. Das Stück ist ein Auftragswerk; die Kammerspiele hatten Jelinek gefragt, ob sie nicht Luis Buñuels Film „Der Würgeengel“ (1962) bearbeiten wolle. In seinem surrealistischen Klassiker zeigt Buñuel eine Party, bei der die Dienstboten das Haus verlassen, während die Gäste irgendwann feststellen, dass sie nicht gehen können. „Bei Jelinek ist es umgekehrt“, erklärt Wieler. „Die Herrschaft hat das Geschehen verlassen und die Dienstboten zurückgelassen – und die finden aus diesem Redegefängnis nicht mehr heraus.“ Ungekürzt würde „Rechnitz“ über sieben Stunden dauern; die Münchner Inszenierung dauert knapp zwei. „Wir haben zwei Drittel gestrichen, meinen aber dennoch, das Wesen des Textes bewahrt zu haben“, sagt Wieler. „Ich habe das Gefühl, dass Jelinek in einem Rauschzustand schreibt – und dass es ihr gar nicht unrecht ist, wenn man das als Theatermacher dann sozusagen für die Bühne lektoriert.“ „Jelineks Texte streicht man mit der Machete!“, schrieb Nicolas Stemann vor vier Jahren, als er für ein Jelinek-Sonderheft der Zeitschrift Theater der Zeit von seinen Erfahrungen berichtete. Anders als Wieler begegnet Stemann den Texten eher auf die harte Tour; er benutzt sie als Spielmaterial für aggressive, laute, wilde Theaterperformances. In seiner jüngsten Jelinek-Arbeit „Die Kontrakte des Kaufmanns“ beschreitet Stemann neue Wege. Die „Wirtschaftskomödie“, in der Jelinek die Skandale um Bawag und Meinl zu einem höhnischen Abgesang auf Großspekulanten und Kleinanleger verwurstet, wird in der halbrohen Form einer szenischen Lesung präsentiert. Einige Wochen vor der Uraufführung im April 2009 am Schauspiel Köln präsentierten Stemann und sein Ensemble das Stück als „Urlesung“ im Akademietheater. „Das Stück ist ja eine Waffe, die für einen ganz speziellen Kampf geschmiedet worden ist“, erklärt der 41-jährige Stemann, der unter Klaus Bachler ein paar Jahre an der Burg engagiert war. „Also wollten wir das einmal nach Wien stellen.“ Die Urlesung – ein mehr als vierstündiges Text-Happening – war dann so überzeugend, dass sie zur Basis der „fertigen“ Aufführung wurde. Nur die ersten 45 und die letzten 30 Minuten sind inszeniert, die knapp drei Stunden dazwischen sehen jeden Abend anders aus. Auf einem Display werden die Manuskriptseiten (von 99 abwärts) heruntergezählt, das Saallicht bleibt an, die Türen sind offen, die Zuschauer können jederzeit raus- und wieder reingehen. Regisseur Stemann steht als Spielleiter (und Musiker) übrigens auch selbst auf der Bühne. Für das Wiener Gastspiel wird es eine eigene Textfassung geben („Witze über die Frisur von Karl-Heinz Grasser versteht in Deutschland kein Mensch“), ein paar Burgschauspieler, die schon bei der „Urlesung“ dabei waren, werden dazukommen, und eventuell wird Jelinek extra für Wien noch etwas Neues schreiben. Insgesamt hat sie dem Text in der Zwischenzeit schon 60 Seiten hinzugefügt, und Stemann liebäugelt mit der Idee, in Wien an einem Marathonabend einmal alle Texte aufzuführen, die Jelinek für die „Kontrakte“ geschrieben hat. Eine solche „long version“ würde rund acht Stunden dauern; aus organisatorischen Gründen ist noch nicht sicher, ob es dazu kommt. Der Mittelteil der „Kontrakte“, der 70-seitige „Chor der Greise“, hat auch einen Experten wie Stemann überrascht: „Das hat eine Penetranz und Redundanz, die ich selbst von Jelinek noch nicht kannte. Aber dann dachte ich, dass wahrscheinlich genau darin die Qualität des Textes liegt. Normalerweise versucht man natürlich, so etwas irgendwie konsumierbar zu machen. Dass ich das kann, habe ich schon öfter bewiesen. Diesmal wollte ich etwas finden, was dem Text seine Maßlosigkeit lässt.“ Das Dramatische an Elfriede Jelineks Theatertexten sei die Sprache selbst, meint Jossi Wieler. „Man könnte fast sagen, sie schreit danach, über die Szene geöffnet zu werden.“ Nicolas Stemann hat das Phänomen einmal so formuliert: „Nach drei Seiten Jelinek-Lektüre muss ich schreiend aus dem Fenster springen. Dieser Schrei ist dann die Inszenierung.“ Elfriede Jelinek Die Nobelpreisträgerin von 2004 veröffentlichte ihre Texte zuletzt hauptsächlich auf der Bühne. Während in den letzten zehn Jahren nur ein Roman („Gier“, 2000) erschienen ist, wurde im selben Zeitraum rund ein Dutzend Stücke uraufgeführt Rechnitz (Der Würgeengel): 22. bis 24.5., 20 Uhr, Theater Akzent Die Kontrakte des Kaufmanns: 17. bis 20.6., 19.30 Uhr, Museumsquartier, Halle E</str><arr name="ressort"><str>ALL</str><str>Feuilleton</str></arr><str name="seite">30,31</str><arr name="ausgabe_txt"><str>
-20/10
-</str></arr><arr name="deskriptor"><str>KULTUR</str><str>ICC_01100000</str><str>MW_KARL-HEINZ_GRASSER</str><str>AIM_ZEIT</str><str>MW_ÖSTERREICH</str><str>RPP_EJELINEK</str><str>PE_EJELINEK</str><str>MW_POLPORT</str></arr><str name="keys">SE_30 DA_20100519 MO_201005 JA_2010 RS_ALL DB_FALTER</str><int name="zeilen">139</int><str name="bildzeilen">Bild: Penetranz und Maßlosigkeit: Nicolas Stemanns Jelinek-Performance „Die Kontrakte des Kaufmanns“ Bild: Dienstboten im Redegefängnis: Jossi Wielers Jelinek-Inszenierung „Rechnitz (Der Würgeengel)“</str><int name="zeitstempel">1274220000</int><str name="docsrc">FALTER</str><long name="_version_">1426689433409683457</long></doc><doc><str name="id">APA_19990824_APA0495</str><date name="datum">1999-08-24T16:16:16Z</date><str name="year">1999</str><arr name="ressort2"><str>inland</str></arr><int name="tokens">119</int><float name="quote_ratio">0.01419214</float><arr name="quoted"><str>Kurier</str><str>Kurier</str></arr><str name="header">APA0495 5 II 0114 Siehe APA0229/24.08 Di, 24.Aug 1999</str><arr name="stichwort"><str>Wahlen</str><str>Nationalrat</str><str>FPÖ</str><str>Niederösterreich</str><str>Böhmdorfer</str></arr><str name="titel">NR-Wahl: Haiders Anwalt Böhmdorfer zieht für FPÖ in Nationalrat</str><str name="inhalt">Utl.: "Kurier": Abgeordneter für Niederösterreich = Wien (APA) - Der langjährige Anwalt von FPÖ-Obmann Jörg Haider, Dieter Böhmdorfer, wird nach den Nationalratswahlen für die Freiheitlichen ins Hohe Haus einziehen. Er wird Abgeordneter für Niederösterreich, berichtet der "Kurier". **** Böhmdorfer folgt auf der Niederösterreich-Liste hinter dem bisherigen Bundesrat Ernst Windholz auf Rang zwei. Dahinter reihen sich der vom LIF zur FPÖ gewechselte Abgeordnete Reinhard Firlinger, ORF-Nachrichtensprecherin Jutta Wochesländer sowie Ex-Justizminister Harald Ofner. Auf dem unsicheren sechsten Platz folgt der Dritte Nationalratspräsident Wilhelm Brauneder vor dem Zahnarzt Christian Hillbrand und erst auf Rang acht scheint der ehemalige FP-Klubobmann und nunmehrige Landesrat Ewald Stadler auf. (Schluss) je/ws APA0495 1999-08-24/16:16 241616 Aug 99</str><str name="agentur">APA</str><arr name="meldungsnummer"><str>APA0495</str></arr><arr name="prioritaet"><str>5</str></arr><arr name="ressort"><str>II</str><str>I</str></arr><arr name="autor"><str>je</str><str>ws</str></arr><arr name="quelle"><str>APA</str></arr><str name="keys">AG_APA RS_II RS_I XR_IA1 XR_IA2 XR_IA3 XR_IA4 XR_IA5 XR_I01 XR_I02 XR_I03 XR_I04 XR_I05 DA_19990824 JA_1999 MO_199908 DB_APA VERSAND_X</str><int name="zeitstempel">935504177</int><str name="docsrc">APA</str><long name="_version_">1426709688434556928</long></doc><doc><str name="id">KRONE_200210260251530102</str><date name="datum">2002-10-26T00:00:00Z</date><str name="year">2002</str><arr name="region"><str>agesamt</str></arr><int name="tokens">58</int><float name="quote_ratio">0.04</float><arr name="quoted"><str>verlorene Stunde</str></arr><str name="vorspann">"Neue Kronen-Zeitung" vom 26.10.2002 Seite: 16</str><str name="titel">Abschied von Sommerzeit</str><str name="inhalt">S ommerzeit ade, jetzt bekommen wir unsere "verlorene Stunde" wieder zurück. Wer nicht gerade mitten in der Nacht aufstehen will, sollte seine Uhren spätestens Sonntagfrüh um eine Stunde zurückdrehen. Dann geht das Umstellen bei Weckern, Videorecordern und Radios im ganzen Haus wieder los. Die Zwillingsbrüder Andreas und Michael haben jedenfalls sichtlich ihren Spaß daran.</str><str name="seite">16</str><arr name="mutation_txt"><str>
-Ktn, Morgen
-</str></arr><str name="keys">SE_16 DA_20021026 MO_200210 JA_2002 RS_ALL DB_KRONE /appl/crs3/ztgconvert/working/krone/1720.KT</str><int name="zeilen">6</int><int name="zeitstempel">1035583200</int><str name="docsrc">KRONE</str><long name="_version_">1426719259428388864</long></doc><doc><str name="id">NVT_200210060500510033</str><date name="datum">2002-10-06T00:00:00Z</date><str name="year">2002</str><arr name="region"><str>awest</str></arr><arr name="ressort2"><str>lokal</str></arr><int name="tokens">318</int><float name="quote_ratio">0.09152216</float><arr name="quoted"><str>Das geht euch nichts an</str><str>Das Mädchen hat sich offenbar geschämt, den Vorfall zu erzählen</str><str>Aufgrund der guten Täterbeschreibung wird die Kriminalabteilung bald ein Phantombild anfertigen können</str></arr><str name="vorspann">"Neue Vorarlberger Tageszeitung" Nr. 235 vom 06.10.2002 Seite: 15 Ressort: Lokal</str><str name="titel">Mädchen (16) am Bahnhof Frastanz sexuell attackiert</str><str name="inhalt">VON PETER BARTA Während die Fahndung nach dem Sexualverbrecher von Sulz auf Hochtouren läuft, wurde jetzt ein weiteres Verbrechen bekannt. Zu der Tat war es am Dienstag gekommen: Gegen 21 Uhr verlässt das 16-jährige Mädchen den Regionalzug am Bahnhof Frastanz und will nach Hause gehen. Noch am Bahnhof wird die Jugendliche von zwei Unbekannten angesprochen. Sie wollen eine Zigarette haben. Die Schülerin gibt ihnen eine. Doch eigentlich wollen die beiden etwa 20-Jährigen etwas ganz anderes: Sie soll ihren Namen nennen, ihre Adresse und ihre Telefonnummer. "Das geht euch nichts an", entgegnet die Jugendliche und rennt davon. Aber die beiden Männer sind schneller. Sie holen die Flüchtende ein, zerren das Opfer von der Straße zu einem überdachten Auto-Abstellplatz einer Wohnanlage. Dort fasst einer der Täter der Jugendlichen unter den Pullover, der andere begrapscht das Mädchen in der Unterhose. Im letzten Moment gelingt es der Schülerin, die Täter wegzustoßen und zu flüchten. "Das Mädchen hat sich offenbar geschämt, den Vorfall zu erzählen", erklärte Franz Lisch von der Gendarmerie Frastanz, weshalb das Delikt erst zwei Tage später angezeigt wurde. "Aufgrund der guten Täterbeschreibung wird die Kriminalabteilung bald ein Phantombild anfertigen können", so Lisch. BESCHREIBUNGEN n Der erste Täter ist etwa 175 cm groß, mollig, hat kurze braun/blonde Haare, zwischen 18 und 20 Jahre alt. n Er trägt einen Dreitagebart und hat ein Muttermal an der linken Wange unten und an der rechten Halsseite. Auffällig: er trägt links einen und rechts zwei Ohrringe. n Bekleidet war der Mann mit einer schwarzen, dicken Jacke und schwarzen Jeans. n Der zweite Täter ist etwa 170 cm groß, normale Statur, schwarze, mittellange Haare (hinten schulterlang, vorne reichen die Haare bis zur Nasenspitze). Er ist ebenfalls zwischen 18 und 20 Jahre alt. n Bekleidet war der zweite Täter mit einem blauen T-Shirt, blauem Pullover und schwarzen Jeans. n Beide Täter sprachen Vorarlberger Dialekt. n Hinweise unter Tel. 05522/51133.</str><arr name="ressort"><str>LOK</str><str>Lokal</str></arr><str name="seite">15</str><arr name="ausgabe_txt"><str>
-Nr. 235
-</str></arr><arr name="deskriptor"><str>Kriminalität</str><str>Straftat</str><str>Sexualdelikt </str><str>AIM_ZEIT</str><str>AIM_CHRONIK</str><str>AIM_KRIMINALITÄT</str></arr><str name="keys">SE_15 DA_20021006 MO_200210 JA_2002 RS_LOK DB_NVT</str><int name="zeilen">37</int><arr name="untertitel_txt"><str>
-Schon wieder ein Sexualverbrechen in Vorarlberg: Am Dienstagabend
-vergingen sich zwei Unbekannte in Frastanz an einer 16-Jährigen. Die
-Fahndung läuft.
-</str></arr><int name="zeitstempel">1033855200</int><str name="docsrc">NVT</str><long name="_version_">1426740431308193792</long></doc><doc><str name="id">VN_200301300330290002</str><date name="datum">2003-01-30T00:00:00Z</date><str name="year">2003</str><arr name="region"><str>awest</str></arr><arr name="ressort2"><str>allgemein</str><str>seite</str><str>titelseite</str></arr><int name="tokens">46</int><float name="quote_ratio">0.0</float><str name="vorspann">"Vorarlberger Nachrichten" Nr. 024 vom 30.01.2003 Seite: A1 Ressort: Titel</str><str name="titel">35:26-Erfolg für den Alpla HC Hard (im Bild Sergej Ubozhanka) gegen...</str><str name="inhalt">35:26-Erfolg für den Alpla HC Hard (im Bild Sergej Ubozhanka) gegen A1 Bregenz. Für Letztere war es die erste Saisonniederlage, Hard hingegen ist in der laufenden Saison zu Hause noch ungeschlagen. /C4 (Foto: VN/Shourot)</str><arr name="ressort"><str>TIT</str><str>Titel</str></arr><str name="seite">A1</str><arr name="ausgabe_txt"><str>
-Nr. 024
-</str></arr><arr name="deskriptor"><str>ICC_15000000</str></arr><str name="keys">SE_A1 DA_20030130 MO_200301 JA_2003 RS_TIT DB_VN</str><int name="zeilen">4</int><int name="zeitstempel">1043881200</int><str name="docsrc">VN</str><long name="_version_">1426765773738606592</long></doc><doc><str name="id">KURIER_200409180436510169</str><date name="datum">2004-09-18T00:00:00Z</date><str name="year">2004</str><arr name="region"><str>agesamt</str></arr><arr name="ressort2"><str>chronik</str></arr><int name="tokens">163</int><float name="quote_ratio">0.0</float><str name="vorspann">"Kurier" vom 18.09.2004 Seite: 13 Ressort: Chronik</str><str name="titel">Die Freundin erschossen, zerstückelt</str><str name="inhalt">Eine grauenhafte Bluttat, die bereits vier Wochen zurück liegt, ist nun in OÖ aufgeflogen. Ein 48-jähriger Mann aus Vöcklabruck hatte seine Lebensgefährtin erschossen und anschließend mit der Motorsäge zerstückelt. Die Leichenteile transportierte er nach Italien und entsorgte sie im Müll. Gabriele G., 40, kam am 22. August am Morgen von einem Ausflug zurück und legte sich schlafen. Ihr Lebensgefährte Volkmar N. dürfte auf diesen Augenblick schon gewartet haben. Sobald die Frau eingeschlafen war, schoss er ihr drei Mal in den Rücken. Da das Opfer noch röchelte, feuerte er einen vierten Schuss in den Hinterkopf. Die Mutter von Gabriele G., die sich wiederholt nach dem Verbleib ihrer Tochter erkundigte, vertröstete der Mann. Die Frau sei in Paris. Schließlich ließ sich die Mutter aber nicht mehr abwimmeln und erstattete Abgängigkeitsanzeige. Die Beamten hielten Nachschau und entdeckten im Haus der Abgängigen Blutspuren und schalteten die Kriminalabteilung ein. Im Verhör legte der 48-Jährige ein Geständnis ab. Das Motiv dürfte Eifersucht gewesen sein.</str><arr name="ressort"><str>CHR</str><str>Chronik</str></arr><str name="seite">13</str><arr name="mutation_txt"><str>
-N.Ö., Morgen
-</str></arr><arr name="deskriptor"><str>AIM_CHRONIK</str><str>AIM_ZEIT</str></arr><str name="keys">SE_13 DA_20040918 MO_200409 JA_2004 RS_CHR DB_KURIER S13T03.AS6</str><int name="zeilen">18</int><arr name="untertitel_txt"><str>
-Bluttat in OÖ
-</str></arr><int name="zeitstempel">1095458400</int><str name="docsrc">KURIER</str><long name="_version_">1426733275054866432</long></doc><doc><str name="id">HOR_201006182322180036</str><date name="datum">2010-06-18T00:00:00Z</date><str name="year">2010</str><arr name="region"><str>spezifisch</str></arr><arr name="ressort2"><str>allgemein</str><str>medien</str><str>unzuordenbar</str><str>wirtschaft</str></arr><int name="tokens">898</int><float name="quote_ratio">0.3369876</float><arr name="quoted"><str>Wenn Sie die Gesamtumsätze am österreichischen Mobilfunkmarkt ansehen, so stellen Sie fest, dass diese trotz wachsender Teilnehmerzahlen und einer gewaltigen Steigerung der Datennutzung in allen Netzen leicht gesunken sind.</str><str>Wir glauben nicht, dass in Österreich auf Dauer vier Mobilfunkinfrastrukturen leistbar sind.</str><str>Aufgrund der Milliarden-Investitionen, die für die ‚nächste Mobilfunkgeneration‘ notwendig sind, wird es eine Konsolidierung der Netze – Network Sharing – geben müssen.</str><str>Die fällt aber nicht so einfach vom Himmel und ist auch nicht das einzige Allheilmittel.</str><str>Eine Marktkonsolidierung auf Kosten von Drei ist reines Wunschdenken des Mitbewerbs.</str><str>Andere Mobilfunkbetreiber beklagen sich immer wieder über den Wettbewerb und wollen die Preise erhöhen</str><str>Bergauf geht es sicher nicht. Aber bergab geht’s, zumindest was den Preispunkt betrifft, auch nicht mehr.</str><str>Die Strategie lautet: Mehr zum selben Preis.</str><str>In den Basistarifen werden immer mehr Services integriert.</str><str>Bei der Gestaltung der Tarife wird die Herausforderung sein, den richtigen Mix an inkludierten Services zu finden und das zu einem attraktiven Gesamtpreis für die Kunden.</str><str>Aufgrund des intensiven Wettbewerbs wird der Preis weiterhin ein dominierender Wettbewerbsfaktor bleiben</str><str>Wir halten dem entgegen, indem wir laufend innovative Produkte, Tarife und Dienste auf den Markt bringen.</str><str>Das sieht man auch am Anstieg der Gesprächsminuten in Österreich auf 5.500 Millionen Minuten bzw. der verschickten SMS auf 1,59 Milliarden im vierten Quartal 2009.</str><str>Die Regulierung war schmerzhaft. Unser Umsatzrückgang von 2008 und 2009 von 3,8 Prozent ist zu einem Großteil auf diese Maßnahme zurückzuführen.</str><str>Während die Preise dramatisch gesunken sind, ist die Anzahl der genutzten Einheiten nur marginal angestiegen.</str><str>Horrorberichte über Roamingfallen</str><str>Wir informieren unsere Kunden intensiv über die Möglichkeiten, im Ausland kostengünstig zu telefonieren beziehungsweise Daten abzurufen</str><str>Holiday-Optionen</str><str>Gerade bei Roaming hat Drei immer die Rolle als Anwalt der Kunden eingenommen und lange, bevor die EU die Preise reduziert hat, einen solchen Schritt gefordert.</str></arr><str name="vorspann">"Horizont" Nr. 24/10 vom 18.06.2010 Seite: 17 Ressort: Märkte &amp; Medien - Telekomunikation und Mobilfunk</str><str name="titel">Kunden bekommen immer mehr – für weniger Geld</str><str name="inhalt">In der Telekom-Branche wird es enger – die Marktakteure müssen für weniger Umsatz mehr leisten. Dies beweist ein Blick in den Telekom Monitor 2/2010 der RTR, der einerseits von sinkenden Umsätzen im Festnetz, Mobilfunk, Breitband und Mietleitungen berichtet: Verdiente die Branche im 1. Quartal 2007 noch knapp 1,48 Milliarden Euro, waren es im 4. Quartal 2009 nur noch 1,250 Milliarden Euro. Wobei etwa zwei Drittel des Gesamtumsatzes im Telekombereich auf den Mobilfunk entfallen. Andererseits steigen im Mobilfunk die Gesprächsminuten am Endkundenmarkt: Im 1. Quartal 2007 maß die RTR noch knapp 3,96 Milliarden Minuten – im 4. Quartal 2009 waren es schon mehr als 5,5 Milliarden. Allein die im Festnetz vertelefonierte Zeit ging zurück: Von knapp 2,2 Milliarden im 1. Quartal 2007 auf über 1,6 Milliarden Minuten im 4. Quartal 2009. Hannes Ametsreiter, CEO von Telekom Austria und mobilkom austria, bringt die schwierige Situation der Mobilfunker auf den Punkt: „Wenn Sie die Gesamtumsätze am österreichischen Mobilfunkmarkt ansehen, so stellen Sie fest, dass diese trotz wachsender Teilnehmerzahlen und einer gewaltigen Steigerung der Datennutzung in allen Netzen leicht gesunken sind.“ Die Margen werden immer enger – und die Meinung, dass zu viele im Mobilfunkteich fischen, teilen immer mehr. Ametsreiter: „Wir glauben nicht, dass in Österreich auf Dauer vier Mobilfunkinfrastrukturen leistbar sind.“ Robert Chvatal, CEO von T-Mobile-Austria (TMA), erachtet die Margen für zukünftige Investitionen als entscheidend. Über 100 Millionen Euro investiere man jährlich in den Ausbau des TMA-Netzes, zuletzt in den Ausbau des 3G-Netzes mit HSPA+ sowie in die 4. Mobilfunkgeneration LTE. Chvatal: „Aufgrund der Milliarden-Investitionen, die für die ‚nächste Mobilfunkgeneration‘ notwendig sind, wird es eine Konsolidierung der Netze – Network Sharing – geben müssen.“ Peter Nebenführ, CMO des drittgrößten Anbieters Orange, wünscht sich eine Konsolidierung am Markt. „Die fällt aber nicht so einfach vom Himmel und ist auch nicht das einzige Allheilmittel.“ Bei Drei gibt man sich kämpferisch, Jan Trionow, CTO des kleinsten Anbieters. „Eine Marktkonsolidierung auf Kosten von Drei ist reines Wunschdenken des Mitbewerbs.“ Trionow verweist darauf, dass Drei 2009 das am schnellsten wachsende Telekomunternehmen Österreichs war. Drei versteht sich selbst jedenfalls als Garant für den Preiskampf. „Andere Mobilfunkbetreiber beklagen sich immer wieder über den Wettbewerb und wollen die Preise erhöhen“, meint der Drei-CTO. Tarife ins Bodenlose? Davon kann – zumindest bis heute – keine Rede sein. Denn schon seit der heimische Mobilfunkmarkt existiert, kennen die Tarife nur eine Richtung – nach unten. Im internationalen Vergleich ist der Preis für das mobile Telefonieren und auch Surfen rekordverdächtig niedrig. Kann es mit der Talfahrt überhaupt noch weiter abwärts gehen? Peter Nebenführ, CMO von Orange, meint: „Bergauf geht es sicher nicht. Aber bergab geht’s, zumindest was den Preispunkt betrifft, auch nicht mehr.“ Dennoch heißt das kein Verharren auf dem Status quo. Nebenführ: „Die Strategie lautet: Mehr zum selben Preis.“ So habe Orange beispielsweise Roaming-Minuten in den eigenen Europa-Tarif inkludiert. Dem Trend, mehr fürs gleiche Geld, folgt man auch bei der mobilkom austria. CEO Hannes Ametsreiter: „In den Basistarifen werden immer mehr Services integriert.“ So biete man Tarife mit inkludiertem SMS-Kontingent, Datenvolumen, aber auch Services wie TV, Navi und Musik an. „Bei der Gestaltung der Tarife wird die Herausforderung sein, den richtigen Mix an inkludierten Services zu finden und das zu einem attraktiven Gesamtpreis für die Kunden.“ Allerdings werde es auch immer sehr einfache Angebote wie etwa bob geben, die ein Basisservice zum niedrigstmöglichen Preis anbieten. „Aufgrund des intensiven Wettbewerbs wird der Preis weiterhin ein dominierender Wettbewerbsfaktor bleiben“, ist TMA-Chef Robert Chvatal überzeugt und ergänzt: „Wir halten dem entgegen, indem wir laufend innovative Produkte, Tarife und Dienste auf den Markt bringen.“ Basis Sprache und SMS Sprache und SMS sind trotz sinkender Tarife immer noch die Basis für das Geschäft der Mobilfunker – sind sie doch die meistgenutzten Services. Ametsreiter rechnet vor: „Das sieht man auch am Anstieg der Gesprächsminuten in Österreich auf 5.500 Millionen Minuten bzw. der verschickten SMS auf 1,59 Milliarden im vierten Quartal 2009.“ Doch nicht nur die harte Konkurrenz, sondern auch regulatorische Eingriffe – wie etwa die Absenkung der Terminierungsentgelte – würden hier die Umsätze schmelzen lassen. Zur Erläuterung: Terminierungsentgelte sind Beträge, die Telefongesellschaften bei der Netzzusammenschaltung für die Gesprächsterminierung – also die Anrufzustellung oder Gesprächsabschluss – in fremden Netzen zahlen müssen. EU-Verordnung kürzte Gewinne Ein harter Eingriff in das Geschäft der Mobilfunker war auch die EU-Vorschrift, die Roaming-Tarife für Sprache, SMS und Daten zu senken. Orange-CMO Nebenführ: „Die Regulierung war schmerzhaft. Unser Umsatzrückgang von 2008 und 2009 von 3,8 Prozent ist zu einem Großteil auf diese Maßnahme zurückzuführen.“ Auch der von der EU prognostizierte Effekt sei nicht eingetreten, betont Ametsreiter. „Während die Preise dramatisch gesunken sind, ist die Anzahl der genutzten Einheiten nur marginal angestiegen.“ Wesentlich schmerzhafter als die Regulierung, mit der man leben muss, sind Robert Chvatal zufolge die „Horrorberichte über Roamingfallen“. „Wir informieren unsere Kunden intensiv über die Möglichkeiten, im Ausland kostengünstig zu telefonieren beziehungsweise Daten abzurufen“, sagt Chvatal und verweist auf „Holiday-Optionen“ für Urlaubsländer, in denen man mit TMA günstig telefonieren könne. Allein bei Drei kann man der Roaming-Verordnung etwas Positives abgewinnen. CTO Jan Trionow: „Gerade bei Roaming hat Drei immer die Rolle als Anwalt der Kunden eingenommen und lange, bevor die EU die Preise reduziert hat, einen solchen Schritt gefordert.“ In den eigenen Netzen habe man jedenfalls das Roaming bereits abgeschafft – man telefoniert und surft als Österreicher also in Italien, Großbritannien, Irland, Schweden, Dänemark, Hongkong und Australien ums selbe Geld wie zu Hause. Seite 18</str><arr name="ressort"><str>ALL</str><str>Märkte</str><str>&amp;</str><str>Medien</str><str>-</str><str>Telekomunikation</str><str>und</str><str>Mobilfunk</str></arr><str name="seite">17</str><arr name="ausgabe_txt"><str>
-24/10
-</str></arr><arr name="deskriptor"><str>ICC_04000000</str><str>ICC_04003000</str></arr><str name="keys">SE_17 DA_20100618 MO_201006 JA_2010 RS_ALL DB_HOR</str><int name="zeilen">101</int><str name="bildzeilen">Bild: Die Smartphones sind in Österreich beliebt. Sie krempeln das Geschäftsmodell der Mobilfunker um – und offensichtlich verschieben sich auch die Prioritäten im Privatleben. © Fotolia/K. Jehle</str><str name="dachzeile">Sinkende Margen stehen dem steigenden Kommunikationsbedarf der Kunden gegenüber: Die Mobilfunker durchleben – auch wegen Apple – keine leichte Phase</str><int name="zeitstempel">1276812000</int><str name="docsrc">HOR</str><long name="_version_">1426691524518739968</long></doc><doc><str name="id">KTZ_200804090505300150</str><date name="datum">2008-04-09T00:00:00Z</date><str name="year">2008</str><arr name="region"><str>asuedost</str></arr><int name="tokens">174</int><float name="quote_ratio">0.077844314</float><arr name="quoted"><str>Wir haben sie ausgeliehen und unter jener Felswand angebunden, in der sich Hansi versteckte</str></arr><str name="vorspann">"Neue Kärntner Tageszeitung" vom 09.04.2008</str><str name="titel">Lotte holte Bock nach Hause</str><str name="inhalt">Drei Monate lang hatte sich Ziegenbock Hansi in einem aufgelassenen Steinbruch versteckt. Mit großer List konnte er jetzt eingefangen werden. VÖLKERMARKT. Seelenruhig steht er mit seiner Lotte im Stall - für welche Aufregung Ausreißer Hansi in den vergangenen drei Monaten gesorgt hatte, weiß er wohl nicht. Beim Verladen in den Transporter - der schwarze Ziegenbock sollte zum Schlachter - schaffte das Tier die Flucht. Ein Versteck fand Hansi in einem aufgelassenen Steinbruch in Mittertrixen. Zurück nach Hause wollte das schlaue Kerlchen scheinbar nicht - alle Versuche ihn einzufangen scheiterten. Erst Geiß Lotte sollte Hansi zurückholen. "Wir haben sie ausgeliehen und unter jener Felswand angebunden, in der sich Hansi versteckte", sagt Besitzer Günther Zellnig. Gestern Nachmittag schließlich wagte sich der Bock so weit herunter, dass es Zellnigs Cousin, Gebhard Paletti, gelang, das Tier mit einem Lasso einzufangen. Jetzt wartet der Ausreißer auf ein gutes Plätzchen. Wer sich unter 0650/6772233 meldet, bekommt den Bock von Günther Napetschnig sogar frei Haus geliefert. Gebhard Paletti und Günther Zellnig mit Hansi und Lotte.</str><arr name="deskriptor"><str>AIM_ZEIT</str></arr><str name="keys">DA_20080409 MO_200804 JA_2008 RS_ALL DB_KTZ</str><int name="zeilen">19</int><int name="zeitstempel">1207692000</int><str name="docsrc">KTZ</str><long name="_version_">1426729960322629632</long></doc><doc><str name="id">NOEN_200908190416330077</str><date name="datum">2009-08-19T00:00:00Z</date><str name="year">2009</str><arr name="region"><str>aost</str></arr><arr name="ressort2"><str>allgemein</str><str>wirtschaft</str></arr><int name="tokens">243</int><float name="quote_ratio">0.17062636</float><arr name="quoted"><str>Umbau</str><str>Persönliche Gründe</str><str>Oberösterreichischen Nachrichten</str><str>an die Öffentlichkeit</str><str>Wir stehen als Familie persönlich hinter unseren Mitarbeitern und garantieren unseren Kunden weiterhin höchste Qualität, ein attraktives Preis-Leistungs-Verhältnis und umfassenden Service.</str><str>Die Entwicklung geht in eine positive Richtung.</str></arr><str name="vorspann">"Niederösterreichische Nachrichten" Nr. 34 vom 19.08.2009 Seite: 38 Ressort: WIRTSCHAFT</str><str name="titel">Elk-Haus steht vor größerem "Umbau"</str><str name="inhalt">VON DANIEL LOHNINGER SCHREMS / Bereits seit einigen Monaten läuft in der Elk-Haus AG - dem größten Fertighausbauer Österreichs mit Sitz in Schrems - nicht alles rund. Jetzt soll eine Umstrukturierung klare Strukturen für die Zukunft bringen. Ziel ist eine Nachfolge-Regelung durch ein Management-Buy-Out (MBO). Im Klartext: Erich Weichselbaum, der nach internen Turbulenzen das Unternehmen bereits verlassen hatte, wird den Betrieb von seinem Vater Johann Weichselbaum übernehmen. "Persönliche Gründe" seien für diese ungewöhnliche Form der Firmen-Übergabe verantwortlich, betonte Erich Weichselbaum gegenüber den "Oberösterreichischen Nachrichten". Ein Management-Buy-Out ist ein Eigentümerwechsel, bei dem das Management die Mehrheit des Kapitals von den bisherigen Eigentümern erwirbt. Der dadurch erhöhte Kapitalbedarf wird üblicherweise zu einem Großteil von Banken oder Investoren gedeckt. Wie die Lösung im Fall der Elk aussehen wird, ist derzeit nicht bekannt. Wirtschafts-Experten gehen davon aus, dass die - nicht börsen-notierte - Aktiengesellschaft wieder re-privatisiert wird. In einer offiziellen Stellungnahme spricht die Familie Weichselbaum lediglich davon, dass das MBO bis Oktober abgeschlossen sein soll. Erst dann werde man mit weiteren Informationen "an die Öffentlichkeit" gehen. Johann und Erich Weichselbaum versichern aber: "Wir stehen als Familie persönlich hinter unseren Mitarbeitern und garantieren unseren Kunden weiterhin höchste Qualität, ein attraktives Preis-Leistungs-Verhältnis und umfassenden Service." Zugeknöpft gibt sich auch Arbeiter-Betriebsrat Christian Tollar. Der Betriebsrat sei in die laufenden Gespräche involviert, er könne aber keine Details verraten - nur soviel: "Die Entwicklung geht in eine positive Richtung." In Schrems sind etwa 650 Mitarbeiter beschäftigt.</str><arr name="ressort"><str>ALL</str><str>WIRTSCHAFT</str></arr><str name="seite">38</str><arr name="mutation_txt"><str>
-GMU Gmünder Zeitung, WAI Waidhofner Zeitung
-</str></arr><arr name="ausgabe_txt"><str>
-34
-</str></arr><str name="keys">SE_38 DA_20090819 MO_200908 JA_2009 RS_ALL DB_NOEN</str><int name="zeilen">30</int><str name="dachzeile">NEUE STRUKTUR / Erich Weichselbaum will Führung des Fertighausbauers übernehmen. Betriebsrat: "Positive Entwicklung!"</str><int name="zeitstempel">1250632800</int><str name="docsrc">NOEN</str><long name="_version_">1426710221347094529</long></doc><doc><str name="id">NOEN_20101026041009118661141</str><date name="datum">2010-10-26T00:00:00Z</date><str name="year">2010</str><arr name="region"><str>aost</str></arr><arr name="ressort2"><str>allgemein</str><str>schule</str><str>unzuordenbar</str></arr><int name="tokens">266</int><float name="quote_ratio">0.064533055</float><arr name="quoted"><str>stillen</str><str>Die Strom-Spar-Familien sollen Vorbilder sein und zeigen, wie viel Sparpotenzial in unseren Stromrechnungen steckt.</str></arr><str name="vorspann">"NÖ Nachrichten" Nr. 43/2010 vom 26.10.2010 Seite: 47 Ressort: AUS DEN SCHULEN</str><str name="titel">200 Familien sparen Strom</str><str name="inhalt">Sie haben die Aktion Strom-Spar-Familien ins Leben gerufen. Warum ist das Thema Strom für Sie so wichtig? Energielandesrat Dr. Stephan Pernkopf: Der Verbrauch an Haushaltsstrom steigt noch immer um etwa 4 Prozent pro Jahr an. Das müssen wir in den Griff bekommen! Die Strom-Spar-Familien sollen Vorbilder sein und zeigen, wie viel Sparpotenzial in unseren Stromrechnungen steckt. Wie werden die Strom-Spar-Familien unterstützt? Pernkopf: Mit der Energieberatung NÖ haben wir ein starkes BeraterInnen-Netzwerk in ganz NÖ aufgebaut. Rund 80 Expertinnen und Experten werden 200 Familien ein Jahr lang intensiv, persönlich betreuen und auf Einsparpotenziale hinweisen. Die Möglichkeiten sind dabei so individuell wie die Familien und hängen vom Benutzerverhalten, der Geräteausstattung und persönlichen Bedürfnissen ab. Sie haben sich vorgenommen bis zum Jahr 2015 den Strombedarf in NÖ zu 100 Prozent aus erneuerbaren Energien zu decken. Wie soll das gehen? Pernkopf: NÖ ist Technologieland und Vorreiter bei der sauberen Energieerzeugung. Schon jetzt decken wir unseren Strombedarf zu 89 Prozent aus erneuerbaren Energiequellen: 70 Prozent liefert die Wasserkraft, 10 Prozent die Windkraft und 9 Prozent stammen aus Biomasse und Photovoltaik. Wir müssen den Ausbau der erneuerbaren Energien weiter vorantreiben und gleichzeitig den bewussten Umgang mit Energie fördern. Wie sparen Sie persönlich Strom? Pernkopf: Ich denke, beim Stromsparen lernt man nie aus, es gibt eigentlich immer etwas zu verbessern. Ich bin als Landesrat viel unterwegs und eher selten zu Hause. Deshalb ist es wichtig, die sogenannten "stillen" Stromfresser abzuschalten. Ich habe deshalb alle Geräte an abschaltbare Steckerleisten angeschlossen. Energielandesrat Dr. Stephan Pernkopf: "Die Strom-Spar-Familien sollen Vorbilder sein und zeigen, wie viel Sparpotenzial in unseren Stromrechnungen steckt." ZVG</str><arr name="ressort"><str>ALL</str><str>AUS</str><str>DEN</str><str>SCHULEN</str></arr><str name="seite">47</str><arr name="mutation_txt"><str>
-Hollabrunner Zeitung
-</str></arr><arr name="ausgabe_txt"><str>
-43/2010
-</str></arr><arr name="deskriptor"><str>AIM_ZEIT</str></arr><str name="keys">SE_47 DA_20101026 MO_201010 JA_2010 RS_ALL DB_NOEN</str><int name="zeilen">42</int><str name="dachzeile">INTERVIEW Energielandesrat Dr. Stephan Pernkopf über die Strom-Spar-Familie der Energieberatung NÖ.</str><int name="zeitstempel">1288044000</int><str name="docsrc">NOEN</str><long name="_version_">1426712252596092928</long></doc><doc><str name="id">NOEN_200305140424081164</str><date name="datum">2003-05-14T00:00:00Z</date><str name="year">2003</str><arr name="region"><str>aost</str></arr><arr name="ressort2"><str>allgemein</str><str>service</str></arr><int name="tokens">155</int><float name="quote_ratio">0.01006192</float><arr name="quoted"><str>Haus der Frau</str></arr><str name="vorspann">"Niederösterreichische Nachrichten" Nr. 20 vom 14.05.2003 Seite: 57 Ressort: SERVICE Ausgabe: MAR Gänserndorf</str><str name="titel">NOT- UND BERATUNGSDIENSTE...</str><str name="inhalt">NOT- UND BERATUNGSDIENSTE PSYCHOLOGISCHE BERATUNG Psychologische Beratung: ( 0676/6126074. EHE-, FAMILIEN- UND LEBENSBERATUNG Verein Ananas: Familien- und juristische Beratung, Kirchenplatz 5, Montag, von 14 Uhr bis 18 Uhr, Mittwoch von 17 Uhr bis 19 Uhr, Dienstag von 9 Uhr bis 12 Uhr, erreichbar unter ( 02282/60466. NÖ Hilfswerk: Familienberatungsstelle, kostenlose Rechtsberatung/Mediation, 2230 Gänserndorf, Hans-Kudlich-Gasse 11, ( 02282/60233. Zentrum für Ganzheit, Energie und Selbstbewusstsein, Lebensberatung, Sexualberatung, Körperarbeit, Energiearbeit - Maria Sukup, ( 02535/2842, 0664/5726863. Psychosoziale Krisenberatung: Telefondienst 02243/83666 (Montag bis Freitag, von 19 Uhr bis 7 Uhr, Wochenende). GESUNDHEITSBERATUNG Weikendorf: Zentrum für Gesundheit, Therapie und Beratung, Dr. Brückner, ( 022827/8935. Angern: Therapiezentrum Angern, Ganzheitsmedizin, Blutegel-Therapie, Biofeedback, Psychokybernetik, Dr. med. Ingeborg Krebs, erreichbar unter ( 02283/340 62-7 DROGENBERATUNG Gänserndorf: Die Drogenberatungsstelle hat den Sprechtag jeweils am Montag von 14 bis 15 Uhr nach telefonischer Voranmeldung unter ( 02282/9025- 24682. FRAUENHAUS MISTELBACH Mistelbach: "Haus der Frau", erreichbar unter( 02572/5088, 0-14 Uhr Angaben ohne Gewähr</str><arr name="ressort"><str>ALL</str><str>SERVICE</str></arr><str name="seite">57</str><arr name="mutation_txt"><str>
-MAR Gänserndorf
-</str></arr><arr name="ausgabe_txt"><str>
-20
-</str></arr><str name="keys">SE_57 DA_20030514 MO_200305 JA_2003 RS_ALL DB_NOEN</str><int name="zeilen">30</int><str name="bildzeilen">Bild: Bei den letzten Vorentscheidungen haben sich sechs Kandidatinnen für das Miss NÖ Finale 2004 qualifiziert. Am 16. Mai, 20 Uhr, geht in der Discothek Barbarossa in Bockfließ die offizielle Vorentscheidung zur Miss Austria Wahl 2004 über die Bühne.</str><int name="zeitstempel">1052863200</int><str name="docsrc">NOEN</str><long name="_version_">1426700223136137217</long></doc><doc><str name="id">SN_200205312010020140</str><date name="datum">2002-05-31T00:00:00Z</date><str name="year">2002</str><arr name="region"><str>amitte</str></arr><arr name="ressort2"><str>lokal</str></arr><int name="tokens">473</int><float name="quote_ratio">0.9674914</float><str name="vorspann">"Salzburger Nachrichten" vom 31.05.2002 Ressort: Lokal</str><str name="titel">Pflegeberuf in gefühlskalter Zeit</str><str name="inhalt">"Eine der Ursachen der Probleme im Pflegebereich ist sicherlich der Umstand, dass hier in einem Sektor gearbeitet wird, der in unserer jugend- und erfolgsbetonten, gefühlskalten Zeit gerne als nicht existent betrachtet wird. Wer will sich schon mit alten, kranken oder gar sterbenden Menschen auseinandersetzen? Das entspricht nicht unserem Lebensstil! Lieber einen Job im Management einer mittelmäßigen Firma anstreben als einem Menschen beim Sterben beistehen. Ich möchte aber allen Pflegenden trotzdem Mut machen. Ohne Manager können wir vielleicht leben - ohne Krankenoder Altenpflege sicher nicht. Irgendwann einmal kommt jeder Mensch in die Lage, pflegebedürftig zu sein und dann sieht die Situation plötzlich vollkommen anders aus. Der Pflegeberuf bekommt plötzlich Bedeutung - als ungemein wichtiger menschlicher Gegenpol zur heutigen durchaus effizienten, aber für den Patienten oft nicht nachvollziehbaren Apparatemedizin. Erich Pazdera 5020 Salzburg "Passt mir auf mein Salzburg auf . . ." Angesichts der Weltlage erscheinen unsere lokalen Ärgernisse ziemlich lächerlich, aber auch Mückenstiche schmerzen. Da soll die arme Kaiserin Elisabeth auf den trostlosen Bahnhofsvorplatz übersiedeln, den Mönchsberg soll ein Betonkasten, genannt "Museum am Berg" schmücken, eine ansprechende Bodengestaltung des Residenzplatzes ist nicht in Sicht, übergroße, hässliche Blumentröge erschlagen den zierlichen Papagenobrunnen - die Liste lässt sich fortsetzen. Die endlosen Debatten um Standorte (Spaßbad usw.) und Festspielhausumbau fördern auch nicht das Ansehen der Stadt. Gibt es niemanden mehr, der den letzten Wunsch von LH Haslauer ernst nimmt? Margarethe Prantauer 5020 Salzburg Umweltbelastet in Maxglan Wir brauchen dringend Ruhezeiten, die aber durch rücksichtsloses Verhalten mancher Mitmenschen nicht mehr gegeben sind! Lassen sie ihre Haustiere, vor allem nachts, nicht im Freien. Besonders Hunde verursachen dauernd Ruhestörungen. Ich bin selbst tierliebend und Halter. Es gibt es keinerlei Probleme, Belästigungen oder Beschwerden. Außerdem: "Hinterlassenes" vor den Häusern der Anrainer ist zu vermeiden. Wir hoffen sehr auf Verständnis. M. Kaufmann 5020 Salzburg Meisterleistung des Architekten Nach so vielen negativen Stellungnahmen über das neue Heizwerk Mitte möchte ich nun eine positive Äußerung machen. Ich gehe jeden Tag am gegenüberliegenden Ufer vorbei, wobei mir bei unvoreingenommener Betrachtung die Verbauung des Miele-Hauses als erstes ins Auge springt, dann das große Wohnhaus Salzachkai und erst als letztes das neue Kraftwerk. Das fensterlose Gebäude mit der grauen, absorbierenden Farbe macht das große Bauwerk eher unauffällig, eine Meisterleistung des Architekten. Jeder Bürger muss doch wissen, dass ein für Salzburg notwendiges Heiz-Kraftwerk in dieser Dimension nicht in einem Einfamilienhäusel Platz hat. Was wäre also die Alternative? Mit Meuchelfotos kann man natürlich viele negative Empfindungen wecken, z. B. starker Straßenverkehr, Stromautobahnen, dichte Verbauung usw. Man braucht nur die "schiachen" Anblicke in Reihe setzen und mit einem Riesenteleobjektiv fotografieren, fertig ist die Manipulation. Der unbefangene Betrachter sieht aber mit offenen Auge (ohne Tele) ein ganz anderes Bild, einfach natürlicher und weniger aufregend. Vielleicht wird die graue Fläche, nach Fertigstellung, auch etwas begrünt, dann können wir wieder zur Tagesordnung übergehen. Ing. Franz Markl 5020 Salzburg</str><arr name="ressort"><str>LOK</str><str>Lokal</str></arr><arr name="mutation_txt"><str>
-Salzburg
-</str></arr><arr name="deskriptor"><str/><str>AIM_ZEIT</str></arr><str name="keys">DA_20020531 MO_200205 JA_2002 RS_LOK DB_SN</str><int name="zeilen">71</int><int name="zeitstempel">1022796000</int><str name="docsrc">SN</str><long name="_version_">1426755215904735233</long></doc><doc><str name="id">NVT_200006200502350046</str><date name="datum">2000-06-20T00:00:00Z</date><str name="year">2000</str><arr name="region"><str>awest</str></arr><arr name="ressort2"><str>leserbriefe</str></arr><int name="tokens">292</int><float name="quote_ratio">0.0</float><str name="vorspann">"Neue Vorarlberger Tageszeitung" Nr. 145 vom 20.06.2000 Seite: 20 Ressort: Geburtstag</str><str name="titel">DIE NEUE GRATULIERT HERZLICH!</str><str name="inhalt">Heute, Dienstag, den 20. Juni, feiern Geburtstag in: Bregenz: Hedwig Winder, Arlbergstraße 114 (90). Hörbranz: Ing. Friedrich Otto Enzian, Gartenstraße 3 (78); Rosa Olga Kornthaler, Weidachweg13 (74). Doren: Josef Sinz, Hemmessen 165 (77). Sulzberg: Aloisia Bilgeri, Altersheim (86). Krumbach: Anton Sutter, Oberkrumbach 22 (83). Hittisau: Barbara Nenning, Reute 97 (77). Egg: Maria Lang, Gropper 210 (78). Bezau: Rudolf Fröwis, Ach 208 (87). Schnepfau: Julius Ott, Hirschau 2 (77). Au: Fridolin Dünser, Argenstein 370 (70). Riezlern: Anna Fischer, Söllerweg 21 (72); Hermann Lingenhöl, Walserstraße 80 (70). Lauterach: Camilla Eisenegger, Montfortplatz 13 (76); Richard Schwei, Achsiedlung 11 (75); Erich Meyer, Flötzerweg 11 (73); Jeanne-Mina Walser, Bregenzer-Weg 131 (71). Höchst: Julie Helbok, Hauptstraße 16 (92). Lustenau: Grete Schlepps, Lerchenfeldstraße 21 (80); Ottilie Bösch, Kaiser-Franz-Josef-Straße 48 (79); Mag. phil. Julius Ott, Rosenweg 2 (77); Jadwiga Stefanowicz, Mühlefeldstraße 11 (77). Buch: Theresia Stadelmann, Risar 111 (70). Dornbirn: Gertrud Nußbaumer, Lehargasse 5 (99); Irma Nachbaur, Zollgasse 23 (88); Johann Schwendinger, Bachmähdle 15 (88); Maria Theresia Wuggenig, Mitteldorfgasse 1 (80). Hohenems: Ludwig Kappel, Breitenbergstraße 6 (80); Hildegard Spiegel, Grillparzerstraße 4 (74). Altach: Elfriede Riezler, Staudenstraße 12a (71). Götzis: Studienrat i. R. Adalbert Kriegler, Brunnengasse 20 (78). Zwischenwasser: Heinrich Biedermann, Hauptstraße 20 (74). Rankweil: Ludmilla Holub, Luzienstraße 2 (90); Katharina Steurer, Walgaustraße 23 (79). Feldkirch: Margarethe Jele, Gilmstraße 7 (77); Paul Solti, Leonhardsplatz 6 (72). Tisis: Siegfried Guettler, Wolf-Huber-Straße 12 (70). Schlins: Johann Wanger, Gartenweg 5 (79). Nenzing: Maria Volbert, Fingaweg 2 (89); Ilija Radovic, Ramschwagstraße 93 (70). Ludesch: Aloisia Domig, Ludescherberg 5 (73). Nüziders: Rita Unterlerchner, Almaweg 14 (75). Brand: Hubert Schedler, Haus-Nr. 42 (80). St. Anton im Montafon: Walter Battlogg, Haus-Nr. 85 (77). Bartholomäberg: Willy Veith, Gantschier 542 (81). Tschagguns: Laura Galehr, Lochmühle 4 (70). Wald am Arlberg: Karl Nessler, Haus-Nr. 92a (77).</str><arr name="ressort"><str>GEB</str><str>Geburtstag</str></arr><str name="seite">20</str><arr name="ausgabe_txt"><str>
-145
-</str></arr><str name="keys">DB_NVT MO_200006 DA_20000620 JA_2000 SE_20 RS_GEB</str><int name="zeilen">78</int><int name="zeitstempel">961452000</int><str name="docsrc">NVT</str><long name="_version_">1426740052991410176</long></doc><doc><str name="id">BVZ_20101020064008277080220</str><date name="datum">2010-10-20T00:00:00Z</date><str name="year">2010</str><arr name="region"><str>aost</str></arr><arr name="ressort2"><str>allgemein</str><str>lokal</str><str>bezirk</str></arr><int name="tokens">399</int><float name="quote_ratio">0.5356607</float><arr name="quoted"><str>Viele Dinge passen nicht</str><str>Der Kindergarten wird lieblos geführt, und das merkt man auch [?] Leider können die Tanten nicht so arbeiten, wie sie ~ wollen!</str><str>Kind auf den Polizeiposten Wulkaprodersdorf zu bringen</str><str>Von der Dame wird etwas aufgebauscht. Das Abholen ist bei einigen Eltern schon mehrmals ein Problem gewesen. Das ist Thema bei einem Elternabend gewesen. Ich verstehe die Kindergartentanten, wenn die nach Hause wollen und sich aber jemand um eine halbe Stunde verspätet</str><str>Das entbehrt jeder Grundlage!</str><str>Da verstehe ich manche Eltern auch nicht. In einen Supermarkt kann ich auch nicht nach Sperrstunde gehen</str><str>Allerdings gibt es im Kindergarten schon unzählige Dinge, die vielen Eltern nicht passen - etwa das ungesunde Essen und der mangelnde Kroatisch-Unterricht. Die Mutter, die den Rüffel wegen zu späten Abholens bekam, ist eine frisch Zugereiste, die Einheimischen selbst sagen nichts mehr dazu, denn das würden unsere Kinder spüren.</str><str>Das entbehrt jeder Grundlage. Sicher gibt es immer etwas, was man verbessern kann, aber wenn jemanden etwas stört, sollte derjenige sich direkt an die Gemeinde oder mich wenden - und nicht an die Medien.</str><str>Da ging es nicht um große Dinge, sondern etwa darum, dass sich die Kinder die Hände vor dem Essen waschen sollten. Einiges - wie etwa eine andere Gruppeneinteilung - ist zwar umgesetzt worden, aber bis heute haben wir keine Antwort auf diese Punkte erhalten</str><str>Davon weiß ich nichts.</str></arr><str name="vorspann">"BVZ" Nr. 42/2010 vom 20.10.2010 Seite: 19 Ressort: BEZIRK EISENSTADT</str><str name="titel">"Viele Dinge passen nicht"</str><str name="inhalt">~ VON BETTINA EDER SIEGENDORF "Der Kindergarten wird lieblos geführt, und das merkt man auch [?] Leider können die Tanten nicht so arbeiten, wie sie ~ wollen!", hagelte es in einem Schreiben an die BVZ Kritik an der Siegendorfer Kindergartenleitung. Verfasserin ist eine betroffene Mutter, die aus Furcht vor Repressalien ihren Namen nicht öffentlich machen wollte. Stein des Anstoßes war ein Fall, der vergangene Woche Staub aufgewirbelt hatte: Die Mutter eines Kindergartenkindes hatte die Leiterin des Kindergartens beschuldigt, sie rüde verwarnt und ihr damit gedroht zu haben, das "Kind auf den Polizeiposten Wulkaprodersdorf zu bringen", wenn sie es noch einmal später abholen würde. "Von der Dame wird etwas aufgebauscht. Das Abholen ist bei einigen Eltern schon mehrmals ein Problem gewesen. Das ist Thema bei einem Elternabend gewesen. Ich verstehe die Kindergartentanten, wenn die nach Hause wollen und sich aber jemand um eine halbe Stunde verspätet", verteidigt ein Vater den Kindergarten. Steier: "Das entbehrt jeder Grundlage!" "Da verstehe ich manche Eltern auch nicht. In einen Supermarkt kann ich auch nicht nach Sperrstunde gehen", bekräftigt eine andere Mutter und ergänzt: "Allerdings gibt es im Kindergarten schon unzählige Dinge, die vielen Eltern nicht passen - etwa das ungesunde Essen und der mangelnde Kroatisch-Unterricht. Die Mutter, die den Rüffel wegen zu späten Abholens bekam, ist eine frisch Zugereiste, die Einheimischen selbst sagen nichts mehr dazu, denn das würden unsere Kinder spüren." Mit Unverständnis reagierte Bürgermeister Gerhard Steier (SPÖ): "Das entbehrt jeder Grundlage. Sicher gibt es immer etwas, was man verbessern kann, aber wenn jemanden etwas stört, sollte derjenige sich direkt an die Gemeinde oder mich wenden - und nicht an die Medien." Laut einer Mutter hätte man allerdings schon im Vorjahr versucht, auf einige Dinge aufmerksam zu machen. Damals hätte es ein Treffen zwischen etwa 15 bis 20 Eltern gegeben, bei dem einige Kritikpunkte formuliert und an die Kindergartenleiterin übergeben worden seien. "Da ging es nicht um große Dinge, sondern etwa darum, dass sich die Kinder die Hände vor dem Essen waschen sollten. Einiges - wie etwa eine andere Gruppeneinteilung - ist zwar umgesetzt worden, aber bis heute haben wir keine Antwort auf diese Punkte erhalten", zeigt sich eine Mutter enttäuscht. Das zweifelt wiederum Steier an: "Davon weiß ich nichts." An die Gemeinde gerichtete Beschwerden und Kritik wollte er ebenfalls nicht bestätigen. Die Kindergartenleiterin wollte zu den Vorwürfen nicht Stellung nehmen. Unruhe. Am Kindergarten Siegendorf gibt's Kritik. BILDERBOX</str><arr name="ressort"><str>ALL</str><str>BEZIRK</str><str>EISENSTADT</str></arr><str name="seite">19</str><arr name="mutation_txt"><str>
-Eisenstadt
-</str></arr><arr name="ausgabe_txt"><str>
-42/2010
-</str></arr><arr name="deskriptor"><str>MW_SPÖ</str><str>AIM_ZEIT</str><str>MW_ÖSTERREICH</str><str>MW_POLPORT</str><str>MW_GERHARD_STEIER</str></arr><str name="keys">SE_19 DA_20101020 MO_201010 JA_2010 RS_ALL DB_BVZ</str><int name="zeilen">49</int><str name="dachzeile">KRITIK Die Kindergartenleiterin soll einer Mutter - nachdem sie ihr Kind verspätet abgeholt hatte - gedroht haben.</str><int name="zeitstempel">1287525600</int><str name="docsrc">BVZ</str><long name="_version_">1426688031998345216</long></doc><doc><str name="id">PRESSE_199501111818250028</str><date name="datum">1995-01-11T00:00:00Z</date><str name="year">1995</str><arr name="region"><str>agesamt</str></arr><int name="tokens">239</int><float name="quote_ratio">0.13184713</float><arr name="quoted"><str>Wenn ich lese, was man über mich schreibt, denke ich mir: Diese Frau würde ich auch nicht mögen.</str><str>nächsten Papst</str><str>Asiaweek</str><str>Ich halte es für unmöglich, daß Gott einen Papst namens Sünde (englisch: Sin) erwählt.</str></arr><str name="vorspann">"Die Presse" vom 11.1.1995 Aussenpolitik</str><str name="titel">NEBENBEI</str><str name="inhalt">Der Siegeszug des rotbraunen Saftes war kaum je aufzuhalten. Auch dem religiösen Verbot, mit dem der geistliche Führer des Iran, Ayatollah Ali Khamenei, nun Coca und Pepsi Cola belegte, wird wohl kein dauernder Erfolg beschieden sein. Da mag Khamenei auch wettern, die Softdrinks stärken den Zionismus. Es scheint aber illusorisch, ohne Cola leben zu wollen: So kursierte auch während des bis vor zwei Jahren geltenden iranischen Cola-Verbots ein gepanschtes Surrogat. e Nach dem Weißen Haus hat nun auch das Capitol Personalprobleme: Der neue Vorsitzende des Repräsentantenhauses, Newt Gingrich, mußte die eben erst von ihm ernannte Historikerin des Hauses, Christina Jeffrey, wieder kündigen. Jeffrey soll sich 1988 gegen die Subvention eines Schülerkurses über Nationalsozialismus und Ku Klux Klan ausgesprochen haben, da darin die Sichtweisen der Nazis und des Klans zu kurz gekommen seien. e Auch seine Mutter macht Gingrich Probleme. Kathleen Gingrich wiederholte ihre Aussage, First Lady Hillary Clinton sei für sie und ihren Sohn ein Miststück. Opfer Hillary gibt sich konziliant und hält an ihrer Einladung an Mutter und Sohn Gingrich fest. Vielleicht ist das schon Teil der neuen Selbstdarstellung, zu der sich Hillary aufraffen will: "Wenn ich lese, was man über mich schreibt, denke ich mir: Diese Frau würde ich auch nicht mögen." e Bereits als "nächsten Papst" sieht die Zeitschrift "Asiaweek" den Erzbischof von Manila, Kardinal Jaime Sin. Seine Antwort: "Ich halte es für unmöglich, daß Gott einen Papst namens Sünde (englisch: Sin) erwählt." e</str><arr name="ressort"><str>04</str></arr><str name="keys">RS_04 DA_19950111 JA_1995 MO_199501 DB_PRESSE</str><int name="zeilen">26</int><int name="zeitstempel">789778800</int><str name="docsrc">PRESSE</str><long name="_version_">1426726950549848064</long></doc></result><lst name="highlighting"><lst name="KURIER_200811151741310086"><arr name="inhalt"><str> das gediegene &lt;em&gt;Haus&lt;/em&gt; in den Kitzbüheler Alpen "Babymio" und bemüht sich mit umfassenden Angeboten um</str></arr></lst><lst name="KURIER_200509200437090081"><arr name="inhalt"><str> Fenster eines &lt;em&gt;Hauses&lt;/em&gt; herab sahen und trat dabei auf die Fahrbahn. Ein Autofahrer konnte nicht mehr</str></arr></lst><lst name="SVZ_201104089585C9C326"><arr name="inhalt"><str> Uhr im &lt;em&gt;Haus&lt;/em&gt; der Natur unternehmen. Um 19 Uhr referiert Christiane Böhm über den "Glatzkopf" unter den</str></arr></lst><lst name="FALTER_200107181840400049"><arr name="inhalt"><str>-Austria-&lt;em&gt;Hauses&lt;/em&gt;, Dr. Karl Lueger-Ring 14 (die erste Tür links im Foyer). Mimra hat dort eigentlich nur eine</str></arr></lst><lst name="SN_200704032311170140"><arr name="inhalt"><str>RB Salzburg - Mattersb. Salzburg sollte zu &lt;em&gt;Hause&lt;/em&gt; siegen. RB Amateure - A. Wien Eine harte Nuss für</str></arr></lst><lst name="FALTER_201005191632240098"><arr name="inhalt"><str> seinem surrealistischen Klassiker zeigt Buñuel eine Party, bei der die Dienstboten das &lt;em&gt;Haus&lt;/em&gt; verlassen</str></arr></lst><lst name="APA_19990824_APA0495"><arr name="inhalt"><str> &lt;em&gt;Haus&lt;/em&gt; einziehen. Er wird Abgeordneter für Niederösterreich, berichtet der "Kurier". **** Böhmdorfer</str></arr></lst><lst name="KRONE_200210260251530102"><arr name="inhalt"><str>. Dann geht das Umstellen bei Weckern, Videorecordern und Radios im ganzen &lt;em&gt;Haus&lt;/em&gt; wieder los. Die</str></arr></lst><lst name="NVT_200210060500510033"><arr name="inhalt"><str> 16-jährige Mädchen den Regionalzug am Bahnhof Frastanz und will nach &lt;em&gt;Hause&lt;/em&gt; gehen. Noch am Bahnhof</str></arr></lst><lst name="VN_200301300330290002"><arr name="inhalt"><str> die erste Saisonniederlage, Hard hingegen ist in der laufenden Saison zu &lt;em&gt;Hause&lt;/em&gt; noch ungeschlagen. /C4</str></arr></lst><lst name="KURIER_200409180436510169"><arr name="inhalt"><str> erstattete Abgängigkeitsanzeige. Die Beamten hielten Nachschau und entdeckten im &lt;em&gt;Haus&lt;/em&gt; der Abgängigen</str></arr></lst><lst name="HOR_201006182322180036"><arr name="inhalt"><str> Geld wie zu &lt;em&gt;Hause&lt;/em&gt;. Seite 18</str></arr></lst><lst name="KTZ_200804090505300150"><arr name="inhalt"><str> &lt;em&gt;Hause&lt;/em&gt; wollte das schlaue Kerlchen scheinbar nicht - alle Versuche ihn einzufangen scheiterten. Erst Geiß</str></arr></lst><lst name="NOEN_200908190416330077"><arr name="inhalt"><str>VON DANIEL LOHNINGER SCHREMS / Bereits seit einigen Monaten läuft in der Elk-&lt;em&gt;Haus&lt;/em&gt; AG - dem größten</str></arr></lst><lst name="NOEN_20101026041009118661141"><arr name="inhalt"><str> und eher selten zu &lt;em&gt;Hause&lt;/em&gt;. Deshalb ist es wichtig, die sogenannten "stillen" Stromfresser abzuschalten</str></arr></lst><lst name="NOEN_200305140424081164"><arr name="inhalt"><str>. FRAUENHAUS MISTELBACH Mistelbach: "&lt;em&gt;Haus&lt;/em&gt; der Frau", erreichbar unter( 02572/5088, 0-14 Uhr Angaben ohne Gewähr</str></arr></lst><lst name="SN_200205312010020140"><arr name="inhalt"><str> &lt;em&gt;Häusern&lt;/em&gt; der Anrainer ist zu vermeiden. Wir hoffen sehr auf Verständnis. M. Kaufmann 5020 Salzburg</str></arr></lst><lst name="NVT_200006200502350046"><arr name="inhalt"><str> (73). Nüziders: Rita Unterlerchner, Almaweg 14 (75). Brand: Hubert Schedler, &lt;em&gt;Haus&lt;/em&gt;-Nr. 42 (80). St</str></arr></lst><lst name="BVZ_20101020064008277080220"><arr name="inhalt"><str> Elternabend gewesen. Ich verstehe die Kindergartentanten, wenn die nach &lt;em&gt;Hause&lt;/em&gt; wollen und sich aber jemand um</str></arr></lst><lst name="PRESSE_199501111818250028"><arr name="inhalt"><str> zwei Jahren geltenden iranischen Cola-Verbots ein gepanschtes Surrogat. e Nach dem Weißen &lt;em&gt;Haus&lt;/em&gt; hat nun</str></arr></lst></lst>
+    <lst name="responseHeader">
+        <int name="status">0</int>
+        <int name="QTime">1546</int>
+        <lst name="params">
+            <str name="hl.fragsize">100</str>
+            <str name="sort">random_1 desc</str>
+            <str name="q">inhalt:Haus</str>
+            <str name="hl.fl">inhalt</str>
+            <arr name="hl">
+                <str>true</str>
+                <str>true</str>
+            </arr>
+            <str name="rows">20</str>
+        </lst>
+    </lst>
+    <result name="response" numFound="1787548" start="0">
+        <doc>
+            <str name="id">KURIER_200811151741310086</str>
+            <date name="datum">2008-11-15T00:00:00Z</date>
+            <str name="year">2008</str>
+            <arr name="region">
+                <str>agesamt</str>
+            </arr>
+            <arr name="ressort2">
+                <str>leben</str>
+            </arr>
+            <int name="tokens">172</int>
+            <float name="quote_ratio">0.86178863</float>
+            <str name="vorspann">"Kurier" vom 15.11.2008 Seite: 18 Ressort: Leben</str>
+            <str name="titel">Babyschwimmen und Basteln</str>
+            <str name="inhalt">Wir haben überlegt, wo unsere Stärken liegen", sagt Elfriede Seiwald.
+                Schnell hat sich herausgestellt, dass sich ihre Hebammen-Ausbildung gut in den
+                Hotelbetrieb integrieren lässt. Jetzt nennt sich das gediegene Haus in den
+                Kitzbüheler Alpen "Babymio" und bemüht sich mit umfassenden Angeboten um werdende
+                und junge Mütter mit Anhang. Nachwuchs mit Freizeit ist auch in Wien umworben. So
+                hat z. B. die Tanzschule Schwebach zahlreiche Kindertanzkurse im Programm; für
+                Teilnehmer ab eineinhalb Jahren. Wer wissen will, was sonst in Wien freizeitmäßig
+                los ist, erhält bei wienXtra, 1070, Museumplatz 1/Hof 2, umfassende Information. Ob
+                Kindertheater, Kasperlvorführung, Naturwanderungen oder Bastelnachmittag - die
+                Servicestelle hat für jedes Alter und für jeden Geschmack etwas parat. Bastler
+                kommen bei den Sammelkursen von "tri-chem Kreativ" auf ihre Rechnung. "In unseren
+                kostenlosen Kursen zeigen wir, wie man unsere Farben verwendet", erklärt Gabi
+                Herglotz. Sie haften auf allen Materialen, auf Ton wie auch Wachs oder Textil, sie
+                lassen sich drucken, walzen und sprühen. Eine Tube schafft acht Kilometer Linie und
+                kostet 6,25 Euro. www.babymio.com, www.schwebach.at, www.wienXtra.at,
+                www.tri-chem.at</str>
+            <arr name="ressort">
+                <str>LEB</str>
+                <str>Leben</str>
+            </arr>
+            <str name="seite">18</str>
+            <arr name="mutation_txt">
+                <str> Wi, Abend, Wi, Morgen </str>
+            </arr>
+            <arr name="deskriptor">
+                <str>AIM_ZEIT</str>
+            </arr>
+            <str name="keys">SE_18 DA_20081115 MO_200811 JA_2008 RS_LEB DB_KURIER</str>
+            <int name="zeilen">23</int>
+            <str name="dachzeile">Freizeit</str>
+            <int name="zeitstempel">1226703600</int>
+            <str name="docsrc">KURIER</str>
+            <long name="_version_">1426736144095117312</long>
+        </doc>
+        <doc>
+            <str name="id">KURIER_200509200437090081</str>
+            <date name="datum">2005-09-20T00:00:00Z</date>
+            <str name="year">2005</str>
+            <arr name="region">
+                <str>agesamt</str>
+            </arr>
+            <arr name="ressort2">
+                <str>chronik</str>
+            </arr>
+            <int name="tokens">145</int>
+            <float name="quote_ratio">0.0068292683</float>
+            <arr name="quoted">
+                <str>reicher</str>
+            </arr>
+            <str name="vorspann">"Kurier" vom 20.09.2005 Seite: 10 Ressort: Chronik</str>
+            <str name="titel">16-jähriger Schüler...</str>
+            <str name="inhalt">16-jähriger Schüler von Pkw erfasst Ein 16-Jähriger aus Wienersdorf
+                wurde bei einem Verkehrsunfall auf der Vöslauer Straße in Baden verletzt. Der
+                Schüler wollte sich mit Freunden unterhalten, die vom Fenster eines Hauses herab
+                sahen und trat dabei auf die Fahrbahn. Ein Autofahrer konnte nicht mehr rechtzeitig
+                bremsen. Der Schüler musste ins Badener Spital gebracht werden. Polizist brach sich
+                bei Unfall Oberschenkel Ein 22-jähriger Grenzpolizist hat Montag Früh am Weg zur
+                Arbeit bei Seyring, Bezirk Wien-Umgebung, mit seinem Auto einen Baum gerammt. Der
+                Beamte war laut Polizei einem Reh ausgewichen, sein Auto war außer Kontrolle
+                geraten. Der 22-Jährige musste von der Feuerwehr aus seinem Wagen befreit werden.
+                Laut dem Polizeikommando in Klosterneuburg erlitt er eine Oberschenkelfraktur.
+                Wieder Behinderung wegen einer Baustelle Baden ist um eine Baustelle "reicher". Seit
+                gestern werden in der Radetzkystraße Fernwärmeleitungen ausgetauscht. Mit
+                Behinderungen ist drei Wochen lang zu rechnen.</str>
+            <arr name="ressort">
+                <str>CHR</str>
+                <str>Chronik</str>
+            </arr>
+            <str name="seite">10</str>
+            <arr name="mutation_txt">
+                <str> N.Ö/Umgebung, Morgen </str>
+            </arr>
+            <arr name="deskriptor">
+                <str>AIM_CHRONIK</str>
+                <str>AIM_ZEIT</str>
+            </arr>
+            <str name="keys">SE_10 DA_20050920 MO_200509 JA_2005 RS_CHR DB_KURIER S10T02.AS6</str>
+            <int name="zeilen">21</int>
+            <int name="zeitstempel">1127167200</int>
+            <str name="docsrc">KURIER</str>
+            <long name="_version_">1426733949790453760</long>
+        </doc>
+        <doc>
+            <str name="id">SVZ_201104089585C9C326</str>
+            <date name="datum">2011-04-08T00:00:00Z</date>
+            <str name="year">2011</str>
+            <arr name="region">
+                <str>amitte</str>
+            </arr>
+            <arr name="ressort2">
+                <str>lokal</str>
+            </arr>
+            <int name="tokens">41</int>
+            <float name="quote_ratio">0.112</float>
+            <arr name="quoted">
+                <str>Extrem verblüffend</str>
+                <str>Glatzkopf</str>
+            </arr>
+            <str name="vorspann">"Salzburger Volkszeitung" Nr. 82/2011 vom 08.04.2011 Seite 4
+                Ressort: Lokal</str>
+            <str name="titel">Physikshow im Haus der Natur</str>
+            <str name="inhalt">Einen Streifzug durch die Physik kann man heute bei der Physikshow
+                "Extrem verblüffend" um 10.30 Uhr im Haus der Natur unternehmen. Um 19 Uhr referiert
+                Christiane Böhm über den "Glatzkopf" unter den Vögeln, den Waldrapp.</str>
+            <arr name="ressort">
+                <str>Lokal</str>
+            </arr>
+            <str name="seite">4</str>
+            <arr name="ausgabe_txt">
+                <str> 82/2011 </str>
+            </arr>
+            <str name="keys">SE_4 DA_20110408 MO_201104 JA_2011 RS_LOKAL DB_SVZ</str>
+            <arr name="publikation_txt">
+                <str> SVZ </str>
+            </arr>
+            <str name="docsrc">SVZ</str>
+            <long name="_version_">1426761275022508032</long>
+        </doc>
+        <doc>
+            <str name="id">FALTER_200107181840400049</str>
+            <date name="datum">2001-07-18T00:00:00Z</date>
+            <str name="year">2001</str>
+            <arr name="region">
+                <str>aost</str>
+            </arr>
+            <arr name="ressort2">
+                <str>leben</str>
+            </arr>
+            <int name="tokens">233</int>
+            <float name="quote_ratio">0.009586579</float>
+            <arr name="quoted">
+                <str>Cantina e l'arte</str>
+            </arr>
+            <str name="vorspann">"Falter" 29/01 vom 18.7.2001 Seite 66 Ressort: Stadtleben</str>
+            <str name="titel">Sideorders: Modern-Italiener</str>
+            <str name="inhalt">Die italienische Küche ist eine feine Sache. Das Ausmaß, in dem sie
+                einem hierzulande gegenübertritt, hat aber schon fast was vom Strunz'schen
+                Laufvirus. In letzter Zeit immer beliebter: kreative Modernisierungen von Risotto,
+                Spaghetti &amp; Co, italo-asiatische Mischungen a la Los Angeles. Das muss freilich
+                nicht grundsätzlich furchtbar sein: Daun Kinsky, 1., Freyung 4, Tel. 532 62 71,
+                Mo-Sa 12-14.30, 18-22.30 Uhr. Jetzt kocht ein neuer Mann am Herd des Restaurants mit
+                dem schönsten Hof der Stadt: Kurt Trobits brutzelt Garnelen-Gemüse-Tempura auf
+                Sprossensalat, Wolfsbarsch mit Tomaten-Zucchini-Ragout, Risotto mit Flusskrebsen und
+                Hummerfleisch oder getrüffelte Polenta mit Shiitake-Pilzen. Bordeaux, 9., Serviteng.
+                2, Tel. 315 63 63, Mo-Fr 12-15, Mo-Sa 18-1 Uhr. Mit Aurelio Nitsche kam ein
+                Kreativbündel, das Dinge bereitet wie Kokosmilchrisotto mit gebratenen Garnelen,
+                Curryschaumsuppe mit gebratener Prosciuttofeige oder Branzinofilet mit in
+                Garnelensud gedünstetem Weißkraut und Petersilmousse. Sehr gut! Barbaros, 1.,
+                Kärntner Str. 19 (Steffl), Tel. 513 17 12, Mo-Sa 12-15, 18-1 Uhr. In dem
+                Designerlokal mit dem tollen Ausblick (auf Dächer und FPÖ-Funktionäre) kocht Andreas
+                Hanser Orangenrisotto mit Basilikum und Scampi oder Anglerfilet mit Knoblauch
+                gespickt, Olivenpolenta und Artischockenchips. Beisl news Den besten Friulaner der
+                Stadt gibt es wieder, wenngleich versteckt: Anton Mimras "Cantina e l'arte" zog ins
+                Untergeschoß des Casino-Austria-Hauses, Dr. Karl Lueger-Ring 14 (die erste Tür links
+                im Foyer). Mimra hat dort eigentlich nur eine Club-Lizenz und kaum eine Küche, was
+                er kocht, ist aber nach wie vor genial.</str>
+            <arr name="ressort">
+                <str>STA</str>
+                <str>Stadtleben</str>
+            </arr>
+            <str name="seite">66</str>
+            <arr name="ausgabe_txt">
+                <str> 29/01 </str>
+            </arr>
+            <str name="keys">SE_66 DA_20010718 MO_200107 JA_2001 RS_STA DB_FALTER</str>
+            <int name="zeitstempel">995407200</int>
+            <str name="docsrc">FALTER</str>
+            <long name="_version_">1426689036130451456</long>
+        </doc>
+        <doc>
+            <str name="id">SN_200704032311170140</str>
+            <date name="datum">2007-04-03T00:00:00Z</date>
+            <str name="year">2007</str>
+            <arr name="ressort2">
+                <str>sport</str>
+            </arr>
+            <int name="tokens">38</int>
+            <float name="quote_ratio">0.0</float>
+            <str name="vorspann">"Salzburger Nachrichten" vom 03.04.2007 Seite: 22 Ressort:
+                Sport</str>
+            <str name="titel">RB Salzburg - Mattersb....</str>
+            <str name="inhalt">RB Salzburg - Mattersb. Salzburg sollte zu Hause siegen. RB Amateure
+                - A. Wien Eine harte Nuss für die Austria. Milan - Bayern Die Klasse spricht für die
+                Italiener. SN-Tipps: 1, 2, 1</str>
+            <arr name="ressort">
+                <str>SPO</str>
+                <str>Sport</str>
+            </arr>
+            <str name="seite">22</str>
+            <str name="keys">SE_22 DA_20070403 MO_200704 JA_2007 RS_SPO DB_SN</str>
+            <int name="zeilen">7</int>
+            <int name="zeitstempel">1175551200</int>
+            <str name="docsrc">SN</str>
+            <long name="_version_">1426756622334558209</long>
+        </doc>
+        <doc>
+            <str name="id">FALTER_201005191632240098</str>
+            <date name="datum">2010-05-19T00:00:00Z</date>
+            <str name="year">2010</str>
+            <arr name="region">
+                <str>aost</str>
+            </arr>
+            <arr name="ressort2">
+                <str>allgemein</str>
+                <str>kultur</str>
+            </arr>
+            <int name="tokens">1205</int>
+            <float name="quote_ratio">0.27808785</float>
+            <arr name="quoted">
+                <str>Sportstück</str>
+                <str>Die Autorin gibt nicht viele Anweisungen, das hat sie inzwischen gelernt.
+                    Machen Sie, was Sie wollen.</str>
+                <str>Diese Texte sind eine Provokation für das Theater</str>
+                <str>Und lange Zeit ist dem Theater ja auch nicht viel dazu eingefallen.</str>
+                <str>Wolken. Heim.</str>
+                <str>Wir</str>
+                <str>Inszenierung des Jahres</str>
+                <str>Wolken.Heim.</str>
+                <str>Rechnitz (Der Würgeengel)</str>
+                <str>Diese Texte versteht man beim Lesen grundsätzlich erst mal ganz schwer. In
+                    ihrer ganzen Vielschichtigkeit und Musikalität erschließen sie sich einem erst
+                    nach und nach. Das ist, wie wenn man in eine Höhle vorstößt und dort immer
+                    wieder neue Nebengänge oder Klangräume entdeckt. Das sind Expeditionen.</str>
+                <str>Rechnitz</str>
+                <str>Das war in diesem Fall noch schwerer als sonst.</str>
+                <str>Wir sind zu dem Schluss gekommen, dass da etwas ganz bewusst veröffentlicht
+                    wird. Der Text ist ein einziger Redeschwall, diese Figuren können gar nicht mehr
+                    aufhören, sich zu formulieren.</str>
+                <str>vierte Wand</str>
+                <str>Der Würgeengel</str>
+                <str>Bei Jelinek ist es umgekehrt</str>
+                <str>Die Herrschaft hat das Geschehen verlassen und die Dienstboten zurückgelassen –
+                    und die finden aus diesem Redegefängnis nicht mehr heraus.</str>
+                <str>Rechnitz</str>
+                <str>Wir haben zwei Drittel gestrichen, meinen aber dennoch, das Wesen des Textes
+                    bewahrt zu haben</str>
+                <str>Ich habe das Gefühl, dass Jelinek in einem Rauschzustand schreibt – und dass es
+                    ihr gar nicht unrecht ist, wenn man das als Theatermacher dann sozusagen für die
+                    Bühne lektoriert.</str>
+                <str>Jelineks Texte streicht man mit der Machete!</str>
+                <str>Die Kontrakte des Kaufmanns</str>
+                <str>Wirtschaftskomödie</str>
+                <str>Urlesung</str>
+                <str>Das Stück ist ja eine Waffe, die für einen ganz speziellen Kampf geschmiedet
+                    worden ist</str>
+                <str>Also wollten wir das einmal nach Wien stellen.</str>
+                <str>fertigen</str>
+                <str>Witze über die Frisur von Karl-Heinz Grasser versteht in Deutschland kein
+                    Mensch</str>
+                <str>Urlesung</str>
+                <str>Kontrakte</str>
+                <str>long version</str>
+                <str>Kontrakte</str>
+                <str>Chor der Greise</str>
+                <str>Das hat eine Penetranz und Redundanz, die ich selbst von Jelinek noch nicht
+                    kannte. Aber dann dachte ich, dass wahrscheinlich genau darin die Qualität des
+                    Textes liegt. Normalerweise versucht man natürlich, so etwas irgendwie
+                    konsumierbar zu machen. Dass ich das kann, habe ich schon öfter bewiesen.
+                    Diesmal wollte ich etwas finden, was dem Text seine Maßlosigkeit lässt.</str>
+                <str>Man könnte fast sagen, sie schreit danach, über die Szene geöffnet zu
+                    werden.</str>
+                <str>Nach drei Seiten Jelinek-Lektüre muss ich schreiend aus dem Fenster springen.
+                    Dieser Schrei ist dann die Inszenierung.</str>
+                <str>Gier</str>
+            </arr>
+            <str name="vorspann">"Falter" Nr. 20/10 vom 19.05.2010 Seite: 30 Ressort:
+                Feuilleton</str>
+            <str name="titel">Eine Sprache, die nach der Bühne schreit</str>
+            <str name="inhalt">Seit Elfriede Jelinek keine Dramen mehr schreibt, ist sie am Theater
+                erfolgreich. Zwei Regisseure erklären ein Phänomen Feature: Wolfgang Kralicek Vor
+                zwölf Jahren hat es Elfriede Jelinek aufgegeben. Das damals veröffentlichte
+                „Sportstück“ beginnt mit folgendem Hinweis an die Regie: „Die Autorin gibt nicht
+                viele Anweisungen, das hat sie inzwischen gelernt. Machen Sie, was Sie wollen.“ Mit
+                der ihr eigenen Selbstironie hat Jelinek damit eigentlich nur zum Ausdruck gebracht,
+                was zumindest im deutschsprachigen Theater ohnedies Usus ist: Die Regisseure machen
+                hier grundsätzlich, was sie wollen. Und Elfriede Jelinek ist damit meistens sehr gut
+                gefahren: Je freier das Theater mit ihren Texten umgeht, desto besser. „Diese Texte
+                sind eine Provokation für das Theater“, sagt der deutsche Regisseur Nicolas Stemann.
+                „Und lange Zeit ist dem Theater ja auch nicht viel dazu eingefallen.“ Zum ersten Mal
+                hatte die Autorin 1988 ein Stück geschrieben, dem man äußerlich nicht ansah, dass es
+                ein Stück ist: In „Wolken. Heim.“ collagierte sie Texte von deutschen Dichtern und
+                Denkern zu einem großen „Wir“-Text; Regieanweisungen, Figuren oder Dialoge sucht man
+                darin vergebens. Interessanterweise war es ausgerechnet eine Inszenierung dieses
+                Stücks, die Elfriede Jelinek als Theaterautorin zum Durchbruch verhalf. 1994 hatte
+                der Schweizer Jossi Wieler am Deutschen Schauspielhaus in Hamburg für den scheinbar
+                so abstrakten Text eine erstaunlich konkrete Form gefunden: In einem verlassenen
+                Offizierskasino eroberten sich sechs Frauen die Welt (und die Sprache) ihrer
+                abwesenden Männer und Väter. Die Aufführung wurde zur „Inszenierung des Jahres“
+                gewählt, und die vermeintlich so theaterfremde Jelinek wurde ab sofort auch als
+                Dramatikerin ernst genommen. Der 58-jährige Wieler, der inzwischen fünf weitere
+                Stücke der Autorin inszeniert hat, gilt heute – mit Stemann – als einer der
+                führenden Jelinekologen unter den Theaterregisseuren. Die Wiener Festwochen, wo 1996
+                schon „Wolken.Heim.“ gastierte, zeigen heuer seine jüngste Jelinek-Arbeit: die im
+                Herbst 2008 an den Münchner Kammerspielen herausgekommene Uraufführung von „Rechnitz
+                (Der Würgeengel)“. Hintergrund des Textes ist ein NS-Massaker, das sich im März 1945
+                im burgenländischen Rechnitz zugetragen hat, als in einer Nacht rund 180 jüdische
+                Zwangsarbeiter erschossen wurden. Die Täter waren Gäste eines in derselben Nacht von
+                Margit von Batthyány auf Schloss Rechnitz gegebenen Fests. Jelineks Stück ist ein
+                150 Buchseiten langer Botenbericht, in dem es vor literarischen und anderen
+                Anspielungen nur so wimmelt. Wenn man so einen Jelinek-Text liest, ist man zunächst
+                einmal erschlagen. Regisseur Wieler geht es da nicht anders. „Diese Texte versteht
+                man beim Lesen grundsätzlich erst mal ganz schwer. In ihrer ganzen Vielschichtigkeit
+                und Musikalität erschließen sie sich einem erst nach und nach. Das ist, wie wenn man
+                in eine Höhle vorstößt und dort immer wieder neue Nebengänge oder Klangräume
+                entdeckt. Das sind Expeditionen.“ Wenn Wieler ein neues Jelinek-Stück in Händen
+                hält, liest er es zunächst einmal laut und im Team; im Fall von „Rechnitz“ hat er
+                sich den Text mit der Bühnenbildnerin Anja Rabes und der Dramaturgin Julia Lochte in
+                mehreren Lese-Sessions erschlossen. „Das war in diesem Fall noch schwerer als
+                sonst.“ Zunächst musste herausgefunden werden, wer da überhaupt spricht – und warum.
+                „Wir sind zu dem Schluss gekommen, dass da etwas ganz bewusst veröffentlicht wird.
+                Der Text ist ein einziger Redeschwall, diese Figuren können gar nicht mehr aufhören,
+                sich zu formulieren.“ Wieler hat sich deshalb erstmals in einer seiner
+                Jelinek-Inszenierungen entschlossen, die unsichtbare „vierte Wand“ des Theaters zu
+                durchbrechen: Die Zuschauer werden direkt angesprochen. Was die Situation betrifft,
+                gab der Untertitel den entscheidenden Hinweis. Das Stück ist ein Auftragswerk; die
+                Kammerspiele hatten Jelinek gefragt, ob sie nicht Luis Buñuels Film „Der Würgeengel“
+                (1962) bearbeiten wolle. In seinem surrealistischen Klassiker zeigt Buñuel eine
+                Party, bei der die Dienstboten das Haus verlassen, während die Gäste irgendwann
+                feststellen, dass sie nicht gehen können. „Bei Jelinek ist es umgekehrt“, erklärt
+                Wieler. „Die Herrschaft hat das Geschehen verlassen und die Dienstboten
+                zurückgelassen – und die finden aus diesem Redegefängnis nicht mehr heraus.“
+                Ungekürzt würde „Rechnitz“ über sieben Stunden dauern; die Münchner Inszenierung
+                dauert knapp zwei. „Wir haben zwei Drittel gestrichen, meinen aber dennoch, das
+                Wesen des Textes bewahrt zu haben“, sagt Wieler. „Ich habe das Gefühl, dass Jelinek
+                in einem Rauschzustand schreibt – und dass es ihr gar nicht unrecht ist, wenn man
+                das als Theatermacher dann sozusagen für die Bühne lektoriert.“ „Jelineks Texte
+                streicht man mit der Machete!“, schrieb Nicolas Stemann vor vier Jahren, als er für
+                ein Jelinek-Sonderheft der Zeitschrift Theater der Zeit von seinen Erfahrungen
+                berichtete. Anders als Wieler begegnet Stemann den Texten eher auf die harte Tour;
+                er benutzt sie als Spielmaterial für aggressive, laute, wilde Theaterperformances.
+                In seiner jüngsten Jelinek-Arbeit „Die Kontrakte des Kaufmanns“ beschreitet Stemann
+                neue Wege. Die „Wirtschaftskomödie“, in der Jelinek die Skandale um Bawag und Meinl
+                zu einem höhnischen Abgesang auf Großspekulanten und Kleinanleger verwurstet, wird
+                in der halbrohen Form einer szenischen Lesung präsentiert. Einige Wochen vor der
+                Uraufführung im April 2009 am Schauspiel Köln präsentierten Stemann und sein
+                Ensemble das Stück als „Urlesung“ im Akademietheater. „Das Stück ist ja eine Waffe,
+                die für einen ganz speziellen Kampf geschmiedet worden ist“, erklärt der 41-jährige
+                Stemann, der unter Klaus Bachler ein paar Jahre an der Burg engagiert war. „Also
+                wollten wir das einmal nach Wien stellen.“ Die Urlesung – ein mehr als vierstündiges
+                Text-Happening – war dann so überzeugend, dass sie zur Basis der „fertigen“
+                Aufführung wurde. Nur die ersten 45 und die letzten 30 Minuten sind inszeniert, die
+                knapp drei Stunden dazwischen sehen jeden Abend anders aus. Auf einem Display werden
+                die Manuskriptseiten (von 99 abwärts) heruntergezählt, das Saallicht bleibt an, die
+                Türen sind offen, die Zuschauer können jederzeit raus- und wieder reingehen.
+                Regisseur Stemann steht als Spielleiter (und Musiker) übrigens auch selbst auf der
+                Bühne. Für das Wiener Gastspiel wird es eine eigene Textfassung geben („Witze über
+                die Frisur von Karl-Heinz Grasser versteht in Deutschland kein Mensch“), ein paar
+                Burgschauspieler, die schon bei der „Urlesung“ dabei waren, werden dazukommen, und
+                eventuell wird Jelinek extra für Wien noch etwas Neues schreiben. Insgesamt hat sie
+                dem Text in der Zwischenzeit schon 60 Seiten hinzugefügt, und Stemann liebäugelt mit
+                der Idee, in Wien an einem Marathonabend einmal alle Texte aufzuführen, die Jelinek
+                für die „Kontrakte“ geschrieben hat. Eine solche „long version“ würde rund acht
+                Stunden dauern; aus organisatorischen Gründen ist noch nicht sicher, ob es dazu
+                kommt. Der Mittelteil der „Kontrakte“, der 70-seitige „Chor der Greise“, hat auch
+                einen Experten wie Stemann überrascht: „Das hat eine Penetranz und Redundanz, die
+                ich selbst von Jelinek noch nicht kannte. Aber dann dachte ich, dass wahrscheinlich
+                genau darin die Qualität des Textes liegt. Normalerweise versucht man natürlich, so
+                etwas irgendwie konsumierbar zu machen. Dass ich das kann, habe ich schon öfter
+                bewiesen. Diesmal wollte ich etwas finden, was dem Text seine Maßlosigkeit lässt.“
+                Das Dramatische an Elfriede Jelineks Theatertexten sei die Sprache selbst, meint
+                Jossi Wieler. „Man könnte fast sagen, sie schreit danach, über die Szene geöffnet zu
+                werden.“ Nicolas Stemann hat das Phänomen einmal so formuliert: „Nach drei Seiten
+                Jelinek-Lektüre muss ich schreiend aus dem Fenster springen. Dieser Schrei ist dann
+                die Inszenierung.“ Elfriede Jelinek Die Nobelpreisträgerin von 2004 veröffentlichte
+                ihre Texte zuletzt hauptsächlich auf der Bühne. Während in den letzten zehn Jahren
+                nur ein Roman („Gier“, 2000) erschienen ist, wurde im selben Zeitraum rund ein
+                Dutzend Stücke uraufgeführt Rechnitz (Der Würgeengel): 22. bis 24.5., 20 Uhr,
+                Theater Akzent Die Kontrakte des Kaufmanns: 17. bis 20.6., 19.30 Uhr,
+                Museumsquartier, Halle E</str>
+            <arr name="ressort">
+                <str>ALL</str>
+                <str>Feuilleton</str>
+            </arr>
+            <str name="seite">30,31</str>
+            <arr name="ausgabe_txt">
+                <str> 20/10 </str>
+            </arr>
+            <arr name="deskriptor">
+                <str>KULTUR</str>
+                <str>ICC_01100000</str>
+                <str>MW_KARL-HEINZ_GRASSER</str>
+                <str>AIM_ZEIT</str>
+                <str>MW_ÖSTERREICH</str>
+                <str>RPP_EJELINEK</str>
+                <str>PE_EJELINEK</str>
+                <str>MW_POLPORT</str>
+            </arr>
+            <str name="keys">SE_30 DA_20100519 MO_201005 JA_2010 RS_ALL DB_FALTER</str>
+            <int name="zeilen">139</int>
+            <str name="bildzeilen">Bild: Penetranz und Maßlosigkeit: Nicolas Stemanns
+                Jelinek-Performance „Die Kontrakte des Kaufmanns“ Bild: Dienstboten im
+                Redegefängnis: Jossi Wielers Jelinek-Inszenierung „Rechnitz (Der Würgeengel)“</str>
+            <int name="zeitstempel">1274220000</int>
+            <str name="docsrc">FALTER</str>
+            <long name="_version_">1426689433409683457</long>
+        </doc>
+        <doc>
+            <str name="id">APA_19990824_APA0495</str>
+            <date name="datum">1999-08-24T16:16:16Z</date>
+            <str name="year">1999</str>
+            <arr name="ressort2">
+                <str>inland</str>
+            </arr>
+            <int name="tokens">119</int>
+            <float name="quote_ratio">0.01419214</float>
+            <arr name="quoted">
+                <str>Kurier</str>
+                <str>Kurier</str>
+            </arr>
+            <str name="header">APA0495 5 II 0114 Siehe APA0229/24.08 Di, 24.Aug 1999</str>
+            <arr name="stichwort">
+                <str>Wahlen</str>
+                <str>Nationalrat</str>
+                <str>FPÖ</str>
+                <str>Niederösterreich</str>
+                <str>Böhmdorfer</str>
+            </arr>
+            <str name="titel">NR-Wahl: Haiders Anwalt Böhmdorfer zieht für FPÖ in Nationalrat</str>
+            <str name="inhalt">Utl.: "Kurier": Abgeordneter für Niederösterreich = Wien (APA) - Der
+                langjährige Anwalt von FPÖ-Obmann Jörg Haider, Dieter Böhmdorfer, wird nach den
+                Nationalratswahlen für die Freiheitlichen ins Hohe Haus einziehen. Er wird
+                Abgeordneter für Niederösterreich, berichtet der "Kurier". **** Böhmdorfer folgt auf
+                der Niederösterreich-Liste hinter dem bisherigen Bundesrat Ernst Windholz auf Rang
+                zwei. Dahinter reihen sich der vom LIF zur FPÖ gewechselte Abgeordnete Reinhard
+                Firlinger, ORF-Nachrichtensprecherin Jutta Wochesländer sowie Ex-Justizminister
+                Harald Ofner. Auf dem unsicheren sechsten Platz folgt der Dritte
+                Nationalratspräsident Wilhelm Brauneder vor dem Zahnarzt Christian Hillbrand und
+                erst auf Rang acht scheint der ehemalige FP-Klubobmann und nunmehrige Landesrat
+                Ewald Stadler auf. (Schluss) je/ws APA0495 1999-08-24/16:16 241616 Aug 99</str>
+            <str name="agentur">APA</str>
+            <arr name="meldungsnummer">
+                <str>APA0495</str>
+            </arr>
+            <arr name="prioritaet">
+                <str>5</str>
+            </arr>
+            <arr name="ressort">
+                <str>II</str>
+                <str>I</str>
+            </arr>
+            <arr name="autor">
+                <str>je</str>
+                <str>ws</str>
+            </arr>
+            <arr name="quelle">
+                <str>APA</str>
+            </arr>
+            <str name="keys">AG_APA RS_II RS_I XR_IA1 XR_IA2 XR_IA3 XR_IA4 XR_IA5 XR_I01 XR_I02
+                XR_I03 XR_I04 XR_I05 DA_19990824 JA_1999 MO_199908 DB_APA VERSAND_X</str>
+            <int name="zeitstempel">935504177</int>
+            <str name="docsrc">APA</str>
+            <long name="_version_">1426709688434556928</long>
+        </doc>
+        <doc>
+            <str name="id">KRONE_200210260251530102</str>
+            <date name="datum">2002-10-26T00:00:00Z</date>
+            <str name="year">2002</str>
+            <arr name="region">
+                <str>agesamt</str>
+            </arr>
+            <int name="tokens">58</int>
+            <float name="quote_ratio">0.04</float>
+            <arr name="quoted">
+                <str>verlorene Stunde</str>
+            </arr>
+            <str name="vorspann">"Neue Kronen-Zeitung" vom 26.10.2002 Seite: 16</str>
+            <str name="titel">Abschied von Sommerzeit</str>
+            <str name="inhalt">S ommerzeit ade, jetzt bekommen wir unsere "verlorene Stunde" wieder
+                zurück. Wer nicht gerade mitten in der Nacht aufstehen will, sollte seine Uhren
+                spätestens Sonntagfrüh um eine Stunde zurückdrehen. Dann geht das Umstellen bei
+                Weckern, Videorecordern und Radios im ganzen Haus wieder los. Die Zwillingsbrüder
+                Andreas und Michael haben jedenfalls sichtlich ihren Spaß daran.</str>
+            <str name="seite">16</str>
+            <arr name="mutation_txt">
+                <str> Ktn, Morgen </str>
+            </arr>
+            <str name="keys">SE_16 DA_20021026 MO_200210 JA_2002 RS_ALL DB_KRONE
+                /appl/crs3/ztgconvert/working/krone/1720.KT</str>
+            <int name="zeilen">6</int>
+            <int name="zeitstempel">1035583200</int>
+            <str name="docsrc">KRONE</str>
+            <long name="_version_">1426719259428388864</long>
+        </doc>
+        <doc>
+            <str name="id">NVT_200210060500510033</str>
+            <date name="datum">2002-10-06T00:00:00Z</date>
+            <str name="year">2002</str>
+            <arr name="region">
+                <str>awest</str>
+            </arr>
+            <arr name="ressort2">
+                <str>lokal</str>
+            </arr>
+            <int name="tokens">318</int>
+            <float name="quote_ratio">0.09152216</float>
+            <arr name="quoted">
+                <str>Das geht euch nichts an</str>
+                <str>Das Mädchen hat sich offenbar geschämt, den Vorfall zu erzählen</str>
+                <str>Aufgrund der guten Täterbeschreibung wird die Kriminalabteilung bald ein
+                    Phantombild anfertigen können</str>
+            </arr>
+            <str name="vorspann">"Neue Vorarlberger Tageszeitung" Nr. 235 vom 06.10.2002 Seite: 15
+                Ressort: Lokal</str>
+            <str name="titel">Mädchen (16) am Bahnhof Frastanz sexuell attackiert</str>
+            <str name="inhalt">VON PETER BARTA Während die Fahndung nach dem Sexualverbrecher von
+                Sulz auf Hochtouren läuft, wurde jetzt ein weiteres Verbrechen bekannt. Zu der Tat
+                war es am Dienstag gekommen: Gegen 21 Uhr verlässt das 16-jährige Mädchen den
+                Regionalzug am Bahnhof Frastanz und will nach Hause gehen. Noch am Bahnhof wird die
+                Jugendliche von zwei Unbekannten angesprochen. Sie wollen eine Zigarette haben. Die
+                Schülerin gibt ihnen eine. Doch eigentlich wollen die beiden etwa 20-Jährigen etwas
+                ganz anderes: Sie soll ihren Namen nennen, ihre Adresse und ihre Telefonnummer. "Das
+                geht euch nichts an", entgegnet die Jugendliche und rennt davon. Aber die beiden
+                Männer sind schneller. Sie holen die Flüchtende ein, zerren das Opfer von der Straße
+                zu einem überdachten Auto-Abstellplatz einer Wohnanlage. Dort fasst einer der Täter
+                der Jugendlichen unter den Pullover, der andere begrapscht das Mädchen in der
+                Unterhose. Im letzten Moment gelingt es der Schülerin, die Täter wegzustoßen und zu
+                flüchten. "Das Mädchen hat sich offenbar geschämt, den Vorfall zu erzählen",
+                erklärte Franz Lisch von der Gendarmerie Frastanz, weshalb das Delikt erst zwei Tage
+                später angezeigt wurde. "Aufgrund der guten Täterbeschreibung wird die
+                Kriminalabteilung bald ein Phantombild anfertigen können", so Lisch. BESCHREIBUNGEN
+                n Der erste Täter ist etwa 175 cm groß, mollig, hat kurze braun/blonde Haare,
+                zwischen 18 und 20 Jahre alt. n Er trägt einen Dreitagebart und hat ein Muttermal an
+                der linken Wange unten und an der rechten Halsseite. Auffällig: er trägt links einen
+                und rechts zwei Ohrringe. n Bekleidet war der Mann mit einer schwarzen, dicken Jacke
+                und schwarzen Jeans. n Der zweite Täter ist etwa 170 cm groß, normale Statur,
+                schwarze, mittellange Haare (hinten schulterlang, vorne reichen die Haare bis zur
+                Nasenspitze). Er ist ebenfalls zwischen 18 und 20 Jahre alt. n Bekleidet war der
+                zweite Täter mit einem blauen T-Shirt, blauem Pullover und schwarzen Jeans. n Beide
+                Täter sprachen Vorarlberger Dialekt. n Hinweise unter Tel. 05522/51133.</str>
+            <arr name="ressort">
+                <str>LOK</str>
+                <str>Lokal</str>
+            </arr>
+            <str name="seite">15</str>
+            <arr name="ausgabe_txt">
+                <str> Nr. 235 </str>
+            </arr>
+            <arr name="deskriptor">
+                <str>Kriminalität</str>
+                <str>Straftat</str>
+                <str>Sexualdelikt </str>
+                <str>AIM_ZEIT</str>
+                <str>AIM_CHRONIK</str>
+                <str>AIM_KRIMINALITÄT</str>
+            </arr>
+            <str name="keys">SE_15 DA_20021006 MO_200210 JA_2002 RS_LOK DB_NVT</str>
+            <int name="zeilen">37</int>
+            <arr name="untertitel_txt">
+                <str> Schon wieder ein Sexualverbrechen in Vorarlberg: Am Dienstagabend vergingen
+                    sich zwei Unbekannte in Frastanz an einer 16-Jährigen. Die Fahndung läuft.
+                </str>
+            </arr>
+            <int name="zeitstempel">1033855200</int>
+            <str name="docsrc">NVT</str>
+            <long name="_version_">1426740431308193792</long>
+        </doc>
+        <doc>
+            <str name="id">VN_200301300330290002</str>
+            <date name="datum">2003-01-30T00:00:00Z</date>
+            <str name="year">2003</str>
+            <arr name="region">
+                <str>awest</str>
+            </arr>
+            <arr name="ressort2">
+                <str>allgemein</str>
+                <str>seite</str>
+                <str>titelseite</str>
+            </arr>
+            <int name="tokens">46</int>
+            <float name="quote_ratio">0.0</float>
+            <str name="vorspann">"Vorarlberger Nachrichten" Nr. 024 vom 30.01.2003 Seite: A1
+                Ressort: Titel</str>
+            <str name="titel">35:26-Erfolg für den Alpla HC Hard (im Bild Sergej Ubozhanka)
+                gegen...</str>
+            <str name="inhalt">35:26-Erfolg für den Alpla HC Hard (im Bild Sergej Ubozhanka) gegen
+                A1 Bregenz. Für Letztere war es die erste Saisonniederlage, Hard hingegen ist in der
+                laufenden Saison zu Hause noch ungeschlagen. /C4 (Foto: VN/Shourot)</str>
+            <arr name="ressort">
+                <str>TIT</str>
+                <str>Titel</str>
+            </arr>
+            <str name="seite">A1</str>
+            <arr name="ausgabe_txt">
+                <str> Nr. 024 </str>
+            </arr>
+            <arr name="deskriptor">
+                <str>ICC_15000000</str>
+            </arr>
+            <str name="keys">SE_A1 DA_20030130 MO_200301 JA_2003 RS_TIT DB_VN</str>
+            <int name="zeilen">4</int>
+            <int name="zeitstempel">1043881200</int>
+            <str name="docsrc">VN</str>
+            <long name="_version_">1426765773738606592</long>
+        </doc>
+        <doc>
+            <str name="id">KURIER_200409180436510169</str>
+            <date name="datum">2004-09-18T00:00:00Z</date>
+            <str name="year">2004</str>
+            <arr name="region">
+                <str>agesamt</str>
+            </arr>
+            <arr name="ressort2">
+                <str>chronik</str>
+            </arr>
+            <int name="tokens">163</int>
+            <float name="quote_ratio">0.0</float>
+            <str name="vorspann">"Kurier" vom 18.09.2004 Seite: 13 Ressort: Chronik</str>
+            <str name="titel">Die Freundin erschossen, zerstückelt</str>
+            <str name="inhalt">Eine grauenhafte Bluttat, die bereits vier Wochen zurück liegt, ist
+                nun in OÖ aufgeflogen. Ein 48-jähriger Mann aus Vöcklabruck hatte seine
+                Lebensgefährtin erschossen und anschließend mit der Motorsäge zerstückelt. Die
+                Leichenteile transportierte er nach Italien und entsorgte sie im Müll. Gabriele G.,
+                40, kam am 22. August am Morgen von einem Ausflug zurück und legte sich schlafen.
+                Ihr Lebensgefährte Volkmar N. dürfte auf diesen Augenblick schon gewartet haben.
+                Sobald die Frau eingeschlafen war, schoss er ihr drei Mal in den Rücken. Da das
+                Opfer noch röchelte, feuerte er einen vierten Schuss in den Hinterkopf. Die Mutter
+                von Gabriele G., die sich wiederholt nach dem Verbleib ihrer Tochter erkundigte,
+                vertröstete der Mann. Die Frau sei in Paris. Schließlich ließ sich die Mutter aber
+                nicht mehr abwimmeln und erstattete Abgängigkeitsanzeige. Die Beamten hielten
+                Nachschau und entdeckten im Haus der Abgängigen Blutspuren und schalteten die
+                Kriminalabteilung ein. Im Verhör legte der 48-Jährige ein Geständnis ab. Das Motiv
+                dürfte Eifersucht gewesen sein.</str>
+            <arr name="ressort">
+                <str>CHR</str>
+                <str>Chronik</str>
+            </arr>
+            <str name="seite">13</str>
+            <arr name="mutation_txt">
+                <str> N.Ö., Morgen </str>
+            </arr>
+            <arr name="deskriptor">
+                <str>AIM_CHRONIK</str>
+                <str>AIM_ZEIT</str>
+            </arr>
+            <str name="keys">SE_13 DA_20040918 MO_200409 JA_2004 RS_CHR DB_KURIER S13T03.AS6</str>
+            <int name="zeilen">18</int>
+            <arr name="untertitel_txt">
+                <str> Bluttat in OÖ </str>
+            </arr>
+            <int name="zeitstempel">1095458400</int>
+            <str name="docsrc">KURIER</str>
+            <long name="_version_">1426733275054866432</long>
+        </doc>
+        <doc>
+            <str name="id">HOR_201006182322180036</str>
+            <date name="datum">2010-06-18T00:00:00Z</date>
+            <str name="year">2010</str>
+            <arr name="region">
+                <str>spezifisch</str>
+            </arr>
+            <arr name="ressort2">
+                <str>allgemein</str>
+                <str>medien</str>
+                <str>unzuordenbar</str>
+                <str>wirtschaft</str>
+            </arr>
+            <int name="tokens">898</int>
+            <float name="quote_ratio">0.3369876</float>
+            <arr name="quoted">
+                <str>Wenn Sie die Gesamtumsätze am österreichischen Mobilfunkmarkt ansehen, so
+                    stellen Sie fest, dass diese trotz wachsender Teilnehmerzahlen und einer
+                    gewaltigen Steigerung der Datennutzung in allen Netzen leicht gesunken
+                    sind.</str>
+                <str>Wir glauben nicht, dass in Österreich auf Dauer vier Mobilfunkinfrastrukturen
+                    leistbar sind.</str>
+                <str>Aufgrund der Milliarden-Investitionen, die für die ‚nächste
+                    Mobilfunkgeneration‘ notwendig sind, wird es eine Konsolidierung der Netze –
+                    Network Sharing – geben müssen.</str>
+                <str>Die fällt aber nicht so einfach vom Himmel und ist auch nicht das einzige
+                    Allheilmittel.</str>
+                <str>Eine Marktkonsolidierung auf Kosten von Drei ist reines Wunschdenken des
+                    Mitbewerbs.</str>
+                <str>Andere Mobilfunkbetreiber beklagen sich immer wieder über den Wettbewerb und
+                    wollen die Preise erhöhen</str>
+                <str>Bergauf geht es sicher nicht. Aber bergab geht’s, zumindest was den Preispunkt
+                    betrifft, auch nicht mehr.</str>
+                <str>Die Strategie lautet: Mehr zum selben Preis.</str>
+                <str>In den Basistarifen werden immer mehr Services integriert.</str>
+                <str>Bei der Gestaltung der Tarife wird die Herausforderung sein, den richtigen Mix
+                    an inkludierten Services zu finden und das zu einem attraktiven Gesamtpreis für
+                    die Kunden.</str>
+                <str>Aufgrund des intensiven Wettbewerbs wird der Preis weiterhin ein dominierender
+                    Wettbewerbsfaktor bleiben</str>
+                <str>Wir halten dem entgegen, indem wir laufend innovative Produkte, Tarife und
+                    Dienste auf den Markt bringen.</str>
+                <str>Das sieht man auch am Anstieg der Gesprächsminuten in Österreich auf 5.500
+                    Millionen Minuten bzw. der verschickten SMS auf 1,59 Milliarden im vierten
+                    Quartal 2009.</str>
+                <str>Die Regulierung war schmerzhaft. Unser Umsatzrückgang von 2008 und 2009 von 3,8
+                    Prozent ist zu einem Großteil auf diese Maßnahme zurückzuführen.</str>
+                <str>Während die Preise dramatisch gesunken sind, ist die Anzahl der genutzten
+                    Einheiten nur marginal angestiegen.</str>
+                <str>Horrorberichte über Roamingfallen</str>
+                <str>Wir informieren unsere Kunden intensiv über die Möglichkeiten, im Ausland
+                    kostengünstig zu telefonieren beziehungsweise Daten abzurufen</str>
+                <str>Holiday-Optionen</str>
+                <str>Gerade bei Roaming hat Drei immer die Rolle als Anwalt der Kunden eingenommen
+                    und lange, bevor die EU die Preise reduziert hat, einen solchen Schritt
+                    gefordert.</str>
+            </arr>
+            <str name="vorspann">"Horizont" Nr. 24/10 vom 18.06.2010 Seite: 17 Ressort: Märkte &amp;
+                Medien - Telekomunikation und Mobilfunk</str>
+            <str name="titel">Kunden bekommen immer mehr – für weniger Geld</str>
+            <str name="inhalt">In der Telekom-Branche wird es enger – die Marktakteure müssen für
+                weniger Umsatz mehr leisten. Dies beweist ein Blick in den Telekom Monitor 2/2010
+                der RTR, der einerseits von sinkenden Umsätzen im Festnetz, Mobilfunk, Breitband und
+                Mietleitungen berichtet: Verdiente die Branche im 1. Quartal 2007 noch knapp 1,48
+                Milliarden Euro, waren es im 4. Quartal 2009 nur noch 1,250 Milliarden Euro. Wobei
+                etwa zwei Drittel des Gesamtumsatzes im Telekombereich auf den Mobilfunk entfallen.
+                Andererseits steigen im Mobilfunk die Gesprächsminuten am Endkundenmarkt: Im 1.
+                Quartal 2007 maß die RTR noch knapp 3,96 Milliarden Minuten – im 4. Quartal 2009
+                waren es schon mehr als 5,5 Milliarden. Allein die im Festnetz vertelefonierte Zeit
+                ging zurück: Von knapp 2,2 Milliarden im 1. Quartal 2007 auf über 1,6 Milliarden
+                Minuten im 4. Quartal 2009. Hannes Ametsreiter, CEO von Telekom Austria und mobilkom
+                austria, bringt die schwierige Situation der Mobilfunker auf den Punkt: „Wenn Sie
+                die Gesamtumsätze am österreichischen Mobilfunkmarkt ansehen, so stellen Sie fest,
+                dass diese trotz wachsender Teilnehmerzahlen und einer gewaltigen Steigerung der
+                Datennutzung in allen Netzen leicht gesunken sind.“ Die Margen werden immer enger –
+                und die Meinung, dass zu viele im Mobilfunkteich fischen, teilen immer mehr.
+                Ametsreiter: „Wir glauben nicht, dass in Österreich auf Dauer vier
+                Mobilfunkinfrastrukturen leistbar sind.“ Robert Chvatal, CEO von T-Mobile-Austria
+                (TMA), erachtet die Margen für zukünftige Investitionen als entscheidend. Über 100
+                Millionen Euro investiere man jährlich in den Ausbau des TMA-Netzes, zuletzt in den
+                Ausbau des 3G-Netzes mit HSPA+ sowie in die 4. Mobilfunkgeneration LTE. Chvatal:
+                „Aufgrund der Milliarden-Investitionen, die für die ‚nächste Mobilfunkgeneration‘
+                notwendig sind, wird es eine Konsolidierung der Netze – Network Sharing – geben
+                müssen.“ Peter Nebenführ, CMO des drittgrößten Anbieters Orange, wünscht sich eine
+                Konsolidierung am Markt. „Die fällt aber nicht so einfach vom Himmel und ist auch
+                nicht das einzige Allheilmittel.“ Bei Drei gibt man sich kämpferisch, Jan Trionow,
+                CTO des kleinsten Anbieters. „Eine Marktkonsolidierung auf Kosten von Drei ist
+                reines Wunschdenken des Mitbewerbs.“ Trionow verweist darauf, dass Drei 2009 das am
+                schnellsten wachsende Telekomunternehmen Österreichs war. Drei versteht sich selbst
+                jedenfalls als Garant für den Preiskampf. „Andere Mobilfunkbetreiber beklagen sich
+                immer wieder über den Wettbewerb und wollen die Preise erhöhen“, meint der Drei-CTO.
+                Tarife ins Bodenlose? Davon kann – zumindest bis heute – keine Rede sein. Denn schon
+                seit der heimische Mobilfunkmarkt existiert, kennen die Tarife nur eine Richtung –
+                nach unten. Im internationalen Vergleich ist der Preis für das mobile Telefonieren
+                und auch Surfen rekordverdächtig niedrig. Kann es mit der Talfahrt überhaupt noch
+                weiter abwärts gehen? Peter Nebenführ, CMO von Orange, meint: „Bergauf geht es
+                sicher nicht. Aber bergab geht’s, zumindest was den Preispunkt betrifft, auch nicht
+                mehr.“ Dennoch heißt das kein Verharren auf dem Status quo. Nebenführ: „Die
+                Strategie lautet: Mehr zum selben Preis.“ So habe Orange beispielsweise
+                Roaming-Minuten in den eigenen Europa-Tarif inkludiert. Dem Trend, mehr fürs gleiche
+                Geld, folgt man auch bei der mobilkom austria. CEO Hannes Ametsreiter: „In den
+                Basistarifen werden immer mehr Services integriert.“ So biete man Tarife mit
+                inkludiertem SMS-Kontingent, Datenvolumen, aber auch Services wie TV, Navi und Musik
+                an. „Bei der Gestaltung der Tarife wird die Herausforderung sein, den richtigen Mix
+                an inkludierten Services zu finden und das zu einem attraktiven Gesamtpreis für die
+                Kunden.“ Allerdings werde es auch immer sehr einfache Angebote wie etwa bob geben,
+                die ein Basisservice zum niedrigstmöglichen Preis anbieten. „Aufgrund des intensiven
+                Wettbewerbs wird der Preis weiterhin ein dominierender Wettbewerbsfaktor bleiben“,
+                ist TMA-Chef Robert Chvatal überzeugt und ergänzt: „Wir halten dem entgegen, indem
+                wir laufend innovative Produkte, Tarife und Dienste auf den Markt bringen.“ Basis
+                Sprache und SMS Sprache und SMS sind trotz sinkender Tarife immer noch die Basis für
+                das Geschäft der Mobilfunker – sind sie doch die meistgenutzten Services.
+                Ametsreiter rechnet vor: „Das sieht man auch am Anstieg der Gesprächsminuten in
+                Österreich auf 5.500 Millionen Minuten bzw. der verschickten SMS auf 1,59 Milliarden
+                im vierten Quartal 2009.“ Doch nicht nur die harte Konkurrenz, sondern auch
+                regulatorische Eingriffe – wie etwa die Absenkung der Terminierungsentgelte – würden
+                hier die Umsätze schmelzen lassen. Zur Erläuterung: Terminierungsentgelte sind
+                Beträge, die Telefongesellschaften bei der Netzzusammenschaltung für die
+                Gesprächsterminierung – also die Anrufzustellung oder Gesprächsabschluss – in
+                fremden Netzen zahlen müssen. EU-Verordnung kürzte Gewinne Ein harter Eingriff in
+                das Geschäft der Mobilfunker war auch die EU-Vorschrift, die Roaming-Tarife für
+                Sprache, SMS und Daten zu senken. Orange-CMO Nebenführ: „Die Regulierung war
+                schmerzhaft. Unser Umsatzrückgang von 2008 und 2009 von 3,8 Prozent ist zu einem
+                Großteil auf diese Maßnahme zurückzuführen.“ Auch der von der EU prognostizierte
+                Effekt sei nicht eingetreten, betont Ametsreiter. „Während die Preise dramatisch
+                gesunken sind, ist die Anzahl der genutzten Einheiten nur marginal angestiegen.“
+                Wesentlich schmerzhafter als die Regulierung, mit der man leben muss, sind Robert
+                Chvatal zufolge die „Horrorberichte über Roamingfallen“. „Wir informieren unsere
+                Kunden intensiv über die Möglichkeiten, im Ausland kostengünstig zu telefonieren
+                beziehungsweise Daten abzurufen“, sagt Chvatal und verweist auf „Holiday-Optionen“
+                für Urlaubsländer, in denen man mit TMA günstig telefonieren könne. Allein bei Drei
+                kann man der Roaming-Verordnung etwas Positives abgewinnen. CTO Jan Trionow: „Gerade
+                bei Roaming hat Drei immer die Rolle als Anwalt der Kunden eingenommen und lange,
+                bevor die EU die Preise reduziert hat, einen solchen Schritt gefordert.“ In den
+                eigenen Netzen habe man jedenfalls das Roaming bereits abgeschafft – man telefoniert
+                und surft als Österreicher also in Italien, Großbritannien, Irland, Schweden,
+                Dänemark, Hongkong und Australien ums selbe Geld wie zu Hause. Seite 18</str>
+            <arr name="ressort">
+                <str>ALL</str>
+                <str>Märkte</str>
+                <str>&amp;</str>
+                <str>Medien</str>
+                <str>-</str>
+                <str>Telekomunikation</str>
+                <str>und</str>
+                <str>Mobilfunk</str>
+            </arr>
+            <str name="seite">17</str>
+            <arr name="ausgabe_txt">
+                <str> 24/10 </str>
+            </arr>
+            <arr name="deskriptor">
+                <str>ICC_04000000</str>
+                <str>ICC_04003000</str>
+            </arr>
+            <str name="keys">SE_17 DA_20100618 MO_201006 JA_2010 RS_ALL DB_HOR</str>
+            <int name="zeilen">101</int>
+            <str name="bildzeilen">Bild: Die Smartphones sind in Österreich beliebt. Sie krempeln
+                das Geschäftsmodell der Mobilfunker um – und offensichtlich verschieben sich auch
+                die Prioritäten im Privatleben. © Fotolia/K. Jehle</str>
+            <str name="dachzeile">Sinkende Margen stehen dem steigenden Kommunikationsbedarf der
+                Kunden gegenüber: Die Mobilfunker durchleben – auch wegen Apple – keine leichte
+                Phase</str>
+            <int name="zeitstempel">1276812000</int>
+            <str name="docsrc">HOR</str>
+            <long name="_version_">1426691524518739968</long>
+        </doc>
+        <doc>
+            <str name="id">KTZ_200804090505300150</str>
+            <date name="datum">2008-04-09T00:00:00Z</date>
+            <str name="year">2008</str>
+            <arr name="region">
+                <str>asuedost</str>
+            </arr>
+            <int name="tokens">174</int>
+            <float name="quote_ratio">0.077844314</float>
+            <arr name="quoted">
+                <str>Wir haben sie ausgeliehen und unter jener Felswand angebunden, in der sich
+                    Hansi versteckte</str>
+            </arr>
+            <str name="vorspann">"Neue Kärntner Tageszeitung" vom 09.04.2008</str>
+            <str name="titel">Lotte holte Bock nach Hause</str>
+            <str name="inhalt">Drei Monate lang hatte sich Ziegenbock Hansi in einem aufgelassenen
+                Steinbruch versteckt. Mit großer List konnte er jetzt eingefangen werden.
+                VÖLKERMARKT. Seelenruhig steht er mit seiner Lotte im Stall - für welche Aufregung
+                Ausreißer Hansi in den vergangenen drei Monaten gesorgt hatte, weiß er wohl nicht.
+                Beim Verladen in den Transporter - der schwarze Ziegenbock sollte zum Schlachter -
+                schaffte das Tier die Flucht. Ein Versteck fand Hansi in einem aufgelassenen
+                Steinbruch in Mittertrixen. Zurück nach Hause wollte das schlaue Kerlchen scheinbar
+                nicht - alle Versuche ihn einzufangen scheiterten. Erst Geiß Lotte sollte Hansi
+                zurückholen. "Wir haben sie ausgeliehen und unter jener Felswand angebunden, in der
+                sich Hansi versteckte", sagt Besitzer Günther Zellnig. Gestern Nachmittag
+                schließlich wagte sich der Bock so weit herunter, dass es Zellnigs Cousin, Gebhard
+                Paletti, gelang, das Tier mit einem Lasso einzufangen. Jetzt wartet der Ausreißer
+                auf ein gutes Plätzchen. Wer sich unter 0650/6772233 meldet, bekommt den Bock von
+                Günther Napetschnig sogar frei Haus geliefert. Gebhard Paletti und Günther Zellnig
+                mit Hansi und Lotte.</str>
+            <arr name="deskriptor">
+                <str>AIM_ZEIT</str>
+            </arr>
+            <str name="keys">DA_20080409 MO_200804 JA_2008 RS_ALL DB_KTZ</str>
+            <int name="zeilen">19</int>
+            <int name="zeitstempel">1207692000</int>
+            <str name="docsrc">KTZ</str>
+            <long name="_version_">1426729960322629632</long>
+        </doc>
+        <doc>
+            <str name="id">NOEN_200908190416330077</str>
+            <date name="datum">2009-08-19T00:00:00Z</date>
+            <str name="year">2009</str>
+            <arr name="region">
+                <str>aost</str>
+            </arr>
+            <arr name="ressort2">
+                <str>allgemein</str>
+                <str>wirtschaft</str>
+            </arr>
+            <int name="tokens">243</int>
+            <float name="quote_ratio">0.17062636</float>
+            <arr name="quoted">
+                <str>Umbau</str>
+                <str>Persönliche Gründe</str>
+                <str>Oberösterreichischen Nachrichten</str>
+                <str>an die Öffentlichkeit</str>
+                <str>Wir stehen als Familie persönlich hinter unseren Mitarbeitern und garantieren
+                    unseren Kunden weiterhin höchste Qualität, ein attraktives
+                    Preis-Leistungs-Verhältnis und umfassenden Service.</str>
+                <str>Die Entwicklung geht in eine positive Richtung.</str>
+            </arr>
+            <str name="vorspann">"Niederösterreichische Nachrichten" Nr. 34 vom 19.08.2009 Seite: 38
+                Ressort: WIRTSCHAFT</str>
+            <str name="titel">Elk-Haus steht vor größerem "Umbau"</str>
+            <str name="inhalt">VON DANIEL LOHNINGER SCHREMS / Bereits seit einigen Monaten läuft in
+                der Elk-Haus AG - dem größten Fertighausbauer Österreichs mit Sitz in Schrems -
+                nicht alles rund. Jetzt soll eine Umstrukturierung klare Strukturen für die Zukunft
+                bringen. Ziel ist eine Nachfolge-Regelung durch ein Management-Buy-Out (MBO). Im
+                Klartext: Erich Weichselbaum, der nach internen Turbulenzen das Unternehmen bereits
+                verlassen hatte, wird den Betrieb von seinem Vater Johann Weichselbaum übernehmen.
+                "Persönliche Gründe" seien für diese ungewöhnliche Form der Firmen-Übergabe
+                verantwortlich, betonte Erich Weichselbaum gegenüber den "Oberösterreichischen
+                Nachrichten". Ein Management-Buy-Out ist ein Eigentümerwechsel, bei dem das
+                Management die Mehrheit des Kapitals von den bisherigen Eigentümern erwirbt. Der
+                dadurch erhöhte Kapitalbedarf wird üblicherweise zu einem Großteil von Banken oder
+                Investoren gedeckt. Wie die Lösung im Fall der Elk aussehen wird, ist derzeit nicht
+                bekannt. Wirtschafts-Experten gehen davon aus, dass die - nicht börsen-notierte -
+                Aktiengesellschaft wieder re-privatisiert wird. In einer offiziellen Stellungnahme
+                spricht die Familie Weichselbaum lediglich davon, dass das MBO bis Oktober
+                abgeschlossen sein soll. Erst dann werde man mit weiteren Informationen "an die
+                Öffentlichkeit" gehen. Johann und Erich Weichselbaum versichern aber: "Wir stehen
+                als Familie persönlich hinter unseren Mitarbeitern und garantieren unseren Kunden
+                weiterhin höchste Qualität, ein attraktives Preis-Leistungs-Verhältnis und
+                umfassenden Service." Zugeknöpft gibt sich auch Arbeiter-Betriebsrat Christian
+                Tollar. Der Betriebsrat sei in die laufenden Gespräche involviert, er könne aber
+                keine Details verraten - nur soviel: "Die Entwicklung geht in eine positive
+                Richtung." In Schrems sind etwa 650 Mitarbeiter beschäftigt.</str>
+            <arr name="ressort">
+                <str>ALL</str>
+                <str>WIRTSCHAFT</str>
+            </arr>
+            <str name="seite">38</str>
+            <arr name="mutation_txt">
+                <str> GMU Gmünder Zeitung, WAI Waidhofner Zeitung </str>
+            </arr>
+            <arr name="ausgabe_txt">
+                <str> 34 </str>
+            </arr>
+            <str name="keys">SE_38 DA_20090819 MO_200908 JA_2009 RS_ALL DB_NOEN</str>
+            <int name="zeilen">30</int>
+            <str name="dachzeile">NEUE STRUKTUR / Erich Weichselbaum will Führung des
+                Fertighausbauers übernehmen. Betriebsrat: "Positive Entwicklung!"</str>
+            <int name="zeitstempel">1250632800</int>
+            <str name="docsrc">NOEN</str>
+            <long name="_version_">1426710221347094529</long>
+        </doc>
+        <doc>
+            <str name="id">NOEN_20101026041009118661141</str>
+            <date name="datum">2010-10-26T00:00:00Z</date>
+            <str name="year">2010</str>
+            <arr name="region">
+                <str>aost</str>
+            </arr>
+            <arr name="ressort2">
+                <str>allgemein</str>
+                <str>schule</str>
+                <str>unzuordenbar</str>
+            </arr>
+            <int name="tokens">266</int>
+            <float name="quote_ratio">0.064533055</float>
+            <arr name="quoted">
+                <str>stillen</str>
+                <str>Die Strom-Spar-Familien sollen Vorbilder sein und zeigen, wie viel
+                    Sparpotenzial in unseren Stromrechnungen steckt.</str>
+            </arr>
+            <str name="vorspann">"NÖ Nachrichten" Nr. 43/2010 vom 26.10.2010 Seite: 47 Ressort: AUS
+                DEN SCHULEN</str>
+            <str name="titel">200 Familien sparen Strom</str>
+            <str name="inhalt">Sie haben die Aktion Strom-Spar-Familien ins Leben gerufen. Warum ist
+                das Thema Strom für Sie so wichtig? Energielandesrat Dr. Stephan Pernkopf: Der
+                Verbrauch an Haushaltsstrom steigt noch immer um etwa 4 Prozent pro Jahr an. Das
+                müssen wir in den Griff bekommen! Die Strom-Spar-Familien sollen Vorbilder sein und
+                zeigen, wie viel Sparpotenzial in unseren Stromrechnungen steckt. Wie werden die
+                Strom-Spar-Familien unterstützt? Pernkopf: Mit der Energieberatung NÖ haben wir ein
+                starkes BeraterInnen-Netzwerk in ganz NÖ aufgebaut. Rund 80 Expertinnen und Experten
+                werden 200 Familien ein Jahr lang intensiv, persönlich betreuen und auf
+                Einsparpotenziale hinweisen. Die Möglichkeiten sind dabei so individuell wie die
+                Familien und hängen vom Benutzerverhalten, der Geräteausstattung und persönlichen
+                Bedürfnissen ab. Sie haben sich vorgenommen bis zum Jahr 2015 den Strombedarf in NÖ
+                zu 100 Prozent aus erneuerbaren Energien zu decken. Wie soll das gehen? Pernkopf: NÖ
+                ist Technologieland und Vorreiter bei der sauberen Energieerzeugung. Schon jetzt
+                decken wir unseren Strombedarf zu 89 Prozent aus erneuerbaren Energiequellen: 70
+                Prozent liefert die Wasserkraft, 10 Prozent die Windkraft und 9 Prozent stammen aus
+                Biomasse und Photovoltaik. Wir müssen den Ausbau der erneuerbaren Energien weiter
+                vorantreiben und gleichzeitig den bewussten Umgang mit Energie fördern. Wie sparen
+                Sie persönlich Strom? Pernkopf: Ich denke, beim Stromsparen lernt man nie aus, es
+                gibt eigentlich immer etwas zu verbessern. Ich bin als Landesrat viel unterwegs und
+                eher selten zu Hause. Deshalb ist es wichtig, die sogenannten "stillen" Stromfresser
+                abzuschalten. Ich habe deshalb alle Geräte an abschaltbare Steckerleisten
+                angeschlossen. Energielandesrat Dr. Stephan Pernkopf: "Die Strom-Spar-Familien
+                sollen Vorbilder sein und zeigen, wie viel Sparpotenzial in unseren Stromrechnungen
+                steckt." ZVG</str>
+            <arr name="ressort">
+                <str>ALL</str>
+                <str>AUS</str>
+                <str>DEN</str>
+                <str>SCHULEN</str>
+            </arr>
+            <str name="seite">47</str>
+            <arr name="mutation_txt">
+                <str> Hollabrunner Zeitung </str>
+            </arr>
+            <arr name="ausgabe_txt">
+                <str> 43/2010 </str>
+            </arr>
+            <arr name="deskriptor">
+                <str>AIM_ZEIT</str>
+            </arr>
+            <str name="keys">SE_47 DA_20101026 MO_201010 JA_2010 RS_ALL DB_NOEN</str>
+            <int name="zeilen">42</int>
+            <str name="dachzeile">INTERVIEW Energielandesrat Dr. Stephan Pernkopf über die
+                Strom-Spar-Familie der Energieberatung NÖ.</str>
+            <int name="zeitstempel">1288044000</int>
+            <str name="docsrc">NOEN</str>
+            <long name="_version_">1426712252596092928</long>
+        </doc>
+        <doc>
+            <str name="id">NOEN_200305140424081164</str>
+            <date name="datum">2003-05-14T00:00:00Z</date>
+            <str name="year">2003</str>
+            <arr name="region">
+                <str>aost</str>
+            </arr>
+            <arr name="ressort2">
+                <str>allgemein</str>
+                <str>service</str>
+            </arr>
+            <int name="tokens">155</int>
+            <float name="quote_ratio">0.01006192</float>
+            <arr name="quoted">
+                <str>Haus der Frau</str>
+            </arr>
+            <str name="vorspann">"Niederösterreichische Nachrichten" Nr. 20 vom 14.05.2003 Seite: 57
+                Ressort: SERVICE Ausgabe: MAR Gänserndorf</str>
+            <str name="titel">NOT- UND BERATUNGSDIENSTE...</str>
+            <str name="inhalt">NOT- UND BERATUNGSDIENSTE PSYCHOLOGISCHE BERATUNG Psychologische
+                Beratung: ( 0676/6126074. EHE-, FAMILIEN- UND LEBENSBERATUNG Verein Ananas:
+                Familien- und juristische Beratung, Kirchenplatz 5, Montag, von 14 Uhr bis 18 Uhr,
+                Mittwoch von 17 Uhr bis 19 Uhr, Dienstag von 9 Uhr bis 12 Uhr, erreichbar unter (
+                02282/60466. NÖ Hilfswerk: Familienberatungsstelle, kostenlose
+                Rechtsberatung/Mediation, 2230 Gänserndorf, Hans-Kudlich-Gasse 11, ( 02282/60233.
+                Zentrum für Ganzheit, Energie und Selbstbewusstsein, Lebensberatung, Sexualberatung,
+                Körperarbeit, Energiearbeit - Maria Sukup, ( 02535/2842, 0664/5726863. Psychosoziale
+                Krisenberatung: Telefondienst 02243/83666 (Montag bis Freitag, von 19 Uhr bis 7 Uhr,
+                Wochenende). GESUNDHEITSBERATUNG Weikendorf: Zentrum für Gesundheit, Therapie und
+                Beratung, Dr. Brückner, ( 022827/8935. Angern: Therapiezentrum Angern,
+                Ganzheitsmedizin, Blutegel-Therapie, Biofeedback, Psychokybernetik, Dr. med.
+                Ingeborg Krebs, erreichbar unter ( 02283/340 62-7 DROGENBERATUNG Gänserndorf: Die
+                Drogenberatungsstelle hat den Sprechtag jeweils am Montag von 14 bis 15 Uhr nach
+                telefonischer Voranmeldung unter ( 02282/9025- 24682. FRAUENHAUS MISTELBACH
+                Mistelbach: "Haus der Frau", erreichbar unter( 02572/5088, 0-14 Uhr Angaben ohne
+                Gewähr</str>
+            <arr name="ressort">
+                <str>ALL</str>
+                <str>SERVICE</str>
+            </arr>
+            <str name="seite">57</str>
+            <arr name="mutation_txt">
+                <str> MAR Gänserndorf </str>
+            </arr>
+            <arr name="ausgabe_txt">
+                <str> 20 </str>
+            </arr>
+            <str name="keys">SE_57 DA_20030514 MO_200305 JA_2003 RS_ALL DB_NOEN</str>
+            <int name="zeilen">30</int>
+            <str name="bildzeilen">Bild: Bei den letzten Vorentscheidungen haben sich sechs
+                Kandidatinnen für das Miss NÖ Finale 2004 qualifiziert. Am 16. Mai, 20 Uhr, geht in
+                der Discothek Barbarossa in Bockfließ die offizielle Vorentscheidung zur Miss
+                Austria Wahl 2004 über die Bühne.</str>
+            <int name="zeitstempel">1052863200</int>
+            <str name="docsrc">NOEN</str>
+            <long name="_version_">1426700223136137217</long>
+        </doc>
+        <doc>
+            <str name="id">SN_200205312010020140</str>
+            <date name="datum">2002-05-31T00:00:00Z</date>
+            <str name="year">2002</str>
+            <arr name="region">
+                <str>amitte</str>
+            </arr>
+            <arr name="ressort2">
+                <str>lokal</str>
+            </arr>
+            <int name="tokens">473</int>
+            <float name="quote_ratio">0.9674914</float>
+            <str name="vorspann">"Salzburger Nachrichten" vom 31.05.2002 Ressort: Lokal</str>
+            <str name="titel">Pflegeberuf in gefühlskalter Zeit</str>
+            <str name="inhalt">"Eine der Ursachen der Probleme im Pflegebereich ist sicherlich der
+                Umstand, dass hier in einem Sektor gearbeitet wird, der in unserer jugend- und
+                erfolgsbetonten, gefühlskalten Zeit gerne als nicht existent betrachtet wird. Wer
+                will sich schon mit alten, kranken oder gar sterbenden Menschen auseinandersetzen?
+                Das entspricht nicht unserem Lebensstil! Lieber einen Job im Management einer
+                mittelmäßigen Firma anstreben als einem Menschen beim Sterben beistehen. Ich möchte
+                aber allen Pflegenden trotzdem Mut machen. Ohne Manager können wir vielleicht leben
+                - ohne Krankenoder Altenpflege sicher nicht. Irgendwann einmal kommt jeder Mensch in
+                die Lage, pflegebedürftig zu sein und dann sieht die Situation plötzlich vollkommen
+                anders aus. Der Pflegeberuf bekommt plötzlich Bedeutung - als ungemein wichtiger
+                menschlicher Gegenpol zur heutigen durchaus effizienten, aber für den Patienten oft
+                nicht nachvollziehbaren Apparatemedizin. Erich Pazdera 5020 Salzburg "Passt mir auf
+                mein Salzburg auf . . ." Angesichts der Weltlage erscheinen unsere lokalen
+                Ärgernisse ziemlich lächerlich, aber auch Mückenstiche schmerzen. Da soll die arme
+                Kaiserin Elisabeth auf den trostlosen Bahnhofsvorplatz übersiedeln, den Mönchsberg
+                soll ein Betonkasten, genannt "Museum am Berg" schmücken, eine ansprechende
+                Bodengestaltung des Residenzplatzes ist nicht in Sicht, übergroße, hässliche
+                Blumentröge erschlagen den zierlichen Papagenobrunnen - die Liste lässt sich
+                fortsetzen. Die endlosen Debatten um Standorte (Spaßbad usw.) und Festspielhausumbau
+                fördern auch nicht das Ansehen der Stadt. Gibt es niemanden mehr, der den letzten
+                Wunsch von LH Haslauer ernst nimmt? Margarethe Prantauer 5020 Salzburg
+                Umweltbelastet in Maxglan Wir brauchen dringend Ruhezeiten, die aber durch
+                rücksichtsloses Verhalten mancher Mitmenschen nicht mehr gegeben sind! Lassen sie
+                ihre Haustiere, vor allem nachts, nicht im Freien. Besonders Hunde verursachen
+                dauernd Ruhestörungen. Ich bin selbst tierliebend und Halter. Es gibt es keinerlei
+                Probleme, Belästigungen oder Beschwerden. Außerdem: "Hinterlassenes" vor den Häusern
+                der Anrainer ist zu vermeiden. Wir hoffen sehr auf Verständnis. M. Kaufmann 5020
+                Salzburg Meisterleistung des Architekten Nach so vielen negativen Stellungnahmen
+                über das neue Heizwerk Mitte möchte ich nun eine positive Äußerung machen. Ich gehe
+                jeden Tag am gegenüberliegenden Ufer vorbei, wobei mir bei unvoreingenommener
+                Betrachtung die Verbauung des Miele-Hauses als erstes ins Auge springt, dann das
+                große Wohnhaus Salzachkai und erst als letztes das neue Kraftwerk. Das fensterlose
+                Gebäude mit der grauen, absorbierenden Farbe macht das große Bauwerk eher
+                unauffällig, eine Meisterleistung des Architekten. Jeder Bürger muss doch wissen,
+                dass ein für Salzburg notwendiges Heiz-Kraftwerk in dieser Dimension nicht in einem
+                Einfamilienhäusel Platz hat. Was wäre also die Alternative? Mit Meuchelfotos kann
+                man natürlich viele negative Empfindungen wecken, z. B. starker Straßenverkehr,
+                Stromautobahnen, dichte Verbauung usw. Man braucht nur die "schiachen" Anblicke in
+                Reihe setzen und mit einem Riesenteleobjektiv fotografieren, fertig ist die
+                Manipulation. Der unbefangene Betrachter sieht aber mit offenen Auge (ohne Tele) ein
+                ganz anderes Bild, einfach natürlicher und weniger aufregend. Vielleicht wird die
+                graue Fläche, nach Fertigstellung, auch etwas begrünt, dann können wir wieder zur
+                Tagesordnung übergehen. Ing. Franz Markl 5020 Salzburg</str>
+            <arr name="ressort">
+                <str>LOK</str>
+                <str>Lokal</str>
+            </arr>
+            <arr name="mutation_txt">
+                <str> Salzburg </str>
+            </arr>
+            <arr name="deskriptor">
+                <str/>
+                <str>AIM_ZEIT</str>
+            </arr>
+            <str name="keys">DA_20020531 MO_200205 JA_2002 RS_LOK DB_SN</str>
+            <int name="zeilen">71</int>
+            <int name="zeitstempel">1022796000</int>
+            <str name="docsrc">SN</str>
+            <long name="_version_">1426755215904735233</long>
+        </doc>
+        <doc>
+            <str name="id">NVT_200006200502350046</str>
+            <date name="datum">2000-06-20T00:00:00Z</date>
+            <str name="year">2000</str>
+            <arr name="region">
+                <str>awest</str>
+            </arr>
+            <arr name="ressort2">
+                <str>leserbriefe</str>
+            </arr>
+            <int name="tokens">292</int>
+            <float name="quote_ratio">0.0</float>
+            <str name="vorspann">"Neue Vorarlberger Tageszeitung" Nr. 145 vom 20.06.2000 Seite: 20
+                Ressort: Geburtstag</str>
+            <str name="titel">DIE NEUE GRATULIERT HERZLICH!</str>
+            <str name="inhalt">Heute, Dienstag, den 20. Juni, feiern Geburtstag in: Bregenz: Hedwig
+                Winder, Arlbergstraße 114 (90). Hörbranz: Ing. Friedrich Otto Enzian, Gartenstraße 3
+                (78); Rosa Olga Kornthaler, Weidachweg13 (74). Doren: Josef Sinz, Hemmessen 165
+                (77). Sulzberg: Aloisia Bilgeri, Altersheim (86). Krumbach: Anton Sutter,
+                Oberkrumbach 22 (83). Hittisau: Barbara Nenning, Reute 97 (77). Egg: Maria Lang,
+                Gropper 210 (78). Bezau: Rudolf Fröwis, Ach 208 (87). Schnepfau: Julius Ott,
+                Hirschau 2 (77). Au: Fridolin Dünser, Argenstein 370 (70). Riezlern: Anna Fischer,
+                Söllerweg 21 (72); Hermann Lingenhöl, Walserstraße 80 (70). Lauterach: Camilla
+                Eisenegger, Montfortplatz 13 (76); Richard Schwei, Achsiedlung 11 (75); Erich Meyer,
+                Flötzerweg 11 (73); Jeanne-Mina Walser, Bregenzer-Weg 131 (71). Höchst: Julie
+                Helbok, Hauptstraße 16 (92). Lustenau: Grete Schlepps, Lerchenfeldstraße 21 (80);
+                Ottilie Bösch, Kaiser-Franz-Josef-Straße 48 (79); Mag. phil. Julius Ott, Rosenweg 2
+                (77); Jadwiga Stefanowicz, Mühlefeldstraße 11 (77). Buch: Theresia Stadelmann, Risar
+                111 (70). Dornbirn: Gertrud Nußbaumer, Lehargasse 5 (99); Irma Nachbaur, Zollgasse
+                23 (88); Johann Schwendinger, Bachmähdle 15 (88); Maria Theresia Wuggenig,
+                Mitteldorfgasse 1 (80). Hohenems: Ludwig Kappel, Breitenbergstraße 6 (80); Hildegard
+                Spiegel, Grillparzerstraße 4 (74). Altach: Elfriede Riezler, Staudenstraße 12a (71).
+                Götzis: Studienrat i. R. Adalbert Kriegler, Brunnengasse 20 (78). Zwischenwasser:
+                Heinrich Biedermann, Hauptstraße 20 (74). Rankweil: Ludmilla Holub, Luzienstraße 2
+                (90); Katharina Steurer, Walgaustraße 23 (79). Feldkirch: Margarethe Jele,
+                Gilmstraße 7 (77); Paul Solti, Leonhardsplatz 6 (72). Tisis: Siegfried Guettler,
+                Wolf-Huber-Straße 12 (70). Schlins: Johann Wanger, Gartenweg 5 (79). Nenzing: Maria
+                Volbert, Fingaweg 2 (89); Ilija Radovic, Ramschwagstraße 93 (70). Ludesch: Aloisia
+                Domig, Ludescherberg 5 (73). Nüziders: Rita Unterlerchner, Almaweg 14 (75). Brand:
+                Hubert Schedler, Haus-Nr. 42 (80). St. Anton im Montafon: Walter Battlogg, Haus-Nr.
+                85 (77). Bartholomäberg: Willy Veith, Gantschier 542 (81). Tschagguns: Laura Galehr,
+                Lochmühle 4 (70). Wald am Arlberg: Karl Nessler, Haus-Nr. 92a (77).</str>
+            <arr name="ressort">
+                <str>GEB</str>
+                <str>Geburtstag</str>
+            </arr>
+            <str name="seite">20</str>
+            <arr name="ausgabe_txt">
+                <str> 145 </str>
+            </arr>
+            <str name="keys">DB_NVT MO_200006 DA_20000620 JA_2000 SE_20 RS_GEB</str>
+            <int name="zeilen">78</int>
+            <int name="zeitstempel">961452000</int>
+            <str name="docsrc">NVT</str>
+            <long name="_version_">1426740052991410176</long>
+        </doc>
+        <doc>
+            <str name="id">BVZ_20101020064008277080220</str>
+            <date name="datum">2010-10-20T00:00:00Z</date>
+            <str name="year">2010</str>
+            <arr name="region">
+                <str>aost</str>
+            </arr>
+            <arr name="ressort2">
+                <str>allgemein</str>
+                <str>lokal</str>
+                <str>bezirk</str>
+            </arr>
+            <int name="tokens">399</int>
+            <float name="quote_ratio">0.5356607</float>
+            <arr name="quoted">
+                <str>Viele Dinge passen nicht</str>
+                <str>Der Kindergarten wird lieblos geführt, und das merkt man auch [?] Leider können
+                    die Tanten nicht so arbeiten, wie sie ~ wollen!</str>
+                <str>Kind auf den Polizeiposten Wulkaprodersdorf zu bringen</str>
+                <str>Von der Dame wird etwas aufgebauscht. Das Abholen ist bei einigen Eltern schon
+                    mehrmals ein Problem gewesen. Das ist Thema bei einem Elternabend gewesen. Ich
+                    verstehe die Kindergartentanten, wenn die nach Hause wollen und sich aber jemand
+                    um eine halbe Stunde verspätet</str>
+                <str>Das entbehrt jeder Grundlage!</str>
+                <str>Da verstehe ich manche Eltern auch nicht. In einen Supermarkt kann ich auch
+                    nicht nach Sperrstunde gehen</str>
+                <str>Allerdings gibt es im Kindergarten schon unzählige Dinge, die vielen Eltern
+                    nicht passen - etwa das ungesunde Essen und der mangelnde Kroatisch-Unterricht.
+                    Die Mutter, die den Rüffel wegen zu späten Abholens bekam, ist eine frisch
+                    Zugereiste, die Einheimischen selbst sagen nichts mehr dazu, denn das würden
+                    unsere Kinder spüren.</str>
+                <str>Das entbehrt jeder Grundlage. Sicher gibt es immer etwas, was man verbessern
+                    kann, aber wenn jemanden etwas stört, sollte derjenige sich direkt an die
+                    Gemeinde oder mich wenden - und nicht an die Medien.</str>
+                <str>Da ging es nicht um große Dinge, sondern etwa darum, dass sich die Kinder die
+                    Hände vor dem Essen waschen sollten. Einiges - wie etwa eine andere
+                    Gruppeneinteilung - ist zwar umgesetzt worden, aber bis heute haben wir keine
+                    Antwort auf diese Punkte erhalten</str>
+                <str>Davon weiß ich nichts.</str>
+            </arr>
+            <str name="vorspann">"BVZ" Nr. 42/2010 vom 20.10.2010 Seite: 19 Ressort: BEZIRK
+                EISENSTADT</str>
+            <str name="titel">"Viele Dinge passen nicht"</str>
+            <str name="inhalt">~ VON BETTINA EDER SIEGENDORF "Der Kindergarten wird lieblos geführt,
+                und das merkt man auch [?] Leider können die Tanten nicht so arbeiten, wie sie ~
+                wollen!", hagelte es in einem Schreiben an die BVZ Kritik an der Siegendorfer
+                Kindergartenleitung. Verfasserin ist eine betroffene Mutter, die aus Furcht vor
+                Repressalien ihren Namen nicht öffentlich machen wollte. Stein des Anstoßes war ein
+                Fall, der vergangene Woche Staub aufgewirbelt hatte: Die Mutter eines
+                Kindergartenkindes hatte die Leiterin des Kindergartens beschuldigt, sie rüde
+                verwarnt und ihr damit gedroht zu haben, das "Kind auf den Polizeiposten
+                Wulkaprodersdorf zu bringen", wenn sie es noch einmal später abholen würde. "Von der
+                Dame wird etwas aufgebauscht. Das Abholen ist bei einigen Eltern schon mehrmals ein
+                Problem gewesen. Das ist Thema bei einem Elternabend gewesen. Ich verstehe die
+                Kindergartentanten, wenn die nach Hause wollen und sich aber jemand um eine halbe
+                Stunde verspätet", verteidigt ein Vater den Kindergarten. Steier: "Das entbehrt
+                jeder Grundlage!" "Da verstehe ich manche Eltern auch nicht. In einen Supermarkt
+                kann ich auch nicht nach Sperrstunde gehen", bekräftigt eine andere Mutter und
+                ergänzt: "Allerdings gibt es im Kindergarten schon unzählige Dinge, die vielen
+                Eltern nicht passen - etwa das ungesunde Essen und der mangelnde
+                Kroatisch-Unterricht. Die Mutter, die den Rüffel wegen zu späten Abholens bekam, ist
+                eine frisch Zugereiste, die Einheimischen selbst sagen nichts mehr dazu, denn das
+                würden unsere Kinder spüren." Mit Unverständnis reagierte Bürgermeister Gerhard
+                Steier (SPÖ): "Das entbehrt jeder Grundlage. Sicher gibt es immer etwas, was man
+                verbessern kann, aber wenn jemanden etwas stört, sollte derjenige sich direkt an die
+                Gemeinde oder mich wenden - und nicht an die Medien." Laut einer Mutter hätte man
+                allerdings schon im Vorjahr versucht, auf einige Dinge aufmerksam zu machen. Damals
+                hätte es ein Treffen zwischen etwa 15 bis 20 Eltern gegeben, bei dem einige
+                Kritikpunkte formuliert und an die Kindergartenleiterin übergeben worden seien. "Da
+                ging es nicht um große Dinge, sondern etwa darum, dass sich die Kinder die Hände vor
+                dem Essen waschen sollten. Einiges - wie etwa eine andere Gruppeneinteilung - ist
+                zwar umgesetzt worden, aber bis heute haben wir keine Antwort auf diese Punkte
+                erhalten", zeigt sich eine Mutter enttäuscht. Das zweifelt wiederum Steier an:
+                "Davon weiß ich nichts." An die Gemeinde gerichtete Beschwerden und Kritik wollte er
+                ebenfalls nicht bestätigen. Die Kindergartenleiterin wollte zu den Vorwürfen nicht
+                Stellung nehmen. Unruhe. Am Kindergarten Siegendorf gibt's Kritik. BILDERBOX</str>
+            <arr name="ressort">
+                <str>ALL</str>
+                <str>BEZIRK</str>
+                <str>EISENSTADT</str>
+            </arr>
+            <str name="seite">19</str>
+            <arr name="mutation_txt">
+                <str> Eisenstadt </str>
+            </arr>
+            <arr name="ausgabe_txt">
+                <str> 42/2010 </str>
+            </arr>
+            <arr name="deskriptor">
+                <str>MW_SPÖ</str>
+                <str>AIM_ZEIT</str>
+                <str>MW_ÖSTERREICH</str>
+                <str>MW_POLPORT</str>
+                <str>MW_GERHARD_STEIER</str>
+            </arr>
+            <str name="keys">SE_19 DA_20101020 MO_201010 JA_2010 RS_ALL DB_BVZ</str>
+            <int name="zeilen">49</int>
+            <str name="dachzeile">KRITIK Die Kindergartenleiterin soll einer Mutter - nachdem sie
+                ihr Kind verspätet abgeholt hatte - gedroht haben.</str>
+            <int name="zeitstempel">1287525600</int>
+            <str name="docsrc">BVZ</str>
+            <long name="_version_">1426688031998345216</long>
+        </doc>
+        <doc>
+            <str name="id">PRESSE_199501111818250028</str>
+            <date name="datum">1995-01-11T00:00:00Z</date>
+            <str name="year">1995</str>
+            <arr name="region">
+                <str>agesamt</str>
+            </arr>
+            <int name="tokens">239</int>
+            <float name="quote_ratio">0.13184713</float>
+            <arr name="quoted">
+                <str>Wenn ich lese, was man über mich schreibt, denke ich mir: Diese Frau würde ich
+                    auch nicht mögen.</str>
+                <str>nächsten Papst</str>
+                <str>Asiaweek</str>
+                <str>Ich halte es für unmöglich, daß Gott einen Papst namens Sünde (englisch: Sin)
+                    erwählt.</str>
+            </arr>
+            <str name="vorspann">"Die Presse" vom 11.1.1995 Aussenpolitik</str>
+            <str name="titel">NEBENBEI</str>
+            <str name="inhalt">Der Siegeszug des rotbraunen Saftes war kaum je aufzuhalten. Auch dem
+                religiösen Verbot, mit dem der geistliche Führer des Iran, Ayatollah Ali Khamenei,
+                nun Coca und Pepsi Cola belegte, wird wohl kein dauernder Erfolg beschieden sein. Da
+                mag Khamenei auch wettern, die Softdrinks stärken den Zionismus. Es scheint aber
+                illusorisch, ohne Cola leben zu wollen: So kursierte auch während des bis vor zwei
+                Jahren geltenden iranischen Cola-Verbots ein gepanschtes Surrogat. e Nach dem Weißen
+                Haus hat nun auch das Capitol Personalprobleme: Der neue Vorsitzende des
+                Repräsentantenhauses, Newt Gingrich, mußte die eben erst von ihm ernannte
+                Historikerin des Hauses, Christina Jeffrey, wieder kündigen. Jeffrey soll sich 1988
+                gegen die Subvention eines Schülerkurses über Nationalsozialismus und Ku Klux Klan
+                ausgesprochen haben, da darin die Sichtweisen der Nazis und des Klans zu kurz
+                gekommen seien. e Auch seine Mutter macht Gingrich Probleme. Kathleen Gingrich
+                wiederholte ihre Aussage, First Lady Hillary Clinton sei für sie und ihren Sohn ein
+                Miststück. Opfer Hillary gibt sich konziliant und hält an ihrer Einladung an Mutter
+                und Sohn Gingrich fest. Vielleicht ist das schon Teil der neuen Selbstdarstellung,
+                zu der sich Hillary aufraffen will: "Wenn ich lese, was man über mich schreibt,
+                denke ich mir: Diese Frau würde ich auch nicht mögen." e Bereits als "nächsten
+                Papst" sieht die Zeitschrift "Asiaweek" den Erzbischof von Manila, Kardinal Jaime
+                Sin. Seine Antwort: "Ich halte es für unmöglich, daß Gott einen Papst namens Sünde
+                (englisch: Sin) erwählt." e</str>
+            <arr name="ressort">
+                <str>04</str>
+            </arr>
+            <str name="keys">RS_04 DA_19950111 JA_1995 MO_199501 DB_PRESSE</str>
+            <int name="zeilen">26</int>
+            <int name="zeitstempel">789778800</int>
+            <str name="docsrc">PRESSE</str>
+            <long name="_version_">1426726950549848064</long>
+        </doc>
+    </result>
+    <lst name="highlighting">
+        <lst name="KURIER_200811151741310086">
+            <arr name="inhalt">
+                <str> das gediegene &lt;em&gt;Haus&lt;/em&gt; in den Kitzbüheler Alpen "Babymio" und
+                    bemüht sich mit umfassenden Angeboten um</str>
+            </arr>
+        </lst>
+        <lst name="KURIER_200509200437090081">
+            <arr name="inhalt">
+                <str> Fenster eines &lt;em&gt;Hauses&lt;/em&gt; herab sahen und trat dabei auf die
+                    Fahrbahn. Ein Autofahrer konnte nicht mehr</str>
+            </arr>
+        </lst>
+        <lst name="SVZ_201104089585C9C326">
+            <arr name="inhalt">
+                <str> Uhr im &lt;em&gt;Haus&lt;/em&gt; der Natur unternehmen. Um 19 Uhr referiert
+                    Christiane Böhm über den "Glatzkopf" unter den</str>
+            </arr>
+        </lst>
+        <lst name="FALTER_200107181840400049">
+            <arr name="inhalt">
+                <str>-Austria-&lt;em&gt;Hauses&lt;/em&gt;, Dr. Karl Lueger-Ring 14 (die erste Tür
+                    links im Foyer). Mimra hat dort eigentlich nur eine</str>
+            </arr>
+        </lst>
+        <lst name="SN_200704032311170140">
+            <arr name="inhalt">
+                <str>RB Salzburg - Mattersb. Salzburg sollte zu &lt;em&gt;Hause&lt;/em&gt; siegen.
+                    RB Amateure - A. Wien Eine harte Nuss für</str>
+            </arr>
+        </lst>
+        <lst name="FALTER_201005191632240098">
+            <arr name="inhalt">
+                <str> seinem surrealistischen Klassiker zeigt Buñuel eine Party, bei der die
+                    Dienstboten das &lt;em&gt;Haus&lt;/em&gt; verlassen</str>
+            </arr>
+        </lst>
+        <lst name="APA_19990824_APA0495">
+            <arr name="inhalt">
+                <str> &lt;em&gt;Haus&lt;/em&gt; einziehen. Er wird Abgeordneter für
+                    Niederösterreich, berichtet der "Kurier". **** Böhmdorfer</str>
+            </arr>
+        </lst>
+        <lst name="KRONE_200210260251530102">
+            <arr name="inhalt">
+                <str>. Dann geht das Umstellen bei Weckern, Videorecordern und Radios im ganzen
+                    &lt;em&gt;Haus&lt;/em&gt; wieder los. Die</str>
+            </arr>
+        </lst>
+        <lst name="NVT_200210060500510033">
+            <arr name="inhalt">
+                <str> 16-jährige Mädchen den Regionalzug am Bahnhof Frastanz und will nach
+                    &lt;em&gt;Hause&lt;/em&gt; gehen. Noch am Bahnhof</str>
+            </arr>
+        </lst>
+        <lst name="VN_200301300330290002">
+            <arr name="inhalt">
+                <str> die erste Saisonniederlage, Hard hingegen ist in der laufenden Saison zu
+                    &lt;em&gt;Hause&lt;/em&gt; noch ungeschlagen. /C4</str>
+            </arr>
+        </lst>
+        <lst name="KURIER_200409180436510169">
+            <arr name="inhalt">
+                <str> erstattete Abgängigkeitsanzeige. Die Beamten hielten Nachschau und entdeckten
+                    im &lt;em&gt;Haus&lt;/em&gt; der Abgängigen</str>
+            </arr>
+        </lst>
+        <lst name="HOR_201006182322180036">
+            <arr name="inhalt">
+                <str> Geld wie zu &lt;em&gt;Hause&lt;/em&gt;. Seite 18</str>
+            </arr>
+        </lst>
+        <lst name="KTZ_200804090505300150">
+            <arr name="inhalt">
+                <str> &lt;em&gt;Hause&lt;/em&gt; wollte das schlaue Kerlchen scheinbar nicht - alle
+                    Versuche ihn einzufangen scheiterten. Erst Geiß</str>
+            </arr>
+        </lst>
+        <lst name="NOEN_200908190416330077">
+            <arr name="inhalt">
+                <str>VON DANIEL LOHNINGER SCHREMS / Bereits seit einigen Monaten läuft in der
+                    Elk-&lt;em&gt;Haus&lt;/em&gt; AG - dem größten</str>
+            </arr>
+        </lst>
+        <lst name="NOEN_20101026041009118661141">
+            <arr name="inhalt">
+                <str> und eher selten zu &lt;em&gt;Hause&lt;/em&gt;. Deshalb ist es wichtig, die
+                    sogenannten "stillen" Stromfresser abzuschalten</str>
+            </arr>
+        </lst>
+        <lst name="NOEN_200305140424081164">
+            <arr name="inhalt">
+                <str>. FRAUENHAUS MISTELBACH Mistelbach: "&lt;em&gt;Haus&lt;/em&gt; der Frau",
+                    erreichbar unter( 02572/5088, 0-14 Uhr Angaben ohne Gewähr</str>
+            </arr>
+        </lst>
+        <lst name="SN_200205312010020140">
+            <arr name="inhalt">
+                <str> &lt;em&gt;Häusern&lt;/em&gt; der Anrainer ist zu vermeiden. Wir hoffen sehr
+                    auf Verständnis. M. Kaufmann 5020 Salzburg</str>
+            </arr>
+        </lst>
+        <lst name="NVT_200006200502350046">
+            <arr name="inhalt">
+                <str> (73). Nüziders: Rita Unterlerchner, Almaweg 14 (75). Brand: Hubert Schedler,
+                    &lt;em&gt;Haus&lt;/em&gt;-Nr. 42 (80). St</str>
+            </arr>
+        </lst>
+        <lst name="BVZ_20101020064008277080220">
+            <arr name="inhalt">
+                <str> Elternabend gewesen. Ich verstehe die Kindergartentanten, wenn die nach
+                    &lt;em&gt;Hause&lt;/em&gt; wollen und sich aber jemand um</str>
+            </arr>
+        </lst>
+        <lst name="PRESSE_199501111818250028">
+            <arr name="inhalt">
+                <str> zwei Jahren geltenden iranischen Cola-Verbots ein gepanschtes Surrogat. e Nach
+                    dem Weißen &lt;em&gt;Haus&lt;/em&gt; hat nun</str>
+            </arr>
+        </lst>
+    </lst>
 </response>

@@ -63,9 +63,9 @@
     </xsl:template>
     <xsl:template match="testrun">
         <div>
-            <xsl:copy-of select="info/h2"/>
+            <xsl:copy-of select="(queryset|info)/h2"/>
             <div class="note">duration: <xsl:value-of select="@duration"/>; on: <xsl:value-of select="substring(@on,1,10)"/>; </div>
-            <xsl:apply-templates select="(info/*|TestSet)"/>
+            <xsl:apply-templates select="(queryset/*|info/*|TestSet)"/>
         </div>
     </xsl:template>
     <xsl:template match="diagnostics">

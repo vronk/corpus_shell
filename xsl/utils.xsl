@@ -4,8 +4,9 @@
     xmlns:exsl="http://exslt.org/common"
     xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl"
     xmlns:utils="http://aac.ac.at/corpus_shell/utils"
+    xmlns:ds="http://aac.ac.at/corpus_shell/dataset"
     xmlns="http://www.w3.org/1999/xhtml"
-    exclude-result-prefixes="exsl xs xd utils" 
+    exclude-result-prefixes="exsl xs xd utils ds" 
     version="2.0">
     
     <xd:doc scope="stylesheet">
@@ -71,14 +72,14 @@
         <xd:param name="dataset"></xd:param>
     </xd:doc>
     <!-- -->
-    <xsl:template match="dataset" mode="invert">
+    <xsl:template match="ds:dataset" mode="invert">
         <xsl:param name="dataset" select="."/>
         <!-- for now, make dataset without explicit namespace, for that need to override the current xhtml default ns -->
-        <dataset xmlns="">
+        <ds:dataset xmlns="">
             <xsl:copy-of select="@*"/>
-            <labels>
-                <xsl:for-each select="dataseries">
-                    <label>
+            <ds:labels>
+                <xsl:for-each select="ds:dataseries">
+                    <ds:label>
                         <xsl:if test="@type">
                             <xsl:attribute name="type" select="@type"/>
                         </xsl:if>
@@ -86,24 +87,24 @@
                             <xsl:attribute name="key" select="@key"/>
                         </xsl:if>
                         <xsl:value-of select="(@name, @label ,@key)[1]"/>
-                    </label>
+                    </ds:label>
                 </xsl:for-each>
-            </labels>
-            <xsl:for-each select="labels/label">
+            </ds:labels>
+            <xsl:for-each select="ds:labels/ds:label">
                 <xsl:variable name="curr_label_old" select="(@key, text())[1]"/>
-                <dataseries key="{$curr_label_old}" label="{text()}">
-                    <xsl:for-each select="$dataset//value[$curr_label_old=@key or $curr_label_old=@label]">
-                        <value key="{(../@name, ../@label,../@key)[not(.='')][1]}">
+                <ds:dataseries key="{$curr_label_old}" label="{text()}">
+                    <xsl:for-each select="$dataset//ds:value[$curr_label_old=@key or $curr_label_old=@label]">
+                        <ds:value key="{(../@name, ../@label,../@key)[not(.='')][1]}">
                             <!-- copy other (value) attributes, but not the key or label --> 
                             <xsl:copy-of select="@*[not(.='')][not(name()=('key','label'))]"/>
                             <!-- formatted="{@formatted}"
                 <xsl:if test="../@type"><xsl:attribute name="type" select="../@type"></xsl:attribute></xsl:if>-->
                             <xsl:value-of select="."/>
-                        </value>
+                        </ds:value>
                     </xsl:for-each>
-                </dataseries>
+                </ds:dataseries>
             </xsl:for-each>
-        </dataset>
+        </ds:dataset>
     </xsl:template>
     
 </xsl:stylesheet>

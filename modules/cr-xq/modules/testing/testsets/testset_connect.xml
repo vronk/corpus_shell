@@ -36,7 +36,7 @@
     doc(concat( "/db/cr/testing/results/","test_connect", "_explain.xml"))//httpclient:body/explain,
 -->
 <!--        <xpath xmlns:httpclient="http://exist-db.org/xquery/httpclient" >doc("/db/cr/testing/testdata/explain.xml")//indexIno</xpath>-->
-        <xpath xmlns:zr="http://explain.z3950.org/dtd/2.1/" xmlns:httpclient="http://exist-db.org/xquery/httpclient">//zr:explain</xpath>
+        <xpath xmlns:httpclient="http://exist-db.org/xquery/httpclient" xmlns:zr="http://explain.z3950.org/dtd/2.1/">//zr:explain</xpath>
     </test>
     <test output="text" ignore="no">
         <task>problem with explain//description</task>

@@ -48,7 +48,7 @@
                       <xsl:value-of select="$data/(@name,@label,@key)[1]"/>
                   </h3>
                   <table class="show">
-                    
+<!--                      XX<xsl:value-of select="count($data/ds:labels/ds:label)" />-<xsl:value-of select="count($data/ds:dataseries)" />-<xsl:value-of select="count($data/ds:labels/ds:label) &gt; count($data/ds:dataseries)" />-->
                     <xsl:choose>
                         <xsl:when test="count($data/ds:labels/ds:label) &gt; count($data/ds:dataseries)">
                             <xsl:variable name="inverted-dataset">
@@ -122,7 +122,7 @@
     <xsl:template match="ds:labels" mode="dataseries-table"/>
     <xsl:template match="ds:dataseries" mode="dataseries-table">
   <!--  variable $labels not used yet, todo :  -->
-        <xsl:variable name="labels" select="../labels"/>
+        <xsl:variable name="labels" select="../ds:labels"/>
         <div id="{concat(utils:normalize(../@key), '-', utils:normalize(@key))}">
             <table class="show">
                 <caption>
@@ -165,7 +165,7 @@
             </xsl:choose>
         </xsl:variable>
         <xsl:variable name="class-number">
-            <xsl:if test="number(.)=number(.)">number value</xsl:if>
+            <xsl:if test="number($val)=number($val)">number value</xsl:if>
         </xsl:variable>
         <td class="{$class-number}">
             <xsl:choose>

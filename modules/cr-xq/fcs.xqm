@@ -21,7 +21,8 @@ declare namespace err = "http://www.w3.org/2005/xqt-errors";
 declare namespace sru = "http://www.loc.gov/zing/srw/";
 declare namespace zr = "http://explain.z3950.org/dtd/2.0/";
 declare namespace tei = "http://www.tei-c.org/ns/1.0";
-declare namespace cmd = "http://www.clarin.eu/cmd/"; 
+declare namespace cmd = "http://www.clarin.eu/cmd/";
+declare namespace xhtml= "http://www.w3.org/1999/xhtml";
 import module namespace request="http://exist-db.org/xquery/request";
 import module namespace diag =  "http://www.loc.gov/zing/srw/diagnostic/" at  "modules/diagnostics/diagnostics.xqm";
 
@@ -202,6 +203,10 @@ declare function fcs:scan($scan-clause  as xs:string, $x-context as xs:string+, 
                 else if ($index-name eq 'cmd.profile') then
 (:                    let $context := repo-utils:context-to-collection($x-context, $config):)
                     cmdcheck:scan-profiles($x-context, $config)
+                else if ($index-name eq 'fcs.resource') then
+                    let $mappings := doc(repo-utils:config-value($config, 'mappings'))
+                    let $xsl := repo-utils:xsl-doc('map-scan', "xml",$config)
+                    return transform:transform($mappings,$xsl,())
                 else
                     fcs:do-scan-default($scan-clause, $index-xpath, $x-context, $sort, $config)         
 

@@ -8,6 +8,7 @@ import module namespace cmdcheck  = "http://clarin.eu/cmd/check" at "/db/cr/modu
 declare namespace cmd = "http://www.clarin.eu/cmd/";
 
 let $dcr-cmd-map := doc("/db/cr/modules/smc/data/dcr-cmd-map.xml")
+let $cmd-terms := doc("/db/cr/modules/smc/data/cmd-terms.xml")
 let $xsl-smc-op := doc("/db/cr/modules/smc/xsl/smc_op.xsl")
 
 let $config := doc("/db/cr/etc/config_mdrepo.xml"), 
@@ -25,7 +26,26 @@ let $ay-data := crday:ay-xml($data-collection, "Components", 4 )
 return xmldb:store("/db/mdrepo-data/_indexes", "ay-olac-Components.xml", $ay-data)
 :)
 
-let $mapping := smc:create-mappings($x-context, $config)
+let $cache_path := repo-utils:config-value($config, 'cache.path')
+(:let $mapping := smc:get-mappings($x-context, $config, true(),'raw'):)
+(:let $mappings := collection($cache_path)/map[*]:)
+
+let $profile_comps := distinct-values($cmd-terms//Term[@type='CMD_Component'][@parent='']/xs:string(@id)),
+    $components := distinct-values($cmd-terms//Term[@type='CMD_Component'][not(@parent='')]/xs:string(@id))
+
+(:return <comp>{for $comp in $components return :)
+
+(:let $ambigue_names := distinct-values($cmd-terms//Term[lower-case(xs:string(@name))='name']/xs:string(@datcat)):)
+
+(:let  $distinct-cmd-names := distinct-values($cmd-terms//Term/lower-case(xs:string(@name)))
+let $ambiguity := for $n in  $distinct-cmd-names
+                        let $distinct-datcats := distinct-values($cmd-terms//Term[lower-case(xs:string(@name))=$n]/xs:string(@datcat))
+                    return <Term name="{$n}" count-datcats="{$distinct-datcats}"  ></Term>
+
+return  for $term in $ambiguity
+            order by $term/@count-datcats descending
+            return $term :)
+return ()            
 (:
 let $data-collection := repo-utils:context-to-collection($x-context, $config),
 $ay-profiles := cmdcheck:stat-profiles($data-collection),
@@ -34,7 +54,7 @@ $child-ns-qnames := if (exists($child-elements)) then distinct-values($child-ele
 :)
 (:     $ns-uri := namespace-uri($data-collection[1]),    
     (namespace-uri($data-collection[1]/*), $data-collection[1]/*, $ay-profiles)  :)
-return $mapping
+(:return $mappings:)
 (: crday:ay-xml($data-collection, "collection", 8)
 let $path-nodes :=  $data-collection//cmd:Components,:)
 (:    $child-elements := $path-nodes/child::element(),:)

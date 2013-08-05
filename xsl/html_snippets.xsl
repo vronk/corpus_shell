@@ -33,52 +33,53 @@
                 </div>
             </div>
             <div id="top-menu">
-                <xsl:call-template name="top-menu"></xsl:call-template>
+                <xsl:call-template name="top-menu"/>
             </div>
         </div>
     </xsl:template>
-    
-    
     <xsl:template name="top-menu">
-        
-            <div id="user">
-                <xsl:variable name="link_toggle_js">
-                    <xsl:call-template name="formURL">
-                        <xsl:with-param name="format">
-                            <xsl:choose>
-                                <xsl:when test="contains($format,'htmljspage')">htmlpage</xsl:when>
-                                <xsl:otherwise>htmljspage</xsl:otherwise>
-                            </xsl:choose>
-                        </xsl:with-param>
-                    </xsl:call-template>
-                </xsl:variable>
-                <xsl:choose>
-                    <xsl:when test="contains($format,'htmljspage')">
-                        <a href="{$link_toggle_js}"> none js </a>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <a href="{$link_toggle_js}"> js </a>
-                    </xsl:otherwise>
-                </xsl:choose>
-                <xsl:choose>
-                    <xsl:when test="$user = ''">
-                        <a href="workspace.jsp">    login</a>
-                    </xsl:when>
-                    <xsl:otherwise>
+        <div id="user">
+            <xsl:variable name="link_toggle_js">
+                <xsl:call-template name="formURL">
+                    <xsl:with-param name="format">
+                        <xsl:choose>
+                            <xsl:when test="contains($format,'htmljspage')">htmlpage</xsl:when>
+                            <xsl:otherwise>htmljspage</xsl:otherwise>
+                        </xsl:choose>
+                    </xsl:with-param>
+                </xsl:call-template>
+            </xsl:variable>
+            <xsl:variable name="link_xml">
+                <xsl:call-template name="formURL">
+                    <xsl:with-param name="format" select="'xml'"/>
+                </xsl:call-template>
+            </xsl:variable>
+            <a href="{$link_xml}">fcs/xml</a>
+            <!--<xsl:choose>
+                <xsl:when test="contains($format,'htmljspage')">
+                    <a href="{$link_toggle_js}"> none js </a>
+                </xsl:when>
+                <xsl:otherwise>
+                    <a href="{$link_toggle_js}"> js </a>
+                </xsl:otherwise>
+            </xsl:choose>
+            <xsl:choose>
+                <xsl:when test="$user = ''">
+                    <a href="workspace.jsp">    login</a>
+                </xsl:when>
+                <xsl:otherwise>
                         User: <b>
-                            <xsl:value-of select="$user"/>
-                        </b>
-                        <a href="logout.jsp">    logout</a>
-                    </xsl:otherwise>
-                </xsl:choose>
-                <a target="_blank" href="static/info"> docs</a>
-            </div>
-            <div id="notify" class="cmds-elem-plus note">
-                <div id="notifylist" class="note"/>
-            </div>
-        
+                        <xsl:value-of select="$user"/>
+                    </b>
+                    <a href="logout.jsp">    logout</a>
+                </xsl:otherwise>
+            </xsl:choose>
+            <a target="_blank" href="static/info"> docs</a> -->
+        </div>
+        <div id="notify" class="cmds-elem-plus note">
+            <div id="notifylist" class="note"/>
+        </div>
     </xsl:template>
-    
     <xsl:template name="query-input">
     
 	<!-- QUERYSEARCH - BLOCK -->
@@ -100,6 +101,7 @@
                     <label>Context</label>
                     <xsl:call-template name="contexts-select"/>
                     <br/>
+<!--                    <div id="main-query" >-->
                     <input type="text" id="input-simplequery" name="query" value="{$q}" class="queryinput active"/>
 <!--                                <div id="searchclauselist" class="queryinput inactive"/>-->
                        <!--     </td>

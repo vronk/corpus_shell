@@ -32,9 +32,12 @@
 			dataset/amc.facetRegion_c20,dataset/amc.facetRegionYear_c20,
 			dataset/amc.facetRegionYear_Haus_baseq,
 			dataset/amc.pivot_facetDocsrcYear_small,
-			dataset/amc.pivot_facetDocsrcRegion,dataset/amc.pivot_facetDocsrcYear,
+			dataset/amc.pivot_facetDocsrcRegion, dataset/amc.pivot_facetDocsrcYear,
 			dataset/dataset2view.amc-vwb-abend,
-			dataset/solr2dataset.stats_overall_20121206,dataset/amc.stats_overall_20121206,
+			dataset/solr2dataset.stats_overall_20121206, dataset/amc.stats_overall_20121206,
+			dataset/amc.compare_Haus-Baum_facetYear_baseurl, dataset/amc.compare_Haus-Baum_facetYear_baseurl_hits,
+			dataset/amc.compare_schwarzesLoch, dataset/amc.compare_schwarzesLoch_1,
+			dataset/amc.stats_base,dataset/amc.stats_core_docsrc-year_tokens-zeilen_dataset,
 			fcs/result2view_v2,fcs/scan2view_v2" ></property>
 		
 		<foreach list="${tests}" target="one-test" param="keyx" />
@@ -95,7 +98,7 @@
 			<param name="mappings-file" expression="file:/${mappings.file}"/>
 			<param name="scripts-dir" expression="${webscripts_url}"/>
 			<param name="scripts_url" expression="${webscripts_url}"/>
-			<param name="baseurl" expression="http://localhost:8983/solr/collection2/select?"/>
+<!--			<param name="baseurl" expression="http://localhost:8983/solr/collection2/select?"/>-->
 			<param name="default-base-data-path" expression="file:/${base-data.file}"/>
 		</saxon-xslt>
 		
