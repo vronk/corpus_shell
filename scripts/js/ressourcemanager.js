@@ -106,7 +106,7 @@ function ResourceManager()
    */
 
   /**
-   * @param {string} resname Name of a resource.
+   * @param {string|number} resname Name of a resource or a position in the array.
    * @desc Returns an array of LabelValueObjects for the given resource name
    * if that is found in ResourceManager's resources or else all known Index/Title pairs are returned.
    * @return {array.<LabelValueObject>}

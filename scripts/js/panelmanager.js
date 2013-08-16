@@ -1,6 +1,8 @@
 /**
  * @fileOverview Provides tha PanelManager class and the global PanelController object. <br/>
  * Entry point from index.html is {@link module:corpus_shell~PanelManager#OpenNewSearchPanel} <br/>
+ * Entry point from corpusshell.js is {@link module:corpus_shell~PanelManager#OpenSubPanel} which
+ * is automatically attached to a set of links to replace their default behaviour. See {@link module:corpus_shell~doOnDocumentReady}<br/>
  * Currently the target of all operations is the id selector of "#snaptarget" -> {@link module:corpus_shell~PanelController}</br>
  * last change:  2012.10.02
  * @author      Andy Basch
@@ -1130,8 +1132,13 @@ function PanelManager (container, searchConfig)
   }
 
   /**
-  * @param -
-  * purpose:
+  * @param elem {node} The link/anchor node where this call originated.
+  * @param url {url} A URL which is used as a container for all parameters needed by the sub panels. 
+  * @param pinned {boolean} If a created sub panel is pinned.
+  * @param type {string} "image" or "text"
+  * @summary purpose: Create a new sub panel that displays the results of a full text search or a facsimile image.
+  * @desc First tries to get the image or text panel associated with the panel to which the link elem belongs to.
+  * If that doesn't succeed a new sub panel is created else the content of the already existing sub panel is changed. 
   * @return    -
   */
   this.OpenSubPanel = function(elem, url, pinned, type)
