@@ -125,11 +125,13 @@
 
      if (($type == "fcs.resource") && ($ddcConfigFound === true))
      {
+     	// $configName is defined in the fcs.resrouce.config.php, that has to be generated in a separate step (initconfigcache.php)
        $keys = array_keys($configName);
        $parentName = $name;
 
        foreach ($keys as $key)
        {
+       	//FIXME: this cannot be based on substring!! http://corpus3.aac.ac.at/trac/ticket/75
          $pos = strpos($key, $parentName);
          if (($pos !== false) && ($pos == 0))
          {
