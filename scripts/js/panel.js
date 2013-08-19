@@ -114,7 +114,7 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
       this.CreateNewSearchPanel(this.Config, searchstr);
     else
       this.CreateNewSubPanel();
-  }
+  };
 
   /**
   * @param url - string containing an URL
@@ -126,7 +126,7 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
   {
     this.Url = url;
     this.PanelController.SetPanelUrl(this.Id, url);
-  }
+  };
 
   /**
   * @param -
@@ -136,7 +136,7 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
   this.Close = function()
   {
     $(this.GetCssId()).remove();
-  }
+  };
 
   // postion handling
 
@@ -274,10 +274,10 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
     var hgt = $(this.GetCssId()).height();
 
     if (this.Type == "search")
-      $(this.GetCssId()).find(".scroll-pane").height(hgt - 105);
+      $(this.GetCssId()).find(".searchresults").height(hgt - 105);
     else
-      $(this.GetCssId()).find(".scroll-pane").height(hgt - 25);
-  }
+      $(this.GetCssId()).find(".searchresults").height(hgt - 35);
+  };
 
   /**
   * @param {number} configIdx Preselected index of SearchCombo
@@ -339,7 +339,7 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
 
     $(this.Container).append(searchPanel);
     this.InitDraggable();
-  }
+  };
 
   /**
   * @param -
@@ -381,7 +381,7 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
       this.GetFullText();
 
     this.InitDraggable();
-  }
+  };
 
   /**
   * @param url - string containing an URL
@@ -411,7 +411,7 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
     }
 
     return urlParams;
-  }
+  };
 
   /**
   * @param -
@@ -429,14 +429,14 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
                  PanelController.BringToFront(panelId);
                  var hgt = $(this).height();
                  if ($(this).find(".searchstring").length != 0)
-                   $(this).find(".scroll-pane").css("height", hgt - 105 + "px");
+                   $(this).find(".searchresults").css("height", hgt - 105 + "px");
                  else
-                   $(this).find(".scroll-pane").css("height", hgt - 35 + "px");
+                   $(this).find(".searchresults").css("height", hgt - 35 + "px");
 
                  PanelController.RefreshScrollPane(panelId);
 
                  var wid = $(this).width();
-                 $(this).find(".scroll-content").css("width", wid - 16 + "px");
+                 $(this).find(".searchresults").css("width", wid + "px");
 
                  PanelController.UpdatePanelPosition(panelId);
                }
@@ -451,7 +451,7 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
                  PanelController.UpdatePanelPosition(panelId);
                }
                });
-  }
+  };
 
   /**
   * @param -
@@ -461,9 +461,9 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
   this.InitScrollPane = function()
   {
    var srdiv = $(this.GetCssId()).find(".searchresults");
-   $(srdiv).sbscroller({ mousewheel: true});
-  }
-
+   $(srdiv).jScrollPane({ mouseWheelSpeed: 10});
+  };
+  
   /**
   * @param -
   * purpose:    refreshes the scrollbar adjacent to the searchresult div
@@ -471,8 +471,8 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
   */
   this.RefreshScrollPane = function()
   {
-    $(this.GetCssId()).find(".searchresults").sbscroller('refresh');
-  }
+        var api = $(this.GetCssId()).find(".searchresults").data('jsp').reinitialise();
+  };
 
   /**
   * @param -
@@ -483,7 +483,7 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
   this.GetCssId = function()
   {
     return '#' + this.Id;
-  }
+  };
 
   /**
   * @param -
@@ -508,9 +508,9 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
 
           responseText = $(responseText).find(".title, .data-view, .navigation, .content");
 
-          if ($(elem).find(".scroll-content").length > 0)
+          if ($(elem).find(".searchresults").data('jsp') != undefined)
           {
-            $(elem).find(".scroll-content").html(responseText);
+            $(elem).find(".searchresults").data('jsp').getContentPane().html(responseText);
             panel.RefreshScrollPane();
           }
           else
@@ -521,7 +521,7 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
         }
     }
     );
-  }
+  };
 
   /**
   * @param -
@@ -533,9 +533,9 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
   {
     var elem = this.GetCssId();
 
-    if ($(elem).find(".searchresults .scroll-content").length > 0)
+    if ($(elem).find(".searchresults").data('jsp') != undefined)
     {
-      $(elem).find(".searchresults .scroll-content").html('<img src="' + this.Url + '" />');
+      $(elem).find(".searchresults").data('jsp').getContentPane().html('<img src="' + this.Url + '" />');
       this.RefreshScrollPane(elem);
     }
     else
@@ -543,7 +543,7 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
       $(elem).find(".searchresults").html('<img src="' + this.Url + '" />');
       this.InitScrollPane(elem);
     }
-  }
+  };
 
   /**
   * purpose:    invokes a AJAX call to the switch script that handles search orders
@@ -595,9 +595,9 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
           hstr = hstr.replace(/&amp;/g, "&");
 
           // init or refresh scrollbars
-          if ($(parElem).find(".searchresults .scroll-content").length > 0)
+          if ($(parElem).find(".searchresults").data('jsp') != undefined)
           {
-            $(parElem).find(".searchresults .scroll-content").html(hstr);
+            $(parElem).find(".searchresults").data('jsp').getContentPane().html(hstr);
             PanelController.RefreshScrollPane(panelId);
           }
           else
@@ -605,7 +605,7 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
             $(resultPane).html(hstr);
             PanelController.InitScrollPane(panelId);
           }
-          var hits = $(resultPane).find(".result-header").attr("data-numberOfRecords")
+          var hits = $(resultPane).find(".result-header").attr("data-numberOfRecords");
           $(parElem).find(".hitcount").text(hits);
           $(resultPane).find(".result-header").hide();
         }
@@ -613,7 +613,7 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
     );
 
     return urlStr;
-  }
+  };
 
   // generate dom objects
 
@@ -705,7 +705,7 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
     });
 
     return searchdiv;
-  }
+  };
 
   /**
   * @param configIdx - selected index of SearchCombo
@@ -731,7 +731,7 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
     }
 
     return searchcombo;
-  }
+  };
 
   /**
   * @param {string} titlestring The panel's title.
@@ -827,7 +827,7 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
     $(titlep).append(titletable);
 
     return titlep;
-  }
+  };
 
   /**
   * purpose:    creates a table with icons to navigate through the search result
@@ -912,7 +912,7 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
     $(navtable).append(navtr);
 
     return navtable;
-  }
+  };
 
   /**
   * purpose:    creats a div that is filled with the search result returned from the
@@ -924,5 +924,5 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
     var resultdiv = document.createElement('div');
     $(resultdiv).addClass("searchresults");
     return resultdiv;
-  }
+  };
 }

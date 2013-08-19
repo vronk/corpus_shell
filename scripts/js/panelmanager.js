@@ -1208,7 +1208,7 @@ function PanelManager (container, searchConfig)
         panelObj.InitDraggable(newPanel);
       }
     }
-  }
+  };
 
   /**
   * @param -
