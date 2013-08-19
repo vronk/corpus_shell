@@ -43,6 +43,10 @@ $url =~ s/;/&/g;
 $url = URLDecode($url);
 $url =~ s/&&/&/g;
 $url =~ s/&/&amp;/g;
+
+$url =~ s/localhost/$localhost/g;
+$url =~ s/127\.0\.0\.1/$localhost/g;
+
 $recordIdBase = $url;
 $url =~ s/query=.*&amp;/&amp;/g;
 $url =~ s/query=.*//g;
@@ -50,8 +54,6 @@ $url =~ s/x-format=.*&amp;/&amp;/g;
 $url =~ s/x-format=.*//g;
 $url =~ s/(&amp;)+/&amp;/g;
 
-$url =~ s/localhost/$localhost/g;
-$url =~ s/127\.0\.0\.1/$localhost/g;
 
 
 #$recordIdBase = "http://corpus3.aac.ac.at/ddconsru?operation=searchRetrieve&x-context=clarin.at:icltt:ddc:barock&query=__query__";
