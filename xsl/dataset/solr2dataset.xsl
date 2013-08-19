@@ -134,7 +134,8 @@
     <!--<xsl:param name="qx" select="//*[@name='qx']" />
     <xsl:param name="qxkey" select="//*[@name='qxkey']" />-->
     <xsl:param name="qx" select="//*[@name='qx']" />
-    <xsl:param name="qxkey" select="utils:params('qxkey',())" />
+    <xsl:param name="qxkey" select="//*[@name='qxkey']" />
+<!--    <xsl:param name="qxkey" select="utils:params('qxkey',())" />-->
     <xsl:param name="params" select="$params" />
     
     <xsl:variable name="q-list" >
@@ -150,11 +151,16 @@
       <result type="multi">
         <!-- put the original (got via param q) result itself into the multiresult -->
         <xsl:copy-of select="/"/>
+        
         <!-- run the other queries (qx) as separate requests and collect the sub-results -->
-        <xsl:for-each select="exsl:node-set($q-list)/*" >
-        <!-- try to match qkeys based on their position - hoping for parallel ordering of qx and qxkey -->  
-          <xsl:variable name="qkey" select="$qkey-list[not(.='')][position()=current()/position()]"></xsl:variable>
-<!--          <xsl:message>DEBUGqxkey1:<xsl:value-of select="exists($qkey)" /></xsl:message>-->
+        <!--        <xsl:message><xsl:copy-of select="$q-list" /> </xsl:message>-->
+        <!--        <xsl:for-each select="exsl:node-set($q-list)/*" >-->
+        <xsl:for-each select="$q-list/*" >
+        
+        <!-- try to match qkeys based on their position - hoping for parallel ordering of qx and qxkey -->
+           <xsl:variable name="curr_pos" select="position()" />
+          <xsl:variable name="qkey" select="$qkey-list/*[not(.='')][position()=$curr_pos]"></xsl:variable>
+<!--                  <xsl:message><xsl:copy-of select="." /> DEBUGqxkey1:<xsl:copy-of select="$qkey-list/*" /></xsl:message>-->
           <xsl:call-template name="subrequest">
             <xsl:with-param name="q" select="."></xsl:with-param>
             <xsl:with-param name="qkey" select="$qkey"></xsl:with-param>
