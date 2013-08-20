@@ -466,12 +466,16 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
   
   /**
   * @param -
-  * purpose:    refreshes the scrollbar adjacent to the searchresult div
+  * purpose:    refreshes the scrollbar adjacent to the searchresult div. If the div isn't a jScrollPane yet
+  * it is initialised.
   * @return    -
   */
   this.RefreshScrollPane = function()
   {
-        var api = $(this.GetCssId()).find(".searchresults").data('jsp').reinitialise();
+       var api = $(this.GetCssId()).find(".searchresults").data('jsp');
+       if (api != undefined)
+          api.reinitialise();
+       else this.InitScrollPane();
   };
 
   /**
@@ -533,16 +537,16 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
   {
     var elem = this.GetCssId();
 
-    if ($(elem).find(".searchresults").data('jsp') != undefined)
+    var resultPane = $(elem).find(".searchresults");
+    if (resultPane.data('jsp') != undefined)
     {
-      $(elem).find(".searchresults").data('jsp').getContentPane().html('<img src="' + this.Url + '" />');
-      this.RefreshScrollPane(elem);
+      resultPane = resultPane.data('jsp').getContentPane();
     }
-    else
-    {
-      $(elem).find(".searchresults").html('<img src="' + this.Url + '" />');
-      this.InitScrollPane(elem);
-    }
+    resultPane.html('<img src="' + this.Url + '" class="facsimile-img"/>');
+    var caller = this;
+    $(".facsimile-img").load(function(){
+    	caller.RefreshScrollPane();
+    });
   };
 
   /**
@@ -558,7 +562,13 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
     var sele = parseInt($(parElem).find(".searchcombo").val());
 
     //  empty result-pane and indicate loading
-    $(parElem).find(".searchresults").addClass("cmd loading").text("");
+    var resultPane = $(parElem).find(".searchresults").addClass("cmd loading");
+    if (resultPane.data('jsp') != undefined)
+    {
+       resultPane = resultPane.data('jsp').getContentPane();
+    }
+    resultPane.text("");
+    PanelController.RefreshScrollPane(panelId);
     $(parElem).find(".hitcount").text("-");
 
     // get batch start and size
@@ -588,8 +598,7 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
         data : {operation: 'searchRetrieve', query: sstr, 'x-context': xcontext, 'x-format': 'html', version: '1.2', maximumRecords: max, startRecord: start},
         complete: function(xml, textStatus)
         {
-          var resultPane = $(parElem).find(".searchresults");
-          resultPane.removeClass("cmd loading");
+          $(parElem).find(".searchresults").removeClass("cmd loading");;
 
           var hstr = xml.responseText;
           hstr = hstr.replace(/&amp;/g, "&");
