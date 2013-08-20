@@ -600,7 +600,11 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
         {
           $(parElem).find(".searchresults").removeClass("cmd loading");;
 
-          var hstr = xml.responseText;
+          var hstr;
+          if (xml.responseText != undefined)
+             hstr = xml.responseText;
+          else
+             hstr = xml.statusText;
           hstr = hstr.replace(/&amp;/g, "&");
 
           // init or refresh scrollbars
