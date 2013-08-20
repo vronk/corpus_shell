@@ -1,11 +1,11 @@
 <?php
 /* vim: set expandtab tabstop=4 shiftwidth=4: */
 // +----------------------------------------------------------------------+
-// | PHP version 4.0                                                      |
+// | PHP version 4.3.x (and higher), tested with 5.1.4                    |
 // +----------------------------------------------------------------------+
-// | Copyright (c) 2002 Active Fish Group                                 |
+// | Copyright (c) 2002-2006 Kelvin Jones, Claus van Beek, Stefan Deussen |
 // +----------------------------------------------------------------------+
-// | Authors: Kelvin Jones <kelvin@kelvinjones.co.uk>                     |
+// | Authors: Kelvin Jones, Claus van Beek, Stefan Deussen                |
 // +----------------------------------------------------------------------+
 //
 // $Id: debug.php,v 1.5 2003/03/03 13:46:47 releasedj Exp $
@@ -18,7 +18,7 @@
  * functions are private. This will be cleaned up in the future but it's quite
  * far down the priority list. It works, and right now, that's what counts.
  *
- * @author Kelvin Jones <kelvin@kelvinjones.co.uk>
+ * @author Kelvin Jones, Claus van Beek, Stefan Deussen
  * @since 21/01/2002
  * @package vLIB
  * @access public
@@ -32,6 +32,9 @@ class vlibTemplateDebug extends vlibTemplate {
 
     var $VLIBTEMPLATE_DEBUGMOD = './vlibTemplate/vlibTemplate_debugmod.html';
     var $VLIBTEMPLATE_DEBUGWRAPPER = './vlibTemplate/vlibTemplate_debugmodwrapper.html';
+	// 2006-08-12, SD: new option 'DEBUG_WITHOUT_JAVASCRIPT'
+    var $VLIBTEMPLATE_DEBUGMOD_NO_JAVASCRIPT = './vlibTemplate/vlibTemplate_debugmod_no_javascript.html';
+	var $VLIBTEMPLATE_DEBUGWRAPPER_NO_JAVASCRIPT = './vlibTemplate/vlibTemplate_debugmodwrapper_no_javascript.html';
 
     /**
      * boolean var prints out vlibTemplate debug module
@@ -56,7 +59,15 @@ class vlibTemplateDebug extends vlibTemplate {
      * @access private
     */
     function doDebug() {
-        $vLIBtmpl = new vlibTemplate ($this->VLIBTEMPLATE_DEBUGMOD);
+		// 2006-08-12, SD: new option 'DEBUG_WITHOUT_JAVASCRIPT'
+		if($this->OPTIONS['DEBUG_WITHOUT_JAVASCRIPT'])
+        {
+			$vLIBtmpl = new vlibTemplate ($this->VLIBTEMPLATE_DEBUGMOD_NO_JAVASCRIPT);
+		}
+		else
+		{
+			$vLIBtmpl = new vlibTemplate ($this->VLIBTEMPLATE_DEBUGMOD);
+		}
 
         // set vars needed for JavaScript in popup window
         $filename_enc = md5($this->_tmplfilename);
@@ -194,7 +205,15 @@ class vlibTemplateDebug extends vlibTemplate {
         // finally grab and echo in JS formatted way
         $output = $vLIBtmpl->grab();
 
-        $wrapper_tmpl = new vlibTemplate($this->VLIBTEMPLATE_DEBUGWRAPPER);
+        // 2006-08-12, SD: new option 'DEBUG_WITHOUT_JAVASCRIPT'
+		if($this->OPTIONS['DEBUG_WITHOUT_JAVASCRIPT'])
+        {
+			$wrapper_tmpl = new vlibTemplate($this->VLIBTEMPLATE_DEBUGWRAPPER_NO_JAVASCRIPT);
+		}
+		else
+		{
+			$wrapper_tmpl = new vlibTemplate($this->VLIBTEMPLATE_DEBUGWRAPPER);
+		}
 
         $filename = $this->_tmplfilename;
         $filename = str_replace('\\', "\\\\", $filename);
@@ -206,7 +225,15 @@ class vlibTemplateDebug extends vlibTemplate {
         $wrapper_tmpl->setVar('filename', $filename);
         $wrapper_tmpl->setvar('filename_enc', $filename_enc);
         $wrapper_tmpl->setvar('securecode', md5(time()));
-        $wrapper_tmpl->setVar('debug_content', $this->enjavanate($output, 120));
+		// 2006-08-12, SD: new option 'DEBUG_WITHOUT_JAVASCRIPT'
+		if($this->OPTIONS['DEBUG_WITHOUT_JAVASCRIPT'])
+		{
+			$wrapper_tmpl->setVar('debug_content', $output);
+		}
+		else
+		{
+			$wrapper_tmpl->setVar('debug_content', $this->enjavanate($output, 120));
+		}
         $wrapper_tmpl->pparse();
     }
 
