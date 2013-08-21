@@ -11,7 +11,9 @@
     <xsl:import href="dataset2table.xsl"/>
     <xsl:import href="../utils.xsl"/>
     <!--  method="xhtml" is saxon-specific! prevents  collapsing empty <script> tags, that makes browsers choke -->
-    <xsl:output method="html" media-type="text/xhtml" indent="yes" encoding="UTF-8" doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"/>
+    <!-- doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN" -->
+    <xsl:output method="html" media-type="text/xhtml" indent="yes" encoding="UTF-8" />
+    
     <xsl:include href="../commons_v2.xsl"/>
 
     <xsl:param name="site_logo" select="'scripts/style/imgs/clarin-logo.png'"/>
