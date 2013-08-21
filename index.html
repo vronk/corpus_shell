@@ -1,33 +1,44 @@
+<!DOCTYPE html>
 <html>
   <head>
-   <!-- <link rel="stylesheet" type="text/css" href="scripts/style/base/jquery.ui.all.css" />
-     <link rel="stylesheet" type="text/css" href="scripts/style/demos.css" /> -->
+  	<!-- Tell IE we want as standard conform a behavior as possible! -->
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
     <link rel="stylesheet" type="text/css" href="scripts/style/base/jquery.ui.css" />
     <link rel="stylesheet" type="text/css" href="scripts/style/base/jquery.ui.resizable.css" />
-    <link rel="stylesheet" type="text/css" href="scripts/style/jquery.sbscroller.css" />
+<!--    <link rel="stylesheet" type="text/css" href="scripts/style/jquery.sbscroller.css" /> -->
+    <link rel="stylesheet" type="text/css" href="scripts/style/jquery.jscrollpane.css"/>
     <link rel="stylesheet" type="text/css" href="scripts/style/corpusshell.css" />
-
+    
+    <!-- jQuery 1.8.x (3) -->
     <script type="text/javascript" src="scripts/js/jquery/jquery.min.js"></script>
-    <script type="text/javascript" src="scripts/js/ui/jquery.ui.core.js"></script>
-    <script type="text/javascript" src="scripts/js/ui/jquery.ui.widget.js"></script>
-    <script type="text/javascript" src="scripts/js/ui/jquery.ui.mouse.js"></script>
-    <script type="text/javascript" src="scripts/js/ui/jquery.ui.draggable.js"></script>
-    <script type="text/javascript" src="scripts/js/ui/jquery.ui.resizable.js"></script>
-    <script type="text/javascript" src="scripts/js/ui/jquery.ui.autocomplete.js"></script>
-    <script type="text/javascript" src="scripts/js/json.js"></script>
-    <script type="text/javascript" src="scripts/js/panel.js"></script>
-    <script type="text/javascript" src="scripts/js/jquery/jquery.store.js"></script>
-    <script type="text/javascript" src="scripts/js/jquery/jquery.mousewheel.min.js"></script>
+    <!-- jQuery UI 1.8.x (24) -->
     <script type="text/javascript" src="scripts/js/jquery/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="scripts/js/jquery/jquery.sbscroller.js"></script>
+    <script type="text/javascript" src="scripts/js/json.js"></script>
+    <!-- A mous wheel support plugin -->
+    <script type="text/javascript" src="scripts/js/jquery/jquery.mousewheel.min.js"></script>
+    <!-- An MIT/GPL licensed library for creating scrollable areas on the fly -->
+    <script type="text/javascript" src="scripts/js/jquery/jquery.jscrollpane.min.js"></script>
+    <!-- jQuery plugin that provides special handling for special IE 8 and IE 9 CORS behavior -->
+    <script type="text/javascript" src="scripts/js/jquery/jquery.xdomainrequest.min.js"></script>
+    
+    <!-- corpus_shell code -->
+    <!-- basic parameters: URL of this page and url of the AJAX provider switch -->
     <script type="text/javascript" src="scripts/js/params.js"></script>
+    <!-- static default replacement for corpusshell.config.php, last updated 2013-07-26 -->
+    <script type="text/javascript" src="scripts/js/corpusshell.config.js"></script>
+    <!-- dynamic configuration of available targets. This php script returns javascript.
+    	The ICLTT version lives at http://corpus3.aac.ac.at/cs2/corpus_shell/scripts/js/corpusshell.config.php. -->
+    <script type="text/javascript" src="http://corpus3.aac.ac.at/cs2/corpus_shell/scripts/js/corpusshell.config.php"></script>    
     <script type="text/javascript" src="scripts/js/corpusshell.config.php"></script>
+    
     <script type="text/javascript" src="scripts/js/profilemanager.js"></script>
+    <script type="text/javascript" src="scripts/js/panel.js"></script>
     <script type="text/javascript" src="scripts/js/panelmanager.js"></script>
     <script type="text/javascript" src="scripts/js/ressourcemanager.js"></script>
     <script type="text/javascript" src="scripts/js/corpusshell.js"></script>
+    <title>ICLTT Corpus Shell</title>
   </head>
   <body>
     <div id="sidebar">
@@ -67,10 +78,11 @@
      		 </tr>
      	</table>
     </div>
-    <div id="messagebox"></div>
-
+    <div id="messagebox">
+    </div>
 <div class="demo" id="mainpanel">
     <div id="snaptarget" class="ui-widget-header">
+    	<!-- The dynamically generated content of this page is inserted here at runtime.-->
     </div>
 </div>
 

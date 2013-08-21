@@ -1,34 +1,197 @@
 <?php
-  //configuration script for the SRU scripts
-
+/**
+ * Common configuration variables
+ * 
+ * Configuration script for the SRU scripts, server side user data storage and
+ * the fcs aggregator and transformer.
+ * @package config
+ */
+  
+ /**
+   * HTTP server's document path on the server's file system
+   * 
+   * The root of the directory containing the files that can be
+   * retrieved from this server.
+   * FIXME: Why does this need to be writen down here?
+   * @global string $docRoot
+   */
   $docRoot =                 '/srv/www/htdocs/';
-  $csRoot =                  'cs2/corpus_shell/';
+  
+  /**
+   * corpus_shell's directory (or path) on the web server
+   * 
+   * The path where the corpus_shell HTML application resides.
+   * @global string $csRoot 
+   */
+  $csRoot =                  'corpus_shell/';
+  
+  /**
+   * Server's file system location of the server side modules  
+   * 
+   * The path where the php (and perl) modules reside which
+   * actually retrieve the data stored in mysql or ddc or
+   * or the switch that provides a central endpoint.
+   * @global string $fcsRoot
+   */
   $fcsRoot =                 $docRoot . $csRoot . 'fcs/';
-  //db connection data
+  
+  /**
+   * DB connection data configuration
+   * 
+   * A file that contains the confidential data used
+   * by the scripts that access a mysql database. Not provided in the public
+   * repository.
+   * @global string $dbConfigFile
+   */
   $dbConfigFile =            $docRoot . 'sru/dbconfig.php';
 
   //template files
-  $diagnosticsTemplate =     $fcsRoot . 'utils/php/templates/sru_diagnostics_template.xml';
-  $responseTemplateFcs =     $fcsRoot . 'utils/php/templates/sru_response_template_fcs.xml';
-  $responseTemplate =        $fcsRoot . 'utils/php/templates/sru_response_template.xml';
-  $explainTemplate =         $fcsRoot . 'utils/php/templates/explain.xml';
-  $explainSwitchTemplate =   $fcsRoot . 'utils/php/templates/switch_explain.xml';
-//$scanCollectionsTemplate = $fcsRoot . 'utils/php/templates/scan_collections.xml';
-  $scanCollectionsTemplate = $fcsRoot . 'utils/php/templates/sru_scan_collections_template.xml';
+  /**
+   * Diagnostic message template file
+   * 
+   * Path to the diagnostics template which is used to convey infomation about
+   * malformed requests back to the user as required by the SRU Base Profile.
+   * See also: {@link http://www.loc.gov/standards/sru/specs/base-profile.html} and
+   * {@link http://www.loc.gov/standards/sru/specs/diagnostics.html}
+   * @global string $diagnosticsTemplate
+   */
+  $diagnosticsTemplate =     $fcsRoot . 'utils-php/templates/sru_diagnostics_template.xml';
+  /**
+   * FCS Resource response template file
+   * 
+   * See also:
+   * @global string $responseTemplateFcs
+   */
+  $responseTemplateFcs =     $fcsRoot . 'utils-php/templates/sru_response_template_fcs.xml';
+  /**
+   * Search response template file
+   * 
+   * See also:
+   * @global string $responseTemplate
+   */
+  $responseTemplate =        $fcsRoot . 'utils-php/templates/sru_response_template.xml';
+  /**
+   * Explain request response template file for a particular resource
+   * 
+   * See also:
+   * @global string $explainTemplate
+   */
+  $explainTemplate =         $fcsRoot . 'utils-php/templates/explain.xml';
+  /**
+   * Explain request response template file for the switch
+   * 
+   * See also:
+   * @global string $explainSwitchTemplate
+   */
+  $explainSwitchTemplate =   $fcsRoot . 'utils-php/templates/switch_explain.xml';
+//$scanCollectionsTemplate = $fcsRoot . 'utils-php/templates/scan_collections.xml';
+  /**
+   * Scan request response template file for a particular collection
+   * 
+   * See also:
+   * @global string $scanCollectionsTemplate
+   */
+  $scanCollectionsTemplate = $fcsRoot . 'utils-php/templates/sru_scan_collections_template.xml';
 
-  //path to template engine
-  $vlibPath =                $fcsRoot . 'utils/php/vlib/vlibTemplate.php';
+  /** 
+   * Path to the vlibTemplate engine
+   * 
+   * @global string $vlibPath
+   */
+  $vlibPath =                $fcsRoot . 'utils-php/vlib/vlibTemplate.php';
 
-  //required values for the templates
+  /**
+   * The schema the fcs resource respons adheres to
+   * 
+   * Required values for the templates: The currently used schema for the
+   * fcs compliant resource declaration.
+   * @global string $recordSchema
+   */
   $recordSchema =            "http://clarin.eu/fcs/1.0/Resource.xsd";
+  
+  /**
+   * The version of SRU the software supports
+   * 
+   * Required values for the templates: The version of SRU currently
+   * implemented. This also is a mandatory parameter even if we only
+   * support this particular version.
+   * See also: {@link http://www.loc.gov/standards/sru/} 
+   * @global string $version
+   */  
   $version =                 "1.2";
 
-  $localhost =               "corpus3.aac.ac.at";
+  /**
+   * The hostname of the wev server
+   * 
+   * To speed up xslt the servername ist replaced by "localhost"
+   * FIXME: And that works how exactly?
+   * @global string $localhost
+   */
+  $localhost =               "www.example.org";
+  /**
+   * Web location of the corpus_shell HTML application
+   * 
+   * @global string $webRoot
+   */
   $webRoot =                 "http://" . $localhost . "/" . $csRoot;
-  $switchUrl =							 $webRoot . "fcs/aggregator/switch.php";
-  $scriptsUrl =              $webRoot . "scripts";  
-  $fcsConfig =               $fcsRoot . "aggregator/fcs.resource.config.php";
-  $switchConfig =            $fcsRoot . "aggregator/switch.config";
+  /**
+   * Web location of the switch
+   * 
+   * The switch provides a single endpoint for different possible upstream
+   * endpoints and enhances their responses to provide additional formats for
+   * retrieval like HTML snippets used by corpus_shell's AJAX
+   * @global string $switchUrl
+   */
+  $switchUrl =               "http://" . $localhost . "/" . $csRoot ."/modules/fcs-aggregator/switch.php";
+  /**
+   * Web location of corpus_shells JavaScript and CSS scripts
+   * 
+   * @global string $scriptsUrl
+   */
+  $scriptsUrl =              $webRoot . "scripts";
+  /**
+   * Server's file system location for an FCS reply configuration file
+   * 
+   * TODO What is the prupose of this?
+   * @global string $fcsConfig
+   */
+  $fcsConfig =               $fcsRoot . "fcs-aggregator/fcs.resource.config.php";
+  /**
+   * Server's file system location of the configuration file for the switch
+   * 
+   * @global string $switchConfig
+   */
+  $switchConfig =            $fcsRoot . "fcs-aggregator/switch.config";
+  /**
+   * Server's file system location of a file providing additional information of resources for corpus_shell
+   * 
+   * @global string $indexCacheFileName
+   */
   $indexCacheFileName =      $docRoot . $csRoot . "scripts/js/indexCache.json";
-
+  /**
+   * Server's file system of a directory for server side persistence in corpus_shell
+   * 
+   * Location for storing JSON data files which represent the server side persistence of corpus_shell.
+   * @global string $userdataPath
+   */
+  $userdataPath =            $fcsRoot . "userdata/data/";
+  
+  /**
+   * Configuration for the ddc gateway scripts
+   * 
+   * @global string $ddcConfig
+   */
+  $ddcConfig =               $fcsRoot . "ddconsru/ddc.config";
+  /**
+   * XML resource description for resources reached via ddc
+   * 
+   * @global string $ddcConfigXml
+   */
+  $ddcConfigXml =            $fcsRoot . "ddconsru/tmpl/sru_scan_fcs.resource.xml";
+  /**
+   * XSL for resource description for resources reached via ddc
+   * 
+   * @global string $ddcConfigXsl
+   */
+  $ddcConfigXsl =            $fcsRoot . "ddconsru/tmpl/sru_scan_fcs.resource.xsl";
 ?>

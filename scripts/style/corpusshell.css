@@ -3,14 +3,20 @@
   height: 100%;
 }
 
+html
+{
+	height: 100%;
+	width: 100%;
+	background-color: #CCCCCC;
+    font-family: verdana, helvetica, serif;
+    font-size: 11px;
+}
 body
 {
   height: 100%;
+  width: 100%;
   margin: 0px;
   padding: 0px;
-  background-color: #CCCCCC;
-  font-family: verdana, helvetica, serif;
-  font-size: 11px;
 }
 
 table { font-size: 11px;}
@@ -49,6 +55,9 @@ td.sidebar h3
  font-weight bold;
  padding: 35px 10px 15px;
  background-color: #286290;
+ /* There is a default margin for h3 elements (14px). 
+  * As we don't use h3 in the usual way this has to be reset to 0 */
+ margin: 0;
 }
 
 td.sidebartoggle
@@ -70,6 +79,14 @@ td.sidebartoggle
   /* border: 1px solid #FFFFFF; */
   position: absolute;
   left: -300px;
+}
+
+a.internal
+{
+  color: #000000;
+  background-color: transparent;
+  text-decoration:none;
+  text-align: left;
 }
 
 a.sidebar:link, a.sidebar:active, a.sidebar:visited
@@ -253,10 +270,10 @@ div.profiletext h4 { font-size: 13px; border-bottom: 1px solid #A82027; }
     width: 15px;
 }
 
-.cmd {	display: inline-block; 	width: 16px;	height: 16px;		background: no-repeat center center;
+.cmd {	display: inline-block; 	width: 100%;	height: 100%;		background: no-repeat center center;
 			margin: 0px 1px;	position: relative;	top: 2px; }
 
-.loading { background-image: url("img/icon_get.gif");}
+.loading { background-image: url("img/icon_get.gif"); }
 
 .kw.hilight { background-color: #aaffaa; }
 
