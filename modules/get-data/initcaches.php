@@ -1,16 +1,20 @@
 <?php
-  /*
-    this script generates php cache files that are used to speed up xml or
-    image delivery.
+  /**
+   * this script generates php cache files that are used to speed up xml or
+   * image delivery.
+   *
+   * an additionial advantage of these caches is the fact that the array items
+   * are sorted before they are saved to disc. hence its very easy to get the
+   * previous/next entry/file.
+   *
+   * @package get-data-caching
+   * @copyright 2012-feb
+   * @author Andy Basch
+   */
 
-    an additionial advantage of these caches is the fact that the array items
-    are sorted before they are saved to disc. hence its very easy to get the
-    previous/next entry/file.
-
-    2012-feb by Andy Basch
-    */
-
-  //paths and files
+  /**
+   * paths and files
+   */
   include "cacheconfig.php";
 
   //recursive file search
