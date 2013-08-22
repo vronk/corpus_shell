@@ -1,20 +1,49 @@
 <?php
-  //if $sruMode is set to strict all mandatory params get checked and
-  //an error message is returned if one is missing (eg. version param
-  //not provided)
+  /**
+   * Switch script that queries upstream resources and enhances their response
+   * if requested
+   * 
+   * Uses the file named in $fcsConfig if it exists.
+   * @uses $fcsConfig
+   * @package fcs-aggregator
+   */
+   
+  /**
+   * Determines how parameters are checked
+   * 
+   * If $sruMode is set to "strict" all mandatory params get checked and
+   * an error message is returned if one is missing (eg. version param
+   * not provided). If it's set to anything else eg. "loose" the script
+   * just tries to fulfill the request on a best effort bases.
+   * @global string $sruMode 
+   */
   $sruMode = "strict";
-  //$sruMode = "loose";
 
-  //definition of constants
+  /**
+   * If there is the $fcsConfig file is loaded.
+   * 
+   * If this file is loaded the $configName cache
+   * variable is available.
+   * @global bool $fcsConfigFound
+   */
   $fcsConfigFound = false;
 
-  //load config file
+  /**
+   * Load the common config file
+   */
   include "../utils-php/config.php";
 
-  //needed to return sru compliant error messages
+  /**
+   * Common implementation for needed to return sru compliant error messages
+   */
   include "../utils-php/diagnostics.php";
 
-  //array containing default xsl style sheets
+  /**
+   * Array (a map) containing default xsl style sheets
+   * 
+   * The keys for the map are searchRetrieve, scan, explain and default.
+   * @global array $globalStyles
+   */
   $globalStyles = array ("searchRetrieve" => "", "scan" => "", "explain" => "", "default" => "");
 
   //import fcs configuration cache
@@ -24,8 +53,13 @@
     $fcsConfigFound = true;
   }
 
-  //returns the node value of the first fitting tag with $tagName
-  //processes the descendants of $node only
+  /**
+   * Get the node value of the first occurrence of $tagName
+   * in the children of $node
+   * @param DOMNode $node The Node at which the search is started.
+   * @param string $tagName The tag to search for.
+   * @return string The value of the tag if found else the empty string "" is returned.
+   */
   function GetNodeValue($node, $tagName)
   {
      $list = $node->getElementsByTagName($tagName);
@@ -36,10 +70,17 @@
      }
      return "";
   }
-
-  //returns the node value of the first fitting tag with $tagName
-  //that has an attribute $attr with the value $attrValue
-  //processes the descendants of $node only
+  
+  /**
+   * Get the node value of the first occurrence of a $tagName that has an attribute $attr with the value $attrValue
+   * 
+   * processes the descendants of $node only
+   * @param DOMNode $node The Node at which the search is started.
+   * @param string $tagName The tag to search for.
+   * @param string $attr The attribute to search for.
+   * @param string $attrValue The attribure value to search for.
+   * @return string Returns the node value of the first fitting tag with $tagName with $attr which has $attrValue
+   */
   function GetNodeValueWithAttribute($node, $tagName, $attr, $attrValue)
   {
      $list = $node->getElementsByTagName($tagName);
@@ -63,7 +104,14 @@
      return "";
   }
 
-  //get default xsl style sheets
+  /**
+   * Get default xsl style sheets
+   * 
+   * Loads $switchConfig as an XML DOM, uses XPath to fetch styles elements and
+   * fills the settings into the $globalStyles array.
+   * @uses $switchConfig
+   * @uses $globalStyles
+   */
   function GetDefaultStyles()
   {
     global $switchConfig;
@@ -88,9 +136,18 @@
     }
   }
 
-  //opens $switchConfig and searches for an <item> with a <name> value that
-  //equals $context - returns configuration infos for the found node in
-  //an array
+  /**
+   * Opens $switchConfig and searches for an element item with an element name value that
+   * equals $context - returns configuration infos for the found node in
+   * an array.
+   * If context is not found in switch.config $configName is used to look up the information
+   * if it exists.
+   * @uses $switchConfig
+   * @uses $fcsConfigFound
+   * @uses $configName
+   * @param string $context An internal ID for a resource.
+   * @return array|false An array (a map) containing "name" (the internal id), "type" (of the resource), "uri" and "style" (the stylesheet to use with the resource).
+   */
   function GetConfig($context)
   {
     global $switchConfig;
@@ -113,8 +170,6 @@
        }
     }
 
-    //context not found in switch.config
-    //have a look in fcsConfig - if it does exist!
     global $fcsConfigFound;
 
     if ($fcsConfigFound)
@@ -131,9 +186,16 @@
     return false;
   }
 
-  //returns every entry from switch.config and also all
-  //entries from fcs.resource.config.php
-  //used in ReturnScan();
+  /**
+   * Return all known resources
+   * 
+   * Returns every entry from switch.config and also all
+   * entries from fcs.resource.config.php.
+   * @uses $switchConfig
+   * @uses $fcsConfigFound
+   * @uses $configName
+   * @return array An array that contains for every resource the "name" (the internal id) and the "label" (the human intelligable name).
+   */
   function GetCompleteConfig()
   {
     global $switchConfig;
@@ -177,14 +239,25 @@
     return $configArray;
   }
 
-  //like file_exists() but working with urls
+  /**
+   * Analog to file_exists() this function tests if a given $url does exist
+   * @param string $url A URL to be testes.
+   * @return bool If $url is reachable or not.
+   */
   function url_exists($url)
   {
       $handle = @fopen($url,'r');
       return ($handle !== false);
   }
 
-  //fills the sru_scan_template with all configured endpoints
+  /**
+   * Fills the $scanCollectionsTemplate with all configured endpoints
+   * 
+   * Returns the expanded template to the client.
+   * @uses $scanCollectionsTemplate
+   * @uses $vlibPath
+   * @param string $version A version that is inserted into the template.
+   */
   function ReturnScan($version)
   {
     global $scanCollectionsTemplate;
@@ -214,7 +287,13 @@
     $tmpl->pparse();
   }
 
-  //reads file $explainSwitchTemplate and returns it
+  /**
+   * Reads the $explainSwitchTemplate and returns it
+   * 
+   * The file is just read from disk, as this doesn't need to be filled.
+   * content-type text/xml and charset UTF-8 are set for the answer.
+   * @uses $explainSwitchTemplate
+   */
   function ReturnExplain()
   {
     global $explainSwitchTemplate;
@@ -223,14 +302,28 @@
     readfile($explainSwitchTemplate);
   }
 
-  //concats $url with the given $paramName and $paramValue
+  /**
+   * Concats $url with the given $paramName and $paramValue
+   * 
+   * @param string url The parameter part of the URL. Initially it's assumed to be just ?
+   * @param string paramName A parameter name to be added.
+   * @param string paramValue A parameter value to be added.
+   * @return string A parameter part of a URL. Can be fed to this function again to add another parameter.
+   */
   function AddParamToUrl($url, $paramName, $paramValue)
   {
     return $url . ($url == "?" ? "" : "&") . "$paramName=$paramValue";
   }
 
-  //concats $url with the given $paramName and $paramValue like AddParamToUrl
-  //but adds parameter checking
+  /**
+   * Concats $url with the given $paramName and $paramValue
+   * 
+   * Like AddParamToUrl but adds parameter checking.
+   * @param string url The parameter part of the URL. Initially it's assumed to be just ?
+   * @param string paramName A parameter name to be added.
+   * @param string paramValue A parameter value to be added.
+   * @return string A parameter part of a URL. Can be fed to this function again to add another parameter.
+   */
   function AddParamToUrlIfNotEmpty($url, $paramName, $paramValue)
   {
     if (($paramValue !== false) && ($paramValue != ""))
@@ -239,7 +332,28 @@
     return $url;
   }
 
-  //generates the query url including all mandatory and optional params
+  /**
+   * Generates the query url including all mandatory and optional params
+   * 
+   * @uses $operation
+   * @uses $query
+   * @uses $scanClause
+   * @uses $responsePosition
+   * @uses $maximumTerms
+   * @uses $version
+   * @uses $maximumRecords
+   * @uses $startRecord
+   * @uses $recordPacking
+   * @uses $recordSchema
+   * @uses $resultSetTTL
+   * @uses $stylesheet
+   * @uses $extraRequestData
+   * @uses $xformat
+   * @param string $endPoint The (upstream) endpoint for the query URL
+   * @param string $xcontext The x-context for the query URL
+   * @param string type If "fcs.resource" or "fcs" x-context is used else ignored.
+   * @return string A URL string that can be used to execute the query.
+   */
   function GetQueryUrl($endPoint, $xcontext, $type)
   {
     //get params
@@ -311,14 +425,27 @@
     return $endPoint . $urlStr;
   }
 
-  //to speed up local queries the local servername ($localhost) is replaced
-  //by the term "localhost"
+  /**
+   * To speed up local queries the local servername (contained in $localhost) is replaced
+   * by the term "127.0.0.1"
+   * @uses $localhost
+   * @param string $url A URL as input.
+   * @return string The input URL with the hostname set to 127.0.0.1 if it matches $localhost.
+   */
   function ReplaceLocalHost($url)
   {
     global $localhost;
     return str_replace($localhost, "127.0.0.1",  $url);
   }
 
+  /**
+   * Returns the XML DOM representation of the document at the URL passed as parameter
+   * 
+   * @uses ReplaceLocalHost()
+   * @uses url_exists()
+   * @param string $url A URL from which the document should be fetched.
+   * @return DOMDocument|false Returns either the XML DOM representation or false.
+   */
   function GetDomDocument($url)
   {
     $url = ReplaceLocalHost($url);
