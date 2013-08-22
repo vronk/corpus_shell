@@ -32,3 +32,18 @@ Workspace
 ResourceViewer
     separate ui-components that are able to display/visualize specific resource types. 
     (Currently we have only the basic XSL-transformed HTML-views of the results returned by the services)
+
+****************************
+How to install this software
+****************************
+
+Simple answer
+    This is easy if you just want to see what corpus_shell does if you point your browser at it and perhaps change
+    some of it's behaviour to your needs by adapting the JavaScript, CSS and perhaps HTML parts: There is nothing to do
+    but open index.html right from where you downloaded it. All your settings stay local in your browser and you query
+    the publicly available projects at ICLTT's server.
+    
+Advanced answer
+	If you want to expose your own data to the world then it gets way more complicated. You need a server capable of interpreting
+	PHP 5.3 or better and perhaps an exsit-db or mysql/mariadb database for storing and retrieving your data. Detailed instructions
+	on how to do such a setup (may) follow (soon).  

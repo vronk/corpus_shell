@@ -1,10 +1,8 @@
-/**
-*
-*  Javascript sprintf
-*  http://www.webtoolkit.info/
-*
-*
-**/
+//
+// Javascript sprintf
+// http://www.webtoolkit.info/
+//
+//
 
 sprintfWrapper = {
 

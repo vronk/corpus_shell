@@ -1,18 +1,29 @@
 <?php
+/**
+ * This file script is used to provide the data sored for some user
+ * in a server side storage.
+ * 
+ * Expects an uid as a POST parameter, returns a file with that name from 
+ * $userdatapath which has a json ending. The mime type is set accordingly.
+ * @uses $userdataPath
+ * @see getUserId.php
+ * @package user-data
+ */
+ 
   header('Content-type: application/json');
-  
+
+/**
+ * Uses the common modules config file.
+ */
   include "../utils-php/config.php";
 
+// use POST
   if (isset($_POST['uid']) && trim($_POST['uid']) != "")
+// use GET
 //  if (isset($_GET['uid']) && trim($_GET['uid']) != "")
   {
-     //moved to config.php
-    //$path = $docRoot.$csRoot."main/utils/userdata/";
-
     $uid = trim($_POST['uid']);
-    //$uid = trim($_GET['uid']);
     $filename = $userdataPath . $uid . ".json";
-//print $filename;
     if (file_exists($filename))
     {
       readfile($filename);
