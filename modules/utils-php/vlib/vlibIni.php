@@ -1,23 +1,21 @@
 <?php
-/* vim: set expandtab tabstop=4 shiftwidth=4: */
-// +----------------------------------------------------------------------+
-// | PHP version 4.0                                                      |
-// +----------------------------------------------------------------------+
-// | Copyright (c) 2002 Active Fish Group                                 |
-// +----------------------------------------------------------------------+
-// | Authors: Kelvin Jones <kelvin@kelvinjones.co.uk>                     |
-// +----------------------------------------------------------------------+
-//
-// $Id: vlibIni.php-dist,v 1.5 2003/10/02 11:16:53 releasedj Exp $
+
+// +------------------------------------------------------------------------+
+// | PHP version 5.x, tested with 5.1.4, 5.1.6, 5.2.6                       |
+// +------------------------------------------------------------------------+
+// | Copyright (c) 2002-2008 Kelvin Jones, Claus van Beek, Stefan Deussen   |
+// +------------------------------------------------------------------------+
+// | Authors: Kelvin Jones, Claus van Beek, Stefan Deussen                  |
+// +------------------------------------------------------------------------+
 
 /*
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; This file contains configuration parametres for use  ;
-; with the vLIB library. [ NOW A CLASS!! ]             ;
+; with the vLIB library.                               ;
 ;                                                      ;
 ; vLIB uses this file so that for future releases, you ;
 ; will not have to delve through all the php script    ;
-; again to set your specific variable/properties ..etc ;
+; again to set your specific variable/properties .etc  ;
 ;                                                      ;
 ; ---------------------------------------------------- ;
 ; ATTENTION: Do NOT remove any variable given in the   ;
@@ -27,28 +25,26 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 */
 
-if (!defined('vlibIniClassLoaded')) {
-    define('vlibIniClassLoaded', 1);
+if (!defined('vlibIniClassLoaded'))
+{
+	define('vlibIniClassLoaded', 1);
 
-    /**
-     * vlibIni is a class used to store configuration parameters
-     * for the vLIB library.
-     *
-     * @since 21/07/2002
-     * @author Kelvin Jones <kelvin@kelvinjones.co.uk>
-     * @package vLIB
-     * @access private
-     */
+	/**
+	 * vlibIni is a class used to store configuration parameters
+	 * for the vLIB library.
+	 *
+	 * @since 2002-07-21
+	 * @package vLIB
+	 * @access private
+	 */
 
     class vlibIni {
 
         /** config vars for vlibTemplate */
-        function vlibTemplate () {
+        public static function vlibTemplate () {
 
             return array(
-
-                        'TEMPLATE_DIR' => '/srv/www/htdocs/ttest',   // Default directory for your template files (full path)
-                                                                   // leave the '/' or '\' off the end of the directory.
+				'TEMPLATE_DIR' => '/your/apache/document_root/htdocs', // Default directory for your template files (full path) leave the '/' or '\' off the end of the directory.
 
                         'MAX_INCLUDES' => 10,                      // Drill depth for tmpl_include's
 
@@ -84,23 +80,22 @@ if (!defined('vlibIniClassLoaded')) {
 
                         /* the following are only used by the vlibTemplateCache class. */
 
-                        'CACHE_DIRECTORY' => '/usr/local/apache/cgi-bin/vlibTemplateCache',
+				'CACHE_DIRECTORY' => '/tmp',
                                                                    // Directory where the cached filesystem
                                                                    // will be set up (full path, and must be writable)
                                                                    // '/' or '\' off the end of the directory.
 
                         'CACHE_LIFETIME' => 604800,                // Duration until file is re-cached in seconds (604800 = 1 week)
 
-                        'CACHE_EXTENSION' => 'vtc'                  // extention to be used by the cached file i.e. index.php will become
-                                                                   // index.vtc (vlibTemplate Compiled)
-                    );
+				'CACHE_EXTENSION' => 'vtc', // extention to be used by the cached file i.e. index.php will become index.vtc (vlibTemplate Compiled)
 
-        } // << end function vlibTemplate
-
+				'DEBUG_WITHOUT_JAVASCRIPT' => 0 // if set to 1, the external debug window won't be displayed and the debug output is placed below every template output.
+			);
+		} // << end method vlibTemplate
 
 
         /** config vars for vlibDate */
-        function vlibDate () {
+        public static function vlibDate () {
 
             return array(
                         'DEFAULT_LANG' => 'en'                     // default language for the date displays
@@ -110,7 +105,7 @@ if (!defined('vlibIniClassLoaded')) {
 
 
         /** config vars for vlibSearchToSQL */
-        function vlibSearchToSQL () {
+        public static function vlibSearchToSQL () {
 
             return array(
 

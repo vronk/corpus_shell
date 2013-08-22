@@ -1,85 +1,163 @@
-/*
- * subject:      Panel class
- * purpose:      represents a panel in corpus_shell
- *
- * dependencies: PanelManager/PanelController - panelmanager.js
- *               jQuery
- *
- * creator:      Andy Basch
+/**
+ * @fileOverview Provides the Panel class. Main entry points here are {@link module:corpus_shell~Panel#CreatePanel}.
+ * @author      Andy Basch,
  * last change:  2012.10.02
  */
 
-/** creates a panel in corpus_shell
-@constructor
-*/
+/**
+ * @module corpus_shell
+ */
+
+/**
+ * @typedef {Object} Position
+ * @property {number} Left
+ * @property {number} Top
+ * @property {number} Width
+ * @property {number} Height
+ */
+
+/**
+ * Creates a panel in corpus_shell.
+ * @constructor
+ * @param {string} id The unique id of this panel. Is a valid JavaScript objects property name.
+ * @param {string} type The type of this panel (currently known: search, image, )
+ * @param {string} title The intelligable title presented to the user. 
+ * @param {url} url A URL, may be an empty string.
+ * @param {Position} position The initial position of the panel.
+ * @param {boolean} pinned
+ * @param {number} zIndex The initial "height" at which this panel shall be displayed.
+ * @param {string} container A jQuery selector which selects the part of the page
+ *                           the pannels appear in
+ * @param {module:corpus_shell~PanelManager} panelController The object this panel belongs to.
+ * @param {number} config An index in {@link module:corpus_shell~SearchConfig}.
+ * @classdesc
+ * purpose:      represents a panel in corpus_shell
+ *
+ * @requires     corpus_shell~PanelManager
+ * @requires     corpus_shell~PanelController
+ * @requires     jQuery
+ */
 function Panel(id, type, title, url, position, pinned, zIndex, container, panelController, config)
 {
-  /* public properties */
+  /**
+   * @public
+   * @type {string}
+   * @desc Used as an id for an HTML element. 
+   */
   this.Id = id;
+  /** 
+   * @public
+   * @type {string}
+   * @desc One of search, image, 
+   */
   this.Type = type;
+  /**
+   * @public
+   * @type {string}
+   * @desc An intelligable title for this panel.
+   */
   this.Title = title;
+  /**
+   * @public
+   * @type {url}
+   * @desc A URL used for searching.
+   */
   this.Url = url;
+  /**
+   * @public
+   * @type {Position}
+   * @desc Position of the panel.
+   */
   this.Position = position;
+  /**
+   * @public
+   * @type {boolean}
+   * @desc If the panel is pinned or not. 
+   */
   this.Pinned = pinned;
+  /** 
+   * @public
+   * @type {number}
+   * @desc At which "height" in the stack of panels is this panel.
+   */
   this.ZIndex = zIndex;
+  /**
+   * @public
+   * @type {string}
+   * @desc A jQuery selector string which identifies the place where the panels are drawn. 
+   */
   this.Container = container;
+  /**
+   * The {@link module:corpus_shell~PanelManager} object this panel belongs to.
+   * @public 
+   */
   this.PanelController = panelController;
+  /**
+   * @public
+   * @type {number}
+   * @desc The index in {@link module:corpus_shell~SearchConfig} for the config to use in search operations.
+   */
   this.Config = config;
 
   /* methods */
 
-  //function:   this.CreatePanel()
-  //parameters: -
-  //purpose:    creates the actual DOM-object and appends it to this.Container
-  //            depending on the value of this.Type either this.CreateNewSearchPanel()
-  //            or this.CreateNewSubPanel() is called
-  //returns:    -
+  /**
+   * @param {string} [searchstr] A search string for a new search panel if one is actually created.
+   * @desc purpose: switch to create the actual DOM-object and to append it to {@link module:corpus_shell~Panel#Container}
+   *            depending on the value of {@link module:corpus_shell~Panel#Type} being search either {@link module:corpus_shell~Panel#CreateNewSearchPanel}
+   *            or {@link module:corpus_shell~Panel#CreateNewSubPanel} is called
+   * @return    -
+   */
   this.CreatePanel = function(searchstr)
   {
     if (this.Type == "search")
       this.CreateNewSearchPanel(this.Config, searchstr);
     else
       this.CreateNewSubPanel();
-  }
+  };
 
-  //function:   this.SetUrl(url)
-  //parameters: url - string containing an URL
-  //purpose:    sets the property this.Url and additionally sets the url in
-  //            this.PanelController
-  //returns:    -
+  /**
+  * @param url - string containing an URL
+  * purpose:    sets the property this.Url and additionally sets the url in
+  *             this.PanelController
+  * @return    -
+  */
   this.SetUrl = function(url)
   {
     this.Url = url;
     this.PanelController.SetPanelUrl(this.Id, url);
-  }
+  };
 
-  //function:   this.Close()
-  //parameters: -
-  //purpose:    closes the panel - ie remove it completelly from the DOM-tree
-  //returns:    -
+  /**
+  * @param -
+  * purpose:    closes the panel - ie remove it completelly from the DOM-tree
+  * @return    -
+  */
   this.Close = function()
   {
     $(this.GetCssId()).remove();
-  }
+  };
 
-  //postion handling
+  // postion handling
 
-  //function:   this.UpdatePosition()
-  //parameters: -
-  //purpose:    gets the current position and size of the panel DOM object and sets
-  //            the property this.Position
-  //returns:    -
+  /**
+  * @param -
+  * purpose:    gets the current position and size of the panel DOM object and sets
+  *             the property this.Position
+  * @return    -
+  */
   this.UpdatePosition = function()
   {
     var newPosition = this.GetPanelPosition();
     this.Position = newPosition;
   }
 
-  //function:   this.SetPosition(position)
-  //parameters: position - object that contains values for top and left position as
-  //            well as width and height
-  //purpose:    set postion and size of panel div, sets this.Position property, too
-  //returns:    -
+  /**
+  * @param position - object that contains values for top and left position as
+  *             well as width and height
+  * purpose:    set postion and size of panel div, sets this.Position property, too
+  * @return    -
+  */
   this.SetPosition = function(position)
   {
     this.Position = position;
@@ -93,10 +171,11 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
     }
   }
 
-  //function:   this.GetPanelPosition()
-  //parameters: -
-  //purpose:    gets the current position and size of the panel DOM object
-  //returns:    postion object containing the values for left, top, width, and height
+  /**
+  * @param -
+  * purpose:    gets the current position and size of the panel DOM object
+  * @return    postion object containing the values for left, top, width, and height
+  */
   this.GetPanelPosition = function()
   {
     var position = new Object();
@@ -108,10 +187,11 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
     return position;
   }
 
-  //function:   this.SetZIndex(zIdx)
-  //parameters: zIdx - Z-Index value
-  //purpose:    sets the Z-Index of the panel DOM object and the this.ZIndex property
-  //returns:    -
+  /**
+  * @param zIdx - Z-Index value
+  * purpose:    sets the Z-Index of the panel DOM object and the this.ZIndex property
+  * @return    -
+  */
   this.SetZIndex = function(zIdx)
   {
     this.ZIndex = zIdx;
@@ -119,15 +199,16 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
     $(this.GetCssId()).css("z-index", zIdx);
   }
 
-  //function:   this.Normalize(position, zIdx)
-  //parameters: position - object that contains values for top and left position as
-  //            well as width and height
-  //            zIdx - Z-Index value
-  //purpose:    sets all position/dimension values of the panel, used to return panel
-  //            from maximized to normal mode (= dimension and position prior to
-  //            maximization), changes the title bar icon and link to allow for the
-  //            panel to be maximized again.
-  //returns:    -
+  /**
+  * @param position - object that contains values for top and left position as
+  *             well as width and height
+  *             zIdx - Z-Index value
+  * purpose:    sets all position/dimension values of the panel, used to return panel
+  *             from maximized to normal mode (= dimension and position prior to
+  *             maximization), changes the title bar icon and link to allow for the
+  *             panel to be maximized again.
+  * @return    -
+  */
   this.Normalize = function(position, zIdx)
   {
     this.SetPosition(position);
@@ -139,13 +220,14 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
     $(this.GetCssId()).find(".titletopiconmax").parent().attr("onclick", "PanelController.MaximizePanel('" + this.Id + "');");
   }
 
-  //function:   this.Maximize(position, zIdx)
-  //parameters: position - object that contains values for top and left position as
-  //            well as width and height
-  //            zIdx - Z-Index value
-  //purpose:    sets all position/dimension values of the panel, used to maximize the
-  //            panel, changes the title bar icon and link
-  //returns:    -
+  /**
+  * @param position - object that contains values for top and left position as
+  *             well as width and height
+  *             zIdx - Z-Index value
+  * purpose:    sets all position/dimension values of the panel, used to maximize the
+  *             panel, changes the title bar icon and link
+  * @return    -
+  */
   this.Maximize = function(position, zIdx)
   {
     this.SetPosition(position);
@@ -157,10 +239,11 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
     $(this.GetCssId()).find(".titletopiconmax").parent().attr("onclick", "PanelController.NormalizePanel('" + this.Id + "');");
   }
 
-  //function:   this.Pin(pinnedState)
-  //parameters: pinnedState - a value of 1 means that the panel is pinned
-  //purpose:    sets the property this.Pinned and changes the icon in the panel title bar
-  //returns:    -
+  /**
+  * @param pinnedState - a value of 1 means that the panel is pinned
+  * purpose:    sets the property this.Pinned and changes the icon in the panel title bar
+  * @return    -
+  */
   this.Pin = function(pinnedState)
   {
     var paneldiv = this.GetCssId();
@@ -181,25 +264,37 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
     }
   }
 
-  //function:   this.CorrectSearchResultHeight()
-  //parameters: -
-  //purpose:    corrects the height of the searchresult div dependent on the panel type
-  //returns:    -
+  /**
+  * @param -
+  * purpose:    corrects the height of the searchresult div dependent on the panel type
+  * @return    -
+  */
   this.CorrectSearchResultHeight = function()
   {
     var hgt = $(this.GetCssId()).height();
 
     if (this.Type == "search")
-      $(this.GetCssId()).find(".scroll-pane").height(hgt - 105);
+      $(this.GetCssId()).find(".searchresults").height(hgt - 105);
     else
-      $(this.GetCssId()).find(".scroll-pane").height(hgt - 25);
-  }
+      $(this.GetCssId()).find(".searchresults").height(hgt - 35);
+  };
 
-  //function:   this.CreateNewSearchPanel(configIdx, searchStr)
-  //parameters: configIdx - selected index of SearchCombo
-  //            searchStr - search string to inserted in search input
-  //purpose:    creates a new search panel
-  //returns:    -
+  /**
+  * @param {number} configIdx Preselected index of SearchCombo
+  * @param {string} searchStr Search string to inserted in search input
+  * @desc <ol>
+  * <li>Creates a new div and styles it as needed by the ui. Its id is set to the unique panel id.</li>
+  * <li>Creates the "window title bar" using {@link module:corpus_shell~Panel#GeneratePanelTitle}</li>
+  * <li>Builds a query to be executed if some search string is given.</li>
+  * <li>Creates the ui elements for searching.<br/>
+  * -> {@link module:corpus_shell~Panel#GenerateSearchInputs} <br/>
+  * -> {@link module:corpus_shell~Panel#GenerateSearchNavigation}</li>
+  * <li>Adds a div for search results. -> {@link module:corpus_shell~Panel#GenerateSearchResultsDiv}</li>
+  * <li>Makes the panel draggable. -> {@link module:corpus_shell~Panel#InitDraggable} </li>
+  * </ol>
+  * @summary purpose:    creates a new search panel and displays it.
+  * @return    -
+  */
   this.CreateNewSearchPanel = function(configIdx, searchStr)
   {
     var searchPanel = document.createElement('div');
@@ -244,12 +339,13 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
 
     $(this.Container).append(searchPanel);
     this.InitDraggable();
-  }
+  };
 
-  //function:   this.CreateNewSubPanel()
-  //parameters: -
-  //purpose:    creates a new sub panel, ie. a panel without search inputs
-  //returns:    -
+  /**
+  * @param -
+  * purpose:    creates a new sub panel, ie. a panel without search inputs
+  * @return    -
+  */
   this.CreateNewSubPanel = function()
   {
     var newPanel = document.createElement('div');
@@ -285,20 +381,21 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
       this.GetFullText();
 
     this.InitDraggable();
-  }
+  };
 
-  //function:   this.GetUrlParams(url)
-  //parameters: url - string containing an URL
-  //purpose:    parses the given url and fills an array fill with the key/value pairs
-  //            of all url parameters
-  //returns:    array with key/value pairs of the url params
+  /**
+  * @param url - string containing an URL
+  * purpose:    parses the given url and fills an array fill with the key/value pairs
+  *             of all url parameters
+  * @return    array with key/value pairs of the url params
+  */
   this.GetUrlParams = function(url)
   {
     var urlParams = {};
     if (url != undefined)
     {
       var match;
-      var pl     = /\+/g;  // Regex for replacing addition symbol with a space
+      var pl     = /\+/g;  //  Regex for replacing addition symbol with a space
       var search = /([^&=]+)=?([^&]*)/g;
       var decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); };
 
@@ -314,12 +411,13 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
     }
 
     return urlParams;
-  }
+  };
 
-  //function:   this.InitDraggable()
-  //parameters: -
-  //purpose:    makes the panel DOM object resizeable and draggable.
-  //returns:    -
+  /**
+  * @param -
+  * purpose:    makes the panel DOM object resizeable and draggable.
+  * @return    -
+  */
   this.InitDraggable = function()
   {
     var panelId = this.Id;
@@ -331,14 +429,14 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
                  PanelController.BringToFront(panelId);
                  var hgt = $(this).height();
                  if ($(this).find(".searchstring").length != 0)
-                   $(this).find(".scroll-pane").css("height", hgt - 105 + "px");
+                   $(this).find(".searchresults").css("height", hgt - 105 + "px");
                  else
-                   $(this).find(".scroll-pane").css("height", hgt - 35 + "px");
+                   $(this).find(".searchresults").css("height", hgt - 35 + "px");
 
                  PanelController.RefreshScrollPane(panelId);
 
                  var wid = $(this).width();
-                 $(this).find(".scroll-content").css("width", wid - 16 + "px");
+                 $(this).find(".searchresults").css("width", wid + "px");
 
                  PanelController.UpdatePanelPosition(panelId);
                }
@@ -353,43 +451,51 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
                  PanelController.UpdatePanelPosition(panelId);
                }
                });
-  }
+  };
 
-  //function:   this.InitScrollPane()
-  //parameters: -
-  //purpose:    initializes the scrollbar adjacent to the searchresult div
-  //returns:    -
+  /**
+  * @param -
+  * purpose:    initializes the scrollbar adjacent to the searchresult div
+  * @return    -
+  */
   this.InitScrollPane = function()
   {
    var srdiv = $(this.GetCssId()).find(".searchresults");
-   $(srdiv).sbscroller({ mousewheel: true});
-  }
-
-  //function:   this.RefreshScrollPane()
-  //parameters: -
-  //purpose:    refreshes the scrollbar adjacent to the searchresult div
-  //returns:    -
+   $(srdiv).jScrollPane({ mouseWheelSpeed: 10});
+  };
+  
+  /**
+  * @param -
+  * purpose:    refreshes the scrollbar adjacent to the searchresult div. If the div isn't a jScrollPane yet
+  * it is initialised.
+  * @return    -
+  */
   this.RefreshScrollPane = function()
   {
-    $(this.GetCssId()).find(".searchresults").sbscroller('refresh');
-  }
+       var api = $(this.GetCssId()).find(".searchresults").data('jsp');
+       if (api != undefined)
+          api.reinitialise();
+       else this.InitScrollPane();
+  };
 
-  //function:   this.GetCssId()
-  //parameters: -
-  //purpose:    adds a # char in front of this.Id to make it easier to address the
-  //            panel with jQuery
-  //returns:    -
+  /**
+  * @param -
+  * purpose:    adds a # char in front of this.Id to make it easier to address the
+  *             panel with jQuery
+  * @return    -
+  */
   this.GetCssId = function()
   {
     return '#' + this.Id;
-  }
+  };
 
-  //function:   this.GetFullText()
-  //parameters: -
-  //purpose:    loads this.Url via AJAX and places the content of the remote file
-  //            inside the searchresult div; afterwards initializes/refreshes the
-  //            scrollbar
-  //returns:    -
+  /**
+  * @param -
+  * purpose:    loads this.Url via AJAX and places the content of the remote file
+  *             inside the searchresult div; afterwards initializes/refreshes the
+  *             scrollbar
+  * @return    -
+  */
   this.GetFullText = function()
   {
     var elem = this.GetCssId();
@@ -406,9 +512,9 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
 
           responseText = $(responseText).find(".title, .data-view, .navigation, .content");
 
-          if ($(elem).find(".scroll-content").length > 0)
+          if ($(elem).find(".searchresults").data('jsp') != undefined)
           {
-            $(elem).find(".scroll-content").html(responseText);
+            $(elem).find(".searchresults").data('jsp').getContentPane().html(responseText);
             panel.RefreshScrollPane();
           }
           else
@@ -419,46 +525,53 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
         }
     }
     );
-  }
+  };
 
-  //function:   this.GetFacsimile()
-  //parameters: -
-  //purpose:    places an img tag (with src=this.Url) inside the searchresult div
-  //            and afterwards initializes/refreshes the scrollbar
-  //returns:    -
+  /**
+  * @param -
+  * purpose:    places an img tag (with src=this.Url) inside the searchresult div
+  *             and afterwards initializes/refreshes the scrollbar
+  * @return    -
+  */
   this.GetFacsimile = function()
   {
     var elem = this.GetCssId();
 
-    if ($(elem).find(".searchresults .scroll-content").length > 0)
+    var resultPane = $(elem).find(".searchresults");
+    if (resultPane.data('jsp') != undefined)
     {
-      $(elem).find(".searchresults .scroll-content").html('<img src="' + this.Url + '" />');
-      this.RefreshScrollPane(elem);
+      resultPane = resultPane.data('jsp').getContentPane();
     }
-    else
-    {
-      $(elem).find(".searchresults").html('<img src="' + this.Url + '" />');
-      this.InitScrollPane(elem);
-    }
-  }
+    resultPane.html('<img src="' + this.Url + '" class="facsimile-img"/>');
+    var caller = this;
+    $(".facsimile-img").load(function(){
+    	caller.RefreshScrollPane();
+    });
+  };
 
-  //function:   this.StartSearch()
-  //parameters: -
-  //purpose:    invokes a AJAX call to the switch script that handles search orders
-  //            to every search ressource; displays the search result in the
-  //            searchresult div
-  //returns:    the url string that was used to get the displayed search result
+  /**
+  * purpose:    invokes a AJAX call to the switch script that handles search orders
+  *             to every search ressource; displays the search result in the
+  *             searchresult div
+  * @return {url} the url string that was used to get the displayed search result
+  */
   this.StartSearch = function()
   {
     var parElem = this.GetCssId();
     var sstr = $(parElem).find(".searchstring").val();
     var sele = parseInt($(parElem).find(".searchcombo").val());
 
-    // empty result-pane and indicate loading
-    $(parElem).find(".searchresults").addClass("cmd loading").text("");
+    //  empty result-pane and indicate loading
+    var resultPane = $(parElem).find(".searchresults").addClass("cmd loading");
+    if (resultPane.data('jsp') != undefined)
+    {
+       resultPane = resultPane.data('jsp').getContentPane();
+    }
+    resultPane.text("");
+    PanelController.RefreshScrollPane(panelId);
     $(parElem).find(".hitcount").text("-");
 
-    //get batch start and size
+    // get batch start and size
     var start = parseInt($(parElem).find(".startrecord").val());
     var max = parseInt($(parElem).find(".maxrecord").val());
 
@@ -485,16 +598,19 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
         data : {operation: 'searchRetrieve', query: sstr, 'x-context': xcontext, 'x-format': 'html', version: '1.2', maximumRecords: max, startRecord: start},
         complete: function(xml, textStatus)
         {
-          var resultPane = $(parElem).find(".searchresults");
-          resultPane.removeClass("cmd loading");
+          $(parElem).find(".searchresults").removeClass("cmd loading");;
 
-          var hstr = xml.responseText;
+          var hstr;
+          if (xml.responseText != undefined)
+             hstr = xml.responseText;
+          else
+             hstr = xml.statusText;
           hstr = hstr.replace(/&amp;/g, "&");
 
-          //init or refresh scrollbars
-          if ($(parElem).find(".searchresults .scroll-content").length > 0)
+          // init or refresh scrollbars
+          if ($(parElem).find(".searchresults").data('jsp') != undefined)
           {
-            $(parElem).find(".searchresults .scroll-content").html(hstr);
+            $(parElem).find(".searchresults").data('jsp').getContentPane().html(hstr);
             PanelController.RefreshScrollPane(panelId);
           }
           else
@@ -502,7 +618,7 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
             $(resultPane).html(hstr);
             PanelController.InitScrollPane(panelId);
           }
-          var hits = $(resultPane).find(".result-header").attr("data-numberOfRecords")
+          var hits = $(resultPane).find(".result-header").attr("data-numberOfRecords");
           $(parElem).find(".hitcount").text(hits);
           $(resultPane).find(".result-header").hide();
         }
@@ -510,16 +626,19 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
     );
 
     return urlStr;
-  }
+  };
 
-  //generate dom objects
+  // generate dom objects
 
-  //function:   this.GenerateSearchInputs(configIdx, searchStr)
-  //parameters: configIdx - selected index of SearchCombo
-  //            searchStr - search string
-  //purpose:    creates a div with the searchsting text input, the endpoint combobox,
-  //            and the search button
-  //returns:    the complete div as a DOM object
+  /**
+  * @param {number} configIdx  Selected index of SearchCombo
+  * @param {string} searchStr Search string
+  * purpose:    creates a div with the searchsting text input, the endpoint combobox,
+  *             and the start search button.<br/>
+  * If the Go button is clicked PanelController's {@link module:corpus_shell~PanelManager#StartSearch} is invoked
+  * with this panels unique id.
+  * @return    the complete div as a DOM object
+  */
   this.GenerateSearchInputs = function(configIdx, searchStr)
   {
     var searchdiv = document.createElement('div');
@@ -541,24 +660,24 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
       })
      .autocomplete({
       minLength: 0,
-      source: //availableTags
+      source: // availableTags
       function( request, response ) {
-       // delegate back to autocomplete, but extract the last term
+       //  delegate back to autocomplete, but extract the last term
        response( $.ui.autocomplete.filter(
         availableTags, extractLast( request.term ) ) );
       }
       ,
       focus: function() {
-       // prevent value inserted on focus
+       //  prevent value inserted on focus
        return false;
       },
       select: function( event, ui ) {
        var terms = split( this.value );
-       // remove the current input
+       //  remove the current input
        terms.pop();
-       // add the selected item
+       //  add the selected item
        terms.push( ui.item.value );
-       // add placeholder to get the comma-and-space at the end
+       //  add placeholder to get the comma-and-space at the end
        terms.push( "" );
        this.value = terms.join("=");
        return false;
@@ -599,13 +718,14 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
     });
 
     return searchdiv;
-  }
+  };
 
-  //function:   this.GenerateSearchCombo(configIdx)
-  //parameters: configIdx - selected index of SearchCombo
-  //purpose:    creates the endpoint combobox, selects the entry with the index given
-  //            in configIdx
-  //returns:    the combobox as a DOM object
+  /**
+  * @param configIdx - selected index of SearchCombo
+  * purpose:    creates the endpoint combobox, selects the entry with the index given
+  *             in configIdx
+  * @return    the combobox as a DOM object
+  */
   this.GenerateSearchCombo = function(configIdx)
   {
     var searchcombo = document.createElement('select');
@@ -624,15 +744,16 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
     }
 
     return searchcombo;
-  }
+  };
 
-  //function:   this.GeneratePanelTitle(titlestring, pin, pinned)
-  //parameters: titlestring - panel title
-  //            pin - with a value of 1 the panel gehts a pin icon
-  //            pinned - boolean value that tells wether the panel is pinned
-  //purpose:    creates a paragraph containing the panel title and the icons to pin
-  //            (optional), maximize, and close.
-  //returns:    the complete panel title paragraph as a DOM object
+  /**
+  * @param {string} titlestring The panel's title.
+  * @param {number} pin With a value of 1 the panel gehts a pin icon.
+  * @param {boolean} pinned Boolean value that tells wether the panel is pinned.
+  * purpose:    creates a paragraph containing the panel title and the icons to pin
+  *             (optional), maximize, and close.
+  * @return    the complete panel title paragraph as a DOM object
+  */
   this.GeneratePanelTitle = function(titlestring, pin, pinned)
   {
     var titlep = document.createElement('p');
@@ -719,12 +840,12 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
     $(titlep).append(titletable);
 
     return titlep;
-  }
+  };
 
-  //function:   this.GenerateSearchNavigation()
-  //parameters: -
-  //purpose:    creates a table with icons to navigate through the search result
-  //returns:    returns the complete table as a DOM object
+  /**
+  * purpose:    creates a table with icons to navigate through the search result
+  * @return    returns the complete table as a DOM object
+  */
   this.GenerateSearchNavigation = function()
   {
     var navtable = document.createElement('table');
@@ -804,17 +925,17 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
     $(navtable).append(navtr);
 
     return navtable;
-  }
+  };
 
-  //function:   this.GenerateSearchResultsDiv()
-  //parameters: -
-  //purpose:    creats a div that is filled with the search result returned from the
-  //            search script (switch.php)
-  //returns:    -
+  /**
+  * purpose:    creats a div that is filled with the search result returned from the
+  *             search script (switch.php)
+  * @return    -
+  */
   this.GenerateSearchResultsDiv = function()
   {
     var resultdiv = document.createElement('div');
     $(resultdiv).addClass("searchresults");
     return resultdiv;
-  }
+  };
 }
