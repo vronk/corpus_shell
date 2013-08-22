@@ -1,16 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <info xml:lang="en">
-    <div class="title">Test suite - barock texte</div>
+    <div class="title">Test suite - monitoring known errors</div>
     <div>
-        <test id="search-fcs.toc">
-            <a class="request" href="?operation=searchRetrieve&amp;query=fcs.toc=n0010&amp;x-context=clarin.at:icltt:ddc:barock">search: fcs.toc=n0010</a>
+        <test id="search-wasser-x-context">
+            <a class="request"
+                href="http://corpus3.aac.ac.at/ddconsru?operation=searchRetrieve&amp;query=Wasser"
+                >search: Wasser on corpus3:ddconsru without x-context</a>
             <xpath key="root-elem">$result-data/httpclient:body/*/name()</xpath>
+            <xpath key="diagnostic-message">$result-data//diagnostics/message</xpath>
         </test>
-    </div>
-    <div>
-        <test id="search-fcs.toc-img">
-            <a class="request" href="?operation=searchRetrieve&amp;query=fcs.toc=n0010&amp;x-context=clarin.at:icltt:ddc:barock&amp;x-format=img">search: fcs.toc=n0010 as img</a>
-            <xpath key="http-headers">xs:string($result-data//httpclient:header[@name="Content-Type"]/@value)</xpath>
+        <p>switch mingles whitespaces and special characters:</p>
+        <test id="ddconsru-search-query-ws">
+            <a class="request"
+                href="http://corpus3.aac.ac.at/ddconsru?operation=searchRetrieve&amp;query=%22nach%20Hause%22&amp;x-context=clarin.at%3Aicltt%3Addc06%3Ac4"
+                >search: "nach Hause" (whitespaces) on corpus3:ddconsru directly</a>
+            <xpath key="root-elem">$result-data/httpclient:body/*/name()</xpath>
+            <xpath key="numberOfRecords">number($result-data//sru:numberOfRecords/text())</xpath>
+            <xpath key="has number numberOfRecords"
+                >number($result-data//sru:numberOfRecords/text())=number($result-data//sru:numberOfRecords/text())</xpath>
+        </test>
+        <test id="switch-search-query-ws">
+            <a class="request"
+                href="http://corpus3.aac.ac.at/switch?operation=searchRetrieve&amp;query=%22nach%20Hause%22&amp;x-context=clarin.at%3Aicltt%3Addc06%3Ac4&amp;version=1.2"
+                >search: "nach Hause" on corpus3:switch -&gt; c4 </a>
+            <xpath key="root-elem">$result-data/httpclient:body/*/name()</xpath>
+            <xpath key="numberOfRecords">number($result-data//sru:numberOfRecords/text())</xpath>
+            <xpath key="has number numberOfRecords"
+                >number($result-data//sru:numberOfRecords/text())=number($result-data//sru:numberOfRecords/text())</xpath>
+        </test>
+        <p>should be the same, but if sent via switch only the first part of the query is considered
+            (Haus):</p>
+        <test id="ddconsru-search-has_field">
+            <a class="request"
+                href="http://corpus3.aac.ac.at/ddconsru?operation=searchRetrieve&amp;query=Haus+%23has_field%5Bsite%2C%2FBerlin%2F%5D&amp;x-context=clarin.at%3Aicltt%3Addc06%3Ac4"
+                >search: Haus #has_field[site,/Berlin/] on corpus3:ddconsru directly</a>
+            <xpath key="root-elem">$result-data/httpclient:body/*/name()</xpath>
+            <xpath key="numberOfRecords">number($result-data//sru:numberOfRecords/text())</xpath>
+            <xpath key="has number numberOfRecords"
+                >number($result-data//sru:numberOfRecords/text())=number($result-data//sru:numberOfRecords/text())</xpath>
+        </test>
+        <test id="switch-search-query-has_field">
+            <a class="request"
+                href="http://corpus3.aac.ac.at/switch?operation=searchRetrieve&amp;query=Haus+%23has_field%5Bsite%2C%2FBerlin%2F%5D&amp;x-context=clarin.at%3Aicltt%3Addc06%3Ac4&amp;version=1.2"
+                >search: Haus #has_field[site,/Berlin/] on corpus3:switch -&gt; c4 </a>
+            <xpath key="root-elem">$result-data/httpclient:body/*/name()</xpath>
+            <xpath key="numberOfRecords">number($result-data//sru:numberOfRecords/text())</xpath>
+            <xpath key="has number numberOfRecords"
+                >number($result-data//sru:numberOfRecords/text())=number($result-data//sru:numberOfRecords/text())</xpath>
+        </test>
+        <test id="ddconsru-search-haus">
+            <a class="request"
+                href="http://corpus3.aac.ac.at/ddconsru?operation=searchRetrieve&amp;query=Haus&amp;x-context=clarin.at%3Aicltt%3Addc06%3Ac4"
+                >search: Haus on corpus3:ddconsru directly</a>
+            <xpath key="root-elem">$result-data/httpclient:body/*/name()</xpath>
+            <xpath key="numberOfRecords">number($result-data//sru:numberOfRecords/text())</xpath>
+            <xpath key="has number numberOfRecords"
+                >number($result-data//sru:numberOfRecords/text())=number($result-data//sru:numberOfRecords/text())</xpath>
         </test>
     </div>
 </info>

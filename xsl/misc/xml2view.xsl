@@ -19,4 +19,5 @@
             <xsl:with-param name="strict" select="true()"/>
         </xsl:apply-templates>
     </xsl:template>
+    <xsl:template match="@ComponentId" mode="format-attr"/>
 </xsl:stylesheet>

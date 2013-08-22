@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0"
   xmlns:exsl="http://exslt.org/common"
+  xmlns:ds="http://aac.ac.at/corpus_shell/dataset"
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl"
   xmlns:utils="http://aac.ac.at/corpus_shell/utils"
@@ -23,28 +24,51 @@
 
   
   <xsl:template match="/" >
-    
-    <xsl:call-template name="preprocess-solr-result" />
-      
+    <xsl:call-template name="preprocess" />
   </xsl:template>
   
   
-  <xsl:template name="preprocess-solr-result">
+  <xd:doc>
+    <xd:desc>
+      <xd:p>check if already preprocessed</xd:p>
+    </xd:desc>
+  </xd:doc>
+  <xsl:template name="preprocess">
+    <xsl:choose>
+      <xsl:when test="/response">
+        <xsl:call-template name="preprocess-solr-response" />
+      </xsl:when>
+      <xsl:otherwise>
+         <xsl:copy-of select="/"></xsl:copy-of>
+      </xsl:otherwise>
+    </xsl:choose>
+    
+  </xsl:template>
+  
+  <xsl:template name="preprocess-solr-response">
     <!--<result>
     reldata:<xsl:value-of select="$reldata" />-->
+    
     
     <xsl:variable name="resolved-result">
       <xsl:call-template name="resolve-qx"></xsl:call-template>
     </xsl:variable>
     
+    
     <xsl:variable name="datasets">
       <xsl:choose>
         <xsl:when test="//*[contains(@name,'baseq')] or $reldata=1">
-          <xsl:call-template name="data2reldata"></xsl:call-template>                
+          <xsl:call-template name="data2reldata">
+            <xsl:with-param name="query-data" select="$resolved-result//ds:dataset"></xsl:with-param>
+          </xsl:call-template>                
+        </xsl:when>
+        <xsl:when test="//str[@name = 'facet.pivot']">                
+          <xsl:call-template name="pivot2data" >
+          </xsl:call-template>  
         </xsl:when>
         <xsl:otherwise>
           <!--<xsl:call-template name="qx2data"></xsl:call-template>-->
-          <xsl:copy-of select="$resolved-result//dataset" />
+          <xsl:copy-of select="$resolved-result//ds:dataset" />
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
@@ -58,7 +82,7 @@
     </xsl:variable>
     
     <xsl:variable  name="count_datasets" select="count($datasets/*)" />
-  
+<!--    DEBUG-ns: <xsl:value-of select="namespace-uri($datasets/ds:dataset[1])"></xsl:value-of>-->
     <result dataset_count="{$count_datasets}" type="{if ($count_datasets &gt; 1) then 'multiresult' else ''}"
       numFound="{$numberOfRecords}" numHits="{$numberOfHits}">
       <xsl:copy-of select="$params"></xsl:copy-of>
@@ -107,20 +131,19 @@
     <xd:param name="params">all the parameters of the original result, to be reused in the subrequest</xd:param>
   </xd:doc>
   <xsl:template name="resolve-qx" >
-    <xsl:param name="qx" select="//*[contains(@name,'qx')]" />
-    <xsl:param name="params" select="//lst[@name='params']" />
+    <!--<xsl:param name="qx" select="//*[@name='qx']" />
+    <xsl:param name="qxkey" select="//*[@name='qxkey']" />-->
+    <xsl:param name="qx" select="//*[@name='qx']" />
+    <xsl:param name="qxkey" select="//*[@name='qxkey']" />
+<!--    <xsl:param name="qxkey" select="utils:params('qxkey',())" />-->
+    <xsl:param name="params" select="$params" />
     
     <xsl:variable name="q-list" >
       <xsl:apply-templates select="$qx" mode="arrayize" />
-      <!--<xsl:choose>
-        <xsl:when test="name($qx)='arr'">
-        <xsl:for-each select="$qx/*">
-        <q><xsl:value-of select="." /></q>
-        </xsl:for-each></xsl:when>
-        <xsl:otherwise>
-        <q><xsl:value-of select="$qx" /></q>
-        </xsl:otherwise>
-        </xsl:choose>-->
+    </xsl:variable>
+    
+    <xsl:variable name="qkey-list" >
+      <xsl:apply-templates select="$qxkey" mode="arrayize" />
     </xsl:variable>
     
     
@@ -128,10 +151,19 @@
       <result type="multi">
         <!-- put the original (got via param q) result itself into the multiresult -->
         <xsl:copy-of select="/"/>
+        
         <!-- run the other queries (qx) as separate requests and collect the sub-results -->
-        <xsl:for-each select="exsl:node-set($q-list)/*" >  		        
+        <!--        <xsl:message><xsl:copy-of select="$q-list" /> </xsl:message>-->
+        <!--        <xsl:for-each select="exsl:node-set($q-list)/*" >-->
+        <xsl:for-each select="$q-list/*" >
+        
+        <!-- try to match qkeys based on their position - hoping for parallel ordering of qx and qxkey -->
+           <xsl:variable name="curr_pos" select="position()" />
+          <xsl:variable name="qkey" select="$qkey-list/*[not(.='')][position()=$curr_pos]"></xsl:variable>
+<!--                  <xsl:message><xsl:copy-of select="." /> DEBUGqxkey1:<xsl:copy-of select="$qkey-list/*" /></xsl:message>-->
           <xsl:call-template name="subrequest">
             <xsl:with-param name="q" select="."></xsl:with-param>
+            <xsl:with-param name="qkey" select="$qkey"></xsl:with-param>
           </xsl:call-template>  		      
         </xsl:for-each>
       </result>
@@ -237,7 +269,7 @@
     </xsl:param>    
     <xsl:param name="pivot-data" select="$source-data/response/lst[@name = 'facet_counts']/lst[@name = 'facet_pivot']/arr" />
 
-    <dataset name="{$pivot-fields}-{utils:normalize($query)}" label="{$pivot-fields} {$query}">
+    <ds:dataset name="{$pivot-fields}-{utils:normalize($query)}" label="{$pivot-fields} {$query}">
       <xsl:call-template name="facets2labels">
         <xsl:with-param name="facet-list" select="$facet2-list"></xsl:with-param>
       </xsl:call-template>
@@ -252,7 +284,7 @@
         <xsl:with-param name="labels-list" select="$facet2-list"></xsl:with-param>
         <xsl:with-param name="pivot-fields" select="$pivot-fields"></xsl:with-param>
       </xsl:apply-templates>
-    </dataset>
+    </ds:dataset>
     
   </xsl:template>    
   
@@ -264,12 +296,12 @@
   </xd:doc>
   <xsl:template name="facets2labels">
     <xsl:param name="facet-list"></xsl:param>    
-    <labels>  
-      <label><xsl:value-of select="$all-label" /></label>
+    <ds:labels>  
+      <ds:label><xsl:value-of select="$all-label" /></ds:label>
       <xsl:for-each select="exsl:node-set($facet-list)/*" >
-          <label><xsl:value-of select="if(xs:string(@name)='') then '_EMPTY_' else translate(xs:string(@name),'~ ','__')" /></label>        
+        <ds:label><xsl:value-of select="if(xs:string(@name)='') then '_EMPTY_' else translate(xs:string(@name),'~ ','__')" /></ds:label>        
       </xsl:for-each>      
-    </labels>
+    </ds:labels>
   </xsl:template>
   
   
@@ -286,16 +318,16 @@
     <xsl:param name="facet-list"></xsl:param>
     <xsl:param name="all-value" select=".//result/@numFound"></xsl:param>
     
-      <dataseries name="{$dataseries-title}">
-        <value label="{$all-label}" formatted="{utils:format-number($all-value,$number-format-default)}" >
+    <ds:dataseries name="{$dataseries-title}">
+        <ds:value label="{$all-label}" formatted="{utils:format-number($all-value,$number-format-default)}" >
           <xsl:value-of select="$all-value"/>
-        </value>
+        </ds:value>
       <xsl:for-each select="$facet-list/*" >
-        <value label="{if(xs:string(@name)='') then '_EMPTY_' else translate(xs:string(@name),'~ ','__')}" formatted="{utils:format-number(.,$number-format-default)}" >
+        <ds:value label="{if(xs:string(@name)='') then '_EMPTY_' else translate(xs:string(@name),'~ ','__')}" formatted="{utils:format-number(.,$number-format-default)}" >
           <xsl:value-of select="." />
-        </value>
+        </ds:value>
       </xsl:for-each>    
-      </dataseries>
+      </ds:dataseries>
     
   </xsl:template>
     
@@ -309,16 +341,16 @@
   <xsl:template match="arr/lst" mode="pivot">
     <xsl:param name="facet2-list"></xsl:param>
     
-    <dataseries name="{*[@name = 'value']}" >        
-      <value label="{$all-label}" formatted="{utils:format-number(*[@name = 'count'],$number-format-default)}" >
+    <ds:dataseries name="{*[@name = 'value']}" >        
+      <ds:value label="{$all-label}" formatted="{utils:format-number(*[@name = 'count'],$number-format-default)}" >
         <xsl:value-of select="*[@name = 'count']"/>
-      </value>        
+      </ds:value>        
       
       <xsl:variable name="curr_facet" select="." />
       <xsl:for-each select="exsl:node-set($facet2-list)/*">
         <xsl:variable name="curr_label" select="@name"></xsl:variable>
         <xsl:variable name="count" select="$curr_facet/arr[@name='pivot']/lst[*[@name='value'][.=$curr_label]]/*[@name='count']" />
-        <value label="{$curr_label}" >
+        <ds:value label="{$curr_label}" >
           <xsl:choose>
           <xsl:when test="number($count)=number($count)" > <!-- test if number -->             
             <xsl:attribute name="formatted" ><xsl:value-of select="utils:format-number($count,$number-format-default)" /></xsl:attribute>
@@ -329,9 +361,9 @@
               <xsl:value-of select="0" />
             </xsl:otherwise>
           </xsl:choose>
-        </value>
+        </ds:value>
       </xsl:for-each>      
-    </dataseries>
+    </ds:dataseries>
   
   </xsl:template>
 
@@ -359,17 +391,17 @@
         
       <xsl:variable name="curr_dataseries" select="string(@name)" />
       
-    <dataseries name="{@name}" >        
-      <value label="{$all-label}" formatted="{utils:format-number(.,$number-format-default)}" >
+      <ds:dataseries name="{@name}" >        
+      <ds:value label="{$all-label}" formatted="{utils:format-number(.,$number-format-default)}" >
         <xsl:value-of select="."/>
-      </value>        
+      </ds:value>        
       
         <xsl:for-each select="exsl:node-set($labels-list)/*">
           <xsl:variable name="curr_label" select="string(@name)"></xsl:variable>
           <xsl:variable name="count" select="$pivot-data//lst[ancestor-or-self::lst[str[@name='field']=$dataseries and str[@name='value']= $curr_dataseries]]
                         [ancestor-or-self::lst[str[@name='field']=$labels and str[@name='value']= $curr_label]]/int[@name='count']" />
 <!--            $curr_facet/arr[@name='pivot']/lst[*[@name='value'][.=$curr_label]]/*[@name='count']" />-->
-          <value label="{$curr_label}" >
+          <ds:value label="{$curr_label}" >
             <xsl:choose>
               <xsl:when test="number($count)=number($count)" > <!-- test if number -->             
                 <xsl:attribute name="formatted" ><xsl:value-of select="utils:format-number($count,$number-format-default)" /></xsl:attribute>
@@ -380,9 +412,9 @@
                 <xsl:value-of select="0" />
               </xsl:otherwise>
             </xsl:choose>
-          </value>
+          </ds:value>
         </xsl:for-each>      
-      </dataseries>
+      </ds:dataseries>
     </xsl:for-each>
     
   </xsl:template>
@@ -406,8 +438,8 @@
         <xsl:copy-of select="$result//result"></xsl:copy-of>
       </xsl:when>
         -->
-      <xsl:when test="exists($result//dataset)">
-        <xsl:copy-of select="$result//dataset"></xsl:copy-of>
+      <xsl:when test="exists($result//ds:dataset)">
+        <xsl:copy-of select="$result//ds:dataset"></xsl:copy-of>
       </xsl:when>
       <xsl:otherwise>
         
@@ -463,7 +495,7 @@
     
     <xsl:for-each select="exsl:node-set($facet-list)/*">
       <xsl:variable name="curr_facet" select="." />            
-      <dataset name="{$curr_facet}">
+      <ds:dataset name="{$curr_facet}">
         <xsl:call-template name="facets2labels">
           <xsl:with-param name="facet-list" >
             <!-- take first (the original) result as base for the labels -->
@@ -490,7 +522,7 @@
             <xsl:with-param name="all-value" select=".//result/@numFound"></xsl:with-param>
           </xsl:call-template>
         </xsl:for-each>
-      </dataset>		    
+      </ds:dataset>		    
     </xsl:for-each>
     
   </xsl:template>  
@@ -528,7 +560,7 @@
             </xsl:for-each>
           </xsl:variable>
           
-          <dataset name="{$curr_facet}">
+          <ds:dataset name="{$curr_facet}">
             <xsl:call-template name="facets2labels">
               <xsl:with-param name="facet-list" select="$facet-value-list" >        
               </xsl:with-param>
@@ -557,7 +589,7 @@
                    <xsl:with-param name="facet-list" >
                      <xsl:for-each select="$stats-data[@name=$curr_field]/lst[@name = 'facets']
                                           /lst[@name=$curr_facet]/lst/(double|long)[@name=$curr_metric]">
-                       <value name="{../@name}"><xsl:value-of select="." /></value>
+                       <ds:value name="{../@name}"><xsl:value-of select="." /></ds:value>
                      </xsl:for-each> 
                    </xsl:with-param>    
                    <xsl:with-param name="all-value" select="$stats-data[@name=$curr_field]/*[@name=$curr_metric]"></xsl:with-param>
@@ -565,7 +597,7 @@
                 </xsl:for-each>
               </xsl:for-each>
             </xsl:for-each>
-          </dataset>		    
+          </ds:dataset>		    
         </xsl:for-each>
      
   </xsl:template>  
@@ -638,53 +670,53 @@
   </xsl:template>
   
   
-  <xsl:template match="dataset" mode="reldata">        
+  <xsl:template match="ds:dataset" mode="reldata">        
     <xsl:param name="data" select="."></xsl:param>
     <xsl:param name="base-data" ></xsl:param>
     
     <xsl:variable name="dataset-name" select="xs:string(exsl:node-set($data)/@name)" />
-    <dataset name="{$dataset-name}" type="reldata" percentile-unit="{$percentile-unit}">            
+    <ds:dataset name="{$dataset-name}" type="reldata" percentile-unit="{$percentile-unit}">            
       <!-- copy the labels of the original dataset -->
-      <xsl:copy-of select="exsl:node-set($data)/labels"/>
+      <xsl:copy-of select="exsl:node-set($data)/ds:labels"/>
       <!-- at the dataseries from the base dataset -->
       <xsl:variable name="base-dataseries" >
-        <xsl:variable name="orig-base-dataseries" select="$base-data//dataset[@name=$dataset-name]/dataseries"/>
-        <dataseries name="{$orig-base-dataseries/@name}" type="base" >
+        <xsl:variable name="orig-base-dataseries" select="$base-data//ds:dataset[@name=$dataset-name]/ds:dataseries"/>
+        <ds:dataseries name="{$orig-base-dataseries/@name}" type="base" >
           <xsl:for-each select="$orig-base-dataseries/*" >
             <xsl:sort select="@label" />
             <xsl:copy-of select="." />
           </xsl:for-each>
-        </dataseries>                
+        </ds:dataseries>                
       </xsl:variable>            
       <xsl:copy-of select="$base-dataseries" >                
       </xsl:copy-of>
       
       <!-- run through the datasets dataseries adding the relative values -->
-      <xsl:apply-templates select="exsl:node-set($data)/dataseries" mode="reldata">
+      <xsl:apply-templates select="exsl:node-set($data)/ds:dataseries" mode="reldata">
         <xsl:with-param name="base-data" select="$base-dataseries"></xsl:with-param>     
       </xsl:apply-templates>
-    </dataset>
+    </ds:dataset>
     
   </xsl:template>
   
-  <xsl:template match="dataseries" mode="reldata">
+  <xsl:template match="ds:dataseries" mode="reldata">
     <xsl:param name="base-data" ></xsl:param>
-    <dataseries name="{@name}" type="reldata">
+    <ds:dataseries name="{@name}" type="reldata">
       <xsl:apply-templates mode="reldata">
         <xsl:with-param name="base-data"  select="$base-data"></xsl:with-param>
       </xsl:apply-templates>
-    </dataseries>        
+    </ds:dataseries>        
   </xsl:template>
   
-  <xsl:template match="value" mode="reldata">
+  <xsl:template match="ds:value" mode="reldata">
     <xsl:param name="base-data" ></xsl:param>
     
-    <xsl:variable name="base-value" select="exsl:node-set($base-data)//value[@label=current()/@label]"/>
+    <xsl:variable name="base-value" select="exsl:node-set($base-data)//ds:value[@label=current()/@label]"/>
     <xsl:variable name="relfreq" select=". div $base-value"/>        
-    <value label="{@label}"  formatted="{@formatted}" abs="{.}" rel="{$relfreq}" 
+    <ds:value label="{@label}"  formatted="{@formatted}" abs="{.}" rel="{$relfreq}" 
       rel_formatted="{utils:format-number($relfreq * $percentile-base, $number-format-dec)}">
       <xsl:value-of select="round($relfreq * $percentile-base * $decimal-base) div $decimal-base"/>
-    </value>
+      </ds:value>
     
   </xsl:template>
   

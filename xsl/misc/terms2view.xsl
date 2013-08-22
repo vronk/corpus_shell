@@ -301,7 +301,7 @@ sample
 			or better/experimental: show sum of the descendants
 		 -->
             <td class="number"><!--   <xsl:if test="not(Term)"><xsl:value-of select="@count_text" /></xsl:if>-->
-                <xsl:variable name="count_text_sanitized" select="if (not(Term)) then @count_text else sum(descendant::Term/@count_text)"/>
+                <xsl:variable name="count_text_sanitized" select="if (not(Term)) then @count_text else sum(descendant-or-self::Term/@count_text)"/>
                 <xsl:value-of select="if (number($count_text_sanitized)=number($count_text_sanitized)) then           format-number(number($count_text_sanitized),'#.##0','european' ) else ''"/>
             </td>
             <td class="number">	
@@ -309,7 +309,7 @@ sample
 			  <xsl:message><xsl:value-of select="concat('formURL: ',my:formURL('values', 'htmllist', concat(@path,'&sort=size')))"></xsl:value-of></xsl:message>
 			</xsl:if>-->
                 <xsl:if test="Term">
-                    <xsl:value-of select="format-number(sum(descendant::Term/@count_distinct_text),'#.##0','european')"/>
+                    <xsl:value-of select="format-number(sum(descendant-or-self::Term/@count_distinct_text),'#.##0','european')"/>
                 </xsl:if>
                 <xsl:if test="not(Term)">
                     <xsl:value-of select="format-number(@count_distinct_text,'#.##0','european')"/>

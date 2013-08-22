@@ -2,6 +2,12 @@
 cr-xq
 =====
 
+UPDATE: this module has now been moved and integrated with the SADE project
+https://github.com/tharman/SADE
+currently as a separate branch:
+https://github.com/vronk/SADE/tree/cr-xq
+
+
 XQuery scripts for a content repository 
 providing an FCS/SRU-interface 
 for searching in data in a XMLDB.
@@ -11,6 +17,7 @@ more: http://clarin.eu/fcs
 
 Part of corpus_shell
 https://github.com/vronk/corpus_shell/
+
 
 
 Content of the project

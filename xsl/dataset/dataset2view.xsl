@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:exsl="http://exslt.org/common"
     xmlns:utils="http://aac.ac.at/corpus_shell/utils"
-    exclude-result-prefixes="exsl utils"
-    xmlns="http://www.w3.org/1999/xhtml" version="1.0" extension-element-prefixes="exsl">
+    xmlns:ds="http://aac.ac.at/corpus_shell/dataset"
+    exclude-result-prefixes="exsl utils ds"
+    xmlns="http://www.w3.org/1999/xhtml" version="1.0" extension-element-prefixes="exsl"
+      >
     <xsl:import href="solr-utils.xsl"/>
     <xsl:import href="dataset2table.xsl"/>
     <xsl:import href="dataset2google-json.xsl"/>
@@ -39,9 +41,9 @@
     <xsl:template name="continue-root">
         <div>
             <!--<xsl:call-template name="callback-header-dataset"></xsl:call-template>-->
-            <xsl:apply-templates select="//dataset">
+            <xsl:apply-templates  select="descendant-or-self::ds:dataset">
 <!--            datasets with less categories come first-->
-                <xsl:sort select="count(labels/label)" data-type="number" order="ascending"/>
+                <xsl:sort select="count(ds:labels/ds:label)" data-type="number" order="ascending"/>
             </xsl:apply-templates>
         </div>
     </xsl:template>
@@ -65,7 +67,7 @@
                 and calls the templates to produce the table and chart representation of the data.</xd:p>
         </xd:desc>
     </xd:doc>
-    <xsl:template match="dataset">
+    <xsl:template match="ds:dataset">
         <xsl:variable name="corrected-dataset">
             <xsl:apply-templates select="." mode="correct"/>
         </xsl:variable>
@@ -111,11 +113,12 @@
             <xsl:apply-templates mode="correct"/>
         </xsl:copy>
     </xsl:template>
-    <xsl:template match="dataseries" mode="correct">
+    <xsl:template match="ds:dataseries" mode="correct">
         <xsl:variable name="q" select="ancestor::result/lst[@name='params']/str[@name='q']"/>
 <!--        <xsl:variable name="qkey" select="ancestor::result/lst[@name='params']/str[@name='qkey']"/>-->
         <xsl:variable name="qkey" select="normalize-space(ancestor::result/lst[@name='params']/str[@name='qkey'])"/>
         <xsl:copy>
+        <!--    meanwhile @name should already have the correct qkey
             <xsl:choose>
                 <xsl:when test="@type='reldata' and $qkey">
                     <xsl:attribute name="name" select="$qkey"/>
@@ -124,7 +127,8 @@
                     <xsl:attribute name="name" select="translate(@name,'&#34;','')"/>
                 </xsl:otherwise>
             </xsl:choose>
-            <xsl:copy-of select="@*[not(name()='name')]"/>
+            <xsl:copy-of select="@*[not(name()='name')]"/>-->
+            <xsl:copy-of select="@*"/>
             <xsl:apply-templates mode="correct"/>
         </xsl:copy>
     </xsl:template>

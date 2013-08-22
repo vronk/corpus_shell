@@ -33,13 +33,13 @@
         <xsl:call-template name="base-link"></xsl:call-template>
     </xsl:variable>
     
-    
+
     <xd:doc>
         <xd:desc>
             <xd:p>store in a variable the params list as delivered by solr in the header of a response</xd:p>
         </xd:desc>
     </xd:doc>
-    <xsl:variable name="params" select="//lst[@name='params']" />
+    <xsl:variable name="params" select="(//lst[@name='params'])[1]" />
     
     <xd:doc>
         <xd:desc>
@@ -51,7 +51,16 @@
         <xsl:param name="default-value"></xsl:param>
         <xsl:value-of select="if(exists($params/*[@name=$param-name])) then $params/*[@name=$param-name] else $default-value "></xsl:value-of>
     </xsl:function>
+
+    <xsl:function name="utils:uri-encode">
+        <xsl:param name="value"></xsl:param>
+        <xsl:value-of select="encode-for-uri($value)" />
+<!--        perhaps whitespaces is enough - seems not (umlaute!)-->
+<!--        <xsl:value-of select="replace($value,' ','%20')" />-->
+    </xsl:function>
     
+
+
     <xd:doc >
         <xd:desc>
             <xd:p>does the sub-calls </xd:p>
@@ -61,10 +70,12 @@
         <xd:param name="link">url to retrieve; overrides the q-param</xd:param>
     </xd:doc>
     <xsl:template name="subrequest" >
-        <xsl:param name="q" select="//*[contains(@name,'q')]" />
-        <xsl:param name="link" select="concat($baseurl, $base-link, 'q=', $q)" />
+        <xsl:param name="q" select="utils:params('q','*:*')" />
+        <xsl:param name="qkey" select="utils:params('qkey','all')" />
         
-        <xsl:message>DEBUG: subrequest: <xsl:value-of select="$link" /></xsl:message>        
+        <xsl:param name="link" select="concat($baseurl, $base-link, 'q=', utils:uri-encode($q[1]), '&amp;qkey=', utils:uri-encode(($qkey,$q)[1]))" />
+        <xsl:message>DEBUG qkey: <xsl:value-of select="exists($qkey)" /></xsl:message>
+        <xsl:message>DEBUG1: subrequest: <xsl:value-of select="$link" /></xsl:message>        
         
         <xsl:choose>
             <xsl:when test="doc-available($link)" >
@@ -84,8 +95,9 @@
         <xd:param name="params"></xd:param>
     </xd:doc>    
     <xsl:template name="base-link">
-        <xsl:param name="params" select="//lst[@name='params']" />
-        <xsl:apply-templates select="$params/*[not(@name='q')][not(@name='qx')][not(@name='baseq')][not(@name='wt')]" mode="link"></xsl:apply-templates>        
+        <xsl:param name="params" select="$params" />
+<!--        <xsl:apply-templates select="$params/*[not(@name='q')][not(@name='qx')][not(@name='qxkey')][not(@name='baseq')][not(@name='wt')]" mode="link"></xsl:apply-templates>        -->
+                <xsl:apply-templates select="$params/*[not(@name=('q', 'qx', 'qkey', 'qxkey', 'baseq', 'wt'))]" mode="link"></xsl:apply-templates>        
     </xsl:template>        
     
     
@@ -95,7 +107,7 @@
         </xd:desc>
     </xd:doc>    
     <xsl:template name="link" >        
-        <xsl:variable name="link" ><xsl:text>?</xsl:text><xsl:apply-templates select="//lst[@name='params']" mode="link" /></xsl:variable>
+        <xsl:variable name="link" ><xsl:text>?</xsl:text><xsl:apply-templates select="$params" mode="link" /></xsl:variable>
         <a href="{$link}"><xsl:value-of select="$link" /></a>
     </xsl:template>
     
@@ -105,7 +117,7 @@
         </xd:desc>
     </xd:doc>
     <xsl:template match="lst[@name='params']/str"  mode="link">
-        <xsl:value-of select="concat(@name,'=',.,'&amp;')" />
+        <xsl:value-of select="concat(@name,'=',utils:uri-encode(.),'&amp;')" />
     </xsl:template>
     
     <xd:doc>
@@ -123,7 +135,7 @@
         </xd:desc>
     </xd:doc>
     <xsl:template match="lst[@name='params']/arr/str" mode="link">        
-        <xsl:value-of select="concat(../@name,'=',.,'&amp;')" />
+        <xsl:value-of select="concat(../@name,'=', utils:uri-encode(.),'&amp;')" />
         
     </xsl:template>
     
@@ -142,7 +154,7 @@
     <xsl:template name="response-header" >
         <!--<xsl:for-each select="result">-->
         <div class="response-header">
-            <xsl:apply-templates  mode="query-input"/>
+            <xsl:apply-templates select="$params"  mode="query-input"/>
 <!--            <span class="label">hits: </span><span class="value hilight"><xsl:value-of select="utils:format-number(//result/@numFound, '#.###')" /></span>-->
         </div>
     </xsl:template>

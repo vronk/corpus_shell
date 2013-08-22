@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.w3.org/1999/xhtml" xmlns:diag="http://www.loc.gov/zing/srw/diagnostic/" xmlns:sru="http://www.loc.gov/zing/srw/" xmlns:fcs="http://clarin.eu/fcs/1.0" version="1.0"
-    extension-element-prefixes="diag sru fcs">
+<xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:diag="http://www.loc.gov/zing/srw/diagnostic/" xmlns:sru="http://www.loc.gov/zing/srw/" xmlns:fcs="http://clarin.eu/fcs/1.0" version="1.0" extension-element-prefixes="diag sru fcs">
 
 <!-- 
 <purpose>generic functions for SRU-result handling</purpose>
@@ -44,7 +43,7 @@
         </xsl:choose>
     </xsl:template>
     <xsl:template name="html">
-        <html xmlns="http://www.w3.org/1999/xhtml">
+        <html>
             <head>
                 <xsl:call-template name="html-head"/>
                 <xsl:call-template name="callback-header"/>
@@ -54,12 +53,13 @@
                 <h1>
                     <xsl:value-of select="$title"/>
                 </h1>
+                <xsl:apply-templates select="diagnostics"/>
                 <xsl:call-template name="continue-root"/>
             </body>
         </html>
     </xsl:template>
     <xsl:template name="htmljs">
-        <html xmlns="http://www.w3.org/1999/xhtml">
+        <html>
             <head>
                 <xsl:call-template name="html-head"/>
                 <xsl:call-template name="callback-header"/>
@@ -81,7 +81,7 @@
 	
 	<!-- a html-envelope for a simple (noscript) view -->
     <xsl:template name="htmlsimple">
-        <html xmlns="http://www.w3.org/1999/xhtml">
+        <html>
             <head>
                 <title>
                     <xsl:value-of select="$title"/>
@@ -92,6 +92,7 @@
             <xsl:call-template name="page-header"/>
             <body>                
 				<!-- <h1><xsl:value-of select="$title"/></h1> -->
+                <xsl:apply-templates select="diagnostics"/>
                 <xsl:call-template name="continue-root"/>
             </body>
         </html>
@@ -118,8 +119,9 @@
     -->
     <xsl:template name="contexts-select">
         
-            <!--DEBUG: contexts_url:<xsl:copy-of select="resolve-uri($contexts_url)" />
-        DEBUG: base_url:<xsl:value-of select="$base_url" />-->
+<!--            DEBUG: contexts_url:<xsl:copy-of select="resolve-uri($contexts_url)" />
+        DEBUG: base_url:<xsl:value-of select="$base_url" />
+        DEBUG: contexts:<xsl:copy-of select="$contexts" /> -->
         <select name="x-context">
             <xsl:if test="$contexts">
                 <xsl:for-each select="$contexts//sru:terms/sru:term">
@@ -143,7 +145,7 @@
 	<!-- shall be usable to form consistently all urls within xsl 
 	-->
     <xsl:template name="formURL">
-        <xsl:param name="action" select="'searchRetrieve'"/>
+        <xsl:param name="action" select="$operation"/>
         <xsl:param name="format" select="$format"/>
         <xsl:param name="q" select="$q"/>
         <xsl:param name="startRecord" select="$startRecord"/>
@@ -164,10 +166,12 @@
                 <xsl:when test="$action='explain'">
                     <xsl:value-of select="concat('&amp;x-context=',$q)"/>
                 </xsl:when>
-                <xsl:when test="$x-context != '' ">
+                <!--<xsl:when test="$x-context != '' ">
+                    <xsl:value-of select="concat('&x-context=',$x-context)"/>
+                </xsl:when>-->
+                <xsl:otherwise>
                     <xsl:value-of select="concat('&amp;x-context=',$x-context)"/>
-                </xsl:when>
-                <xsl:otherwise/>
+                </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
         <xsl:variable name="param_startRecord">
@@ -180,9 +184,17 @@
                 <xsl:value-of select="concat('&amp;maximumRecords=',$maximumRecords)"/>
             </xsl:if>
         </xsl:variable>
+        <xsl:variable name="param_scanClause">
+            <xsl:if test="$scanClause != ''">
+                <xsl:value-of select="concat('&amp;scanClause=',$scanClause)"/>
+            </xsl:if>
+        </xsl:variable>
         <xsl:choose>
             <xsl:when test="$action='explain'">
                 <xsl:value-of select="concat($base_url, '?operation=',$action, $param_x-context, $param_format)"/>
+            </xsl:when>
+            <xsl:when test="$action='scan'">
+                <xsl:value-of select="concat($base_url, '?operation=',$action, $param_scanClause, $param_x-context, $param_format)"/>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:value-of select="concat($base_url, '?operation=',$action, $param_q, $param_x-context, $param_startRecord, $param_maximumRecords, $param_format)"/>

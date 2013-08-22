@@ -5,17 +5,17 @@ import module namespace httpclient = "http://exist-db.org/xquery/httpclient";
 import module namespace t="http://exist-db.org/xquery/testing";
 import module namespace repo-utils = "http://aac.ac.at/content_repository/utils" at  "/db/cr/repo-utils.xqm";
 
-declare namespace zr="http://explain.z3950.org/dtd/2.1/";
+declare namespace zr="http://explain.z3950.org/dtd/2.0/";
 declare namespace sru = "http://www.loc.gov/zing/srw/";
 declare namespace fcs = "http://clarin.eu/fcs/1.0";
 declare namespace diag = "http://www.loc.gov/zing/srw/diagnostic/";
+declare namespace ds = "http://aac.ac.at/corpus_shell/dataset";
 declare namespace xhtml="http://www.w3.org/1999/xhtml"; 
 
-(: sample input:
-    
+(: sample input: 
  :)
 declare variable $fcs-tests:config := doc("config.xml");
-declare variable $fcs-tests:cr-config := repo-utils:config("/db/cr/conf/cr/config.xml");
+declare variable $fcs-tests:cr-config := repo-utils:config("/db/apps/cr-xq/modules/fcs/config.xml");
 declare variable $fcs-tests:run-config := "run-config.xml";
 declare variable $fcs-tests:testsets-coll := "/db/cr/modules/testing/testsets/";
 declare variable $fcs-tests:results-coll := "/db/cr/modules/testing/results/";
@@ -193,7 +193,18 @@ Issues one http-call to the target-url in the a@href-attribute, stores the incom
 :) 
 declare function fcs-tests:process-request($test, $request as xs:string, $a-text as xs:string, $target-key as xs:string, $request-id as xs:string, $operation as xs:string) as item()* { 
             
-    let $a-processed := <a href="{$request}">{$a-text}</a>
+    let $result-link := $fcs-tests:config//property[xs:string(@key)='result-link']            
+    let $a-processed := (if (contains($result-link,'original')) then <a href="{$request}">{$a-text}</a> else (),
+                         if (contains($result-link,'rewrite')) then
+                                               let $cache-uri-prefix := $fcs-tests:config//property[xs:string(@key)='result-uri-prefix']
+                                               let $req-rwr := concat($cache-uri-prefix, $request-id, ".xml")                                               
+                                               return <a href="{$req-rwr}">{$a-text}</a>
+                                               else (),
+                        if (contains($result-link,'cache')) then
+                                        (:let $cache-uri := if (exists($store)):) 
+                                            <a href="{concat('results/', $target-key, "/", $request-id, ".xml")}" > cache </a> 
+                                          else ()
+                       ) 
     let $username := if ($test/@username) then $test/xs:string(@username)  else ""  
     let $password := if ($test/@password) then $test/xs:string(@password) else "" 
     
@@ -203,9 +214,11 @@ declare function fcs-tests:process-request($test, $request as xs:string, $a-text
                             
     let $result-data := httpclient:get(xs:anyURI($request), false(), $headers )
                             
-    let $store := if ($operation eq 'run-store') then fcs-tests:store-result($target-key, $request-id, $result-data//httpclient:body/*) else ()
-    let $cache-uri := if (exists($store)) then
-    <a href="{concat($target-key, "/", $request-id, ".xml")}" >cache</a> else ()
+(:        let $store := if ($operation eq 'run-store') then fcs-tests:store-result($target-key, $request-id, $result-data//httpclient:body/*) else ()
+rather store everything including the envelope: :)
+let $store := if ($operation eq 'run-store') then fcs-tests:store-result($target-key, $request-id, $result-data//httpclient:body/*) else ()
+
+    
 (:    <a href="{fcs-tests:get-result-paths($target-key, $request-id) else ():)
 (:    let $cache-uri := if (exists($store)) then <a href="{concat(repo-utils:base-url(()), document-uri($store))}" > cache </a> else ():)
     (: evaluate all xpaths defined for given request :) 
@@ -222,8 +235,10 @@ declare function fcs-tests:process-request($test, $request as xs:string, $a-text
      let $diag := ($result-data//diag:diagnostic, $result-data//exception, 
                 if ($http-status ne '200') then <http-status>{$http-status}</http-status> else ())      
       let $wrapped-diag := if (exists($diag)) then 
-                <diagnostics type="{string-join($diag/name(),',')}" >{$diag}</diagnostics> else ()                     
-return ($a-processed, $cache-uri, $check, $wrapped-diag) 
+                <diagnostics type="{string-join($diag/name(),',')}" >{$diag}</diagnostics> else ()
+
+return ($a-processed, $check, $wrapped-diag)
+(:                , $cache-uri:)
 };
 
 
@@ -275,7 +290,8 @@ declare function fcs-tests:display-page($target  as xs:string, $testset as xs:st
             <title>FCS - test suite</title>
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
              <link rel="stylesheet" type="text/css" href="tests.css" />            
-             <link rel="stylesheet" type="text/css" href="../../scripts/style/cmds-ui.css" />
+            <link rel="stylesheet" type="text/css" href="/exist/apps/cr-xq/modules/shared/scripts/style/cmds-ui.css" />
+v
         </head>
         <body>            
             <div id="header">
@@ -371,9 +387,15 @@ declare function fcs-tests:display-overview() as item()* {
 :)
 declare function fcs-tests:subst($string as xs:string, $substset)
     {
-        let $substkeys := for $substi in $substset/(*|@*) return concat('%', $substi/name())
+        let $substkeys := for $substi in $substset/(*|@*) return
+                                if (ends-with($substi/name(),'url')) then concat('%', $substi/name()) 
+                                      else (concat('%', $substi/name()),concat('%_', $substi/name(), '_url'))  
+                                    
+        
         let $substvalues := for $substi in $substset/(*|@*) return 
-                            if (ends-with($substi/name(),'url')) then xmldb:encode(xs:string($substi)) else xs:string($substi)
+                            if (ends-with($substi/name(),'url')) then xmldb:encode(xs:string($substi)) 
+                                    else 
+                                        (xs:string($substi), xmldb:encode(xs:string($substi)))
         
         (: let $temp := replace($string, concat('%', $substkey), $substvalue) 
         return if count($substset local:subst($temp, $substset/*[position() > 1]) :)

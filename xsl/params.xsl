@@ -14,8 +14,10 @@
     <xsl:param name="site_logo" select="concat($scripts_url, 'style/logo_c_s.png')"/>
     <xsl:param name="site_name">Repository</xsl:param>
     
+    
     <!-- following are needed in in commons_v1.xsl (formURL) and in html_snippets.xsl, therefore they need to be defined here
         (but only as default, so we could move them, because actually they pertain only to result2view.xsl -->
+    <xsl:param name="operation"/> <!-- explain|scan|searchRetreive-->
     <xsl:param name="format" select="'htmlpagelist'"/> <!-- table|list|detail -->
     <xsl:param name="q" select="/sru:searchRetrieveResponse/sru:echoedSearchRetrieveRequest/sru:query"/>
     <xsl:param name="x-context" select="/sru:searchRetrieveResponse/sru:echoedSearchRetrieveRequest/fcs:x-context"/>

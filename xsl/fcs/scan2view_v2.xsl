@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml"  xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:utils="http://aac.ac.at/content_repository/utils" xmlns:sru="http://www.loc.gov/zing/srw/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fcs="http://clarin.eu/fcs/1.0" version="2.0"
-    extension-element-prefixes="sru fcs utils xs"
-    >
+<xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:utils="http://aac.ac.at/content_repository/utils" xmlns:sru="http://www.loc.gov/zing/srw/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fcs="http://clarin.eu/fcs/1.0" version="2.0" extension-element-prefixes="sru fcs utils xs">
     <!-- xmlns="http://www.w3.org/1999/xhtml" 
 <purpose> generate a view for a values-list (index scan) </purpose>
 <params>
@@ -41,8 +39,7 @@
 </sample>
 -->
     <xsl:import href="../commons_v2.xsl"/>
-
-<xsl:output method="xhtml" indent="yes"></xsl:output>
+    <xsl:output method="xhtml" indent="yes"/>
 
     <!-- <xsl:param name="size_lowerbound">0</xsl:param>
 <xsl:param name="max_depth">0</xsl:param>
@@ -52,6 +49,7 @@
     <!-- s=size|n=name|t=time|x=default -->
     <xsl:param name="name_col_width">50%</xsl:param>
     <xsl:param name="list-mode">table</xsl:param>
+    <xsl:param name="parts">header</xsl:param> <!-- header -->
 
     <!-- <xsl:param name="mode" select="'htmldiv'" />     -->
     <xsl:param name="title" select="concat('scan: ', $scanClause )"/>
@@ -65,8 +63,8 @@
     <xsl:param name="index" select="$scanClause-array[1]"/>
     <xsl:param name="filter" select="$scanClause-array[2]"/>
     <xsl:template name="continue-root">
-        <div xmlns="http://www.w3.org/1999/xhtml"> <!-- class="cmds-ui-block  init-show" -->
-            <xsl:if test="$format = 'htmlpage'">
+        <div> <!-- class="cmds-ui-block  init-show" -->
+            <xsl:if test="$format = 'htmlpage' or $parts='header'">
                 <xsl:call-template name="header"/>
             </xsl:if>
             <div class="content">
