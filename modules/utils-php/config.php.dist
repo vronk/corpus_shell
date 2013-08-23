@@ -121,10 +121,10 @@
   $version =                 "1.2";
 
   /**
-   * The hostname of the wev server
+   * The hostname of the web server
    * 
-   * To speed up xslt the servername ist replaced by "localhost"
-   * FIXME: And that works how exactly?
+   * To speed up eg. xslt every occurence of this domain name is replaced
+   * by the loopback device for functions requesting data using URLs.
    * @global string $localhost
    */
   $localhost =               "www.example.org";
