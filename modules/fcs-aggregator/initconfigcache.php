@@ -120,6 +120,7 @@
 
   /**
    * XQuery needed to find all items with type==$type (defined above)
+   * @ignore
    * @global string $query
    */
   $query = "//item[type='$type']";

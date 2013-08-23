@@ -1,10 +1,116 @@
 <?php
   /**
-   * Switch script that queries upstream resources and enhances their response
-   * if requested
+   * Switch script that queries upstream resources and transforms their response if requested
+   * <br/>
+   * Uses the file named in $fcsConfig if it exists.<br/>
+   * <br/>
+   * Parameters for operation "explain"<br/>
+   * <pre>
+   *      Params - taken from {@link http://www.loc.gov/standards/sru/specs/explain.html}
+   *      Name              type        Description
+   *      operation         Mandatory   The string: 'explain'.
+   *      version           Mandatory   The version of the request, and a statement by the client
+   *                                    that it wants the response to be less than, or preferably
+   *                                    equal to, that version. See Versions.
+   *      recordPacking     Optional    A string to determine how the explain record should be
+   *                                    escaped in the response. Defined values are 'string' and
+   *                                    'xml'. The default is 'xml'. See Records.
+   *      stylesheet        Optional    A URL for a stylesheet. The client requests that the server
+   *                                    simply return this URL in the response. See Stylesheets.
+   *      extraRequestData  Optional    Provides additional information for the server to process.
+   *                                    See Extensions.
+   * </pre>
+   * Parameters for operation "scan"<br/>
+   * <pre>
+   *      Params - taken from {@link http://www.loc.gov/standards/sru/specs/scan.html}
+   *      Name              type        Description
+   *      operation         mandatory   The string: 'scan'.
+   *      version           mandatory   The version of the request, and a statement by the client that
+   *                                    it wants the response to be less than, or preferably equal to,
+   *                                    that version. See Versions.
+   *      scanClause        mandatory   The index to be browsed and the start point within it,
+   *                                    expressed as a complete index, relation, term  clause in CQL.
+   *                                    See CQL.
+   *      responsePosition  optional    The position within the list of terms returned where the
+   *                                    client would like the start term to occur. If the position
+   *                                    given is 0, then the term should be immediately before the
+   *                                    first term in the response. If the position given is 1, then
+   *                                    the term should be first in the list, and so forth up to the
+   *                                    number of terms requested plus 1, meaning that the term should
+   *                                    be immediately after the last term in the response, even if
+   *                                    the number of terms returned is less than the number requested.
+   *                                    The range of values is 0 to the number of terms requested plus
+   *                                    1. The default value is 1.
+   *      maximumTerms      optional    The number of terms which the client requests be returned. The
+   *                                    actual number returned may be less than this, for example if
+   *                                    the end of the term list is reached, but may not be more. The
+   *                                    explain record for the database may indicate the maximum
+   *                                    number of terms which the server will return at once. All
+   *                                    positive integers are valid for this parameter. If not
+   *                                    specified, the default is server determined.
+   *      stylesheet        optional    A URL for a stylesheet. The client requests that the server
+   *                                    simply return this URL in the response. See Stylesheets.
+   *      extraRequestData  optional    Provides additional information for the server to process. See
+   *                                    Extensions.
+   * </pre>
+   * Parameters for operation "searchRetrieve"<br/>
+   * <pre>
+   *      Params - taken from {@link http://www.loc.gov/standards/sru/specs/search-retrieve.html}
+   *      Name              type        Description
+   *      operation         mandatory   The string: 'searchRetrieve'.
+   *      version           mandatory   The version of the request, and a statement by the client that
+   *                                    it wants the response to be less than, or preferably equal to,
+   *                                    that version. See Version.
+   *      query             mandatory   Contains a query expressed in CQL to be processed by the
+   *                                    server. See CQL.
+   *      startRecord       optional    The position within the sequence of matched records of the
+   *                                    first record to be returned. The first position in the
+   *                                    sequence is 1. The value supplied MUST be greater than 0. The
+   *                                    default value if not supplied is 1.
+   *      maximumRecords    optional    The number of records requested to be returned. The value must
+   *                                    be 0 or greater. Default value if not supplied is determined
+   *                                    by the server. The server MAY return less than this number of
+   *                                    records, for example if there are fewer matching records than
+   *                                    requested, but MUST NOT return more than this number of records.
+   *      recordPacking     optional    A string to determine how the record should be escaped in the
+   *                                    response. Defined values are 'string' and 'xml'. The default is
+   *                                    'xml'. See Records.
+   *      recordSchema      optional    The schema in which the records MUST be returned. The value is
+   *                                    the URI identifier for the schema or the short name for it
+   *                                    published by the server. The default value if not supplied is
+   *                                    determined by the server. See Record Schemas.
+   *      resultSetTTL      optional    The number of seconds for which the client requests that the
+   *                                    result set created should be maintained. The server MAY choose
+   *                                    not to fulfil this request, and may respond with a different
+   *                                    number of seconds. If resultSetTTL is not supplied then the
+   *                                    server will determine the value. See Result Sets.
+   *      stylesheet        optional    A URL for a stylesheet. The client requests that the server
+   *                                    simply return this URL in the response. See Stylesheets.
+   *      extraRequestData  optional    Provides additional information for the server to process. See
+   *                                    Extensions.
+   * </pre>
    * 
-   * Uses the file named in $fcsConfig if it exists.
+   * @uses HandleXFormatCases()
    * @uses $fcsConfig
+   * @uses $operation
+   * @uses $query
+   * @uses $version
+   * @uses $scanClause
+   * @uses $xcontext
+   * @uses Diagnostics()
+   * @uses GetDefaultStyles()
+   * @uses $operation
+   * @uses $query
+   * @uses $scanClause
+   * @uses $extraRequestData
+   * @uses $recordPacking
+   * @uses $stylesheet
+   * @uses $responsePosition
+   * @uses $maximumTerms
+   * @uses $startRecord
+   * @uses $maximumRecords
+   * @uses $recordSchema
+   * @uses $resultSetTTL
    * @package fcs-aggregator
    */
    
@@ -439,7 +545,7 @@
   }
 
   /**
-   * Returns the XML DOM representation of the document at the URL passed as parameter
+   * Get the XML DOM representation of the document at the URL passed as parameter
    * 
    * @uses ReplaceLocalHost()
    * @uses url_exists()
@@ -461,6 +567,17 @@
     return false;
   }
 
+  /**
+   * Return the XML Document specified by $url to the client
+   * 
+   * Sets the response header to $headerStr. If the document can't be fetched upstream
+   * a diagnostic message 15 Unsupported context set is returned to the client.
+   * @uses url_exists()
+   * @uses ReplaceLocalHost()
+   * @uses Diagnostics()
+   * @param string $url The URL form which the XML should be fetched.
+   * @param string $headerStr A string that should be sent as response header
+   */
   function ReturnXmlDocument($url, $headerStr)
   {
     $url = ReplaceLocalHost($url);
@@ -477,6 +594,19 @@
       Diagnostics(15, str_replace("&", "&amp;", $url));
   }
 
+  /**
+   * Get the location of the XSL style sheet associated with $operation
+   * 
+   * The XSL style sheet is fetched from the $globalStyles array or $configItem for "searchRetrieve". If a style for one
+   * of the operations is not set in $globalStyles the XSL style sheet for the key "default" is fetched.
+   * If operation is not from the described set a diagnostic message 6 Unsupported parameter value is returned to the client.
+   * @uses ReplaceLocalHost()
+   * @uses $globalStyles
+   * @uses Diagnostics()
+   * @param string $operation The operation for which to get the XSL document. One of "explain", "scan" or "searchRetrieve"
+   * @param array $configItem A array (a map) that has a "style" key. Used for passing a style for the "searchRetrieve" operation.
+   * @return string The URL of the style sheet. If it's located on the local host the URL contains 127.0.0.1 instead of the real domain name.
+   */
   function GetXslStyle($operation, $configItem)
   {
     global $globalStyles;
@@ -522,12 +652,32 @@
     }
   }
 
+  /**
+   * Get the XSL for an $operation as DOM document
+   * 
+   * @uses GetXslStyle()
+   * @uses GetDomDocument()
+   * @param string $operation The operation for which to get the XSL document. One of "explain", "scan" or "searchRetrieve"
+   * @param array $configItem A array (a map) that has a "style" key. Used for passing a style for the "searchRetrieve" operation.
+   * @return DOMDocument A XSL DOM representation of the XSL style sheet document.  
+   */
   function GetXslStyleDomDocument($operation, $configItem)
   {
     $xslUrl = GetXslStyle($operation, $configItem);
     return GetDomDocument($xslUrl);
   }
 
+  /**
+   * Return an upstream XML to the client after applying an XSL style sheet transfomation
+   * 
+   * The type of the returned document is set to text/html the encoding is set to UTF-8.
+   * 
+   * @uses $xformat
+   * @uses $scriptsUrl
+   * @param DOMDocument $xmlDoc The XML input document as XML DOM representation.
+   * @param DOMDocument|SimpleXMLElement $xslDoc The XSL style sheet used for the transformation.
+   * @param bool $useParams If set $xformat and $scriptsUrl are passed to the XSL processor as parameters "format" and "scripts_url".
+   */
   function ReturnXslT($xmlDoc, $xslDoc, $useParams)
   {
     $proc = new XSLTProcessor();
@@ -546,6 +696,35 @@
     print $proc->transformToXML($xmlDoc);
   }
 
+  /**
+   * Main method: called after the validity of the request is checked
+   * 
+   * Iterates over the contents of $context so processes multiple requests if
+   * they are specified.
+   * <ol>
+   * <li>Loads the config for this particular resource.</li>
+   * <li>Depending on key strings beeing part of $xformat
+   * <ul>
+   * <li>on "html": Fetches the XML upstream and applies the XSL document specified
+   * for that operation in the $switchConfig</li>
+   * <li>on "xsltproc": returns a diagnostic text about the XSLT processor that would be used.</li>
+   * <li>on "xsl": returns the stylesheet that would be used for the requested operation.</li>
+   * <li>on "img": the response from the upstream endpoint is returnes as if it were an image/jpeg.</li>
+   * <li>on an unrecognizable string: the upstream result is returned verbatim and text/xml is assumed.</li>
+   * </ul>
+   * </li>
+   * </ol>
+   * @uses $context
+   * @uses $xformat
+   * @uses $operation
+   * @uses GetConfig()
+   * @uses GetQueryUrl()
+   * @uses ReturnXslT()
+   * @uses Diagnostics()
+   * @uses GetDomDocument()
+   * @uses GetXslStyleDomDocument()
+   * @uses ReturnXmlDocument()
+   */
   function HandleXFormatCases()
   {
     global $context;
@@ -609,29 +788,186 @@
   GetDefaultStyles();
 
   // params SRU
+  /**
+   * The operation requested by the client.
+   * 
+   * Mandatory. In strict mode a diagnostic error message is shown.<br/>
+   * Passed as HTTP GET parameter "operation". If $sruMode is "strict" this is set to false if 
+   * the paramter is missing else it's assumed to be "explain" <br/>
+   * See also: {@link http://www.loc.gov/standards/sru/specs/index.html}
+   * @uses $sruMode
+   * @global string|bool $operation
+   */
   if (isset($_GET['operation'])) $operation = $_GET["operation"]; else $operation = ($sruMode=="strict") ? false : "explain";
+  
+  /**
+   * Contains a query expressed in CQL to be processed by the server
+   * 
+   * See {@link http://www.loc.gov/standards/sru/specs/cql.html CQL}.<br/>
+   * Mandatory. In strict mode a diagnostic error message is shown.<br/>
+   * Passed as HTTP GET parameter "query".
+   * If $sruMode is "strict" this is set to false if the paramter is missing else it's assumed to be ""
+   * @uses $sruMode
+   * @global string|bool $query
+   */
   if (isset($_GET['query'])) $query = trim($_GET['query']); else $query = ($sruMode=="strict") ? false : "";
+
+  /**
+   * The index to be browsed and the start point within it, expressed as a complete index, relation, term clause in CQL
+   * 
+   * See {@link http://www.loc.gov/standards/sru/specs/cql.html CQL}.<br/>
+   * Mandatory. In strict mode a diagnostic error message is shown.<br/>
+   * Passed as HTTP GET parameter "scanClause".
+   * If $sruMode is "strict" this is set to false if the paramter is missing else it's assumed to be ""
+   * @uses $sruMode
+   * @global string|bool $scanClause
+   */
   if (isset($_GET['scanClause'])) $scanClause = trim($_GET['scanClause']); else $scanClause = ($sruMode=="strict") ? false : "";
+  
+  /**
+   * The position within the list of terms returned where the client would like the start term to occur
+   * If the position given is 0, then the term should be immediately before the first term in the response.
+   * If the position given is 1, then the term should be first in the list, and so forth up to the number of terms
+   * requested plus 1, meaning that the term should be immediately after the last term in the response,
+   * even if the number of terms returned is less than the number requested.
+   * The range of values is 0 to the number of terms requested plus 1. The default value is 1.<br/>
+   * Optional.<br/>
+   * Passed as HTTP GET parameter "responsePosition". If the parameter is missing "" is assumed.
+   * @global string $responsePosition
+   */
   if (isset($_GET['responsePosition'])) $responsePosition = trim($_GET['responsePosition']); else $responsePosition = "";
 
+  /**
+   * The number of terms which the client requests be returned
+   * 
+   * The actual number returned may be less than this, for example if the end of the term list is reached,
+   * but may not be more. The explain record for the database may indicate the maximum number of terms which
+   * the server will return at once. All positive integers are valid for this parameter. If not specified,
+   * the default is server determined.<br/>
+   * Optional.<br/>
+   * Passed as HTTP GET parameter "maximumTerms". If the parameter is missing "10" is assumed.
+   * @global string $maximumTerms
+   */
   if (isset($_GET['maximumTerms'])) $maximumTerms = trim($_GET['maximumTerms']); else $maximumTerms = "10";
+
+  /**
+   * The version of the request, and a statement by the client that it wants the response to be less than, or preferably equal to, that version
+   * 
+   * See {@link http://www.loc.gov/standards/sru/specs/common.html#version Versions}.<br/>
+   * Mandatory. In strict mode a diagnostic error message is shown.<br/>
+   * Passed as HTTP GET parameter "version".
+   * If $sruMode is "strict" this is set to false if the paramter is missing else it's assumed to be "1.2"
+   * @uses $sruMode
+   * @global string|bool $version
+   */
   if (isset($_GET['version'])) $version = trim($_GET['version']); else $version = ($sruMode=="strict") ? false : "1.2";
 
+  /**
+   * The number of records requested to be returned
+   * The value must be 0 or greater. Default value if not supplied is determined by the server.
+   * The server MAY return less than this number of records, for example if there are fewer matching records
+   * than requested, but MUST NOT return more than this number of records.<br/>
+   * Optional.<br/>
+   * Passed as HTTP GET parameter "maximumRecords". If the parameter is missing "10" is assumed.
+   * @global string $maximumRecords
+   */
   if (isset($_GET['maximumRecords'])) $maximumRecords = trim($_GET['maximumRecords']); else $maximumRecords = "10";
+
+  /**
+   * The position within the sequence of matched records of the first record to be returned
+   * 
+   * The first position in the sequence is 1. The value supplied MUST be greater than 0.<br/>
+   * Optional.<br/>
+   * Passed as HTTP GET parameter "startRecord". If the parameter is missing "1" is assumed.
+   * @global string $startRecord
+   */  
   if (isset($_GET['startRecord'])) $startRecord = trim($_GET['startRecord']); else $startRecord = "1";
+  
+  /**
+   * A string to determine how the record should be escaped in the response
+   * 
+   * Defined values are 'string' and 'xml'. The default is
+   * 'xml'. See {@link http://www.loc.gov/standards/sru/specs/search-retrieve.html#records Records}.<br/>
+   * Optional.<br/>
+   * Passed as HTTP GET parameter "recordPacking". If the parameter is missing "xml" is assumed.
+   * @global string $recordPacking
+   */
   if (isset($_GET['recordPacking'])) $recordPacking = trim($_GET['recordPacking']); else $recordPacking = "xml";
+  
+  /**
+   * The schema in which the records MUST be returned
+   * 
+   * The value is the URI identifier for the schema or the short name for it
+   * published by the server. The default value if not supplied is
+   * determined by the server. See {@link http://www.loc.gov/standards/sru/resources/schemas.html Record Schemas}.<br/>
+   * Optional.<br/>
+   * Passed as HTTP GET parameter "recordSchema". If the parameter is missing "" is assumed.
+   * @global string $recordSchema
+   */  
   if (isset($_GET['recordSchema'])) $recordSchema = trim($_GET['recordSchema']); else $recordSchema = "";
 
+  /**
+   * A URL for a stylesheet
+   * 
+   * The client requests that the server simply return this URL in the response.<br/>
+   * See {@link http://www.loc.gov/standards/sru/specs/common.html#stylesheet Stylesheets}.<br/>
+   * Optional.<br/>
+   * Passed as HTTP GET parameter "stylesheet". If the parameter is missing "" is assumed.
+   * @global string $stylesheet
+   */ 
   if (isset($_GET['stylesheet'])) $stylesheet = trim($_GET['stylesheet']); else $stylesheet = "";
-  if (isset($_GET['extraRequestData'])) $extraRequestData = trim($_GET['extraRequestData']); else $extraRequestData = "";
 
+  /**
+   * Provides additional information for the server to process.
+   * 
+   * See {@link http://www.loc.gov/standards/sru/specs/common.html#extraData Extensions}.<br/>
+   * Optional.<br/>
+   * Passed as HTTP GET parameter "extraRequestData". If the parameter is missing "" is assumed.
+   * @global string $extraRequestData
+   */
+  if (isset($_GET['extraRequestData'])) $extraRequestData = trim($_GET['extraRequestData']); else $extraRequestData = "";
+  /**
+   * The number of seconds for which the client requests that the result set created should be maintained
+   * 
+   * The server MAY choose not to fulfil this request, and may respond with a different number of seconds.
+   * If resultSetTTL is not supplied then the server will determine the value.
+   * See {@link http://www.loc.gov/standards/sru/specs/search-retrieve.html#resultsets Result Sets}.
+   * 
+   * Passed as HTTP GET parameter "extraRequestData". If the parameter is missing "" is assumed.
+   * @global string $resultSetTTL
+   */
   if (isset($_GET['resultSetTTL'])) $resultSetTTL = trim($_GET['resultSetTTL']); else $resultSetTTL = "";
 
   //additional params - non SRU
+  /**
+   * The x-context parameter passed by the client.
+   * 
+   * Used to specify the resources for which the operation is to be performed. Resources are separated by ",".
+   * An extension to the SRU standard parameter set. Inspired by x-cmd-context where cmd stands for Component MetaData.<br/>
+   * Passed as HTTP GET parameter "x-context". If the parameter is missing HTTP GET parameter "x-cmd-context" takes its place. If both are missing "" is assumed.
+   * See also: {@link http://www.clarin.eu/fcs}<br/>
+   * {@link http://www.clarin.eu/cmdi}
+   * @global string $xcontext
+   */
   if (isset($_GET['x-context'])) $xcontext = $_GET["x-context"]; else $xcontext = "";
+  if (isset($_GET['x-cmd-context']) && $xcontext === "") $xcontext = $_GET['x-cmd-context'];
+
+  /**
+   * The x-format parameter passed by the client
+   * 
+   * Used to specify the response format expected by the client. Possible values include "html", "xsltproc", "xsl" and "img".
+   * On other values XML is assumed as requested response format.
+   * FIXME: and others???
+   * @global string $xformat
+   */  
   if (isset($_GET['x-format'])) $xformat = trim($_GET['x-format']); else $xformat = "";
 
-  //split x-context
+  /**
+   * All contexts/resources given by the HTTP GET parameter "x-context" as array
+   *
+   * @uses $xcontext
+   * @global array $context
+   */
   $context = explode(",", $xcontext);
 
   //no operation param provided ==> explain
@@ -642,21 +978,6 @@
     switch ($operation)
     {
       case "explain" :
-        /*
-          Params - taken from http://www.loc.gov/standards/sru/specs/explain.html
-          Name              type        Description
-          operation         Mandatory   The string: 'explain'.
-          version           Mandatory   The version of the request, and a statement by the client
-                                        that it wants the response to be less than, or preferably
-                                        equal to, that version. See Versions.
-          recordPacking     Optional    A string to determine how the explain record should be
-                                        escaped in the response. Defined values are 'string' and
-                                        'xml'. The default is 'xml'. See Records.
-          stylesheet        Optional    A URL for a stylesheet. The client requests that the server
-                                        simply return this URL in the response. See Stylesheets.
-          extraRequestData  Optional    Provides additional information for the server to process.
-                                        See Extensions.
-        */
           if ($xcontext == "")
             ReturnExplain();
           else
@@ -665,39 +986,6 @@
           }
       break;
       case "scan" :
-        /*
-          Params - taken from http://www.loc.gov/standards/sru/specs/scan.html
-          Name              type        Description
-          operation         mandatory   The string: 'scan'.
-          version           mandatory   The version of the request, and a statement by the client that
-                                        it wants the response to be less than, or preferably equal to,
-                                        that version. See Versions.
-          scanClause        mandatory   The index to be browsed and the start point within it,
-                                        expressed as a complete index, relation, term  clause in CQL.
-                                        See CQL.
-          responsePosition  optional    The position within the list of terms returned where the
-                                        client would like the start term to occur. If the position
-                                        given is 0, then the term should be immediately before the
-                                        first term in the response. If the position given is 1, then
-                                        the term should be first in the list, and so forth up to the
-                                        number of terms requested plus 1, meaning that the term should
-                                        be immediately after the last term in the response, even if
-                                        the number of terms returned is less than the number requested.
-                                        The range of values is 0 to the number of terms requested plus
-                                        1. The default value is 1.
-          maximumTerms      optional    The number of terms which the client requests be returned. The
-                                        actual number returned may be less than this, for example if
-                                        the end of the term list is reached, but may not be more. The
-                                        explain record for the database may indicate the maximum
-                                        number of terms which the server will return at once. All
-                                        positive integers are valid for this parameter. If not
-                                        specified, the default is server determined.
-          stylesheet        optional    A URL for a stylesheet. The client requests that the server
-                                        simply return this URL in the response. See Stylesheets.
-          extraRequestData  optional    Provides additional information for the server to process. See
-                                        Extensions.
-        */
-
           if ($scanClause === false)
             //"Mandatory parameter not supplied"
             Diagnostics(7, "scanClause");
@@ -732,42 +1020,6 @@
 
       break;
       case "searchRetrieve" :
-        /*
-          Params - taken from http://www.loc.gov/standards/sru/specs/search-retrieve.html
-          Name              type        Description
-          operation         mandatory   The string: 'searchRetrieve'.
-          version           mandatory   The version of the request, and a statement by the client that
-                                        it wants the response to be less than, or preferably equal to,
-                                        that version. See Version.
-          query             mandatory   Contains a query expressed in CQL to be processed by the
-                                        server. See CQL.
-          startRecord       optional    The position within the sequence of matched records of the
-                                        first record to be returned. The first position in the
-                                        sequence is 1. The value supplied MUST be greater than 0. The
-                                        default value if not supplied is 1.
-          maximumRecords    optional    The number of records requested to be returned. The value must
-                                        be 0 or greater. Default value if not supplied is determined
-                                        by the server. The server MAY return less than this number of
-                                        records, for example if there are fewer matching records than
-                                        requested, but MUST NOT return more than this number of records.
-          recordPacking     optional    A string to determine how the record should be escaped in the
-                                        response. Defined values are 'string' and 'xml'. The default is
-                                        'xml'. See Records.
-          recordSchema      optional    The schema in which the records MUST be returned. The value is
-                                        the URI identifier for the schema or the short name for it
-                                        published by the server. The default value if not supplied is
-                                        determined by the server. See Record Schemas.
-          resultSetTTL      optional    The number of seconds for which the client requests that the
-                                        result set created should be maintained. The server MAY choose
-                                        not to fulfil this request, and may respond with a different
-                                        number of seconds. If resultSetTTL is not supplied then the
-                                        server will determine the value. See Result Sets.
-          stylesheet        optional    A URL for a stylesheet. The client requests that the server
-                                        simply return this URL in the response. See Stylesheets.
-          extraRequestData  optional    Provides additional information for the server to process. See
-                                        Extensions.
-        */
-
           if ($query === false)
             //"Mandatory parameter not supplied"
             Diagnostics(7, "query");
