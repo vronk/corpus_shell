@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:cmd="http://www.clarin.eu/cmd/" xmlns:sru="http://www.loc.gov/zing/srw/" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:exist="http://exist.sourceforge.net/NS/exist" xmlns:util="http://aac.ac.at/content_repository/utils" version="2.0" exclude-result-prefixes="exist">
+<xsl:stylesheet 
+    xmlns="http://www.w3.org/1999/xhtml" 
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns:cmd="http://www.clarin.eu/cmd/"
+    xmlns:sru="http://www.loc.gov/zing/srw/"
+    xmlns:html="http://www.w3.org/1999/xhtml"
+    xmlns:exist="http://exist.sourceforge.net/NS/exist"
+    xmlns:util="http://aac.ac.at/content_repository/utils"
+    xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl"
+    version="2.0" exclude-result-prefixes="exist xd">
 
-<!-- 
- stylesheet for custom formatting of CMD-records (inside a FCS/SRU-result).
--->
+<xd:doc scope="stylesheet">
+    <xd:desc>Stylesheet for custom formatting of CMD-records (inside a FCS/SRU-result).</xd:desc>
+</xd:doc>
+    
     <xsl:variable name="resourceref_limit" select="10"/>
     <xsl:template match="cmd:ResourceProxyList" mode="record-data">
         <xsl:choose>

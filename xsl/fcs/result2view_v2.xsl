@@ -10,7 +10,7 @@
     <!--  method="xhtml" is saxon-specific! prevents  collapsing empty <script> tags, that makes browsers choke -->
     <xsl:output method="xhtml" media-type="text/html" indent="yes" encoding="UTF-8" doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"/>
     <xsl:include href="../commons_v2.xsl"/>
-    <xsl:include href="data2view.xsl"/>
+    <xsl:include href="data2view_v2.xsl"/>
     <xsl:include href="data2view_cmd.xsl"/>
     <xsl:param name="title">
         <xsl:text>Result Set</xsl:text>
