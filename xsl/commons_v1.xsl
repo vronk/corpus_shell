@@ -5,8 +5,9 @@
     xmlns:diag="http://www.loc.gov/zing/srw/diagnostic/"
     xmlns:sru="http://www.loc.gov/zing/srw/"
     xmlns:fcs="http://clarin.eu/fcs/1.0"
+    xmlns:exsl="http://exslt.org/common"
     xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl"
-    version="1.1" extension-element-prefixes="diag sru fcs">
+    version="1.0" extension-element-prefixes="diag sru fcs exsl">
 
     <xd:doc scope="stylesheet">
         <xd:desc>Generic functions for SRU-result handling.
@@ -49,7 +50,7 @@
 	            Depending on <xd:ref name="format" type="parameter">$format</xd:ref> containing
 	            that name generates the html framework using one of the following named templates
 	            <xd:ul>	                
-	                <xd:li><xd:ref name="htmlpage" type="template">htmlpage</xd:ref> for ??? </xd:li>
+	                <xd:li><xd:ref name="html" type="template">html</xd:ref> for ??? </xd:li>
 	                <xd:li><xd:ref name="htmljs" type="template">htmljs</xd:ref> for ??? </xd:li>
 	                <xd:li><xd:ref name="htmlsimple" type="template">htmlsimple</xd:ref> for ??? </xd:li>	                
 	            </xd:ul>
@@ -135,7 +136,7 @@
                 <title>
                     <xsl:value-of select="$title"/>
                 </title>
-                <link href="{$scripts_url}/style/cmds-ui.css" type="text/css" rel="stylesheet"/>				
+                <link href="{$scripts_url}style/cmds-ui.css" type="text/css" rel="stylesheet"/>				
 				<!-- <xsl:call-template name="callback-header"/> -->
             </head>
             <xsl:call-template name="page-header"/>
@@ -172,6 +173,18 @@
             <xsl:value-of select="diag:uri"/>
         </p>
     </xsl:template>
+    
+    <xd:doc>
+        <xd:desc>Fetches the context from the URL provided in $context_url
+        <xd:p>
+            $context_url is influenced by <xd:ref name="base_url" type="variable">$base_url</xd:ref>.
+        </xd:p>
+        <xd:p>
+            Note: by default $base_url is set to an empty string so the URL is assumed to be wherever these
+            style sheet is executed. This may lead to warnings by the XSLT processor.
+        </xd:p>
+        </xd:desc>
+    </xd:doc>
     <xsl:template name="contexts-doc">
         <xsl:copy-of select="document($contexts_url)"/>
     </xsl:template>
@@ -186,7 +199,7 @@
         DEBUG: contexts:<xsl:copy-of select="$contexts" /> -->
         <select name="x-context">
             <xsl:if test="$contexts">
-                <xsl:for-each select="$contexts//sru:terms/sru:term">
+                <xsl:for-each select="(exsl:node-set($contexts))//sru:terms/sru:term">
                     <xsl:variable name="ancestors-prefix">
                         <xsl:for-each select="ancestor::sru:term">
                             <xsl:text>.</xsl:text>
@@ -206,16 +219,16 @@
     	
     <xd:doc>
         <xd:desc>Shall be usable to form consistently all urls within xsl</xd:desc>
-        <xd:param name="action">Same meaning as <xd:ref name="operation" type="param">$operation</xd:ref>.
-            Defaults to <xd:ref name="operation" type="param">$operation</xd:ref>.</xd:param>
-        <xd:param name="format">Same meaning as <xd:ref name="format" type="param">$format</xd:ref>.
-            Defaults to <xd:ref name="format" type="param">$format</xd:ref>.</xd:param>
-        <xd:param name="q">Same meaning as <xd:ref name="q" type="param">$q</xd:ref>.
-            Defaults to <xd:ref name="q" type="param">$q</xd:ref>.</xd:param>
-        <xd:param name="startRecord">Same meaning as <xd:ref name="startRecord" type="param">$startRecord</xd:ref>.
-            Defaults to <xd:ref name="startRecord" type="param">$startRecord</xd:ref>.</xd:param>
-        <xd:param name="maximumRecords">Same meaning as <xd:ref name="maximumRecords" type="param">$maximumRecords</xd:ref>.
-            Defaults to <xd:ref name="maximumRecords" type="param">$maximumRecords</xd:ref>.</xd:param>
+        <xd:param name="action">Same meaning as <xd:ref name="operation" type="parameter">$operation</xd:ref>.
+            Defaults to <xd:ref name="operation" type="parameter">$operation</xd:ref>.</xd:param>
+        <xd:param name="format">Same meaning as <xd:ref name="format" type="parameter">$format</xd:ref>.
+            Defaults to <xd:ref name="format" type="parameter">$format</xd:ref>.</xd:param>
+        <xd:param name="q">Same meaning as <xd:ref name="q" type="parameter">$q</xd:ref>.
+            Defaults to <xd:ref name="q" type="parameter">$q</xd:ref>.</xd:param>
+        <xd:param name="startRecord">Same meaning as <xd:ref name="startRecord" type="parameter">$startRecord</xd:ref>.
+            Defaults to <xd:ref name="startRecord" type="parameter">$startRecord</xd:ref>.</xd:param>
+        <xd:param name="maximumRecords">Same meaning as <xd:ref name="maximumRecords" type="parameter">$maximumRecords</xd:ref>.
+            Defaults to <xd:ref name="maximumRecords" type="parameter">$maximumRecords</xd:ref>.</xd:param>
     </xd:doc>
     <xsl:template name="formURL">
         <xsl:param name="action" select="$operation"/>
