@@ -1,14 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:utils="http://aac.ac.at/content_repository/utils" version="2.0">
-    
-    <!-- 
-        <purpose>generic functions for SRU-result handling</purpose>
-        <history>
-        <change on="2012-02-04" type="created" by="vr">convenience wrapper to commons_v1.xsl in XSLT 2.0</change>
-        <change on="2011-12-04" type="created" by="vr">based on cmd_functions.xsl but retrofitted back to 1.0</change>
-        </history>        
-    -->
+<xsl:stylesheet
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns:utils="http://aac.ac.at/content_repository/utils"
+    xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl"
+    version="2.0">
     <xsl:import href="commons_v1.xsl"/>
+    <xd:doc scope="stylesheet">
+        <xd:desc>Generic functions for SRU-result handling
+            <xd:p>History:
+                <xd:ul>
+                    <xd:li>2012-02-04: created by:"vr": Convenience wrapper to commons_v1.xsl in XSLT 2.0</xd:li>
+                    <xd:li>2011-12-04: created by:"vr": Based on cmd_functions.xsl but retrofitted back to 1.0</xd:li>
+                </xd:ul>
+            </xd:p>       
+        </xd:desc>
+    </xd:doc>
+    
+    <xd:doc>
+        <xd:desc>???</xd:desc>
+    </xd:doc>
     <xsl:template name="contexts-doc">
         <xsl:if test="not(doc-available(resolve-uri($contexts_url,$base_url)))">
             <xsl:message>ERROR: context not available: <xsl:value-of select="resolve-uri($contexts_url,$base_url)"/>
@@ -18,10 +29,13 @@
         <xsl:copy-of select="if (doc-available(resolve-uri($contexts_url,$base_url))) then doc(resolve-uri($contexts_url,$base_url)) else ()"/>
     </xsl:template>
  
-    <!--
-        convenience-wrapper to formURL-template
-        shall be usable to form consistently all urls within xsl 
-    -->
+    <xd:doc>
+        <xd:desc>Convenience-wrapper to formURL-template
+            shall be usable to form consistently all urls within xsl </xd:desc>
+        <xd:param name="action">See <xd:ref name="formURL" type="template">formURL template</xd:ref>.</xd:param>
+        <xd:param name="format">See <xd:ref name="formURL" type="template">formURL template</xd:ref>.</xd:param>
+        <xd:param name="q">See <xd:ref name="formURL" type="template">formURL template</xd:ref>.</xd:param>
+    </xd:doc>     
     <xsl:function name="utils:formURL">
         <xsl:param name="action"/>
         <xsl:param name="format"/>
@@ -32,6 +46,50 @@
             <xsl:with-param name="q" select="$q"/>
             <!-- CHECK: possibly necessary   <xsl:with-param name="repository" select="$repository" /> -->
         </xsl:call-template>
+        <!-- XSL 2.0 implementation: 
+     <xsl:function name="util:formURL">
+        <xsl:param name="action"/>
+        <xsl:param name="format"/>
+        <xsl:param name="q"/>
+        <xsl:variable name="param_q">
+            <xsl:if test="$q != ''">
+                <xsl:value-of select="concat('&query=',$q)"/>
+            </xsl:if>
+        </xsl:variable>
+        <xsl:variable name="param_repository">
+            <xsl:if test="$x-context != ''">
+                <xsl:value-of select="concat('&repository=',$x-context)"/>
+            </xsl:if>
+        </xsl:variable>
+        <xsl:variable name="param_startRecord">
+            <xsl:if test="$startRecord != ''">
+                <xsl:value-of select="concat('&startRecord=',$startRecord)"/>
+            </xsl:if>
+        </xsl:variable>
+        <xsl:variable name="param_maximumRecords">
+            <xsl:if test="$maximumRecords != ''">
+                <xsl:value-of select="concat('&maximumRecords=',$maximumRecords)"/>
+            </xsl:if>
+        </xsl:variable>
+        <xsl:choose>
+            <xsl:when test="$action=''">
+                <xsl:value-of select="concat($base_url, '/?q=', $q, '&x-context=', $x-context)"/>
+            </xsl:when>
+            <xsl:when test="$q=''">
+                <xsl:value-of select="concat($base_url, '/',$action, '/', $format)"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:choose>
+                    <xsl:when test="$action='record'">
+                        <xsl:value-of select="concat($base_url, '/',$action, '/', $format, '?query=', $q, $param_repository)"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of select="concat($base_url, '/',$action, '/', $format, '?query=', $q, $param_repository, $param_startRecord, $param_maximumRecords)"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:function>-->
     </xsl:function>        
   
    <!--
