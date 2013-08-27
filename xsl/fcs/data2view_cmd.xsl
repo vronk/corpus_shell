@@ -6,9 +6,8 @@
     xmlns:sru="http://www.loc.gov/zing/srw/"
     xmlns:html="http://www.w3.org/1999/xhtml"
     xmlns:exist="http://exist.sourceforge.net/NS/exist"
-    xmlns:util="http://aac.ac.at/content_repository/utils"
     xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl"
-    version="2.0" exclude-result-prefixes="exist xd">
+    version="1.1" exclude-result-prefixes="exist xd">
 
 <xd:doc scope="stylesheet">
     <xd:desc>Stylesheet for custom formatting of CMD-records (inside a FCS/SRU-result).</xd:desc>
@@ -51,11 +50,31 @@
                     <xsl:value-of select="cmd:ResourceRef"/>
                 </xsl:when>
                 <xsl:otherwise>
+                    <!-- XSL 2.0:
+                    *******************
+                            <xsl:function name="util:encodePID">
+                                    <xsl:param name="pid"/>
+                                    <xsl:value-of select="encode-for-uri(replace(replace($pid,'/','%2F'),'\.','%2E'))"/>
+                            </xsl:function>
+                    *******************
                     <xsl:value-of select="util:formURL('record', 'htmlpage', util:encodePID(ResourceRef))"/>
+                    -->
+                    <xsl:call-template name="formURL">
+                        <xsl:with-param name="action">record</xsl:with-param>
+                        <xsl:with-param name="format">htmlpage</xsl:with-param>
+                        <xsl:with-param name="q"><xsl:value-of select="encode-for-uri(replace(replace(ResourceRef,'/','%2F'),'\.','%2E'))"/></xsl:with-param>
+                    </xsl:call-template>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
-        <xsl:variable name="class" select=" if (cmd:ResourceType='Resource') then 'external' else 'internal'"/>
+        <!-- XPath 1.0 if trick: from http://stackoverflow.com/questions/971067/is-there-an-if-then-else-statement-in-xpath and
+        http://www.tkachenko.com/blog/archives/000156.html Becker's method, relies on substring start argument bigger than string lenght
+        returns empty string and number(false) = 0, number(true) = 1. -->
+        <!-- XPath 2.0:  if (cmd:ResourceType='Resource') then 'external' else 'internal' -->
+        <xsl:variable name="class" select="concat(
+            substring('external', number(not(cmd:ResourceType='Resource')) * string-length('external') + 1),
+            substring('internal', number(cmd:ResourceType='Resource') * string-length('internal') + 1)
+            )"/>
         <li>
             <span class="label">
                 <xsl:value-of select="cmd:ResourceType"/>: </span>
@@ -65,51 +84,4 @@
         </li>
     </xsl:template>
     <xsl:template match="@ComponentId" mode="format-attr"/>
-    <xsl:function name="util:encodePID">
-        <xsl:param name="pid"/>
-        <xsl:value-of select="encode-for-uri(replace(replace($pid,'/','%2F'),'\.','%2E'))"/>
-    </xsl:function>
-    <!--  <xsl:function name="util:formURL">
-        <xsl:param name="action"/>
-        <xsl:param name="format"/>
-        <xsl:param name="q"/>
-        <xsl:variable name="param_q">
-            <xsl:if test="$q != ''">
-                <xsl:value-of select="concat('&query=',$q)"/>
-            </xsl:if>
-        </xsl:variable>
-        <xsl:variable name="param_repository">
-            <xsl:if test="$x-context != ''">
-                <xsl:value-of select="concat('&repository=',$x-context)"/>
-            </xsl:if>
-        </xsl:variable>
-        <xsl:variable name="param_startRecord">
-            <xsl:if test="$startRecord != ''">
-                <xsl:value-of select="concat('&startRecord=',$startRecord)"/>
-            </xsl:if>
-        </xsl:variable>
-        <xsl:variable name="param_maximumRecords">
-            <xsl:if test="$maximumRecords != ''">
-                <xsl:value-of select="concat('&maximumRecords=',$maximumRecords)"/>
-            </xsl:if>
-        </xsl:variable>
-        <xsl:choose>
-            <xsl:when test="$action=''">
-                <xsl:value-of select="concat($base_url, '/?q=', $q, '&x-context=', $x-context)"/>
-            </xsl:when>
-            <xsl:when test="$q=''">
-                <xsl:value-of select="concat($base_url, '/',$action, '/', $format)"/>
-            </xsl:when>
-            <xsl:otherwise>
-                <xsl:choose>
-                    <xsl:when test="$action='record'">
-                        <xsl:value-of select="concat($base_url, '/',$action, '/', $format, '?query=', $q, $param_repository)"/>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:value-of select="concat($base_url, '/',$action, '/', $format, '?query=', $q, $param_repository, $param_startRecord, $param_maximumRecords)"/>
-                    </xsl:otherwise>
-                </xsl:choose>
-            </xsl:otherwise>
-        </xsl:choose>
-    </xsl:function>-->
 </xsl:stylesheet>
