@@ -2,7 +2,7 @@
   /**
    * Switch script that queries upstream resources and transforms their response if requested
    * <br/>
-   * Uses the file named in $fcsConfig if it exists.<br/>
+   * Uses the file named in $fcsConfig if it exists to get $configName.<br/>
    * <br/>
    * Parameters for operation "explain"<br/>
    * <pre>
@@ -91,6 +91,7 @@
    * </pre>
    * 
    * @uses HandleXFormatCases()
+   * @uses $configName
    * @uses $fcsConfig
    * @uses $operation
    * @uses $query
@@ -707,7 +708,7 @@
    * <ul>
    * <li>on "html": Fetches the XML upstream and applies the XSL document specified
    * for that operation in the $switchConfig</li>
-   * <li>on "xsltproc": returns a diagnostic text about the XSLT processor that would be used.</li>
+   * <li>on "xsltproc": returns a diagnostic text about the XSLT processor providing EXSLT support (which is mandatory for the XSL style sheets supplied!).</li>
    * <li>on "xsl": returns the stylesheet that would be used for the requested operation.</li>
    * <li>on "img": the response from the upstream endpoint is returnes as if it were an image/jpeg.</li>
    * <li>on an unrecognizable string: the upstream result is returned verbatim and text/xml is assumed.</li>
@@ -752,7 +753,7 @@
               ReturnXslT($xmlDoc, $xslDoc, true);
             else
               //"Unsupported context set"
-              Diagnostics(15, str_replace("&", "&amp;", $item));
+              Diagnostics(15, str_replace("&", "&amp;", GetXslStyle($operation, $configItem) .":  " . $item));
           }
           else
             //"Unsupported context set"
@@ -762,8 +763,11 @@
         {
           $proc = new XSLTProcessor();
           header("content-type: text/plain; charset=UTF-8");
-          print "XSLTPROC-testing";
-          print "hasExsltSupport: ".$proc->hasExsltSupport;
+          print "XSLTPROC ";
+		  if ($proc->hasExsltSupport())
+            print "has Exslt support.\n";
+		  else
+		    print "doesn't have Exslt support!\n";
         }
         elseif (stripos($xformat, "xsl") !== false)
         {
