@@ -130,21 +130,25 @@
     <xsl:param name="operation"/>
     <xd:doc>
         <xd:desc>Requested format of the result
+            <xd:p>One of htmlpage, htmljspage or htmlsimple or something completely different.
+                Most importantly this chooses between four different frameworks for the page with more or less
+                building blocks. Unrecognizeable strings generate only the least possible amount of HTML.</xd:p>
+            <xd:p>Possible intended future use: Mix and match parts needed by the application:</xd:p>
             <xd:p>One a combination of
                 <xd:ul>
-                    <xd:li>html + one of
+                    <xd:li>"html" to actually generate an HTML framework as opposed to an AJAX HTML fragment + one of
                         <xd:ul>
-                            <xd:li>page</xd:li>
-                            <xd:li>js</xd:li>
-                            <xd:li>simple</xd:li>                    
+                            <xd:li>"page"</xd:li>
+                            <xd:li>"js" generate an HTML page that utilises JavaScript</xd:li>
+                            <xd:li>"simple" generate a simple HTML page</xd:li>                    
                         </xd:ul>
                     </xd:li>
-                    <xd:li>list</xd:li>
-                    <xd:li>detail</xd:li>
+                    <xd:li>"list" represent the SRU items as a list</xd:li>
+                    <xd:li>"detail" add detail information</xd:li>
                 </xd:ul>
             </xd:p>
             <xd:p>
-                Examples: htmlsimpledetail or htmljslist
+                Examples would be: htmlsimpledetail or htmljslist
             </xd:p>
             <xd:p>
                 Defaults to 'htmlpagelist'.
