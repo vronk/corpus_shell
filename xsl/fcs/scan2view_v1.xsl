@@ -66,8 +66,45 @@
     <xsl:decimal-format name="european" decimal-separator="," grouping-separator="."/>
     <xsl:param name="scanClause" select="/sru:scanResponse/sru:echoedScanRequest/sru:scanClause"/>
 <!--    <xsl:param name="scanClause-array" select="tokenize($scanClause,'=')"/>-->
+    <xd:doc>
+        <xd:desc>The index is defined as the part of the scanClause before the '='
+        <xd:p>
+            This is one possibility according to the
+            <xd:a href="http://www.loc.gov/standards/sru/specs/scan.html">SRU documentation</xd:a>.
+            The documentation states that scanClause can be "expressed as a complete index, relation, term clause in CQL". 
+        </xd:p>
+        <xd:p>
+            Note: for the special scan clause fcs.resource this is an empty string.
+            See <xd:a href="http://www.w3.org/TR/xpath/#function-substring-before">.XPath language definition</xd:a>
+        </xd:p>
+        </xd:desc>
+    </xd:doc>
     <xsl:param name="index" select="substring-before($scanClause,'=')"/>
+    <xd:doc>
+        <xd:desc>The filter is defined as the part of the scanClause after the '='
+            <xd:p>
+                This is one possibility according to the
+                <xd:a href="http://www.loc.gov/standards/sru/specs/scan.html">SRU documentation</xd:a>.
+                The documentation states that scanClause can be "expressed as a complete index, relation, term clause in CQL". 
+            </xd:p>
+            <xd:p>
+                Note: for the special scan clause fcs.resource this is an empty string.
+                See <xd:a href="http://www.w3.org/TR/xpath/#function-substring-after">.XPath language definition</xd:a>
+            </xd:p>
+        </xd:desc>
+    </xd:doc>    
     <xsl:param name="filter" select="substring-after($scanClause,'=')"/>
+    
+    <xd:doc>
+        <xd:desc>Standard callback from / template
+        <xd:p>
+            <xd:ul>
+            <xd:li>If a htmlpage is requested generates input elements for the user to do another scan.</xd:li>
+            <xd:li>Wraps the HTML representation of the result terms in an HTML div element.</xd:li>
+            </xd:ul>
+        </xd:p>
+        </xd:desc>
+    </xd:doc>
     <xsl:template name="continue-root">
         <div> <!-- class="cmds-ui-block  init-show" -->
             <xsl:if test="$format = 'htmlpage'">
@@ -79,13 +116,9 @@
         </div>
     </xsl:template>
     
-    <!-- <sru:extraResponseData>
-        <fcs:countTerms>619</fcs:countTerms>
-        </sru:extraResponseData>
-        <sru:echoedScanRequest>
-        <sru:scanClause>diary-month</sru:scanClause>
-        <sru:maximumTerms>100</sru:maximumTerms>        
-        </sru:echoedScanRequest> -->
+    <xd:doc>
+        <xd:desc>Generates an HTML div element containing inputs so the user can initiate another scan</xd:desc>
+    </xd:doc>
     <xsl:template name="header">
         <xsl:variable name="countTerms" select="/sru:scanResponse/sru:extraResponseData/fcs:countTerms"/>
         <xsl:variable name="start-item" select="'TODO:start-item=?'"/>
@@ -110,15 +143,9 @@
         </div>
     </xsl:template>
     
-    <!-- 
-sample data:        
-        <sru:term>
-        <sru:value>cartesian</sru:value>
-        <sru:numberOfRecords>35645</sru:numberOfRecords>
-        <sru:displayTerm>Carthesian</sru:displayTerm>
-        <sru:extraTermData></sru:extraTermData>
-        </sru:term>
-    -->
+    <xd:doc>
+        <xd:desc>Operation scan returns any number of terms which are presented in HTML either nested as lists aor tables</xd:desc>
+    </xd:doc>
     <xsl:template match="sru:terms">
 <!--        <xsl:variable name="index" select="my:xpath2index(@path)"/>-->
         <xsl:choose>
@@ -134,12 +161,29 @@ sample data:
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
+    
+    <xd:doc>
+        <xd:desc>A term consits of a number for this term and the term itself
+        <xd:p>The term is presented as a link that can be used to scan for that term.</xd:p>
+        <xd:p>
+            Sample data:
+<xd:pre>
+            &lt;sru:term>
+                &lt;sru:value>cartesian&lt;/sru:value>
+                &lt;sru:numberOfRecords>35645&lt;/sru:numberOfRecords>
+                &lt;sru:displayTerm>Carthesian&lt;/sru:displayTerm>
+                &lt;sru:extraTermData>&lt;/sru:extraTermData>
+            &lt;/sru:term>
+</xd:pre>
+        </xd:p>
+        </xd:desc>
+    </xd:doc>
     <xsl:template match="sru:term">
         <xsl:variable name="depth" select="count(ancestor::sru:term)"/>
         <xsl:variable name="href">
             <!--                        special handling for special index -->
             <xsl:choose>
-                <xsl:when test="$index = 'fcs.resource'">
+                <xsl:when test="$scanClause = 'fcs.resource'">
 <!--                    <xsl:value-of select="utils:formURL('explain', $format, sru:value)"/>-->
                     <xsl:call-template name="formURL">
                         <xsl:with-param name="action" >explain</xsl:with-param>
