@@ -143,12 +143,16 @@
    * @global string $switchUrl
    */
   $switchUrl =               "http://" . $localhost . "/" . $csRoot ."/modules/fcs-aggregator/switch.php";
+  // phpdoc only accepts relative URLS within the local project or fully specified ones.
   /**
-   * Web location of corpus_shells JavaScript and CSS scripts
+   * Web location of corpus_shells JavaScript and CSS scripts as seen from the browsers perspective.
+   * Has to end in a path separator (/)!
    * 
+   * See: {@link http://localhost/corpus_shell/docs/xsltdocs/result2view_v14.html#P_scripts_urlS_..params.xsl XSLT docs}
+   *  
    * @global string $scriptsUrl
    */
-  $scriptsUrl =              $webRoot . "scripts";
+  $scriptsUrl =              $webRoot . "scripts/";
   /**
    * Server's file system location for an FCS reply configuration file
    * 
