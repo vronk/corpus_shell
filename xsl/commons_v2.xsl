@@ -3,6 +3,7 @@
     xmlns="http://www.w3.org/1999/xhtml"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:utils="http://aac.ac.at/content_repository/utils"
+    xmlns:exsl="http://exslt.org/common"
     xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl"
     version="2.0">
     <xsl:import href="commons_v1.xsl"/>
@@ -117,5 +118,14 @@
             <xsl:with-param name="key" select="$key"/>
             <xsl:with-param name="fallback" select="$fallback"/>
         </xsl:call-template>
+    </xsl:function>
+    
+    <xd:doc>
+        <xd:desc>Dummy that returns it's parameter as this is not needed in XSL 2.0</xd:desc>
+        <xd:param name="node-set">This node-set is returned as is</xd:param>
+    </xd:doc>
+    <xsl:function name="exsl:node-set">
+        <xsl:param name="node-set"/>
+        <xsl:value-of select="$node-set"/>
     </xsl:function>
 </xsl:stylesheet>

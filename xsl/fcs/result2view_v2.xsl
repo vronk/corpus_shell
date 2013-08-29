@@ -185,14 +185,21 @@
             </td>
         </tr>
     </xsl:template>
+    
     <xsl:template match="sru:diagnostics">
         <div class="error">
             <xsl:apply-templates/>
         </div>
     </xsl:template>
+    
     <xsl:template match="diag:diagnostic">
         <xsl:value-of select="diag:message"/> (<xsl:value-of select="diag:uri"/>)
     </xsl:template>
+    
+    <xd:doc>
+        <xd:desc>Inserts the JavaScript funtions needed for displaying the representation
+        of the unknown parts of the TEI encoding.</xd:desc>
+    </xd:doc>
     <xsl:template name="callback-header">
         <script type="text/javascript">
             $(function()

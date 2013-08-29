@@ -9,7 +9,8 @@
     xmlns:fcs="http://clarin.eu/fcs/1.0"
     xmlns:exist="http://exist.sourceforge.net/NS/exist"
     xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl"
-    version="1.0" exclude-result-prefixes="kwic xsl tei sru xs fcs exist xd">
+    xmlns:exsl="http://exslt.org/common"
+    version="1.0" exclude-result-prefixes="kwic xsl tei sru xs fcs exist xd exsl">
     <xd:doc scope="stylesheet">
         <xd:desc>Provides more specific handling of sru-result-set recordData
             <xd:p>History:
@@ -228,8 +229,94 @@
     
     <xd:doc>
         <xd:desc>
-            <xd:p>Empty template. Only available with XSL 2.0 using features. See data2view_v2.xsl</xd:p>
+            <xd:p>Inserts links for special TEI elements like named entities. XSL 1.0 port.
+                Advanced functionality is available with XSL 2.0 using features. See data2view_v2.xsl</xd:p>
         </xd:desc>
     </xd:doc>
-    <xsl:template name="inline"/>
+    <xsl:template name="inline">
+        <xsl:variable name="elem-link">
+            <xsl:call-template name="elem-link"/>
+        </xsl:variable>
+        <xsl:variable name="inline-content">
+            <xsl:for-each select=".//text()">
+                <xsl:choose>
+                    <xsl:when test="parent::exist:match">
+                        <xsl:apply-templates select="parent::exist:match" mode="record-data"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of select="."/>
+                        <xsl:text> </xsl:text>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:for-each>        
+        </xsl:variable>
+        <xsl:variable name="class">
+            <!-- This genereates CSS class attributes for HTML elements. As far as I know
+                it doesn't matter if the class is specified once or n-times so for 1.0 just forget
+                about distinct-values() for now and let's see -->
+            <xsl:for-each select="descendant-or-self::*">
+                <xsl:value-of select="name(.)"/>
+                <xsl:text> </xsl:text>
+            </xsl:for-each>
+        </xsl:variable>
+        <xsl:variable name="inline-elem">
+            <xsl:choose>
+                <xsl:when test="not($elem-link='')">
+                    <a href="{$elem-link}">
+                        <span class="{$class}">
+                            <xsl:copy-of select="$inline-content"/>
+                        </span>
+                    </a>
+                </xsl:when>
+                <xsl:otherwise>
+                    <span class="{$class}">
+                        <xsl:copy-of select="$inline-content"/>
+                    </span>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <span class="inline-wrap">
+            <xsl:if test="descendant-or-self::*/@*">
+                <span class="attributes" style="display:none;">
+                    <table>
+                            <tr>
+                                <td colspan="2">
+                                    <xsl:call-template name="join-attributes-with-space">
+                                        <xsl:with-param name="nodes" select="exsl:node-set(descendant-or-self::*)"/>
+                                    </xsl:call-template>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <xsl:for-each select="descendant-or-self::*">
+                                        <xsl:if test="@*">
+                                            <table style="float:left">
+                                                <xsl:for-each select="@*">
+                                                    <tr>
+                                                        <td class="label">
+                                                            <xsl:value-of select="name()"/>
+                                                        </td>
+                                                        <td class="value">
+                                                            <xsl:value-of select="."/>
+                                                        </td>
+                                                    </tr>
+                                                </xsl:for-each>
+                                            </table>
+                                        </xsl:if>
+                                    </xsl:for-each>
+                                </td>
+                            </tr>
+                    </table>
+                </span>
+            </xsl:if>
+            <xsl:copy-of select="$inline-elem"/>
+        </span>
+    </xsl:template>
+    <xsl:template name="join-attributes-with-space">
+        <xsl:param name="nodes"/>
+        <xsl:for-each select="$nodes/@*">
+             <xsl:value-of select="."/>
+             <xsl:text> </xsl:text>
+        </xsl:for-each> 
+    </xsl:template>
 </xsl:stylesheet>

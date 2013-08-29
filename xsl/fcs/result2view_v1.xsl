@@ -152,7 +152,7 @@
             </div>
         </xsl:variable>
         <xsl:call-template name="record-table-row">
-            <xsl:with-param name="fields" select="$fields"/>
+            <xsl:with-param name="fields" select="exsl:node-set($fields)"/>
         </xsl:call-template>
     </xsl:template>
     
@@ -220,7 +220,7 @@
         </tr>
         <tr>
             <td>
-                <xsl:copy-of select="$fields"/>
+                <xsl:copy-of select="exsl:node-set($fields)"/>
             </td>
         </tr>
     </xsl:template>

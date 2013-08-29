@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns:exsl="http://exslt.org/common"
     xmlns:sru="http://www.loc.gov/zing/srw/"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:fcs="http://clarin.eu/fcs/1.0"
@@ -251,7 +252,7 @@
     <xd:doc>
         <xd:desc>A map with additional settings</xd:desc>
     </xd:doc>
-    <xsl:variable name="mappings" select="document($mappings-file)/map"/>
+    <xsl:variable name="mappings" select="exsl:node-set(document($mappings-file)/map)"/>
     <xd:doc>
         <xd:desc>The settings for <xd:ref name="x-context" type="parameter">$x-context</xd:ref> contained in 
         <xd:ref name="mappings" type="variable">mappings</xd:ref></xd:desc>
