@@ -1,17 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:aac="urn:general" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:sru="http://www.loc.gov/zing/srw/" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:exist="http://exist.sourceforge.net/NS/exist" version="1.0" 
-    exclude-result-prefixes="#all">
+<xsl:stylesheet 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns:aac="urn:general"
+    xmlns:tei="http://www.tei-c.org/ns/1.0"
+    xmlns:sru="http://www.loc.gov/zing/srw/"
+    xmlns:html="http://www.w3.org/1999/xhtml"
+    xmlns:exist="http://exist.sourceforge.net/NS/exist"
+    xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl"
+    version="1.0" 
+    exclude-result-prefixes="xsl aac tei sru html exist xd">
 
-<!-- 
- stylesheet for formatting TEI-elements  inside a FCS/SRU-result.
+<xd:doc scope="stylesheet">
+    <xd:desc> 
+<xd:p>Stylesheet for formatting TEI-elements  inside a FCS/SRU-result.
 the TEI-elements are expected without namespace (!) (just local names)
-This is not nice, but is currently in results like that.
-
+This is not nice, but is currently in results like that.</xd:p>
+<xd:p>
 The templates are sorted by TEI-elements they match.
 if the same transformation applies to multiple elements,
 it is extracted into own named-template and called from the matching templates.
-the named templates are at the bottom.
--->
+the named templates are at the bottom.</xd:p>
+    </xd:desc>
+</xd:doc>
     
     <!-- some special elements retained in data, due to missing correspondencies in tei 
         if it will get more, we should move to separate file -->
