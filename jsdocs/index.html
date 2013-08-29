@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Index</title>
+    
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+    
+    <h1 class="page-title">Index</h1>
+    
+    
+
+
+    
+
+
+    <h3> </h3>
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+<section>
+    
+<header>
+    <h2>
+    js/corpusshell.config.js
+    </h2>
+    
+</header>  
+
+<article>
+    <div class="container-overview">
+    
+    
+    
+        
+            <div class="description">Configuration of available search contexts, downloaded from corpus3.aac.ac.at.last updated 2012-07-26</div>
+        
+        
+        
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="corpusshell.config.js.html">corpusshell.config.js</a>, <a href="corpusshell.config.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+        
+        
+    
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</article>
+
+</section>  
+
+
+
+
+
+
+<section>
+    
+<header>
+    <h2>
+    js/corpusshell.js
+    </h2>
+    
+</header>  
+
+<article>
+    <div class="container-overview">
+    
+    
+    
+        
+            <div class="description">Contains all the helper methods that are called from index.html which dosome preliminary checks and then delegate the work to the specialized classes. It also provides the ui logic for the sidebar.<br/>This file has some sections which are just instructions and are not wraped into a function block.Main entry points here are <a href="module-corpus_shell.html#doOnDocumentReady">module:corpus_shell~doOnDocumentReady</a> which is passed to jQuery as the $(document).ready() handler,<a href="module-corpus_shell.html#SaveProfileAs">module:corpus_shell~SaveProfileAs</a>, <a href="module-corpus_shell.html#CreateNewProfile">module:corpus_shell~CreateNewProfile</a>, <a href="module-corpus_shell.html#LoadProfile">module:corpus_shell~LoadProfile</a> and <a href="module-corpus_shell.html#DeleteProfile">module:corpus_shell~DeleteProfile</a>which are activated by correponding buttons in the side bar, <a href="module-corpus_shell.html#GetUserData">module:corpus_shell~GetUserData</a> which is used by the Refresh user profiles button and<a href="module-corpus_shell.html#ShowIndexCache">module:corpus_shell~ShowIndexCache</a> which provides the Show/Hide indexes functionality.</div>
+        
+        
+        
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="corpusshell.js.html">corpusshell.js</a>, <a href="corpusshell.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+        
+        
+    
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</article>
+
+</section>  
+
+
+
+
+
+
+<section>
+    
+<header>
+    <h2>
+    js/panel.js
+    </h2>
+    
+</header>  
+
+<article>
+    <div class="container-overview">
+    
+    
+    
+        
+            <div class="description">Provides the Panel class. Main entry points here are <a href="module-corpus_shell-Panel.html#CreatePanel">module:corpus_shell~Panel#CreatePanel</a>.</div>
+        
+        
+        
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>Andy Basch,last change:  2012.10.02</li>
+        </ul>
+    </dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="panel.js.html">panel.js</a>, <a href="panel.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+        
+        
+    
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</article>
+
+</section>  
+
+
+
+
+
+
+<section>
+    
+<header>
+    <h2>
+    js/panelmanager.js
+    </h2>
+    
+</header>  
+
+<article>
+    <div class="container-overview">
+    
+    
+    
+        
+            <div class="description">Provides tha PanelManager class and the global PanelController object. <br/>Entry point from index.html is <a href="module-corpus_shell-PanelManager.html#OpenNewSearchPanel">module:corpus_shell~PanelManager#OpenNewSearchPanel</a> <br/>Entry point from corpusshell.js is <a href="module-corpus_shell-PanelManager.html#OpenSubPanel">module:corpus_shell~PanelManager#OpenSubPanel</a> whichis automatically attached to a set of links to replace their default behaviour. See <a href="module-corpus_shell.html#doOnDocumentReady">module:corpus_shell~doOnDocumentReady</a><br/>Currently the target of all operations is the id selector of "#snaptarget" -> <a href="module-corpus_shell.html#PanelController">module:corpus_shell~PanelController</a></br>last change:  2012.10.02</div>
+        
+        
+        
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>Andy Basch</li>
+        </ul>
+    </dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="panelmanager.js.html">panelmanager.js</a>, <a href="panelmanager.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+        
+        
+    
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</article>
+
+</section>  
+
+
+
+
+
+
+<section>
+    
+<header>
+    <h2>
+    js/params.js
+    </h2>
+    
+</header>  
+
+<article>
+    <div class="container-overview">
+    
+    
+    
+        
+            <div class="description">a default version of the params-file for instance specific configuration.Makes things work just pointing a CORS compatible Browser (non-IE, IE >= 10) at thelocal copy. The switch URL is a temporary reverse proxy solution.</div>
+        
+        
+        
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="params.js.html">params.js</a>, <a href="params.js.html#line2">line 2</a>
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+        
+        
+    
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</article>
+
+</section>  
+
+
+
+
+
+
+<section>
+    
+<header>
+    <h2>
+    js/profilemanager.js
+    </h2>
+    
+</header>  
+
+<article>
+    <div class="container-overview">
+    
+    
+    
+        
+            <div class="description">Provides the ProfileManager class and the ProfileController object.</div>
+        
+        
+        
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>Andy Basch</li>
+        </ul>
+    </dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="profilemanager.js.html">profilemanager.js</a>, <a href="profilemanager.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+        
+        
+    
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</article>
+
+</section>  
+
+
+
+
+
+
+<section>
+    
+<header>
+    <h2>
+    js/ressourcemanager.js
+    </h2>
+    
+</header>  
+
+<article>
+    <div class="container-overview">
+    
+    
+    
+        
+            <div class="description">Provides a managemant class for search endpoints and indexes <a href="module-corpus_shell-ResourceManager.html">module:corpus_shell~ResourceManager</a> and a default object for this purpose <a href="module-corpus_shell.html#ResourceController">module:corpus_shell~ResourceController</a>.<br/>Main entry points are <a href="module-corpus_shell-ResourceManager.html#AddResource">module:corpus_shell~ResourceManager#AddResource</a> and <a href="module-corpus_shell-ResourceManager.html#AddIndex">module:corpus_shell~ResourceManager#AddIndex</a> which are calledfrom <a href="module-corpus_shell.html#doOnDocumentReady">module:corpus_shell~doOnDocumentReady</a>. <a href="module-corpus_shell-ResourceManager.html#GetIndexCache">module:corpus_shell~ResourceManager#GetIndexCache</a> generates the box that is shown after a click onShow indexes.</div>
+        
+        
+        
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ressourcemanager.js.html">ressourcemanager.js</a>, <a href="ressourcemanager.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+        
+        
+    
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</article>
+
+</section>  
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="module-corpus_shell.html">corpus_shell</a></li></ul><h3>Classes</h3><ul><li><a href="$.fn.QueryInput.html">QueryInput</a></li><li><a href="module-corpus_shell-Panel.html">Panel</a></li><li><a href="module-corpus_shell-PanelManager.html">PanelManager</a></li><li><a href="module-corpus_shell-ProfileManager.html">ProfileManager</a></li><li><a href="module-corpus_shell-ResourceManager.html">ResourceManager</a></li></ul><h3>Events</h3><ul><li><a href="module-corpus_shell-PanelManager.html#event:onUpdated">onUpdated</a></li></ul><h3>Global</h3><ul><li><a href="global.html#drawChart">drawChart</a></li></ul>
+</nav>
+
+<br clear="both">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.0-dev</a> on Wed Aug 21 2013 17:54:46 GMT+0200 (MESZ)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

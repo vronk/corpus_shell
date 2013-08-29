@@ -1,0 +1,888 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos  -->
+			<title>Docs For Class vlibTemplateDebug</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+						<script src="../media/lib/classTree.js"></script>
+												<script language="javascript" type="text/javascript">
+				var imgPlus = new Image();
+				var imgMinus = new Image();
+				imgPlus.src = "../media/images/plus.png";
+				imgMinus.src = "../media/images/minus.png";
+				
+				function showNode(Node){
+							switch(navigator.family){
+								case 'nn4':
+									// Nav 4.x code fork...
+							var oTable = document.layers["span" + Node];
+							var oImg = document.layers["img" + Node];
+									break;
+								case 'ie4':
+									// IE 4/5 code fork...
+							var oTable = document.all["span" + Node];
+							var oImg = document.all["img" + Node];
+									break;
+								case 'gecko':
+									// Standards Compliant code fork...
+							var oTable = document.getElementById("span" + Node);
+							var oImg = document.getElementById("img" + Node);
+									break;
+							}
+					oImg.src = imgMinus.src;
+					oTable.style.display = "block";
+				}
+				
+				function hideNode(Node){
+							switch(navigator.family){
+								case 'nn4':
+									// Nav 4.x code fork...
+							var oTable = document.layers["span" + Node];
+							var oImg = document.layers["img" + Node];
+									break;
+								case 'ie4':
+									// IE 4/5 code fork...
+							var oTable = document.all["span" + Node];
+							var oImg = document.all["img" + Node];
+									break;
+								case 'gecko':
+									// Standards Compliant code fork...
+							var oTable = document.getElementById("span" + Node);
+							var oImg = document.getElementById("img" + Node);
+									break;
+							}
+					oImg.src = imgPlus.src;
+					oTable.style.display = "none";
+				}
+				
+				function nodeIsVisible(Node){
+							switch(navigator.family){
+								case 'nn4':
+									// Nav 4.x code fork...
+							var oTable = document.layers["span" + Node];
+									break;
+								case 'ie4':
+									// IE 4/5 code fork...
+							var oTable = document.all["span" + Node];
+									break;
+								case 'gecko':
+									// Standards Compliant code fork...
+							var oTable = document.getElementById("span" + Node);
+									break;
+							}
+					return (oTable && oTable.style.display == "block");
+				}
+				
+				function toggleNodeVisibility(Node){
+					if (nodeIsVisible(Node)){
+						hideNode(Node);
+					}else{
+						showNode(Node);
+					}
+				}
+			</script>
+					</head>
+		<body>
+			<div class="page-body">			
+<h2 class="class-name"><img src="../media/images/Class_logo.png"
+														alt=" Class"
+														title=" Class"
+														style="vertical-align: middle"> vlibTemplateDebug</h2>
+
+<a name="sec-description"></a>
+<div class="info-box">
+	<div class="info-box-title">Description</div>
+	<div class="nav-bar">
+					<span class="disabled">Description</span> |
+													<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+						|											<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+						
+					</div>
+	<div class="info-box-body">
+        		<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Class uses all of vlibTemplate's functionality but debugs the template files.</p>
+<p class="description"><p>Outputs a debug console to an html page, only use this for html files.</p><p>NB: This class is not as well documented as the main vlibTemplate class as all  functions are private. This will be cleaned up in the future but it's quite  far down the priority list. It works, and right now, that's what counts.</p></p>
+	<ul class="tags">
+				<li><span class="field">author:</span> Kelvin Jones, Claus van Beek, Stefan Deussen</li>
+				<li><span class="field">since:</span> 21/01/2002</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+		<p class="notes">
+			Located in <a class="field" href="_utils-php---vlib---vlibTemplate---debug.php.html">/utils-php/vlib/vlibTemplate/debug.php</a> (line <span class="field">27</span>)
+		</p>
+		
+				
+		<pre><a href="../vLIB/vlibTemplate.html">vlibTemplate</a>
+   |
+   --vlibTemplateDebug</pre>
+	
+			</div>
+</div>
+
+
+
+	<a name="sec-var-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Variable Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+						<span class="disabled">Vars</span> (<a href="#sec-vars">details</a>)
+							| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+								</div>
+		<div class="info-box-body">
+			<div class="var-summary">
+																																																																																																																<div class="var-title">
+					<img src="../media/images/Variable.png" alt=" " />
+					<span class="var-type">mixed</span>
+					<a href="#$VLIBTEMPLATE_DEBUGMOD" title="details" class="var-name">$VLIBTEMPLATE_DEBUGMOD</a>
+				</div>
+																<div class="var-title">
+					<img src="../media/images/Variable.png" alt=" " />
+					<span class="var-type">mixed</span>
+					<a href="#$VLIBTEMPLATE_DEBUGMOD_NO_JAVASCRIPT" title="details" class="var-name">$VLIBTEMPLATE_DEBUGMOD_NO_JAVASCRIPT</a>
+				</div>
+																<div class="var-title">
+					<img src="../media/images/Variable.png" alt=" " />
+					<span class="var-type">mixed</span>
+					<a href="#$VLIBTEMPLATE_DEBUGWRAPPER" title="details" class="var-name">$VLIBTEMPLATE_DEBUGWRAPPER</a>
+				</div>
+																<div class="var-title">
+					<img src="../media/images/Variable.png" alt=" " />
+					<span class="var-type">mixed</span>
+					<a href="#$VLIBTEMPLATE_DEBUGWRAPPER_NO_JAVASCRIPT" title="details" class="var-name">$VLIBTEMPLATE_DEBUGWRAPPER_NO_JAVASCRIPT</a>
+				</div>
+																<div class="var-title">
+					<img src="../media/images/Variable.png" alt=" " />
+					<span class="var-type">mixed</span>
+					<a href="#$_debug" title="details" class="var-name">$_debug</a>
+				</div>
+																<div class="var-title">
+					<img src="../media/images/Variable.png" alt=" " />
+					<span class="var-type">mixed</span>
+					<a href="#$_debugalltags" title="details" class="var-name">$_debugalltags</a>
+				</div>
+																<div class="var-title">
+					<img src="../media/images/Variable.png" alt=" " />
+					<span class="var-type">mixed</span>
+					<a href="#$_debugIncludedfiles" title="details" class="var-name">$_debugIncludedfiles</a>
+				</div>
+																<div class="var-title">
+					<img src="../media/images/Variable.png" alt=" " />
+					<span class="var-type">mixed</span>
+					<a href="#$_debugtags" title="details" class="var-name">$_debugtags</a>
+				</div>
+																<div class="var-title">
+					<img src="../media/images/Variable.png" alt=" " />
+					<span class="var-type">mixed</span>
+					<a href="#$_debugTemplatevars" title="details" class="var-name">$_debugTemplatevars</a>
+				</div>
+																<div class="var-title">
+					<img src="../media/images/Variable.png" alt=" " />
+					<span class="var-type">mixed</span>
+					<a href="#$_debugwarningmsgs" title="details" class="var-name">$_debugwarningmsgs</a>
+				</div>
+																<div class="var-title">
+					<img src="../media/images/Variable.png" alt=" " />
+					<span class="var-type">mixed</span>
+					<a href="#$_debugwarningmsgscontrol" title="details" class="var-name">$_debugwarningmsgscontrol</a>
+				</div>
+																<div class="var-title">
+					<img src="../media/images/Variable.png" alt=" " />
+					<span class="var-type">mixed</span>
+					<a href="#$_debugwarnings" title="details" class="var-name">$_debugwarnings</a>
+				</div>
+											</div>
+		</div>
+	</div>
+
+	<a name="sec-method-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Method Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+																		<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+				 
+				|
+						<span class="disabled">Methods</span> (<a href="#sec-methods">details</a>)
+		</div>
+		<div class="info-box-body">			
+			<div class="method-summary">
+																																																																							
+				<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">void</span>
+										<a href="#arrangeTags" title="details" class="method-name">arrangeTags</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$arr</span>)
+									</div>
+															
+				<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">void</span>
+										<a href="#clearCache" title="details" class="method-name">clearCache</a>
+										()
+									</div>
+															
+				<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">void</span>
+										<a href="#enjavanate" title="details" class="method-name">enjavanate</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$str</span>, [<span class="var-type"></span>&nbsp;<span class="var-name">$limit</span> = <span class="var-default">60</span>])
+									</div>
+															
+				<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">void</span>
+										<a href="#recache" title="details" class="method-name">recache</a>
+										()
+									</div>
+															
+				<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">void</span>
+										<a href="#setCacheExtension" title="details" class="method-name">setCacheExtension</a>
+										()
+									</div>
+															
+				<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">void</span>
+										<a href="#setCacheLifeTime" title="details" class="method-name">setCacheLifeTime</a>
+										()
+									</div>
+															
+				<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">void</span>
+										<a href="#_debugReset" title="details" class="method-name">_debugReset</a>
+										()
+									</div>
+											</div>
+		</div>
+	</div>		
+
+	<a name="sec-vars"></a>
+	<div class="info-box">
+		<div class="info-box-title">Variables</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+										<a href="#sec-var-summary">Vars</a> (<span class="disabled">details</span>)
+						
+			
+										| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+					</div>
+		<div class="info-box-body">
+			
+<a name="var$VLIBTEMPLATE_DEBUGMOD" id="$VLIBTEMPLATE_DEBUGMOD"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<img src="../media/images/Variable.png" />
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$VLIBTEMPLATE_DEBUGMOD</span>
+			 = <span class="var-default"> './vlibTemplate/vlibTemplate_debugmod.html'</span>			(line <span class="line-number">33</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+		
+		
+
+</div>
+<a name="var$VLIBTEMPLATE_DEBUGMOD_NO_JAVASCRIPT" id="$VLIBTEMPLATE_DEBUGMOD_NO_JAVASCRIPT"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<img src="../media/images/Variable.png" />
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$VLIBTEMPLATE_DEBUGMOD_NO_JAVASCRIPT</span>
+			 = <span class="var-default"> './vlibTemplate/vlibTemplate_debugmod_no_javascript.html'</span>			(line <span class="line-number">36</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+		
+		
+
+</div>
+<a name="var$VLIBTEMPLATE_DEBUGWRAPPER" id="$VLIBTEMPLATE_DEBUGWRAPPER"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<img src="../media/images/Variable.png" />
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$VLIBTEMPLATE_DEBUGWRAPPER</span>
+			 = <span class="var-default"> './vlibTemplate/vlibTemplate_debugmodwrapper.html'</span>			(line <span class="line-number">34</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+		
+		
+
+</div>
+<a name="var$VLIBTEMPLATE_DEBUGWRAPPER_NO_JAVASCRIPT" id="$VLIBTEMPLATE_DEBUGWRAPPER_NO_JAVASCRIPT"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<img src="../media/images/Variable.png" />
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$VLIBTEMPLATE_DEBUGWRAPPER_NO_JAVASCRIPT</span>
+			 = <span class="var-default"> './vlibTemplate/vlibTemplate_debugmodwrapper_no_javascript.html'</span>			(line <span class="line-number">37</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+		
+		
+
+</div>
+<a name="var$_debug" id="$_debug"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<img src="../media/images/Variable.png" />
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$_debug</span>
+			 = <span class="var-default"> 1</span>			(line <span class="line-number">43</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">boolean var prints out vlibTemplate debug module</p>
+	<ul class="tags">
+				<li><span class="field">see:</span> <a href="../vLIB/vlibTemplate.html#var$_tmplfilep">vlibTemplate::$_tmplfilep</a></li>
+			</ul>
+	
+	
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../vLIB/vlibTemplate.html#var$_debug">vlibTemplate::$_debug</a></dt>
+						<dd>define vars to avoid warnings</dd>
+					</dl>
+		
+		
+
+</div>
+<a name="var$_debugalltags" id="$_debugalltags"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<img src="../media/images/Variable.png" />
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$_debugalltags</span>
+			 = <span class="var-default">array()</span>			(line <span class="line-number">48</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+		
+		
+
+</div>
+<a name="var$_debugIncludedfiles" id="$_debugIncludedfiles"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<img src="../media/images/Variable.png" />
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$_debugIncludedfiles</span>
+			 = <span class="var-default">array()</span>			(line <span class="line-number">45</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+		
+		
+
+</div>
+<a name="var$_debugtags" id="$_debugtags"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<img src="../media/images/Variable.png" />
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$_debugtags</span>
+			 = <span class="var-default">array()</span>			(line <span class="line-number">49</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+		
+		
+
+</div>
+<a name="var$_debugTemplatevars" id="$_debugTemplatevars"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<img src="../media/images/Variable.png" />
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$_debugTemplatevars</span>
+			 = <span class="var-default">array()</span>			(line <span class="line-number">46</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+		
+		
+
+</div>
+<a name="var$_debugwarningmsgs" id="$_debugwarningmsgs"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<img src="../media/images/Variable.png" />
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$_debugwarningmsgs</span>
+			 = <span class="var-default">array()</span>			(line <span class="line-number">53</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+		
+		
+
+</div>
+<a name="var$_debugwarningmsgscontrol" id="$_debugwarningmsgscontrol"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<img src="../media/images/Variable.png" />
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$_debugwarningmsgscontrol</span>
+			 = <span class="var-default">array()</span>			(line <span class="line-number">52</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+		
+		
+
+</div>
+<a name="var$_debugwarnings" id="$_debugwarnings"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<img src="../media/images/Variable.png" />
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$_debugwarnings</span>
+			 = <span class="var-default">array()</span>			(line <span class="line-number">51</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+		
+		
+
+</div>
+							<h4>Inherited Variables</h4>
+				<A NAME='inherited_vars'><!-- --></A>
+									<p>Inherited from <span class="classname"><a href="../vLIB/vlibTemplate.html">vlibTemplate</a></span></p>
+					<blockquote>
+													<img src="../media/images/Variable.png" />
+							<span class="var-title">
+								<span class="var-name"><a href="../vLIB/vlibTemplate.html#var$allowed_if_ops">vlibTemplate::$allowed_if_ops</a></span><br>
+							</span>
+													<img src="../media/images/Variable.png" />
+							<span class="var-title">
+								<span class="var-name"><a href="../vLIB/vlibTemplate.html#var$allowed_loop_dbs">vlibTemplate::$allowed_loop_dbs</a></span><br>
+							</span>
+													<img src="../media/images/Variable.png" />
+							<span class="var-title">
+								<span class="var-name"><a href="../vLIB/vlibTemplate.html#var$ESCAPE_TAGS">vlibTemplate::$ESCAPE_TAGS</a></span><br>
+							</span>
+													<img src="../media/images/Variable.png" />
+							<span class="var-title">
+								<span class="var-name"><a href="../vLIB/vlibTemplate.html#var$FORMAT_TAGS">vlibTemplate::$FORMAT_TAGS</a></span><br>
+							</span>
+													<img src="../media/images/Variable.png" />
+							<span class="var-title">
+								<span class="var-name"><a href="../vLIB/vlibTemplate.html#var$OPTIONS">vlibTemplate::$OPTIONS</a></span><br>
+							</span>
+													<img src="../media/images/Variable.png" />
+							<span class="var-title">
+								<span class="var-name"><a href="../vLIB/vlibTemplate.html#var$VLIBTEMPLATE_ROOT">vlibTemplate::$VLIBTEMPLATE_ROOT</a></span><br>
+							</span>
+													<img src="../media/images/Variable.png" />
+							<span class="var-title">
+								<span class="var-name"><a href="../vLIB/vlibTemplate.html#var$_arrvars">vlibTemplate::$_arrvars</a></span><br>
+							</span>
+													<img src="../media/images/Variable.png" />
+							<span class="var-title">
+								<span class="var-name"><a href="../vLIB/vlibTemplate.html#var$_cache">vlibTemplate::$_cache</a></span><br>
+							</span>
+													<img src="../media/images/Variable.png" />
+							<span class="var-title">
+								<span class="var-name"><a href="../vLIB/vlibTemplate.html#var$_currentincludedir">vlibTemplate::$_currentincludedir</a></span><br>
+							</span>
+													<img src="../media/images/Variable.png" />
+							<span class="var-title">
+								<span class="var-name"><a href="../vLIB/vlibTemplate.html#var$_currloop">vlibTemplate::$_currloop</a></span><br>
+							</span>
+													<img src="../media/images/Variable.png" />
+							<span class="var-title">
+								<span class="var-name"><a href="../vLIB/vlibTemplate.html#var$_currloopname">vlibTemplate::$_currloopname</a></span><br>
+							</span>
+													<img src="../media/images/Variable.png" />
+							<span class="var-title">
+								<span class="var-name"><a href="../vLIB/vlibTemplate.html#var$_firstparsetime">vlibTemplate::$_firstparsetime</a></span><br>
+							</span>
+													<img src="../media/images/Variable.png" />
+							<span class="var-title">
+								<span class="var-name"><a href="../vLIB/vlibTemplate.html#var$_includedepth">vlibTemplate::$_includedepth</a></span><br>
+							</span>
+													<img src="../media/images/Variable.png" />
+							<span class="var-title">
+								<span class="var-name"><a href="../vLIB/vlibTemplate.html#var$_namespace">vlibTemplate::$_namespace</a></span><br>
+							</span>
+													<img src="../media/images/Variable.png" />
+							<span class="var-title">
+								<span class="var-name"><a href="../vLIB/vlibTemplate.html#var$_parsed">vlibTemplate::$_parsed</a></span><br>
+							</span>
+													<img src="../media/images/Variable.png" />
+							<span class="var-title">
+								<span class="var-name"><a href="../vLIB/vlibTemplate.html#var$_tmplfile">vlibTemplate::$_tmplfile</a></span><br>
+							</span>
+													<img src="../media/images/Variable.png" />
+							<span class="var-title">
+								<span class="var-name"><a href="../vLIB/vlibTemplate.html#var$_tmplfilename">vlibTemplate::$_tmplfilename</a></span><br>
+							</span>
+													<img src="../media/images/Variable.png" />
+							<span class="var-title">
+								<span class="var-name"><a href="../vLIB/vlibTemplate.html#var$_tmplfilep">vlibTemplate::$_tmplfilep</a></span><br>
+							</span>
+													<img src="../media/images/Variable.png" />
+							<span class="var-title">
+								<span class="var-name"><a href="../vLIB/vlibTemplate.html#var$_tmploutput">vlibTemplate::$_tmploutput</a></span><br>
+							</span>
+													<img src="../media/images/Variable.png" />
+							<span class="var-title">
+								<span class="var-name"><a href="../vLIB/vlibTemplate.html#var$_totalparsetime">vlibTemplate::$_totalparsetime</a></span><br>
+							</span>
+													<img src="../media/images/Variable.png" />
+							<span class="var-title">
+								<span class="var-name"><a href="../vLIB/vlibTemplate.html#var$_unknowns">vlibTemplate::$_unknowns</a></span><br>
+							</span>
+													<img src="../media/images/Variable.png" />
+							<span class="var-title">
+								<span class="var-name"><a href="../vLIB/vlibTemplate.html#var$_vars">vlibTemplate::$_vars</a></span><br>
+							</span>
+											</blockquote> 
+										
+		</div>
+	</div>
+	
+	<a name="sec-methods"></a>
+	<div class="info-box">
+		<div class="info-box-title">Methods</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+															<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+																	<a href="#sec-method-summary">Methods</a> (<span class="disabled">details</span>)
+						
+		</div>
+		<div class="info-box-body">
+			<A NAME='method_detail'></A>
+<a name="methodarrangeTags" id="arrangeTags"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">arrangeTags</span> (line <span class="line-number">245</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">rearranges all vars from below regex</p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			arrangeTags
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$arr</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$arr</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodclearCache" id="clearCache"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">clearCache</span> (line <span class="line-number">600</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			clearCache
+		</span>
+				()
+			</div>
+	
+		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../vLIB/vlibTemplate.html#methodclearCache">vlibTemplate::clearCache()</a></dt>
+					</dl>
+			
+	</div>
+<a name="methodenjavanate" id="enjavanate"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">enjavanate</span> (line <span class="line-number">557</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Puts a text string into document.write functions calls in javascript</p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			enjavanate
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$str</span>, [<span class="var-type"></span>&nbsp;<span class="var-name">$limit</span> = <span class="var-default">60</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$str</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$limit</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodrecache" id="recache"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">recache</span> (line <span class="line-number">601</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			recache
+		</span>
+				()
+			</div>
+	
+		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../vLIB/vlibTemplate.html#methodrecache">vlibTemplate::recache()</a></dt>
+					</dl>
+			
+	</div>
+<a name="methodsetCacheExtension" id="setCacheExtension"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">setCacheExtension</span> (line <span class="line-number">603</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setCacheExtension
+		</span>
+				()
+			</div>
+	
+		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../vLIB/vlibTemplate.html#methodsetCacheExtension">vlibTemplate::setCacheExtension()</a></dt>
+					</dl>
+			
+	</div>
+<a name="methodsetCacheLifeTime" id="setCacheLifeTime"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">setCacheLifeTime</span> (line <span class="line-number">602</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setCacheLifeTime
+		</span>
+				()
+			</div>
+	
+		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../vLIB/vlibTemplate.html#methodsetCacheLifeTime">vlibTemplate::setCacheLifeTime()</a></dt>
+					</dl>
+			
+	</div>
+<a name="method_debugReset" id="_debugReset"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">_debugReset</span> (line <span class="line-number">585</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Resets the debug module ready for more information</p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			_debugReset
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+							<h4>Inherited Methods</h4>
+				<a name='inherited_methods'><!-- --></a>	
+									<!-- =========== Summary =========== -->
+					<p>Inherited From <span class="classname"><a href="../vLIB/vlibTemplate.html">vlibTemplate</a></span></p>
+					<blockquote>
+													<img src="../media/images/Method.png" alt=" "/>
+							<span class="method-name"><a href="../vLIB/vlibTemplate.html#methodaddLoop">vlibTemplate::addLoop()</a></span><br>
+													<img src="../media/images/Method.png" alt=" "/>
+							<span class="method-name"><a href="../vLIB/vlibTemplate.html#methodaddRow">vlibTemplate::addRow()</a></span><br>
+													<img src="../media/images/Method.png" alt=" "/>
+							<span class="method-name"><a href="../vLIB/vlibTemplate.html#methodclearAll">vlibTemplate::clearAll()</a></span><br>
+													<img src="../media/images/Method.png" alt=" "/>
+							<span class="method-name"><a href="../vLIB/vlibTemplate.html#methodclearCache">vlibTemplate::clearCache()</a></span><br>
+													<img src="../media/images/Method.png" alt=" "/>
+							<span class="method-name"><a href="../vLIB/vlibTemplate.html#methodclearLoops">vlibTemplate::clearLoops()</a></span><br>
+													<img src="../media/images/Method.png" alt=" "/>
+							<span class="method-name"><a href="../vLIB/vlibTemplate.html#methodclearVars">vlibTemplate::clearVars()</a></span><br>
+													<img src="../media/images/Method.png" alt=" "/>
+							<span class="method-name"><a href="../vLIB/vlibTemplate.html#methodfastPrint">vlibTemplate::fastPrint()</a></span><br>
+													<img src="../media/images/Method.png" alt=" "/>
+							<span class="method-name"><a href="../vLIB/vlibTemplate.html#methodgetLoop">vlibTemplate::getLoop()</a></span><br>
+													<img src="../media/images/Method.png" alt=" "/>
+							<span class="method-name"><a href="../vLIB/vlibTemplate.html#methodgetParseTime">vlibTemplate::getParseTime()</a></span><br>
+													<img src="../media/images/Method.png" alt=" "/>
+							<span class="method-name"><a href="../vLIB/vlibTemplate.html#methodgetUnknowns">vlibTemplate::getUnknowns()</a></span><br>
+													<img src="../media/images/Method.png" alt=" "/>
+							<span class="method-name"><a href="../vLIB/vlibTemplate.html#methodgetVar">vlibTemplate::getVar()</a></span><br>
+													<img src="../media/images/Method.png" alt=" "/>
+							<span class="method-name"><a href="../vLIB/vlibTemplate.html#methodgetVars">vlibTemplate::getVars()</a></span><br>
+													<img src="../media/images/Method.png" alt=" "/>
+							<span class="method-name"><a href="../vLIB/vlibTemplate.html#methodgrab">vlibTemplate::grab()</a></span><br>
+													<img src="../media/images/Method.png" alt=" "/>
+							<span class="method-name"><a href="../vLIB/vlibTemplate.html#methodnewLoop">vlibTemplate::newLoop()</a></span><br>
+													<img src="../media/images/Method.png" alt=" "/>
+							<span class="method-name"><a href="../vLIB/vlibTemplate.html#methodnewTemplate">vlibTemplate::newTemplate()</a></span><br>
+													<img src="../media/images/Method.png" alt=" "/>
+							<span class="method-name"><a href="../vLIB/vlibTemplate.html#methodpparse">vlibTemplate::pparse()</a></span><br>
+													<img src="../media/images/Method.png" alt=" "/>
+							<span class="method-name"><a href="../vLIB/vlibTemplate.html#methodpprint">vlibTemplate::pprint()</a></span><br>
+													<img src="../media/images/Method.png" alt=" "/>
+							<span class="method-name"><a href="../vLIB/vlibTemplate.html#methodrecache">vlibTemplate::recache()</a></span><br>
+													<img src="../media/images/Method.png" alt=" "/>
+							<span class="method-name"><a href="../vLIB/vlibTemplate.html#methodreset">vlibTemplate::reset()</a></span><br>
+													<img src="../media/images/Method.png" alt=" "/>
+							<span class="method-name"><a href="../vLIB/vlibTemplate.html#methodsetCacheExtension">vlibTemplate::setCacheExtension()</a></span><br>
+													<img src="../media/images/Method.png" alt=" "/>
+							<span class="method-name"><a href="../vLIB/vlibTemplate.html#methodsetCacheLifeTime">vlibTemplate::setCacheLifeTime()</a></span><br>
+													<img src="../media/images/Method.png" alt=" "/>
+							<span class="method-name"><a href="../vLIB/vlibTemplate.html#methodsetContextVars">vlibTemplate::setContextVars()</a></span><br>
+													<img src="../media/images/Method.png" alt=" "/>
+							<span class="method-name"><a href="../vLIB/vlibTemplate.html#methodsetDbLoop">vlibTemplate::setDbLoop()</a></span><br>
+													<img src="../media/images/Method.png" alt=" "/>
+							<span class="method-name"><a href="../vLIB/vlibTemplate.html#methodsetLoop">vlibTemplate::setLoop()</a></span><br>
+													<img src="../media/images/Method.png" alt=" "/>
+							<span class="method-name"><a href="../vLIB/vlibTemplate.html#methodsetPath">vlibTemplate::setPath()</a></span><br>
+													<img src="../media/images/Method.png" alt=" "/>
+							<span class="method-name"><a href="../vLIB/vlibTemplate.html#methodsetUnknowns">vlibTemplate::setUnknowns()</a></span><br>
+													<img src="../media/images/Method.png" alt=" "/>
+							<span class="method-name"><a href="../vLIB/vlibTemplate.html#methodsetVar">vlibTemplate::setVar()</a></span><br>
+													<img src="../media/images/Method.png" alt=" "/>
+							<span class="method-name"><a href="../vLIB/vlibTemplate.html#methodunknowns">vlibTemplate::unknowns()</a></span><br>
+													<img src="../media/images/Method.png" alt=" "/>
+							<span class="method-name"><a href="../vLIB/vlibTemplate.html#methodunknownsExist">vlibTemplate::unknownsExist()</a></span><br>
+													<img src="../media/images/Method.png" alt=" "/>
+							<span class="method-name"><a href="../vLIB/vlibTemplate.html#methodunsetLoop">vlibTemplate::unsetLoop()</a></span><br>
+													<img src="../media/images/Method.png" alt=" "/>
+							<span class="method-name"><a href="../vLIB/vlibTemplate.html#methodunsetVar">vlibTemplate::unsetVar()</a></span><br>
+													<img src="../media/images/Method.png" alt=" "/>
+							<span class="method-name"><a href="../vLIB/vlibTemplate.html#method_parseIncludeFile">vlibTemplate::_parseIncludeFile()</a></span><br>
+											</blockquote>
+										
+		</div>
+	</div>
+
+	
+	<p class="notes" id="credit">
+		Documentation generated on Wed, 28 Aug 2013 15:14:50 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.5.0a1</a>
+	</p>
+	</div></body>
+</html>

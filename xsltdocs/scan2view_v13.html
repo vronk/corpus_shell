@@ -1,0 +1,2567 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+      <title>Stylesheet documentation for: params.xsl</title>
+      <link rel="stylesheet" href="docHtml.css" type="text/css" /><script type="text/javascript">
+         <!--
+        
+        
+        
+        var usedByBoxes= new Array('uB_P_base_urlS_..params.xsl', 
+				'uB_P_scripts_urlS_..params.xsl', 
+				'uB_P_site_logoS_..params.xsl', 
+				'uB_P_site_nameS_..params.xsl', 
+				'uB_P_operationS_..params.xsl', 
+				'uB_P_formatS_..params.xsl', 
+				'uB_P_qS_..params.xsl', 
+				'uB_P_x-contextS_..params.xsl', 
+				'uB_P_startRecordS_..params.xsl', 
+				'uB_P_maximumRecordsS_..params.xsl', 
+				'uB_P_numberOfRecordsS_..params.xsl', 
+				'uB_P_contexts_urlS_..params.xsl', 
+				'uB_P_mappings-fileS_..params.xsl', 
+				'uB_V_mappingsS_..params.xsl', 
+				'uB_V_context-mappingS_..params.xsl');
+
+        var docBoxes= new Array('dS_..params.xsl', 
+				'dS_P_userS_..params.xsl', 
+				'dS_P_titleS_..params.xsl', 
+				'dS_P_base_urlS_..params.xsl', 
+				'dS_P_scripts_urlS_..params.xsl', 
+				'dS_P_site_logoS_..params.xsl', 
+				'dS_P_site_nameS_..params.xsl', 
+				'dS_P_operationS_..params.xsl', 
+				'dS_P_formatS_..params.xsl', 
+				'dS_P_qS_..params.xsl', 
+				'dS_P_x-contextS_..params.xsl', 
+				'dS_P_startRecordS_..params.xsl', 
+				'dS_P_maximumRecordsS_..params.xsl', 
+				'dS_P_numberOfRecordsS_..params.xsl', 
+				'dS_P_numberOfMatchesS_..params.xsl', 
+				'dS_P_modeS_..params.xsl', 
+				'dS_P_scanClauseS_..params.xsl', 
+				'dS_P_contexts_urlS_..params.xsl', 
+				'dS_P_mappings-fileS_..params.xsl', 
+				'dS_V_context-paramS_..params.xsl', 
+				'dS_V_mappingsS_..params.xsl', 
+				'dS_V_context-mappingS_..params.xsl', 
+				'dS_V_default-mappingS_..params.xsl');
+
+        var sourceBoxes= new Array('src_P_userS_..params.xsl', 
+				'src_P_titleS_..params.xsl', 
+				'src_P_base_urlS_..params.xsl', 
+				'src_P_scripts_urlS_..params.xsl', 
+				'src_P_site_logoS_..params.xsl', 
+				'src_P_site_nameS_..params.xsl', 
+				'src_P_operationS_..params.xsl', 
+				'src_P_formatS_..params.xsl', 
+				'src_P_qS_..params.xsl', 
+				'src_P_x-contextS_..params.xsl', 
+				'src_P_startRecordS_..params.xsl', 
+				'src_P_maximumRecordsS_..params.xsl', 
+				'src_P_numberOfRecordsS_..params.xsl', 
+				'src_P_numberOfMatchesS_..params.xsl', 
+				'src_P_modeS_..params.xsl', 
+				'src_P_scanClauseS_..params.xsl', 
+				'src_P_contexts_urlS_..params.xsl', 
+				'src_P_mappings-fileS_..params.xsl', 
+				'src_V_context-paramS_..params.xsl', 
+				'src_V_mappingsS_..params.xsl', 
+				'src_V_context-mappingS_..params.xsl', 
+				'src_V_default-mappingS_..params.xsl');
+
+        
+        var overridingBoxes= new Array('ovr_P_titleS_..params.xsl', 
+				'ovr_P_scanClauseS_..params.xsl');
+
+        var referencesBoxes= new Array('refs_P_site_logoS_..params.xsl', 
+				'refs_P_contexts_urlS_..params.xsl', 
+				'refs_V_mappingsS_..params.xsl', 
+				'refs_V_context-mappingS_..params.xsl', 
+				'refs_V_default-mappingS_..params.xsl');
+
+        
+        
+        var importedFromBoxes= new Array('ipF_..params.xsl');
+
+        
+        var button_prefix = 'bt_';
+        
+        /**
+        * Get all DIV elements with a specified class name.
+        *
+        * @param className The class name. 
+        */
+        function getElementsByClassName(className) {
+            var results = [];
+    
+             if (document.getElementsByClassName == undefined) {
+                var allElements = document.getElementsByTagName("div");
+                var element;
+                for (var i = 0; i < allElements.length; i++) {
+                    var element = allElements[i];
+                	var elementClass = element.className;
+                	if (elementClass == className) { 
+                		results.push(element);
+                	}
+                }
+             } else {
+                results = document.getElementsByClassName(className);
+             }
+    
+            return results;
+        }
+            
+        /**
+        * Returns an element in the current HTML document.
+        *
+        * @param elementID Identifier of HTML element
+        * @return               HTML element object
+        */
+        function getElementObject(elementID) {
+            var elemObj = null;
+            if (document.getElementById) {
+                elemObj = document.getElementById(elementID);
+            }
+            return elemObj;
+        }
+        
+        /**
+        * Switches the state of a collapseable box, e.g.
+        * if it's opened, it'll be closed, and vice versa.
+        *
+        * @param boxID Identifier of box
+        */
+        function switchState(boxID) {
+            var boxObj = getElementObject(boxID);
+            var buttonObj = getElementObject(button_prefix + boxID);
+            if (boxObj == null || buttonObj == null) {
+                // Box or button not found
+            } else if (boxObj.style.display == "none") {
+                // Box is closed, so open it
+                openBox(boxObj, buttonObj);
+            } else if (boxObj.style.display == "block") {
+                // Box is opened, so close it
+                closeBox(boxObj, buttonObj);
+            }
+        }
+        
+        /**
+        * Opens a collapseable box.
+        *
+        * @param boxObj       Collapseable box
+        * @param buttonObj Button controlling box
+        */
+        function openBox(boxObj, buttonObj) {
+            if (boxObj == null || buttonObj == null) {
+                // Box or button not found
+            } else {
+                // Change 'display' CSS property of box
+                boxObj.style.display = "block";
+                
+                // Change text of button
+                if (boxObj.style.display == "block") {
+                    buttonObj.src = "img/btM.gif";
+                }
+            }
+        }
+        
+        /**
+        * Closes a collapseable box.
+        *
+        * @param boxObj       Collapseable box
+        * @param buttonObj Button controlling box
+        */
+        function closeBox(boxObj, buttonObj) {
+            if (boxObj == null || buttonObj == null) {
+                // Box or button not found
+            } else {
+                // Change 'display' CSS property of box
+                boxObj.style.display = "none";
+                
+                // Change text of button
+                if (boxObj.style.display == "none") {
+                    buttonObj.src = "img/btP.gif";
+                }
+            }
+        }
+
+       /**
+        * Switch between the compact list representation and the clasic list representation.
+        */
+       function switchMode(checkBox) {
+            if (checkBox == null) {
+                // Checkbox not found
+            } else if (checkBox.checked == 1) {
+                // Compact mode
+                var divs = getElementsByClassName('refItemBlock');
+                for (var i = 0; i < divs.length; i ++) {
+                    divs[i].style.display = "inline";
+                    var children = divs[i].children;
+                    var refItemSep = children[children.length - 1];
+                    if (refItemSep.className == "refItemSep") {
+                        children[children.length - 1].style.display = "inline";
+                    }
+                }
+            } else {
+                // Expanded mode
+                var divs = getElementsByClassName('refItemBlock');
+                for (var i = 0; i < divs.length; i ++) {
+                    divs[i].style.display = "block";
+                    var children = divs[i].children;
+                    var refItemSep = children[children.length - 1];
+                    if (refItemSep.className == "refItemSep") {
+                        children[children.length - 1].style.display = "none";
+                    }
+                }
+            }
+        }
+
+       function switchStateForAll(buttonObj, boxList) {
+            if (buttonObj == null) {
+                // button not found
+            } else if (buttonObj.value == "+") {
+                // Expand all
+                expandAll(boxList);
+                buttonObj.value = "-";
+            } else if (buttonObj.value == "-") {
+                // Collapse all
+                collapseAll(boxList);
+                buttonObj.value = "+";
+            }
+        }
+        
+        /**
+        * Closes all boxes in a given list.
+        *
+        * @param boxList Array of box IDs
+        */
+        function collapseAll(boxList) {
+            var idx;
+            for (idx = 0; idx < boxList.length; idx++) {
+                var boxObj = getElementObject(boxList[idx]);
+                var buttonObj = getElementObject(button_prefix + boxList[idx]);
+                closeBox(boxObj, buttonObj);
+            }
+        }
+            
+        /**
+        * Open all boxes in a given list.
+        *
+        * @param boxList Array of box IDs
+        */
+        function expandAll(boxList) {
+            var idx;
+            for (idx = 0; idx < boxList.length; idx++) {
+                var boxObj = getElementObject(boxList[idx]);
+                var buttonObj = getElementObject(button_prefix + boxList[idx]);
+                openBox(boxObj, buttonObj);
+            }
+        }
+        
+        /**
+         * Update the message presented in the title of the html page.
+         * - If the documentation was splited by namespace we present something like: "Documentation for namespace 'ns'"
+         * - If the documentation was splited by location we present somehing like: "Documentation for 'Schema.xsd'"
+         * - If no split we always present: "Documentation for 'MainSchema.xsd'"
+         */
+        function updPT(message) {
+            top.document.title = "Stylesheet documentation for: " + message;
+        }
+        
+          
+                    
+         /**
+          * Finds an HTML element by its ID and makes it floatable over the normal content.
+          *
+          * @param x_displacement The difference in pixels to the right side of the window from 
+          *           the left side of the element.
+          * @param y_displacement The difference in pixels to the right side of the window from 
+          *           the top of the element.          
+          */
+         function findAndFloat(id, x_displacement, y_displacement){
+
+            var element = getElementObject(id);            
+            
+            window[id + "_obj"] = element;
+            
+            if(document.layers) {
+               element.style = element;
+            }
+            
+            element.current_y = y_displacement;      
+            element.first_time = true;
+         
+            element.floatElement = function(){
+               // It may be closed by an user action.
+                
+               // Target X and Y coordinates.
+               var x, y;
+               
+               var myWidth = 0, myHeight = 0;
+               if( typeof( window.innerWidth ) == 'number' ) {
+                  //Non-IE
+                  myWidth = window.innerWidth;
+                  myHeight = window.innerHeight;
+               } else if( document.documentElement && ( document.documentElement.clientWidth || document.documentElement.clientHeight ) ) {
+                  //IE 6+ in 'standards compliant mode'
+                  myWidth = document.documentElement.clientWidth;
+                  myHeight = document.documentElement.clientHeight;
+               } else if( document.body && ( document.body.clientWidth || document.body.clientHeight ) ) {
+                  //IE 4 compatible
+                  myWidth = document.body.clientWidth;
+                  myHeight = document.body.clientHeight;
+               }
+               
+               
+               x = myWidth - x_displacement;
+               
+               var ns = (navigator.appName.indexOf("Netscape") != -1);               
+               y = ns ? pageYOffset : document.documentElement && document.documentElement.scrollTop ? 
+                  document.documentElement.scrollTop : document.body.scrollTop;               
+               y = y + y_displacement;               
+               
+               // The current y is the current coordinate of the floating element.
+               // This should be at the limit the y target coordinate.
+               this.current_y += (y - this.current_y)/1.25;
+               
+               // Add the pixels constant after the values
+               // and move the element.
+               var px = document.layers ? "" : "px";
+               this.style.left =  x + px;
+               this.style.top =  this.current_y + px;
+                              
+               setTimeout(this.id + "_obj.floatElement()", 100);
+            }
+            
+            element.floatElement();
+            return element;
+          }
+
+         /**
+          * Finds an HTML element by its ID and makes it floatable over the normal content.
+          *
+          * @param x_displacement The difference in pixels to the right side of the window from 
+          *           the left side of the element.
+          * @param y_displacement The difference in pixels to the right side of the window from 
+          *           the top of the element.          
+          */
+         function selectTOCGroupBy(id){
+         var selectIds = new Array('toc_group_by_location', 'toc_group_by_component_type', 'toc_group_by_namespace', 'toc_group_by_mode');
+            // Make all the tabs invisible.
+            for (i = 0; i < 4; i++){
+               var tab = getElementObject(selectIds[i]);
+               tab.style.display = 'none';
+            }
+            var selTab = getElementObject(id);
+            selTab.style.display = 'block';            
+         }
+          
+
+    --></script></head>
+   <body>
+      <div id="global_controls" class="globalControls" style="position:absolute;right:0;">
+         <table class="rt">
+            <tr>
+               <td class="rt_cTL"></td>
+               <td class="rt_lT"></td>
+               <td class="rt_cTR"></td>
+            </tr>
+            <tr>
+               <td class="rt_lL"></td>
+               <td class="rt_cnt">
+                  <h3>Mode:</h3>
+                  <table>
+                     <tr>
+                        <td><span><input type="checkbox" value="-" checked="checked" onclick="switchMode(this);" class="control" /></span><span class="globalControlName">Compact lists</span></td>
+                     </tr>
+                  </table>
+                  <h3>Showing:</h3>
+                  <table>
+                     <tr>
+                        <td><span><input type="checkbox" value="-" checked="checked" onclick="switchStateForAll(this, docBoxes);" class="control" /></span><span class="globalControlName">Documentation
+                              </span></td>
+                     </tr>
+                     <tr>
+                        <td><span><input type="checkbox" value="-" checked="checked" onclick="switchStateForAll(this, usedByBoxes);" class="control" /></span><span class="globalControlName">Used by </span></td>
+                     </tr>
+                     <tr>
+                        <td><span><input type="checkbox" value="-" checked="checked" onclick="switchStateForAll(this, referencesBoxes);" class="control" /></span><span class="globalControlName">References </span></td>
+                     </tr>
+                     <tr>
+                        <td><span><input type="checkbox" value="-" checked="checked" onclick="switchStateForAll(this, overridingBoxes);" class="control" /></span><span class="globalControlName">Overriding </span></td>
+                     </tr>
+                     <tr>
+                        <td><span><input type="checkbox" value="-" checked="checked" onclick="switchStateForAll(this, importedFromBoxes);" class="control" /></span><span class="globalControlName">Imported from
+                              </span></td>
+                     </tr>
+                     <tr>
+                        <td><span><input type="checkbox" value="-" checked="checked" onclick="switchStateForAll(this, sourceBoxes);" class="control" /></span><span class="globalControlName">Source </span></td>
+                     </tr>
+                  </table>
+                  <div align="right"><span><input type="button" onclick="getElementObject('global_controls').style.display = 'none';" value="Close" /></span></div>
+               </td>
+               <td class="rt_lR"></td>
+            </tr>
+            <tr>
+               <td class="rt_cBL"></td>
+               <td class="rt_lB"></td>
+               <td class="rt_cBR"></td>
+            </tr>
+         </table>
+      </div><a id="..params.xsl"></a><div class="cmpT">Stylesheet
+         <span class="qname">params.xsl</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cTL"></td>
+            <td class="rt_lT"></td>
+            <td class="rt_cTR"></td>
+         </tr>
+         <tr>
+            <td class="rt_lL"></td>
+            <td class="rt_cnt">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Documentation</div>
+                           <div class="flR"><input id="bt_dS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="dS_..params.xsl" style="display:block">
+                              <div>
+                                 <h3>Description</h3>Central definition of all parameters the style sheets take
+                                 
+                                 <p>
+                                    The following are needed in commons_v1.xsl (formURL) and in html_snippets.xsl, therefore
+                                    they need to be defined here
+                                    (but only as default, so we could move them, because actually they pertain only to
+                                    result2view.xsl:
+                                    
+                                    <ul>
+                                       
+                                       <li class="doc"><a href="scan2view_v13.html#P_operationS_..params.xsl" target="_self">operation</a></li>
+                                       
+                                       <li class="doc"><a href="scan2view_v13.html#P_formatS_..params.xsl" target="_self">format</a></li>
+                                       
+                                       <li class="doc"><a href="scan2view_v13.html#P_qS_..params.xsl" target="_self">q</a></li>
+                                       
+                                       <li class="doc"><a href="scan2view_v13.html#P_x-contextS_..params.xsl" target="_self">x-context</a></li>
+                                       
+                                       <li class="doc"><a href="scan2view_v13.html#P_startRecordS_..params.xsl" target="_self">startRecord</a></li>
+                                       
+                                       <li class="doc"><a href="scan2view_v13.html#P_maximumRecordsS_..params.xsl" target="_self">maximumRecords</a></li>
+                                       
+                                       <li class="doc"><a href="scan2view_v13.html#P_numberOfRecordsS_..params.xsl" target="_self">numberOfRecords</a></li>
+                                       
+                                       <li class="doc"><a href="scan2view_v13.html#P_numberOfMatchesS_..params.xsl" target="_self">numberOfMatches</a></li>
+                                       
+                                       <li class="doc"><a href="scan2view_v13.html#P_modeS_..params.xsl" target="_self">mode</a></li>
+                                       
+                                    </ul>
+                                    
+                                 </p>
+                                 
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Imported from</div>
+                           <div class="flR"><input id="bt_ipF_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('ipF_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="ipF_..params.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="scan2view_v12.html#..html_snippets.xsl" target="_self" title="No namespace" onclick="updPT('../html_snippets.xsl')">../html_snippets.xsl</a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Stylesheet version</td>
+                        <td>1.0</td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lR"></td>
+         </tr>
+         <tr>
+            <td class="rt_cBL"></td>
+            <td class="rt_lB"></td>
+            <td class="rt_cBR"></td>
+         </tr>
+      </table><a id="P_userS_..params.xsl"></a><div class="cmpT">Parameter
+         <span class="qname">user</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cTL"></td>
+            <td class="rt_lT"></td>
+            <td class="rt_cTR"></td>
+         </tr>
+         <tr>
+            <td class="rt_lL"></td>
+            <td class="rt_cnt">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Documentation</div>
+                           <div class="flR"><input id="bt_dS_P_userS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_P_userS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="dS_P_userS_..params.xsl" style="display:block">
+                              <div>
+                                 <h3>Description</h3>This also inludes params.xls
+                              </div>
+                              <hr />
+                              <div>
+                                 <h3>Description</h3>???
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Namespace</td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Select</td>
+                        <td>''</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Source</div>
+                           <div class="flR"><input id="bt_src_P_userS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_P_userS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="src_P_userS_..params.xsl" style="display:block">
+                              <table class="pWCont">
+                                 <tr>
+                                    <td width="100%"><pre><span class="tXSLEl">&lt;xsl:param</span><span class="tAN"> name=</span><span class="tAV">"user"</span><span class="tAN"> select=</span><span class="tAV">"''"</span><span class="tXSLEl">/&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lR"></td>
+         </tr>
+         <tr>
+            <td class="rt_cBL"></td>
+            <td class="rt_lB"></td>
+            <td class="rt_cBR"></td>
+         </tr>
+      </table><a id="P_titleS_..params.xsl"></a><div class="cmpT">Parameter
+         <span class="qname">title</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cTL"></td>
+            <td class="rt_lT"></td>
+            <td class="rt_cTR"></td>
+         </tr>
+         <tr>
+            <td class="rt_lL"></td>
+            <td class="rt_cnt">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Documentation</div>
+                           <div class="flR"><input id="bt_dS_P_titleS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_P_titleS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="dS_P_titleS_..params.xsl" style="display:block">
+                              <div>
+                                 <h3>Description</h3>
+                                 
+                                 <p>
+                                    Defaults to an empty xs:string.
+                                    
+                                 </p>
+                                 
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Namespace</td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Select</td>
+                        <td>''</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Overriding</div>
+                           <div class="flR"><input id="bt_ovr_P_titleS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('ovr_P_titleS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="ovr_P_titleS_..params.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td class="fCol">Parameter</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="scan2view_v10.html#P_titleS_scan2view_v1.xsl" target="_self" title="No namespace" onclick="updPT('scan2view_v1.xsl')">title</a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Source</div>
+                           <div class="flR"><input id="bt_src_P_titleS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_P_titleS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="src_P_titleS_..params.xsl" style="display:block">
+                              <table class="pWCont">
+                                 <tr>
+                                    <td width="100%"><pre><span class="tXSLEl">&lt;xsl:param</span><span class="tAN"> name=</span><span class="tAV">"title"</span><span class="tAN"> select=</span><span class="tAV">"''"</span><span class="tXSLEl">/&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lR"></td>
+         </tr>
+         <tr>
+            <td class="rt_cBL"></td>
+            <td class="rt_lB"></td>
+            <td class="rt_cBR"></td>
+         </tr>
+      </table><a id="P_base_urlS_..params.xsl"></a><div class="cmpT">Parameter
+         <span class="qname">base_url</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cTL"></td>
+            <td class="rt_lT"></td>
+            <td class="rt_cTR"></td>
+         </tr>
+         <tr>
+            <td class="rt_lL"></td>
+            <td class="rt_cnt">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Documentation</div>
+                           <div class="flR"><input id="bt_dS_P_base_urlS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_P_base_urlS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="dS_P_base_urlS_..params.xsl" style="display:block">
+                              <div>
+                                 <h3>Description</h3>A URL that is used by this style sheet to build links and fetch additional data
+                                 
+                                 <p>
+                                    Corresponds to //sru:baseUrl. If this is an empty string links used in this style
+                                    sheet point back
+                                    to the URL that executed the style sheet. If this is not an SRU aware endpoint strange
+                                    warnings and
+                                    behaviors can be expected.
+                                    
+                                 </p>
+                                 
+                                 <p>
+                                    Examples:
+                                    
+                                    <ul>
+                                       
+                                       <li class="doc"><a href="http://corpus3.aac.ac.at/switch" target="_self">http://corpus3.aac.ac.at/switch</a></li>
+                                       
+                                       <li class="doc"><a href="http://clarin.aac.ac.at/cr/lrp/fcs" target="_self">http://clarin.aac.ac.at/cr/lrp/fcs</a></li>
+                                       
+                                       <li class="doc">http://localhost/corpus_shell/modules/fcs-aggregator/switch.php</li>
+                                       
+                                       <li class="doc">The URL has to be reachable by the XSLT processor so sth. like this is possible: http://localhost:8686/exist/rest/db/cr/cr.xql</li>
+                                       
+                                    </ul>
+                                    
+                                 </p>
+                                 
+                                 <p>
+                                    Defaults to an empty xs:string.
+                                    
+                                 </p>
+                                 
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Namespace</td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Select</td>
+                        <td>''</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Used by</div>
+                           <div class="flR"><input id="bt_uB_P_base_urlS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('uB_P_base_urlS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="uB_P_base_urlS_..params.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td class="fCol">Templates</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="scan2view_v11.html#T_formURLS_..commons_v1.xsl" target="_self" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">formURL</span></a><span class="refItemSep">;</span></div>
+                                          <div class="refItemBlock"><a href="scan2view_v12.html#T_page-headerS_..html_snippets.xsl" target="_self" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">page-header</span></a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="fCol">Parameter</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="scan2view_v13.html#P_contexts_urlS_..params.xsl" target="_self" title="No namespace" onclick="updPT('../params.xsl')">contexts_url</a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Source</div>
+                           <div class="flR"><input id="bt_src_P_base_urlS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_P_base_urlS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="src_P_base_urlS_..params.xsl" style="display:block">
+                              <table class="pWCont">
+                                 <tr>
+                                    <td width="100%"><pre><span class="tXSLEl">&lt;xsl:param</span><span class="tAN"> name=</span><span class="tAV">"base_url"</span><span class="tAN"> select=</span><span class="tAV">"''"</span><span class="tXSLEl">/&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lR"></td>
+         </tr>
+         <tr>
+            <td class="rt_cBL"></td>
+            <td class="rt_lB"></td>
+            <td class="rt_cBR"></td>
+         </tr>
+      </table><a id="P_scripts_urlS_..params.xsl"></a><div class="cmpT">Parameter
+         <span class="qname">scripts_url</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cTL"></td>
+            <td class="rt_lT"></td>
+            <td class="rt_cTR"></td>
+         </tr>
+         <tr>
+            <td class="rt_lL"></td>
+            <td class="rt_cnt">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Documentation</div>
+                           <div class="flR"><input id="bt_dS_P_scripts_urlS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_P_scripts_urlS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="dS_P_scripts_urlS_..params.xsl" style="display:block">
+                              <div>
+                                 <h3>Description</h3>A URL for locating JavaScript scripts and CSS style sheets
+                                 
+                                 <p>
+                                    Note: If this parameter is supplied it has to end in a path separator (/)!
+                                    
+                                 </p>
+                                 
+                                 <p>
+                                    Note: These paths are meant for the user's browser so localhost is usually not an
+                                    option!
+                                    
+                                 </p>
+                                 
+                                 <p>
+                                    If this is an empty string the location of the files are interpreted relativ to the
+                                    URL that
+                                    executed the style sheet respectively the document generated by the style sheet.
+                                    
+                                 </p>
+                                 
+                                 <p>
+                                    Usually passed by the script 
+                                    <a href="../phpdocs/config/_utils-php---config.php.html#global$scriptsUrl" target="_self">switch.php</a>.
+                                    
+                                 </p>
+                                 
+                                 <p>
+                                    Examples:
+                                    
+                                    <ul>
+                                       
+                                       <li class="doc">../../</li>
+                                       
+                                       <li class="doc">http://corpus3.aac.ac.at/cs2/corpus_shell/scripts/</li>
+                                       
+                                       <li class="doc">Only for testing purpose on your development machine: http://localhost/corpus_shell</li>
+                                       
+                                    </ul>
+                                    
+                                 </p>
+                                 
+                                 <p>
+                                    Defaults to an emtpy string
+                                    
+                                 </p>
+                                 
+                              </div>
+                              <hr />
+                              <div>
+                                 <h3>Description</h3><pre> &lt;xsl:param name="base_dir"&gt;http://corpus3.aac.ac.at/cs/&lt;/xsl:param&gt;</pre></div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Namespace</td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Select</td>
+                        <td>''</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Used by</div>
+                           <div class="flR"><input id="bt_uB_P_scripts_urlS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('uB_P_scripts_urlS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="uB_P_scripts_urlS_..params.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td class="fCol">Templates</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="scan2view_v12.html#T_html-headS_..html_snippets.xsl" target="_self" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">html-head</span></a><span class="refItemSep">;</span></div>
+                                          <div class="refItemBlock"><a href="scan2view_v11.html#T_htmlsimpleS_..commons_v1.xsl" target="_self" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">htmlsimple</span></a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="fCol">Parameter</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="scan2view_v13.html#P_site_logoS_..params.xsl" target="_self" title="No namespace" onclick="updPT('../params.xsl')">site_logo</a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Source</div>
+                           <div class="flR"><input id="bt_src_P_scripts_urlS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_P_scripts_urlS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="src_P_scripts_urlS_..params.xsl" style="display:block">
+                              <table class="pWCont">
+                                 <tr>
+                                    <td width="100%"><pre><span class="tXSLEl">&lt;xsl:param</span><span class="tAN"> name=</span><span class="tAV">"scripts_url"</span><span class="tAN"> select=</span><span class="tAV">"''"</span><span class="tXSLEl">/&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lR"></td>
+         </tr>
+         <tr>
+            <td class="rt_cBL"></td>
+            <td class="rt_lB"></td>
+            <td class="rt_cBR"></td>
+         </tr>
+      </table><a id="P_site_logoS_..params.xsl"></a><div class="cmpT">Parameter
+         <span class="qname">site_logo</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cTL"></td>
+            <td class="rt_lT"></td>
+            <td class="rt_cTR"></td>
+         </tr>
+         <tr>
+            <td class="rt_lL"></td>
+            <td class="rt_cnt">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Documentation</div>
+                           <div class="flR"><input id="bt_dS_P_site_logoS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_P_site_logoS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="dS_P_site_logoS_..params.xsl" style="display:block">
+                              <div>
+                                 <h3>Description</h3>A URL where a logo for the site can be found
+                                 
+                                 <p>
+                                    Defaults to <a href="scan2view_v13.html#P_scripts_urlS_..params.xsl" target="_self">$scripts_url</a> . 'style/logo_c_s.png'
+                                    
+                                 </p>
+                                 
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Namespace</td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Select</td>
+                        <td>concat($scripts_url, 'style/logo_c_s.png')</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Used by</div>
+                           <div class="flR"><input id="bt_uB_P_site_logoS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('uB_P_site_logoS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="uB_P_site_logoS_..params.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td class="fCol">Template</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="scan2view_v12.html#T_page-headerS_..html_snippets.xsl" target="_self" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">page-header</span></a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">References</div>
+                           <div class="flR"><input id="bt_refs_P_site_logoS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('refs_P_site_logoS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="refs_P_site_logoS_..params.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td class="fCol">Parameter</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="scan2view_v13.html#P_scripts_urlS_..params.xsl" target="_self" title="No namespace" onclick="updPT('../params.xsl')">scripts_url</a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Source</div>
+                           <div class="flR"><input id="bt_src_P_site_logoS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_P_site_logoS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="src_P_site_logoS_..params.xsl" style="display:block">
+                              <table class="pWCont">
+                                 <tr>
+                                    <td width="100%"><pre><span class="tXSLEl">&lt;xsl:param</span><span class="tAN"> name=</span><span class="tAV">"site_logo"</span><span class="tAN"> select=</span><span class="tAV">"concat($scripts_url, 'style/logo_c_s.png')"</span><span class="tXSLEl">/&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lR"></td>
+         </tr>
+         <tr>
+            <td class="rt_cBL"></td>
+            <td class="rt_lB"></td>
+            <td class="rt_cBR"></td>
+         </tr>
+      </table><a id="P_site_nameS_..params.xsl"></a><div class="cmpT">Parameter
+         <span class="qname">site_name</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cTL"></td>
+            <td class="rt_lT"></td>
+            <td class="rt_cTR"></td>
+         </tr>
+         <tr>
+            <td class="rt_lL"></td>
+            <td class="rt_cnt">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Documentation</div>
+                           <div class="flR"><input id="bt_dS_P_site_nameS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_P_site_nameS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="dS_P_site_nameS_..params.xsl" style="display:block">
+                              <div>
+                                 <h3>Description</h3>Name of the site
+                                 
+                                 <p>
+                                    Defaults to 'Repository'
+                                    
+                                 </p>
+                                 
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Namespace</td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Used by</div>
+                           <div class="flR"><input id="bt_uB_P_site_nameS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('uB_P_site_nameS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="uB_P_site_nameS_..params.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td class="fCol">Template</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="scan2view_v12.html#T_page-headerS_..html_snippets.xsl" target="_self" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">page-header</span></a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Source</div>
+                           <div class="flR"><input id="bt_src_P_site_nameS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_P_site_nameS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="src_P_site_nameS_..params.xsl" style="display:block">
+                              <table class="pWCont">
+                                 <tr>
+                                    <td width="100%"><pre><span class="tXSLEl">&lt;xsl:param</span><span class="tAN"> name=</span><span class="tAV">"site_name"</span><span class="tXSLEl">&gt;</span><span class="tT" style="white-space:normal">Repository</span><span class="tXSLEl">&lt;/xsl:param&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lR"></td>
+         </tr>
+         <tr>
+            <td class="rt_cBL"></td>
+            <td class="rt_lB"></td>
+            <td class="rt_cBR"></td>
+         </tr>
+      </table><a id="P_operationS_..params.xsl"></a><div class="cmpT">Parameter
+         <span class="qname">operation</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cTL"></td>
+            <td class="rt_lT"></td>
+            <td class="rt_cTR"></td>
+         </tr>
+         <tr>
+            <td class="rt_lL"></td>
+            <td class="rt_cnt">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Documentation</div>
+                           <div class="flR"><input id="bt_dS_P_operationS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_P_operationS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="dS_P_operationS_..params.xsl" style="display:block">
+                              <div>
+                                 <h3>Description</h3>Operation for which this template should do the transformation 
+                                 
+                                 <p>One of
+                                    
+                                    <ul>
+                                       
+                                       <li class="doc">explain</li>
+                                       
+                                       <li class="doc">scan</li>
+                                       
+                                       <li class="doc">searchRetrieve</li>
+                                       
+                                    </ul>
+                                    
+                                 </p>
+                                 
+                                 <p>
+                                    Defaults to nothing.
+                                    
+                                 </p>
+                                 
+                              </div>
+                              <hr />
+                              <div>
+                                 <h3>Description</h3><pre> following are needed in in commons_v1.xsl (formURL) and in html_snippets.xsl, therefore they need to be defined here
+        (but only as default, so we could move them, because actually they pertain only to result2view.xsl </pre></div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Namespace</td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Used by</div>
+                           <div class="flR"><input id="bt_uB_P_operationS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('uB_P_operationS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="uB_P_operationS_..params.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td class="fCol">Template</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="scan2view_v11.html#T_formURLS_..commons_v1.xsl" target="_self" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">formURL</span></a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Source</div>
+                           <div class="flR"><input id="bt_src_P_operationS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_P_operationS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="src_P_operationS_..params.xsl" style="display:block">
+                              <table class="pWCont">
+                                 <tr>
+                                    <td width="100%"><pre><span class="tXSLEl">&lt;xsl:param</span><span class="tAN"> name=</span><span class="tAV">"operation"</span><span class="tXSLEl">/&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lR"></td>
+         </tr>
+         <tr>
+            <td class="rt_cBL"></td>
+            <td class="rt_lB"></td>
+            <td class="rt_cBR"></td>
+         </tr>
+      </table><a id="P_formatS_..params.xsl"></a><div class="cmpT">Parameter
+         <span class="qname">format</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cTL"></td>
+            <td class="rt_lT"></td>
+            <td class="rt_cTR"></td>
+         </tr>
+         <tr>
+            <td class="rt_lL"></td>
+            <td class="rt_cnt">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Documentation</div>
+                           <div class="flR"><input id="bt_dS_P_formatS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_P_formatS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="dS_P_formatS_..params.xsl" style="display:block">
+                              <div>
+                                 <h3>Description</h3>Requested format of the result
+                                 
+                                 <p>One of htmlpage, htmljspage or htmlsimple or something completely different.
+                                    Most importantly this chooses between four different frameworks for the page with
+                                    more or less
+                                    building blocks. Unrecognizeable strings generate only the least possible amount of
+                                    HTML.
+                                 </p>
+                                 
+                                 <p>Possible intended future use: Mix and match parts needed by the application:</p>
+                                 
+                                 <p>One a combination of
+                                    
+                                    <ul>
+                                       
+                                       <li class="doc">"html" to actually generate an HTML framework as opposed to an AJAX HTML fragment
+                                          + one of
+                                          
+                                          <ul>
+                                             
+                                             <li class="doc">"page"</li>
+                                             
+                                             <li class="doc">"js" generate an HTML page that utilises JavaScript</li>
+                                             
+                                             <li class="doc">"simple" generate a simple HTML page</li>                    
+                                             
+                                          </ul>
+                                          
+                                       </li>
+                                       
+                                       <li class="doc">"list" represent the SRU items as a list</li>
+                                       
+                                       <li class="doc">"detail" add detail information</li>
+                                       
+                                    </ul>
+                                    
+                                 </p>
+                                 
+                                 <p>
+                                    Examples would be: htmlsimpledetail or htmljslist
+                                    
+                                 </p>
+                                 
+                                 <p>
+                                    Defaults to 'htmlpagelist'.
+                                    
+                                 </p>
+                                 
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Namespace</td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Select</td>
+                        <td>'htmlpagelist'</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Used by</div>
+                           <div class="flR"><input id="bt_uB_P_formatS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('uB_P_formatS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="uB_P_formatS_..params.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td class="fCol">Templates</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="scan2view_v10.html#T_continue-rootS_scan2view_v1.xsl" target="_self" title="No namespace" onclick="updPT('scan2view_v1.xsl')"><span class="nRf">continue-root</span></a><span class="refItemSep">;</span></div>
+                                          <div class="refItemBlock"><a href="scan2view_v10.html#T_headerS_scan2view_v1.xsl" target="_self" title="No namespace" onclick="updPT('scan2view_v1.xsl')"><span class="nRf">header</span></a><span class="refItemSep">;</span></div>
+                                          <div class="refItemBlock"><a href="scan2view_v12.html#T_query-inputS_..html_snippets.xsl" target="_self" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">query-input</span></a><span class="refItemSep">;</span></div>
+                                          <div class="refItemBlock"><a href="scan2view_v12.html#T_top-menuS_..html_snippets.xsl" target="_self" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">top-menu</span></a><span class="refItemSep">;</span></div>
+                                          <div class="refItemBlock"><a href="scan2view_v11.html#M_S_..commons_v1.xsl" target="_self" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="mRf">/</span></a><span class="refItemSep">;</span></div>
+                                          <div class="refItemBlock"><a href="scan2view_v10.html#M_srutermS_scan2view_v1.xsl" target="_self" title="No namespace" onclick="updPT('scan2view_v1.xsl')"><span class="mRf">sru:term</span></a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Source</div>
+                           <div class="flR"><input id="bt_src_P_formatS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_P_formatS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="src_P_formatS_..params.xsl" style="display:block">
+                              <table class="pWCont">
+                                 <tr>
+                                    <td width="100%"><pre><span class="tXSLEl">&lt;xsl:param</span><span class="tAN"> name=</span><span class="tAV">"format"</span><span class="tAN"> select=</span><span class="tAV">"'htmlpagelist'"</span><span class="tXSLEl">/&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lR"></td>
+         </tr>
+         <tr>
+            <td class="rt_cBL"></td>
+            <td class="rt_lB"></td>
+            <td class="rt_cBR"></td>
+         </tr>
+      </table><a id="P_qS_..params.xsl"></a><div class="cmpT">Parameter
+         <span class="qname">q</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cTL"></td>
+            <td class="rt_lT"></td>
+            <td class="rt_cTR"></td>
+         </tr>
+         <tr>
+            <td class="rt_lL"></td>
+            <td class="rt_cnt">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Documentation</div>
+                           <div class="flR"><input id="bt_dS_P_qS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_P_qS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="dS_P_qS_..params.xsl" style="display:block">
+                              <div>
+                                 <h3>Description</h3>The query sent by the client
+                                 
+                                 <p>
+                                    Defaults to /sru:searchRetrieveResponse/sru:echoedSearchRetrieveRequest/sru:query
+                                    
+                                 </p>
+                                 
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Namespace</td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Select</td>
+                        <td>/sru:searchRetrieveResponse/sru:echoedSearchRetrieveRequest/sru:query</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Used by</div>
+                           <div class="flR"><input id="bt_uB_P_qS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('uB_P_qS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="uB_P_qS_..params.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td class="fCol">Template</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="scan2view_v12.html#T_query-inputS_..html_snippets.xsl" target="_self" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">query-input</span></a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Source</div>
+                           <div class="flR"><input id="bt_src_P_qS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_P_qS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="src_P_qS_..params.xsl" style="display:block">
+                              <table class="pWCont">
+                                 <tr>
+                                    <td width="100%"><pre><span class="tXSLEl">&lt;xsl:param</span><span class="tAN"> name=</span><span class="tAV">"q"</span><span class="tAN"> select=</span><span class="tAV">"/sru:searchRetrieveResponse/sru:echoedSearchRetrieveRequest/sru:query"</span><span class="tXSLEl">/&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lR"></td>
+         </tr>
+         <tr>
+            <td class="rt_cBL"></td>
+            <td class="rt_lB"></td>
+            <td class="rt_cBR"></td>
+         </tr>
+      </table><a id="P_x-contextS_..params.xsl"></a><div class="cmpT">Parameter
+         <span class="qname">x-context</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cTL"></td>
+            <td class="rt_lT"></td>
+            <td class="rt_cTR"></td>
+         </tr>
+         <tr>
+            <td class="rt_lL"></td>
+            <td class="rt_cnt">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Documentation</div>
+                           <div class="flR"><input id="bt_dS_P_x-contextS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_P_x-contextS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="dS_P_x-contextS_..params.xsl" style="display:block">
+                              <div>
+                                 <h3>Description</h3>The x-context (x-cmd-context) the client specified
+                                 
+                                 <p>
+                                    Defaults to /sru:searchRetrieveResponse/sru:echoedSearchRetrieveRequest/sru:query
+                                    
+                                 </p>
+                                 
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Namespace</td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Select</td>
+                        <td>/sru:searchRetrieveResponse/sru:echoedSearchRetrieveRequest/fcs:x-context</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Used by</div>
+                           <div class="flR"><input id="bt_uB_P_x-contextS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('uB_P_x-contextS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="uB_P_x-contextS_..params.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td class="fCol">Templates</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="scan2view_v11.html#T_contexts-selectS_..commons_v1.xsl" target="_self" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">contexts-select</span></a><span class="refItemSep">;</span></div>
+                                          <div class="refItemBlock"><a href="scan2view_v11.html#T_formURLS_..commons_v1.xsl" target="_self" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">formURL</span></a><span class="refItemSep">;</span></div>
+                                          <div class="refItemBlock"><a href="scan2view_v10.html#T_headerS_scan2view_v1.xsl" target="_self" title="No namespace" onclick="updPT('scan2view_v1.xsl')"><span class="nRf">header</span></a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="fCol">Variable</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="scan2view_v13.html#V_context-mappingS_..params.xsl" target="_self" title="No namespace" onclick="updPT('../params.xsl')">context-mapping</a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Source</div>
+                           <div class="flR"><input id="bt_src_P_x-contextS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_P_x-contextS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="src_P_x-contextS_..params.xsl" style="display:block">
+                              <table class="pWCont">
+                                 <tr>
+                                    <td width="100%"><pre><span class="tXSLEl">&lt;xsl:param</span><span class="tAN"> name=</span><span class="tAV">"x-context"</span><span class="tAN"> select=</span><span class="tAV">"/sru:searchRetrieveResponse/sru:echoedSearchRetrieveRequest/fcs:x-context"</span><span class="tXSLEl">/&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lR"></td>
+         </tr>
+         <tr>
+            <td class="rt_cBL"></td>
+            <td class="rt_lB"></td>
+            <td class="rt_cBR"></td>
+         </tr>
+      </table><a id="P_startRecordS_..params.xsl"></a><div class="cmpT">Parameter
+         <span class="qname">startRecord</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cTL"></td>
+            <td class="rt_lT"></td>
+            <td class="rt_cTR"></td>
+         </tr>
+         <tr>
+            <td class="rt_lL"></td>
+            <td class="rt_cnt">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Documentation</div>
+                           <div class="flR"><input id="bt_dS_P_startRecordS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_P_startRecordS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="dS_P_startRecordS_..params.xsl" style="display:block">
+                              <div>
+                                 <h3>Description</h3>The start record the client requested or the one the upstream endpoint chose
+                                 
+                                 <p>
+                                    Defaults to /sru:searchRetrieveResponse/sru:echoedSearchRetrieveRequest/sru:startRecord
+                                    
+                                 </p>
+                                 
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Namespace</td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Select</td>
+                        <td>/sru:searchRetrieveResponse/sru:echoedSearchRetrieveRequest/sru:startRecord</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Used by</div>
+                           <div class="flR"><input id="bt_uB_P_startRecordS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('uB_P_startRecordS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="uB_P_startRecordS_..params.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td class="fCol">Templates</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="scan2view_v12.html#T_prev-nextS_..html_snippets.xsl" target="_self" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">prev-next</span></a><span class="refItemSep">;</span></div>
+                                          <div class="refItemBlock"><a href="scan2view_v12.html#T_result-pagingS_..html_snippets.xsl" target="_self" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">result-paging</span></a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Source</div>
+                           <div class="flR"><input id="bt_src_P_startRecordS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_P_startRecordS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="src_P_startRecordS_..params.xsl" style="display:block">
+                              <table class="pWCont">
+                                 <tr>
+                                    <td width="100%"><pre><span class="tXSLEl">&lt;xsl:param</span><span class="tAN"> name=</span><span class="tAV">"startRecord"</span><span class="tAN"> select=</span><span class="tAV">"/sru:searchRetrieveResponse/sru:echoedSearchRetrieveRequest/sru:startRecord"</span><span class="tXSLEl">/&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lR"></td>
+         </tr>
+         <tr>
+            <td class="rt_cBL"></td>
+            <td class="rt_lB"></td>
+            <td class="rt_cBR"></td>
+         </tr>
+      </table><a id="P_maximumRecordsS_..params.xsl"></a><div class="cmpT">Parameter
+         <span class="qname">maximumRecords</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cTL"></td>
+            <td class="rt_lT"></td>
+            <td class="rt_cTR"></td>
+         </tr>
+         <tr>
+            <td class="rt_lL"></td>
+            <td class="rt_cnt">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Documentation</div>
+                           <div class="flR"><input id="bt_dS_P_maximumRecordsS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_P_maximumRecordsS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="dS_P_maximumRecordsS_..params.xsl" style="display:block">
+                              <div>
+                                 <h3>Description</h3>The maximum number of records the client requested or the one the upstream endpoint
+                                 chose
+                                 
+                                 <p>
+                                    Defaults to /sru:searchRetrieveResponse/sru:echoedSearchRetrieveRequest/sru:maximumRecords
+                                    
+                                 </p>
+                                 
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Namespace</td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Select</td>
+                        <td>/sru:searchRetrieveResponse/sru:echoedSearchRetrieveRequest/sru:maximumRecords</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Used by</div>
+                           <div class="flR"><input id="bt_uB_P_maximumRecordsS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('uB_P_maximumRecordsS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="uB_P_maximumRecordsS_..params.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td class="fCol">Templates</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="scan2view_v12.html#T_prev-nextS_..html_snippets.xsl" target="_self" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">prev-next</span></a><span class="refItemSep">;</span></div>
+                                          <div class="refItemBlock"><a href="scan2view_v12.html#T_result-pagingS_..html_snippets.xsl" target="_self" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">result-paging</span></a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Source</div>
+                           <div class="flR"><input id="bt_src_P_maximumRecordsS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_P_maximumRecordsS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="src_P_maximumRecordsS_..params.xsl" style="display:block">
+                              <table class="pWCont">
+                                 <tr>
+                                    <td width="100%"><pre><span class="tXSLEl">&lt;xsl:param</span><span class="tAN"> name=</span><span class="tAV">"maximumRecords"</span><span class="tAN"> select=</span><span class="tAV">"/sru:searchRetrieveResponse/sru:echoedSearchRetrieveRequest/sru:maximumRecords"</span><span class="tXSLEl">/&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lR"></td>
+         </tr>
+         <tr>
+            <td class="rt_cBL"></td>
+            <td class="rt_lB"></td>
+            <td class="rt_cBR"></td>
+         </tr>
+      </table><a id="P_numberOfRecordsS_..params.xsl"></a><div class="cmpT">Parameter
+         <span class="qname">numberOfRecords</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cTL"></td>
+            <td class="rt_lT"></td>
+            <td class="rt_cTR"></td>
+         </tr>
+         <tr>
+            <td class="rt_lL"></td>
+            <td class="rt_cnt">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Documentation</div>
+                           <div class="flR"><input id="bt_dS_P_numberOfRecordsS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_P_numberOfRecordsS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="dS_P_numberOfRecordsS_..params.xsl" style="display:block">
+                              <div>
+                                 <h3>Description</h3>The actual number of records in the response
+                                 
+                                 <p>
+                                    Defaults to /sru:searchRetrieveResponse/sru:numberOfRecords
+                                    
+                                 </p>
+                                 
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Namespace</td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Select</td>
+                        <td>/sru:searchRetrieveResponse/sru:numberOfRecords</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Used by</div>
+                           <div class="flR"><input id="bt_uB_P_numberOfRecordsS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('uB_P_numberOfRecordsS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="uB_P_numberOfRecordsS_..params.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td class="fCol">Template</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="scan2view_v12.html#T_result-pagingS_..html_snippets.xsl" target="_self" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">result-paging</span></a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Source</div>
+                           <div class="flR"><input id="bt_src_P_numberOfRecordsS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_P_numberOfRecordsS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="src_P_numberOfRecordsS_..params.xsl" style="display:block">
+                              <table class="pWCont">
+                                 <tr>
+                                    <td width="100%"><pre><span class="tXSLEl">&lt;xsl:param</span><span class="tAN"> name=</span><span class="tAV">"numberOfRecords"</span><span class="tAN"> select=</span><span class="tAV">"/sru:searchRetrieveResponse/sru:numberOfRecords"</span><span class="tXSLEl">/&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lR"></td>
+         </tr>
+         <tr>
+            <td class="rt_cBL"></td>
+            <td class="rt_lB"></td>
+            <td class="rt_cBR"></td>
+         </tr>
+      </table><a id="P_numberOfMatchesS_..params.xsl"></a><div class="cmpT">Parameter
+         <span class="qname">numberOfMatches</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cTL"></td>
+            <td class="rt_lT"></td>
+            <td class="rt_cTR"></td>
+         </tr>
+         <tr>
+            <td class="rt_lL"></td>
+            <td class="rt_cnt">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Documentation</div>
+                           <div class="flR"><input id="bt_dS_P_numberOfMatchesS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_P_numberOfMatchesS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="dS_P_numberOfMatchesS_..params.xsl" style="display:block">
+                              <div>
+                                 <h3>Description</h3>The number of matches records in the response
+                                 
+                                 <p>
+                                    Defaults to /sru:searchRetrieveResponse/sru:extraResponseData/fcs:numberOfMatches
+                                    
+                                 </p>
+                                 
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Namespace</td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Select</td>
+                        <td>/sru:searchRetrieveResponse/sru:extraResponseData/fcs:numberOfMatches</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Source</div>
+                           <div class="flR"><input id="bt_src_P_numberOfMatchesS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_P_numberOfMatchesS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="src_P_numberOfMatchesS_..params.xsl" style="display:block">
+                              <table class="pWCont">
+                                 <tr>
+                                    <td width="100%"><pre><span class="tXSLEl">&lt;xsl:param</span><span class="tAN"> name=</span><span class="tAV">"numberOfMatches"</span><span class="tAN"> select=</span><span class="tAV">"/sru:searchRetrieveResponse/sru:extraResponseData/fcs:numberOfMatches"</span><span class="tXSLEl">/&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lR"></td>
+         </tr>
+         <tr>
+            <td class="rt_cBL"></td>
+            <td class="rt_lB"></td>
+            <td class="rt_cBR"></td>
+         </tr>
+      </table><a id="P_modeS_..params.xsl"></a><div class="cmpT">Parameter
+         <span class="qname">mode</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cTL"></td>
+            <td class="rt_lT"></td>
+            <td class="rt_cTR"></td>
+         </tr>
+         <tr>
+            <td class="rt_lL"></td>
+            <td class="rt_cnt">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Documentation</div>
+                           <div class="flR"><input id="bt_dS_P_modeS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_P_modeS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="dS_P_modeS_..params.xsl" style="display:block">
+                              <div>
+                                 <h3>Description</h3>???
+                                 
+                                 <p>
+                                    Defaults to 'html'
+                                    
+                                 </p>
+                                 
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Namespace</td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Select</td>
+                        <td>'html'</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Source</div>
+                           <div class="flR"><input id="bt_src_P_modeS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_P_modeS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="src_P_modeS_..params.xsl" style="display:block">
+                              <table class="pWCont">
+                                 <tr>
+                                    <td width="100%"><pre><span class="tXSLEl">&lt;xsl:param</span><span class="tAN"> name=</span><span class="tAV">"mode"</span><span class="tAN"> select=</span><span class="tAV">"'html'"</span><span class="tXSLEl">/&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lR"></td>
+         </tr>
+         <tr>
+            <td class="rt_cBL"></td>
+            <td class="rt_lB"></td>
+            <td class="rt_cBR"></td>
+         </tr>
+      </table><a id="P_scanClauseS_..params.xsl"></a><div class="cmpT">Parameter
+         <span class="qname">scanClause</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cTL"></td>
+            <td class="rt_lT"></td>
+            <td class="rt_cTR"></td>
+         </tr>
+         <tr>
+            <td class="rt_lL"></td>
+            <td class="rt_cnt">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Documentation</div>
+                           <div class="flR"><input id="bt_dS_P_scanClauseS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_P_scanClauseS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="dS_P_scanClauseS_..params.xsl" style="display:block">
+                              <div>
+                                 <h3>Description</h3>The scanClause specified by the client
+                                 
+                                 <p>
+                                    Defaults to an empty xs:string.
+                                    
+                                 </p>
+                                 
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Namespace</td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Select</td>
+                        <td>''</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Overriding</div>
+                           <div class="flR"><input id="bt_ovr_P_scanClauseS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('ovr_P_scanClauseS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="ovr_P_scanClauseS_..params.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td class="fCol">Parameter</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="scan2view_v10.html#P_scanClauseS_scan2view_v1.xsl" target="_self" title="No namespace" onclick="updPT('scan2view_v1.xsl')">scanClause</a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Source</div>
+                           <div class="flR"><input id="bt_src_P_scanClauseS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_P_scanClauseS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="src_P_scanClauseS_..params.xsl" style="display:block">
+                              <table class="pWCont">
+                                 <tr>
+                                    <td width="100%"><pre><span class="tXSLEl">&lt;xsl:param</span><span class="tAN"> name=</span><span class="tAV">"scanClause"</span><span class="tAN"> select=</span><span class="tAV">"''"</span><span class="tXSLEl">/&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lR"></td>
+         </tr>
+         <tr>
+            <td class="rt_cBL"></td>
+            <td class="rt_lB"></td>
+            <td class="rt_cBR"></td>
+         </tr>
+      </table><a id="P_contexts_urlS_..params.xsl"></a><div class="cmpT">Parameter
+         <span class="qname">contexts_url</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cTL"></td>
+            <td class="rt_lT"></td>
+            <td class="rt_cTR"></td>
+         </tr>
+         <tr>
+            <td class="rt_lL"></td>
+            <td class="rt_cnt">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Documentation</div>
+                           <div class="flR"><input id="bt_dS_P_contexts_urlS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_P_contexts_urlS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="dS_P_contexts_urlS_..params.xsl" style="display:block">
+                              <div>
+                                 <h3>Description</h3>A URL that returns any contexts an endpoint provides
+                                 
+                                 <p>
+                                    Defaults to $base_url + ?operation=scan&amp;scanClause=fcs.resource&amp;sort=text&amp;version=1.2&amp;x-format=xml.
+                                    
+                                 </p>
+                                 
+                                 <p>
+                                    Note: If $base_url is the empty string (the default) then this calls back to whatever
+                                    URL this style sheet is
+                                    executed from. Of course this doesn't work on a local hard drive so there my be warnings
+                                    when processing the
+                                    style sheet.
+                                    
+                                 </p>
+                                 
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Namespace</td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Select</td>
+                        <td>concat($base_url,'?operation=scan&amp;scanClause=fcs.resource&amp;sort=text&amp;version=1.2&amp;x-format=xml')</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Used by</div>
+                           <div class="flR"><input id="bt_uB_P_contexts_urlS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('uB_P_contexts_urlS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="uB_P_contexts_urlS_..params.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td class="fCol">Template</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="scan2view_v11.html#T_contexts-docS_..commons_v1.xsl" target="_self" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">contexts-doc</span></a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">References</div>
+                           <div class="flR"><input id="bt_refs_P_contexts_urlS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('refs_P_contexts_urlS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="refs_P_contexts_urlS_..params.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td class="fCol">Parameter</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="scan2view_v13.html#P_base_urlS_..params.xsl" target="_self" title="No namespace" onclick="updPT('../params.xsl')">base_url</a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Source</div>
+                           <div class="flR"><input id="bt_src_P_contexts_urlS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_P_contexts_urlS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="src_P_contexts_urlS_..params.xsl" style="display:block">
+                              <table class="pWCont">
+                                 <tr>
+                                    <td width="100%"><pre><span class="tXSLEl">&lt;xsl:param</span><span class="tAN"> name=</span><span class="tAV">"contexts_url"</span><span class="tAN"> select=</span><span class="tAV">"concat($base_url,'?operation=scan&amp;scanClause=fcs.resource&amp;sort=text&amp;version=1.2&amp;x-format=xml')"</span><span class="tXSLEl">/&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lR"></td>
+         </tr>
+         <tr>
+            <td class="rt_cBL"></td>
+            <td class="rt_lB"></td>
+            <td class="rt_cBR"></td>
+         </tr>
+      </table><a id="P_mappings-fileS_..params.xsl"></a><div class="cmpT">Parameter
+         <span class="qname">mappings-file</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cTL"></td>
+            <td class="rt_lT"></td>
+            <td class="rt_cTR"></td>
+         </tr>
+         <tr>
+            <td class="rt_lL"></td>
+            <td class="rt_cnt">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Documentation</div>
+                           <div class="flR"><input id="bt_dS_P_mappings-fileS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_P_mappings-fileS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="dS_P_mappings-fileS_..params.xsl" style="display:block">
+                              <div>
+                                 <h3>Description</h3>A URL to a file where additional parameters can be specified
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Namespace</td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Select</td>
+                        <td>''</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Used by</div>
+                           <div class="flR"><input id="bt_uB_P_mappings-fileS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('uB_P_mappings-fileS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="uB_P_mappings-fileS_..params.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td class="fCol">Variable</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="scan2view_v13.html#V_mappingsS_..params.xsl" target="_self" title="No namespace" onclick="updPT('../params.xsl')">mappings</a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Source</div>
+                           <div class="flR"><input id="bt_src_P_mappings-fileS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_P_mappings-fileS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="src_P_mappings-fileS_..params.xsl" style="display:block">
+                              <table class="pWCont">
+                                 <tr>
+                                    <td width="100%"><pre><span class="tXSLEl">&lt;xsl:param</span><span class="tAN"> name=</span><span class="tAV">"mappings-file"</span><span class="tAN"> select=</span><span class="tAV">"''"</span><span class="tXSLEl">/&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lR"></td>
+         </tr>
+         <tr>
+            <td class="rt_cBL"></td>
+            <td class="rt_lB"></td>
+            <td class="rt_cBR"></td>
+         </tr>
+      </table><a id="V_context-paramS_..params.xsl"></a><div class="cmpT">Variable
+         <span class="qname">context-param</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cTL"></td>
+            <td class="rt_lT"></td>
+            <td class="rt_cTR"></td>
+         </tr>
+         <tr>
+            <td class="rt_lL"></td>
+            <td class="rt_cnt">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Documentation</div>
+                           <div class="flR"><input id="bt_dS_V_context-paramS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_V_context-paramS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="dS_V_context-paramS_..params.xsl" style="display:block">
+                              <div>
+                                 <h3>Description</h3>URL parameter that contained the context for the operation
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Namespace</td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Select</td>
+                        <td>'x-context'</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Source</div>
+                           <div class="flR"><input id="bt_src_V_context-paramS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_V_context-paramS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="src_V_context-paramS_..params.xsl" style="display:block">
+                              <table class="pWCont">
+                                 <tr>
+                                    <td width="100%"><pre><span class="tXSLEl">&lt;xsl:variable</span><span class="tAN"> name=</span><span class="tAV">"context-param"</span><span class="tAN"> select=</span><span class="tAV">"'x-context'"</span><span class="tXSLEl">/&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lR"></td>
+         </tr>
+         <tr>
+            <td class="rt_cBL"></td>
+            <td class="rt_lB"></td>
+            <td class="rt_cBR"></td>
+         </tr>
+      </table><a id="V_mappingsS_..params.xsl"></a><div class="cmpT">Variable
+         <span class="qname">mappings</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cTL"></td>
+            <td class="rt_lT"></td>
+            <td class="rt_cTR"></td>
+         </tr>
+         <tr>
+            <td class="rt_lL"></td>
+            <td class="rt_cnt">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Documentation</div>
+                           <div class="flR"><input id="bt_dS_V_mappingsS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_V_mappingsS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="dS_V_mappingsS_..params.xsl" style="display:block">
+                              <div>
+                                 <h3>Description</h3>A map with additional settings
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Namespace</td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Select</td>
+                        <td>document($mappings-file)/map</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Used by</div>
+                           <div class="flR"><input id="bt_uB_V_mappingsS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('uB_V_mappingsS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="uB_V_mappingsS_..params.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td class="fCol">Variables</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="scan2view_v13.html#V_context-mappingS_..params.xsl" target="_self" title="No namespace" onclick="updPT('../params.xsl')">context-mapping</a><span class="refItemSep">;</span></div>
+                                          <div class="refItemBlock"><a href="scan2view_v13.html#V_default-mappingS_..params.xsl" target="_self" title="No namespace" onclick="updPT('../params.xsl')">default-mapping</a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">References</div>
+                           <div class="flR"><input id="bt_refs_V_mappingsS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('refs_V_mappingsS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="refs_V_mappingsS_..params.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td class="fCol">Parameter</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="scan2view_v13.html#P_mappings-fileS_..params.xsl" target="_self" title="No namespace" onclick="updPT('../params.xsl')">mappings-file</a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Source</div>
+                           <div class="flR"><input id="bt_src_V_mappingsS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_V_mappingsS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="src_V_mappingsS_..params.xsl" style="display:block">
+                              <table class="pWCont">
+                                 <tr>
+                                    <td width="100%"><pre><span class="tXSLEl">&lt;xsl:variable</span><span class="tAN"> name=</span><span class="tAV">"mappings"</span><span class="tAN"> select=</span><span class="tAV">"document($mappings-file)/map"</span><span class="tXSLEl">/&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lR"></td>
+         </tr>
+         <tr>
+            <td class="rt_cBL"></td>
+            <td class="rt_lB"></td>
+            <td class="rt_cBR"></td>
+         </tr>
+      </table><a id="V_context-mappingS_..params.xsl"></a><div class="cmpT">Variable
+         <span class="qname">context-mapping</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cTL"></td>
+            <td class="rt_lT"></td>
+            <td class="rt_cTR"></td>
+         </tr>
+         <tr>
+            <td class="rt_lL"></td>
+            <td class="rt_cnt">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Documentation</div>
+                           <div class="flR"><input id="bt_dS_V_context-mappingS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_V_context-mappingS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="dS_V_context-mappingS_..params.xsl" style="display:block">
+                              <div>
+                                 <h3>Description</h3>The settings for <a href="scan2view_v13.html#P_x-contextS_..params.xsl" target="_self">$x-context</a> contained in 
+                                 <a href="scan2view_v13.html#V_mappingsS_..params.xsl" target="_self">mappings</a></div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Namespace</td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Select</td>
+                        <td>$mappings//map[@key][xs:string(@key) = $x-context]</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Used by</div>
+                           <div class="flR"><input id="bt_uB_V_context-mappingS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('uB_V_context-mappingS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="uB_V_context-mappingS_..params.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td class="fCol">Template</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="scan2view_v11.html#T_elem-linkS_..commons_v1.xsl" target="_self" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">elem-link</span></a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">References</div>
+                           <div class="flR"><input id="bt_refs_V_context-mappingS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('refs_V_context-mappingS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="refs_V_context-mappingS_..params.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td class="fCol">Variable</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="scan2view_v13.html#V_mappingsS_..params.xsl" target="_self" title="No namespace" onclick="updPT('../params.xsl')">mappings</a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="fCol">Parameter</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="scan2view_v13.html#P_x-contextS_..params.xsl" target="_self" title="No namespace" onclick="updPT('../params.xsl')">x-context</a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Source</div>
+                           <div class="flR"><input id="bt_src_V_context-mappingS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_V_context-mappingS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="src_V_context-mappingS_..params.xsl" style="display:block">
+                              <table class="pWCont">
+                                 <tr>
+                                    <td width="100%"><pre><span class="tXSLEl">&lt;xsl:variable</span><span class="tAN"> name=</span><span class="tAV">"context-mapping"</span><span class="tAN"> select=</span><span class="tAV">"$mappings//map[@key][xs:string(@key) = $x-context]"</span><span class="tXSLEl">/&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lR"></td>
+         </tr>
+         <tr>
+            <td class="rt_cBL"></td>
+            <td class="rt_lB"></td>
+            <td class="rt_cBR"></td>
+         </tr>
+      </table><a id="V_default-mappingS_..params.xsl"></a><div class="cmpT">Variable
+         <span class="qname">default-mapping</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cTL"></td>
+            <td class="rt_lT"></td>
+            <td class="rt_cTR"></td>
+         </tr>
+         <tr>
+            <td class="rt_lL"></td>
+            <td class="rt_cnt">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Documentation</div>
+                           <div class="flR"><input id="bt_dS_V_default-mappingS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_V_default-mappingS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="dS_V_default-mappingS_..params.xsl" style="display:block">
+                              <div>
+                                 <h3>Description</h3>The settings for default contained in <a href="scan2view_v13.html#V_mappingsS_..params.xsl" target="_self">mappings</a>
+                                 
+                                 <p>
+                                    The XML atrribute key is taken from the XSL context where this variable is evaluated
+                                    so the context
+                                    should be an XML element that has a key attribute.
+                                    
+                                 </p>
+                                 
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Namespace</td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Select</td>
+                        <td>$mappings//map[@key][xs:string(@key) = 'default']</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">References</div>
+                           <div class="flR"><input id="bt_refs_V_default-mappingS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('refs_V_default-mappingS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="refs_V_default-mappingS_..params.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td class="fCol">Variable</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="scan2view_v13.html#V_mappingsS_..params.xsl" target="_self" title="No namespace" onclick="updPT('../params.xsl')">mappings</a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Source</div>
+                           <div class="flR"><input id="bt_src_V_default-mappingS_..params.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_V_default-mappingS_..params.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="src_V_default-mappingS_..params.xsl" style="display:block">
+                              <table class="pWCont">
+                                 <tr>
+                                    <td width="100%"><pre><span class="tXSLEl">&lt;xsl:variable</span><span class="tAN"> name=</span><span class="tAV">"default-mapping"</span><span class="tAN"> select=</span><span class="tAV">"$mappings//map[@key][xs:string(@key) = 'default']"</span><span class="tXSLEl">/&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lR"></td>
+         </tr>
+         <tr>
+            <td class="rt_cBL"></td>
+            <td class="rt_lB"></td>
+            <td class="rt_cBR"></td>
+         </tr>
+      </table>
+      <div class="footer">
+         <hr />
+         <div align="center">Stylesheet documentation generated by <a href="http://www.oxygenxml.com" target="_parent"><span class="oXygenLogo"><span class="redX">&lt;</span>o<span class="redX">X</span>ygen<span class="redX">/&gt;</span></span></a><sup>®</sup> XML Developer.
+         </div>
+      </div><script type="text/javascript">
+         <!--                     
+                    // The namespace is the selected option in the TOC combo.
+                    
+                    // The corresponding div is already visible conf. to its style attr.                     
+                    
+                            var selectToc = getElementObject('selectTOC');
+                            if(selectToc != null){
+                            // It can be null when having chunking, the combo of the TOC is in another frame.
+                            selectToc.selectedIndex = 0;
+                            }
+                        
+                    
+                    // Floats the toolbar.
+                    var globalControls = getElementObject("global_controls"); 
+                    
+                    if(globalControls != null){
+                    var browser=navigator.appName;
+                    var version = parseFloat(navigator.appVersion.split('MSIE')[1]);
+                    
+                    var IE6 = false;
+                    if ((browser=="Microsoft Internet Explorer") && (version < 7)){
+                    IE6 = true;
+                    }
+                    
+                    //alert (IE6 + " |V| " + version);
+                    
+                    if(IE6){
+                    // On IE 6 the 'fixed' property is not supported. We must use javascript. 
+                    globalControls.style.position='absolute';                         
+                    // The global controls will do not exist in the TOC frame, when chunking.
+                    findAndFloat("global_controls", 225, 30);    
+                    } else {
+                    globalControls.style.position='fixed';                     	
+                    }
+                    
+                    globalControls.style.right='0';                       
+                    }
+                --></script></body>
+</html>

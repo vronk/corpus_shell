@@ -1,0 +1,1708 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+      <title>Stylesheet documentation for: html_snippets.xsl</title>
+      <link rel="stylesheet" href="docHtml.css" type="text/css" /><script type="text/javascript">
+         <!--
+        
+        
+        
+        var usedByBoxes= new Array('uB_T_html-headS_..html_snippets.xsl', 
+				'uB_T_page-headerS_..html_snippets.xsl', 
+				'uB_T_top-menuS_..html_snippets.xsl', 
+				'uB_T_query-inputS_..html_snippets.xsl', 
+				'uB_T_query-listS_..html_snippets.xsl', 
+				'uB_T_detail-spaceS_..html_snippets.xsl', 
+				'uB_T_public-spaceS_..html_snippets.xsl', 
+				'uB_T_user-spaceS_..html_snippets.xsl');
+
+        var docBoxes= new Array('dS_..html_snippets.xsl', 
+				'dS_T_html-headS_..html_snippets.xsl', 
+				'dS_T_page-headerS_..html_snippets.xsl', 
+				'dS_T_top-menuS_..html_snippets.xsl', 
+				'dS_T_query-inputS_..html_snippets.xsl', 
+				'dS_T_result-pagingS_..html_snippets.xsl', 
+				'dS_T_prev-nextS_..html_snippets.xsl', 
+				'dS_T_query-listS_..html_snippets.xsl', 
+				'dS_T_detail-spaceS_..html_snippets.xsl', 
+				'dS_T_public-spaceS_..html_snippets.xsl', 
+				'dS_T_user-spaceS_..html_snippets.xsl');
+
+        var sourceBoxes= new Array('src_T_html-headS_..html_snippets.xsl', 
+				'src_T_page-headerS_..html_snippets.xsl', 
+				'src_T_top-menuS_..html_snippets.xsl', 
+				'src_T_query-inputS_..html_snippets.xsl', 
+				'src_T_result-pagingS_..html_snippets.xsl', 
+				'src_T_prev-nextS_..html_snippets.xsl', 
+				'src_T_query-listS_..html_snippets.xsl', 
+				'src_T_detail-spaceS_..html_snippets.xsl', 
+				'src_T_public-spaceS_..html_snippets.xsl', 
+				'src_T_user-spaceS_..html_snippets.xsl');
+
+        
+        
+        var referencesBoxes= new Array('refs_T_html-headS_..html_snippets.xsl', 
+				'refs_T_page-headerS_..html_snippets.xsl', 
+				'refs_T_top-menuS_..html_snippets.xsl', 
+				'refs_T_query-inputS_..html_snippets.xsl', 
+				'refs_T_result-pagingS_..html_snippets.xsl', 
+				'refs_T_prev-nextS_..html_snippets.xsl');
+
+        var importsBoxes= new Array('ip_..html_snippets.xsl');
+
+        
+        
+        var includedFromBoxes= new Array('icF_..html_snippets.xsl');
+
+        var button_prefix = 'bt_';
+        
+        /**
+        * Get all DIV elements with a specified class name.
+        *
+        * @param className The class name. 
+        */
+        function getElementsByClassName(className) {
+            var results = [];
+    
+             if (document.getElementsByClassName == undefined) {
+                var allElements = document.getElementsByTagName("div");
+                var element;
+                for (var i = 0; i < allElements.length; i++) {
+                    var element = allElements[i];
+                	var elementClass = element.className;
+                	if (elementClass == className) { 
+                		results.push(element);
+                	}
+                }
+             } else {
+                results = document.getElementsByClassName(className);
+             }
+    
+            return results;
+        }
+            
+        /**
+        * Returns an element in the current HTML document.
+        *
+        * @param elementID Identifier of HTML element
+        * @return               HTML element object
+        */
+        function getElementObject(elementID) {
+            var elemObj = null;
+            if (document.getElementById) {
+                elemObj = document.getElementById(elementID);
+            }
+            return elemObj;
+        }
+        
+        /**
+        * Switches the state of a collapseable box, e.g.
+        * if it's opened, it'll be closed, and vice versa.
+        *
+        * @param boxID Identifier of box
+        */
+        function switchState(boxID) {
+            var boxObj = getElementObject(boxID);
+            var buttonObj = getElementObject(button_prefix + boxID);
+            if (boxObj == null || buttonObj == null) {
+                // Box or button not found
+            } else if (boxObj.style.display == "none") {
+                // Box is closed, so open it
+                openBox(boxObj, buttonObj);
+            } else if (boxObj.style.display == "block") {
+                // Box is opened, so close it
+                closeBox(boxObj, buttonObj);
+            }
+        }
+        
+        /**
+        * Opens a collapseable box.
+        *
+        * @param boxObj       Collapseable box
+        * @param buttonObj Button controlling box
+        */
+        function openBox(boxObj, buttonObj) {
+            if (boxObj == null || buttonObj == null) {
+                // Box or button not found
+            } else {
+                // Change 'display' CSS property of box
+                boxObj.style.display = "block";
+                
+                // Change text of button
+                if (boxObj.style.display == "block") {
+                    buttonObj.src = "img/btM.gif";
+                }
+            }
+        }
+        
+        /**
+        * Closes a collapseable box.
+        *
+        * @param boxObj       Collapseable box
+        * @param buttonObj Button controlling box
+        */
+        function closeBox(boxObj, buttonObj) {
+            if (boxObj == null || buttonObj == null) {
+                // Box or button not found
+            } else {
+                // Change 'display' CSS property of box
+                boxObj.style.display = "none";
+                
+                // Change text of button
+                if (boxObj.style.display == "none") {
+                    buttonObj.src = "img/btP.gif";
+                }
+            }
+        }
+
+       /**
+        * Switch between the compact list representation and the clasic list representation.
+        */
+       function switchMode(checkBox) {
+            if (checkBox == null) {
+                // Checkbox not found
+            } else if (checkBox.checked == 1) {
+                // Compact mode
+                var divs = getElementsByClassName('refItemBlock');
+                for (var i = 0; i < divs.length; i ++) {
+                    divs[i].style.display = "inline";
+                    var children = divs[i].children;
+                    var refItemSep = children[children.length - 1];
+                    if (refItemSep.className == "refItemSep") {
+                        children[children.length - 1].style.display = "inline";
+                    }
+                }
+            } else {
+                // Expanded mode
+                var divs = getElementsByClassName('refItemBlock');
+                for (var i = 0; i < divs.length; i ++) {
+                    divs[i].style.display = "block";
+                    var children = divs[i].children;
+                    var refItemSep = children[children.length - 1];
+                    if (refItemSep.className == "refItemSep") {
+                        children[children.length - 1].style.display = "none";
+                    }
+                }
+            }
+        }
+
+       function switchStateForAll(buttonObj, boxList) {
+            if (buttonObj == null) {
+                // button not found
+            } else if (buttonObj.value == "+") {
+                // Expand all
+                expandAll(boxList);
+                buttonObj.value = "-";
+            } else if (buttonObj.value == "-") {
+                // Collapse all
+                collapseAll(boxList);
+                buttonObj.value = "+";
+            }
+        }
+        
+        /**
+        * Closes all boxes in a given list.
+        *
+        * @param boxList Array of box IDs
+        */
+        function collapseAll(boxList) {
+            var idx;
+            for (idx = 0; idx < boxList.length; idx++) {
+                var boxObj = getElementObject(boxList[idx]);
+                var buttonObj = getElementObject(button_prefix + boxList[idx]);
+                closeBox(boxObj, buttonObj);
+            }
+        }
+            
+        /**
+        * Open all boxes in a given list.
+        *
+        * @param boxList Array of box IDs
+        */
+        function expandAll(boxList) {
+            var idx;
+            for (idx = 0; idx < boxList.length; idx++) {
+                var boxObj = getElementObject(boxList[idx]);
+                var buttonObj = getElementObject(button_prefix + boxList[idx]);
+                openBox(boxObj, buttonObj);
+            }
+        }
+        
+        /**
+         * Update the message presented in the title of the html page.
+         * - If the documentation was splited by namespace we present something like: "Documentation for namespace 'ns'"
+         * - If the documentation was splited by location we present somehing like: "Documentation for 'Schema.xsd'"
+         * - If no split we always present: "Documentation for 'MainSchema.xsd'"
+         */
+        function updPT(message) {
+            top.document.title = "Stylesheet documentation for: " + message;
+        }
+        
+          
+                    
+         /**
+          * Finds an HTML element by its ID and makes it floatable over the normal content.
+          *
+          * @param x_displacement The difference in pixels to the right side of the window from 
+          *           the left side of the element.
+          * @param y_displacement The difference in pixels to the right side of the window from 
+          *           the top of the element.          
+          */
+         function findAndFloat(id, x_displacement, y_displacement){
+
+            var element = getElementObject(id);            
+            
+            window[id + "_obj"] = element;
+            
+            if(document.layers) {
+               element.style = element;
+            }
+            
+            element.current_y = y_displacement;      
+            element.first_time = true;
+         
+            element.floatElement = function(){
+               // It may be closed by an user action.
+                
+               // Target X and Y coordinates.
+               var x, y;
+               
+               var myWidth = 0, myHeight = 0;
+               if( typeof( window.innerWidth ) == 'number' ) {
+                  //Non-IE
+                  myWidth = window.innerWidth;
+                  myHeight = window.innerHeight;
+               } else if( document.documentElement && ( document.documentElement.clientWidth || document.documentElement.clientHeight ) ) {
+                  //IE 6+ in 'standards compliant mode'
+                  myWidth = document.documentElement.clientWidth;
+                  myHeight = document.documentElement.clientHeight;
+               } else if( document.body && ( document.body.clientWidth || document.body.clientHeight ) ) {
+                  //IE 4 compatible
+                  myWidth = document.body.clientWidth;
+                  myHeight = document.body.clientHeight;
+               }
+               
+               
+               x = myWidth - x_displacement;
+               
+               var ns = (navigator.appName.indexOf("Netscape") != -1);               
+               y = ns ? pageYOffset : document.documentElement && document.documentElement.scrollTop ? 
+                  document.documentElement.scrollTop : document.body.scrollTop;               
+               y = y + y_displacement;               
+               
+               // The current y is the current coordinate of the floating element.
+               // This should be at the limit the y target coordinate.
+               this.current_y += (y - this.current_y)/1.25;
+               
+               // Add the pixels constant after the values
+               // and move the element.
+               var px = document.layers ? "" : "px";
+               this.style.left =  x + px;
+               this.style.top =  this.current_y + px;
+                              
+               setTimeout(this.id + "_obj.floatElement()", 100);
+            }
+            
+            element.floatElement();
+            return element;
+          }
+
+         /**
+          * Finds an HTML element by its ID and makes it floatable over the normal content.
+          *
+          * @param x_displacement The difference in pixels to the right side of the window from 
+          *           the left side of the element.
+          * @param y_displacement The difference in pixels to the right side of the window from 
+          *           the top of the element.          
+          */
+         function selectTOCGroupBy(id){
+         var selectIds = new Array('toc_group_by_location', 'toc_group_by_component_type', 'toc_group_by_namespace', 'toc_group_by_mode');
+            // Make all the tabs invisible.
+            for (i = 0; i < 4; i++){
+               var tab = getElementObject(selectIds[i]);
+               tab.style.display = 'none';
+            }
+            var selTab = getElementObject(id);
+            selTab.style.display = 'block';            
+         }
+          
+
+    --></script></head>
+   <body>
+      <div id="global_controls" class="globalControls" style="position:absolute;right:0;">
+         <table class="rt">
+            <tr>
+               <td class="rt_cTL"></td>
+               <td class="rt_lT"></td>
+               <td class="rt_cTR"></td>
+            </tr>
+            <tr>
+               <td class="rt_lL"></td>
+               <td class="rt_cnt">
+                  <h3>Mode:</h3>
+                  <table>
+                     <tr>
+                        <td><span><input type="checkbox" value="-" checked="checked" onclick="switchMode(this);" class="control" /></span><span class="globalControlName">Compact lists</span></td>
+                     </tr>
+                  </table>
+                  <h3>Showing:</h3>
+                  <table>
+                     <tr>
+                        <td><span><input type="checkbox" value="-" checked="checked" onclick="switchStateForAll(this, docBoxes);" class="control" /></span><span class="globalControlName">Documentation
+                              </span></td>
+                     </tr>
+                     <tr>
+                        <td><span><input type="checkbox" value="-" checked="checked" onclick="switchStateForAll(this, usedByBoxes);" class="control" /></span><span class="globalControlName">Used by </span></td>
+                     </tr>
+                     <tr>
+                        <td><span><input type="checkbox" value="-" checked="checked" onclick="switchStateForAll(this, referencesBoxes);" class="control" /></span><span class="globalControlName">References </span></td>
+                     </tr>
+                     <tr>
+                        <td><span><input type="checkbox" value="-" checked="checked" onclick="switchStateForAll(this, importsBoxes);" class="control" /></span><span class="globalControlName">Imported modules
+                              </span></td>
+                     </tr>
+                     <tr>
+                        <td><span><input type="checkbox" value="-" checked="checked" onclick="switchStateForAll(this, includedFromBoxes);" class="control" /></span><span class="globalControlName">Included from
+                              </span></td>
+                     </tr>
+                     <tr>
+                        <td><span><input type="checkbox" value="-" checked="checked" onclick="switchStateForAll(this, sourceBoxes);" class="control" /></span><span class="globalControlName">Source </span></td>
+                     </tr>
+                  </table>
+                  <div align="right"><span><input type="button" onclick="getElementObject('global_controls').style.display = 'none';" value="Close" /></span></div>
+               </td>
+               <td class="rt_lR"></td>
+            </tr>
+            <tr>
+               <td class="rt_cBL"></td>
+               <td class="rt_lB"></td>
+               <td class="rt_cBR"></td>
+            </tr>
+         </table>
+      </div><a id="..html_snippets.xsl"></a><div class="cmpT">Stylesheet
+         <span class="qname">html_snippets.xsl</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cTL"></td>
+            <td class="rt_lT"></td>
+            <td class="rt_cTR"></td>
+         </tr>
+         <tr>
+            <td class="rt_lL"></td>
+            <td class="rt_cnt">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Documentation</div>
+                           <div class="flR"><input id="bt_dS_..html_snippets.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_..html_snippets.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="dS_..html_snippets.xsl" style="display:block">
+                              <div>
+                                 <h3>Description</h3>pieces of html wrapped in templates, to be reused by other stylesheets
+                                 
+                                 <p>History:
+                                    
+                                    <ul>
+                                       
+                                       <li class="doc">2011-12-05: created by:"vr": copied from cr/html_snippets reworked back to xslt 1.0</li>
+                                       
+                                    </ul>
+                                    
+                                 </p>
+                                 
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Imported modules</div>
+                           <div class="flR"><input id="bt_ip_..html_snippets.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('ip_..html_snippets.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="ip_..html_snippets.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="result2view_v14.html#..params.xsl" target="_self" title="No namespace" onclick="updPT('../params.xsl')">../params.xsl</a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Included from</div>
+                           <div class="flR"><input id="bt_icF_..html_snippets.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('icF_..html_snippets.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="icF_..html_snippets.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="result2view_v11.html#..commons_v1.xsl" target="_self" title="No namespace" onclick="updPT('../commons_v1.xsl')">../commons_v1.xsl</a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Stylesheet version</td>
+                        <td>1.0</td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lR"></td>
+         </tr>
+         <tr>
+            <td class="rt_cBL"></td>
+            <td class="rt_lB"></td>
+            <td class="rt_cBR"></td>
+         </tr>
+      </table><a id="T_html-headS_..html_snippets.xsl"></a><div class="cmpT">Template
+         <span class="titleTemplateName">html-head</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cTL"></td>
+            <td class="rt_lT"></td>
+            <td class="rt_cTR"></td>
+         </tr>
+         <tr>
+            <td class="rt_lL"></td>
+            <td class="rt_cnt">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Documentation</div>
+                           <div class="flR"><input id="bt_dS_T_html-headS_..html_snippets.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_T_html-headS_..html_snippets.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="dS_T_html-headS_..html_snippets.xsl" style="display:block">
+                              <div>
+                                 <h3>Description</h3>Standard header for the html page
+                                 
+                                 <p>
+                                    
+                                    <ul>
+                                       
+                                       <li class="doc">Sets the charset to UTF-8</li>
+                                       
+                                       <li class="doc">includes a customized stylesheet based on jQuery-ui 1.8.5</li>
+                                       
+                                       <li class="doc">includes a CSS style sheet cmd-ui.css</li>
+                                       
+                                       <li class="doc">includes a CSS style sheet cr.css</li>
+                                       
+                                       <li class="doc">includes jQuery 1.6.2 (???!)</li>
+                                       
+                                    </ul>
+                                    
+                                 </p>
+                                 
+                                 <p>
+                                    TODO: what about htmljspage and jquery.treeview css/js? Enable it? Toss it?
+                                    
+                                 </p>
+                                 
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Namespace</td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Used by</div>
+                           <div class="flR"><input id="bt_uB_T_html-headS_..html_snippets.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('uB_T_html-headS_..html_snippets.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="uB_T_html-headS_..html_snippets.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td class="fCol">Templates</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="result2view_v11.html#T_htmlS_..commons_v1.xsl" target="_self" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">html</span></a><span class="refItemSep">;</span></div>
+                                          <div class="refItemBlock"><a href="result2view_v11.html#T_htmljsS_..commons_v1.xsl" target="_self" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">htmljs</span></a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">References</div>
+                           <div class="flR"><input id="bt_refs_T_html-headS_..html_snippets.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('refs_T_html-headS_..html_snippets.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="refs_T_html-headS_..html_snippets.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td class="fCol">Parameters</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="result2view_v14.html#P_scripts_urlS_..params.xsl" target="_self" title="No namespace" onclick="updPT('../params.xsl')">scripts_url</a><span class="refItemSep">;</span></div>
+                                          <div class="refItemBlock"><a href="result2view_v10.html#P_titleS_result2view_v1.xsl" target="_self" title="No namespace" onclick="updPT('result2view_v1.xsl')">title</a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Import precedence</td>
+                        <td>1</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Source</div>
+                           <div class="flR"><input id="bt_src_T_html-headS_..html_snippets.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_T_html-headS_..html_snippets.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="src_T_html-headS_..html_snippets.xsl" style="display:block">
+                              <table class="pWCont">
+                                 <tr>
+                                    <td width="100%"><pre><span class="tXSLEl">&lt;xsl:template</span><span class="tAN"> name=</span><span class="tAV">"html-head"</span><span class="tXSLEl">&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;title</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;xsl:value-of</span><span class="tAN"> select=</span><span class="tAV">"$title"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/title&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;meta</span><span class="tAN"> http-equiv=</span><span class="tAV">"Content-Type"</span><span class="tAN"> content=</span><span class="tAV">"text/html; charset=UTF-8"</span><span class="tEl">/&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;link</span><span class="tAN"> href=</span><span class="tAV">"{$scripts_url}style/jquery/clarindotblue/jquery-ui-1.8.5.custom.css"</span><span class="tAN"> type=</span><span class="tAV">"text/css"</span><span class="tAN"> rel=</span><span class="tAV">"stylesheet"</span><span class="tEl">/&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;link</span><span class="tAN"> href=</span><span class="tAV">"{$scripts_url}style/cmds-ui.css"</span><span class="tAN"> type=</span><span class="tAV">"text/css"</span><span class="tAN"> rel=</span><span class="tAV">"stylesheet"</span><span class="tEl">/&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;link</span><span class="tAN"> href=</span><span class="tAV">"{$scripts_url}style/cr.css"</span><span class="tAN"> type=</span><span class="tAV">"text/css"</span><span class="tAN"> rel=</span><span class="tAV">"stylesheet"</span><span class="tEl">/&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;script</span><span class="tAN"> type=</span><span class="tAV">"text/javascript"</span><span class="tAN"> src=</span><span class="tAV">"{$scripts_url}js/jquery/jquery-1.6.2.js"</span><span class="tEl">/&gt;</span><span class="tI">
+  </span><span class="tC">&lt;!--        &lt;xsl:if test="contains($format,'htmljspage')"&gt;
+            &lt;link href="{$base_dir}/style/jquery/jquery-treeview/jquery.treeview.css" rel="stylesheet"/&gt;        
+            &lt;/xsl:if&gt;--&gt;</span><span class="tI">
+</span><span class="tXSLEl">&lt;/xsl:template&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lR"></td>
+         </tr>
+         <tr>
+            <td class="rt_cBL"></td>
+            <td class="rt_lB"></td>
+            <td class="rt_cBR"></td>
+         </tr>
+      </table><a id="T_page-headerS_..html_snippets.xsl"></a><div class="cmpT">Template
+         <span class="titleTemplateName">page-header</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cTL"></td>
+            <td class="rt_lT"></td>
+            <td class="rt_cTR"></td>
+         </tr>
+         <tr>
+            <td class="rt_lL"></td>
+            <td class="rt_cnt">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Documentation</div>
+                           <div class="flR"><input id="bt_dS_T_page-headerS_..html_snippets.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_T_page-headerS_..html_snippets.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="dS_T_page-headerS_..html_snippets.xsl" style="display:block">
+                              <div>
+                                 <h3>Description</h3>A header visible for the user
+                                 
+                                 <p>
+                                    Shows the site's name, a logo and and the contents of top-menu.
+                                    
+                                 </p>
+                                 
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Namespace</td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Used by</div>
+                           <div class="flR"><input id="bt_uB_T_page-headerS_..html_snippets.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('uB_T_page-headerS_..html_snippets.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="uB_T_page-headerS_..html_snippets.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td class="fCol">Templates</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="result2view_v11.html#T_htmlS_..commons_v1.xsl" target="_self" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">html</span></a><span class="refItemSep">;</span></div>
+                                          <div class="refItemBlock"><a href="result2view_v11.html#T_htmljsS_..commons_v1.xsl" target="_self" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">htmljs</span></a><span class="refItemSep">;</span></div>
+                                          <div class="refItemBlock"><a href="result2view_v11.html#T_htmlsimpleS_..commons_v1.xsl" target="_self" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">htmlsimple</span></a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">References</div>
+                           <div class="flR"><input id="bt_refs_T_page-headerS_..html_snippets.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('refs_T_page-headerS_..html_snippets.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="refs_T_page-headerS_..html_snippets.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td class="fCol">Parameters</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="result2view_v14.html#P_base_urlS_..params.xsl" target="_self" title="No namespace" onclick="updPT('../params.xsl')">base_url</a><span class="refItemSep">;</span></div>
+                                          <div class="refItemBlock"><a href="result2view_v14.html#P_site_logoS_..params.xsl" target="_self" title="No namespace" onclick="updPT('../params.xsl')">site_logo</a><span class="refItemSep">;</span></div>
+                                          <div class="refItemBlock"><a href="result2view_v14.html#P_site_nameS_..params.xsl" target="_self" title="No namespace" onclick="updPT('../params.xsl')">site_name</a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="fCol">Template</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="result2view_v13.html#T_top-menuS_..html_snippets.xsl" target="_self" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">top-menu</span></a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Import precedence</td>
+                        <td>1</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Source</div>
+                           <div class="flR"><input id="bt_src_T_page-headerS_..html_snippets.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_T_page-headerS_..html_snippets.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="src_T_page-headerS_..html_snippets.xsl" style="display:block">
+                              <table class="pWCont">
+                                 <tr>
+                                    <td width="100%"><pre><span class="tXSLEl">&lt;xsl:template</span><span class="tAN"> name=</span><span class="tAV">"page-header"</span><span class="tXSLEl">&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;div</span><span class="tAN"> class=</span><span class="tAV">"cmds-ui-block"</span><span class="tAN"> id=</span><span class="tAV">"titlelogin"</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;div</span><span class="tAN"> id=</span><span class="tAV">"logo"</span><span class="tEl">&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;a</span><span class="tAN"> href=</span><span class="tAV">"{$base_url}"</span><span class="tEl">&gt;</span><span class="tI">
+        </span><span class="tEl">&lt;img</span><span class="tAN"> src=</span><span class="tAV">"{$site_logo}"</span><span class="tAN"> alt=</span><span class="tAV">"{$site_name}"</span><span class="tEl">/&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;/a&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;div</span><span class="tAN"> id=</span><span class="tAV">"site-name"</span><span class="tEl">&gt;</span><span class="tI">
+        </span><span class="tXSLEl">&lt;xsl:value-of</span><span class="tAN"> select=</span><span class="tAV">"$site_name"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;/div&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;/div&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;div</span><span class="tAN"> id=</span><span class="tAV">"top-menu"</span><span class="tEl">&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;xsl:call-template</span><span class="tAN"> name=</span><span class="tAV">"top-menu"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;/div&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/div&gt;</span><span class="tI">
+</span><span class="tXSLEl">&lt;/xsl:template&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lR"></td>
+         </tr>
+         <tr>
+            <td class="rt_cBL"></td>
+            <td class="rt_lB"></td>
+            <td class="rt_cBR"></td>
+         </tr>
+      </table><a id="T_top-menuS_..html_snippets.xsl"></a><div class="cmpT">Template
+         <span class="titleTemplateName">top-menu</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cTL"></td>
+            <td class="rt_lT"></td>
+            <td class="rt_cTR"></td>
+         </tr>
+         <tr>
+            <td class="rt_lL"></td>
+            <td class="rt_cnt">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Documentation</div>
+                           <div class="flR"><input id="bt_dS_T_top-menuS_..html_snippets.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_T_top-menuS_..html_snippets.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="dS_T_top-menuS_..html_snippets.xsl" style="display:block">
+                              <div>
+                                 <h3>Description</h3>Shows a link that leads to the xml representation of this page
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Namespace</td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Used by</div>
+                           <div class="flR"><input id="bt_uB_T_top-menuS_..html_snippets.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('uB_T_top-menuS_..html_snippets.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="uB_T_top-menuS_..html_snippets.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td class="fCol">Template</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="result2view_v13.html#T_page-headerS_..html_snippets.xsl" target="_self" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">page-header</span></a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">References</div>
+                           <div class="flR"><input id="bt_refs_T_top-menuS_..html_snippets.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('refs_T_top-menuS_..html_snippets.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="refs_T_top-menuS_..html_snippets.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td class="fCol">Template</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="result2view_v11.html#T_formURLS_..commons_v1.xsl" target="_self" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">formURL</span></a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="fCol">Parameter</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="result2view_v14.html#P_formatS_..params.xsl" target="_self" title="No namespace" onclick="updPT('../params.xsl')">format</a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Import precedence</td>
+                        <td>1</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Source</div>
+                           <div class="flR"><input id="bt_src_T_top-menuS_..html_snippets.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_T_top-menuS_..html_snippets.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="src_T_top-menuS_..html_snippets.xsl" style="display:block">
+                              <table class="pWCont">
+                                 <tr>
+                                    <td width="100%"><pre><span class="tXSLEl">&lt;xsl:template</span><span class="tAN"> name=</span><span class="tAV">"top-menu"</span><span class="tXSLEl">&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;div</span><span class="tAN"> id=</span><span class="tAV">"user"</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;xsl:variable</span><span class="tAN"> name=</span><span class="tAV">"link_toggle_js"</span><span class="tXSLEl">&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;xsl:call-template</span><span class="tAN"> name=</span><span class="tAV">"formURL"</span><span class="tXSLEl">&gt;</span><span class="tI">
+        </span><span class="tXSLEl">&lt;xsl:with-param</span><span class="tAN"> name=</span><span class="tAV">"format"</span><span class="tXSLEl">&gt;</span><span class="tI">
+          </span><span class="tXSLEl">&lt;xsl:choose</span><span class="tXSLEl">&gt;</span><span class="tI">
+            </span><span class="tXSLEl">&lt;xsl:when</span><span class="tAN"> test=</span><span class="tAV">"contains($format,'htmljspage')"</span><span class="tXSLEl">&gt;</span><span class="tT">htmlpage</span><span class="tXSLEl">&lt;/xsl:when&gt;</span><span class="tI">
+            </span><span class="tXSLEl">&lt;xsl:otherwise</span><span class="tXSLEl">&gt;</span><span class="tT">htmljspage</span><span class="tXSLEl">&lt;/xsl:otherwise&gt;</span><span class="tI">
+          </span><span class="tXSLEl">&lt;/xsl:choose&gt;</span><span class="tI">
+        </span><span class="tXSLEl">&lt;/xsl:with-param&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;/xsl:call-template&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;/xsl:variable&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;xsl:variable</span><span class="tAN"> name=</span><span class="tAV">"link_xml"</span><span class="tXSLEl">&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;xsl:call-template</span><span class="tAN"> name=</span><span class="tAV">"formURL"</span><span class="tXSLEl">&gt;</span><span class="tI">
+        </span><span class="tXSLEl">&lt;xsl:with-param</span><span class="tAN"> name=</span><span class="tAV">"format"</span><span class="tAN"> select=</span><span class="tAV">"'xml'"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;/xsl:call-template&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;/xsl:variable&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;a</span><span class="tAN"> href=</span><span class="tAV">"{$link_xml}"</span><span class="tEl">&gt;</span><span class="tT">fcs/xml</span><span class="tEl">&lt;/a&gt;</span><span class="tI">
+    </span><span class="tC">&lt;!--&lt;xsl:choose&gt;
+                &lt;xsl:when test="contains($format,'htmljspage')"&gt;
+                    &lt;a href="{$link_toggle_js}"&gt; none js &lt;/a&gt;
+                &lt;/xsl:when&gt;
+                &lt;xsl:otherwise&gt;
+                    &lt;a href="{$link_toggle_js}"&gt; js &lt;/a&gt;
+                &lt;/xsl:otherwise&gt;
+            &lt;/xsl:choose&gt;
+            &lt;xsl:choose&gt;
+                &lt;xsl:when test="$user = ''"&gt;
+                    &lt;a href="workspace.jsp"&gt;    login&lt;/a&gt;
+                &lt;/xsl:when&gt;
+                &lt;xsl:otherwise&gt;
+                        User: &lt;b&gt;
+                        &lt;xsl:value-of select="$user"/&gt;
+                    &lt;/b&gt;
+                    &lt;a href="logout.jsp"&gt;    logout&lt;/a&gt;
+                &lt;/xsl:otherwise&gt;
+            &lt;/xsl:choose&gt;
+            &lt;a target="_blank" href="static/info"&gt; docs&lt;/a&gt; --&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/div&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;div</span><span class="tAN"> id=</span><span class="tAV">"notify"</span><span class="tAN"> class=</span><span class="tAV">"cmds-elem-plus note"</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;div</span><span class="tAN"> id=</span><span class="tAV">"notifylist"</span><span class="tAN"> class=</span><span class="tAV">"note"</span><span class="tEl">/&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/div&gt;</span><span class="tI">
+</span><span class="tXSLEl">&lt;/xsl:template&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lR"></td>
+         </tr>
+         <tr>
+            <td class="rt_cBL"></td>
+            <td class="rt_lB"></td>
+            <td class="rt_cBR"></td>
+         </tr>
+      </table><a id="T_query-inputS_..html_snippets.xsl"></a><div class="cmpT">Template
+         <span class="titleTemplateName">query-input</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cTL"></td>
+            <td class="rt_lT"></td>
+            <td class="rt_cTR"></td>
+         </tr>
+         <tr>
+            <td class="rt_lL"></td>
+            <td class="rt_cnt">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Documentation</div>
+                           <div class="flR"><input id="bt_dS_T_query-inputS_..html_snippets.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_T_query-inputS_..html_snippets.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="dS_T_query-inputS_..html_snippets.xsl" style="display:block">
+                              <div>
+                                 <h3>Description</h3>Provides query controls
+                                 
+                                 <p>Note: This is included in the operation specific parts of the style sheet and htmljs
+                                    pages.
+                                 </p>
+                                 
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Namespace</td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Used by</div>
+                           <div class="flR"><input id="bt_uB_T_query-inputS_..html_snippets.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('uB_T_query-inputS_..html_snippets.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="uB_T_query-inputS_..html_snippets.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td class="fCol">Templates</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="result2view_v10.html#T_headerS_result2view_v1.xsl" target="_self" title="No namespace" onclick="updPT('result2view_v1.xsl')"><span class="nRf">header</span></a><span class="refItemSep">;</span></div>
+                                          <div class="refItemBlock"><a href="result2view_v11.html#T_htmljsS_..commons_v1.xsl" target="_self" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">htmljs</span></a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">References</div>
+                           <div class="flR"><input id="bt_refs_T_query-inputS_..html_snippets.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('refs_T_query-inputS_..html_snippets.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="refs_T_query-inputS_..html_snippets.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td class="fCol">Parameters</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="result2view_v14.html#P_formatS_..params.xsl" target="_self" title="No namespace" onclick="updPT('../params.xsl')">format</a><span class="refItemSep">;</span></div>
+                                          <div class="refItemBlock"><a href="result2view_v14.html#P_qS_..params.xsl" target="_self" title="No namespace" onclick="updPT('../params.xsl')">q</a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="fCol">Template</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="result2view_v11.html#T_contexts-selectS_..commons_v1.xsl" target="_self" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">contexts-select</span></a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Import precedence</td>
+                        <td>1</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Source</div>
+                           <div class="flR"><input id="bt_src_T_query-inputS_..html_snippets.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_T_query-inputS_..html_snippets.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="src_T_query-inputS_..html_snippets.xsl" style="display:block">
+                              <table class="pWCont">
+                                 <tr>
+                                    <td width="100%"><pre><span class="tXSLEl">&lt;xsl:template</span><span class="tAN"> name=</span><span class="tAV">"query-input"</span><span class="tXSLEl">&gt;</span><span class="tI">
+  </span><span class="tC">&lt;!-- QUERYSEARCH - BLOCK --&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;div</span><span class="tAN"> class=</span><span class="tAV">"cmds-ui-block init-show"</span><span class="tAN"> id=</span><span class="tAV">"querysearch"</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;div</span><span class="tAN"> class=</span><span class="tAV">"header ui-widget-header ui-state-default ui-corner-top"</span><span class="tEl">&gt;</span><span class="tT">
+                Search
+            </span><span class="tEl">&lt;/div&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;div</span><span class="tAN"> class=</span><span class="tAV">"content"</span><span class="tAN"> id=</span><span class="tAV">"query-input"</span><span class="tEl">&gt;</span><span class="tI">
+      </span><span class="tC">&lt;!-- fill form@action with &lt;xsl:call-template name="formURL"/&gt; will not work, 
+                        because the parameter have to be encoded as input-elements  not in the form-url  
+                    --&gt;</span><span class="tI">
+      </span><span class="tC">&lt;!--&lt;form id="searchretrieve" action="{$base_url}" method="get"&gt;--&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;form</span><span class="tAN"> id=</span><span class="tAV">"searchretrieve"</span><span class="tAN"> action=</span><span class="tAV">""</span><span class="tAN"> method=</span><span class="tAV">"get"</span><span class="tEl">&gt;</span><span class="tI">
+        </span><span class="tEl">&lt;input</span><span class="tAN"> type=</span><span class="tAV">"hidden"</span><span class="tAN"> name=</span><span class="tAV">"x-format"</span><span class="tAN"> value=</span><span class="tAV">"{$format}"</span><span class="tEl">/&gt;</span><span class="tI">
+        </span><span class="tC">&lt;!--&lt;table class="cmds-ui-elem-stretch"&gt;
+                        &lt;tr&gt;
+                            &lt;td colspan="2"&gt;
+                    --&gt;</span><span class="tI">
+        </span><span class="tEl">&lt;label</span><span class="tEl">&gt;</span><span class="tT">Context</span><span class="tEl">&lt;/label&gt;</span><span class="tI">
+        </span><span class="tXSLEl">&lt;xsl:call-template</span><span class="tAN"> name=</span><span class="tAV">"contexts-select"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+        </span><span class="tEl">&lt;br</span><span class="tEl">/&gt;</span><span class="tI">
+        </span><span class="tC">&lt;!--                    &lt;div id="main-query" &gt;--&gt;</span><span class="tI">
+        </span><span class="tEl">&lt;input</span><span class="tAN"> type=</span><span class="tAV">"text"</span><span class="tAN"> id=</span><span class="tAV">"input-simplequery"</span><span class="tAN"> name=</span><span class="tAV">"query"</span><span class="tAN"> value=</span><span class="tAV">"{$q}"</span><span class="tAN"> class=</span><span class="tAV">"queryinput active"</span><span class="tEl">/&gt;</span><span class="tI">
+        </span><span class="tC">&lt;!--                                &lt;div id="searchclauselist" class="queryinput inactive"/&gt;--&gt;</span><span class="tI">
+        </span><span class="tC">&lt;!--     &lt;/td&gt;
+                            &lt;td&gt;
+                       --&gt;</span><span class="tI">
+        </span><span class="tEl">&lt;input</span><span class="tAN"> type=</span><span class="tAV">"submit"</span><span class="tAN"> value=</span><span class="tAV">"submit"</span><span class="tAN"> id=</span><span class="tAV">"submit-query"</span><span class="tEl">/&gt;</span><span class="tI">
+        </span><span class="tC">&lt;!--&lt;br/&gt;--&gt;</span><span class="tI">
+        </span><span class="tC">&lt;!--&lt;span id="switch-input" class="cmd"/&gt;
+                                &lt;label&gt;Complex query&lt;/label&gt;--&gt;</span><span class="tI">
+        </span><span class="tC">&lt;!--  &lt;/td&gt;
+                        &lt;/tr&gt;
+                        &lt;tr&gt;
+                            &lt;td valign="top"&gt;                                    
+                                        
+							&lt;!-\-  selected collections  -\-&gt;
+							&lt;!-\- &lt;label&gt;Collections&lt;/label&gt;&lt;br/&gt;-\-&gt;
+                                &lt;div id="collections-widget" class="c-widget"/&gt;
+                            &lt;/td&gt;
+                            &lt;td valign="top"&gt;
+                                &lt;xsl:call-template name="result-paging"/&gt;
+                            &lt;/td&gt;
+                            &lt;td/&gt;
+                        &lt;/tr&gt;
+                    &lt;/table&gt;--&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;/form&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;/div&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/div&gt;</span><span class="tI">
+</span><span class="tXSLEl">&lt;/xsl:template&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lR"></td>
+         </tr>
+         <tr>
+            <td class="rt_cBL"></td>
+            <td class="rt_lB"></td>
+            <td class="rt_cBR"></td>
+         </tr>
+      </table><a id="T_result-pagingS_..html_snippets.xsl"></a><div class="cmpT">Template
+         <span class="titleTemplateName">result-paging</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cTL"></td>
+            <td class="rt_lT"></td>
+            <td class="rt_cTR"></td>
+         </tr>
+         <tr>
+            <td class="rt_lL"></td>
+            <td class="rt_cnt">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Documentation</div>
+                           <div class="flR"><input id="bt_dS_T_result-pagingS_..html_snippets.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_T_result-pagingS_..html_snippets.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="dS_T_result-pagingS_..html_snippets.xsl" style="display:block">
+                              <div>
+                                 <h3>Description</h3>Provides information to the user about the position in a search response that spans
+                                 multiple pages
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Namespace</td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">References</div>
+                           <div class="flR"><input id="bt_refs_T_result-pagingS_..html_snippets.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('refs_T_result-pagingS_..html_snippets.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="refs_T_result-pagingS_..html_snippets.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td class="fCol">Parameters</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="result2view_v14.html#P_maximumRecordsS_..params.xsl" target="_self" title="No namespace" onclick="updPT('../params.xsl')">maximumRecords</a><span class="refItemSep">;</span></div>
+                                          <div class="refItemBlock"><a href="result2view_v14.html#P_numberOfRecordsS_..params.xsl" target="_self" title="No namespace" onclick="updPT('../params.xsl')">numberOfRecords</a><span class="refItemSep">;</span></div>
+                                          <div class="refItemBlock"><a href="result2view_v14.html#P_startRecordS_..params.xsl" target="_self" title="No namespace" onclick="updPT('../params.xsl')">startRecord</a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Import precedence</td>
+                        <td>1</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Source</div>
+                           <div class="flR"><input id="bt_src_T_result-pagingS_..html_snippets.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_T_result-pagingS_..html_snippets.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="src_T_result-pagingS_..html_snippets.xsl" style="display:block">
+                              <table class="pWCont">
+                                 <tr>
+                                    <td width="100%"><pre><span class="tXSLEl">&lt;xsl:template</span><span class="tAN"> name=</span><span class="tAV">"result-paging"</span><span class="tXSLEl">&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;span</span><span class="tAN"> class=</span><span class="tAV">"label"</span><span class="tEl">&gt;</span><span class="tT">from:</span><span class="tEl">&lt;/span&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;span</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;input</span><span class="tAN"> type=</span><span class="tAV">"text"</span><span class="tAN"> name=</span><span class="tAV">"startRecord"</span><span class="tAN"> class=</span><span class="tAV">"value start_record paging-input"</span><span class="tEl">&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;xsl:attribute</span><span class="tAN"> name=</span><span class="tAV">"value"</span><span class="tXSLEl">&gt;</span><span class="tI">
+        </span><span class="tXSLEl">&lt;xsl:value-of</span><span class="tAN"> select=</span><span class="tAV">"$startRecord"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;/xsl:attribute&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;/input&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/span&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;span</span><span class="tAN"> class=</span><span class="tAV">"label"</span><span class="tEl">&gt;</span><span class="tT">max:</span><span class="tEl">&lt;/span&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;span</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;input</span><span class="tAN"> type=</span><span class="tAV">"text"</span><span class="tAN"> name=</span><span class="tAV">"maximumRecords"</span><span class="tAN"> class=</span><span class="tAV">"value maximum_records paging-input"</span><span class="tEl">&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;xsl:attribute</span><span class="tAN"> name=</span><span class="tAV">"value"</span><span class="tXSLEl">&gt;</span><span class="tI">
+        </span><span class="tXSLEl">&lt;xsl:choose</span><span class="tXSLEl">&gt;</span><span class="tI">
+          </span><span class="tXSLEl">&lt;xsl:when</span><span class="tAN"> test=</span><span class="tAV">"number($numberOfRecords) &gt; 0 and number($numberOfRecords) &lt; number($maximumRecords)"</span><span class="tXSLEl">&gt;</span><span class="tI">
+            </span><span class="tXSLEl">&lt;xsl:value-of</span><span class="tAN"> select=</span><span class="tAV">"$numberOfRecords"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+          </span><span class="tXSLEl">&lt;/xsl:when&gt;</span><span class="tI">
+          </span><span class="tXSLEl">&lt;xsl:otherwise</span><span class="tXSLEl">&gt;</span><span class="tI">
+            </span><span class="tXSLEl">&lt;xsl:value-of</span><span class="tAN"> select=</span><span class="tAV">"$maximumRecords"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+          </span><span class="tXSLEl">&lt;/xsl:otherwise&gt;</span><span class="tI">
+        </span><span class="tXSLEl">&lt;/xsl:choose&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;/xsl:attribute&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;/input&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/span&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;input</span><span class="tAN"> type=</span><span class="tAV">"submit"</span><span class="tAN"> value=</span><span class="tAV">""</span><span class="tAN"> class=</span><span class="tAV">"cmd cmd_reload"</span><span class="tEl">/&gt;</span><span class="tI">
+</span><span class="tXSLEl">&lt;/xsl:template&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lR"></td>
+         </tr>
+         <tr>
+            <td class="rt_cBL"></td>
+            <td class="rt_lB"></td>
+            <td class="rt_cBR"></td>
+         </tr>
+      </table><a id="T_prev-nextS_..html_snippets.xsl"></a><div class="cmpT">Template
+         <span class="titleTemplateName">prev-next</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cTL"></td>
+            <td class="rt_lT"></td>
+            <td class="rt_cTR"></td>
+         </tr>
+         <tr>
+            <td class="rt_lL"></td>
+            <td class="rt_cnt">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Documentation</div>
+                           <div class="flR"><input id="bt_dS_T_prev-nextS_..html_snippets.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_T_prev-nextS_..html_snippets.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="dS_T_prev-nextS_..html_snippets.xsl" style="display:block">
+                              <div>
+                                 <h3>Description</h3>Provides controls for going forward and back in searches that span multiple pages
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Namespace</td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">References</div>
+                           <div class="flR"><input id="bt_refs_T_prev-nextS_..html_snippets.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('refs_T_prev-nextS_..html_snippets.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="refs_T_prev-nextS_..html_snippets.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td class="fCol">Parameters</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="result2view_v14.html#P_maximumRecordsS_..params.xsl" target="_self" title="No namespace" onclick="updPT('../params.xsl')">maximumRecords</a><span class="refItemSep">;</span></div>
+                                          <div class="refItemBlock"><a href="result2view_v14.html#P_startRecordS_..params.xsl" target="_self" title="No namespace" onclick="updPT('../params.xsl')">startRecord</a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="fCol">Template</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="result2view_v11.html#T_formURLS_..commons_v1.xsl" target="_self" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">formURL</span></a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Import precedence</td>
+                        <td>1</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Source</div>
+                           <div class="flR"><input id="bt_src_T_prev-nextS_..html_snippets.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_T_prev-nextS_..html_snippets.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="src_T_prev-nextS_..html_snippets.xsl" style="display:block">
+                              <table class="pWCont">
+                                 <tr>
+                                    <td width="100%"><pre><span class="tXSLEl">&lt;xsl:template</span><span class="tAN"> name=</span><span class="tAV">"prev-next"</span><span class="tXSLEl">&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;xsl:variable</span><span class="tAN"> name=</span><span class="tAV">"prev_startRecord"</span><span class="tXSLEl">&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;xsl:choose</span><span class="tXSLEl">&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;xsl:when</span><span class="tAN"> test=</span><span class="tAV">"number($startRecord) - number($maximumRecords) &gt; 0"</span><span class="tXSLEl">&gt;</span><span class="tI">
+        </span><span class="tXSLEl">&lt;xsl:value-of</span><span class="tAN"> select=</span><span class="tAV">"format-number(number($startRecord) - number($maximumRecords),'#')"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;/xsl:when&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;xsl:otherwise</span><span class="tXSLEl">&gt;</span><span class="tI">
+        </span><span class="tXSLEl">&lt;xsl:value-of</span><span class="tAN"> select=</span><span class="tAV">"1"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;/xsl:otherwise&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;/xsl:choose&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;/xsl:variable&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;xsl:variable</span><span class="tAN"> name=</span><span class="tAV">"next_startRecord"</span><span class="tXSLEl">&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;xsl:choose</span><span class="tXSLEl">&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;xsl:when</span><span class="tAN"> test=</span><span class="tAV">"number($startRecord) + number($maximumRecords) &gt; number(numberOfRecords)"</span><span class="tXSLEl">&gt;</span><span class="tI">
+        </span><span class="tXSLEl">&lt;xsl:value-of</span><span class="tAN"> select=</span><span class="tAV">"$startRecord"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;/xsl:when&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;xsl:otherwise</span><span class="tXSLEl">&gt;</span><span class="tI">
+        </span><span class="tXSLEl">&lt;xsl:value-of</span><span class="tAN"> select=</span><span class="tAV">"format-number(number($startRecord) + number($maximumRecords),'#')"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;/xsl:otherwise&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;/xsl:choose&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;/xsl:variable&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;xsl:variable</span><span class="tAN"> name=</span><span class="tAV">"link_prev"</span><span class="tXSLEl">&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;xsl:call-template</span><span class="tAN"> name=</span><span class="tAV">"formURL"</span><span class="tXSLEl">&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;xsl:with-param</span><span class="tAN"> name=</span><span class="tAV">"startRecord"</span><span class="tAN"> select=</span><span class="tAV">"$prev_startRecord"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;xsl:with-param</span><span class="tAN"> name=</span><span class="tAV">"maximumRecords"</span><span class="tAN"> select=</span><span class="tAV">"$maximumRecords"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;/xsl:call-template&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;/xsl:variable&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;xsl:variable</span><span class="tAN"> name=</span><span class="tAV">"prev-disabled"</span><span class="tXSLEl">&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;xsl:if</span><span class="tAN"> test=</span><span class="tAV">"$startRecord = '1'"</span><span class="tXSLEl">&gt;</span><span class="tT" style="white-space:normal">disabled</span><span class="tXSLEl">&lt;/xsl:if&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;/xsl:variable&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;xsl:variable</span><span class="tAN"> name=</span><span class="tAV">"link_next"</span><span class="tXSLEl">&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;xsl:call-template</span><span class="tAN"> name=</span><span class="tAV">"formURL"</span><span class="tXSLEl">&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;xsl:with-param</span><span class="tAN"> name=</span><span class="tAV">"startRecord"</span><span class="tAN"> select=</span><span class="tAV">"$next_startRecord"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;xsl:with-param</span><span class="tAN"> name=</span><span class="tAV">"maximumRecords"</span><span class="tAN"> select=</span><span class="tAV">"$maximumRecords"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;/xsl:call-template&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;/xsl:variable&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;xsl:variable</span><span class="tAN"> name=</span><span class="tAV">"next-disabled"</span><span class="tXSLEl">&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;xsl:if</span><span class="tAN"> test=</span><span class="tAV">"number($startRecord) + number($maximumRecords) &gt;= number(numberOfRecords)"</span><span class="tXSLEl">&gt;</span><span class="tT" style="white-space:normal">disabled</span><span class="tXSLEl">&lt;/xsl:if&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;/xsl:variable&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;span</span><span class="tAN"> class=</span><span class="tAV">"result-navigation prev-next"</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;a</span><span class="tAN"> class=</span><span class="tAV">"internal prev {$prev-disabled}"</span><span class="tAN"> href=</span><span class="tAV">"{$link_prev}"</span><span class="tEl">&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;span</span><span class="tAN"> class=</span><span class="tAV">"cmd cmd_prev"</span><span class="tEl">/&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;/a&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;a</span><span class="tAN"> class=</span><span class="tAV">"internal next {$next-disabled}"</span><span class="tAN"> href=</span><span class="tAV">"{$link_next}"</span><span class="tEl">&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;span</span><span class="tAN"> class=</span><span class="tAV">"cmd cmd_next"</span><span class="tEl">/&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;/a&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/span&gt;</span><span class="tI">
+</span><span class="tXSLEl">&lt;/xsl:template&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lR"></td>
+         </tr>
+         <tr>
+            <td class="rt_cBL"></td>
+            <td class="rt_lB"></td>
+            <td class="rt_cBR"></td>
+         </tr>
+      </table><a id="T_query-listS_..html_snippets.xsl"></a><div class="cmpT">Template
+         <span class="titleTemplateName">query-list</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cTL"></td>
+            <td class="rt_lT"></td>
+            <td class="rt_cTR"></td>
+         </tr>
+         <tr>
+            <td class="rt_lL"></td>
+            <td class="rt_cnt">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Documentation</div>
+                           <div class="flR"><input id="bt_dS_T_query-listS_..html_snippets.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_T_query-listS_..html_snippets.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="dS_T_query-listS_..html_snippets.xsl" style="display:block">
+                              <div>
+                                 <h3>Description</h3>Provides a querylistblock HTML div element which is manipulated by JavaScript
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Namespace</td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Used by</div>
+                           <div class="flR"><input id="bt_uB_T_query-listS_..html_snippets.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('uB_T_query-listS_..html_snippets.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="uB_T_query-listS_..html_snippets.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td class="fCol">Template</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="result2view_v11.html#T_htmljsS_..commons_v1.xsl" target="_self" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">htmljs</span></a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Import precedence</td>
+                        <td>1</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Source</div>
+                           <div class="flR"><input id="bt_src_T_query-listS_..html_snippets.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_T_query-listS_..html_snippets.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="src_T_query-listS_..html_snippets.xsl" style="display:block">
+                              <table class="pWCont">
+                                 <tr>
+                                    <td width="100%"><pre><span class="tXSLEl">&lt;xsl:template</span><span class="tAN"> name=</span><span class="tAV">"query-list"</span><span class="tXSLEl">&gt;</span><span class="tI">
+  </span><span class="tC">&lt;!-- QUERYLIST BLOCK --&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;div</span><span class="tAN"> id=</span><span class="tAV">"querylistblock"</span><span class="tAN"> class=</span><span class="tAV">"cmds-ui-block"</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;div</span><span class="tAN"> class=</span><span class="tAV">"header ui-widget-header ui-state-default ui-corner-top"</span><span class="tEl">&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;span</span><span class="tEl">&gt;</span><span class="tT">QUERYLIST</span><span class="tEl">&lt;/span&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;/div&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;div</span><span class="tAN"> class=</span><span class="tAV">"content"</span><span class="tAN"> id=</span><span class="tAV">"querylist"</span><span class="tEl">/&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/div&gt;</span><span class="tI">
+</span><span class="tXSLEl">&lt;/xsl:template&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lR"></td>
+         </tr>
+         <tr>
+            <td class="rt_cBL"></td>
+            <td class="rt_lB"></td>
+            <td class="rt_cBR"></td>
+         </tr>
+      </table><a id="T_detail-spaceS_..html_snippets.xsl"></a><div class="cmpT">Template
+         <span class="titleTemplateName">detail-space</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cTL"></td>
+            <td class="rt_lT"></td>
+            <td class="rt_cTR"></td>
+         </tr>
+         <tr>
+            <td class="rt_lL"></td>
+            <td class="rt_cnt">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Documentation</div>
+                           <div class="flR"><input id="bt_dS_T_detail-spaceS_..html_snippets.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_T_detail-spaceS_..html_snippets.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="dS_T_detail-spaceS_..html_snippets.xsl" style="display:block">
+                              <div>
+                                 <h3>Description</h3>Provides a detailblock HTML div element which is manipulated by JavaScript
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Namespace</td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Used by</div>
+                           <div class="flR"><input id="bt_uB_T_detail-spaceS_..html_snippets.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('uB_T_detail-spaceS_..html_snippets.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="uB_T_detail-spaceS_..html_snippets.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td class="fCol">Template</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="result2view_v11.html#T_htmljsS_..commons_v1.xsl" target="_self" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">htmljs</span></a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Import precedence</td>
+                        <td>1</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Source</div>
+                           <div class="flR"><input id="bt_src_T_detail-spaceS_..html_snippets.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_T_detail-spaceS_..html_snippets.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="src_T_detail-spaceS_..html_snippets.xsl" style="display:block">
+                              <table class="pWCont">
+                                 <tr>
+                                    <td width="100%"><pre><span class="tXSLEl">&lt;xsl:template</span><span class="tAN"> name=</span><span class="tAV">"detail-space"</span><span class="tXSLEl">&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;div</span><span class="tAN"> id=</span><span class="tAV">"detailblock"</span><span class="tAN"> class=</span><span class="tAV">"cmds-ui-block"</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;div</span><span class="tAN"> class=</span><span class="tAV">"header ui-widget-header ui-state-default ui-corner-top"</span><span class="tEl">&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;span</span><span class="tEl">&gt;</span><span class="tT">DETAIL</span><span class="tEl">&lt;/span&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;/div&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;div</span><span class="tAN"> class=</span><span class="tAV">"content"</span><span class="tAN"> id=</span><span class="tAV">"details"</span><span class="tEl">/&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/div&gt;</span><span class="tI">
+</span><span class="tXSLEl">&lt;/xsl:template&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lR"></td>
+         </tr>
+         <tr>
+            <td class="rt_cBL"></td>
+            <td class="rt_lB"></td>
+            <td class="rt_cBR"></td>
+         </tr>
+      </table><a id="T_public-spaceS_..html_snippets.xsl"></a><div class="cmpT">Template
+         <span class="titleTemplateName">public-space</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cTL"></td>
+            <td class="rt_lT"></td>
+            <td class="rt_cTR"></td>
+         </tr>
+         <tr>
+            <td class="rt_lL"></td>
+            <td class="rt_cnt">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Documentation</div>
+                           <div class="flR"><input id="bt_dS_T_public-spaceS_..html_snippets.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_T_public-spaceS_..html_snippets.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="dS_T_public-spaceS_..html_snippets.xsl" style="display:block">
+                              <div>
+                                 <h3>Description</h3>Provides a public-space HTML div element which is manipulated by JavaScript
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Namespace</td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Used by</div>
+                           <div class="flR"><input id="bt_uB_T_public-spaceS_..html_snippets.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('uB_T_public-spaceS_..html_snippets.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="uB_T_public-spaceS_..html_snippets.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td class="fCol">Template</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="result2view_v11.html#T_htmljsS_..commons_v1.xsl" target="_self" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">htmljs</span></a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Import precedence</td>
+                        <td>1</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Source</div>
+                           <div class="flR"><input id="bt_src_T_public-spaceS_..html_snippets.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_T_public-spaceS_..html_snippets.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="src_T_public-spaceS_..html_snippets.xsl" style="display:block">
+                              <table class="pWCont">
+                                 <tr>
+                                    <td width="100%"><pre><span class="tXSLEl">&lt;xsl:template</span><span class="tAN"> name=</span><span class="tAV">"public-space"</span><span class="tXSLEl">&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;div</span><span class="tAN"> id=</span><span class="tAV">"public-space"</span><span class="tAN"> class=</span><span class="tAV">"cmds-ui-block"</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;div</span><span class="tAN"> class=</span><span class="tAV">"header"</span><span class="tEl">&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;span</span><span class="tEl">&gt;</span><span class="tT">Public Space</span><span class="tEl">&lt;/span&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;/div&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;div</span><span class="tAN"> id=</span><span class="tAV">"serverqs"</span><span class="tAN"> class=</span><span class="tAV">"content"</span><span class="tEl">/&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/div&gt;</span><span class="tI">
+</span><span class="tXSLEl">&lt;/xsl:template&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lR"></td>
+         </tr>
+         <tr>
+            <td class="rt_cBL"></td>
+            <td class="rt_lB"></td>
+            <td class="rt_cBR"></td>
+         </tr>
+      </table><a id="T_user-spaceS_..html_snippets.xsl"></a><div class="cmpT">Template
+         <span class="titleTemplateName">user-space</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cTL"></td>
+            <td class="rt_lT"></td>
+            <td class="rt_cTR"></td>
+         </tr>
+         <tr>
+            <td class="rt_lL"></td>
+            <td class="rt_cnt">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Documentation</div>
+                           <div class="flR"><input id="bt_dS_T_user-spaceS_..html_snippets.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_T_user-spaceS_..html_snippets.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="dS_T_user-spaceS_..html_snippets.xsl" style="display:block">
+                              <div>
+                                 <h3>Description</h3>Provides HTML elements for a Personal Workspace which is manipulated by JavaScript
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Namespace</td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Used by</div>
+                           <div class="flR"><input id="bt_uB_T_user-spaceS_..html_snippets.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('uB_T_user-spaceS_..html_snippets.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="uB_T_user-spaceS_..html_snippets.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td class="fCol">Template</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="result2view_v11.html#T_htmljsS_..commons_v1.xsl" target="_self" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">htmljs</span></a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Import precedence</td>
+                        <td>1</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Source</div>
+                           <div class="flR"><input id="bt_src_T_user-spaceS_..html_snippets.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_T_user-spaceS_..html_snippets.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="src_T_user-spaceS_..html_snippets.xsl" style="display:block">
+                              <table class="pWCont">
+                                 <tr>
+                                    <td width="100%"><pre><span class="tXSLEl">&lt;xsl:template</span><span class="tAN"> name=</span><span class="tAV">"user-space"</span><span class="tXSLEl">&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;div</span><span class="tAN"> class=</span><span class="tAV">"cmds-ui-block init-show"</span><span class="tAN"> id=</span><span class="tAV">"user-space"</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;div</span><span class="tAN"> class=</span><span class="tAV">"header"</span><span class="tEl">&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;span</span><span class="tEl">&gt;</span><span class="tT">Personal Workspace</span><span class="tEl">&lt;/span&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;/div&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;div</span><span class="tAN"> id=</span><span class="tAV">"userqs"</span><span class="tAN"> class=</span><span class="tAV">"content"</span><span class="tEl">&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;div</span><span class="tAN"> id=</span><span class="tAV">"userquerysets"</span><span class="tEl">&gt;</span><span class="tI">
+        </span><span class="tEl">&lt;label</span><span class="tEl">&gt;</span><span class="tT">Querysets</span><span class="tEl">&lt;/label&gt;</span><span class="tI">
+        </span><span class="tEl">&lt;select</span><span class="tAN"> id=</span><span class="tAV">"qts_select"</span><span class="tEl">/&gt;</span><span class="tI">
+        </span><span class="tC">&lt;!--  &lt;button id="qts_add" class="cmd cmd_add" &gt;Add&lt;/button&gt; --&gt;</span><span class="tI">
+        </span><span class="tEl">&lt;span</span><span class="tAN"> id=</span><span class="tAV">"qts_add"</span><span class="tAN"> class=</span><span class="tAV">"cmd cmd_add"</span><span class="tEl">/&gt;</span><span class="tI">
+        </span><span class="tEl">&lt;span</span><span class="tAN"> id=</span><span class="tAV">"qts_delete"</span><span class="tAN"> class=</span><span class="tAV">"cmd cmd_del"</span><span class="tEl">/&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;/div&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;label</span><span class="tEl">&gt;</span><span class="tT">name</span><span class="tEl">&lt;/label&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;input</span><span class="tAN"> type=</span><span class="tAV">"text"</span><span class="tAN"> id=</span><span class="tAV">"qts_input"</span><span class="tEl">/&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;span</span><span class="tAN"> id=</span><span class="tAV">"qts_save"</span><span class="tAN"> class=</span><span class="tAV">"cmd cmd_save"</span><span class="tEl">/&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;div</span><span class="tAN"> id=</span><span class="tAV">"userqueries"</span><span class="tEl">/&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;/div&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;div</span><span class="tAN"> id=</span><span class="tAV">"userbs"</span><span class="tAN"> class=</span><span class="tAV">"content"</span><span class="tEl">&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;div</span><span class="tAN"> id=</span><span class="tAV">"bookmarksets"</span><span class="tEl">&gt;</span><span class="tI">
+        </span><span class="tEl">&lt;label</span><span class="tEl">&gt;</span><span class="tT">Bookmarksets</span><span class="tEl">&lt;/label&gt;</span><span class="tI">
+        </span><span class="tEl">&lt;select</span><span class="tAN"> id=</span><span class="tAV">"bts_select"</span><span class="tEl">/&gt;</span><span class="tI">
+        </span><span class="tEl">&lt;span</span><span class="tAN"> id=</span><span class="tAV">"bts_add"</span><span class="tAN"> class=</span><span class="tAV">"cmd cmd_add"</span><span class="tEl">/&gt;</span><span class="tI">
+        </span><span class="tEl">&lt;span</span><span class="tAN"> id=</span><span class="tAV">"bts_delete"</span><span class="tAN"> class=</span><span class="tAV">"cmd cmd_del"</span><span class="tEl">/&gt;</span><span class="tI">
+        </span><span class="tEl">&lt;span</span><span class="tAN"> id=</span><span class="tAV">"bts_publish"</span><span class="tAN"> class=</span><span class="tAV">"cmd cmd_publish"</span><span class="tEl">/&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;/div&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;label</span><span class="tEl">&gt;</span><span class="tT">name</span><span class="tEl">&lt;/label&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;input</span><span class="tAN"> type=</span><span class="tAV">"text"</span><span class="tAN"> id=</span><span class="tAV">"bts_input"</span><span class="tEl">/&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;span</span><span class="tAN"> id=</span><span class="tAV">"bts_save"</span><span class="tAN"> class=</span><span class="tAV">"cmd cmd_save"</span><span class="tEl">/&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;div</span><span class="tAN"> id=</span><span class="tAV">"bookmarks"</span><span class="tEl">/&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;/div&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/div&gt;</span><span class="tI">
+</span><span class="tXSLEl">&lt;/xsl:template&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lR"></td>
+         </tr>
+         <tr>
+            <td class="rt_cBL"></td>
+            <td class="rt_lB"></td>
+            <td class="rt_cBR"></td>
+         </tr>
+      </table>
+      <div class="footer">
+         <hr />
+         <div align="center">Stylesheet documentation generated by <a href="http://www.oxygenxml.com" target="_parent"><span class="oXygenLogo"><span class="redX">&lt;</span>o<span class="redX">X</span>ygen<span class="redX">/&gt;</span></span></a><sup>®</sup> XML Developer.
+         </div>
+      </div><script type="text/javascript">
+         <!--                     
+                    // The namespace is the selected option in the TOC combo.
+                    
+                    // The corresponding div is already visible conf. to its style attr.                     
+                    
+                            var selectToc = getElementObject('selectTOC');
+                            if(selectToc != null){
+                            // It can be null when having chunking, the combo of the TOC is in another frame.
+                            selectToc.selectedIndex = 0;
+                            }
+                        
+                    
+                    // Floats the toolbar.
+                    var globalControls = getElementObject("global_controls"); 
+                    
+                    if(globalControls != null){
+                    var browser=navigator.appName;
+                    var version = parseFloat(navigator.appVersion.split('MSIE')[1]);
+                    
+                    var IE6 = false;
+                    if ((browser=="Microsoft Internet Explorer") && (version < 7)){
+                    IE6 = true;
+                    }
+                    
+                    //alert (IE6 + " |V| " + version);
+                    
+                    if(IE6){
+                    // On IE 6 the 'fixed' property is not supported. We must use javascript. 
+                    globalControls.style.position='absolute';                         
+                    // The global controls will do not exist in the TOC frame, when chunking.
+                    findAndFloat("global_controls", 225, 30);    
+                    } else {
+                    globalControls.style.position='fixed';                     	
+                    }
+                    
+                    globalControls.style.right='0';                       
+                    }
+                --></script></body>
+</html>

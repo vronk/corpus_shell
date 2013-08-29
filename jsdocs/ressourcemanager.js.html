@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: ressourcemanager.js</title>
+    
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+    
+    <h1 class="page-title">Source: ressourcemanager.js</h1>
+    
+    
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source"><code>/**
+ * @fileOverview Provides a managemant class for search endpoints and indexes {@link module:corpus_shell~ResourceManager} and a default object for this purpose {@link module:corpus_shell~ResourceController}.&lt;br/>
+ * Main entry points are {@link module:corpus_shell~ResourceManager#AddResource} and {@link module:corpus_shell~ResourceManager#AddIndex} which are called
+ * from {@link module:corpus_shell~doOnDocumentReady}. {@link module:corpus_shell~ResourceManager#GetIndexCache} generates the box that is shown after a click on
+ * Show indexes. 
+ */
+
+/**
+ * @module corpus_shell 
+ */
+
+/**
+ * @classdesc Manages resources that is search endpoints and their possible inexes.
+ * @constructor 
+ */
+function ResourceManager()
+{
+  /**
+   * A "map" of all the known Resources.
+   * @type {map.&lt;ResourceObject>}
+   */
+  this.Resources = new Array();
+
+  /**
+   * @param {string} resname A resource name.
+   * @param {string} restitle A title for that resource
+   * @desc Adds the resource the the "map" of resources by the given name and stores the title.
+   * @return - 
+   */
+  this.AddResource = function (resname, restitle)
+  {
+    this.Resources[resname] = this.GetNewResourceObject(resname, restitle);
+  }
+
+  /**
+   * @param {string} resname A resource name.
+   * @param {string} idxname An index name.
+   * @param {booblean} searchable Is the index searchable?
+   * @param {boolean} scanable Is the index scanable?
+   * @param {boolean} sortable Is the index sortable?
+   * @desc Adds an index name and its properties to a resource if it exist.
+   * @return -  
+   */  
+  this.AddIndex = function (resname, idxname, idxtitle, searchable, scanable, sortable)
+  {
+    if (this.Resources[resname] != undefined)
+      this.Resources[resname].Indexes[idxname] = this.GetNewIndexObject(idxname, idxtitle, searchable, scanable, sortable);
+  }
+
+  /**
+   * @typedef {Object} ResourceObject
+   * @property  {string} Name Name of the resource.
+   * @property {string} Title A intelligable title for the resource.
+   * @property {array.&lt;IndexObject>} Indexes
+   */
+  
+  /**
+   * @param {string} name Name of the resource.
+   * @param {string} title A intelligable title for the resource.
+   * @desc Creates a new ResourceObject.
+   * @return {ResourceObject} The newly created ResourceObject. 
+   */
+  this.GetNewResourceObject = function (name, title)
+  {
+    var newObj = new Object();
+    newObj["Name"] = name;
+    newObj["Title"] = title;
+    newObj["Indexes"] = new Array();
+
+    return newObj;
+  }
+  /**
+   * @typedef {Object} IndexObject
+   * @property {string} Name Name of the resource this index belongs to.
+   * @property {string} Title Name of this index.
+   * @property {boolean} Searchable Is this index is searchable?
+   * @property {boolean} Scanable Is this index scannable?
+   * @property {boolean} Sortable Is this index sortable?
+   */
+  
+  /**
+   * @param {string} name Name of the resource this index belongs to.
+   * @param {string} title Name of this index.
+   * @param {boolean} searchable Is this index is searchable?
+   * @param {boolean} scanable Is this index scannable?
+   * @param {boolean} sortable Is this index sortable?
+   * @desc Creates a new IndexObject.
+   * @return {IndexObject} The newly created IndexObject.
+   */
+  this.GetNewIndexObject = function (name, title, searchable, scanable, sortable)
+  {
+    var newObj = new Object();
+    newObj["Name"] = name;
+    newObj["Title"] = title;
+    newObj["Searchable"] = searchable;
+    newObj["Scanable"] = scanable;
+    newObj["Sortable"] = sortable;
+
+    return newObj;
+  }
+  
+  /**
+   * @typedef {Object} LabelValueObject
+   * @property {string} label A label, corresponds to {@link IndexObject}.Title
+   * @property {string} value A value, corresponds to {@link IndexObject}.Name
+   */
+
+  /**
+   * @param {string|number} resname Name of a resource or a position in the array.
+   * @desc Returns an array of LabelValueObjects for the given resource name
+   * if that is found in ResourceManager's resources or else all known Index/Title pairs are returned.
+   * @return {array.&lt;LabelValueObject>}
+   */
+  this.GetLabelValueArray = function (resname)
+  {
+    var list = new Array();
+
+    if (this.Resources[resname] != undefined)
+    {
+      var resource = this.Resources[resname];
+      for (key in resource.Indexes)
+      {
+        var index = resource.Indexes[key];
+        var ary = new Array();
+        ary['label'] = index.Title;
+        ary['value'] = index.Name;
+        list.push(ary);
+      }
+    }
+    else
+    {
+      for (reskey in this.Resources)
+      {
+        var resource = this.Resources[reskey];
+        for (key in resource.Indexes)
+        {
+          var index = resource.Indexes[key];
+
+          //distinct -> add only unique values
+          var found = false;
+
+          //check if list contains indexName
+          for (var idx=0; idx&lt;list.length; idx++)
+          {
+            var item = list[idx];
+            if (item.value == index.Name)
+             found = true;
+          }
+
+          //add if list doesn't contain indexName
+          if (found == false)
+          {
+            var ary = new Array();
+            ary['label'] = index.Title;
+            ary['value'] = index.Name;
+            list.push(ary);
+          }
+        }
+      }
+    }
+
+    return list;
+  }
+
+  /**
+   * Delete all stored data recursively.
+   * @return -
+   */
+  this.ClearResources = function ()
+  {
+    for (reskey in this.Resources)
+    {
+      var resource = this.Resources[reskey];
+      for (key in resource.Indexes)
+      {
+        delete resource.Indexes[key];
+      }
+
+      delete resource;
+    }
+  }
+
+  /**
+   * Creates an HTML snippet containing in a table in a div all the information about the resources.
+   * @return {string} An HTML snippet. 
+   */
+  this.GetIndexCache = function ()
+  {
+    var hStr = '&lt;div id="openIndexList" style="height: 250px; overflow: auto;">&lt;table id="indexList">';
+
+    for (reskey in this.Resources)
+    {
+      var resource = this.Resources[reskey];
+
+      hStr += '&lt;tr>&lt;td colspan="4" class="dotted b">' + resource.Title + '&lt;/td>&lt;/tr>';
+
+      var cnt = 0;
+      for (key in resource.Indexes)
+      {
+        hStr += '&lt;tr>&lt;td rowspan="2" style="width: 15px;">&lt;/td>';
+        var idx = resource.Indexes[key];
+        hStr += '&lt;td class="dotted" colspan="3">' + idx.Title + ' (' + idx.Name + ')&lt;/td>&lt;/tr>';
+
+        hStr += '&lt;tr>&lt;td class="dottedr is' + idx.Searchable + '"';
+        if (idx.Searchable == true)
+          hStr += ' style="cursor: pointer;" onclick="PanelController.OpenNewSearchPanel(\'' + resource.Name + '\', \'' +  idx.Name + '=\');"';
+        hStr += '>search&lt;/td>';
+        hStr += '&lt;td class="dottedr is' + idx.Scanable + '"'
+
+        if (idx.Scanable == true)
+          hStr += ' style="cursor: pointer;" onclick="PanelController.OpenNewScanPanel(\'' + resource.Name + '\', \'' +  idx.Name + '\');"';
+
+        hStr += '>scan&lt;/td>';
+        hStr += '&lt;td class="dottedr is' + idx.Sortable + '">sort&lt;/td>&lt;/tr>';
+        hStr += '&lt;tr>&lt;td colspan="3" style="height: 10px;">&lt;/td>&lt;/tr>'
+        cnt++;
+      }
+      if (cnt == 0)
+      {
+        hStr += '&lt;tr>&lt;td style="width: 15px;">&lt;/td>';
+        hStr += '&lt;td colspan="3">no indexes found&lt;/td>&lt;/tr>';
+      }
+    }
+
+    return hStr + '&lt;/table>&lt;/div>';
+  }
+}
+
+/**
+ * The ResourceController object, an {@link module:corpus_shell~ResourceManager} instance.
+ */
+var ResourceController = new ResourceManager();</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="module-corpus_shell.html">corpus_shell</a></li></ul><h3>Classes</h3><ul><li><a href="$.fn.QueryInput.html">QueryInput</a></li><li><a href="module-corpus_shell-Panel.html">Panel</a></li><li><a href="module-corpus_shell-PanelManager.html">PanelManager</a></li><li><a href="module-corpus_shell-ProfileManager.html">ProfileManager</a></li><li><a href="module-corpus_shell-ResourceManager.html">ResourceManager</a></li></ul><h3>Events</h3><ul><li><a href="module-corpus_shell-PanelManager.html#event:onUpdated">onUpdated</a></li></ul><h3>Global</h3><ul><li><a href="global.html#drawChart">drawChart</a></li></ul>
+</nav>
+
+<br clear="both">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.0-dev</a> on Wed Aug 21 2013 17:54:45 GMT+0200 (MESZ)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

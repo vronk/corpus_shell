@@ -1,0 +1,610 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos  -->
+			<title>Docs for page config.php</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+						<script src="../media/lib/classTree.js"></script>
+												<script language="javascript" type="text/javascript">
+				var imgPlus = new Image();
+				var imgMinus = new Image();
+				imgPlus.src = "../media/images/plus.png";
+				imgMinus.src = "../media/images/minus.png";
+				
+				function showNode(Node){
+							switch(navigator.family){
+								case 'nn4':
+									// Nav 4.x code fork...
+							var oTable = document.layers["span" + Node];
+							var oImg = document.layers["img" + Node];
+									break;
+								case 'ie4':
+									// IE 4/5 code fork...
+							var oTable = document.all["span" + Node];
+							var oImg = document.all["img" + Node];
+									break;
+								case 'gecko':
+									// Standards Compliant code fork...
+							var oTable = document.getElementById("span" + Node);
+							var oImg = document.getElementById("img" + Node);
+									break;
+							}
+					oImg.src = imgMinus.src;
+					oTable.style.display = "block";
+				}
+				
+				function hideNode(Node){
+							switch(navigator.family){
+								case 'nn4':
+									// Nav 4.x code fork...
+							var oTable = document.layers["span" + Node];
+							var oImg = document.layers["img" + Node];
+									break;
+								case 'ie4':
+									// IE 4/5 code fork...
+							var oTable = document.all["span" + Node];
+							var oImg = document.all["img" + Node];
+									break;
+								case 'gecko':
+									// Standards Compliant code fork...
+							var oTable = document.getElementById("span" + Node);
+							var oImg = document.getElementById("img" + Node);
+									break;
+							}
+					oImg.src = imgPlus.src;
+					oTable.style.display = "none";
+				}
+				
+				function nodeIsVisible(Node){
+							switch(navigator.family){
+								case 'nn4':
+									// Nav 4.x code fork...
+							var oTable = document.layers["span" + Node];
+									break;
+								case 'ie4':
+									// IE 4/5 code fork...
+							var oTable = document.all["span" + Node];
+									break;
+								case 'gecko':
+									// Standards Compliant code fork...
+							var oTable = document.getElementById("span" + Node);
+									break;
+							}
+					return (oTable && oTable.style.display == "block");
+				}
+				
+				function toggleNodeVisibility(Node){
+					if (nodeIsVisible(Node)){
+						hideNode(Node);
+					}else{
+						showNode(Node);
+					}
+				}
+			</script>
+					</head>
+		<body>
+			<div class="page-body">			
+<h2 class="file-name"><img src="../media/images/Page_logo.png" alt="File" style="vertical-align: middle">/utils-php/config.php</h2>
+
+<a name="sec-description"></a>
+<div class="info-box">
+	<div class="info-box-title">Description</div>
+	<div class="nav-bar">
+					<span class="disabled">Description</span> |
+													<a href="#sec-variables">Variables</a>
+								</div>
+	<div class="info-box-body">	
+		<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Common configuration variables</p>
+<p class="description"><p>Configuration script for the SRU scripts, server side user data storage and  the fcs aggregator and transformer.</p></p>
+		
+			</div>
+</div>
+		
+
+	
+	
+	<a name="sec-variables"></a>	
+	<div class="info-box">
+		<div class="info-box-title">Variables</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+												<span class="disabled">Variables</span>
+								</div>
+		<div class="info-box-body">	
+			<a name="global$csRoot" id="global$csRoot"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<img src="../media/images/Global.png" />
+		<span class="var-title">
+			<span class="var-type">string</span>
+			<span class="var-name">$csRoot</span>
+						(line <span class="line-number">35</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">corpus_shell's directory (or path) on the web server</p>
+<p class="description"><p>The path where the corpus_shell HTML application resides.</p></p>
+	
+		
+</div>
+<a name="global$dbConfigFile" id="global$dbConfigFile"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<img src="../media/images/Global.png" />
+		<span class="var-title">
+			<span class="var-type">string</span>
+			<span class="var-name">$dbConfigFile</span>
+						(line <span class="line-number">55</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">DB connection data configuration</p>
+<p class="description"><p>A file that contains the confidential data used  by the scripts that access a mysql database. Not provided in the public  repository.</p></p>
+	
+		
+</div>
+<a name="global$ddcConfig" id="global$ddcConfig"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<img src="../media/images/Global.png" />
+		<span class="var-title">
+			<span class="var-type">string</span>
+			<span class="var-name">$ddcConfig</span>
+						(line <span class="line-number">200</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Configuration for the ddc gateway scripts</p>
+	
+		
+</div>
+<a name="global$ddcConfigXml" id="global$ddcConfigXml"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<img src="../media/images/Global.png" />
+		<span class="var-title">
+			<span class="var-type">string</span>
+			<span class="var-name">$ddcConfigXml</span>
+						(line <span class="line-number">206</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">XML resource description for resources reached via ddc</p>
+	
+		
+</div>
+<a name="global$ddcConfigXsl" id="global$ddcConfigXsl"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<img src="../media/images/Global.png" />
+		<span class="var-title">
+			<span class="var-type">string</span>
+			<span class="var-name">$ddcConfigXsl</span>
+						(line <span class="line-number">212</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">XSL for resource description for resources reached via ddc</p>
+	
+		
+</div>
+<a name="global$diagnosticsTemplate" id="global$diagnosticsTemplate"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<img src="../media/images/Global.png" />
+		<span class="var-title">
+			<span class="var-type">string</span>
+			<span class="var-name">$diagnosticsTemplate</span>
+						(line <span class="line-number">70</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Diagnostic message template file</p>
+<p class="description"><p>Path to the diagnostics template which is used to convey infomation about  malformed requests back to the user as required by the SRU Base Profile.  See also: <a href="http://www.loc.gov/standards/sru/specs/base-profile.html">http://www.loc.gov/standards/sru/specs/base-profile.html</a> and  <a href="http://www.loc.gov/standards/sru/specs/diagnostics.html">http://www.loc.gov/standards/sru/specs/diagnostics.html</a></p></p>
+	<ul class="tags">
+				<li><span class="field">usedby:</span> <a href="../config/_utils-php---diagnostics.php.html#functionDiagnostics">Diagnostics()</a></li>
+			</ul>
+	
+		
+</div>
+<a name="global$docRoot" id="global$docRoot"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<img src="../media/images/Global.png" />
+		<span class="var-title">
+			<span class="var-type">string</span>
+			<span class="var-name">$docRoot</span>
+						(line <span class="line-number">27</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">HTTP server's document path on the server's file system</p>
+<p class="description"><p>The root of the directory containing the files that can be  retrieved from this server.  FIXME: Why does this need to be writen down here?</p></p>
+	
+		
+</div>
+<a name="global$explainSwitchTemplate" id="global$explainSwitchTemplate"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<img src="../media/images/Global.png" />
+		<span class="var-title">
+			<span class="var-type">string</span>
+			<span class="var-name">$explainSwitchTemplate</span>
+						(line <span class="line-number">98</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Explain request response template file for the switch</p>
+<p class="description"><p>See also:</p></p>
+	<ul class="tags">
+				<li><span class="field">usedby:</span> <a href="../fcs-aggregator/_fcs-aggregator---switch.php.html#functionReturnExplain">ReturnExplain()</a></li>
+			</ul>
+	
+		
+</div>
+<a name="global$explainTemplate" id="global$explainTemplate"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<img src="../media/images/Global.png" />
+		<span class="var-title">
+			<span class="var-type">string</span>
+			<span class="var-name">$explainTemplate</span>
+						(line <span class="line-number">91</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Explain request response template file for a particular resource</p>
+<p class="description"><p>See also:</p></p>
+	
+		
+</div>
+<a name="global$fcsConfig" id="global$fcsConfig"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<img src="../media/images/Global.png" />
+		<span class="var-title">
+			<span class="var-type">string</span>
+			<span class="var-name">$fcsConfig</span>
+						(line <span class="line-number">173</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Server's file system location for an FCS reply configuration file</p>
+<p class="description"><p>TODO What is the prupose of this?</p></p>
+	<ul class="tags">
+				<li><span class="field">usedby:</span> <a href="../fcs-aggregator/_fcs-aggregator---switch.php.html">switch.php</a></li>
+				<li><span class="field">usedby:</span> <a href="../fcs-aggregator/_fcs-aggregator---initconfigcache.php.html">initconfigcache.php</a></li>
+			</ul>
+	
+		
+</div>
+<a name="global$fcsRoot" id="global$fcsRoot"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<img src="../media/images/Global.png" />
+		<span class="var-title">
+			<span class="var-type">string</span>
+			<span class="var-name">$fcsRoot</span>
+						(line <span class="line-number">45</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Server's file system location of the server side modules</p>
+<p class="description"><p>The path where the php (and perl) modules reside which  actually retrieve the data stored in mysql or ddc or  or the switch that provides a central endpoint.</p></p>
+	
+		
+</div>
+<a name="global$indexCacheFileName" id="global$indexCacheFileName"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<img src="../media/images/Global.png" />
+		<span class="var-title">
+			<span class="var-type">string</span>
+			<span class="var-name">$indexCacheFileName</span>
+						(line <span class="line-number">185</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Server's file system location of a file providing additional information of resources for corpus_shell</p>
+	
+		
+</div>
+<a name="global$localhost" id="global$localhost"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<img src="../media/images/Global.png" />
+		<span class="var-title">
+			<span class="var-type">string</span>
+			<span class="var-name">$localhost</span>
+						(line <span class="line-number">142</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">The hostname of the web server</p>
+<p class="description"><p>To speed up eg. xslt every occurence of this domain name is replaced  by the loopback device for functions requesting data using URLs.</p></p>
+	<ul class="tags">
+				<li><span class="field">usedby:</span> <a href="../fcs-aggregator/_fcs-aggregator---switch.php.html#functionReplaceLocalHost">ReplaceLocalHost()</a></li>
+				<li><span class="field">usedby:</span> <a href="../fcs-aggregator/_fcs-aggregator---initconfigcache.php.html">initconfigcache.php</a></li>
+			</ul>
+	
+		
+</div>
+<a name="global$recordSchema" id="global$recordSchema"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<img src="../media/images/Global.png" />
+		<span class="var-title">
+			<span class="var-type">string</span>
+			<span class="var-name">$recordSchema</span>
+						(line <span class="line-number">122</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">The schema the fcs resource respons adheres to</p>
+<p class="description"><p>Required values for the templates: The currently used schema for the  fcs compliant resource declaration.</p></p>
+	
+		
+</div>
+<a name="global$responseTemplate" id="global$responseTemplate"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<img src="../media/images/Global.png" />
+		<span class="var-title">
+			<span class="var-type">string</span>
+			<span class="var-name">$responseTemplate</span>
+						(line <span class="line-number">84</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Search response template file</p>
+<p class="description"><p>See also:</p></p>
+	
+		
+</div>
+<a name="global$responseTemplateFcs" id="global$responseTemplateFcs"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<img src="../media/images/Global.png" />
+		<span class="var-title">
+			<span class="var-type">string</span>
+			<span class="var-name">$responseTemplateFcs</span>
+						(line <span class="line-number">77</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">FCS Resource response template file</p>
+<p class="description"><p>See also:</p></p>
+	
+		
+</div>
+<a name="global$scanCollectionsTemplate" id="global$scanCollectionsTemplate"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<img src="../media/images/Global.png" />
+		<span class="var-title">
+			<span class="var-type">string</span>
+			<span class="var-name">$scanCollectionsTemplate</span>
+						(line <span class="line-number">106</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Scan request response template file for a particular collection</p>
+<p class="description"><p>See also:</p></p>
+	<ul class="tags">
+				<li><span class="field">usedby:</span> <a href="../fcs-aggregator/_fcs-aggregator---switch.php.html#functionReturnScan">ReturnScan()</a></li>
+			</ul>
+	
+		
+</div>
+<a name="global$scriptsUrl" id="global$scriptsUrl"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<img src="../media/images/Global.png" />
+		<span class="var-title">
+			<span class="var-type">string</span>
+			<span class="var-name">$scriptsUrl</span>
+						(line <span class="line-number">166</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Web location of corpus_shells JavaScript and CSS scripts as seen from the browsers perspective.</p>
+<p class="description"><p>Has to end in a path separator (/)!</p><p>See: <a href="http://simar0at.github.io/corpus_shell/xsltdocs/result2view_v14.html#P_scripts_urlS_..params.xsl">XSLT docs</a></p></p>
+	<ul class="tags">
+				<li><span class="field">usedby:</span> <a href="../fcs-aggregator/_fcs-aggregator---switch.php.html#functionReturnXslT">ReturnXslT()</a></li>
+			</ul>
+	
+		
+</div>
+<a name="global$serverRoot" id="global$serverRoot"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<img src="../media/images/Global.png" />
+		<span class="var-title">
+			<span class="var-type">string</span>
+			<span class="var-name">$serverRoot</span>
+						(line <span class="line-number">17</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">HTTP server's root path</p>
+<p class="description"><p>The path to the root of the web server's files.  FIXME: Why does this need to be writen down here?</p></p>
+	
+		
+</div>
+<a name="global$switchConfig" id="global$switchConfig"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<img src="../media/images/Global.png" />
+		<span class="var-title">
+			<span class="var-type">string</span>
+			<span class="var-name">$switchConfig</span>
+						(line <span class="line-number">179</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Server's file system location of the configuration file for the switch</p>
+	<ul class="tags">
+				<li><span class="field">usedby:</span> <a href="../fcs-aggregator/_fcs-aggregator---switch.php.html#functionGetConfig">GetConfig()</a></li>
+				<li><span class="field">usedby:</span> <a href="../fcs-aggregator/_fcs-aggregator---switch.php.html#functionGetCompleteConfig">GetCompleteConfig()</a></li>
+				<li><span class="field">usedby:</span> <a href="../fcs-aggregator/_fcs-aggregator---switch.php.html#functionGetDefaultStyles">GetDefaultStyles()</a></li>
+				<li><span class="field">usedby:</span> <a href="../fcs-aggregator/_fcs-aggregator---showIndexCache.php.html#functionGenerateConfigDictionary">GenerateConfigDictionary()</a></li>
+				<li><span class="field">usedby:</span> <a href="../fcs-aggregator/_fcs-aggregator---initconfigcache.php.html#global$doc">$doc</a></li>
+				<li><span class="field">usedby:</span> <a href="../fcs-aggregator/_fcs-aggregator---populateIndexCache.php.html">populateIndexCache.php</a></li>
+				<li><span class="field">usedby:</span> <a href="../fcs-aggregator/_fcs-aggregator---initconfigcache.php.html">initconfigcache.php</a></li>
+			</ul>
+	
+		
+</div>
+<a name="global$switchUrl" id="global$switchUrl"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<img src="../media/images/Global.png" />
+		<span class="var-title">
+			<span class="var-type">string</span>
+			<span class="var-name">$switchUrl</span>
+						(line <span class="line-number">157</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Web location of the switch</p>
+<p class="description"><p>The switch provides a single endpoint for different possible upstream  endpoints and enhances their responses to provide additional formats for  retrieval like HTML snippets used by corpus_shell's AJAX</p></p>
+	<ul class="tags">
+				<li><span class="field">usedby:</span> <a href="../fcs-aggregator/_fcs-aggregator---populateIndexCache.php.html">populateIndexCache.php</a></li>
+			</ul>
+	
+		
+</div>
+<a name="global$userdataPath" id="global$userdataPath"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<img src="../media/images/Global.png" />
+		<span class="var-title">
+			<span class="var-type">string</span>
+			<span class="var-name">$userdataPath</span>
+						(line <span class="line-number">192</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Server's file system of a directory for server side persistence in corpus_shell</p>
+<p class="description"><p>Location for storing JSON data files which represent the server side persistence of corpus_shell.</p></p>
+	<ul class="tags">
+				<li><span class="field">usedby:</span> <a href="../user-data/_userdata---saveUserData.php.html">saveUserData.php</a></li>
+				<li><span class="field">usedby:</span> <a href="../user-data/_userdata---getUserData.php.html">getUserData.php</a></li>
+			</ul>
+	
+		
+</div>
+<a name="global$version" id="global$version"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<img src="../media/images/Global.png" />
+		<span class="var-title">
+			<span class="var-type">string</span>
+			<span class="var-name">$version</span>
+						(line <span class="line-number">133</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">The version of SRU the software supports</p>
+<p class="description"><p>Required values for the templates: The version of SRU currently  implemented. This also is a mandatory parameter even if we only  support this particular version.  See also: <a href="http://www.loc.gov/standards/sru/">http://www.loc.gov/standards/sru/</a></p></p>
+	<ul class="tags">
+				<li><span class="field">usedby:</span> <a href="../config/_utils-php---diagnostics.php.html#functionDiagnostics">Diagnostics()</a></li>
+			</ul>
+	
+		
+</div>
+<a name="global$vlibPath" id="global$vlibPath"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<img src="../media/images/Global.png" />
+		<span class="var-title">
+			<span class="var-type">string</span>
+			<span class="var-name">$vlibPath</span>
+						(line <span class="line-number">113</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Path to the vlibTemplate engine</p>
+	<ul class="tags">
+				<li><span class="field">usedby:</span> <a href="../config/_utils-php---diagnostics.php.html#functionDiagnostics">Diagnostics()</a></li>
+				<li><span class="field">usedby:</span> <a href="../fcs-aggregator/_fcs-aggregator---switch.php.html#functionReturnScan">ReturnScan()</a></li>
+			</ul>
+	
+		
+</div>
+<a name="global$webRoot" id="global$webRoot"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<img src="../media/images/Global.png" />
+		<span class="var-title">
+			<span class="var-type">string</span>
+			<span class="var-name">$webRoot</span>
+						(line <span class="line-number">148</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Web location of the corpus_shell HTML application</p>
+	
+		
+</div>
+		</div>
+	</div>
+	
+	
+	<p class="notes" id="credit">
+		Documentation generated on Wed, 28 Aug 2013 15:14:49 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.5.0a1</a>
+	</p>
+	</div></body>
+</html>

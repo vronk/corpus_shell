@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: corpusshell.config.js</title>
+    
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+    
+    <h1 class="page-title">Source: corpusshell.config.js</h1>
+    
+    
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source"><code>/** 
+ * @fileOverview Configuration of available search contexts, downloaded from corpus3.aac.ac.at.
+ * last updated 2012-07-26
+ */
+
+/**
+ * @module corpus_shell 
+ */
+
+/**
+ * @typedef {Object} SearchConfigItem
+ * @property {string} x-context internal name
+ * @property {string} DisplayText a user readable name (eg. for buttons)
+ */
+
+/**
+ * An array of maps which provides all possible search contexts (['x-context'] => internal name) and
+ * their respective human readable description (['DisplayText'] => a user readable name)
+ * @type {array.&lt;SearchConfigItem>}
+ */
+var SearchConfig = new Array();
+SearchConfig[0] = new Array();
+SearchConfig[0]['x-context'] = 'arz_eng_006';
+SearchConfig[0]['DisplayText'] = 'VICAV dictionary Cairo-dialect';
+
+SearchConfig[1] = new Array();
+SearchConfig[1]['x-context'] = 'apc_eng_002';
+SearchConfig[1]['DisplayText'] = 'VICAV dictionary Damascus-dialect';
+
+SearchConfig[2] = new Array();
+SearchConfig[2]['x-context'] = 'deu_wikt_002';
+SearchConfig[2]['DisplayText'] = 'Wiktionary';
+
+SearchConfig[3] = new Array();
+SearchConfig[3]['x-context'] = 'clarin.at:icltt:ddc';
+SearchConfig[3]['DisplayText'] = 'DDC on Corpus3';
+
+SearchConfig[4] = new Array();
+SearchConfig[4]['x-context'] = 'clarin.at:icltt:ddc:traum_deu';
+SearchConfig[4]['DisplayText'] = ' -> Freud: Die Traumdeutung, German';
+
+SearchConfig[5] = new Array();
+SearchConfig[5]['x-context'] = 'clarin.at:icltt:ddc:traum_russ';
+SearchConfig[5]['DisplayText'] = ' -> Freud: Die Traumdeutung, Russian';
+
+SearchConfig[6] = new Array();
+SearchConfig[6]['x-context'] = 'clarin.at:icltt:ddc:fackel';
+SearchConfig[6]['DisplayText'] = ' -> Die Fackel';
+
+SearchConfig[7] = new Array();
+SearchConfig[7]['x-context'] = 'clarin.at:icltt:ddc:barock';
+SearchConfig[7]['DisplayText'] = ' -> Barocktexte';
+
+SearchConfig[8] = new Array();
+SearchConfig[8]['x-context'] = 'clarin.at:icltt:ddc06:c4';
+SearchConfig[8]['DisplayText'] = ' -> C4';
+
+SearchConfig[9] = new Array();
+SearchConfig[9]['x-context'] = 'clarin.at:icltt:ddc06:c4_vienna';
+SearchConfig[9]['DisplayText'] = ' -> C4 Vienna';
+
+SearchConfig[10] = new Array();
+SearchConfig[10]['x-context'] = 'sru-gutenberg';
+SearchConfig[10]['DisplayText'] = 'Gutenberg Metadata';
+
+SearchConfig[11] = new Array();
+SearchConfig[11]['x-context'] = 'vicav-profile';
+SearchConfig[11]['DisplayText'] = 'VICAV Profile';
+
+SearchConfig[12] = new Array();
+SearchConfig[12]['x-context'] = 'vicav-bib';
+SearchConfig[12]['DisplayText'] = 'VICAV Bibliography';
+
+SearchConfig[13] = new Array();
+SearchConfig[13]['x-context'] = 'vicav-text';
+SearchConfig[13]['DisplayText'] = 'VICAV Sampletexte';
+
+SearchConfig[14] = new Array();
+SearchConfig[14]['x-context'] = 'ids-goethe';
+SearchConfig[14]['DisplayText'] = 'IDS Goethe';
+
+SearchConfig[15] = new Array();
+SearchConfig[15]['x-context'] = 'arz_eng_006_newStyle';
+SearchConfig[15]['DisplayText'] = 'VICAV dictionary Cairo-dialect newStyle';
+
+SearchConfig[16] = new Array();
+SearchConfig[16]['x-context'] = 'clarin.at:icltt:cr';
+SearchConfig[16]['DisplayText'] = 'ICLTT Content Repository';
+
+SearchConfig[17] = new Array();
+SearchConfig[17]['x-context'] = 'clarin.at:icltt:cr:stb';
+SearchConfig[17]['DisplayText'] = ' -> Schnitzler Tagebuch';
+
+SearchConfig[18] = new Array();
+SearchConfig[18]['x-context'] = 'clarin.at:icltt:cr:barock';
+SearchConfig[18]['DisplayText'] = ' -> Barock Texte';
+
+SearchConfig[19] = new Array();
+SearchConfig[19]['x-context'] = 'clarin.at:icltt:cr:aac-names';
+SearchConfig[19]['DisplayText'] = ' -> Namensdatenbank';
+
+SearchConfig[20] = new Array();
+SearchConfig[20]['x-context'] = 'clarin-d:digilib';
+SearchConfig[20]['DisplayText'] = 'TextGrid Digital Library';
+
+SearchConfig[21] = new Array();
+SearchConfig[21]['x-context'] = 'clarin-d:tueba-ddc';
+SearchConfig[21]['DisplayText'] = 'Tuebingen';
+
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="module-corpus_shell.html">corpus_shell</a></li></ul><h3>Classes</h3><ul><li><a href="$.fn.QueryInput.html">QueryInput</a></li><li><a href="module-corpus_shell-Panel.html">Panel</a></li><li><a href="module-corpus_shell-PanelManager.html">PanelManager</a></li><li><a href="module-corpus_shell-ProfileManager.html">ProfileManager</a></li><li><a href="module-corpus_shell-ResourceManager.html">ResourceManager</a></li></ul><h3>Events</h3><ul><li><a href="module-corpus_shell-PanelManager.html#event:onUpdated">onUpdated</a></li></ul><h3>Global</h3><ul><li><a href="global.html#drawChart">drawChart</a></li></ul>
+</nav>
+
+<br clear="both">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.0-dev</a> on Wed Aug 21 2013 17:54:45 GMT+0200 (MESZ)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

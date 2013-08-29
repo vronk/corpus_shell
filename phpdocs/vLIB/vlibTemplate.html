@@ -1,0 +1,2014 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos  -->
+			<title>Docs For Class vlibTemplate</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+						<script src="../media/lib/classTree.js"></script>
+												<script language="javascript" type="text/javascript">
+				var imgPlus = new Image();
+				var imgMinus = new Image();
+				imgPlus.src = "../media/images/plus.png";
+				imgMinus.src = "../media/images/minus.png";
+				
+				function showNode(Node){
+							switch(navigator.family){
+								case 'nn4':
+									// Nav 4.x code fork...
+							var oTable = document.layers["span" + Node];
+							var oImg = document.layers["img" + Node];
+									break;
+								case 'ie4':
+									// IE 4/5 code fork...
+							var oTable = document.all["span" + Node];
+							var oImg = document.all["img" + Node];
+									break;
+								case 'gecko':
+									// Standards Compliant code fork...
+							var oTable = document.getElementById("span" + Node);
+							var oImg = document.getElementById("img" + Node);
+									break;
+							}
+					oImg.src = imgMinus.src;
+					oTable.style.display = "block";
+				}
+				
+				function hideNode(Node){
+							switch(navigator.family){
+								case 'nn4':
+									// Nav 4.x code fork...
+							var oTable = document.layers["span" + Node];
+							var oImg = document.layers["img" + Node];
+									break;
+								case 'ie4':
+									// IE 4/5 code fork...
+							var oTable = document.all["span" + Node];
+							var oImg = document.all["img" + Node];
+									break;
+								case 'gecko':
+									// Standards Compliant code fork...
+							var oTable = document.getElementById("span" + Node);
+							var oImg = document.getElementById("img" + Node);
+									break;
+							}
+					oImg.src = imgPlus.src;
+					oTable.style.display = "none";
+				}
+				
+				function nodeIsVisible(Node){
+							switch(navigator.family){
+								case 'nn4':
+									// Nav 4.x code fork...
+							var oTable = document.layers["span" + Node];
+									break;
+								case 'ie4':
+									// IE 4/5 code fork...
+							var oTable = document.all["span" + Node];
+									break;
+								case 'gecko':
+									// Standards Compliant code fork...
+							var oTable = document.getElementById("span" + Node);
+									break;
+							}
+					return (oTable && oTable.style.display == "block");
+				}
+				
+				function toggleNodeVisibility(Node){
+					if (nodeIsVisible(Node)){
+						hideNode(Node);
+					}else{
+						showNode(Node);
+					}
+				}
+			</script>
+					</head>
+		<body>
+			<div class="page-body">			
+<h2 class="class-name"><img src="../media/images/Class_logo.png"
+														alt=" Class"
+														title=" Class"
+														style="vertical-align: middle"> vlibTemplate</h2>
+
+<a name="sec-description"></a>
+<div class="info-box">
+	<div class="info-box-title">Description</div>
+	<div class="nav-bar">
+					<span class="disabled">Description</span> |
+							<a href="#sec-descendents">Descendents</a>
+			|											<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+						|											<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+						
+					</div>
+	<div class="info-box-body">
+        		<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">vlibTemplate is a class used to seperate PHP and HTML.</p>
+	<ul class="tags">
+				<li><span class="field">since:</span> 2002-03-07</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+		<p class="notes">
+			Located in <a class="field" href="_utils-php---vlib---vlibTemplate.php.html">/utils-php/vlib/vlibTemplate.php</a> (line <span class="field">28</span>)
+		</p>
+		
+				
+		<pre></pre>
+	
+			</div>
+</div>
+
+	<a name="sec-descendents"></a>
+	<div class="info-box">
+		<div class="info-box-title">Direct descendents</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+			<span class="disabled">Descendents</span>
+			|												<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+								|															<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+								</div>
+		<div class="info-box-body">
+			<table cellpadding="2" cellspacing="0" class="class-table">
+				<tr>
+					<th class="class-table-header">Class</th>
+					<th class="class-table-header">Description</th>
+				</tr>
+								<tr>
+					<td style="padding-right: 2em; white-space: nowrap">
+						<img src="../media/images/Class.png"
+								 alt=" class"
+								 title=" class"
+								 style="vertical-align: center"/>
+						<a href="../vLIB/vlibTemplateCache.html">vlibTemplateCache</a>
+					</td>
+					<td>
+											Class uses all of vlibTemplate's functionality but caches the template files.
+										</td>
+				</tr>
+								<tr>
+					<td style="padding-right: 2em; white-space: nowrap">
+						<img src="../media/images/Class.png"
+								 alt=" class"
+								 title=" class"
+								 style="vertical-align: center"/>
+						<a href="../vLIB/vlibTemplateDebug.html">vlibTemplateDebug</a>
+					</td>
+					<td>
+											Class uses all of vlibTemplate's functionality but debugs the template files.
+										</td>
+				</tr>
+							</table>
+		</div>
+	</div>
+
+
+	<a name="sec-var-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Variable Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+							<a href="#sec-descendents">Descendants</a> |
+						<span class="disabled">Vars</span> (<a href="#sec-vars">details</a>)
+							| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+								</div>
+		<div class="info-box-body">
+			<div class="var-summary">
+																																																																																																																																																																																																								<div class="var-title">
+					<img src="../media/images/Variable.png" alt=" " />
+					<span class="var-type">mixed</span>
+					<a href="#$allowed_if_ops" title="details" class="var-name">$allowed_if_ops</a>
+				</div>
+																<div class="var-title">
+					<img src="../media/images/Variable.png" alt=" " />
+					<span class="var-type">mixed</span>
+					<a href="#$allowed_loop_dbs" title="details" class="var-name">$allowed_loop_dbs</a>
+				</div>
+																<div class="var-title">
+					<img src="../media/images/Variable.png" alt=" " />
+					<span class="var-type">mixed</span>
+					<a href="#$ESCAPE_TAGS" title="details" class="var-name">$ESCAPE_TAGS</a>
+				</div>
+																<div class="var-title">
+					<img src="../media/images/Variable.png" alt=" " />
+					<span class="var-type">mixed</span>
+					<a href="#$FORMAT_TAGS" title="details" class="var-name">$FORMAT_TAGS</a>
+				</div>
+																<div class="var-title">
+					<img src="../media/images/Variable.png" alt=" " />
+					<span class="var-type">mixed</span>
+					<a href="#$OPTIONS" title="details" class="var-name">$OPTIONS</a>
+				</div>
+																<div class="var-title">
+					<img src="../media/images/Variable.png" alt=" " />
+					<span class="var-type">mixed</span>
+					<a href="#$VLIBTEMPLATE_ROOT" title="details" class="var-name">$VLIBTEMPLATE_ROOT</a>
+				</div>
+																<div class="var-title">
+					<img src="../media/images/Variable.png" alt=" " />
+					<span class="var-type">mixed</span>
+					<a href="#$_arrvars" title="details" class="var-name">$_arrvars</a>
+				</div>
+																<div class="var-title">
+					<img src="../media/images/Variable.png" alt=" " />
+					<span class="var-type">mixed</span>
+					<a href="#$_cache" title="details" class="var-name">$_cache</a>
+				</div>
+																<div class="var-title">
+					<img src="../media/images/Variable.png" alt=" " />
+					<span class="var-type">mixed</span>
+					<a href="#$_currentincludedir" title="details" class="var-name">$_currentincludedir</a>
+				</div>
+																<div class="var-title">
+					<img src="../media/images/Variable.png" alt=" " />
+					<span class="var-type">mixed</span>
+					<a href="#$_currloop" title="details" class="var-name">$_currloop</a>
+				</div>
+																<div class="var-title">
+					<img src="../media/images/Variable.png" alt=" " />
+					<span class="var-type">mixed</span>
+					<a href="#$_currloopname" title="details" class="var-name">$_currloopname</a>
+				</div>
+																<div class="var-title">
+					<img src="../media/images/Variable.png" alt=" " />
+					<span class="var-type">mixed</span>
+					<a href="#$_debug" title="details" class="var-name">$_debug</a>
+				</div>
+																<div class="var-title">
+					<img src="../media/images/Variable.png" alt=" " />
+					<span class="var-type">mixed</span>
+					<a href="#$_firstparsetime" title="details" class="var-name">$_firstparsetime</a>
+				</div>
+																<div class="var-title">
+					<img src="../media/images/Variable.png" alt=" " />
+					<span class="var-type">mixed</span>
+					<a href="#$_includedepth" title="details" class="var-name">$_includedepth</a>
+				</div>
+																<div class="var-title">
+					<img src="../media/images/Variable.png" alt=" " />
+					<span class="var-type">mixed</span>
+					<a href="#$_namespace" title="details" class="var-name">$_namespace</a>
+				</div>
+																<div class="var-title">
+					<img src="../media/images/Variable.png" alt=" " />
+					<span class="var-type">mixed</span>
+					<a href="#$_parsed" title="details" class="var-name">$_parsed</a>
+				</div>
+																<div class="var-title">
+					<img src="../media/images/Variable.png" alt=" " />
+					<span class="var-type">mixed</span>
+					<a href="#$_tmplfile" title="details" class="var-name">$_tmplfile</a>
+				</div>
+																<div class="var-title">
+					<img src="../media/images/Variable.png" alt=" " />
+					<span class="var-type">mixed</span>
+					<a href="#$_tmplfilename" title="details" class="var-name">$_tmplfilename</a>
+				</div>
+																<div class="var-title">
+					<img src="../media/images/Variable.png" alt=" " />
+					<span class="var-type">mixed</span>
+					<a href="#$_tmplfilep" title="details" class="var-name">$_tmplfilep</a>
+				</div>
+																<div class="var-title">
+					<img src="../media/images/Variable.png" alt=" " />
+					<span class="var-type">mixed</span>
+					<a href="#$_tmploutput" title="details" class="var-name">$_tmploutput</a>
+				</div>
+																<div class="var-title">
+					<img src="../media/images/Variable.png" alt=" " />
+					<span class="var-type">mixed</span>
+					<a href="#$_totalparsetime" title="details" class="var-name">$_totalparsetime</a>
+				</div>
+																<div class="var-title">
+					<img src="../media/images/Variable.png" alt=" " />
+					<span class="var-type">mixed</span>
+					<a href="#$_unknowns" title="details" class="var-name">$_unknowns</a>
+				</div>
+																<div class="var-title">
+					<img src="../media/images/Variable.png" alt=" " />
+					<span class="var-type">mixed</span>
+					<a href="#$_vars" title="details" class="var-name">$_vars</a>
+				</div>
+											</div>
+		</div>
+	</div>
+
+	<a name="sec-method-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Method Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+							<a href="#sec-descendents">Descendants</a> |
+																		<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+				 
+				|
+						<span class="disabled">Methods</span> (<a href="#sec-methods">details</a>)
+		</div>
+		<div class="info-box-body">			
+			<div class="method-summary">
+																																																																																																																																																																																																																																																																															
+				<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">boolean</span>
+										<a href="#addLoop" title="details" class="method-name">addLoop</a>
+											([<span class="var-type">string</span>&nbsp;<span class="var-name">$loopname</span> = <span class="var-default">null</span>])
+									</div>
+															
+				<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">boolean</span>
+										<a href="#addRow" title="details" class="method-name">addRow</a>
+											(<span class="var-type">array</span>&nbsp;<span class="var-name">$row</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$loopname</span> = <span class="var-default">null</span>])
+									</div>
+															
+				<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">boolean</span>
+										<a href="#clearAll" title="details" class="method-name">clearAll</a>
+										()
+									</div>
+															
+				<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">void</span>
+										<a href="#clearCache" title="details" class="method-name">clearCache</a>
+										()
+									</div>
+															
+				<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">boolean</span>
+										<a href="#clearLoops" title="details" class="method-name">clearLoops</a>
+										()
+									</div>
+															
+				<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">boolean</span>
+										<a href="#clearVars" title="details" class="method-name">clearVars</a>
+										()
+									</div>
+															
+				<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">boolean</span>
+										<a href="#fastPrint" title="details" class="method-name">fastPrint</a>
+										()
+									</div>
+															
+				<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">boolean</span>
+										<a href="#getLoop" title="details" class="method-name">getLoop</a>
+											([<span class="var-type">string</span>&nbsp;<span class="var-name">$loopname</span> = <span class="var-default">null</span>])
+									</div>
+															
+				<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">float</span>
+										<a href="#getParseTime" title="details" class="method-name">getParseTime</a>
+										()
+									</div>
+															
+				<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">array</span>
+										<a href="#getUnknowns" title="details" class="method-name">getUnknowns</a>
+										()
+									</div>
+															
+				<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">var</span>
+										<a href="#getVar" title="details" class="method-name">getVar</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$var</span>)
+									</div>
+															
+				<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">array</span>
+										<a href="#getVars" title="details" class="method-name">getVars</a>
+										()
+									</div>
+															
+				<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">boolean</span>
+										<a href="#grab" title="details" class="method-name">grab</a>
+										()
+									</div>
+															
+				<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">boolean</span>
+										<a href="#newLoop" title="details" class="method-name">newLoop</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$loopname</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$name</span>)
+									</div>
+															
+				<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">boolean</span>
+										<a href="#newTemplate" title="details" class="method-name">newTemplate</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$tmplfile</span>)
+									</div>
+															
+				<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">boolean</span>
+										<a href="#pparse" title="details" class="method-name">pparse</a>
+										()
+									</div>
+															
+				<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">void</span>
+										<a href="#pprint" title="details" class="method-name">pprint</a>
+										()
+									</div>
+															
+				<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">void</span>
+										<a href="#recache" title="details" class="method-name">recache</a>
+										()
+									</div>
+															
+				<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">boolean</span>
+										<a href="#reset" title="details" class="method-name">reset</a>
+										()
+									</div>
+															
+				<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">void</span>
+										<a href="#setCacheExtension" title="details" class="method-name">setCacheExtension</a>
+										()
+									</div>
+															
+				<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">void</span>
+										<a href="#setCacheLifeTime" title="details" class="method-name">setCacheLifeTime</a>
+										()
+									</div>
+															
+				<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">true</span>
+										<a href="#setContextVars" title="details" class="method-name">setContextVars</a>
+										()
+									</div>
+															
+				<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">boolean</span>
+										<a href="#setDbLoop" title="details" class="method-name">setDbLoop</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$loopname</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$result</span>, [<span class="var-type"></span>&nbsp;<span class="var-name">$db_type</span> = <span class="var-default">'MYSQL'</span>], <span class="var-type">string</span>&nbsp;<span class="var-name">$db_type,</span>)
+									</div>
+															
+				<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">boolean</span>
+										<a href="#setLoop" title="details" class="method-name">setLoop</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$k</span>, <span class="var-type">array</span>&nbsp;<span class="var-name">$v</span>)
+									</div>
+															
+				<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">bool</span>
+										<a href="#setPath" title="details" class="method-name">setPath</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">0</span>)
+									</div>
+															
+				<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">boolean</span>
+										<a href="#setUnknowns" title="details" class="method-name">setUnknowns</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$arg</span>)
+									</div>
+															
+				<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">boolean</span>
+										<a href="#setVar" title="details" class="method-name">setVar</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$k</span>, [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$v</span> = <span class="var-default">null</span>])
+									</div>
+															
+				<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">void</span>
+										<a href="#unknowns" title="details" class="method-name">unknowns</a>
+										()
+									</div>
+															
+				<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">boolean</span>
+										<a href="#unknownsExist" title="details" class="method-name">unknownsExist</a>
+										()
+									</div>
+															
+				<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">boolean</span>
+										<a href="#unsetLoop" title="details" class="method-name">unsetLoop</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">0</span>)
+									</div>
+															
+				<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">boolean</span>
+										<a href="#unsetVar" title="details" class="method-name">unsetVar</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">0</span>)
+									</div>
+															
+				<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">void</span>
+										<a href="#_parseIncludeFile" title="details" class="method-name">_parseIncludeFile</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$file</span>)
+									</div>
+											</div>
+		</div>
+	</div>		
+
+	<a name="sec-vars"></a>
+	<div class="info-box">
+		<div class="info-box-title">Variables</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+							<a href="#sec-descendents">Descendents</a> |
+										<a href="#sec-var-summary">Vars</a> (<span class="disabled">details</span>)
+						
+			
+										| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+					</div>
+		<div class="info-box-body">
+			
+<a name="var$allowed_if_ops" id="$allowed_if_ops"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<img src="../media/images/Variable.png" />
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$allowed_if_ops</span>
+			 = <span class="var-default">array('==','!=','&lt;&gt;','&lt;','&gt;','&lt;=','&gt;=')</span>			(line <span class="line-number">81</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">operators allowed when using extended TMPL_IF syntax</p>
+	
+	
+		
+		
+
+</div>
+<a name="var$allowed_loop_dbs" id="$allowed_loop_dbs"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<img src="../media/images/Variable.png" />
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$allowed_loop_dbs</span>
+			 = <span class="var-default">array(<br />			'MYSQL',<br />			'POSTGRESQL',<br />			'INFORMIX',<br />			'INTERBASE',<br />			'INGRES',<br />			'MSSQL',<br />			'MSQL',<br />			'OCI8',<br />			'ORACLE',<br />			'OVRIMOS',<br />			'SYBASE'<br />		)</span>			(line <span class="line-number">84</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">dbs allowed by vlibTemplate::setDbLoop().</p>
+	
+	
+		
+		
+
+</div>
+<a name="var$ESCAPE_TAGS" id="$ESCAPE_TAGS"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<img src="../media/images/Variable.png" />
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$ESCAPE_TAGS</span>
+			 = <span class="var-default">array(<br />			'html' =&gt; array('open' =&gt; 'htmlspecialchars(', 'close'=&gt; ', ENT_QUOTES)'),'url'=&gt;array('open'=&gt;'urlencode(','close'=&gt;')'),'rawurl'=&gt;array('open'=&gt;'rawurlencode(','close'=&gt;')'),'sq'=&gt;array('open'=&gt;'addcslashes(','close'=&gt;&quot;, \&quot;'\&quot;)&quot;),'dq'=&gt;array('open'=&gt;'addcslashes(','close'=&gt;&quot;, '\&quot;')&quot;),'1'=&gt;array('open'=&gt;'htmlspecialchars(','close'=&gt;', ENT_QUOTES)'),'0'=&gt;array('open'=&gt;'','close'=&gt;''),'none'=&gt;array('open'=&gt;'','close'=&gt;''),'hex'=&gt;array('open'=&gt;'$this-&gt;_escape_hex(','close'=&gt;', false)'),'hexentity'=&gt;array('open'=&gt;'$this-&gt;_escape_hex(','close'=&gt;', true)'))</span>			(line <span class="line-number">57</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">open and close tags used for escaping</p>
+	
+	
+		
+		
+
+</div>
+<a name="var$FORMAT_TAGS" id="$FORMAT_TAGS"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<img src="../media/images/Variable.png" />
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$FORMAT_TAGS</span>
+			 = <span class="var-default">array(<br />			'uc' =&gt; array('open' =&gt; 'strtoupper(', 'close'=&gt; ')'),'lc'=&gt;array('open'=&gt;'strtolower(','close'=&gt;')'),'ucfirst'=&gt;array('open'=&gt;'ucfirst(','close'=&gt;')'),'lcucfirst'=&gt;array('open'=&gt;'ucfirst(strtolower(','close'=&gt;'))'),'ucwords'=&gt;array('open'=&gt;'ucwords(','close'=&gt;')'),'lcucwords'=&gt;array('open'=&gt;'ucwords(strtolower(','close'=&gt;'))'))</span>			(line <span class="line-number">71</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">open and close tags used for formatting</p>
+	
+	
+		
+		
+
+</div>
+<a name="var$OPTIONS" id="$OPTIONS"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<img src="../media/images/Variable.png" />
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$OPTIONS</span>
+			 = <span class="var-default">array(<br />			'MAX_INCLUDES' =&gt; 2,<br />			'TEMPLATE_DIR' =&gt; null,<br />			'GLOBAL_VARS' =&gt; null,<br />			'GLOBAL_CONTEXT_VARS' =&gt; null,<br />			'LOOP_CONTEXT_VARS' =&gt; null,<br />			'SET_LOOP_VAR' =&gt; null,<br />			'DEFAULT_ESCAPE' =&gt; null,<br />			'STRICT' =&gt; null,<br />			'CASELESS' =&gt; null,<br />			'UNKNOWNS' =&gt; null,<br />			'TIME_PARSE' =&gt; null,<br />			'ENABLE_PHPINCLUDE' =&gt; FALSE,<br />			'ENABLE_SHORTTAGS' =&gt; null,<br />			'INCLUDE_PATHS' =&gt; array(),'CACHE_DIRECTORY'=&gt;null,'CACHE_LIFETIME'=&gt;null,'CACHE_EXTENSION'=&gt;null,'DEBUG_WITHOUT_JAVASCRIPT'=&gt;0,)</span>			(line <span class="line-number">35</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+		
+		
+
+</div>
+<a name="var$VLIBTEMPLATE_ROOT" id="$VLIBTEMPLATE_ROOT"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<img src="../media/images/Variable.png" />
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$VLIBTEMPLATE_ROOT</span>
+			 = <span class="var-default"> null</span>			(line <span class="line-number">99</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">root directory of vlibTemplate automagically filled in</p>
+	
+	
+		
+		
+
+</div>
+<a name="var$_arrvars" id="$_arrvars"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<img src="../media/images/Variable.png" />
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$_arrvars</span>
+			 = <span class="var-default">array()</span>			(line <span class="line-number">123</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">array where loop variables are kept</p>
+	
+	
+		
+		
+
+</div>
+<a name="var$_cache" id="$_cache"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<img src="../media/images/Variable.png" />
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$_cache</span>
+			 = <span class="var-default"> null</span>			(line <span class="line-number">148</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+		
+			<hr class="separator" />
+		<div class="notes">Redefined in descendants as:</div>
+		<ul class="redefinitions">
+					<li>
+				<a href="../vLIB/vlibTemplateCache.html#var$_cache">vlibTemplateCache::$_cache</a>
+							</li>
+				</ul>
+		
+
+</div>
+<a name="var$_currentincludedir" id="$_currentincludedir"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<img src="../media/images/Variable.png" />
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$_currentincludedir</span>
+			 = <span class="var-default">array()</span>			(line <span class="line-number">102</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">contains current directory used when doing recursive include</p>
+	
+	
+		
+		
+
+</div>
+<a name="var$_currloop" id="$_currloop"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<img src="../media/images/Variable.png" />
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$_currloop</span>
+			 = <span class="var-default">array()</span>			(line <span class="line-number">144</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">rows with the above loop</p>
+	
+	
+		
+		
+
+</div>
+<a name="var$_currloopname" id="$_currloopname"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<img src="../media/images/Variable.png" />
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$_currloopname</span>
+			 = <span class="var-default"> null</span>			(line <span class="line-number">141</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">name of current loop being passed in</p>
+	
+	
+		
+		
+
+</div>
+<a name="var$_debug" id="$_debug"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<img src="../media/images/Variable.png" />
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$_debug</span>
+			 = <span class="var-default"> null</span>			(line <span class="line-number">147</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">define vars to avoid warnings</p>
+	
+	
+		
+			<hr class="separator" />
+		<div class="notes">Redefined in descendants as:</div>
+		<ul class="redefinitions">
+					<li>
+				<a href="../vLIB/vlibTemplateDebug.html#var$_debug">vlibTemplateDebug::$_debug</a>
+								: boolean var prints out vlibTemplate debug module
+							</li>
+				</ul>
+		
+
+</div>
+<a name="var$_firstparsetime" id="$_firstparsetime"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<img src="../media/images/Variable.png" />
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$_firstparsetime</span>
+			 = <span class="var-default"> null</span>			(line <span class="line-number">135</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">microtime when template parsing began</p>
+	
+	
+		
+		
+
+</div>
+<a name="var$_includedepth" id="$_includedepth"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<img src="../media/images/Variable.png" />
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$_includedepth</span>
+			 = <span class="var-default"> 0</span>			(line <span class="line-number">105</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">current depth of includes</p>
+	
+	
+		
+		
+
+</div>
+<a name="var$_namespace" id="$_namespace"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<img src="../media/images/Variable.png" />
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$_namespace</span>
+			 = <span class="var-default">array()</span>			(line <span class="line-number">126</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">array which holds the current namespace during parse</p>
+	
+	
+		
+		
+
+</div>
+<a name="var$_parsed" id="$_parsed"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<img src="../media/images/Variable.png" />
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$_parsed</span>
+			 = <span class="var-default"> false</span>			(line <span class="line-number">129</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">variable is set to true once the template is parsed, to save re-parsing everything</p>
+	
+	
+		
+		
+
+</div>
+<a name="var$_tmplfile" id="$_tmplfile"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<img src="../media/images/Variable.png" />
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$_tmplfile</span>
+			 = <span class="var-default"> null</span>			(line <span class="line-number">111</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">file data before it's parsed</p>
+	
+	
+		
+		
+
+</div>
+<a name="var$_tmplfilename" id="$_tmplfilename"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<img src="../media/images/Variable.png" />
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$_tmplfilename</span>
+			 = <span class="var-default"> null</span>			(line <span class="line-number">108</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">full path to tmpl file</p>
+	
+	
+		
+		
+
+</div>
+<a name="var$_tmplfilep" id="$_tmplfilep"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<img src="../media/images/Variable.png" />
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$_tmplfilep</span>
+			 = <span class="var-default"> null</span>			(line <span class="line-number">114</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">parsed version of file, ready for eval()ing</p>
+	
+	
+		
+		
+
+</div>
+<a name="var$_tmploutput" id="$_tmploutput"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<img src="../media/images/Variable.png" />
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$_tmploutput</span>
+			 = <span class="var-default"> null</span>			(line <span class="line-number">117</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">eval()ed version ready for printing or whatever</p>
+	
+	
+		
+		
+
+</div>
+<a name="var$_totalparsetime" id="$_totalparsetime"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<img src="../media/images/Variable.png" />
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$_totalparsetime</span>
+			 = <span class="var-default"> null</span>			(line <span class="line-number">138</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">total time taken to parse template</p>
+	
+	
+		
+		
+
+</div>
+<a name="var$_unknowns" id="$_unknowns"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<img src="../media/images/Variable.png" />
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$_unknowns</span>
+			 = <span class="var-default">array()</span>			(line <span class="line-number">132</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">array holds all unknowns vars</p>
+	
+	
+		
+		
+
+</div>
+<a name="var$_vars" id="$_vars"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<img src="../media/images/Variable.png" />
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$_vars</span>
+			 = <span class="var-default">array()</span>			(line <span class="line-number">120</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">array for variables to be kept</p>
+	
+	
+		
+		
+
+</div>
+						
+		</div>
+	</div>
+	
+	<a name="sec-methods"></a>
+	<div class="info-box">
+		<div class="info-box-title">Methods</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+							<a href="#sec-descendents">Descendents</a> |
+															<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+																	<a href="#sec-method-summary">Methods</a> (<span class="disabled">details</span>)
+						
+		</div>
+		<div class="info-box-body">
+			<A NAME='method_detail'></A>
+<a name="methodaddLoop" id="addLoop"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">addLoop</span> (line <span class="line-number">528</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">METHOD: addLoop</p>
+<p class="description"><p>Completes the 3 step loop process. This assigns the rows and resets  the variables used.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> true/false</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			addLoop
+		</span>
+					([<span class="var-type">string</span>&nbsp;<span class="var-name">$loopname</span> = <span class="var-default">null</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$loopname</span><span class="var-description">: to commit loop. If not set, will use last loopname set using newLoop()</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodaddRow" id="addRow"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">addRow</span> (line <span class="line-number">502</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">METHOD: addRow</p>
+<p class="description"><p>Adds a row to the current loop in the 3 step loop process.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> true/false</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			addRow
+		</span>
+					(<span class="var-type">array</span>&nbsp;<span class="var-name">$row</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$loopname</span> = <span class="var-default">null</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">array</span>
+				<span class="var-name">$row</span><span class="var-description">: loop row to add to current loop</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$loopname</span><span class="var-description">: loop to which you want to add row, if not set will use last loop set using newLoop().</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodclearAll" id="clearAll"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">clearAll</span> (line <span class="line-number">661</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">METHOD: clearAll</p>
+<p class="description"><p>Unsets all variables and loops set using setVar/Loop()</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> true</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			clearAll
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodclearCache" id="clearCache"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">clearCache</span> (line <span class="line-number">1551</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			clearCache
+		</span>
+				()
+			</div>
+	
+		
+			
+			<hr class="separator" />
+		<div class="notes">Redefined in descendants as:</div>
+		<ul class="redefinitions">
+					<li>
+				<a href="../vLIB/vlibTemplateCache.html#methodclearCache">vlibTemplateCache::clearCache()</a>
+								: FUNCTION: clearCache  will unset a file, and set $this-&gt;_cacheexists to 0.
+							</li>
+					<li>
+				<a href="../vLIB/vlibTemplateDebug.html#methodclearCache">vlibTemplateDebug::clearCache()</a>
+							</li>
+				</ul>
+	</div>
+<a name="methodclearLoops" id="clearLoops"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">clearLoops</span> (line <span class="line-number">646</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">METHOD: clearLoops</p>
+<p class="description"><p>Unsets all loops in the template</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> true</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			clearLoops
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodclearVars" id="clearVars"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">clearVars</span> (line <span class="line-number">633</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">METHOD: clearVars</p>
+<p class="description"><p>Unsets all variables in the template</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> true</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			clearVars
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodfastPrint" id="fastPrint"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">fastPrint</span> (line <span class="line-number">777</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">METHOD: fastPrint</p>
+<p class="description"><p>Identical to pparse() except that it uses output buffering w/ gz compression thus  printing the output directly and compressed if poss.  Will possibly if parsing a huge template.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> true/false</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			fastPrint
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodgetLoop" id="getLoop"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">getLoop</span> (line <span class="line-number">563</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">METHOD: getLoop</p>
+<p class="description"><p>Use this function to return the loop structure. This is useful in setting  inner loops using the 3-step-loop process.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> true/false</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			getLoop
+		</span>
+					([<span class="var-type">string</span>&nbsp;<span class="var-name">$loopname</span> = <span class="var-default">null</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$loopname</span><span class="var-description">: name of loop to get</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodgetParseTime" id="getParseTime"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">getParseTime</span> (line <span class="line-number">759</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">METHOD: getParseTime</p>
+<p class="description"><p>After using one of the parse functions, this will allow you  access the time taken to parse the template.  see OPTION 'TIME_PARSE'.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> time taken to parse template</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">float</span>
+		<span class="method-name">
+			getParseTime
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodgetUnknowns" id="getUnknowns"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">getUnknowns</span> (line <span class="line-number">700</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">METHOD: getUnknowns</p>
+<p class="description"><p>Returns an array of all unknown vars found when parsing.  This function is only relevant after parsing a document.</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">array</span>
+		<span class="method-name">
+			getUnknowns
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodgetVar" id="getVar"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">getVar</span> (line <span class="line-number">271</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">METHOD: getVar</p>
+<p class="description"><p>Gets a single var from the global namespace</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">var</span>
+		<span class="method-name">
+			getVar
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$var</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$var</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodgetVars" id="getVars"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">getVars</span> (line <span class="line-number">258</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">METHOD: getVars</p>
+<p class="description"><p>Gets all vars currently set in global namespace.</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">array</span>
+		<span class="method-name">
+			getVars
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodgrab" id="grab"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">grab</span> (line <span class="line-number">819</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">METHOD: grab</p>
+<p class="description"><p>Returns the parsed output, ready for printing, passing to mail() ...etc.  Invokes $this-&gt;_parse() if template has not yet been parsed.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> true/false</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			grab
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodnewLoop" id="newLoop"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">newLoop</span> (line <span class="line-number">481</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">METHOD: newLoop</p>
+<p class="description"><p>Sets the name for the curent loop in the 3 step loop process.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> true/false</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			newLoop
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$loopname</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$name</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$name</span><span class="var-description">: string to define loop name</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$loopname</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodnewTemplate" id="newTemplate"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">newTemplate</span> (line <span class="line-number">166</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">METHOD: newTemplate</p>
+<p class="description"><p>Usually called by the class constructor.  Stores the filename in $this-&gt;_tmplfilename.  Raises an error if the template file is not found.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> true</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			newTemplate
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$tmplfile</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$tmplfile</span><span class="var-description">: full path to template file</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodpparse" id="pparse"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">pparse</span> (line <span class="line-number">792</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">METHOD: pparse</p>
+<p class="description"><p>Calls parse, and then prints out $this-&gt;_tmploutput</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> true/false</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			pparse
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodpprint" id="pprint"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">pprint</span> (line <span class="line-number">805</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">METHOD: pprint</p>
+<p class="description"><p>Alias for pparse()</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			pprint
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodrecache" id="recache"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">recache</span> (line <span class="line-number">1552</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			recache
+		</span>
+				()
+			</div>
+	
+		
+			
+			<hr class="separator" />
+		<div class="notes">Redefined in descendants as:</div>
+		<ul class="redefinitions">
+					<li>
+				<a href="../vLIB/vlibTemplateCache.html#methodrecache">vlibTemplateCache::recache()</a>
+								: FUNCTION: recache  alias for clearCache().
+							</li>
+					<li>
+				<a href="../vLIB/vlibTemplateDebug.html#methodrecache">vlibTemplateDebug::recache()</a>
+							</li>
+				</ul>
+	</div>
+<a name="methodreset" id="reset"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">reset</span> (line <span class="line-number">609</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">METHOD: reset</p>
+<p class="description"><p>Resets the vlibTemplate object. After using vlibTemplate::reset() you must  use vlibTemplate::newTemplate(tmpl) to reuse, not passing in the options array.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> true</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			reset
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodsetCacheExtension" id="setCacheExtension"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">setCacheExtension</span> (line <span class="line-number">1554</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setCacheExtension
+		</span>
+				()
+			</div>
+	
+		
+			
+			<hr class="separator" />
+		<div class="notes">Redefined in descendants as:</div>
+		<ul class="redefinitions">
+					<li>
+				<a href="../vLIB/vlibTemplateCache.html#methodsetCacheExtension">vlibTemplateCache::setCacheExtension()</a>
+								: FUNCTION: setCacheExtension  sets the extention of the cache file
+							</li>
+					<li>
+				<a href="../vLIB/vlibTemplateDebug.html#methodsetCacheExtension">vlibTemplateDebug::setCacheExtension()</a>
+							</li>
+				</ul>
+	</div>
+<a name="methodsetCacheLifeTime" id="setCacheLifeTime"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">setCacheLifeTime</span> (line <span class="line-number">1553</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setCacheLifeTime
+		</span>
+				()
+			</div>
+	
+		
+			
+			<hr class="separator" />
+		<div class="notes">Redefined in descendants as:</div>
+		<ul class="redefinitions">
+					<li>
+				<a href="../vLIB/vlibTemplateCache.html#methodsetCacheLifeTime">vlibTemplateCache::setCacheLifeTime()</a>
+								: FUNCTION: setCacheLifeTime  sets the lifetime of the cached file
+							</li>
+					<li>
+				<a href="../vLIB/vlibTemplateDebug.html#methodsetCacheLifeTime">vlibTemplateDebug::setCacheLifeTime()</a>
+							</li>
+				</ul>
+	</div>
+<a name="methodsetContextVars" id="setContextVars"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">setContextVars</span> (line <span class="line-number">285</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">METHOD: setContextVars</p>
+<p class="description"><p>sets the GLOBAL_CONTEXT_VARS</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">true</span>
+		<span class="method-name">
+			setContextVars
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodsetDbLoop" id="setDbLoop"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">setDbLoop</span> (line <span class="line-number">333</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">METHOD: setDbLoop [** EXPERIMENTAL **]</p>
+<p class="description"><p>Function to create a loop from a Db result resource link.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> true/false</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			setDbLoop
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$loopname</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$result</span>, [<span class="var-type"></span>&nbsp;<span class="var-name">$db_type</span> = <span class="var-default">'MYSQL'</span>], <span class="var-type">string</span>&nbsp;<span class="var-name">$db_type,</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$loopname</span><span class="var-description">: to commit loop. If not set, will use last loopname set using newLoop()</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$result</span><span class="var-description">: link to a Db result resource or to a Db result object</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$db_type,</span><span class="var-description">: type of db that the result resource belongs to.</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$db_type</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodsetLoop" id="setLoop"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">setLoop</span> (line <span class="line-number">310</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">METHOD: setLoop</p>
+<p class="description"><p>Builds the loop construct for use with &lt;TMPL_LOOP&gt;.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> true/false</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			setLoop
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$k</span>, <span class="var-type">array</span>&nbsp;<span class="var-name">$v</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$k</span><span class="var-description">: string to define loop name</span>			</li>
+					<li>
+				<span class="var-type">array</span>
+				<span class="var-name">$v</span><span class="var-description">: array to assign to $k</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodsetPath" id="setPath"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">setPath</span> (line <span class="line-number">736</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">METHOD: setPath</p>
+<p class="description"><p>function sets the paths to use when including files.  Use of this function: vlibTemplate::setPath(string path [, string path, ..]);  i.e. if $tmpl is your template object do: $tmpl-&gt;setPath('/web/htdocs/templates','/web/htdocs/www');  with as many paths as you like.  if this function is called without any arguments, it will just delete any previously set paths.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> success</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">bool</span>
+		<span class="method-name">
+			setPath
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">0</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">0</span><span class="var-description">: path (mulitple)</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodsetUnknowns" id="setUnknowns"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">setUnknowns</span> (line <span class="line-number">714</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">METHOD: setUnknowns</p>
+<p class="description"><p>Sets how you want to handle variables that were found in the  template but not set in vlibTemplate using vlibTemplate::setVar().</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			setUnknowns
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$arg</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$arg</span><span class="var-description">: ignore, remove, print, leave or comment</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodsetVar" id="setVar"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">setVar</span> (line <span class="line-number">205</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">METHOD: setVar</p>
+<p class="description"><p>Sets variables to be used by the template  If $k is an array, then it will treat it as an associative array  using the keys as variable names and the values as variable values.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> true/false</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			setVar
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$k</span>, [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$v</span> = <span class="var-default">null</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$k</span><span class="var-description">: key to define variable name</span>			</li>
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$v</span><span class="var-description">: variable to assign to $k</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodunknowns" id="unknowns"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">unknowns</span> (line <span class="line-number">687</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">METHOD: unknowns</p>
+<p class="description"><p>Alias for unknownsExist.</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			unknowns
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodunknownsExist" id="unknownsExist"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">unknownsExist</span> (line <span class="line-number">676</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">METHOD: unknownsExist</p>
+<p class="description"><p>Returns true if unknowns were found after parsing.  Function MUST be called AFTER one of the parsing functions to have any relevance.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> true/false</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			unknownsExist
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodunsetLoop" id="unsetLoop"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">unsetLoop</span> (line <span class="line-number">586</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">METHOD: unsetLoop</p>
+<p class="description"><p>Unsets a loop which has already been set.  Can only unset top level loops.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> true/false returns true unless called with 0 params</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			unsetLoop
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">0</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">0</span><span class="var-description">: loop to remove use: vlibTemplate::unsetLoop(loop[, loop..])</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodunsetVar" id="unsetVar"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">unsetVar</span> (line <span class="line-number">237</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">METHOD: unsetVar</p>
+<p class="description"><p>Unsets a variable which has already been set  Parse in all vars wanted for deletion in seperate parametres</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> true/false returns true unless called with 0 params</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			unsetVar
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">0</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">0</span><span class="var-description">: var name to remove use: vlibTemplate::unsetVar(var[, var..])</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="method_parseIncludeFile" id="_parseIncludeFile"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">_parseIncludeFile</span> (line <span class="line-number">1282</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">METHOD: _parseIncludeFile  parses a string in an include tag, i.e.:   &lt;TMPL_INCLUDE FILE=&quot;footer_{var:footer_number}.html&quot; /&gt;</p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			_parseIncludeFile
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$file</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$file</span><span class="var-description">: file name</span>			</li>
+				</ul>
+		
+			
+	</div>
+						
+		</div>
+	</div>
+
+	
+	<p class="notes" id="credit">
+		Documentation generated on Wed, 28 Aug 2013 15:15:02 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.5.0a1</a>
+	</p>
+	</div></body>
+</html>

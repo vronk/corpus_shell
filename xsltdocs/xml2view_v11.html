@@ -1,0 +1,2909 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+      <title>Stylesheet documentation for: commons_v1.xsl</title>
+      <link rel="stylesheet" href="docHtml.css" type="text/css" /><script type="text/javascript">
+         <!--
+        
+        var parametersBoxes= new Array('prs_T_formURLS_..commons_v1.xsl', 
+				'prs_T_elem-linkS_..commons_v1.xsl', 
+				'prs_T_format-fieldS_..commons_v1.xsl', 
+				'prs_T_format-valueS_..commons_v1.xsl', 
+				'prs_M_M_format-xmlelemS_..commons_v1.xsl', 
+				'prs_T_xml-contextS_..commons_v1.xsl', 
+				'prs_T_dictS_..commons_v1.xsl');
+
+        
+        var usedByBoxes= new Array('uB_T_htmlS_..commons_v1.xsl', 
+				'uB_T_htmljsS_..commons_v1.xsl', 
+				'uB_T_htmlsimpleS_..commons_v1.xsl', 
+				'uB_T_callback-headerS_..commons_v1.xsl', 
+				'uB_T_contexts-docS_..commons_v1.xsl', 
+				'uB_T_contexts-selectS_..commons_v1.xsl', 
+				'uB_T_formURLS_..commons_v1.xsl', 
+				'uB_T_format-valueS_..commons_v1.xsl', 
+				'uB_V_dictS_..commons_v1.xsl', 
+				'uB_V_contextsS_..commons_v1.xsl');
+
+        var docBoxes= new Array('dS_..commons_v1.xsl', 
+				'dS_M_S_..commons_v1.xsl', 
+				'dS_T_htmlS_..commons_v1.xsl', 
+				'dS_T_htmljsS_..commons_v1.xsl', 
+				'dS_T_htmlsimpleS_..commons_v1.xsl', 
+				'dS_T_callback-headerS_..commons_v1.xsl', 
+				'dS_M_diagnosticsS_..commons_v1.xsl', 
+				'dS_T_contexts-docS_..commons_v1.xsl', 
+				'dS_T_contexts-selectS_..commons_v1.xsl', 
+				'dS_T_formURLS_..commons_v1.xsl', 
+				'dS_T_elem-linkS_..commons_v1.xsl', 
+				'dS_T_format-fieldS_..commons_v1.xsl', 
+				'dS_T_format-valueS_..commons_v1.xsl', 
+				'dS_M_M_format-xmlelemS_..commons_v1.xsl', 
+				'dS_M_M_format-attrS_..commons_v1.xsl', 
+				'dS_T_xml-contextS_..commons_v1.xsl', 
+				'dS_T_dictS_..commons_v1.xsl', 
+				'dS_P_dict_fileS_..commons_v1.xsl', 
+				'dS_V_dictS_..commons_v1.xsl', 
+				'dS_V_contextsS_..commons_v1.xsl');
+
+        var sourceBoxes= new Array('src_M_S_..commons_v1.xsl', 
+				'src_T_htmlS_..commons_v1.xsl', 
+				'src_T_htmljsS_..commons_v1.xsl', 
+				'src_T_htmlsimpleS_..commons_v1.xsl', 
+				'src_T_callback-headerS_..commons_v1.xsl', 
+				'src_M_diagnosticsS_..commons_v1.xsl', 
+				'src_M_diagdiagnosticS_..commons_v1.xsl', 
+				'src_T_contexts-docS_..commons_v1.xsl', 
+				'src_T_contexts-selectS_..commons_v1.xsl', 
+				'src_T_formURLS_..commons_v1.xsl', 
+				'src_T_elem-linkS_..commons_v1.xsl', 
+				'src_T_format-fieldS_..commons_v1.xsl', 
+				'src_T_format-valueS_..commons_v1.xsl', 
+				'src_M_M_format-xmlelemS_..commons_v1.xsl', 
+				'src_M_M_format-attrS_..commons_v1.xsl', 
+				'src_T_xml-contextS_..commons_v1.xsl', 
+				'src_T_dictS_..commons_v1.xsl', 
+				'src_P_dict_fileS_..commons_v1.xsl', 
+				'src_V_dictS_..commons_v1.xsl', 
+				'src_V_contextsS_..commons_v1.xsl');
+
+        
+        
+        var referencesBoxes= new Array('refs_M_S_..commons_v1.xsl', 
+				'refs_T_htmlS_..commons_v1.xsl', 
+				'refs_T_htmljsS_..commons_v1.xsl', 
+				'refs_T_htmlsimpleS_..commons_v1.xsl', 
+				'refs_T_contexts-docS_..commons_v1.xsl', 
+				'refs_T_contexts-selectS_..commons_v1.xsl', 
+				'refs_T_formURLS_..commons_v1.xsl', 
+				'refs_T_elem-linkS_..commons_v1.xsl', 
+				'refs_T_format-fieldS_..commons_v1.xsl', 
+				'refs_M_M_format-xmlelemS_..commons_v1.xsl', 
+				'refs_M_M_format-attrS_..commons_v1.xsl', 
+				'refs_T_dictS_..commons_v1.xsl', 
+				'refs_V_contextsS_..commons_v1.xsl');
+
+        
+        var includesBoxes= new Array('ic_..commons_v1.xsl');
+
+        var importedFromBoxes= new Array('ipF_..commons_v1.xsl');
+
+        
+        var button_prefix = 'bt_';
+        
+        /**
+        * Get all DIV elements with a specified class name.
+        *
+        * @param className The class name. 
+        */
+        function getElementsByClassName(className) {
+            var results = [];
+    
+             if (document.getElementsByClassName == undefined) {
+                var allElements = document.getElementsByTagName("div");
+                var element;
+                for (var i = 0; i < allElements.length; i++) {
+                    var element = allElements[i];
+                	var elementClass = element.className;
+                	if (elementClass == className) { 
+                		results.push(element);
+                	}
+                }
+             } else {
+                results = document.getElementsByClassName(className);
+             }
+    
+            return results;
+        }
+            
+        /**
+        * Returns an element in the current HTML document.
+        *
+        * @param elementID Identifier of HTML element
+        * @return               HTML element object
+        */
+        function getElementObject(elementID) {
+            var elemObj = null;
+            if (document.getElementById) {
+                elemObj = document.getElementById(elementID);
+            }
+            return elemObj;
+        }
+        
+        /**
+        * Switches the state of a collapseable box, e.g.
+        * if it's opened, it'll be closed, and vice versa.
+        *
+        * @param boxID Identifier of box
+        */
+        function switchState(boxID) {
+            var boxObj = getElementObject(boxID);
+            var buttonObj = getElementObject(button_prefix + boxID);
+            if (boxObj == null || buttonObj == null) {
+                // Box or button not found
+            } else if (boxObj.style.display == "none") {
+                // Box is closed, so open it
+                openBox(boxObj, buttonObj);
+            } else if (boxObj.style.display == "block") {
+                // Box is opened, so close it
+                closeBox(boxObj, buttonObj);
+            }
+        }
+        
+        /**
+        * Opens a collapseable box.
+        *
+        * @param boxObj       Collapseable box
+        * @param buttonObj Button controlling box
+        */
+        function openBox(boxObj, buttonObj) {
+            if (boxObj == null || buttonObj == null) {
+                // Box or button not found
+            } else {
+                // Change 'display' CSS property of box
+                boxObj.style.display = "block";
+                
+                // Change text of button
+                if (boxObj.style.display == "block") {
+                    buttonObj.src = "img/btM.gif";
+                }
+            }
+        }
+        
+        /**
+        * Closes a collapseable box.
+        *
+        * @param boxObj       Collapseable box
+        * @param buttonObj Button controlling box
+        */
+        function closeBox(boxObj, buttonObj) {
+            if (boxObj == null || buttonObj == null) {
+                // Box or button not found
+            } else {
+                // Change 'display' CSS property of box
+                boxObj.style.display = "none";
+                
+                // Change text of button
+                if (boxObj.style.display == "none") {
+                    buttonObj.src = "img/btP.gif";
+                }
+            }
+        }
+
+       /**
+        * Switch between the compact list representation and the clasic list representation.
+        */
+       function switchMode(checkBox) {
+            if (checkBox == null) {
+                // Checkbox not found
+            } else if (checkBox.checked == 1) {
+                // Compact mode
+                var divs = getElementsByClassName('refItemBlock');
+                for (var i = 0; i < divs.length; i ++) {
+                    divs[i].style.display = "inline";
+                    var children = divs[i].children;
+                    var refItemSep = children[children.length - 1];
+                    if (refItemSep.className == "refItemSep") {
+                        children[children.length - 1].style.display = "inline";
+                    }
+                }
+            } else {
+                // Expanded mode
+                var divs = getElementsByClassName('refItemBlock');
+                for (var i = 0; i < divs.length; i ++) {
+                    divs[i].style.display = "block";
+                    var children = divs[i].children;
+                    var refItemSep = children[children.length - 1];
+                    if (refItemSep.className == "refItemSep") {
+                        children[children.length - 1].style.display = "none";
+                    }
+                }
+            }
+        }
+
+       function switchStateForAll(buttonObj, boxList) {
+            if (buttonObj == null) {
+                // button not found
+            } else if (buttonObj.value == "+") {
+                // Expand all
+                expandAll(boxList);
+                buttonObj.value = "-";
+            } else if (buttonObj.value == "-") {
+                // Collapse all
+                collapseAll(boxList);
+                buttonObj.value = "+";
+            }
+        }
+        
+        /**
+        * Closes all boxes in a given list.
+        *
+        * @param boxList Array of box IDs
+        */
+        function collapseAll(boxList) {
+            var idx;
+            for (idx = 0; idx < boxList.length; idx++) {
+                var boxObj = getElementObject(boxList[idx]);
+                var buttonObj = getElementObject(button_prefix + boxList[idx]);
+                closeBox(boxObj, buttonObj);
+            }
+        }
+            
+        /**
+        * Open all boxes in a given list.
+        *
+        * @param boxList Array of box IDs
+        */
+        function expandAll(boxList) {
+            var idx;
+            for (idx = 0; idx < boxList.length; idx++) {
+                var boxObj = getElementObject(boxList[idx]);
+                var buttonObj = getElementObject(button_prefix + boxList[idx]);
+                openBox(boxObj, buttonObj);
+            }
+        }
+        
+        /**
+         * Update the message presented in the title of the html page.
+         * - If the documentation was splited by namespace we present something like: "Documentation for namespace 'ns'"
+         * - If the documentation was splited by location we present somehing like: "Documentation for 'Schema.xsd'"
+         * - If no split we always present: "Documentation for 'MainSchema.xsd'"
+         */
+        function updPT(message) {
+            top.document.title = "Stylesheet documentation for: " + message;
+        }
+        
+          
+                    
+         /**
+          * Finds an HTML element by its ID and makes it floatable over the normal content.
+          *
+          * @param x_displacement The difference in pixels to the right side of the window from 
+          *           the left side of the element.
+          * @param y_displacement The difference in pixels to the right side of the window from 
+          *           the top of the element.          
+          */
+         function findAndFloat(id, x_displacement, y_displacement){
+
+            var element = getElementObject(id);            
+            
+            window[id + "_obj"] = element;
+            
+            if(document.layers) {
+               element.style = element;
+            }
+            
+            element.current_y = y_displacement;      
+            element.first_time = true;
+         
+            element.floatElement = function(){
+               // It may be closed by an user action.
+                
+               // Target X and Y coordinates.
+               var x, y;
+               
+               var myWidth = 0, myHeight = 0;
+               if( typeof( window.innerWidth ) == 'number' ) {
+                  //Non-IE
+                  myWidth = window.innerWidth;
+                  myHeight = window.innerHeight;
+               } else if( document.documentElement && ( document.documentElement.clientWidth || document.documentElement.clientHeight ) ) {
+                  //IE 6+ in 'standards compliant mode'
+                  myWidth = document.documentElement.clientWidth;
+                  myHeight = document.documentElement.clientHeight;
+               } else if( document.body && ( document.body.clientWidth || document.body.clientHeight ) ) {
+                  //IE 4 compatible
+                  myWidth = document.body.clientWidth;
+                  myHeight = document.body.clientHeight;
+               }
+               
+               
+               x = myWidth - x_displacement;
+               
+               var ns = (navigator.appName.indexOf("Netscape") != -1);               
+               y = ns ? pageYOffset : document.documentElement && document.documentElement.scrollTop ? 
+                  document.documentElement.scrollTop : document.body.scrollTop;               
+               y = y + y_displacement;               
+               
+               // The current y is the current coordinate of the floating element.
+               // This should be at the limit the y target coordinate.
+               this.current_y += (y - this.current_y)/1.25;
+               
+               // Add the pixels constant after the values
+               // and move the element.
+               var px = document.layers ? "" : "px";
+               this.style.left =  x + px;
+               this.style.top =  this.current_y + px;
+                              
+               setTimeout(this.id + "_obj.floatElement()", 100);
+            }
+            
+            element.floatElement();
+            return element;
+          }
+
+         /**
+          * Finds an HTML element by its ID and makes it floatable over the normal content.
+          *
+          * @param x_displacement The difference in pixels to the right side of the window from 
+          *           the left side of the element.
+          * @param y_displacement The difference in pixels to the right side of the window from 
+          *           the top of the element.          
+          */
+         function selectTOCGroupBy(id){
+         var selectIds = new Array('toc_group_by_location', 'toc_group_by_component_type', 'toc_group_by_namespace', 'toc_group_by_mode');
+            // Make all the tabs invisible.
+            for (i = 0; i < 4; i++){
+               var tab = getElementObject(selectIds[i]);
+               tab.style.display = 'none';
+            }
+            var selTab = getElementObject(id);
+            selTab.style.display = 'block';            
+         }
+          
+
+    --></script></head>
+   <body>
+      <div id="global_controls" class="globalControls" style="position:absolute;right:0;">
+         <table class="rt">
+            <tr>
+               <td class="rt_cTL"></td>
+               <td class="rt_lT"></td>
+               <td class="rt_cTR"></td>
+            </tr>
+            <tr>
+               <td class="rt_lL"></td>
+               <td class="rt_cnt">
+                  <h3>Mode:</h3>
+                  <table>
+                     <tr>
+                        <td><span><input type="checkbox" value="-" checked="checked" onclick="switchMode(this);" class="control" /></span><span class="globalControlName">Compact lists</span></td>
+                     </tr>
+                  </table>
+                  <h3>Showing:</h3>
+                  <table>
+                     <tr>
+                        <td><span><input type="checkbox" value="-" checked="checked" onclick="switchStateForAll(this, docBoxes);" class="control" /></span><span class="globalControlName">Documentation
+                              </span></td>
+                     </tr>
+                     <tr>
+                        <td><span><input type="checkbox" value="-" checked="checked" onclick="switchStateForAll(this, parametersBoxes);" class="control" /></span><span class="globalControlName">Parameters </span></td>
+                     </tr>
+                     <tr>
+                        <td><span><input type="checkbox" value="-" checked="checked" onclick="switchStateForAll(this, usedByBoxes);" class="control" /></span><span class="globalControlName">Used by </span></td>
+                     </tr>
+                     <tr>
+                        <td><span><input type="checkbox" value="-" checked="checked" onclick="switchStateForAll(this, referencesBoxes);" class="control" /></span><span class="globalControlName">References </span></td>
+                     </tr>
+                     <tr>
+                        <td><span><input type="checkbox" value="-" checked="checked" onclick="switchStateForAll(this, includesBoxes);" class="control" /></span><span class="globalControlName">Included modules
+                              </span></td>
+                     </tr>
+                     <tr>
+                        <td><span><input type="checkbox" value="-" checked="checked" onclick="switchStateForAll(this, importedFromBoxes);" class="control" /></span><span class="globalControlName">Imported from
+                              </span></td>
+                     </tr>
+                     <tr>
+                        <td><span><input type="checkbox" value="-" checked="checked" onclick="switchStateForAll(this, sourceBoxes);" class="control" /></span><span class="globalControlName">Source </span></td>
+                     </tr>
+                  </table>
+                  <div align="right"><span><input type="button" onclick="getElementObject('global_controls').style.display = 'none';" value="Close" /></span></div>
+               </td>
+               <td class="rt_lR"></td>
+            </tr>
+            <tr>
+               <td class="rt_cBL"></td>
+               <td class="rt_lB"></td>
+               <td class="rt_cBR"></td>
+            </tr>
+         </table>
+      </div><a id="..commons_v1.xsl"></a><div class="cmpT">Stylesheet
+         <span class="qname">commons_v1.xsl</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cTL"></td>
+            <td class="rt_lT"></td>
+            <td class="rt_cTR"></td>
+         </tr>
+         <tr>
+            <td class="rt_lL"></td>
+            <td class="rt_cnt">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Documentation</div>
+                           <div class="flR"><input id="bt_dS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="dS_..commons_v1.xsl" style="display:block">
+                              <div>
+                                 <h3>Description</h3>Generic functions for SRU-result handling.
+                                 
+                                 <p>History:
+                                    
+                                    <ul>
+                                       
+                                       <li class="doc">2011-12-04: created by:"vr": based on cmd_functions.xsl but retrofitted back to 1.0</li>
+                                       
+                                    </ul>
+                                    
+                                 </p>
+                                 
+                                 <table>
+                                    <tr>
+                                       <h4>Parameters</h4>
+                                       <td class="paramName"><b>dict_file</b></td>
+                                       <td></td>
+                                    </tr>
+                                 </table>
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Included modules</div>
+                           <div class="flR"><input id="bt_ic_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('ic_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="ic_..commons_v1.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="xml2view_v12.html#..html_snippets.xsl" target="_self" title="No namespace" onclick="updPT('../html_snippets.xsl')">../html_snippets.xsl</a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Imported from</div>
+                           <div class="flR"><input id="bt_ipF_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('ipF_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="ipF_..commons_v1.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="xml2view_v10.html#xml2view_v1.xsl" target="_self" title="No namespace" onclick="updPT('xml2view_v1.xsl')">xml2view_v1.xsl</a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Stylesheet version</td>
+                        <td>1.0</td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lR"></td>
+         </tr>
+         <tr>
+            <td class="rt_cBL"></td>
+            <td class="rt_lB"></td>
+            <td class="rt_cBR"></td>
+         </tr>
+      </table><a id="M_S_..commons_v1.xsl"></a><div class="cmpT">Template
+         <span class="titleTemplateMatch">/</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cTL"></td>
+            <td class="rt_lT"></td>
+            <td class="rt_cTR"></td>
+         </tr>
+         <tr>
+            <td class="rt_lL"></td>
+            <td class="rt_cnt">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Documentation</div>
+                           <div class="flR"><input id="bt_dS_M_S_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_M_S_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="dS_M_S_..commons_v1.xsl" style="display:block">
+                              <div>
+                                 <h3>Description</h3>Common starting point for all stylesheet
+                                 	        
+                                 <p>Cares for unified html-envelope
+                                    	        and passes back to the individual stylesheets for the content 
+                                    	        (via template: <a href="xml2view_v10.html#T_continue-rootS_xml2view_v1.xsl" target="_self">continue-root</a>)
+                                    	        
+                                 </p>
+                                 	        
+                                 <p>
+                                    	            Depending on <a href="xml2view_v13.html#P_formatS_..params.xsl" target="_self">$format</a> containing
+                                    	            that name generates the html framework using one of the following named
+                                    templates
+                                    	            
+                                    <ul>	                
+                                       	                
+                                       <li class="doc"><a href="xml2view_v11.html#T_htmlS_..commons_v1.xsl" target="_self">html</a> for ??? 
+                                       </li>
+                                       	                
+                                       <li class="doc"><a href="xml2view_v11.html#T_htmljsS_..commons_v1.xsl" target="_self">htmljs</a> for ??? 
+                                       </li>
+                                       	                
+                                       <li class="doc"><a href="xml2view_v11.html#T_htmlsimpleS_..commons_v1.xsl" target="_self">htmlsimple</a> for ??? 
+                                       </li>	                
+                                       	            
+                                    </ul>
+                                    	            If none of these are found the only the contents generated by
+                                    	            <a href="xml2view_v10.html#T_continue-rootS_xml2view_v1.xsl" target="_self">continue-root</a> are returned. 
+                                    	        
+                                 </p>
+                                 	    
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Namespace</td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Match</td>
+                        <td>/</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Mode</td>
+                        <td>#default</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">References</div>
+                           <div class="flR"><input id="bt_refs_M_S_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('refs_M_S_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="refs_M_S_..commons_v1.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td class="fCol">Parameter</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="xml2view_v13.html#P_formatS_..params.xsl" target="_self" title="No namespace" onclick="updPT('../params.xsl')">format</a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="fCol">Templates</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="xml2view_v10.html#T_continue-rootS_xml2view_v1.xsl" target="_self" title="No namespace" onclick="updPT('xml2view_v1.xsl')"><span class="nRf">continue-root</span></a><span class="refItemSep">;</span></div>
+                                          <div class="refItemBlock"><a href="xml2view_v11.html#T_htmlS_..commons_v1.xsl" target="_self" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">html</span></a><span class="refItemSep">;</span></div>
+                                          <div class="refItemBlock"><a href="xml2view_v11.html#T_htmljsS_..commons_v1.xsl" target="_self" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">htmljs</span></a><span class="refItemSep">;</span></div>
+                                          <div class="refItemBlock"><a href="xml2view_v11.html#T_htmlsimpleS_..commons_v1.xsl" target="_self" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">htmlsimple</span></a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Import precedence</td>
+                        <td>1</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Source</div>
+                           <div class="flR"><input id="bt_src_M_S_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_M_S_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="src_M_S_..commons_v1.xsl" style="display:block">
+                              <table class="pWCont">
+                                 <tr>
+                                    <td width="100%"><pre><span class="tXSLEl">&lt;xsl:template</span><span class="tAN"> match=</span><span class="tAV">"/"</span><span class="tXSLEl">&gt;</span><span class="tI">
+  </span><span class="tC">&lt;!--&lt;xsl:message&gt;root_document-uri:&lt;xsl:value-of select="$root_uri"/&gt;
+			&lt;/xsl:message&gt;
+			&lt;xsl:message&gt;format:&lt;xsl:value-of select="$format"/&gt;
+			&lt;/xsl:message&gt;--&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;xsl:choose</span><span class="tXSLEl">&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;xsl:when</span><span class="tAN"> test=</span><span class="tAV">"contains($format,'htmlpage')"</span><span class="tXSLEl">&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;xsl:call-template</span><span class="tAN"> name=</span><span class="tAV">"html"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;/xsl:when&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;xsl:when</span><span class="tAN"> test=</span><span class="tAV">"contains($format,'htmljspage')"</span><span class="tXSLEl">&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;xsl:call-template</span><span class="tAN"> name=</span><span class="tAV">"htmljs"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;/xsl:when&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;xsl:when</span><span class="tAN"> test=</span><span class="tAV">"contains($format,'htmlsimple')"</span><span class="tXSLEl">&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;xsl:call-template</span><span class="tAN"> name=</span><span class="tAV">"htmlsimple"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;/xsl:when&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;xsl:otherwise</span><span class="tXSLEl">&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;xsl:call-template</span><span class="tAN"> name=</span><span class="tAV">"continue-root"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;/xsl:otherwise&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;/xsl:choose&gt;</span><span class="tI">
+</span><span class="tXSLEl">&lt;/xsl:template&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lR"></td>
+         </tr>
+         <tr>
+            <td class="rt_cBL"></td>
+            <td class="rt_lB"></td>
+            <td class="rt_cBR"></td>
+         </tr>
+      </table><a id="T_htmlS_..commons_v1.xsl"></a><div class="cmpT">Template
+         <span class="titleTemplateName">html</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cTL"></td>
+            <td class="rt_lT"></td>
+            <td class="rt_cTR"></td>
+         </tr>
+         <tr>
+            <td class="rt_lL"></td>
+            <td class="rt_cnt">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Documentation</div>
+                           <div class="flR"><input id="bt_dS_T_htmlS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_T_htmlS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="dS_T_htmlS_..commons_v1.xsl" style="display:block">
+                              <div>
+                                 <h3>Description</h3>Generates the typical html framework and integrates the parts created by the specialised
+                                 named templates
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Namespace</td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Used by</div>
+                           <div class="flR"><input id="bt_uB_T_htmlS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('uB_T_htmlS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="uB_T_htmlS_..commons_v1.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td class="fCol">Template</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="xml2view_v11.html#M_S_..commons_v1.xsl" target="_self" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="mRf">/</span></a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">References</div>
+                           <div class="flR"><input id="bt_refs_T_htmlS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('refs_T_htmlS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="refs_T_htmlS_..commons_v1.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td class="fCol">Templates</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="xml2view_v11.html#T_callback-headerS_..commons_v1.xsl" target="_self" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">callback-header</span></a><span class="refItemSep">;</span></div>
+                                          <div class="refItemBlock"><a href="xml2view_v10.html#T_continue-rootS_xml2view_v1.xsl" target="_self" title="No namespace" onclick="updPT('xml2view_v1.xsl')"><span class="nRf">continue-root</span></a><span class="refItemSep">;</span></div>
+                                          <div class="refItemBlock"><a href="xml2view_v12.html#T_html-headS_..html_snippets.xsl" target="_self" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">html-head</span></a><span class="refItemSep">;</span></div>
+                                          <div class="refItemBlock"><a href="xml2view_v12.html#T_page-headerS_..html_snippets.xsl" target="_self" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">page-header</span></a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="fCol">Variable</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="xml2view_v10.html#V_titleS_xml2view_v1.xsl" target="_self" title="No namespace" onclick="updPT('xml2view_v1.xsl')">title</a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Import precedence</td>
+                        <td>1</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Source</div>
+                           <div class="flR"><input id="bt_src_T_htmlS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_T_htmlS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="src_T_htmlS_..commons_v1.xsl" style="display:block">
+                              <table class="pWCont">
+                                 <tr>
+                                    <td width="100%"><pre><span class="tXSLEl">&lt;xsl:template</span><span class="tAN"> name=</span><span class="tAV">"html"</span><span class="tXSLEl">&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;html</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;head</span><span class="tEl">&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;xsl:call-template</span><span class="tAN"> name=</span><span class="tAV">"html-head"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;xsl:call-template</span><span class="tAN"> name=</span><span class="tAV">"callback-header"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;/head&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;body</span><span class="tEl">&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;xsl:call-template</span><span class="tAN"> name=</span><span class="tAV">"page-header"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;h1</span><span class="tEl">&gt;</span><span class="tI">
+        </span><span class="tXSLEl">&lt;xsl:value-of</span><span class="tAN"> select=</span><span class="tAV">"$title"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;/h1&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;xsl:apply-templates</span><span class="tAN"> select=</span><span class="tAV">"diagnostics"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;xsl:call-template</span><span class="tAN"> name=</span><span class="tAV">"continue-root"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;/body&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/html&gt;</span><span class="tI">
+</span><span class="tXSLEl">&lt;/xsl:template&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lR"></td>
+         </tr>
+         <tr>
+            <td class="rt_cBL"></td>
+            <td class="rt_lB"></td>
+            <td class="rt_cBR"></td>
+         </tr>
+      </table><a id="T_htmljsS_..commons_v1.xsl"></a><div class="cmpT">Template
+         <span class="titleTemplateName">htmljs</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cTL"></td>
+            <td class="rt_lT"></td>
+            <td class="rt_cTR"></td>
+         </tr>
+         <tr>
+            <td class="rt_lL"></td>
+            <td class="rt_cnt">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Documentation</div>
+                           <div class="flR"><input id="bt_dS_T_htmljsS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_T_htmljsS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="dS_T_htmljsS_..commons_v1.xsl" style="display:block">
+                              <div>
+                                 <h3>Description</h3>Generates the typical html framework and integrates the more parts created by the
+                                 specialised named templates
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Namespace</td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Used by</div>
+                           <div class="flR"><input id="bt_uB_T_htmljsS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('uB_T_htmljsS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="uB_T_htmljsS_..commons_v1.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td class="fCol">Template</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="xml2view_v11.html#M_S_..commons_v1.xsl" target="_self" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="mRf">/</span></a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">References</div>
+                           <div class="flR"><input id="bt_refs_T_htmljsS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('refs_T_htmljsS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="refs_T_htmljsS_..commons_v1.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td class="fCol">Templates</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="xml2view_v11.html#T_callback-headerS_..commons_v1.xsl" target="_self" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">callback-header</span></a><span class="refItemSep">;</span></div>
+                                          <div class="refItemBlock"><a href="xml2view_v12.html#T_detail-spaceS_..html_snippets.xsl" target="_self" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">detail-space</span></a><span class="refItemSep">;</span></div>
+                                          <div class="refItemBlock"><a href="xml2view_v12.html#T_html-headS_..html_snippets.xsl" target="_self" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">html-head</span></a><span class="refItemSep">;</span></div>
+                                          <div class="refItemBlock"><a href="xml2view_v12.html#T_page-headerS_..html_snippets.xsl" target="_self" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">page-header</span></a><span class="refItemSep">;</span></div>
+                                          <div class="refItemBlock"><a href="xml2view_v12.html#T_public-spaceS_..html_snippets.xsl" target="_self" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">public-space</span></a><span class="refItemSep">;</span></div>
+                                          <div class="refItemBlock"><a href="xml2view_v12.html#T_query-inputS_..html_snippets.xsl" target="_self" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">query-input</span></a><span class="refItemSep">;</span></div>
+                                          <div class="refItemBlock"><a href="xml2view_v12.html#T_query-listS_..html_snippets.xsl" target="_self" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">query-list</span></a><span class="refItemSep">;</span></div>
+                                          <div class="refItemBlock"><a href="xml2view_v12.html#T_user-spaceS_..html_snippets.xsl" target="_self" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">user-space</span></a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="fCol">Variable</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="xml2view_v10.html#V_titleS_xml2view_v1.xsl" target="_self" title="No namespace" onclick="updPT('xml2view_v1.xsl')">title</a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Import precedence</td>
+                        <td>1</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Source</div>
+                           <div class="flR"><input id="bt_src_T_htmljsS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_T_htmljsS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="src_T_htmljsS_..commons_v1.xsl" style="display:block">
+                              <table class="pWCont">
+                                 <tr>
+                                    <td width="100%"><pre><span class="tXSLEl">&lt;xsl:template</span><span class="tAN"> name=</span><span class="tAV">"htmljs"</span><span class="tXSLEl">&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;html</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;head</span><span class="tEl">&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;xsl:call-template</span><span class="tAN"> name=</span><span class="tAV">"html-head"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;xsl:call-template</span><span class="tAN"> name=</span><span class="tAV">"callback-header"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;/head&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;body</span><span class="tEl">&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;xsl:call-template</span><span class="tAN"> name=</span><span class="tAV">"page-header"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;h1</span><span class="tEl">&gt;</span><span class="tI">
+        </span><span class="tXSLEl">&lt;xsl:value-of</span><span class="tAN"> select=</span><span class="tAV">"$title"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;/h1&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;xsl:call-template</span><span class="tAN"> name=</span><span class="tAV">"query-input"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;xsl:call-template</span><span class="tAN"> name=</span><span class="tAV">"query-list"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;xsl:call-template</span><span class="tAN"> name=</span><span class="tAV">"detail-space"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;xsl:call-template</span><span class="tAN"> name=</span><span class="tAV">"public-space"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;xsl:call-template</span><span class="tAN"> name=</span><span class="tAV">"user-space"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+      </span><span class="tC">&lt;!--  &lt;xsl:call-template name="continue-root"/&gt;--&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;/body&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/html&gt;</span><span class="tI">
+</span><span class="tXSLEl">&lt;/xsl:template&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lR"></td>
+         </tr>
+         <tr>
+            <td class="rt_cBL"></td>
+            <td class="rt_lB"></td>
+            <td class="rt_cBR"></td>
+         </tr>
+      </table><a id="T_htmlsimpleS_..commons_v1.xsl"></a><div class="cmpT">Template
+         <span class="titleTemplateName">htmlsimple</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cTL"></td>
+            <td class="rt_lT"></td>
+            <td class="rt_cTR"></td>
+         </tr>
+         <tr>
+            <td class="rt_lL"></td>
+            <td class="rt_cnt">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Documentation</div>
+                           <div class="flR"><input id="bt_dS_T_htmlsimpleS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_T_htmlsimpleS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="dS_T_htmlsimpleS_..commons_v1.xsl" style="display:block">
+                              <div>
+                                 <h3>Description</h3>An html-envelope for a simple (noscript) view
+                                 
+                                 <p>
+                                    Uses $script_url/style/cmd-ui.css
+                                    
+                                 </p>
+                                 
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Namespace</td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Used by</div>
+                           <div class="flR"><input id="bt_uB_T_htmlsimpleS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('uB_T_htmlsimpleS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="uB_T_htmlsimpleS_..commons_v1.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td class="fCol">Template</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="xml2view_v11.html#M_S_..commons_v1.xsl" target="_self" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="mRf">/</span></a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">References</div>
+                           <div class="flR"><input id="bt_refs_T_htmlsimpleS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('refs_T_htmlsimpleS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="refs_T_htmlsimpleS_..commons_v1.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td class="fCol">Variable</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="xml2view_v10.html#V_titleS_xml2view_v1.xsl" target="_self" title="No namespace" onclick="updPT('xml2view_v1.xsl')">title</a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="fCol">Parameter</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="xml2view_v13.html#P_scripts_urlS_..params.xsl" target="_self" title="No namespace" onclick="updPT('../params.xsl')">scripts_url</a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="fCol">Templates</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="xml2view_v10.html#T_continue-rootS_xml2view_v1.xsl" target="_self" title="No namespace" onclick="updPT('xml2view_v1.xsl')"><span class="nRf">continue-root</span></a><span class="refItemSep">;</span></div>
+                                          <div class="refItemBlock"><a href="xml2view_v12.html#T_page-headerS_..html_snippets.xsl" target="_self" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">page-header</span></a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Import precedence</td>
+                        <td>1</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Source</div>
+                           <div class="flR"><input id="bt_src_T_htmlsimpleS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_T_htmlsimpleS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="src_T_htmlsimpleS_..commons_v1.xsl" style="display:block">
+                              <table class="pWCont">
+                                 <tr>
+                                    <td width="100%"><pre><span class="tXSLEl">&lt;xsl:template</span><span class="tAN"> name=</span><span class="tAV">"htmlsimple"</span><span class="tXSLEl">&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;html</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;head</span><span class="tEl">&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;title</span><span class="tEl">&gt;</span><span class="tI">
+        </span><span class="tXSLEl">&lt;xsl:value-of</span><span class="tAN"> select=</span><span class="tAV">"$title"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;/title&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;link</span><span class="tAN"> href=</span><span class="tAV">"{$scripts_url}style/cmds-ui.css"</span><span class="tAN"> type=</span><span class="tAV">"text/css"</span><span class="tAN"> rel=</span><span class="tAV">"stylesheet"</span><span class="tEl">/&gt;</span><span class="tI">
+      </span><span class="tC">&lt;!-- &lt;xsl:call-template name="callback-header"/&gt; --&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;/head&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;xsl:call-template</span><span class="tAN"> name=</span><span class="tAV">"page-header"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;body</span><span class="tEl">&gt;</span><span class="tI">
+      </span><span class="tC">&lt;!-- &lt;h1&gt;&lt;xsl:value-of select="$title"/&gt;&lt;/h1&gt; --&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;xsl:apply-templates</span><span class="tAN"> select=</span><span class="tAV">"diagnostics"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;xsl:call-template</span><span class="tAN"> name=</span><span class="tAV">"continue-root"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;/body&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/html&gt;</span><span class="tI">
+</span><span class="tXSLEl">&lt;/xsl:template&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lR"></td>
+         </tr>
+         <tr>
+            <td class="rt_cBL"></td>
+            <td class="rt_lB"></td>
+            <td class="rt_cBR"></td>
+         </tr>
+      </table><a id="T_callback-headerS_..commons_v1.xsl"></a><div class="cmpT">Template
+         <span class="titleTemplateName">callback-header</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cTL"></td>
+            <td class="rt_lT"></td>
+            <td class="rt_cTR"></td>
+         </tr>
+         <tr>
+            <td class="rt_lL"></td>
+            <td class="rt_cnt">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Documentation</div>
+                           <div class="flR"><input id="bt_dS_T_callback-headerS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_T_callback-headerS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="dS_T_callback-headerS_..commons_v1.xsl" style="display:block">
+                              <div>
+                                 <h3>Description</h3>Do-nothing definition of callback-header. Overwrite this in specialised templates
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Namespace</td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Used by</div>
+                           <div class="flR"><input id="bt_uB_T_callback-headerS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('uB_T_callback-headerS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="uB_T_callback-headerS_..commons_v1.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td class="fCol">Templates</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="xml2view_v11.html#T_htmlS_..commons_v1.xsl" target="_self" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">html</span></a><span class="refItemSep">;</span></div>
+                                          <div class="refItemBlock"><a href="xml2view_v11.html#T_htmljsS_..commons_v1.xsl" target="_self" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">htmljs</span></a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Import precedence</td>
+                        <td>1</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Source</div>
+                           <div class="flR"><input id="bt_src_T_callback-headerS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_T_callback-headerS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="src_T_callback-headerS_..commons_v1.xsl" style="display:block">
+                              <table class="pWCont">
+                                 <tr>
+                                    <td width="100%"><pre><span class="tXSLEl">&lt;xsl:template</span><span class="tAN"> name=</span><span class="tAV">"callback-header"</span><span class="tXSLEl">/&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lR"></td>
+         </tr>
+         <tr>
+            <td class="rt_cBL"></td>
+            <td class="rt_lB"></td>
+            <td class="rt_cBR"></td>
+         </tr>
+      </table><a id="M_diagnosticsS_..commons_v1.xsl"></a><div class="cmpT">Template
+         <span class="titleTemplateMatch">diagnostics</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cTL"></td>
+            <td class="rt_lT"></td>
+            <td class="rt_cTR"></td>
+         </tr>
+         <tr>
+            <td class="rt_lL"></td>
+            <td class="rt_cnt">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Documentation</div>
+                           <div class="flR"><input id="bt_dS_M_diagnosticsS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_M_diagnosticsS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="dS_M_diagnosticsS_..commons_v1.xsl" style="display:block">
+                              <div>
+                                 <h3>Description</h3>Template used to display an error/diagnostic message returned by the upstream endpoint
+                                 
+                                 <p>
+                                    The error message can be found in diag:diagnostic so the template for this is directly
+                                    related.
+                                    
+                                 </p>
+                                 
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Namespace</td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Match</td>
+                        <td>diagnostics</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Mode</td>
+                        <td>#default</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Import precedence</td>
+                        <td>1</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Source</div>
+                           <div class="flR"><input id="bt_src_M_diagnosticsS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_M_diagnosticsS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="src_M_diagnosticsS_..commons_v1.xsl" style="display:block">
+                              <table class="pWCont">
+                                 <tr>
+                                    <td width="100%"><pre><span class="tXSLEl">&lt;xsl:template</span><span class="tAN"> match=</span><span class="tAV">"diagnostics"</span><span class="tXSLEl">&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;div</span><span class="tAN"> class=</span><span class="tAV">"error"</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;xsl:apply-templates</span><span class="tXSLEl">/&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/div&gt;</span><span class="tI">
+</span><span class="tXSLEl">&lt;/xsl:template&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lR"></td>
+         </tr>
+         <tr>
+            <td class="rt_cBL"></td>
+            <td class="rt_lB"></td>
+            <td class="rt_cBR"></td>
+         </tr>
+      </table><a id="M_diagdiagnosticS_..commons_v1.xsl"></a><div class="cmpT">Template
+         <span class="titleTemplateMatch">diag:diagnostic</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cTL"></td>
+            <td class="rt_lT"></td>
+            <td class="rt_cTR"></td>
+         </tr>
+         <tr>
+            <td class="rt_lL"></td>
+            <td class="rt_cnt">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="fCol">Namespace</td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Match</td>
+                        <td>diag:diagnostic</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Mode</td>
+                        <td>#default</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Import precedence</td>
+                        <td>1</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Source</div>
+                           <div class="flR"><input id="bt_src_M_diagdiagnosticS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_M_diagdiagnosticS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="src_M_diagdiagnosticS_..commons_v1.xsl" style="display:block">
+                              <table class="pWCont">
+                                 <tr>
+                                    <td width="100%"><pre><span class="tXSLEl">&lt;xsl:template</span><span class="tAN"> match=</span><span class="tAV">"diag:diagnostic"</span><span class="tXSLEl">&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;p</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;xsl:value-of</span><span class="tAN"> select=</span><span class="tAV">"diag:message"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;xsl:if</span><span class="tAN"> test=</span><span class="tAV">"diag:details"</span><span class="tXSLEl">&gt;</span><span class="tT"> (</span><span class="tXSLEl">&lt;xsl:value-of</span><span class="tAN"> select=</span><span class="tAV">"diag:details"</span><span class="tXSLEl">/&gt;</span><span class="tT">)</span><span class="tXSLEl">&lt;/xsl:if&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;br</span><span class="tEl">/&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;xsl:value-of</span><span class="tAN"> select=</span><span class="tAV">"diag:uri"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/p&gt;</span><span class="tI">
+</span><span class="tXSLEl">&lt;/xsl:template&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lR"></td>
+         </tr>
+         <tr>
+            <td class="rt_cBL"></td>
+            <td class="rt_lB"></td>
+            <td class="rt_cBR"></td>
+         </tr>
+      </table><a id="T_contexts-docS_..commons_v1.xsl"></a><div class="cmpT">Template
+         <span class="titleTemplateName">contexts-doc</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cTL"></td>
+            <td class="rt_lT"></td>
+            <td class="rt_cTR"></td>
+         </tr>
+         <tr>
+            <td class="rt_lL"></td>
+            <td class="rt_cnt">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Documentation</div>
+                           <div class="flR"><input id="bt_dS_T_contexts-docS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_T_contexts-docS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="dS_T_contexts-docS_..commons_v1.xsl" style="display:block">
+                              <div>
+                                 <h3>Description</h3>Fetches the context from the URL provided in $context_url
+                                 
+                                 <p>
+                                    $context_url is influenced by <a href=".html#" target="_self">$base_url</a>.
+                                    
+                                 </p>
+                                 
+                                 <p>
+                                    Note: by default $base_url is set to an empty string so the URL is assumed to be wherever
+                                    these
+                                    style sheet is executed. This may lead to warnings by the XSLT processor.
+                                    
+                                 </p>
+                                 
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Namespace</td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Used by</div>
+                           <div class="flR"><input id="bt_uB_T_contexts-docS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('uB_T_contexts-docS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="uB_T_contexts-docS_..commons_v1.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td class="fCol">Variable</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="xml2view_v11.html#V_contextsS_..commons_v1.xsl" target="_self" title="No namespace" onclick="updPT('../commons_v1.xsl')">contexts</a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">References</div>
+                           <div class="flR"><input id="bt_refs_T_contexts-docS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('refs_T_contexts-docS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="refs_T_contexts-docS_..commons_v1.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td class="fCol">Parameter</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="xml2view_v13.html#P_contexts_urlS_..params.xsl" target="_self" title="No namespace" onclick="updPT('../params.xsl')">contexts_url</a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Import precedence</td>
+                        <td>1</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Source</div>
+                           <div class="flR"><input id="bt_src_T_contexts-docS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_T_contexts-docS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="src_T_contexts-docS_..commons_v1.xsl" style="display:block">
+                              <table class="pWCont">
+                                 <tr>
+                                    <td width="100%"><pre><span class="tXSLEl">&lt;xsl:template</span><span class="tAN"> name=</span><span class="tAV">"contexts-doc"</span><span class="tXSLEl">&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;xsl:copy-of</span><span class="tAN"> select=</span><span class="tAV">"document($contexts_url)"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+</span><span class="tXSLEl">&lt;/xsl:template&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lR"></td>
+         </tr>
+         <tr>
+            <td class="rt_cBL"></td>
+            <td class="rt_lB"></td>
+            <td class="rt_cBR"></td>
+         </tr>
+      </table><a id="T_contexts-selectS_..commons_v1.xsl"></a><div class="cmpT">Template
+         <span class="titleTemplateName">contexts-select</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cTL"></td>
+            <td class="rt_lT"></td>
+            <td class="rt_cTR"></td>
+         </tr>
+         <tr>
+            <td class="rt_lL"></td>
+            <td class="rt_cnt">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Documentation</div>
+                           <div class="flR"><input id="bt_dS_T_contexts-selectS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_T_contexts-selectS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="dS_T_contexts-selectS_..commons_v1.xsl" style="display:block">
+                              <div>
+                                 <h3>Description</h3>Generates an HTML select-option list of available contexts
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Namespace</td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Used by</div>
+                           <div class="flR"><input id="bt_uB_T_contexts-selectS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('uB_T_contexts-selectS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="uB_T_contexts-selectS_..commons_v1.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td class="fCol">Template</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="xml2view_v12.html#T_query-inputS_..html_snippets.xsl" target="_self" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">query-input</span></a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">References</div>
+                           <div class="flR"><input id="bt_refs_T_contexts-selectS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('refs_T_contexts-selectS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="refs_T_contexts-selectS_..commons_v1.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td class="fCol">Variable</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="xml2view_v11.html#V_contextsS_..commons_v1.xsl" target="_self" title="No namespace" onclick="updPT('../commons_v1.xsl')">contexts</a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="fCol">Parameter</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="xml2view_v13.html#P_x-contextS_..params.xsl" target="_self" title="No namespace" onclick="updPT('../params.xsl')">x-context</a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Import precedence</td>
+                        <td>1</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Source</div>
+                           <div class="flR"><input id="bt_src_T_contexts-selectS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_T_contexts-selectS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="src_T_contexts-selectS_..commons_v1.xsl" style="display:block">
+                              <table class="pWCont">
+                                 <tr>
+                                    <td width="100%"><pre><span class="tXSLEl">&lt;xsl:template</span><span class="tAN"> name=</span><span class="tAV">"contexts-select"</span><span class="tXSLEl">&gt;</span><span class="tI">
+  </span><span class="tC">&lt;!--            DEBUG: contexts_url:&lt;xsl:copy-of select="resolve-uri($contexts_url)" /&gt;
+        DEBUG: base_url:&lt;xsl:value-of select="$base_url" /&gt;
+        DEBUG: contexts:&lt;xsl:copy-of select="$contexts" /&gt; --&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;select</span><span class="tAN"> name=</span><span class="tAV">"x-context"</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;xsl:if</span><span class="tAN"> test=</span><span class="tAV">"$contexts"</span><span class="tXSLEl">&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;xsl:for-each</span><span class="tAN"> select=</span><span class="tAV">"(exsl:node-set($contexts))//sru:terms/sru:term"</span><span class="tXSLEl">&gt;</span><span class="tI">
+        </span><span class="tXSLEl">&lt;xsl:variable</span><span class="tAN"> name=</span><span class="tAV">"ancestors-prefix"</span><span class="tXSLEl">&gt;</span><span class="tI">
+          </span><span class="tXSLEl">&lt;xsl:for-each</span><span class="tAN"> select=</span><span class="tAV">"ancestor::sru:term"</span><span class="tXSLEl">&gt;</span><span class="tI">
+            </span><span class="tXSLEl">&lt;xsl:text</span><span class="tXSLEl">&gt;</span><span class="tT">.</span><span class="tXSLEl">&lt;/xsl:text&gt;</span><span class="tI">
+          </span><span class="tXSLEl">&lt;/xsl:for-each&gt;</span><span class="tI">
+        </span><span class="tXSLEl">&lt;/xsl:variable&gt;</span><span class="tI">
+        </span><span class="tEl">&lt;option</span><span class="tAN"> value=</span><span class="tAV">"{sru:value}"</span><span class="tEl">&gt;</span><span class="tI">
+          </span><span class="tXSLEl">&lt;xsl:if</span><span class="tAN"> test=</span><span class="tAV">"sru:value/text() = $x-context"</span><span class="tXSLEl">&gt;</span><span class="tI">
+            </span><span class="tXSLEl">&lt;xsl:attribute</span><span class="tAN"> name=</span><span class="tAV">"selected"</span><span class="tXSLEl">&gt;</span><span class="tT">selected</span><span class="tXSLEl">&lt;/xsl:attribute&gt;</span><span class="tI">
+          </span><span class="tXSLEl">&lt;/xsl:if&gt;</span><span class="tI">
+          </span><span class="tXSLEl">&lt;xsl:value-of</span><span class="tAN"> select=</span><span class="tAV">"concat($ancestors-prefix, sru:displayTerm)"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+        </span><span class="tEl">&lt;/option&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;/xsl:for-each&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;/xsl:if&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/select&gt;</span><span class="tI">
+</span><span class="tXSLEl">&lt;/xsl:template&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lR"></td>
+         </tr>
+         <tr>
+            <td class="rt_cBL"></td>
+            <td class="rt_lB"></td>
+            <td class="rt_cBR"></td>
+         </tr>
+      </table><a id="T_formURLS_..commons_v1.xsl"></a><div class="cmpT">Template
+         <span class="titleTemplateName">formURL</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cTL"></td>
+            <td class="rt_lT"></td>
+            <td class="rt_cTR"></td>
+         </tr>
+         <tr>
+            <td class="rt_lL"></td>
+            <td class="rt_cnt">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Documentation</div>
+                           <div class="flR"><input id="bt_dS_T_formURLS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_T_formURLS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="dS_T_formURLS_..commons_v1.xsl" style="display:block">
+                              <div>
+                                 <h3>Description</h3>Shall be usable to form consistently all urls within xsl
+                                 <table>
+                                    <tr>
+                                       <h4>Parameters</h4>
+                                       <td class="paramName"><b>action</b></td>
+                                       <td>Same meaning as <a href="xml2view_v13.html#P_operationS_..params.xsl" target="_self">$operation</a>.
+                                          Defaults to <a href="xml2view_v13.html#P_operationS_..params.xsl" target="_self">$operation</a>.
+                                       </td>
+                                    </tr>
+                                    <tr>
+                                       <td class="paramName"><b>format</b></td>
+                                       <td>Same meaning as <a href="xml2view_v13.html#P_formatS_..params.xsl" target="_self">$format</a>.
+                                          Defaults to <a href="xml2view_v13.html#P_formatS_..params.xsl" target="_self">$format</a>.
+                                       </td>
+                                    </tr>
+                                    <tr>
+                                       <td class="paramName"><b>q</b></td>
+                                       <td>Same meaning as <a href="xml2view_v13.html#P_qS_..params.xsl" target="_self">$q</a>.
+                                          Defaults to <a href="xml2view_v13.html#P_qS_..params.xsl" target="_self">$q</a>.
+                                       </td>
+                                    </tr>
+                                    <tr>
+                                       <td class="paramName"><b>startRecord</b></td>
+                                       <td>Same meaning as <a href="xml2view_v13.html#P_startRecordS_..params.xsl" target="_self">$startRecord</a>.
+                                          Defaults to <a href="xml2view_v13.html#P_startRecordS_..params.xsl" target="_self">$startRecord</a>.
+                                       </td>
+                                    </tr>
+                                    <tr>
+                                       <td class="paramName"><b>maximumRecords</b></td>
+                                       <td>Same meaning as <a href="xml2view_v13.html#P_maximumRecordsS_..params.xsl" target="_self">$maximumRecords</a>.
+                                          Defaults to <a href="xml2view_v13.html#P_maximumRecordsS_..params.xsl" target="_self">$maximumRecords</a>.
+                                       </td>
+                                    </tr>
+                                 </table>
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Namespace</td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Used by</div>
+                           <div class="flR"><input id="bt_uB_T_formURLS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('uB_T_formURLS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="uB_T_formURLS_..commons_v1.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td class="fCol">Templates</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="xml2view_v12.html#T_prev-nextS_..html_snippets.xsl" target="_self" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">prev-next</span></a><span class="refItemSep">;</span></div>
+                                          <div class="refItemBlock"><a href="xml2view_v12.html#T_top-menuS_..html_snippets.xsl" target="_self" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">top-menu</span></a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">References</div>
+                           <div class="flR"><input id="bt_refs_T_formURLS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('refs_T_formURLS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="refs_T_formURLS_..commons_v1.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td class="fCol">Parameters</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="xml2view_v13.html#P_base_urlS_..params.xsl" target="_self" title="No namespace" onclick="updPT('../params.xsl')">base_url</a><span class="refItemSep">;</span></div>
+                                          <div class="refItemBlock"><a href="xml2view_v13.html#P_operationS_..params.xsl" target="_self" title="No namespace" onclick="updPT('../params.xsl')">operation</a><span class="refItemSep">;</span></div>
+                                          <div class="refItemBlock"><a href="xml2view_v13.html#P_scanClauseS_..params.xsl" target="_self" title="No namespace" onclick="updPT('../params.xsl')">scanClause</a><span class="refItemSep">;</span></div>
+                                          <div class="refItemBlock"><a href="xml2view_v13.html#P_x-contextS_..params.xsl" target="_self" title="No namespace" onclick="updPT('../params.xsl')">x-context</a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Parameters</div>
+                           <div class="flR"><input id="bt_prs_T_formURLS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('prs_T_formURLS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="prs_T_formURLS_..commons_v1.xsl" style="display:block">
+                              <table class="attsT">
+                                 <thead>
+                                    <tr>
+                                       <th>QName</th>
+                                       <th>Namespace</th>
+                                       <th>Select</th>
+                                    </tr>
+                                 </thead>
+                                 <tr>
+                                    <td class="fCol">action</td>
+                                    <td>No namespace</td>
+                                    <td>$operation</td>
+                                 </tr>
+                                 <tr>
+                                    <td class="fCol">format</td>
+                                    <td>No namespace</td>
+                                    <td>$format</td>
+                                 </tr>
+                                 <tr>
+                                    <td class="fCol">maximumRecords</td>
+                                    <td>No namespace</td>
+                                    <td>$maximumRecords</td>
+                                 </tr>
+                                 <tr>
+                                    <td class="fCol">q</td>
+                                    <td>No namespace</td>
+                                    <td>$q</td>
+                                 </tr>
+                                 <tr>
+                                    <td class="fCol">startRecord</td>
+                                    <td>No namespace</td>
+                                    <td>$startRecord</td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Import precedence</td>
+                        <td>1</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Source</div>
+                           <div class="flR"><input id="bt_src_T_formURLS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_T_formURLS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="src_T_formURLS_..commons_v1.xsl" style="display:block">
+                              <table class="pWCont">
+                                 <tr>
+                                    <td width="100%"><pre><span class="tXSLEl">&lt;xsl:template</span><span class="tAN"> name=</span><span class="tAV">"formURL"</span><span class="tXSLEl">&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;xsl:param</span><span class="tAN"> name=</span><span class="tAV">"action"</span><span class="tAN"> select=</span><span class="tAV">"$operation"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;xsl:param</span><span class="tAN"> name=</span><span class="tAV">"format"</span><span class="tAN"> select=</span><span class="tAV">"$format"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;xsl:param</span><span class="tAN"> name=</span><span class="tAV">"q"</span><span class="tAN"> select=</span><span class="tAV">"$q"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;xsl:param</span><span class="tAN"> name=</span><span class="tAV">"startRecord"</span><span class="tAN"> select=</span><span class="tAV">"$startRecord"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;xsl:param</span><span class="tAN"> name=</span><span class="tAV">"maximumRecords"</span><span class="tAN"> select=</span><span class="tAV">"$maximumRecords"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;xsl:variable</span><span class="tAN"> name=</span><span class="tAV">"param_q"</span><span class="tXSLEl">&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;xsl:if</span><span class="tAN"> test=</span><span class="tAV">"$q != ''"</span><span class="tXSLEl">&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;xsl:value-of</span><span class="tAN"> select=</span><span class="tAV">"concat('&amp;query=',$q)"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;/xsl:if&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;/xsl:variable&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;xsl:variable</span><span class="tAN"> name=</span><span class="tAV">"param_format"</span><span class="tXSLEl">&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;xsl:if</span><span class="tAN"> test=</span><span class="tAV">"$format != ''"</span><span class="tXSLEl">&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;xsl:value-of</span><span class="tAN"> select=</span><span class="tAV">"concat('&amp;x-format=',$format)"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;/xsl:if&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;/xsl:variable&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;xsl:variable</span><span class="tAN"> name=</span><span class="tAV">"param_x-context"</span><span class="tXSLEl">&gt;</span><span class="tI">
+    </span><span class="tC">&lt;!--            if action=explain, handle-q param as x-context--&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;xsl:choose</span><span class="tXSLEl">&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;xsl:when</span><span class="tAN"> test=</span><span class="tAV">"$action='explain'"</span><span class="tXSLEl">&gt;</span><span class="tI">
+        </span><span class="tXSLEl">&lt;xsl:value-of</span><span class="tAN"> select=</span><span class="tAV">"concat('&amp;x-context=',$q)"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;/xsl:when&gt;</span><span class="tI">
+      </span><span class="tC">&lt;!--&lt;xsl:when test="$x-context != '' "&gt;
+                    &lt;xsl:value-of select="concat('&amp;x-context=',$x-context)"/&gt;
+                &lt;/xsl:when&gt;--&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;xsl:otherwise</span><span class="tXSLEl">&gt;</span><span class="tI">
+        </span><span class="tXSLEl">&lt;xsl:value-of</span><span class="tAN"> select=</span><span class="tAV">"concat('&amp;x-context=',$x-context)"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;/xsl:otherwise&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;/xsl:choose&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;/xsl:variable&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;xsl:variable</span><span class="tAN"> name=</span><span class="tAV">"param_startRecord"</span><span class="tXSLEl">&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;xsl:if</span><span class="tAN"> test=</span><span class="tAV">"$startRecord != ''"</span><span class="tXSLEl">&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;xsl:value-of</span><span class="tAN"> select=</span><span class="tAV">"concat('&amp;startRecord=',$startRecord)"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;/xsl:if&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;/xsl:variable&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;xsl:variable</span><span class="tAN"> name=</span><span class="tAV">"param_maximumRecords"</span><span class="tXSLEl">&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;xsl:if</span><span class="tAN"> test=</span><span class="tAV">"$maximumRecords != ''"</span><span class="tXSLEl">&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;xsl:value-of</span><span class="tAN"> select=</span><span class="tAV">"concat('&amp;maximumRecords=',$maximumRecords)"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;/xsl:if&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;/xsl:variable&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;xsl:variable</span><span class="tAN"> name=</span><span class="tAV">"param_scanClause"</span><span class="tXSLEl">&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;xsl:if</span><span class="tAN"> test=</span><span class="tAV">"$scanClause != ''"</span><span class="tXSLEl">&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;xsl:value-of</span><span class="tAN"> select=</span><span class="tAV">"concat('&amp;scanClause=',$scanClause)"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;/xsl:if&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;/xsl:variable&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;xsl:choose</span><span class="tXSLEl">&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;xsl:when</span><span class="tAN"> test=</span><span class="tAV">"$action='explain'"</span><span class="tXSLEl">&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;xsl:value-of</span><span class="tAN"> select=</span><span class="tAV">"concat($base_url, '?operation=',$action, $param_x-context, $param_format)"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;/xsl:when&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;xsl:when</span><span class="tAN"> test=</span><span class="tAV">"$action='scan'"</span><span class="tXSLEl">&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;xsl:value-of</span><span class="tAN"> select=</span><span class="tAV">"concat($base_url, '?operation=',$action, $param_scanClause, $param_x-context, $param_format)"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;/xsl:when&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;xsl:otherwise</span><span class="tXSLEl">&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;xsl:value-of</span><span class="tAN"> select=</span><span class="tAV">"concat($base_url, '?operation=',$action, $param_q, $param_x-context, $param_startRecord, $param_maximumRecords, $param_format)"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;/xsl:otherwise&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;/xsl:choose&gt;</span><span class="tI">
+  </span><span class="tC">&lt;!--        &lt;xsl:choose&gt;
+            &lt;xsl:when test="$action=''"&gt;
+                &lt;xsl:value-of select="concat($base_dir, '?q=', $q, '&amp;repository=', $repository)"/&gt;
+            &lt;/xsl:when&gt;
+            &lt;xsl:when test="$q=''"&gt;
+                &lt;xsl:value-of select="concat($base_dir, '/',$action, '/', $format)"/&gt;
+            &lt;/xsl:when&gt;
+            &lt;xsl:otherwise&gt;
+                &lt;xsl:choose&gt;
+                    &lt;xsl:when test="$action='record'"&gt;
+                        &lt;xsl:value-of select="concat($base_dir, '/',$action, '/', $format, '?query=', $q, $param_repository)"/&gt;
+                    &lt;/xsl:when&gt;
+                    &lt;xsl:otherwise&gt;
+                        &lt;xsl:value-of select="concat($base_dir, '?operation=',$action, $param_q, $param_repository, $param_startRecord, $param_maximumRecords, $param_format)"/&gt;
+                    &lt;/xsl:otherwise&gt;
+                &lt;/xsl:choose&gt;
+            &lt;/xsl:otherwise&gt;
+        &lt;/xsl:choose&gt;
+--&gt;</span><span class="tI">
+</span><span class="tXSLEl">&lt;/xsl:template&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lR"></td>
+         </tr>
+         <tr>
+            <td class="rt_cBL"></td>
+            <td class="rt_lB"></td>
+            <td class="rt_cBR"></td>
+         </tr>
+      </table><a id="T_elem-linkS_..commons_v1.xsl"></a><div class="cmpT">Template
+         <span class="titleTemplateName">elem-link</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cTL"></td>
+            <td class="rt_lT"></td>
+            <td class="rt_cTR"></td>
+         </tr>
+         <tr>
+            <td class="rt_lL"></td>
+            <td class="rt_cnt">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Documentation</div>
+                           <div class="flR"><input id="bt_dS_T_elem-linkS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_T_elem-linkS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="dS_T_elem-linkS_..commons_v1.xsl" style="display:block">
+                              <div>
+                                 <h3>Description</h3>Add link to more information to a link using information from mappings and some XML
+                                 attribute key
+                                 <table>
+                                    <tr>
+                                       <h4>Parameters</h4>
+                                       <td class="paramName"><b>elem</b></td>
+                                       <td>???</td>
+                                    </tr>
+                                 </table>
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Namespace</td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">References</div>
+                           <div class="flR"><input id="bt_refs_T_elem-linkS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('refs_T_elem-linkS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="refs_T_elem-linkS_..commons_v1.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td class="fCol">Variable</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="xml2view_v13.html#V_context-mappingS_..params.xsl" target="_self" title="No namespace" onclick="updPT('../params.xsl')">context-mapping</a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Parameters</div>
+                           <div class="flR"><input id="bt_prs_T_elem-linkS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('prs_T_elem-linkS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="prs_T_elem-linkS_..commons_v1.xsl" style="display:block">
+                              <table class="attsT">
+                                 <thead>
+                                    <tr>
+                                       <th>QName</th>
+                                       <th>Namespace</th>
+                                       <th>Select</th>
+                                    </tr>
+                                 </thead>
+                                 <tr>
+                                    <td class="fCol">elem</td>
+                                    <td>No namespace</td>
+                                    <td>.</td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Import precedence</td>
+                        <td>1</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Source</div>
+                           <div class="flR"><input id="bt_src_T_elem-linkS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_T_elem-linkS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="src_T_elem-linkS_..commons_v1.xsl" style="display:block">
+                              <table class="pWCont">
+                                 <tr>
+                                    <td width="100%"><pre><span class="tXSLEl">&lt;xsl:template</span><span class="tAN"> name=</span><span class="tAV">"elem-link"</span><span class="tXSLEl">&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;xsl:param</span><span class="tAN"> name=</span><span class="tAV">"elem"</span><span class="tAN"> select=</span><span class="tAV">"."</span><span class="tXSLEl">/&gt;</span><span class="tI">
+  </span><span class="tC">&lt;!-- WATCHME: primitive matching on elem-name, let's see how far this gets us --&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;xsl:variable</span><span class="tAN"> name=</span><span class="tAV">"index"</span><span class="tAN"> select=</span><span class="tAV">"$context-mapping//index[path = name($elem)][@link]"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;xsl:if</span><span class="tAN"> test=</span><span class="tAV">"$index"</span><span class="tXSLEl">&gt;</span><span class="tI">
+    </span><span class="tC">&lt;!-- we would need a dynamic evaluation to get the specific piece of data from the $elem 
+                but let's try with some more trivial means --&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;xsl:variable</span><span class="tAN"> name=</span><span class="tAV">"linking-value"</span><span class="tXSLEl">&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;xsl:choose</span><span class="tXSLEl">&gt;</span><span class="tI">
+        </span><span class="tXSLEl">&lt;xsl:when</span><span class="tAN"> test=</span><span class="tAV">"contains($index/@use,'@')"</span><span class="tXSLEl">&gt;</span><span class="tI">
+          </span><span class="tXSLEl">&lt;xsl:value-of</span><span class="tAN"> select=</span><span class="tAV">"$elem/@*[name()= substring-after($index/@use,'@')]"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+        </span><span class="tXSLEl">&lt;/xsl:when&gt;</span><span class="tI">
+        </span><span class="tXSLEl">&lt;xsl:otherwise</span><span class="tXSLEl">&gt;</span><span class="tI">
+          </span><span class="tXSLEl">&lt;xsl:value-of</span><span class="tAN"> select=</span><span class="tAV">"$elem/text()"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+        </span><span class="tXSLEl">&lt;/xsl:otherwise&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;/xsl:choose&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;/xsl:variable&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;xsl:value-of</span><span class="tAN"> select=</span><span class="tAV">"concat($index/@link, $linking-value)"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;/xsl:if&gt;</span><span class="tI">
+</span><span class="tXSLEl">&lt;/xsl:template&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lR"></td>
+         </tr>
+         <tr>
+            <td class="rt_cBL"></td>
+            <td class="rt_lB"></td>
+            <td class="rt_cBR"></td>
+         </tr>
+      </table><a id="T_format-fieldS_..commons_v1.xsl"></a><div class="cmpT">Template
+         <span class="titleTemplateName">format-field</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cTL"></td>
+            <td class="rt_lT"></td>
+            <td class="rt_cTR"></td>
+         </tr>
+         <tr>
+            <td class="rt_lL"></td>
+            <td class="rt_cnt">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Documentation</div>
+                           <div class="flR"><input id="bt_dS_T_format-fieldS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_T_format-fieldS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="dS_T_format-fieldS_..commons_v1.xsl" style="display:block">
+                              <div>
+                                 <h3>Description</h3>Formats an XML fragment so it's readable as such (using mode format-xmlelem), some
+                                 elements as list or a single element
+                                 using <a href="xml2view_v11.html#T_format-valueS_..commons_v1.xsl" target="_self">format-value</a><table>
+                                    <tr>
+                                       <h4>Parameters</h4>
+                                       <td class="paramName"><b>elems</b></td>
+                                       <td>Some node() that should be formated.</td>
+                                    </tr>
+                                 </table>
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Namespace</td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">References</div>
+                           <div class="flR"><input id="bt_refs_T_format-fieldS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('refs_T_format-fieldS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="refs_T_format-fieldS_..commons_v1.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td class="fCol">Template</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="xml2view_v11.html#T_format-valueS_..commons_v1.xsl" target="_self" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">format-value</span></a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Parameters</div>
+                           <div class="flR"><input id="bt_prs_T_format-fieldS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('prs_T_format-fieldS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="prs_T_format-fieldS_..commons_v1.xsl" style="display:block">
+                              <table class="attsT">
+                                 <thead>
+                                    <tr>
+                                       <th>QName</th>
+                                       <th>Namespace</th>
+                                    </tr>
+                                 </thead>
+                                 <tr>
+                                    <td class="fCol">elems</td>
+                                    <td>No namespace</td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Import precedence</td>
+                        <td>1</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Source</div>
+                           <div class="flR"><input id="bt_src_T_format-fieldS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_T_format-fieldS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="src_T_format-fieldS_..commons_v1.xsl" style="display:block">
+                              <table class="pWCont">
+                                 <tr>
+                                    <td width="100%"><pre><span class="tXSLEl">&lt;xsl:template</span><span class="tAN"> name=</span><span class="tAV">"format-field"</span><span class="tXSLEl">&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;xsl:param</span><span class="tAN"> name=</span><span class="tAV">"elems"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;xsl:choose</span><span class="tXSLEl">&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;xsl:when</span><span class="tAN"> test=</span><span class="tAV">"$elems/*"</span><span class="tXSLEl">&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;xsl:apply-templates</span><span class="tAN"> select=</span><span class="tAV">"$elems"</span><span class="tAN"> mode=</span><span class="tAV">"format-xmlelem"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;/xsl:when&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;xsl:when</span><span class="tAN"> test=</span><span class="tAV">"count($elems) &gt; 1"</span><span class="tXSLEl">&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;ul</span><span class="tEl">&gt;</span><span class="tI">
+        </span><span class="tXSLEl">&lt;xsl:for-each</span><span class="tAN"> select=</span><span class="tAV">"$elems"</span><span class="tXSLEl">&gt;</span><span class="tI">
+          </span><span class="tEl">&lt;li</span><span class="tEl">&gt;</span><span class="tI">
+            </span><span class="tXSLEl">&lt;xsl:call-template</span><span class="tAN"> name=</span><span class="tAV">"format-value"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+          </span><span class="tEl">&lt;/li&gt;</span><span class="tI">
+        </span><span class="tXSLEl">&lt;/xsl:for-each&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;/ul&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;/xsl:when&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;xsl:otherwise</span><span class="tXSLEl">&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;xsl:call-template</span><span class="tAN"> name=</span><span class="tAV">"format-value"</span><span class="tXSLEl">&gt;</span><span class="tI">
+        </span><span class="tXSLEl">&lt;xsl:with-param</span><span class="tAN"> name=</span><span class="tAV">"value"</span><span class="tAN"> select=</span><span class="tAV">"$elems"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;/xsl:call-template&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;/xsl:otherwise&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;/xsl:choose&gt;</span><span class="tI">
+</span><span class="tXSLEl">&lt;/xsl:template&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lR"></td>
+         </tr>
+         <tr>
+            <td class="rt_cBL"></td>
+            <td class="rt_lB"></td>
+            <td class="rt_cBR"></td>
+         </tr>
+      </table><a id="T_format-valueS_..commons_v1.xsl"></a><div class="cmpT">Template
+         <span class="titleTemplateName">format-value</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cTL"></td>
+            <td class="rt_lT"></td>
+            <td class="rt_cTR"></td>
+         </tr>
+         <tr>
+            <td class="rt_lL"></td>
+            <td class="rt_cnt">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Documentation</div>
+                           <div class="flR"><input id="bt_dS_T_format-valueS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_T_format-valueS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="dS_T_format-valueS_..commons_v1.xsl" style="display:block">
+                              <div>
+                                 <h3>Description</h3>Format values eg. when formatting attributes like below
+                                 
+                                 <p>
+                                    This basic implementation just replaces http: containing URLs with a matching HTML
+                                    a tag
+                                    that opens the link in another window.
+                                    
+                                 </p>
+                                 
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Namespace</td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Used by</div>
+                           <div class="flR"><input id="bt_uB_T_format-valueS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('uB_T_format-valueS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="uB_T_format-valueS_..commons_v1.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td class="fCol">Templates</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="xml2view_v11.html#T_format-fieldS_..commons_v1.xsl" target="_self" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">format-field</span></a><span class="refItemSep">;</span></div>
+                                          <div class="refItemBlock"><a href="xml2view_v11.html#M_M_format-attrS_..commons_v1.xsl" target="_self" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="mRf">@*</span><span class="mdRf">format-attr</span></a><span class="refItemSep">;</span></div>
+                                          <div class="refItemBlock"><a href="xml2view_v11.html#M_M_format-xmlelemS_..commons_v1.xsl" target="_self" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="mRf">*</span><span class="mdRf">format-xmlelem</span></a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Parameters</div>
+                           <div class="flR"><input id="bt_prs_T_format-valueS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('prs_T_format-valueS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="prs_T_format-valueS_..commons_v1.xsl" style="display:block">
+                              <table class="attsT">
+                                 <thead>
+                                    <tr>
+                                       <th>QName</th>
+                                       <th>Namespace</th>
+                                       <th>Select</th>
+                                    </tr>
+                                 </thead>
+                                 <tr>
+                                    <td class="fCol">value</td>
+                                    <td>No namespace</td>
+                                    <td>.</td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Import precedence</td>
+                        <td>1</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Source</div>
+                           <div class="flR"><input id="bt_src_T_format-valueS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_T_format-valueS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="src_T_format-valueS_..commons_v1.xsl" style="display:block">
+                              <table class="pWCont">
+                                 <tr>
+                                    <td width="100%"><pre><span class="tXSLEl">&lt;xsl:template</span><span class="tAN"> name=</span><span class="tAV">"format-value"</span><span class="tXSLEl">&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;xsl:param</span><span class="tAN"> name=</span><span class="tAV">"value"</span><span class="tAN"> select=</span><span class="tAV">"."</span><span class="tXSLEl">/&gt;</span><span class="tI">
+  </span><span class="tC">&lt;!-- cnt_value:&lt;xsl:value-of select="count($value)" /&gt;  --&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;xsl:choose</span><span class="tXSLEl">&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;xsl:when</span><span class="tAN"> test=</span><span class="tAV">"starts-with($value[1], 'http:') "</span><span class="tXSLEl">&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;a</span><span class="tAN"> target=</span><span class="tAV">"_blank"</span><span class="tAN"> class=</span><span class="tAV">"external"</span><span class="tAN"> href=</span><span class="tAV">"{$value}"</span><span class="tEl">&gt;</span><span class="tI">
+        </span><span class="tXSLEl">&lt;xsl:value-of</span><span class="tAN"> select=</span><span class="tAV">"$value"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;/a&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;/xsl:when&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;xsl:otherwise</span><span class="tXSLEl">&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;xsl:value-of</span><span class="tAN"> select=</span><span class="tAV">"$value"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;/xsl:otherwise&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;/xsl:choose&gt;</span><span class="tI">
+</span><span class="tXSLEl">&lt;/xsl:template&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lR"></td>
+         </tr>
+         <tr>
+            <td class="rt_cBL"></td>
+            <td class="rt_lB"></td>
+            <td class="rt_cBR"></td>
+         </tr>
+      </table><a id="M_M_format-xmlelemS_..commons_v1.xsl"></a><div class="cmpT">Template
+         <span class="titleTemplateMatch">*</span><span class="titleTemplateMode">format-xmlelem</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cTL"></td>
+            <td class="rt_lT"></td>
+            <td class="rt_cTR"></td>
+         </tr>
+         <tr>
+            <td class="rt_lL"></td>
+            <td class="rt_cnt">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Documentation</div>
+                           <div class="flR"><input id="bt_dS_M_M_format-xmlelemS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_M_M_format-xmlelemS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="dS_M_M_format-xmlelemS_..commons_v1.xsl" style="display:block">
+                              <div>
+                                 <h3>Description</h3>Provides a generic html-view for xml-elements 
+                                 	    
+                                 <table>
+                                    <tr>
+                                       <h4>Parameters</h4>
+                                       <td class="paramName"><b>strict</b></td>
+                                       <td>xs:boolean: Stay in mode format-xmlelem mode (or try to go back to mode=record-data)</td>
+                                    </tr>
+                                 </table>
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Namespace</td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Match</td>
+                        <td>*</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Mode</td>
+                        <td>format-xmlelem</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">References</div>
+                           <div class="flR"><input id="bt_refs_M_M_format-xmlelemS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('refs_M_M_format-xmlelemS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="refs_M_M_format-xmlelemS_..commons_v1.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td class="fCol">Template</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="xml2view_v11.html#T_format-valueS_..commons_v1.xsl" target="_self" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">format-value</span></a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Parameters</div>
+                           <div class="flR"><input id="bt_prs_M_M_format-xmlelemS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('prs_M_M_format-xmlelemS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="prs_M_M_format-xmlelemS_..commons_v1.xsl" style="display:block">
+                              <table class="attsT">
+                                 <thead>
+                                    <tr>
+                                       <th>QName</th>
+                                       <th>Namespace</th>
+                                    </tr>
+                                 </thead>
+                                 <tr>
+                                    <td class="fCol">strict</td>
+                                    <td>No namespace</td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Import precedence</td>
+                        <td>1</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Source</div>
+                           <div class="flR"><input id="bt_src_M_M_format-xmlelemS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_M_M_format-xmlelemS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="src_M_M_format-xmlelemS_..commons_v1.xsl" style="display:block">
+                              <table class="pWCont">
+                                 <tr>
+                                    <td width="100%"><pre><span class="tXSLEl">&lt;xsl:template</span><span class="tAN"> match=</span><span class="tAV">"*"</span><span class="tAN"> mode=</span><span class="tAV">"format-xmlelem"</span><span class="tXSLEl">&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;xsl:param</span><span class="tAN"> name=</span><span class="tAV">"strict"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+  </span><span class="tC">&lt;!--        &lt;xsl:message&gt;strict:&lt;xsl:value-of select="$strict"/&gt;&lt;/xsl:message&gt;        --&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;xsl:if</span><span class="tAN"> test=</span><span class="tAV">".//text() or @*"</span><span class="tXSLEl">&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;xsl:variable</span><span class="tAN"> name=</span><span class="tAV">"has_text"</span><span class="tXSLEl">&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;xsl:choose</span><span class="tXSLEl">&gt;</span><span class="tI">
+        </span><span class="tXSLEl">&lt;xsl:when</span><span class="tAN"> test=</span><span class="tAV">"normalize-space(text()[1])='Unspecified'"</span><span class="tXSLEl">&gt;</span><span class="tT" style="white-space:normal">unspecified</span><span class="tXSLEl">&lt;/xsl:when&gt;</span><span class="tI">
+        </span><span class="tXSLEl">&lt;xsl:when</span><span class="tAN"> test=</span><span class="tAV">"not(normalize-space(.//text())='')"</span><span class="tXSLEl">&gt;</span><span class="tT" style="white-space:normal">text</span><span class="tXSLEl">&lt;/xsl:when&gt;</span><span class="tI">
+        </span><span class="tXSLEl">&lt;xsl:otherwise</span><span class="tXSLEl">&gt;</span><span class="tT" style="white-space:normal">empty</span><span class="tXSLEl">&lt;/xsl:otherwise&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;/xsl:choose&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;/xsl:variable&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;xsl:variable</span><span class="tAN"> name=</span><span class="tAV">"has_children"</span><span class="tXSLEl">&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;xsl:choose</span><span class="tXSLEl">&gt;</span><span class="tI">
+        </span><span class="tXSLEl">&lt;xsl:when</span><span class="tAN"> test=</span><span class="tAV">"*"</span><span class="tXSLEl">&gt;</span><span class="tT" style="white-space:normal">has-children</span><span class="tXSLEl">&lt;/xsl:when&gt;</span><span class="tI">
+        </span><span class="tXSLEl">&lt;xsl:otherwise</span><span class="tXSLEl">/&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;/xsl:choose&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;/xsl:variable&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;xsl:variable</span><span class="tAN"> name=</span><span class="tAV">"label-class"</span><span class="tXSLEl">&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;xsl:choose</span><span class="tXSLEl">&gt;</span><span class="tI">
+        </span><span class="tXSLEl">&lt;xsl:when</span><span class="tAN"> test=</span><span class="tAV">"*"</span><span class="tXSLEl">&gt;</span><span class="tT" style="white-space:normal">block label</span><span class="tXSLEl">&lt;/xsl:when&gt;</span><span class="tI">
+        </span><span class="tXSLEl">&lt;xsl:otherwise</span><span class="tXSLEl">&gt;</span><span class="tT" style="white-space:normal">inline label</span><span class="tXSLEl">&lt;/xsl:otherwise&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;/xsl:choose&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;/xsl:variable&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;div</span><span class="tAN"> class=</span><span class="tAV">"cmds-xmlelem {$has_children} value-{$has_text}"</span><span class="tEl">&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;span</span><span class="tAN"> class=</span><span class="tAV">"{$label-class}"</span><span class="tEl">&gt;</span><span class="tI">
+        </span><span class="tXSLEl">&lt;xsl:value-of</span><span class="tAN"> select=</span><span class="tAV">"name()"</span><span class="tXSLEl">/&gt;</span><span class="tT">:</span><span class="tEl">&lt;/span&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;span</span><span class="tAN"> class=</span><span class="tAV">"value"</span><span class="tEl">&gt;</span><span class="tI">
+        </span><span class="tXSLEl">&lt;xsl:call-template</span><span class="tAN"> name=</span><span class="tAV">"format-value"</span><span class="tXSLEl">&gt;</span><span class="tI">
+          </span><span class="tXSLEl">&lt;xsl:with-param</span><span class="tAN"> name=</span><span class="tAV">"value"</span><span class="tAN"> select=</span><span class="tAV">"text()[.!='']"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+        </span><span class="tXSLEl">&lt;/xsl:call-template&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;/span&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;xsl:if</span><span class="tAN"> test=</span><span class="tAV">"@*"</span><span class="tXSLEl">&gt;</span><span class="tI">
+        </span><span class="tEl">&lt;div</span><span class="tAN"> class=</span><span class="tAV">"attributes"</span><span class="tEl">&gt;</span><span class="tI">
+          </span><span class="tXSLEl">&lt;xsl:apply-templates</span><span class="tAN"> select=</span><span class="tAV">"@*"</span><span class="tAN"> mode=</span><span class="tAV">"format-attr"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+        </span><span class="tEl">&lt;/div&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;/xsl:if&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;xsl:choose</span><span class="tXSLEl">&gt;</span><span class="tI">
+        </span><span class="tXSLEl">&lt;xsl:when</span><span class="tAN"> test=</span><span class="tAV">"$strict"</span><span class="tXSLEl">&gt;</span><span class="tI">
+          </span><span class="tXSLEl">&lt;xsl:apply-templates</span><span class="tAN"> select=</span><span class="tAV">"*"</span><span class="tAN"> mode=</span><span class="tAV">"format-xmlelem"</span><span class="tXSLEl">&gt;</span><span class="tI">
+            </span><span class="tXSLEl">&lt;xsl:with-param</span><span class="tAN"> name=</span><span class="tAV">"strict"</span><span class="tAN"> select=</span><span class="tAV">"$strict"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+          </span><span class="tXSLEl">&lt;/xsl:apply-templates&gt;</span><span class="tI">
+        </span><span class="tXSLEl">&lt;/xsl:when&gt;</span><span class="tI">
+        </span><span class="tXSLEl">&lt;xsl:otherwise</span><span class="tXSLEl">&gt;</span><span class="tI">
+          </span><span class="tXSLEl">&lt;xsl:apply-templates</span><span class="tAN"> select=</span><span class="tAV">"*"</span><span class="tAN"> mode=</span><span class="tAV">"record-data"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+        </span><span class="tXSLEl">&lt;/xsl:otherwise&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;/xsl:choose&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;/div&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;/xsl:if&gt;</span><span class="tI">
+</span><span class="tXSLEl">&lt;/xsl:template&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lR"></td>
+         </tr>
+         <tr>
+            <td class="rt_cBL"></td>
+            <td class="rt_lB"></td>
+            <td class="rt_cBR"></td>
+         </tr>
+      </table><a id="M_M_format-attrS_..commons_v1.xsl"></a><div class="cmpT">Template
+         <span class="titleTemplateMatch">@*</span><span class="titleTemplateMode">format-attr</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cTL"></td>
+            <td class="rt_lT"></td>
+            <td class="rt_cTR"></td>
+         </tr>
+         <tr>
+            <td class="rt_lL"></td>
+            <td class="rt_cnt">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Documentation</div>
+                           <div class="flR"><input id="bt_dS_M_M_format-attrS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_M_M_format-attrS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="dS_M_M_format-attrS_..commons_v1.xsl" style="display:block">
+                              <div>
+                                 <h3>Description</h3>Returns attribute names and their values as pairs of HTML span tags
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Namespace</td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Match</td>
+                        <td>@*</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Mode</td>
+                        <td>format-attr</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">References</div>
+                           <div class="flR"><input id="bt_refs_M_M_format-attrS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('refs_M_M_format-attrS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="refs_M_M_format-attrS_..commons_v1.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td class="fCol">Template</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="xml2view_v11.html#T_format-valueS_..commons_v1.xsl" target="_self" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">format-value</span></a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Import precedence</td>
+                        <td>1</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Source</div>
+                           <div class="flR"><input id="bt_src_M_M_format-attrS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_M_M_format-attrS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="src_M_M_format-attrS_..commons_v1.xsl" style="display:block">
+                              <table class="pWCont">
+                                 <tr>
+                                    <td width="100%"><pre><span class="tXSLEl">&lt;xsl:template</span><span class="tAN"> match=</span><span class="tAV">"@*"</span><span class="tAN"> mode=</span><span class="tAV">"format-attr"</span><span class="tXSLEl">&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;span</span><span class="tAN"> class=</span><span class="tAV">"inline label"</span><span class="tEl">&gt;</span><span class="tT">@</span><span class="tXSLEl">&lt;xsl:value-of</span><span class="tAN"> select=</span><span class="tAV">"name()"</span><span class="tXSLEl">/&gt;</span><span class="tT">: </span><span class="tEl">&lt;/span&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;span</span><span class="tAN"> class=</span><span class="tAV">"value"</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;xsl:call-template</span><span class="tAN"> name=</span><span class="tAV">"format-value"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+    </span><span class="tC">&lt;!--&lt;xsl:value-of select="." /&gt; --&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/span&gt;</span><span class="tI">
+</span><span class="tXSLEl">&lt;/xsl:template&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lR"></td>
+         </tr>
+         <tr>
+            <td class="rt_cBL"></td>
+            <td class="rt_lB"></td>
+            <td class="rt_cBR"></td>
+         </tr>
+      </table><a id="T_xml-contextS_..commons_v1.xsl"></a><div class="cmpT">Template
+         <span class="titleTemplateName">xml-context</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cTL"></td>
+            <td class="rt_lT"></td>
+            <td class="rt_cTR"></td>
+         </tr>
+         <tr>
+            <td class="rt_lL"></td>
+            <td class="rt_cnt">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Documentation</div>
+                           <div class="flR"><input id="bt_dS_T_xml-contextS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_T_xml-contextS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="dS_T_xml-contextS_..commons_v1.xsl" style="display:block">
+                              <div>
+                                 <h3>Description</h3>???
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Namespace</td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Parameters</div>
+                           <div class="flR"><input id="bt_prs_T_xml-contextS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('prs_T_xml-contextS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="prs_T_xml-contextS_..commons_v1.xsl" style="display:block">
+                              <table class="attsT">
+                                 <thead>
+                                    <tr>
+                                       <th>QName</th>
+                                       <th>Namespace</th>
+                                    </tr>
+                                 </thead>
+                                 <tr>
+                                    <td class="fCol">child</td>
+                                    <td>No namespace</td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Import precedence</td>
+                        <td>1</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Source</div>
+                           <div class="flR"><input id="bt_src_T_xml-contextS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_T_xml-contextS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="src_T_xml-contextS_..commons_v1.xsl" style="display:block">
+                              <table class="pWCont">
+                                 <tr>
+                                    <td width="100%"><pre><span class="tXSLEl">&lt;xsl:template</span><span class="tAN"> name=</span><span class="tAV">"xml-context"</span><span class="tXSLEl">&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;xsl:param</span><span class="tAN"> name=</span><span class="tAV">"child"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;xsl:variable</span><span class="tAN"> name=</span><span class="tAV">"collect"</span><span class="tXSLEl">&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;xsl:for-each</span><span class="tAN"> select=</span><span class="tAV">"$child/ancestor::CMD_Component|$child/ancestor::Term"</span><span class="tXSLEl">&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;xsl:value-of</span><span class="tAN"> select=</span><span class="tAV">"@name"</span><span class="tXSLEl">/&gt;</span><span class="tT" style="white-space:normal">.</span><span class="tXSLEl">&lt;/xsl:for-each&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;xsl:value-of</span><span class="tAN"> select=</span><span class="tAV">"$child/@name"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;/xsl:variable&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;xsl:value-of</span><span class="tAN"> select=</span><span class="tAV">"$collect"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+</span><span class="tXSLEl">&lt;/xsl:template&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lR"></td>
+         </tr>
+         <tr>
+            <td class="rt_cBL"></td>
+            <td class="rt_lB"></td>
+            <td class="rt_cBR"></td>
+         </tr>
+      </table><a id="T_dictS_..commons_v1.xsl"></a><div class="cmpT">Template
+         <span class="titleTemplateName">dict</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cTL"></td>
+            <td class="rt_lT"></td>
+            <td class="rt_cTR"></td>
+         </tr>
+         <tr>
+            <td class="rt_lL"></td>
+            <td class="rt_cnt">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Documentation</div>
+                           <div class="flR"><input id="bt_dS_T_dictS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_T_dictS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="dS_T_dictS_..commons_v1.xsl" style="display:block">
+                              <div>
+                                 <h3>Description</h3>???
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Namespace</td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">References</div>
+                           <div class="flR"><input id="bt_refs_T_dictS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('refs_T_dictS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="refs_T_dictS_..commons_v1.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td class="fCol">Variable</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="xml2view_v11.html#V_dictS_..commons_v1.xsl" target="_self" title="No namespace" onclick="updPT('../commons_v1.xsl')">dict</a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Parameters</div>
+                           <div class="flR"><input id="bt_prs_T_dictS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('prs_T_dictS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="prs_T_dictS_..commons_v1.xsl" style="display:block">
+                              <table class="attsT">
+                                 <thead>
+                                    <tr>
+                                       <th>QName</th>
+                                       <th>Namespace</th>
+                                       <th>Select</th>
+                                    </tr>
+                                 </thead>
+                                 <tr>
+                                    <td class="fCol">fallback</td>
+                                    <td>No namespace</td>
+                                    <td>$key</td>
+                                 </tr>
+                                 <tr>
+                                    <td class="fCol">key</td>
+                                    <td>No namespace</td>
+                                    <td></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Import precedence</td>
+                        <td>1</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Source</div>
+                           <div class="flR"><input id="bt_src_T_dictS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_T_dictS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="src_T_dictS_..commons_v1.xsl" style="display:block">
+                              <table class="pWCont">
+                                 <tr>
+                                    <td width="100%"><pre><span class="tXSLEl">&lt;xsl:template</span><span class="tAN"> name=</span><span class="tAV">"dict"</span><span class="tXSLEl">&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;xsl:param</span><span class="tAN"> name=</span><span class="tAV">"key"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;xsl:param</span><span class="tAN"> name=</span><span class="tAV">"fallback"</span><span class="tAN"> select=</span><span class="tAV">"$key"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;xsl:choose</span><span class="tXSLEl">&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;xsl:when</span><span class="tAN"> test=</span><span class="tAV">"$dict/list/item[@key=$key]"</span><span class="tXSLEl">&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;xsl:value-of</span><span class="tAN"> select=</span><span class="tAV">"$dict/list/item[@key=$key]"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;/xsl:when&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;xsl:when</span><span class="tAN"> test=</span><span class="tAV">"$dict/list/item[.=$key]"</span><span class="tXSLEl">&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;xsl:value-of</span><span class="tAN"> select=</span><span class="tAV">"$dict/list/item[.=$key]/@key"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;/xsl:when&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;xsl:otherwise</span><span class="tXSLEl">&gt;</span><span class="tI">
+      </span><span class="tXSLEl">&lt;xsl:value-of</span><span class="tAN"> select=</span><span class="tAV">"$fallback"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+    </span><span class="tXSLEl">&lt;/xsl:otherwise&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;/xsl:choose&gt;</span><span class="tI">
+</span><span class="tXSLEl">&lt;/xsl:template&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lR"></td>
+         </tr>
+         <tr>
+            <td class="rt_cBL"></td>
+            <td class="rt_lB"></td>
+            <td class="rt_cBR"></td>
+         </tr>
+      </table><a id="P_dict_fileS_..commons_v1.xsl"></a><div class="cmpT">Parameter
+         <span class="qname">dict_file</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cTL"></td>
+            <td class="rt_lT"></td>
+            <td class="rt_cTR"></td>
+         </tr>
+         <tr>
+            <td class="rt_lL"></td>
+            <td class="rt_cnt">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Documentation</div>
+                           <div class="flR"><input id="bt_dS_P_dict_fileS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_P_dict_fileS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="dS_P_dict_fileS_..commons_v1.xsl" style="display:block">
+                              <div>
+                                 <h3>Description</h3><pre> &lt;xsl:param name="mode" select="'html'" /&gt; </pre></div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Namespace</td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Select</td>
+                        <td>'dict.xml'</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Source</div>
+                           <div class="flR"><input id="bt_src_P_dict_fileS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_P_dict_fileS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="src_P_dict_fileS_..commons_v1.xsl" style="display:block">
+                              <table class="pWCont">
+                                 <tr>
+                                    <td width="100%"><pre><span class="tXSLEl">&lt;xsl:param</span><span class="tAN"> name=</span><span class="tAV">"dict_file"</span><span class="tAN"> select=</span><span class="tAV">"'dict.xml'"</span><span class="tXSLEl">/&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lR"></td>
+         </tr>
+         <tr>
+            <td class="rt_cBL"></td>
+            <td class="rt_lB"></td>
+            <td class="rt_cBR"></td>
+         </tr>
+      </table><a id="V_dictS_..commons_v1.xsl"></a><div class="cmpT">Variable
+         <span class="qname">dict</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cTL"></td>
+            <td class="rt_lT"></td>
+            <td class="rt_cTR"></td>
+         </tr>
+         <tr>
+            <td class="rt_lL"></td>
+            <td class="rt_cnt">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Documentation</div>
+                           <div class="flR"><input id="bt_dS_V_dictS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_V_dictS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="dS_V_dictS_..commons_v1.xsl" style="display:block">
+                              <div>
+                                 <h3>Description</h3>
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Namespace</td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Used by</div>
+                           <div class="flR"><input id="bt_uB_V_dictS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('uB_V_dictS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="uB_V_dictS_..commons_v1.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td class="fCol">Template</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="xml2view_v11.html#T_dictS_..commons_v1.xsl" target="_self" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">dict</span></a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Source</div>
+                           <div class="flR"><input id="bt_src_V_dictS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_V_dictS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="src_V_dictS_..commons_v1.xsl" style="display:block">
+                              <table class="pWCont">
+                                 <tr>
+                                    <td width="100%"><pre><span class="tXSLEl">&lt;xsl:variable</span><span class="tAN"> name=</span><span class="tAV">"dict"</span><span class="tXSLEl">&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;dict</span><span class="tEl">/&gt;</span><span class="tI">
+</span><span class="tXSLEl">&lt;/xsl:variable&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lR"></td>
+         </tr>
+         <tr>
+            <td class="rt_cBL"></td>
+            <td class="rt_lB"></td>
+            <td class="rt_cBR"></td>
+         </tr>
+      </table><a id="V_contextsS_..commons_v1.xsl"></a><div class="cmpT">Variable
+         <span class="qname">contexts</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cTL"></td>
+            <td class="rt_lT"></td>
+            <td class="rt_cTR"></td>
+         </tr>
+         <tr>
+            <td class="rt_lL"></td>
+            <td class="rt_cnt">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Documentation</div>
+                           <div class="flR"><input id="bt_dS_V_contextsS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('dS_V_contextsS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="dS_V_contextsS_..commons_v1.xsl" style="display:block">
+                              <div>
+                                 <h3>Description</h3>
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">Namespace</td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Used by</div>
+                           <div class="flR"><input id="bt_uB_V_contextsS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('uB_V_contextsS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="uB_V_contextsS_..commons_v1.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td class="fCol">Template</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="xml2view_v11.html#T_contexts-selectS_..commons_v1.xsl" target="_self" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">contexts-select</span></a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">References</div>
+                           <div class="flR"><input id="bt_refs_V_contextsS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('refs_V_contextsS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="refs_V_contextsS_..commons_v1.xsl" style="display:block">
+                              <table class="uBT">
+                                 <tr>
+                                    <td class="fCol">Template</td>
+                                    <td>
+                                       <div class="listGrouping">
+                                          <div class="refItemBlock"><a href="xml2view_v11.html#T_contexts-docS_..commons_v1.xsl" target="_self" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">contexts-doc</span></a></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="fCol">
+                           <div class="flL">Source</div>
+                           <div class="flR"><input id="bt_src_V_contextsS_..commons_v1.xsl" type="image" src="img/btM.gif" value="-" onclick="switchState('src_V_contextsS_..commons_v1.xsl');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="src_V_contextsS_..commons_v1.xsl" style="display:block">
+                              <table class="pWCont">
+                                 <tr>
+                                    <td width="100%"><pre><span class="tXSLEl">&lt;xsl:variable</span><span class="tAN"> name=</span><span class="tAV">"contexts"</span><span class="tXSLEl">&gt;</span><span class="tI">
+  </span><span class="tXSLEl">&lt;xsl:call-template</span><span class="tAN"> name=</span><span class="tAV">"contexts-doc"</span><span class="tXSLEl">/&gt;</span><span class="tI">
+</span><span class="tXSLEl">&lt;/xsl:variable&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lR"></td>
+         </tr>
+         <tr>
+            <td class="rt_cBL"></td>
+            <td class="rt_lB"></td>
+            <td class="rt_cBR"></td>
+         </tr>
+      </table>
+      <div class="footer">
+         <hr />
+         <div align="center">Stylesheet documentation generated by <a href="http://www.oxygenxml.com" target="_parent"><span class="oXygenLogo"><span class="redX">&lt;</span>o<span class="redX">X</span>ygen<span class="redX">/&gt;</span></span></a><sup>®</sup> XML Developer.
+         </div>
+      </div><script type="text/javascript">
+         <!--                     
+                    // The namespace is the selected option in the TOC combo.
+                    
+                    // The corresponding div is already visible conf. to its style attr.                     
+                    
+                            var selectToc = getElementObject('selectTOC');
+                            if(selectToc != null){
+                            // It can be null when having chunking, the combo of the TOC is in another frame.
+                            selectToc.selectedIndex = 0;
+                            }
+                        
+                    
+                    // Floats the toolbar.
+                    var globalControls = getElementObject("global_controls"); 
+                    
+                    if(globalControls != null){
+                    var browser=navigator.appName;
+                    var version = parseFloat(navigator.appVersion.split('MSIE')[1]);
+                    
+                    var IE6 = false;
+                    if ((browser=="Microsoft Internet Explorer") && (version < 7)){
+                    IE6 = true;
+                    }
+                    
+                    //alert (IE6 + " |V| " + version);
+                    
+                    if(IE6){
+                    // On IE 6 the 'fixed' property is not supported. We must use javascript. 
+                    globalControls.style.position='absolute';                         
+                    // The global controls will do not exist in the TOC frame, when chunking.
+                    findAndFloat("global_controls", 225, 30);    
+                    } else {
+                    globalControls.style.position='fixed';                     	
+                    }
+                    
+                    globalControls.style.right='0';                       
+                    }
+                --></script></body>
+</html>

@@ -1,0 +1,1219 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+      <title>Stylesheet documentation for: </title>
+      <link rel="stylesheet" href="docHtml.css" type="text/css" /><script type="text/javascript">
+         <!--
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        var button_prefix = 'bt_';
+        
+        /**
+        * Get all DIV elements with a specified class name.
+        *
+        * @param className The class name. 
+        */
+        function getElementsByClassName(className) {
+            var results = [];
+    
+             if (document.getElementsByClassName == undefined) {
+                var allElements = document.getElementsByTagName("div");
+                var element;
+                for (var i = 0; i < allElements.length; i++) {
+                    var element = allElements[i];
+                	var elementClass = element.className;
+                	if (elementClass == className) { 
+                		results.push(element);
+                	}
+                }
+             } else {
+                results = document.getElementsByClassName(className);
+             }
+    
+            return results;
+        }
+            
+        /**
+        * Returns an element in the current HTML document.
+        *
+        * @param elementID Identifier of HTML element
+        * @return               HTML element object
+        */
+        function getElementObject(elementID) {
+            var elemObj = null;
+            if (document.getElementById) {
+                elemObj = document.getElementById(elementID);
+            }
+            return elemObj;
+        }
+        
+        /**
+        * Switches the state of a collapseable box, e.g.
+        * if it's opened, it'll be closed, and vice versa.
+        *
+        * @param boxID Identifier of box
+        */
+        function switchState(boxID) {
+            var boxObj = getElementObject(boxID);
+            var buttonObj = getElementObject(button_prefix + boxID);
+            if (boxObj == null || buttonObj == null) {
+                // Box or button not found
+            } else if (boxObj.style.display == "none") {
+                // Box is closed, so open it
+                openBox(boxObj, buttonObj);
+            } else if (boxObj.style.display == "block") {
+                // Box is opened, so close it
+                closeBox(boxObj, buttonObj);
+            }
+        }
+        
+        /**
+        * Opens a collapseable box.
+        *
+        * @param boxObj       Collapseable box
+        * @param buttonObj Button controlling box
+        */
+        function openBox(boxObj, buttonObj) {
+            if (boxObj == null || buttonObj == null) {
+                // Box or button not found
+            } else {
+                // Change 'display' CSS property of box
+                boxObj.style.display = "block";
+                
+                // Change text of button
+                if (boxObj.style.display == "block") {
+                    buttonObj.src = "img/btM.gif";
+                }
+            }
+        }
+        
+        /**
+        * Closes a collapseable box.
+        *
+        * @param boxObj       Collapseable box
+        * @param buttonObj Button controlling box
+        */
+        function closeBox(boxObj, buttonObj) {
+            if (boxObj == null || buttonObj == null) {
+                // Box or button not found
+            } else {
+                // Change 'display' CSS property of box
+                boxObj.style.display = "none";
+                
+                // Change text of button
+                if (boxObj.style.display == "none") {
+                    buttonObj.src = "img/btP.gif";
+                }
+            }
+        }
+
+       /**
+        * Switch between the compact list representation and the clasic list representation.
+        */
+       function switchMode(checkBox) {
+            if (checkBox == null) {
+                // Checkbox not found
+            } else if (checkBox.checked == 1) {
+                // Compact mode
+                var divs = getElementsByClassName('refItemBlock');
+                for (var i = 0; i < divs.length; i ++) {
+                    divs[i].style.display = "inline";
+                    var children = divs[i].children;
+                    var refItemSep = children[children.length - 1];
+                    if (refItemSep.className == "refItemSep") {
+                        children[children.length - 1].style.display = "inline";
+                    }
+                }
+            } else {
+                // Expanded mode
+                var divs = getElementsByClassName('refItemBlock');
+                for (var i = 0; i < divs.length; i ++) {
+                    divs[i].style.display = "block";
+                    var children = divs[i].children;
+                    var refItemSep = children[children.length - 1];
+                    if (refItemSep.className == "refItemSep") {
+                        children[children.length - 1].style.display = "none";
+                    }
+                }
+            }
+        }
+
+       function switchStateForAll(buttonObj, boxList) {
+            if (buttonObj == null) {
+                // button not found
+            } else if (buttonObj.value == "+") {
+                // Expand all
+                expandAll(boxList);
+                buttonObj.value = "-";
+            } else if (buttonObj.value == "-") {
+                // Collapse all
+                collapseAll(boxList);
+                buttonObj.value = "+";
+            }
+        }
+        
+        /**
+        * Closes all boxes in a given list.
+        *
+        * @param boxList Array of box IDs
+        */
+        function collapseAll(boxList) {
+            var idx;
+            for (idx = 0; idx < boxList.length; idx++) {
+                var boxObj = getElementObject(boxList[idx]);
+                var buttonObj = getElementObject(button_prefix + boxList[idx]);
+                closeBox(boxObj, buttonObj);
+            }
+        }
+            
+        /**
+        * Open all boxes in a given list.
+        *
+        * @param boxList Array of box IDs
+        */
+        function expandAll(boxList) {
+            var idx;
+            for (idx = 0; idx < boxList.length; idx++) {
+                var boxObj = getElementObject(boxList[idx]);
+                var buttonObj = getElementObject(button_prefix + boxList[idx]);
+                openBox(boxObj, buttonObj);
+            }
+        }
+        
+        /**
+         * Update the message presented in the title of the html page.
+         * - If the documentation was splited by namespace we present something like: "Documentation for namespace 'ns'"
+         * - If the documentation was splited by location we present somehing like: "Documentation for 'Schema.xsd'"
+         * - If no split we always present: "Documentation for 'MainSchema.xsd'"
+         */
+        function updPT(message) {
+            top.document.title = "Stylesheet documentation for: " + message;
+        }
+        
+          
+                    
+         /**
+          * Finds an HTML element by its ID and makes it floatable over the normal content.
+          *
+          * @param x_displacement The difference in pixels to the right side of the window from 
+          *           the left side of the element.
+          * @param y_displacement The difference in pixels to the right side of the window from 
+          *           the top of the element.          
+          */
+         function findAndFloat(id, x_displacement, y_displacement){
+
+            var element = getElementObject(id);            
+            
+            window[id + "_obj"] = element;
+            
+            if(document.layers) {
+               element.style = element;
+            }
+            
+            element.current_y = y_displacement;      
+            element.first_time = true;
+         
+            element.floatElement = function(){
+               // It may be closed by an user action.
+                
+               // Target X and Y coordinates.
+               var x, y;
+               
+               var myWidth = 0, myHeight = 0;
+               if( typeof( window.innerWidth ) == 'number' ) {
+                  //Non-IE
+                  myWidth = window.innerWidth;
+                  myHeight = window.innerHeight;
+               } else if( document.documentElement && ( document.documentElement.clientWidth || document.documentElement.clientHeight ) ) {
+                  //IE 6+ in 'standards compliant mode'
+                  myWidth = document.documentElement.clientWidth;
+                  myHeight = document.documentElement.clientHeight;
+               } else if( document.body && ( document.body.clientWidth || document.body.clientHeight ) ) {
+                  //IE 4 compatible
+                  myWidth = document.body.clientWidth;
+                  myHeight = document.body.clientHeight;
+               }
+               
+               
+               x = myWidth - x_displacement;
+               
+               var ns = (navigator.appName.indexOf("Netscape") != -1);               
+               y = ns ? pageYOffset : document.documentElement && document.documentElement.scrollTop ? 
+                  document.documentElement.scrollTop : document.body.scrollTop;               
+               y = y + y_displacement;               
+               
+               // The current y is the current coordinate of the floating element.
+               // This should be at the limit the y target coordinate.
+               this.current_y += (y - this.current_y)/1.25;
+               
+               // Add the pixels constant after the values
+               // and move the element.
+               var px = document.layers ? "" : "px";
+               this.style.left =  x + px;
+               this.style.top =  this.current_y + px;
+                              
+               setTimeout(this.id + "_obj.floatElement()", 100);
+            }
+            
+            element.floatElement();
+            return element;
+          }
+
+         /**
+          * Finds an HTML element by its ID and makes it floatable over the normal content.
+          *
+          * @param x_displacement The difference in pixels to the right side of the window from 
+          *           the left side of the element.
+          * @param y_displacement The difference in pixels to the right side of the window from 
+          *           the top of the element.          
+          */
+         function selectTOCGroupBy(id){
+         var selectIds = new Array('toc_group_by_location', 'toc_group_by_component_type', 'toc_group_by_namespace', 'toc_group_by_mode');
+            // Make all the tabs invisible.
+            for (i = 0; i < 4; i++){
+               var tab = getElementObject(selectIds[i]);
+               tab.style.display = 'none';
+            }
+            var selTab = getElementObject(id);
+            selTab.style.display = 'block';            
+         }
+          
+
+    --></script></head>
+   <body>
+      <h2><a id="INDEX">Table of Contents</a></h2>
+      <div class="toc">
+         <form action="none">
+            <div><span> Group by: <select id="selectTOC" onchange="selectTOCGroupBy(this.options[this.selectedIndex].value);">
+                     <option value="toc_group_by_location" selected="selected">Location</option>
+                     <option value="toc_group_by_component_type">Component Type</option>
+                     <option value="toc_group_by_namespace">Namespace</option>
+                     <option value="toc_group_by_mode">Mode</option></select></span></div>
+         </form>
+         <div class="level1" id="toc_group_by_namespace" style="display:none">
+            <div>
+               <div class="level2">
+                  <p><input id="bt_boxIdNamespace1" type="image" value="-" src="img/btM.gif" onclick="switchState('boxIdNamespace1');" class="control" /><span class="indexGroupTitle">No namespace</span></p>
+                  <div id="boxIdNamespace1" style="display:block">
+                     <div class="horizontalLayout">
+                        <table class="rt">
+                           <tr>
+                              <td class="rt_cTL"></td>
+                              <td class="rt_lT"></td>
+                              <td class="rt_cTR"></td>
+                           </tr>
+                           <tr>
+                              <td class="rt_lL"></td>
+                              <td class="rt_cnt">
+                                 <div class="componentGroupTitle"><input id="bt_boxIdNamespace1template" type="image" value="-" src="img/btM.gif" onclick="switchState('boxIdNamespace1template');" class="control" />Templates
+                                 </div>
+                                 <div id="boxIdNamespace1template" style="display:block">
+                                    <div class="indentWrapDiv"><a href="xml2view_v22.html#T_callback-headerS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">callback-header</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v22.html#T_contexts-docS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">contexts-doc</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v22.html#T_contexts-selectS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">contexts-select</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v21.html#T_continue-rootS_xml2view_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('xml2view_v1.xsl')"><span class="nRf">continue-root</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v23.html#T_detail-spaceS_..html_snippets.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">detail-space</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v22.html#T_dictS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">dict</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v22.html#T_elem-linkS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">elem-link</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v22.html#T_formURLS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">formURL</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v22.html#T_format-fieldS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">format-field</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v22.html#T_format-valueS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">format-value</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v22.html#T_htmlS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">html</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v23.html#T_html-headS_..html_snippets.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">html-head</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v22.html#T_htmljsS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">htmljs</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v22.html#T_htmlsimpleS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">htmlsimple</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v23.html#T_page-headerS_..html_snippets.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">page-header</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v23.html#T_prev-nextS_..html_snippets.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">prev-next</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v23.html#T_public-spaceS_..html_snippets.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">public-space</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v23.html#T_query-inputS_..html_snippets.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">query-input</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v23.html#T_query-listS_..html_snippets.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">query-list</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v23.html#T_result-pagingS_..html_snippets.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">result-paging</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v23.html#T_top-menuS_..html_snippets.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">top-menu</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v23.html#T_user-spaceS_..html_snippets.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">user-space</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v22.html#T_xml-contextS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">xml-context</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v22.html#M_S_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="mRfI">/</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v22.html#M_diagdiagnosticS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="mRfI">diag:diagnostic</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v22.html#M_diagnosticsS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="mRfI">diagnostics</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v22.html#M_M_format-attrS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="mRfI">@*</span><span class="mdRf">format-attr</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v21.html#M_ComponentIdM_format-attrS_xml2view_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('xml2view_v1.xsl')"><span class="mRfI">@ComponentId</span><span class="mdRf">format-attr</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v22.html#M_M_format-xmlelemS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="mRfI">*</span><span class="mdRf">format-xmlelem</span></a></div>
+                                 </div>
+                              </td>
+                              <td class="rt_lR"></td>
+                           </tr>
+                           <tr>
+                              <td class="rt_cBL"></td>
+                              <td class="rt_lB"></td>
+                              <td class="rt_cBR"></td>
+                           </tr>
+                        </table>
+                     </div>
+                     <div class="horizontalLayout">
+                        <table class="rt">
+                           <tr>
+                              <td class="rt_cTL"></td>
+                              <td class="rt_lT"></td>
+                              <td class="rt_cTR"></td>
+                           </tr>
+                           <tr>
+                              <td class="rt_lL"></td>
+                              <td class="rt_cnt">
+                                 <div class="componentGroupTitle"><input id="bt_boxIdNamespace1parameter" type="image" value="-" src="img/btM.gif" onclick="switchState('boxIdNamespace1parameter');" class="control" />Parameters
+                                 </div>
+                                 <div id="boxIdNamespace1parameter" style="display:block">
+                                    <div class="indentWrapDiv"><a href="xml2view_v24.html#P_base_urlS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">base_url</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v24.html#P_contexts_urlS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">contexts_url</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v22.html#P_dict_fileS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="cRfI">dict_file</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v24.html#P_formatS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">format</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v24.html#P_mappings-fileS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">mappings-file</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v24.html#P_maximumRecordsS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">maximumRecords</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v24.html#P_modeS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">mode</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v24.html#P_numberOfMatchesS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">numberOfMatches</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v24.html#P_numberOfRecordsS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">numberOfRecords</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v24.html#P_operationS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">operation</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v24.html#P_qS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">q</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v24.html#P_scanClauseS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">scanClause</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v24.html#P_scripts_urlS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">scripts_url</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v24.html#P_site_logoS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">site_logo</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v24.html#P_site_nameS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">site_name</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v24.html#P_startRecordS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">startRecord</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v24.html#P_titleS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">title</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v24.html#P_userS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">user</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v24.html#P_x-contextS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">x-context</span></a></div>
+                                 </div>
+                              </td>
+                              <td class="rt_lR"></td>
+                           </tr>
+                           <tr>
+                              <td class="rt_cBL"></td>
+                              <td class="rt_lB"></td>
+                              <td class="rt_cBR"></td>
+                           </tr>
+                        </table>
+                     </div>
+                     <div class="horizontalLayout">
+                        <table class="rt">
+                           <tr>
+                              <td class="rt_cTL"></td>
+                              <td class="rt_lT"></td>
+                              <td class="rt_cTR"></td>
+                           </tr>
+                           <tr>
+                              <td class="rt_lL"></td>
+                              <td class="rt_cnt">
+                                 <div class="componentGroupTitle"><input id="bt_boxIdNamespace1variable" type="image" value="-" src="img/btM.gif" onclick="switchState('boxIdNamespace1variable');" class="control" />Variables
+                                 </div>
+                                 <div id="boxIdNamespace1variable" style="display:block">
+                                    <div class="indentWrapDiv"><a href="xml2view_v24.html#V_context-mappingS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">context-mapping</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v24.html#V_context-paramS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">context-param</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v22.html#V_contextsS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="cRfI">contexts</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v24.html#V_default-mappingS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">default-mapping</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v22.html#V_dictS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="cRfI">dict</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v24.html#V_mappingsS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">mappings</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v21.html#V_titleS_xml2view_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('xml2view_v1.xsl')"><span class="cRfI">title</span></a></div>
+                                 </div>
+                              </td>
+                              <td class="rt_lR"></td>
+                           </tr>
+                           <tr>
+                              <td class="rt_cBL"></td>
+                              <td class="rt_lB"></td>
+                              <td class="rt_cBR"></td>
+                           </tr>
+                        </table>
+                     </div>
+                     <div class="horizontalLayout">
+                        <table class="rt">
+                           <tr>
+                              <td class="rt_cTL"></td>
+                              <td class="rt_lT"></td>
+                              <td class="rt_cTR"></td>
+                           </tr>
+                           <tr>
+                              <td class="rt_lL"></td>
+                              <td class="rt_cnt">
+                                 <div class="componentGroupTitle"><input id="bt_boxIdNamespace1output" type="image" value="-" src="img/btM.gif" onclick="switchState('boxIdNamespace1output');" class="control" />Output
+                                 </div>
+                                 <div id="boxIdNamespace1output" style="display:block">
+                                    <div class="indentWrapDiv"><a href="xml2view_v21.html#O_S_xml2view_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('xml2view_v1.xsl')"><span class="cRfI">(default)</span></a></div>
+                                 </div>
+                              </td>
+                              <td class="rt_lR"></td>
+                           </tr>
+                           <tr>
+                              <td class="rt_cBL"></td>
+                              <td class="rt_lB"></td>
+                              <td class="rt_cBR"></td>
+                           </tr>
+                        </table>
+                     </div>
+                     <div style="clear:left"></div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="level1" id="toc_group_by_mode" style="display:none">
+            <div class="level2">
+               <p><input id="bt_boxIdMode1" type="image" value="-" src="img/btM.gif" onclick="switchState('boxIdMode1');" class="control" /><span class="indexGroupTitle">#default</span></p>
+               <div id="boxIdMode1" style="display:block">
+                  <div class="horizontalLayout">
+                     <table class="rt">
+                        <tr>
+                           <td class="rt_cTL"></td>
+                           <td class="rt_lT"></td>
+                           <td class="rt_cTR"></td>
+                        </tr>
+                        <tr>
+                           <td class="rt_lL"></td>
+                           <td class="rt_cnt">
+                              <div class="componentGroupTitle"><input id="bt_boxIdMode1template" type="image" value="-" src="img/btM.gif" onclick="switchState('boxIdMode1template');" class="control" />Templates
+                              </div>
+                              <div id="boxIdMode1template" style="display:block">
+                                 <div class="indentWrapDiv"><a href="xml2view_v22.html#M_S_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="mRfI">/</span></a></div>
+                                 <div class="indentWrapDiv"><a href="xml2view_v22.html#M_diagdiagnosticS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="mRfI">diag:diagnostic</span></a></div>
+                                 <div class="indentWrapDiv"><a href="xml2view_v22.html#M_diagnosticsS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="mRfI">diagnostics</span></a></div>
+                              </div>
+                           </td>
+                           <td class="rt_lR"></td>
+                        </tr>
+                        <tr>
+                           <td class="rt_cBL"></td>
+                           <td class="rt_lB"></td>
+                           <td class="rt_cBR"></td>
+                        </tr>
+                     </table>
+                  </div>
+                  <div style="clear:left"></div>
+               </div>
+            </div>
+            <div class="level2">
+               <p><input id="bt_boxIdMode2" type="image" value="-" src="img/btM.gif" onclick="switchState('boxIdMode2');" class="control" /><span class="indexGroupTitle">format-xmlelem</span></p>
+               <div id="boxIdMode2" style="display:block">
+                  <div class="horizontalLayout">
+                     <table class="rt">
+                        <tr>
+                           <td class="rt_cTL"></td>
+                           <td class="rt_lT"></td>
+                           <td class="rt_cTR"></td>
+                        </tr>
+                        <tr>
+                           <td class="rt_lL"></td>
+                           <td class="rt_cnt">
+                              <div class="componentGroupTitle"><input id="bt_boxIdMode2template" type="image" value="-" src="img/btM.gif" onclick="switchState('boxIdMode2template');" class="control" />Template
+                              </div>
+                              <div id="boxIdMode2template" style="display:block">
+                                 <div class="indentWrapDiv"><a href="xml2view_v22.html#M_M_format-xmlelemS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="mRfI">*</span><span class="mdRf">format-xmlelem</span></a></div>
+                              </div>
+                           </td>
+                           <td class="rt_lR"></td>
+                        </tr>
+                        <tr>
+                           <td class="rt_cBL"></td>
+                           <td class="rt_lB"></td>
+                           <td class="rt_cBR"></td>
+                        </tr>
+                     </table>
+                  </div>
+                  <div style="clear:left"></div>
+               </div>
+            </div>
+            <div class="level2">
+               <p><input id="bt_boxIdMode3" type="image" value="-" src="img/btM.gif" onclick="switchState('boxIdMode3');" class="control" /><span class="indexGroupTitle">format-attr</span></p>
+               <div id="boxIdMode3" style="display:block">
+                  <div class="horizontalLayout">
+                     <table class="rt">
+                        <tr>
+                           <td class="rt_cTL"></td>
+                           <td class="rt_lT"></td>
+                           <td class="rt_cTR"></td>
+                        </tr>
+                        <tr>
+                           <td class="rt_lL"></td>
+                           <td class="rt_cnt">
+                              <div class="componentGroupTitle"><input id="bt_boxIdMode3template" type="image" value="-" src="img/btM.gif" onclick="switchState('boxIdMode3template');" class="control" />Templates
+                              </div>
+                              <div id="boxIdMode3template" style="display:block">
+                                 <div class="indentWrapDiv"><a href="xml2view_v22.html#M_M_format-attrS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="mRfI">@*</span><span class="mdRf">format-attr</span></a></div>
+                                 <div class="indentWrapDiv"><a href="xml2view_v21.html#M_ComponentIdM_format-attrS_xml2view_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('xml2view_v1.xsl')"><span class="mRfI">@ComponentId</span><span class="mdRf">format-attr</span></a></div>
+                              </div>
+                           </td>
+                           <td class="rt_lR"></td>
+                        </tr>
+                        <tr>
+                           <td class="rt_cBL"></td>
+                           <td class="rt_lB"></td>
+                           <td class="rt_cBR"></td>
+                        </tr>
+                     </table>
+                  </div>
+                  <div style="clear:left"></div>
+               </div>
+            </div>
+            <div class="level2">
+               <p><input id="bt_boxIdNoMode" type="image" value="-" src="img/btM.gif" onclick="switchState('boxIdNoMode');" class="control" /><span class="indexGroupTitle"> Components without mode </span></p>
+               <div id="boxIdNoMode" style="display:block">
+                  <div class="horizontalLayout">
+                     <table class="rt">
+                        <tr>
+                           <td class="rt_cTL"></td>
+                           <td class="rt_lT"></td>
+                           <td class="rt_cTR"></td>
+                        </tr>
+                        <tr>
+                           <td class="rt_lL"></td>
+                           <td class="rt_cnt">
+                              <div class="componentGroupTitle"><input id="bt_boxIdNoModetemplate" type="image" value="-" src="img/btM.gif" onclick="switchState('boxIdNoModetemplate');" class="control" />Templates
+                              </div>
+                              <div id="boxIdNoModetemplate" style="display:block">
+                                 <div class="indentWrapDiv"><a href="xml2view_v22.html#T_callback-headerS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">callback-header</span></a></div>
+                                 <div class="indentWrapDiv"><a href="xml2view_v22.html#T_contexts-docS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">contexts-doc</span></a></div>
+                                 <div class="indentWrapDiv"><a href="xml2view_v22.html#T_contexts-selectS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">contexts-select</span></a></div>
+                                 <div class="indentWrapDiv"><a href="xml2view_v21.html#T_continue-rootS_xml2view_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('xml2view_v1.xsl')"><span class="nRf">continue-root</span></a></div>
+                                 <div class="indentWrapDiv"><a href="xml2view_v23.html#T_detail-spaceS_..html_snippets.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">detail-space</span></a></div>
+                                 <div class="indentWrapDiv"><a href="xml2view_v22.html#T_dictS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">dict</span></a></div>
+                                 <div class="indentWrapDiv"><a href="xml2view_v22.html#T_elem-linkS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">elem-link</span></a></div>
+                                 <div class="indentWrapDiv"><a href="xml2view_v22.html#T_formURLS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">formURL</span></a></div>
+                                 <div class="indentWrapDiv"><a href="xml2view_v22.html#T_format-fieldS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">format-field</span></a></div>
+                                 <div class="indentWrapDiv"><a href="xml2view_v22.html#T_format-valueS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">format-value</span></a></div>
+                                 <div class="indentWrapDiv"><a href="xml2view_v22.html#T_htmlS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">html</span></a></div>
+                                 <div class="indentWrapDiv"><a href="xml2view_v23.html#T_html-headS_..html_snippets.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">html-head</span></a></div>
+                                 <div class="indentWrapDiv"><a href="xml2view_v22.html#T_htmljsS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">htmljs</span></a></div>
+                                 <div class="indentWrapDiv"><a href="xml2view_v22.html#T_htmlsimpleS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">htmlsimple</span></a></div>
+                                 <div class="indentWrapDiv"><a href="xml2view_v23.html#T_page-headerS_..html_snippets.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">page-header</span></a></div>
+                                 <div class="indentWrapDiv"><a href="xml2view_v23.html#T_prev-nextS_..html_snippets.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">prev-next</span></a></div>
+                                 <div class="indentWrapDiv"><a href="xml2view_v23.html#T_public-spaceS_..html_snippets.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">public-space</span></a></div>
+                                 <div class="indentWrapDiv"><a href="xml2view_v23.html#T_query-inputS_..html_snippets.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">query-input</span></a></div>
+                                 <div class="indentWrapDiv"><a href="xml2view_v23.html#T_query-listS_..html_snippets.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">query-list</span></a></div>
+                                 <div class="indentWrapDiv"><a href="xml2view_v23.html#T_result-pagingS_..html_snippets.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">result-paging</span></a></div>
+                                 <div class="indentWrapDiv"><a href="xml2view_v23.html#T_top-menuS_..html_snippets.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">top-menu</span></a></div>
+                                 <div class="indentWrapDiv"><a href="xml2view_v23.html#T_user-spaceS_..html_snippets.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">user-space</span></a></div>
+                                 <div class="indentWrapDiv"><a href="xml2view_v22.html#T_xml-contextS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">xml-context</span></a></div>
+                              </div>
+                           </td>
+                           <td class="rt_lR"></td>
+                        </tr>
+                        <tr>
+                           <td class="rt_cBL"></td>
+                           <td class="rt_lB"></td>
+                           <td class="rt_cBR"></td>
+                        </tr>
+                     </table>
+                  </div>
+                  <div class="horizontalLayout">
+                     <table class="rt">
+                        <tr>
+                           <td class="rt_cTL"></td>
+                           <td class="rt_lT"></td>
+                           <td class="rt_cTR"></td>
+                        </tr>
+                        <tr>
+                           <td class="rt_lL"></td>
+                           <td class="rt_cnt">
+                              <div class="componentGroupTitle"><input id="bt_boxIdNoModeparameter" type="image" value="-" src="img/btM.gif" onclick="switchState('boxIdNoModeparameter');" class="control" />Parameters
+                              </div>
+                              <div id="boxIdNoModeparameter" style="display:block">
+                                 <div class="indentWrapDiv"><a href="xml2view_v24.html#P_base_urlS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">base_url</span></a></div>
+                                 <div class="indentWrapDiv"><a href="xml2view_v24.html#P_contexts_urlS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">contexts_url</span></a></div>
+                                 <div class="indentWrapDiv"><a href="xml2view_v22.html#P_dict_fileS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="cRfI">dict_file</span></a></div>
+                                 <div class="indentWrapDiv"><a href="xml2view_v24.html#P_formatS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">format</span></a></div>
+                                 <div class="indentWrapDiv"><a href="xml2view_v24.html#P_mappings-fileS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">mappings-file</span></a></div>
+                                 <div class="indentWrapDiv"><a href="xml2view_v24.html#P_maximumRecordsS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">maximumRecords</span></a></div>
+                                 <div class="indentWrapDiv"><a href="xml2view_v24.html#P_modeS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">mode</span></a></div>
+                                 <div class="indentWrapDiv"><a href="xml2view_v24.html#P_numberOfMatchesS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">numberOfMatches</span></a></div>
+                                 <div class="indentWrapDiv"><a href="xml2view_v24.html#P_numberOfRecordsS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">numberOfRecords</span></a></div>
+                                 <div class="indentWrapDiv"><a href="xml2view_v24.html#P_operationS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">operation</span></a></div>
+                                 <div class="indentWrapDiv"><a href="xml2view_v24.html#P_qS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">q</span></a></div>
+                                 <div class="indentWrapDiv"><a href="xml2view_v24.html#P_scanClauseS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">scanClause</span></a></div>
+                                 <div class="indentWrapDiv"><a href="xml2view_v24.html#P_scripts_urlS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">scripts_url</span></a></div>
+                                 <div class="indentWrapDiv"><a href="xml2view_v24.html#P_site_logoS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">site_logo</span></a></div>
+                                 <div class="indentWrapDiv"><a href="xml2view_v24.html#P_site_nameS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">site_name</span></a></div>
+                                 <div class="indentWrapDiv"><a href="xml2view_v24.html#P_startRecordS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">startRecord</span></a></div>
+                                 <div class="indentWrapDiv"><a href="xml2view_v24.html#P_titleS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">title</span></a></div>
+                                 <div class="indentWrapDiv"><a href="xml2view_v24.html#P_userS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">user</span></a></div>
+                                 <div class="indentWrapDiv"><a href="xml2view_v24.html#P_x-contextS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">x-context</span></a></div>
+                              </div>
+                           </td>
+                           <td class="rt_lR"></td>
+                        </tr>
+                        <tr>
+                           <td class="rt_cBL"></td>
+                           <td class="rt_lB"></td>
+                           <td class="rt_cBR"></td>
+                        </tr>
+                     </table>
+                  </div>
+                  <div class="horizontalLayout">
+                     <table class="rt">
+                        <tr>
+                           <td class="rt_cTL"></td>
+                           <td class="rt_lT"></td>
+                           <td class="rt_cTR"></td>
+                        </tr>
+                        <tr>
+                           <td class="rt_lL"></td>
+                           <td class="rt_cnt">
+                              <div class="componentGroupTitle"><input id="bt_boxIdNoModevariable" type="image" value="-" src="img/btM.gif" onclick="switchState('boxIdNoModevariable');" class="control" />Variables
+                              </div>
+                              <div id="boxIdNoModevariable" style="display:block">
+                                 <div class="indentWrapDiv"><a href="xml2view_v24.html#V_context-mappingS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">context-mapping</span></a></div>
+                                 <div class="indentWrapDiv"><a href="xml2view_v24.html#V_context-paramS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">context-param</span></a></div>
+                                 <div class="indentWrapDiv"><a href="xml2view_v22.html#V_contextsS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="cRfI">contexts</span></a></div>
+                                 <div class="indentWrapDiv"><a href="xml2view_v24.html#V_default-mappingS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">default-mapping</span></a></div>
+                                 <div class="indentWrapDiv"><a href="xml2view_v22.html#V_dictS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="cRfI">dict</span></a></div>
+                                 <div class="indentWrapDiv"><a href="xml2view_v24.html#V_mappingsS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">mappings</span></a></div>
+                                 <div class="indentWrapDiv"><a href="xml2view_v21.html#V_titleS_xml2view_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('xml2view_v1.xsl')"><span class="cRfI">title</span></a></div>
+                              </div>
+                           </td>
+                           <td class="rt_lR"></td>
+                        </tr>
+                        <tr>
+                           <td class="rt_cBL"></td>
+                           <td class="rt_lB"></td>
+                           <td class="rt_cBR"></td>
+                        </tr>
+                     </table>
+                  </div>
+                  <div class="horizontalLayout">
+                     <table class="rt">
+                        <tr>
+                           <td class="rt_cTL"></td>
+                           <td class="rt_lT"></td>
+                           <td class="rt_cTR"></td>
+                        </tr>
+                        <tr>
+                           <td class="rt_lL"></td>
+                           <td class="rt_cnt">
+                              <div class="componentGroupTitle"><input id="bt_boxIdNoModeoutput" type="image" value="-" src="img/btM.gif" onclick="switchState('boxIdNoModeoutput');" class="control" />Output
+                              </div>
+                              <div id="boxIdNoModeoutput" style="display:block">
+                                 <div class="indentWrapDiv"><a href="xml2view_v21.html#O_S_xml2view_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('xml2view_v1.xsl')"><span class="cRfI">(default)</span></a></div>
+                              </div>
+                           </td>
+                           <td class="rt_lR"></td>
+                        </tr>
+                        <tr>
+                           <td class="rt_cBL"></td>
+                           <td class="rt_lB"></td>
+                           <td class="rt_cBR"></td>
+                        </tr>
+                     </table>
+                  </div>
+                  <div style="clear:left"></div>
+               </div>
+            </div>
+         </div>
+         <div class="level1" id="toc_group_by_component_type" style="display:none">
+            <div>
+               <div class="horizontalLayout">
+                  <table class="rt">
+                     <tr>
+                        <td class="rt_cTL"></td>
+                        <td class="rt_lT"></td>
+                        <td class="rt_cTR"></td>
+                     </tr>
+                     <tr>
+                        <td class="rt_lL"></td>
+                        <td class="rt_cnt">
+                           <div class="componentGroupTitle"><input id="bt_template" type="image" value="-" src="img/btM.gif" onclick="switchState('template');" class="control" />Templates
+                           </div>
+                           <div id="template" style="display:block">
+                              <div class="indentWrapDiv"><a href="xml2view_v22.html#T_callback-headerS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">callback-header</span></a></div>
+                              <div class="indentWrapDiv"><a href="xml2view_v22.html#T_contexts-docS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">contexts-doc</span></a></div>
+                              <div class="indentWrapDiv"><a href="xml2view_v22.html#T_contexts-selectS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">contexts-select</span></a></div>
+                              <div class="indentWrapDiv"><a href="xml2view_v21.html#T_continue-rootS_xml2view_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('xml2view_v1.xsl')"><span class="nRf">continue-root</span></a></div>
+                              <div class="indentWrapDiv"><a href="xml2view_v23.html#T_detail-spaceS_..html_snippets.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">detail-space</span></a></div>
+                              <div class="indentWrapDiv"><a href="xml2view_v22.html#T_dictS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">dict</span></a></div>
+                              <div class="indentWrapDiv"><a href="xml2view_v22.html#T_elem-linkS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">elem-link</span></a></div>
+                              <div class="indentWrapDiv"><a href="xml2view_v22.html#T_formURLS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">formURL</span></a></div>
+                              <div class="indentWrapDiv"><a href="xml2view_v22.html#T_format-fieldS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">format-field</span></a></div>
+                              <div class="indentWrapDiv"><a href="xml2view_v22.html#T_format-valueS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">format-value</span></a></div>
+                              <div class="indentWrapDiv"><a href="xml2view_v22.html#T_htmlS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">html</span></a></div>
+                              <div class="indentWrapDiv"><a href="xml2view_v23.html#T_html-headS_..html_snippets.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">html-head</span></a></div>
+                              <div class="indentWrapDiv"><a href="xml2view_v22.html#T_htmljsS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">htmljs</span></a></div>
+                              <div class="indentWrapDiv"><a href="xml2view_v22.html#T_htmlsimpleS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">htmlsimple</span></a></div>
+                              <div class="indentWrapDiv"><a href="xml2view_v23.html#T_page-headerS_..html_snippets.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">page-header</span></a></div>
+                              <div class="indentWrapDiv"><a href="xml2view_v23.html#T_prev-nextS_..html_snippets.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">prev-next</span></a></div>
+                              <div class="indentWrapDiv"><a href="xml2view_v23.html#T_public-spaceS_..html_snippets.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">public-space</span></a></div>
+                              <div class="indentWrapDiv"><a href="xml2view_v23.html#T_query-inputS_..html_snippets.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">query-input</span></a></div>
+                              <div class="indentWrapDiv"><a href="xml2view_v23.html#T_query-listS_..html_snippets.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">query-list</span></a></div>
+                              <div class="indentWrapDiv"><a href="xml2view_v23.html#T_result-pagingS_..html_snippets.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">result-paging</span></a></div>
+                              <div class="indentWrapDiv"><a href="xml2view_v23.html#T_top-menuS_..html_snippets.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">top-menu</span></a></div>
+                              <div class="indentWrapDiv"><a href="xml2view_v23.html#T_user-spaceS_..html_snippets.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">user-space</span></a></div>
+                              <div class="indentWrapDiv"><a href="xml2view_v22.html#T_xml-contextS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">xml-context</span></a></div>
+                              <div class="indentWrapDiv"><a href="xml2view_v22.html#M_S_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="mRfI">/</span></a></div>
+                              <div class="indentWrapDiv"><a href="xml2view_v22.html#M_diagdiagnosticS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="mRfI">diag:diagnostic</span></a></div>
+                              <div class="indentWrapDiv"><a href="xml2view_v22.html#M_diagnosticsS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="mRfI">diagnostics</span></a></div>
+                              <div class="indentWrapDiv"><a href="xml2view_v22.html#M_M_format-attrS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="mRfI">@*</span><span class="mdRf">format-attr</span></a></div>
+                              <div class="indentWrapDiv"><a href="xml2view_v21.html#M_ComponentIdM_format-attrS_xml2view_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('xml2view_v1.xsl')"><span class="mRfI">@ComponentId</span><span class="mdRf">format-attr</span></a></div>
+                              <div class="indentWrapDiv"><a href="xml2view_v22.html#M_M_format-xmlelemS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="mRfI">*</span><span class="mdRf">format-xmlelem</span></a></div>
+                           </div>
+                        </td>
+                        <td class="rt_lR"></td>
+                     </tr>
+                     <tr>
+                        <td class="rt_cBL"></td>
+                        <td class="rt_lB"></td>
+                        <td class="rt_cBR"></td>
+                     </tr>
+                  </table>
+               </div>
+               <div class="horizontalLayout">
+                  <table class="rt">
+                     <tr>
+                        <td class="rt_cTL"></td>
+                        <td class="rt_lT"></td>
+                        <td class="rt_cTR"></td>
+                     </tr>
+                     <tr>
+                        <td class="rt_lL"></td>
+                        <td class="rt_cnt">
+                           <div class="componentGroupTitle"><input id="bt_parameter" type="image" value="-" src="img/btM.gif" onclick="switchState('parameter');" class="control" />Parameters
+                           </div>
+                           <div id="parameter" style="display:block">
+                              <div class="indentWrapDiv"><a href="xml2view_v24.html#P_base_urlS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">base_url</span></a></div>
+                              <div class="indentWrapDiv"><a href="xml2view_v24.html#P_contexts_urlS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">contexts_url</span></a></div>
+                              <div class="indentWrapDiv"><a href="xml2view_v22.html#P_dict_fileS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="cRfI">dict_file</span></a></div>
+                              <div class="indentWrapDiv"><a href="xml2view_v24.html#P_formatS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">format</span></a></div>
+                              <div class="indentWrapDiv"><a href="xml2view_v24.html#P_mappings-fileS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">mappings-file</span></a></div>
+                              <div class="indentWrapDiv"><a href="xml2view_v24.html#P_maximumRecordsS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">maximumRecords</span></a></div>
+                              <div class="indentWrapDiv"><a href="xml2view_v24.html#P_modeS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">mode</span></a></div>
+                              <div class="indentWrapDiv"><a href="xml2view_v24.html#P_numberOfMatchesS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">numberOfMatches</span></a></div>
+                              <div class="indentWrapDiv"><a href="xml2view_v24.html#P_numberOfRecordsS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">numberOfRecords</span></a></div>
+                              <div class="indentWrapDiv"><a href="xml2view_v24.html#P_operationS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">operation</span></a></div>
+                              <div class="indentWrapDiv"><a href="xml2view_v24.html#P_qS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">q</span></a></div>
+                              <div class="indentWrapDiv"><a href="xml2view_v24.html#P_scanClauseS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">scanClause</span></a></div>
+                              <div class="indentWrapDiv"><a href="xml2view_v24.html#P_scripts_urlS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">scripts_url</span></a></div>
+                              <div class="indentWrapDiv"><a href="xml2view_v24.html#P_site_logoS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">site_logo</span></a></div>
+                              <div class="indentWrapDiv"><a href="xml2view_v24.html#P_site_nameS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">site_name</span></a></div>
+                              <div class="indentWrapDiv"><a href="xml2view_v24.html#P_startRecordS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">startRecord</span></a></div>
+                              <div class="indentWrapDiv"><a href="xml2view_v24.html#P_titleS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">title</span></a></div>
+                              <div class="indentWrapDiv"><a href="xml2view_v24.html#P_userS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">user</span></a></div>
+                              <div class="indentWrapDiv"><a href="xml2view_v24.html#P_x-contextS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">x-context</span></a></div>
+                           </div>
+                        </td>
+                        <td class="rt_lR"></td>
+                     </tr>
+                     <tr>
+                        <td class="rt_cBL"></td>
+                        <td class="rt_lB"></td>
+                        <td class="rt_cBR"></td>
+                     </tr>
+                  </table>
+               </div>
+               <div class="horizontalLayout">
+                  <table class="rt">
+                     <tr>
+                        <td class="rt_cTL"></td>
+                        <td class="rt_lT"></td>
+                        <td class="rt_cTR"></td>
+                     </tr>
+                     <tr>
+                        <td class="rt_lL"></td>
+                        <td class="rt_cnt">
+                           <div class="componentGroupTitle"><input id="bt_variable" type="image" value="-" src="img/btM.gif" onclick="switchState('variable');" class="control" />Variables
+                           </div>
+                           <div id="variable" style="display:block">
+                              <div class="indentWrapDiv"><a href="xml2view_v24.html#V_context-mappingS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">context-mapping</span></a></div>
+                              <div class="indentWrapDiv"><a href="xml2view_v24.html#V_context-paramS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">context-param</span></a></div>
+                              <div class="indentWrapDiv"><a href="xml2view_v22.html#V_contextsS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="cRfI">contexts</span></a></div>
+                              <div class="indentWrapDiv"><a href="xml2view_v24.html#V_default-mappingS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">default-mapping</span></a></div>
+                              <div class="indentWrapDiv"><a href="xml2view_v22.html#V_dictS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="cRfI">dict</span></a></div>
+                              <div class="indentWrapDiv"><a href="xml2view_v24.html#V_mappingsS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">mappings</span></a></div>
+                              <div class="indentWrapDiv"><a href="xml2view_v21.html#V_titleS_xml2view_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('xml2view_v1.xsl')"><span class="cRfI">title</span></a></div>
+                           </div>
+                        </td>
+                        <td class="rt_lR"></td>
+                     </tr>
+                     <tr>
+                        <td class="rt_cBL"></td>
+                        <td class="rt_lB"></td>
+                        <td class="rt_cBR"></td>
+                     </tr>
+                  </table>
+               </div>
+               <div class="horizontalLayout">
+                  <table class="rt">
+                     <tr>
+                        <td class="rt_cTL"></td>
+                        <td class="rt_lT"></td>
+                        <td class="rt_cTR"></td>
+                     </tr>
+                     <tr>
+                        <td class="rt_lL"></td>
+                        <td class="rt_cnt">
+                           <div class="componentGroupTitle"><input id="bt_output" type="image" value="-" src="img/btM.gif" onclick="switchState('output');" class="control" />Output
+                           </div>
+                           <div id="output" style="display:block">
+                              <div class="indentWrapDiv"><a href="xml2view_v21.html#O_S_xml2view_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('xml2view_v1.xsl')"><span class="cRfI">(default)</span></a></div>
+                           </div>
+                        </td>
+                        <td class="rt_lR"></td>
+                     </tr>
+                     <tr>
+                        <td class="rt_cBL"></td>
+                        <td class="rt_lB"></td>
+                        <td class="rt_cBR"></td>
+                     </tr>
+                  </table>
+               </div>
+               <div style="clear:left"></div>
+            </div>
+         </div>
+         <div class="level1" id="toc_group_by_location" style="display:block">
+            <div>
+               <div class="level2">
+                  <p><input id="bt_../html_snippets.xsl" type="image" value="-" src="img/btM.gif" onclick="switchState('../html_snippets.xsl');" class="control" /><span class="indexGroupTitle"><a href="xml2view_v23.html#..html_snippets.xsl" target="mainFrame" title="No namespace" onclick="updPT('../html_snippets.xsl')">../html_snippets.xsl</a></span></p>
+                  <div id="../html_snippets.xsl" style="display:block">
+                     <div class="horizontalLayout">
+                        <table class="rt">
+                           <tr>
+                              <td class="rt_cTL"></td>
+                              <td class="rt_lT"></td>
+                              <td class="rt_cTR"></td>
+                           </tr>
+                           <tr>
+                              <td class="rt_lL"></td>
+                              <td class="rt_cnt">
+                                 <div class="componentGroupTitle"><input id="bt_../html_snippets.xsltemplate" type="image" value="-" src="img/btM.gif" onclick="switchState('../html_snippets.xsltemplate');" class="control" />Templates
+                                 </div>
+                                 <div id="../html_snippets.xsltemplate" style="display:block">
+                                    <div class="indentWrapDiv"><a href="xml2view_v23.html#T_detail-spaceS_..html_snippets.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">detail-space</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v23.html#T_html-headS_..html_snippets.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">html-head</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v23.html#T_page-headerS_..html_snippets.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">page-header</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v23.html#T_prev-nextS_..html_snippets.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">prev-next</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v23.html#T_public-spaceS_..html_snippets.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">public-space</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v23.html#T_query-inputS_..html_snippets.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">query-input</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v23.html#T_query-listS_..html_snippets.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">query-list</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v23.html#T_result-pagingS_..html_snippets.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">result-paging</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v23.html#T_top-menuS_..html_snippets.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">top-menu</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v23.html#T_user-spaceS_..html_snippets.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../html_snippets.xsl')"><span class="nRf">user-space</span></a></div>
+                                 </div>
+                              </td>
+                              <td class="rt_lR"></td>
+                           </tr>
+                           <tr>
+                              <td class="rt_cBL"></td>
+                              <td class="rt_lB"></td>
+                              <td class="rt_cBR"></td>
+                           </tr>
+                        </table>
+                     </div>
+                     <div style="clear:left"></div>
+                  </div>
+               </div>
+               <div class="level2">
+                  <p><input id="bt_../commons_v1.xsl" type="image" value="-" src="img/btM.gif" onclick="switchState('../commons_v1.xsl');" class="control" /><span class="indexGroupTitle"><a href="xml2view_v22.html#..commons_v1.xsl" target="mainFrame" title="No namespace" onclick="updPT('../commons_v1.xsl')">../commons_v1.xsl</a></span></p>
+                  <div id="../commons_v1.xsl" style="display:block">
+                     <div class="horizontalLayout">
+                        <table class="rt">
+                           <tr>
+                              <td class="rt_cTL"></td>
+                              <td class="rt_lT"></td>
+                              <td class="rt_cTR"></td>
+                           </tr>
+                           <tr>
+                              <td class="rt_lL"></td>
+                              <td class="rt_cnt">
+                                 <div class="componentGroupTitle"><input id="bt_../commons_v1.xsltemplate" type="image" value="-" src="img/btM.gif" onclick="switchState('../commons_v1.xsltemplate');" class="control" />Templates
+                                 </div>
+                                 <div id="../commons_v1.xsltemplate" style="display:block">
+                                    <div class="indentWrapDiv"><a href="xml2view_v22.html#T_callback-headerS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">callback-header</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v22.html#T_contexts-docS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">contexts-doc</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v22.html#T_contexts-selectS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">contexts-select</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v22.html#T_dictS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">dict</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v22.html#T_elem-linkS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">elem-link</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v22.html#T_formURLS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">formURL</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v22.html#T_format-fieldS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">format-field</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v22.html#T_format-valueS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">format-value</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v22.html#T_htmlS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">html</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v22.html#T_htmljsS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">htmljs</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v22.html#T_htmlsimpleS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">htmlsimple</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v22.html#T_xml-contextS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="nRf">xml-context</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v22.html#M_S_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="mRfI">/</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v22.html#M_diagdiagnosticS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="mRfI">diag:diagnostic</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v22.html#M_diagnosticsS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="mRfI">diagnostics</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v22.html#M_M_format-attrS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="mRfI">@*</span><span class="mdRf">format-attr</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v22.html#M_M_format-xmlelemS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="mRfI">*</span><span class="mdRf">format-xmlelem</span></a></div>
+                                 </div>
+                              </td>
+                              <td class="rt_lR"></td>
+                           </tr>
+                           <tr>
+                              <td class="rt_cBL"></td>
+                              <td class="rt_lB"></td>
+                              <td class="rt_cBR"></td>
+                           </tr>
+                        </table>
+                     </div>
+                     <div class="horizontalLayout">
+                        <table class="rt">
+                           <tr>
+                              <td class="rt_cTL"></td>
+                              <td class="rt_lT"></td>
+                              <td class="rt_cTR"></td>
+                           </tr>
+                           <tr>
+                              <td class="rt_lL"></td>
+                              <td class="rt_cnt">
+                                 <div class="componentGroupTitle"><input id="bt_../commons_v1.xslparameter" type="image" value="-" src="img/btM.gif" onclick="switchState('../commons_v1.xslparameter');" class="control" />Parameter
+                                 </div>
+                                 <div id="../commons_v1.xslparameter" style="display:block">
+                                    <div class="indentWrapDiv"><a href="xml2view_v22.html#P_dict_fileS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="cRfI">dict_file</span></a></div>
+                                 </div>
+                              </td>
+                              <td class="rt_lR"></td>
+                           </tr>
+                           <tr>
+                              <td class="rt_cBL"></td>
+                              <td class="rt_lB"></td>
+                              <td class="rt_cBR"></td>
+                           </tr>
+                        </table>
+                     </div>
+                     <div class="horizontalLayout">
+                        <table class="rt">
+                           <tr>
+                              <td class="rt_cTL"></td>
+                              <td class="rt_lT"></td>
+                              <td class="rt_cTR"></td>
+                           </tr>
+                           <tr>
+                              <td class="rt_lL"></td>
+                              <td class="rt_cnt">
+                                 <div class="componentGroupTitle"><input id="bt_../commons_v1.xslvariable" type="image" value="-" src="img/btM.gif" onclick="switchState('../commons_v1.xslvariable');" class="control" />Variables
+                                 </div>
+                                 <div id="../commons_v1.xslvariable" style="display:block">
+                                    <div class="indentWrapDiv"><a href="xml2view_v22.html#V_contextsS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="cRfI">contexts</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v22.html#V_dictS_..commons_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../commons_v1.xsl')"><span class="cRfI">dict</span></a></div>
+                                 </div>
+                              </td>
+                              <td class="rt_lR"></td>
+                           </tr>
+                           <tr>
+                              <td class="rt_cBL"></td>
+                              <td class="rt_lB"></td>
+                              <td class="rt_cBR"></td>
+                           </tr>
+                        </table>
+                     </div>
+                     <div style="clear:left"></div>
+                  </div>
+               </div>
+               <div class="level2">
+                  <p><input id="bt_xml2view_v1.xsl" type="image" value="-" src="img/btM.gif" onclick="switchState('xml2view_v1.xsl');" class="control" /><span class="indexGroupTitle"><a href="xml2view_v21.html#xml2view_v1.xsl" target="mainFrame" title="No namespace" onclick="updPT('xml2view_v1.xsl')">xml2view_v1.xsl</a></span></p>
+                  <div id="xml2view_v1.xsl" style="display:block">
+                     <div class="horizontalLayout">
+                        <table class="rt">
+                           <tr>
+                              <td class="rt_cTL"></td>
+                              <td class="rt_lT"></td>
+                              <td class="rt_cTR"></td>
+                           </tr>
+                           <tr>
+                              <td class="rt_lL"></td>
+                              <td class="rt_cnt">
+                                 <div class="componentGroupTitle"><input id="bt_xml2view_v1.xsltemplate" type="image" value="-" src="img/btM.gif" onclick="switchState('xml2view_v1.xsltemplate');" class="control" />Templates
+                                 </div>
+                                 <div id="xml2view_v1.xsltemplate" style="display:block">
+                                    <div class="indentWrapDiv"><a href="xml2view_v21.html#T_continue-rootS_xml2view_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('xml2view_v1.xsl')"><span class="nRf">continue-root</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v21.html#M_ComponentIdM_format-attrS_xml2view_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('xml2view_v1.xsl')"><span class="mRfI">@ComponentId</span><span class="mdRf">format-attr</span></a></div>
+                                 </div>
+                              </td>
+                              <td class="rt_lR"></td>
+                           </tr>
+                           <tr>
+                              <td class="rt_cBL"></td>
+                              <td class="rt_lB"></td>
+                              <td class="rt_cBR"></td>
+                           </tr>
+                        </table>
+                     </div>
+                     <div class="horizontalLayout">
+                        <table class="rt">
+                           <tr>
+                              <td class="rt_cTL"></td>
+                              <td class="rt_lT"></td>
+                              <td class="rt_cTR"></td>
+                           </tr>
+                           <tr>
+                              <td class="rt_lL"></td>
+                              <td class="rt_cnt">
+                                 <div class="componentGroupTitle"><input id="bt_xml2view_v1.xslvariable" type="image" value="-" src="img/btM.gif" onclick="switchState('xml2view_v1.xslvariable');" class="control" />Variable
+                                 </div>
+                                 <div id="xml2view_v1.xslvariable" style="display:block">
+                                    <div class="indentWrapDiv"><a href="xml2view_v21.html#V_titleS_xml2view_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('xml2view_v1.xsl')"><span class="cRfI">title</span></a></div>
+                                 </div>
+                              </td>
+                              <td class="rt_lR"></td>
+                           </tr>
+                           <tr>
+                              <td class="rt_cBL"></td>
+                              <td class="rt_lB"></td>
+                              <td class="rt_cBR"></td>
+                           </tr>
+                        </table>
+                     </div>
+                     <div class="horizontalLayout">
+                        <table class="rt">
+                           <tr>
+                              <td class="rt_cTL"></td>
+                              <td class="rt_lT"></td>
+                              <td class="rt_cTR"></td>
+                           </tr>
+                           <tr>
+                              <td class="rt_lL"></td>
+                              <td class="rt_cnt">
+                                 <div class="componentGroupTitle"><input id="bt_xml2view_v1.xsloutput" type="image" value="-" src="img/btM.gif" onclick="switchState('xml2view_v1.xsloutput');" class="control" />Output
+                                 </div>
+                                 <div id="xml2view_v1.xsloutput" style="display:block">
+                                    <div class="indentWrapDiv"><a href="xml2view_v21.html#O_S_xml2view_v1.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('xml2view_v1.xsl')"><span class="cRfI">(default)</span></a></div>
+                                 </div>
+                              </td>
+                              <td class="rt_lR"></td>
+                           </tr>
+                           <tr>
+                              <td class="rt_cBL"></td>
+                              <td class="rt_lB"></td>
+                              <td class="rt_cBR"></td>
+                           </tr>
+                        </table>
+                     </div>
+                     <div style="clear:left"></div>
+                  </div>
+               </div>
+               <div class="level2">
+                  <p><input id="bt_../params.xsl" type="image" value="-" src="img/btM.gif" onclick="switchState('../params.xsl');" class="control" /><span class="indexGroupTitle"><a href="xml2view_v24.html#..params.xsl" target="mainFrame" title="No namespace" onclick="updPT('../params.xsl')">../params.xsl</a></span></p>
+                  <div id="../params.xsl" style="display:block">
+                     <div class="horizontalLayout">
+                        <table class="rt">
+                           <tr>
+                              <td class="rt_cTL"></td>
+                              <td class="rt_lT"></td>
+                              <td class="rt_cTR"></td>
+                           </tr>
+                           <tr>
+                              <td class="rt_lL"></td>
+                              <td class="rt_cnt">
+                                 <div class="componentGroupTitle"><input id="bt_../params.xslparameter" type="image" value="-" src="img/btM.gif" onclick="switchState('../params.xslparameter');" class="control" />Parameters
+                                 </div>
+                                 <div id="../params.xslparameter" style="display:block">
+                                    <div class="indentWrapDiv"><a href="xml2view_v24.html#P_base_urlS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">base_url</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v24.html#P_contexts_urlS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">contexts_url</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v24.html#P_formatS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">format</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v24.html#P_mappings-fileS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">mappings-file</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v24.html#P_maximumRecordsS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">maximumRecords</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v24.html#P_modeS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">mode</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v24.html#P_numberOfMatchesS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">numberOfMatches</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v24.html#P_numberOfRecordsS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">numberOfRecords</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v24.html#P_operationS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">operation</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v24.html#P_qS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">q</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v24.html#P_scanClauseS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">scanClause</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v24.html#P_scripts_urlS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">scripts_url</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v24.html#P_site_logoS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">site_logo</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v24.html#P_site_nameS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">site_name</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v24.html#P_startRecordS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">startRecord</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v24.html#P_titleS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">title</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v24.html#P_userS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">user</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v24.html#P_x-contextS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">x-context</span></a></div>
+                                 </div>
+                              </td>
+                              <td class="rt_lR"></td>
+                           </tr>
+                           <tr>
+                              <td class="rt_cBL"></td>
+                              <td class="rt_lB"></td>
+                              <td class="rt_cBR"></td>
+                           </tr>
+                        </table>
+                     </div>
+                     <div class="horizontalLayout">
+                        <table class="rt">
+                           <tr>
+                              <td class="rt_cTL"></td>
+                              <td class="rt_lT"></td>
+                              <td class="rt_cTR"></td>
+                           </tr>
+                           <tr>
+                              <td class="rt_lL"></td>
+                              <td class="rt_cnt">
+                                 <div class="componentGroupTitle"><input id="bt_../params.xslvariable" type="image" value="-" src="img/btM.gif" onclick="switchState('../params.xslvariable');" class="control" />Variables
+                                 </div>
+                                 <div id="../params.xslvariable" style="display:block">
+                                    <div class="indentWrapDiv"><a href="xml2view_v24.html#V_context-mappingS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">context-mapping</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v24.html#V_context-paramS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">context-param</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v24.html#V_default-mappingS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">default-mapping</span></a></div>
+                                    <div class="indentWrapDiv"><a href="xml2view_v24.html#V_mappingsS_..params.xsl" target="mainFrame" class="iRf" title="No namespace" onclick="updPT('../params.xsl')"><span class="cRfI">mappings</span></a></div>
+                                 </div>
+                              </td>
+                              <td class="rt_lR"></td>
+                           </tr>
+                           <tr>
+                              <td class="rt_cBL"></td>
+                              <td class="rt_lB"></td>
+                              <td class="rt_cBR"></td>
+                           </tr>
+                        </table>
+                     </div>
+                     <div style="clear:left"></div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="footer">
+         <hr />
+         <div align="center">Stylesheet documentation generated by <a href="http://www.oxygenxml.com" target="_parent"><span class="oXygenLogo"><span class="redX">&lt;</span>o<span class="redX">X</span>ygen<span class="redX">/&gt;</span></span></a><sup>®</sup> XML Developer.
+         </div>
+      </div><script type="text/javascript">
+         <!--                     
+                    // The namespace is the selected option in the TOC combo.
+                    
+                    // The corresponding div is already visible conf. to its style attr.                     
+                    
+                            var selectToc = getElementObject('selectTOC');
+                            if(selectToc != null){
+                            // It can be null when having chunking, the combo of the TOC is in another frame.
+                            selectToc.selectedIndex = 0;
+                            }
+                        
+                    
+                    // Floats the toolbar.
+                    var globalControls = getElementObject("global_controls"); 
+                    
+                    if(globalControls != null){
+                    var browser=navigator.appName;
+                    var version = parseFloat(navigator.appVersion.split('MSIE')[1]);
+                    
+                    var IE6 = false;
+                    if ((browser=="Microsoft Internet Explorer") && (version < 7)){
+                    IE6 = true;
+                    }
+                    
+                    //alert (IE6 + " |V| " + version);
+                    
+                    if(IE6){
+                    // On IE 6 the 'fixed' property is not supported. We must use javascript. 
+                    globalControls.style.position='absolute';                         
+                    // The global controls will do not exist in the TOC frame, when chunking.
+                    findAndFloat("global_controls", 225, 30);    
+                    } else {
+                    globalControls.style.position='fixed';                     	
+                    }
+                    
+                    globalControls.style.right='0';                       
+                    }
+                --></script></body>
+</html>

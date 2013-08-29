@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos  -->
+			<title></title>
+			<link rel="stylesheet" href="media/stylesheet.css" />
+											</head>
+		<body>
+						<div align="center"><h1></h1></div>
+<pre>
+
+**********************************************
+README for the corpus_shell fcs-wrapper to DDC
+**********************************************
+
+
+This module provides an interface (REST-style API)
+to the corpus search engine DDC
+	[ http://www.ddc-concordance.org/documentation ] 
+	[ http://sourceforge.net/projects/ddc-concordance/ ]
+	
+It builds upon the ddc-perl API provided by DDC:
+	[ http://sourceforge.net/projects/ddc-concordance/files/ddc-perl/ ]
+	
+It accepts parameters as defined in the SRU-protocol:
+	[ http://www.loc.gov/standards/sru/specs/scan.html ]
+or rather its FCS-extension
+  [ http://clarin.eu/fcs ]
+  
+translates them to the queries as DDC-API expects them
+and parses the result and translates it back to format expected by the FCS/SRU-protocol.
+
+It uses the Template perl-module for generating the response.
+(install via CPAN)
+
+
+== How to use it  ==
+
+First, you have to have a ddc-server running, or make one to run
+as described in ddc-documentation.
+
+Then you add the ddconsru-scripts into your webserver (usually cgi-bin folder)
+and add the the ddc-perl scripts, so that you have following folder structure.
+
+cgi-bin:
+  ddconsru/
+  ddconsru/DDC/*
+  ddconsru/tmpl/*
+  ddconsru/DDConSRU.pl
+  ddconsru/DDC.pm
+  ddconsru/ddc.config
+  
+Then you have to adapt your configuration.
+
+== Config ==
+
+Take the ddc.config.dist rename it to ddc.config and edit it like following:
+
+The &lt;server&gt;-element stores obviously the information about the ddc-server
+       
+   &lt;key&gt;{key}&lt;/key&gt;
+   &lt;ip&gt;{ddc-server ip}&lt;/ip&gt;
+   &lt;port&gt;{ddc-server port&lt;/port&gt;
+
+The key is primarily meant for the client, 
+to be able to restrict the request to this specific server
+so could be any internal identifier.
+
+The &lt;item&gt;-elements within &lt;server&gt; represent individual corpus-threads
+available at given ddc-server (every ddc-server can serve many corpora/threads):
+
+	&lt;item&gt;
+		&lt;key&gt;clarin.at:icltt:ddc:traum_russ&lt;/key&gt;
+	    &lt;name&gt;traum_russ&lt;/name&gt;
+	    &lt;displayText&gt;Freud: Die Traumdeutung, Russian&lt;/displayText&gt;
+    &lt;/item&gt;    
+
+&lt;key&gt; is again an identifier for the client to pick a corpus to search in (via the parameter x-context)
+Upon request this is translated to the internal name of the corpus undestood by ddc (&lt;name&gt;-element).
+
+The config is served to the client upon the request
+ 
+  operation=scan&amp;scanClause=fcs.resource
+  
+Within FCS this is meant as a request to list available resource in an endpoint.
+
+== To Do ==
+
+* Parsing and translating complex queries!
+	 SRU-protocol defines a powerful query language (CQL - Context Query Language)
+	 DDC also provides its own powerful query language.
+	 There needs to be translation between those two.
+
+* Harmonize the ddc-perl-api [http://corpus3.aac.ac.at/trac/ticket/45]
+	 Currently ddconsru works on a customized version of ddc-perl-api (source on corpus3).
+	 We should be able to read from the ?default ddc-perl-api and work any customizations on top of that.
+	
+
+
+</pre>
+	<p class="notes" id="credit">
+		Documentation generated on Wed, 28 Aug 2013 15:14:43 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.5.0a1</a>
+	</p>
+	</body>
+</html>
