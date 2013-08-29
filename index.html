@@ -1,10 +1,10 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>corpus_shell by vronk</title>
-    <link rel="stylesheet" href="stylesheets/styles.css">
+		<title>devdocs for corpus_shell</title>
+		<link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script src="javascripts/respond.js"></script>
@@ -17,75 +17,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
   </head>
-  <body>
-      <div id="header">
-        <nav>
-          <li class="fork"><a href="https://github.com/vronk/corpus_shell">View On GitHub</a></li>
-          <li class="downloads"><a href="https://github.com/vronk/corpus_shell/zipball/master">ZIP</a></li>
-          <li class="downloads"><a href="https://github.com/vronk/corpus_shell/tarball/master">TAR</a></li>
-          <li class="title">DOWNLOADS</li>
-        </nav>
-      </div><!-- end header -->
 
-    <div class="wrapper">
-
-      <section>
-        <div id="title">
-          <h1>corpus_shell</h1>
-          <p>modular framework for publishing (distributed and heterogeneous) language resources</p>
-          <hr>
-          <span class="credits left">Project maintained by <a href="https://github.com/vronk">vronk</a></span>
-          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
-        </div>
-
-        <hr><p>corpus_shell</p>
-
-<hr><p>Is a modular framework for publishing (distributed and heterogeneous) language resources.</p>
-
-<p>It consists of self-contained "loosely-coupled" services, with (hopfully) clearly defined tasks and interfaces,
-the basic protocol (the linuga franca) being the FCS/SRU-protocol [ <a href="http://clarin.eu/fcs">http://clarin.eu/fcs</a> ], "FCS" standing for federated content search.</p>
-
-<p>We recognize following basic components to the framework:</p>
-
-<p>Aggregator
-    a service that is able to dispatch a query to multiple target repositories, and merge the result back.
-    Currently we have a basic php-implementation fcs/aggreagtor/switch.php 
-    which however is not yet able to query multiple target repositories at once. </p>
-
-<p>Wrapper
-    services that translate between existing systems and the protocol. Currently we have (in an early dirty version):</p>
-
-<pre><code>  - *php* - implementations accessing MySQL-db for Dictionaries
-  - *xquery* implementation for eXist-based content repository
-  - *perl* implementation mapping to ddc-api (corpus search engine) 
-    allowing to access our (public) corpora (not checked in yet) 
-</code></pre>
-
-<p>Workspace
-    main user-interface allowing to select targets, issues queries, 
-    see the results and invoke specialized viewer for the resources.
-    [ index.html ]</p>
-
-<p>ResourceViewer
-    separate ui-components that are able to display/visualize specific resource types. 
-    (Currently we have only the basic XSL-transformed HTML-views of the results returned by the services)</p>
-
-<hr><p>How to install this software</p>
-
-<hr><p>Simple answer
-    This is easy if you just want to see what corpus_shell does if you point your browser at it and perhaps change
-    some of it's behaviour to your needs by adapting the JavaScript, CSS and perhaps HTML parts: There is nothing to do
-    but open index.html right from where you downloaded it. All your settings stay local in your browser and you query
-    the publicly available projects at ICLTT's server.</p>
-
-<p>Advanced answer
-    If you want to expose your own data to the world then it gets way more complicated. You need a server capable of interpreting
-    PHP 5.3 or better and perhaps an exsit-db or mysql/mariadb database for storing and retrieving your data. Detailed instructions
-    on how to do such a setup (may) follow (soon).  </p>
-      </section>
-
-    </div>
-    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
-    
-  </body>
+	<body>
+		<h1>Documentation for the source code of corpus_shell </h1>
+		<p>Documentation for the source code that form the corpus_shell. It consists of a client side HTML(5) 
+			application which utilises a few server side services to get the actual data and to store settings at a central location.</p>
+		<ul>
+		<li><a href="phpdocs/index.html">PHP Documentation</a><br/>Generated using: phpdoc -d modules -t docs/phpdocs -o HTML:frames:DOM/earthli</li>
+		<li><a href="jsdocs/index.html">JavaScript Documentation</a><br/>Generated using: ..\jsdoc\jsdoc -r -p -d docs/jsdocs scripts/js</li>
+		<li>XSLT Documentation
+			<ul>
+				<li><a href="xsltdocs/explain2view_v1.html">for explain2view_v1.xsl</a></li>
+				<li><a href="xsltdocs/explain2view_v2.html">for explain2view_v2.xsl</a></li>
+				<li><a href="xsltdocs/result2view_v1.html">for result2view_v1.xsl</a></li>
+				<li><a href="xsltdocs/result2view_v2.html">for result2view_v2.xsl</a></li>
+				<li><a href="xsltdocs/scan2view_v1.html">for scan2view_v1.xsl</a></li>
+				<li><a href="xsltdocs/scan2view_v2.html">for scan2view_v2.xsl</a></li>
+				<li><a href="xsltdocs/xml2view_v1.html">for xml2view_v1.xsl</a></li>
+				<li><a href="xsltdocs/xml2view_v2.html">for xml2view_v2.xsl</a></li>
+				<li><a href="xsltdocs/profile.html">for profile.xsl</a></li>
+				<li><a href="xsltdocs/profilesampletext.html">for profilesampletext.xsl</a></li>
+				<li><a href="xsltdocs/bibliography.html">for bibliography.xsl</a></li>
+			</ul>
+		</li>
+	    Generated using &lt;oXygen/> XML.
+		<li>CSS Documentation</li>
+		</ul>
+	</body>
 </html>
