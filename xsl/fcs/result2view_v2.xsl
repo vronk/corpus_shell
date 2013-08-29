@@ -1,16 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:diag="http://www.loc.gov/zing/srw/diagnostic/" xmlns:utils="http://aac.ac.at/content_repository/utils" xmlns:sru="http://www.loc.gov/zing/srw/" xmlns:saxon="http://saxon.sf.net/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fcs="http://clarin.eu/fcs/1.0" xmlns:exsl="http://exslt.org/common" version="2.0" exclude-result-prefixes="#all">
+<xsl:stylesheet
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns:diag="http://www.loc.gov/zing/srw/diagnostic/"
+    xmlns:utils="http://aac.ac.at/content_repository/utils"
+    xmlns:sru="http://www.loc.gov/zing/srw/"
+    xmlns:saxon="http://saxon.sf.net/"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:fcs="http://clarin.eu/fcs/1.0"
+    xmlns:exsl="http://exslt.org/common"
+    xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl"
+    version="2.0" exclude-result-prefixes="#all">
     
-<!--   
-    <purpose> generate html view of a sru-result-set  (eventually in various formats).</purpose>
-<history>  
-<change on="2011-12-06" type="created" by="vr">based on cmdi/scripts/mdset2view.xsl retrofitted for XSLT 1.0</change>	
-</history>   
- -->   
-    <!--  method="xhtml" is saxon-specific! prevents  collapsing empty <script> tags, that makes browsers choke -->
+    <xd:doc scope="stylesheet">
+        <xd:desc>Generate html view of a sru-result-set  (eventually in various formats)
+            <xd:p>History:
+                <xd:ul>
+                    <xd:li>2011-12-06: created by:"vr": based on cmdi/scripts/mdset2view.xsl retrofitted for XSLT 1.0</xd:li>
+                </xd:ul>
+            </xd:p>
+        </xd:desc>
+    </xd:doc>  
+    
+    <xd:doc>
+        <xd:desc>Note: method="xhtml" is saxon-specific! prevents  collapsing empty &lt;script> tags, that makes browsers choke</xd:desc>
+    </xd:doc>
     <xsl:output method="xhtml" media-type="text/html" indent="yes" encoding="UTF-8" doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"/>
     <xsl:include href="../commons_v2.xsl"/>
-    <xsl:include href="data2view.xsl"/>
+    <xsl:include href="data2view_v2.xsl"/>
     <xsl:include href="data2view_cmd.xsl"/>
     <xsl:param name="title">
         <xsl:text>Result Set</xsl:text>
@@ -168,14 +185,21 @@
             </td>
         </tr>
     </xsl:template>
+    
     <xsl:template match="sru:diagnostics">
         <div class="error">
             <xsl:apply-templates/>
         </div>
     </xsl:template>
+    
     <xsl:template match="diag:diagnostic">
         <xsl:value-of select="diag:message"/> (<xsl:value-of select="diag:uri"/>)
     </xsl:template>
+    
+    <xd:doc>
+        <xd:desc>Inserts the JavaScript funtions needed for displaying the representation
+        of the unknown parts of the TEI encoding.</xd:desc>
+    </xd:doc>
     <xsl:template name="callback-header">
         <script type="text/javascript">
             $(function()

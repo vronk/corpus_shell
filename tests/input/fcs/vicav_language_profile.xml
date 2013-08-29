@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- generated 2013-08-26 using http://corpus3.aac.ac.at/cs2/corpus_shell/modules/mysqlonsru/ProfileOnSRU.php?operation=searchRetrieve&query=cairo&x-format=xml&version=1.2&maximumRecords=100&startRecord=1 -->
+<sru:searchRetrieveResponse xmlns:diag="http://www.loc.gov/zing/srw/diagnostic/"
+   xmlns:sru="http://www.loc.gov/zing/srw/" xmlns:fcs="http://clarin.eu/fcs/1.0">
+   <sru:version>1.2</sru:version>
+   <sru:numberOfRecords>1</sru:numberOfRecords>
+   <echoedSearchRetrieveRequest>
+      <version>1.2</version>
+      <query>cairo</query>
+      <baseUrl/>
+   </echoedSearchRetrieveRequest>
+   <sru:records>
+      <sru:record>
+         <sru:recordSchema>http://clarin.eu/fcs/1.0/Resource.xsd</sru:recordSchema>
+         <sru:recordPacking>raw</sru:recordPacking>
+         <sru:recordData>
+            <fcs:Resource>
+               <fcs:DataView type="metadata">
+                  <fcs:f key="copyright">ICLTT</fcs:f>
+                  <fcs:f key="content">Arabic dialect profile for the region of cairo</fcs:f>
+               </fcs:DataView>
+               <fcs:ResourceFragment>
+                  <fcs:DataView type="w">
+                     <TEI xml:id="profile_cairo_01">
+                        <teiHeader>
+
+                           <fileDesc>
+                              <author>Charly Moerth</author>
+
+                              <titleStmt>
+                                 <title>A machine-readable language profile of Cairo Arabic </title>
+                              </titleStmt>
+
+                              <publicationStmt>
+                                 <pubPlace>Vienna</pubPlace>
+                                 <date>2011</date>
+                                 <availability status="restricted">
+                                    <p>
+                                       <ref type="license"
+                                          target="http://creativecommons.org/licenses/by-nc-sa/3.0/"
+                                       />
+                                    </p>
+                                 </availability>
+                              </publicationStmt>
+
+                              <editionStmt>
+                                 <edition>1.0 (Alpha)</edition>
+                              </editionStmt>
+
+                              <sourceDesc>
+                                 <p>This is an original digital text</p>
+                              </sourceDesc>
+                           </fileDesc>
+                        </teiHeader>
+                        <text>
+                           <body>
+                              <head>
+                                 <name xml:lang="eng">Cairo</name>
+                                 <name xml:lang="ara">القاهیرة</name>
+                                 <name xml:lang="ara-x-DMG">ʔal-qāhira</name>
+                                 <name xml:lang="arz" type="araLoc">مصر</name>
+                                 <name xml:lang="arz-Latn" type="latLoc">maṣr</name>
+                              </head>
+                              <div type="positioning">
+                                 <p>
+                                    <ref target="Cairo-2009.JPG"/>
+                                 </p>
+                              </div>
+                              <div type="typology">
+                                 <p>Eastern › Egyptian › Upper Egypt</p>
+                                 <p>Urban, sedentary, high prestige variety</p>
+                              </div>
+                              <div type="glottonyms">
+                                 <p/>
+                              </div>
+                              <div type="general">
+                                 <p>The Egyptian varieties of Arabic form a quite diversified
+                                    linguistic group. They are usually subdivided into four major
+                                    subgroups: the dialects of Upper Egypt, Middle Egypt, Lower
+                                    Egypt and those spoken in the Oases. The dialect of the capital
+                                    belongs to the northern group. The first more detailed
+                                    description of Cairo Arabic was published as early as 1880 by
+                                    Wilhelm Spitta. </p>
+                                 <p>By contrast to most other varieties of vernacular Arabic, the
+                                    dialect of Cairo has been reduced to writing as well. There
+                                    exists quite a significant amount of literary output, in
+                                    particular stage plays. </p>
+                              </div>
+                              <div type="sampleText">
+                                 <ptr target="cairo_sample_01"/>
+                              </div>
+                              <div type="bibliography">
+                                 <p>Meanwhile there exists a vast amount of literature concerning
+                                    the dialect of Cairo.</p>
+                                 <ptr target="vicav_bibl_002|vicavTaxonomy=Cairo"/>
+                              </div>
+                              <div type="dictionary">
+                                 <p>Our site provides a digital dictionary of Cairo Arabic. <ptr
+                                       target="arz_eng_006"/></p>
+                                 <p>Socrates Spiro’s dictionary is pretty old. As there is not
+                                    anything else available in digital form, it is still worth
+                                    looking at. <ptr
+                                       target="http://archive.org/details/anarabicenglish00spirgoog"
+                                    /></p>
+                              </div>
+                              <div type="basicGlossary"/>
+                           </body>
+                        </text>
+                     </TEI>
+                  </fcs:DataView>
+               </fcs:ResourceFragment>
+            </fcs:Resource>
+         </sru:recordData>
+         <sru:recordPosition>1</sru:recordPosition>
+         <sru:recordIdentifier/>
+      </sru:record>
+      <sru:nextRecordPosition/>
+   </sru:records>
+   <sru:res>1</sru:res>
+</sru:searchRetrieveResponse>

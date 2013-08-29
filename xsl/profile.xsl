@@ -1,9 +1,15 @@
 <?xml version="1.0"?>
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/xhtml" exclude-result-prefixes="html">
+<xsl:stylesheet version="1.0" 
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:html="http://www.w3.org/1999/xhtml"
+  xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl"
+  xmlns="http://www.w3.org/1999/xhtml" exclude-result-prefixes="html xd">
 
     <xsl:output method="html"/>
-
-    <xsl:template match="/">
+    <xd:doc>
+      <xd:desc>This stylesheet pulls the information needed from the TEI document returned from upstream.</xd:desc>
+    </xd:doc>
+  <xsl:template match="/">
       <div class="profiletext">
 
          <xsl:if test="//div[@type='positioning']">
@@ -103,23 +109,35 @@
       </div>
     </xsl:template>
 
+    <xd:doc>
+      <xd:desc>TEI div elements, denoting divisions of the body, are translated to HTML div elements, which doesn't have a meaning
+      of its own but just marks a semantically related group of consecutive elements.</xd:desc>
+    </xd:doc>
     <xsl:template match="div">
       <div><xsl:apply-templates/></div>
     </xsl:template>
 
-    <xsl:template match="p">
+    <xd:doc>
+      <xd:desc>TEI paragraphs are mapped to HTML paragraphs.</xd:desc>
+    </xd:doc>
+  <xsl:template match="p">
       <p><xsl:apply-templates/></p>
     </xsl:template>
 
-    <xsl:template match="ptrr">
+    <xd:doc>
+      <xd:desc>This doesn't match any valid TEI element.</xd:desc>
+    </xd:doc>
+  <xsl:template match="ptrr">
       <a>
         <xsl:attribute name="href">#URL#sampletext=<xsl:value-of select="@target"/></xsl:attribute>
         <xsl:text>→ Basic phrases</xsl:text>
       </a>
     </xsl:template>
 
-
-    <xsl:template match="teiHeader"/>
+    <xd:doc>
+      <xd:desc>The TEI header is not used in the result document. It's matched with an empty result</xd:desc>
+    </xd:doc>
+  <xsl:template match="teiHeader"/>
 
 
 </xsl:stylesheet>

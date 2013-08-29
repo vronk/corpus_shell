@@ -1,13 +1,21 @@
 <?php
-  
-  //load configuration
-  //include "../../wrapper/php/config.php";
+/**
+ * 
+ * 
+ * @package config
+ */
+
+  /**
+   * Loads the common configuration file
+   */
   include "config.php";
 
-  //SRU version
-  $version = "1.2";
-
-  //array containing all SRU diagnostic messages
+  /**
+   * Array containing all SRU diagnostic message texts
+   * 
+   * Using this array error numbers can be mapped to (english) messages.
+   * @global array $errorMessages
+   */
   $errorMessages = array (1   => "General system error",
                           2   => "System temporarily unavailable",
                           3   => "Authentication error",
@@ -90,8 +98,19 @@
                           121 => "Too many terms requested");
   
   
-  //fills the diagnostic template with the selected error message and 
-  //$diagnosticDetails and returns it
+  /**
+   * Returns a standard conform XML diagnostic messsage to the client
+   *
+   * Fills the diagnostic template with the selected error message and 
+   * $diagnosticDetails and returns it to the client.
+   * See alos: {@link http://www.loc.gov/standards/sru/specs/diagnostics.html}
+   * @uses $version
+   * @uses $vlibPath
+   * @uses $diagnosticsTemplate
+   * @uses $errorMessages
+   * @param $diagnosticId
+   * @param $diagnosticDetails
+   */
   function Diagnostics($diagnosticId, $diagnosticDetails)
   {
     global $diagnosticsTemplate;
