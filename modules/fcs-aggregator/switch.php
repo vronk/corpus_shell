@@ -456,6 +456,7 @@
    * @uses $stylesheet
    * @uses $extraRequestData
    * @uses $xformat
+   * @uses $xdataview
    * @param string $endPoint The (upstream) endpoint for the query URL
    * @param string $xcontext The x-context for the query URL
    * @param string type If "fcs.resource" or "fcs" x-context is used else ignored.
@@ -482,6 +483,7 @@
     global $extraRequestData;
 
     global $xformat;
+	global $xdataview;
 
     $urlStr = "?";
 
@@ -518,8 +520,9 @@
         $urlStr =  AddParamToUrlIfNotEmpty($urlStr, "recordPacking", $recordPacking);
         $urlStr =  AddParamToUrlIfNotEmpty($urlStr, "recordSchema", $recordSchema);
         $urlStr =  AddParamToUrlIfNotEmpty($urlStr, "resultSetTTL", $resultSetTTL);
-
-        //if x-format!=html --> forward x-format (added 2012-05-02 by AB)
+		
+		$urlStr =  AddParamToUrlIfNotEmpty($urlStr, "x-dataview", $xdataview);
+        
         if (stripos($xformat, "html")=== false)
           $urlStr =  AddParamToUrlIfNotEmpty($urlStr, "x-format", $xformat);
       break;
@@ -673,8 +676,16 @@
    * 
    * The type of the returned document is set to text/html the encoding is set to UTF-8.
    * 
+   * @uses $operation
    * @uses $xformat
    * @uses $scriptsUrl
+   * @uses $xcontext
+   * @uses $startRecord
+   * @uses $maximumRecords
+   * @uses $scanClause
+   * @uses $query
+   * @uses $switchUrl
+   *  
    * @param DOMDocument $xmlDoc The XML input document as XML DOM representation.
    * @param DOMDocument|SimpleXMLElement $xslDoc The XSL style sheet used for the transformation.
    * @param bool $useParams If set $xformat and $scriptsUrl are passed to the XSL processor as parameters "format" and "scripts_url".
@@ -688,9 +699,23 @@
     {
       global $xformat;
       global $scriptsUrl;
-
+	  global $operation;
+	  global $xcontext;
+      global $startRecord;
+      global $maximumRecords;
+      global $scanClause;
+      global $query;
+	  global $switchUrl;
+      
       $proc->setParameter('', 'format', $xformat);
       $proc->setParameter('', 'scripts_url', $scriptsUrl);
+	  $proc->setParameter('', 'operation', $operation);
+	  $proc->setParameter('', 'x-context', $xcontext);
+	  $proc->setParameter('', 'startRecord', $startRecord);
+	  $proc->setParameter('', 'maximumRecords', $maximumRecords);
+	  $proc->setParameter('', 'scanClause', $scanClause);
+	  $proc->setParameter('', 'q', $query);
+	  $proc->setParameter('', 'base_url', $switchUrl);
     }
 
     header("content-type: text/html; charset=UTF-8");
@@ -965,6 +990,16 @@
    * @global string $xformat
    */  
   if (isset($_GET['x-format'])) $xformat = trim($_GET['x-format']); else $xformat = "";
+  
+  /**
+   * The x-dataview parameter passed by the client
+   * 
+   * Used to specify which views on the result shall be returned as response.
+   * Possible values include "kwic", "full", "title", "facs", "navigation" and "xmlescaped".
+   * On other values "the result is undefined "kwic" is assumed.
+   * @global string $xdataview
+   */  
+  if (isset($_GET['x-dataview'])) $xdataview = trim($_GET['x-dataview']); else $xformat = "kwic";
 
   /**
    * All contexts/resources given by the HTTP GET parameter "x-context" as array
