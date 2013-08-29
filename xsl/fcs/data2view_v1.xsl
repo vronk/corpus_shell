@@ -1,44 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:kwic="http://clarin.eu/fcs/1.0/kwic" xmlns="http://www.w3.org/1999/xhtml" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:sru="http://www.loc.gov/zing/srw/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fcs="http://clarin.eu/fcs/1.0" xmlns:exist="http://exist.sourceforge.net/NS/exist" version="2.0" exclude-result-prefixes="#all">
-    <xd:doc xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet">
-        <xd:desc>
-            <xd:p>
-                <xd:b>Created on:</xd:b> Apr 17, 2013</xd:p>
-            <xd:p>
-                <xd:b>Author:</xd:b> m</xd:p>
+<xsl:stylesheet
+    xmlns:kwic="http://clarin.eu/fcs/1.0/kwic"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns:tei="http://www.tei-c.org/ns/1.0"
+    xmlns:sru="http://www.loc.gov/zing/srw/"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:fcs="http://clarin.eu/fcs/1.0"
+    xmlns:exist="http://exist.sourceforge.net/NS/exist"
+    xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl"
+    xmlns:exsl="http://exslt.org/common"
+    version="1.0" exclude-result-prefixes="kwic xsl tei sru xs fcs exist xd exsl">
+    <xd:doc scope="stylesheet">
+        <xd:desc>Provides more specific handling of sru-result-set recordData
+            <xd:p>History:
+                <xd:ul>
+                    <xd:li>2013-04-17: created by: "m": </xd:li>
+                    <xd:li>2011-11-14: created by: "vr": based on cmdi/scripts/xml2view.xsl</xd:li>
+                </xd:ul>
+            </xd:p>
             <xd:p/>
         </xd:desc>
     </xd:doc>
-<!--    exclude-result-prefixes="xs sru exist tei fcs kwic"-->
 
-    <!-- 
-        <purpose> provide more specific handling of sru-result-set recordData</purpose>
-        <params>
-        <param name=""></param>
-        </params>
-        <history>	
-        <change on="2011-11-14" type="created" by="vr">based on cmdi/scripts/xml2view.xsl</change>	
-        </history>
-    -->
     <xsl:include href="data2view_cmd.xsl"/>
 <!--    <xsl:import href="../amc/dataset2view.xsl"/>-->
     <xsl:include href="data2view_tei.xsl"/>
 <!--    <xsl:include href="../stand_weiss.xsl"/>-->
    
    
-<!-- default starting-point -->
-    <xd:doc xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl">
-        <xd:desc>
-            <xd:p/>
+    <xd:doc>
+        <xd:desc>Default starting-point
+            <xd:p>In mode record-data this this and all included style sheets define the transformation.</xd:p>
         </xd:desc>
     </xd:doc>
     <xsl:template match="sru:recordData" mode="record-data">
         <xsl:apply-templates select="*" mode="record-data"/>
     </xsl:template>
     
-<!-- default fallback: display the xml-structure-->
-    <xd:doc xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl">
-        <xd:desc>
+    <xd:doc>
+        <xd:desc>default fallback: display the xml-structure
             <xd:p/>
         </xd:desc>
     </xd:doc>
@@ -225,11 +226,11 @@
             </xsl:when>
         </xsl:choose>
     </xsl:template>
-    <xd:doc xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl">
+    
+    <xd:doc>
         <xd:desc>
-            <xd:p>generic template, invoked link processing and places attributes of the element 
-                (TODO: !and its parents!)
-            in a separate hidden structure - viewable via mouseover (given appropriate css and js is supplied)</xd:p>
+            <xd:p>Inserts links for special TEI elements like named entities. XSL 1.0 port.
+                Advanced functionality is available with XSL 2.0 using features. See data2view_v2.xsl</xd:p>
         </xd:desc>
     </xd:doc>
     <xsl:template name="inline">
@@ -237,21 +238,9 @@
             <xsl:call-template name="elem-link"/>
         </xsl:variable>
         <xsl:variable name="inline-content">
-            <!--<xsl:choose>
-                <xsl:when test="*">
-                    <xsl:for-each select="*" >
-                    <xsl:apply-templates select="*" mode="record-data"></xsl:apply-templates>
-                     </xsl:for-each>
-                </xsl:when>
-                <xsl:otherwise>-->                    
-                    <!--            <xsl:value-of select="."/>-->            
-                    <!-- umständliche lösung to get spaces between children elements -->
             <xsl:for-each select=".//text()">
-                        <!--<xsl:value-of select="."/>
-                            <xsl:text> </xsl:text>-->
                 <xsl:choose>
                     <xsl:when test="parent::exist:match">
-                                <!--                        <xsl:value-of select="name(.)"/>-->
                         <xsl:apply-templates select="parent::exist:match" mode="record-data"/>
                     </xsl:when>
                     <xsl:otherwise>
@@ -260,12 +249,13 @@
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:for-each>        
-            <!--    </xsl:otherwise>
-            </xsl:choose>-->
         </xsl:variable>
         <xsl:variable name="class">
-            <xsl:for-each select="distinct-values(descendant-or-self::*/name())">
-                <xsl:value-of select="."/>
+            <!-- This genereates CSS class attributes for HTML elements. As far as I know
+                it doesn't matter if the class is specified once or n-times so for 1.0 just forget
+                about distinct-values() for now and let's see -->
+            <xsl:for-each select="descendant-or-self::*">
+                <xsl:value-of select="name(.)"/>
                 <xsl:text> </xsl:text>
             </xsl:for-each>
         </xsl:variable>
@@ -289,17 +279,16 @@
             <xsl:if test="descendant-or-self::*/@*">
                 <span class="attributes" style="display:none;">
                     <table>
-                        <xsl:for-each-group select="descendant-or-self::*" group-by="name()">
                             <tr>
                                 <td colspan="2">
-                                    <xsl:value-of select="name()"/>
+                                    <xsl:call-template name="join-attributes-with-space">
+                                        <xsl:with-param name="nodes" select="exsl:node-set(descendant-or-self::*)"/>
+                                    </xsl:call-template>
                                 </td>
                             </tr>
-                    
-<!--                        <xsl:apply-templates select="@*" mode="format-attr"/>-->
                             <tr>
                                 <td>
-                                    <xsl:for-each select="current-group()">
+                                    <xsl:for-each select="descendant-or-self::*">
                                         <xsl:if test="@*">
                                             <table style="float:left">
                                                 <xsl:for-each select="@*">
@@ -317,105 +306,17 @@
                                     </xsl:for-each>
                                 </td>
                             </tr>
-                        </xsl:for-each-group>
                     </table>
                 </span>
             </xsl:if>
             <xsl:copy-of select="$inline-elem"/>
         </span>
     </xsl:template>
-    
-    <!-- versioned going top-down (collecting the children of given element)
-    <xsl:template name="inline">
-        <xsl:variable name="elem-link">
-            <xsl:call-template name="elem-link"/>
-        </xsl:variable>
-        <xsl:variable name="inline-content">
-            <!-\-<xsl:choose>
-                <xsl:when test="*">
-                    <xsl:for-each select="*" >
-                    <xsl:apply-templates select="*" mode="record-data"></xsl:apply-templates>
-                     </xsl:for-each>
-                </xsl:when>
-                <xsl:otherwise>-\->                    
-            <!-\-            <xsl:value-of select="."/>-\->            
-            <!-\- umständliche lösung to get spaces between children elements -\->
-            <xsl:for-each select=".//text()">
-                <!-\-<xsl:value-of select="."/>
-                            <xsl:text> </xsl:text>-\->
-                <xsl:choose>
-                    <xsl:when test="parent::exist:match">
-                        <!-\-                        <xsl:value-of select="name(.)"/>-\->
-                        <xsl:apply-templates select="parent::exist:match" mode="record-data"/>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:value-of select="."/>
-                        <xsl:text> </xsl:text>
-                    </xsl:otherwise>
-                </xsl:choose>
-            </xsl:for-each>        
-            <!-\-    </xsl:otherwise>
-            </xsl:choose>-\->
-        </xsl:variable>
-        <xsl:variable name="class">
-            <xsl:for-each select="distinct-values(descendant-or-self::*/name())">
-                <xsl:value-of select="."/>
-                <xsl:text> </xsl:text>
-            </xsl:for-each>
-        </xsl:variable>
-        <xsl:variable name="inline-elem">
-            <xsl:choose>
-                <xsl:when test="not($elem-link='')">
-                    <a href="{$elem-link}">
-                        <span class="{$class}">
-                            <xsl:copy-of select="$inline-content"/>
-                        </span>
-                    </a>
-                </xsl:when>
-                <xsl:otherwise>
-                    <span class="{$class}">
-                        <xsl:copy-of select="$inline-content"/>
-                    </span>
-                </xsl:otherwise>
-            </xsl:choose>
-        </xsl:variable>
-        <span class="inline-wrap">
-            <xsl:if test="descendant-or-self::*/@*">
-                <span class="attributes" style="display:none;">
-                    <table>
-                        <xsl:for-each-group select="descendant-or-self::*" group-by="name()">
-                            <tr>
-                                <td colspan="2">
-                                    <xsl:value-of select="name()"/>
-                                </td>
-                            </tr>
-                            
-                            <!-\-                        <xsl:apply-templates select="@*" mode="format-attr"/>-\->
-                            <tr>
-                                <td>
-                                    <xsl:for-each select="current-group()">
-                                        <xsl:if test="@*">
-                                            <table style="float:left">
-                                                <xsl:for-each select="@*">
-                                                    <tr>
-                                                        <td class="label">
-                                                            <xsl:value-of select="name()"/>
-                                                        </td>
-                                                        <td class="value">
-                                                            <xsl:value-of select="."/>
-                                                        </td>
-                                                    </tr>
-                                                </xsl:for-each>
-                                            </table>
-                                        </xsl:if>
-                                    </xsl:for-each>
-                                </td>
-                            </tr>
-                        </xsl:for-each-group>
-                    </table>
-                </span>
-            </xsl:if>
-            <xsl:copy-of select="$inline-elem"/>
-        </span>
-    </xsl:template> -->
+    <xsl:template name="join-attributes-with-space">
+        <xsl:param name="nodes"/>
+        <xsl:for-each select="$nodes/@*">
+             <xsl:value-of select="."/>
+             <xsl:text> </xsl:text>
+        </xsl:for-each> 
+    </xsl:template>
 </xsl:stylesheet>

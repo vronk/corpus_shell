@@ -1,21 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:diag="http://www.loc.gov/zing/srw/diagnostic/" xmlns:saxon="http://saxon.sf.net/" xmlns:sru="http://www.loc.gov/zing/srw/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fcs="http://clarin.eu/fcs/1.0" xmlns:exsl="http://exslt.org/common" version="1.0" exclude-result-prefixes="saxon xs exsl diag sru fcs">
-<!--   
-    <purpose> generate html view of a sru-result-set  (eventually in various formats).</purpose>
-<history>  
-<change on="2011-12-06" type="created" by="vr">based on cmdi/scripts/mdset2view.xsl retrofitted for XSLT 1.0</change>	
-</history> 
- -->   
-    <!--  method="xhtml" is saxon-specific! prevents  collapsing empty <script> tags, that makes browsers choke -->
-    <xsl:output method="xhtml" media-type="text/xhtml" indent="yes" encoding="UTF-8" doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"/>
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns:diag="http://www.loc.gov/zing/srw/diagnostic/"
+    xmlns:saxon="http://saxon.sf.net/"
+    xmlns:sru="http://www.loc.gov/zing/srw/"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:fcs="http://clarin.eu/fcs/1.0"
+    xmlns:exsl="http://exslt.org/common"
+    xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl"
+    version="1.0"
+    exclude-result-prefixes="saxon xs exsl diag sru fcs xd">
+
+    <xd:doc scope="stylesheet">
+    <xd:desc>Generate html view of a sru-result-set  (eventually in various formats).
+        <xd:p>History:
+        <xd:ul>
+            <xd:li>2011-12-06: created by:"vr": based on cmdi/scripts/mdset2view.xsl retrofitted for XSLT 1.0</xd:li>
+        </xd:ul>
+        </xd:p>
+    </xd:desc>
+    <xd:param name="title">
+        
+    </xd:param>
+    </xd:doc>
+  
+    <xd:doc>
+        <xd:desc></xd:desc>
+    </xd:doc>
+    <xsl:output method="html" media-type="text/xhtml" indent="yes" encoding="UTF-8" doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"/>
+    
+    <xd:doc>
+        <xd:desc>Common stuff that works with XSL 1.0</xd:desc>
+    </xd:doc>
     <xsl:include href="../commons_v1.xsl"/>
-    <xsl:include href="data2view.xsl"/>
+    
+    <xd:doc>
+        <xd:desc>Use data view framework.</xd:desc>
+    </xd:doc>
+    <xsl:include href="data2view_v1.xsl"/>
+    
     <xsl:param name="title">
         <xsl:text>Result Set</xsl:text>
     </xsl:param>
+    
+    <xd:doc>
+        <xd:desc>???</xd:desc>
+    </xd:doc>
     <xsl:variable name="cols">
         <col>all</col>
     </xsl:variable>
+    
+    <xd:doc>
+        <xd:desc>Main entry point. Called by commons_v1.xsl's / matching template.
+            <xd:p>
+                
+            </xd:p>
+            <xd:p>
+                TODO: Finish switching to different modes depending on the $format parameter.
+            </xd:p>
+        </xd:desc>
+    </xd:doc>
     <xsl:template name="continue-root">
         <xsl:for-each select="sru:searchRetrieveResponse">
             <xsl:apply-templates select="sru:diagnostics"/>
@@ -41,6 +84,11 @@
             </div>
         </xsl:for-each>
     </xsl:template>
+    
+    <xd:doc>
+        <xd:desc>Generates a header for each of the &lt;div> containers
+            <xd:ref name="continue-root" type="template">continue-root</xd:ref> creates.</xd:desc>
+    </xd:doc>
     <xsl:template name="header">
         <div class="result-header" data-numberOfRecords="{$numberOfRecords}">
             <xsl:if test="contains($format, 'page')">
@@ -75,6 +123,10 @@
             </xsl:if>
         </div>
     </xsl:template>
+    
+    <xd:doc>
+        <xd:desc></xd:desc>
+    </xd:doc>
     <xsl:template match="sru:records" mode="list">
         <table class="show">
             <thead>
@@ -88,6 +140,10 @@
             </tbody>
         </table>
     </xsl:template>
+    
+    <xd:doc>
+        <xd:desc></xd:desc>
+    </xd:doc>
     <xsl:template match="sru:record" mode="list">
         <xsl:variable name="curr_record" select="."/>
         <xsl:variable name="fields">
@@ -96,9 +152,13 @@
             </div>
         </xsl:variable>
         <xsl:call-template name="record-table-row">
-            <xsl:with-param name="fields" select="$fields"/>
+            <xsl:with-param name="fields" select="exsl:node-set($fields)"/>
         </xsl:call-template>
     </xsl:template>
+    
+    <xd:doc>
+        <xd:desc></xd:desc>
+    </xd:doc>
     <xsl:template name="record-table-row">
         <xsl:param name="fields"/>
 <!-- @field absolute_position compute records position over whole recordset, ie add `startRecord` (important when paging)
@@ -160,15 +220,23 @@
         </tr>
         <tr>
             <td>
-                <xsl:copy-of select="$fields"/>
+                <xsl:copy-of select="exsl:node-set($fields)"/>
             </td>
         </tr>
     </xsl:template>
+    
+    <xd:doc>
+        <xd:desc>If the request cannot be served a sru:diagnostics record is returned instead of</xd:desc>
+    </xd:doc>
     <xsl:template match="sru:diagnostics">
         <div class="error">
             <xsl:apply-templates/>
         </div>
     </xsl:template>
+    
+    <xd:doc>
+        <xd:desc></xd:desc>
+    </xd:doc>
     <xsl:template match="diag:diagnostic">
         <xsl:value-of select="diag:message"/> (<xsl:value-of select="diag:uri"/>)
     </xsl:template>

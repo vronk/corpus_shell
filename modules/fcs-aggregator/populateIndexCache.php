@@ -1,15 +1,24 @@
 <?php
-/*
-	generates an js-array out of switch.config
-	containing the available targets
+/**
+ * Generates a js-array out of switch.config containing the available targets
+ *
+ * Includes items of type == "fcs.resource". This js-array is loaded by the HTML app.
+ * @uses $switchConfig
+ * @uses $configName
+ * @uses $switchUrl
+ * @package fcs-aggregator
+ */
 
-	new feature: add items of type == "fcs.resource"
-*/
-
+  /**
+   * Common configuration file
+   */
   include "../utils-php/config.php";
 
   $ddcConfigFound = false;
 
+  /**
+   * FIXME: Duplicated again
+   */
   function GetNodeValue($node, $tagName)
   {
      $list = $node->getElementsByTagName($tagName);

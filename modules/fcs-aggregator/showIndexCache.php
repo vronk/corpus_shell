@@ -1,13 +1,22 @@
 <?php
-/*
- loads indexCache.json and returns a html representation of the imported array
-*/
+/**
+ * Loads indexCache.json and returns a html representation of the imported array
+ * 
+ * The webpage is created as nested unordered lists and styled to look like a table.
+ * @uses GenerateConfigDictionary()
+ * @package fcs-aggregator
+ */
 
-  //configuration
+  /**
+   * Common configuration file
+   */
   include "../utils-php/config.php";
 
   $ddcConfigFound = false;
 
+  /**
+   * FIXME: Duplicate function
+   */
   function GetNodeValue($node, $tagName)
   {
      $list = $node->getElementsByTagName($tagName);
@@ -25,7 +34,13 @@
     $ddcConfigFound = true;
   }
 
-
+  /**
+   * Create a dictionary (a map) that maps internal names to their labels
+   * 
+   * Uses $configName if the cache file was generated.
+   * @uses $switchConfig
+   * @uses $configName
+   */
   function GenerateConfigDictionary()
   {
     global $switchConfig;
