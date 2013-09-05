@@ -1,177 +1,360 @@
+/*
+ The style for the corpus_shell HTML5 app
+ ========================================
 
-html
-{
+ Setting html and body to 100% is the HTML5 way of using the whole window.
+ Other parts of the page have to be configured to expand as well.
+ Failure to do this results in the gray (#CCCCCC) background being visible.
+ The generic table setting is used by the "window captions".
+ Note/Todo: The example below looks broken and it actually is. The problem
+ with the idea of organizing the title bar as a table is that this
+ violates the specs. A paragraph as used here as a container in principle
+ cannot hold other block level elements such as a table so eg. Firefox
+ interprets the paragraph as two paragraph one before and one after the
+ table. Blind tables aren't used that much anymore in web sites in 2013
+ so this should be changed in the long run.
+ 
+ Example:
+ ```
+ <html>
+ <body>
+   <div style="position: absolute; left: 20px; top 10px; width: 200px; height: 100px;" class="draggable ui-widget-content whiteback ui-resizable ui-draggable">
+   <p class="ui-widget-header">
+   <table style="width: 100%;">
+     <tbody>
+       <tr>
+         <td>Search 1</td>
+         <td style="width: 17px;">
+           <a href="#" class="noborder">
+             <img src="http://corpus3.aac.ac.at/cs2/corpus_shell/scripts/style/img/n.win_max.png" class="titletopiconmax noborder">
+           </a>
+         </td>
+         <td style="width: 17px;">
+           <a href="#" class="noborder">
+             <img src="http://corpus3.aac.ac.at/cs2/corpus_shell/scripts/style/img/n.win_close.png" class="titletopiconclose noborder">
+           </a>
+         </td>
+       </tr>
+     </tbody>
+   </table>
+   </p>
+   </div>
+ </body>
+ </html>
+
+ ```
+ */
+html {
 	height: 100%;
 	width: 100%;
 	background-color: #CCCCCC;
-    font-family: verdana, helvetica, serif;
-    font-size: 11px;
+	font-family: verdana, helvetica, serif;
+	font-size: 11px;
 }
-body
-{
-  height: 100%;
-  width: 100%;
-  margin: 0px;
-  padding: 0px;
-}
-
-table { font-size: 11px;}
-
-#sidebar
-{
-  height: 100%;
-  width: 210px;
-  background-color: #FFFFFF;
-  /* border: 1px solid #FFFFFF; */
-  position: absolute;
-  left: 0px;
-  z-index: 100;
+body {
+	height: 100%;
+	width: 100%;
+	margin: 0px;
+	padding: 0px;
 }
 
-table.sidebar
-{
-  height: 100%;
-  width: 100%;
-  border: none;
-  border-collapse: collapse;
+table {
+	font-size: 11px;
 }
 
-td.sidebar
-{
-  height: 100%;
-  width: 193px;
-  color: #FFFFFF;
-  padding: 0px;
-  vertical-align: top;
+div p.ui-widget-header {
+	cursor: move;
+	border: 1px solid #aaaaaa;
+	background: #cccccc url(base/images/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x;
+	color: #222222;
+	font-weight: bold;
+}
+/*
+ Side bar: The initial user interface
+ ====================================
+
+ The sidebar is a table with a single column and two rows.
+ All ui elements are placed in the first row. The buttons are styled a elements.
+ Their class is "searchresult" (for whatever reason).
+ There is a default margin for h3 elements (14px).
+ As we don't use h3 in the usual way this has to be reset to 0.
+ Note/Todo: This use of of a blind table is discouraged in web designs in 2013.
+ This should be changed in the long run.
+ 
+ Messagebox
+ ----------
+ Something that might be of use some time. Now it's a div placed 300px left of(f) the screen.
+ ```
+    <div id="sidebar">
+     	<table class="sidebar">
+     		 <tr>
+      		 	<td class="sidebar">
+      		 		 <h3>ICLTT Corpus Shell</h3>
+      		 		 <div style="padding: 10px;" id="searchbuttons">
+         				<a href="#" class="sidebar">New search panel</a>
+         			</div>
+         			<div id="openpanels" style="padding: 10px;">
+         				<a id="TogglePanelListButton" class="sidebar" href="#">Hide panel list</a>
+         				<div id="openpanelslist" style="padding: 10px 0px; border-left: 1px dotted rgb(102, 102, 102); border-right: 1px dotted rgb(102, 102, 102); border-bottom: 1px dotted rgb(102, 102, 102);">
+         				<table id="panelList" style="margin-left: 15px; width: 165px; border-collapse: collapse;">
+         				  <tbody>
+         				    <tr>
+         				      <td colspan="2"><a class="sidebar" href="#" style="display: block; padding-top: 2px; padding-bottom: 2px;">Search 1</a></td>
+         				    </tr>
+         				    <tr>
+         				      <td colspan="2"><a class="sidebar" href="#" style="display: block; padding-top: 2px; padding-bottom: 2px;">Search 2</a></td>
+         				    </tr>
+         				    <tr>
+         				      <td style="width: 20px;"></td>
+         				      <td><a class="sidebar" href="#" style="display: block; padding-top: 2px; padding-bottom: 2px;">Full text</a></td>
+         				    </tr>
+         				    <tr>
+         				      <td style="width: 20px;"></td>
+         				      <td><a class="sidebar" href="#" style="display: block; padding-top: 2px; padding-bottom: 2px;">Facsimile</a></td>
+         				    </tr>
+         				    <tr>
+         				      <td colspan="2"><a class="sidebar" href="#" style="display: block; padding-top: 2px; padding-bottom: 2px;">Search 3</a></td>
+         				    </tr>
+         				  </tbody>
+         				</table>
+         		    </div>
+         			</div>
+         			<div style="padding: 10px;" id="profilebuttons">
+         			  <select class="searchcombo" style="margin: 5px 0px;" id="profilecombo">
+         			    <option value="default" selected="selected">default</option>
+         			  </select>
+         			  <a href="#" style="margin-top: 5px;" class="sidebar" id="profilenew">Create new profile</a>
+         			  <input type="text" class="searchstring" id="newprofilename" style="margin: 5px 0px;"/>
+         			</div>
+         			<div style="padding: 10px;" id="userdata">
+         			  <span style="color: #000000; width: 100%;">Link to your profiles: </span> <br/>
+         			  <input style="width: 100%;" type="text" value="test data" id="userid"/>
+         			</div>
+         		</td>
+         		<td class="sidebartoggle">
+      		 		<img id="sidebaricon" src="http://corpus3.aac.ac.at/cs2/corpus_shell/scripts/style/img/sidebargrip.left.png" />
+      		 	</td>
+      		 <tr>
+      	</table>
+    </div>
+    <div id="messagebox">Message</div>
+ <!-- comments found:
+ border: 1px solid #FFFFFF;
+ in #messagebox as well as in #sidebar
+ -->
+ ```
+ */
+#sidebar {
+	height: 100%;
+	width: 210px;
+	background-color: #FFFFFF;
+	position: absolute;
+	left: 0px;
+	z-index: 100;
 }
 
-td.sidebar h3
-{
- font-size: 14px;
- font-weight bold;
- padding: 35px 10px 15px;
- background-color: #286290;
- /* There is a default margin for h3 elements (14px). 
-  * As we don't use h3 in the usual way this has to be reset to 0 */
- margin: 0;
+table.sidebar {
+	height: 100%;
+	width: 100%;
+	border: none;
+	border-collapse: collapse;
 }
 
-td.sidebartoggle
-{
-  height: 100%;
-  width: 7px;
-  background-color: #214F75;
-  cursor: pointer;
-  vertical-align: middle;
-  text-align: center;
+td.sidebar {
+	height: 100%;
+	width: 193px;
+	color: #FFFFFF;
+	padding: 0px;
+	vertical-align: top;
 }
 
-#messagebox
-{
-  height: 100px;
-  width: 200px;
-  background-color: #286290;
-  color: #FFFFFF;
-  /* border: 1px solid #FFFFFF; */
-  position: absolute;
-  left: -300px;
+td.sidebar h3 {
+	font-size: 14px;font-weight bold;
+	padding: 35px 10px 15px;
+	background-color: #286290;
+	margin: 0;
 }
 
-a.internal
-{
-  color: #000000;
-  background-color: transparent;
-  text-decoration:none;
-  text-align: left;
+td.sidebartoggle {
+	height: 100%;
+	width: 7px;
+	background-color: #214F75;
+	cursor: pointer;
+	vertical-align: middle;
+	text-align: center;
 }
 
-a.sidebar:link, a.sidebar:active, a.sidebar:visited
-{
-  display: block;
-  font-size:12px;
-  color: #000000;
-  background-color: transparent;
-  text-decoration:none;
-  text-align: left;
-  padding: 5px 10px;
-  border: 1px dotted #286290;
+#messagebox {
+	height: 100px;
+	width: 200px;
+	background-color: #286290;
+	color: #FFFFFF;
+	position: absolute;
+	left: -300px;
 }
 
-a.sidebar:hover,
-a.sidebar:focus
-{
-  color: #FFFFFF;
-  background-color: #286290;
-  display: block;
-  text-decoration: none;
-  text-align: left;
-  font-size: 12px;
-  padding: 5px 10px;
-  border: 1px solid #286290;
+a.internal {
+	color: #000000;
+	background-color: transparent;
+	text-decoration: none;
+	text-align: left;
 }
 
-a.searchresult:link, a.searchresult:active, a.searchresult:visited
-{
-  font-size:12px;
-  color: #000000;
-  background-color: transparent;
-  text-decoration:none;
-  text-align: left;
-  padding: 3px 6px;
-  border: 1px dotted #286290;
+a.sidebar:link, a.sidebar:active, a.sidebar:visited {
+	display: block;
+	font-size: 12px;
+	color: #000000;
+	background-color: transparent;
+	text-decoration: none;
+	text-align: left;
+	padding: 5px 10px;
+	border: 1px dotted #286290;
 }
 
-a.searchresult:hover,
-a.searchresult:focus
-{
-  color: #FFFFFF;
-  background-color: #286290;
-  text-decoration: none;
-  text-align: left;
-  font-size: 12px;
-  padding: 3px 6px;
-  border: 1px solid #286290;
+a.sidebar:hover, a.sidebar:focus {
+	color: #FFFFFF;
+	background-color: #286290;
+	display: block;
+	text-decoration: none;
+	text-align: left;
+	font-size: 12px;
+	padding: 5px 10px;
+	border: 1px solid #286290;
+}
+a.searchresult:link, a.searchresult:active, a.searchresult:visited {
+	font-size: 12px;
+	color: #000000;
+	background-color: transparent;
+	text-decoration: none;
+	text-align: left;
+	padding: 3px 6px;
+	border: 1px dotted #286290;
 }
 
-.noborder
-{
-  border: none;
+a.searchresult:hover, a.searchresult:focus {
+	color: #FFFFFF;
+	background-color: #286290;
+	text-decoration: none;
+	text-align: left;
+	font-size: 12px;
+	padding: 3px 6px;
+	border: 1px solid #286290;
+}
+/*
+ Styles for the result "windows"
+ ===============================
+ These styles define how the search result windows look like.
+ 
+ ```
+	<div class="draggable ui-widget-content whiteback ui-resizable ui-draggable" id="panel1" style="left: 20px; top: 10px; width: 500px; height: 250px; position: absolute; z-index: 2;">
+		<p class="ui-widget-header">
+			<table style="width: 100%;">
+				<tbody>
+					<tr>
+						<td>Search 1</td>
+						<td style="width: 17px;"><a class="noborder" href="#"><img class="titletopiconmax noborder" src="http://corpus3.aac.ac.at/cs2/corpus_shell/scripts/style/img/n.win_max.png" width="25" height="25"></a></td>
+						<td style="width: 17px;"><a class="noborder" href="#"><img class="titletopiconclose noborder" src="http://corpus3.aac.ac.at/cs2/corpus_shell/scripts/style/img/n.win_close.png" width="25" height="25"></a></td>
+					</tr>
+				</tbody>
+			</table>
+	    </p>
+        <div class="searchdiv">
+        	Search for <input aria-haspopup="true" class="searchstring ui-autocomplete-input" role="textbox" type="text" autocomplete="off" aria-autocomplete="list">
+        	in <select class="searchcombo">
+        	 	  <option value="0">Resource 0</option>
+        	 	  <option value="1">Resource 1</option>
+        	 	 </select>
+        	<div style="float: right;">
+        	  <input class="searchbutton" value="Go" type="button">
+            </div>
+        </div>
+        <table class="navigation">
+        	<tbody>
+        		<tr>
+        			<td class="navigationtitle">Search results</td>
+        			<td class="navigationmain">
+        				<i>hits:</i>&nbsp;<span class="hitcount">101</span>;&nbsp;<i>from:</i>&nbsp;<input class="startrecord" type="text">&nbsp;<i>max:</i>&nbsp;
+        				<input class="maxrecord" type="text">
+        				<a class="noborder" href="#"><img class="navigationicon" src="http://corpus3.aac.ac.at/cs2/corpus_shell/scripts/style/img/n.arrow_right_b.png" width="25" height="25"></a>
+        				<a class="noborder" href="#"><img class="navigationicon" src="http://corpus3.aac.ac.at/cs2/corpus_shell/scripts/style/img/n.arrow_left.png" width="25" height="25"></a>
+        				<a class="noborder" href="#"><img class="navigationicon" src="http://corpus3.aac.ac.at/cs2/corpus_shell/scripts/style/img/n.arrow_right.png" width="25" height="25"></a>
+        			</td>
+        		</tr>
+        	</tbody>
+        </table>
+        <div tabIndex="0" class="searchresults" hideFocus="false">
+        	Some search results.
+        </div>
+    </div>
+    <ul style="z-index: 14; top: 10px; left: 540px; display: block; width: 159px;" class="ui-autocomplete ui-menu ui-widget ui-widget-content ui-corner-all">
+    	  <li role="menuitem" class="ui-menu-item"><a tabindex="-1" class="ui-corner-all">Suggestions for search results:</a></li>
+    	  <li role="menuitem" class="ui-menu-item"><a tabindex="-1" class="ui-corner-all">CQL Server Choice</a></li>
+    	  <li role="menuitem" class="ui-menu-item"><a tabindex="-1" class="ui-corner-all">CQL All</a></li>
+    	  <li role="menuitem" class="ui-menu-item"><a tabindex="-1" class="ui-corner-all">part of speech</a></li>
+    	  <li role="menuitem" class="ui-menu-item"><a tabindex="-1" class="ui-corner-all">Item 5</a></li>
+    	  <li role="menuitem" class="ui-menu-item"><a tabindex="-1" class="ui-corner-all">Item 6</a></li>
+    	  <li role="menuitem" class="ui-menu-item"><a tabindex="-1" class="ui-corner-all">Item 7</a></li>
+    	  <li role="menuitem" class="ui-menu-item"><a tabindex="-1" class="ui-corner-all">Item 8</a></li>
+    	  <li role="menuitem" class="ui-menu-item"><a tabindex="-1" class="ui-corner-all">Item 9</a></li>
+    	  <li role="menuitem" class="ui-menu-item"><a tabindex="-1" class="ui-corner-all">Item 10</a></li>
+    </ul>
+ ```
+ */
+
+.noborder {
+	border: none;
 }
 
-img.titletopiconmax, img.titletopiconclose, img.titletopiconpin
-{
-  width: 15px;
-  height: 15px;
-  vertical-align: middle;
+img.titletopiconmax, img.titletopiconclose, img.titletopiconpin {
+	width: 15px;
+	height: 15px;
+	vertical-align: middle;
 }
 
-div.searchdiv
-{
-  padding: 8px;
-  font-size: 12px;
+.ui-icon {
+	width: 16px;
+	height: 16px;
+	background-image: url(base/images/ui-icons_222222_256x240.png)/*{iconsContent}*/;
+}
+.ui-icon-gripsmall-diagonal-se {
+	background-position: -64px -224px;
 }
 
-div.searchresults
-{
-  color: #000000;
-  clear: both;
-  position: relative;
+.ui-resizable-helper {
+	border: 1px dotted #666666;
 }
 
-input.searchstring, select.searchcombo
-{
-  border: 1px solid #CCCCCC;
-  width: 183px;
+div.searchdiv {
+	padding: 8px;
+	font-size: 12px;
 }
 
-input.searchbutton
-{
+.ui-autocomplete {
+	max-height: 200px;
+	overflow-y: auto;
+	/* prevent horizontal scrollbar */
+	overflow-x: hidden;
+	/* add padding to account for vertical scrollbar */
+	padding-right: 20px;
+}
+
+div.searchresults {
+	color: #000000;
+	clear: both;
+	position: relative;
+}
+
+input.searchstring, select.searchcombo {
+	border: 1px solid #CCCCCC;
+	width: 183px;
+}
+
+input.searchbutton {
 	border: 1px solid #CCCCCC;
 	color: #000000;
 }
 
-table.navigation
-{
+table.navigation {
 	border-collapse: collapse;
 	border: none;
 	margin: 0px;
@@ -182,31 +365,27 @@ table.navigation
 	clear: both;
 }
 
-td.navigationtitle
-{
+td.navigationtitle {
 	text-align: left;
 	font-size: 14px;
 	font-variant: small-caps;
 	padding-left: 10px;
 }
 
-td.navigationmain
-{
+td.navigationmain {
 	text-align: right;
 	vertical-align: middle;
 	font-size: 10px;
 	padding: 3px 10px;
 }
 
-span.hitcount
-{
+span.hitcount {
 	font-weight: bold;
 	font-size: 14px;
 	vertical-align: middle;
 }
 
-input.startrecord, input.maxrecord
-{
+input.startrecord, input.maxrecord {
 	border: 1px solid #CCCCCC;
 	width: 40px;
 	text-align: right;
@@ -214,8 +393,7 @@ input.startrecord, input.maxrecord
 	vertical-align: middle;
 }
 
-img.navigationicon
-{
+img.navigationicon {
 	border: none;
 	width: 13px;
 	height: 13px;
@@ -224,63 +402,192 @@ img.navigationicon
 	padding: 0px;
 }
 
-.draggable {padding: 3px; float: left; margin: 3px; /* font-size: .9em; */ border: 1px solid #286290; overflow: visible; border-radius: 6px;}
-.ui-widget-header p, .ui-widget-content p { margin: 0; padding: 0px 0px 0px 10px; border-radius: 6px; font-size: 12px;}
-.whiteback
-{
-  background-color: #FFFFFF;
+.draggable {
+	padding: 3px;
+	float: left;
+	margin: 3px; /* font-size: .9em; */
+	border: 1px solid #286290;
+	overflow: visible;
+	border-radius: 6px;
+}
+.ui-widget-header p, .ui-widget-content p {
+	margin: 0;
+	padding: 0px 0px 0px 10px;
+	border-radius: 6px;
+	font-size: 12px;
+}
+.loading {
+	background-image: url("img/icon_get.gif");
+}
+.whiteback {
+	background-color: #FFFFFF;
+}
+    /* Remainder of sbscrollpane (which is not redistributable) */
+.scroll-pane {
+	width: 100%;
+	height: 195px;
+	overflow: auto;
+}
+.slider-wrap, .ui-slider-handle {
+	width: 15px;
+}
+/*
+ Snaptarget: the space where the search result windows are drawn
+ ===============================================================
+
+ In essence this is a white surface.
+ Note that that snaptharget extends below the side bar.
+ Maybe it should be absolute: #snaptarget { height: 910px; width: 1110px; border: none; background: #EEEEEE url(); position: relative;}
+ ```
+ <div id=sidebar style="height: 100%; width: 210px; border-width: 1px; border-style: solid;">Sidebar</div>
+ <div id="mainpanel" class="demo">
+   <div id="snaptarget" style="text-align: center;">Snaptarget</div>
+ </div>
+ ```
+ */
+#snaptarget {
+	height: 100%;
+	width: 100%;
+	border: none;
+	background: #FFFFFF url();
+	position: relative;
+}
+
+div.demo {
+	border: none;
+	padding: 0px;
+	overflow: hidden;
+	height: 100%;
+	width: 100%;
 }
 
 /*
-#snaptarget { height: 910px; width: 1110px; border: none; background: #EEEEEE url(); position: relative;}
-*/
-#snaptarget { height: 100%; width: 100%; border: none; background: #FFFFFF url(); position: relative;}
-div p.ui-widget-header
-{
-  cursor: move;
-  border: 1px solid #aaaaaa;
-  background: #cccccc url(base/images/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x;
-  color: #222222;
-  font-weight: bold;
+ Styles used by VICAV language profiles
+ ======================================
+ Blind tables are used here. These should be replaced.
+ 
+ Example:
+```
+<div id="some_container_window_dummy" class="searchresults" style="background: #FFFFFF;">
+<div class="profiletext">
+  <img src="images/damaskus-moschee-hof-1985.jpg" style="border:4px solid rgb(212,212,212); width:200px; height: 200px; float:right; margin: 10px 4px 10px 10px;"/>
+  <h3>Damascus<span style="font-size: 6pt;font-weight: normal;"> (Contributed by Stephan Procházka)</span></h3>
+  <table>
+    <tbody>
+      <tr>
+        <td style="background:white;text-align:right;padding-right: 5px">Official name:</td>
+        <td style="background:white; font-style: italic;">dimašq</td>
+        <td style="background:white;width: 10px"></td>
+        <td style="background:white;font-size:larger">دمشق</td>
+      </tr>
+      <tr style="backgound:white">
+        <td style="background:white;text-align:right;padding-right: 5px">Local name:</td>
+        <td style="background:white; font-style: italic;">ǝš-šām</td>
+        <td style="background:white;width: 10px"></td>
+        <td style="background:white;font-size:larger">الشام</td>
+      </tr>
+    </tbody>
+  </table><br/>
+  <br/>
+  <h4>Typology</h4>
+  <div>
+    <p>Eastern › Syro-Palestinian › Central Syrian</p>
+    <p>Urban, sedentary dialect, high-prestige variety</p>
+  </div><br/>
+  <br/>
+  <h4>Audio data</h4>
+  <div>
+    <p>Songs in Damascus Arabic are abundantly found on YouTube, look for instance for
+       the well-known band Kulna Sawa.
+    </p>
+  </div><br/>
+  <br/>
+  <h4>Texts</h4>
+  Basic phrases <a href="#URL#sampletext=damascus_sample_01">→ </a><br/>
+  <br/>
+  <h4>Bibliography</h4>            
+  <a href="#URL#biblio=vicav_bibl_002|vicavTaxonomy=Damascus">→ </a><br/>
+  <br/>
+</div>
+</div>
+```
+ */
+div.profiletext, div.profiletext p {
+	text-align: left;
+	font-size: 11px;
+	font-weight: normal;
+	padding: 3px 0px;
 }
 
-.ui-icon { width: 16px; height: 16px; background-image: url(base/images/ui-icons_222222_256x240.png)/*{iconsContent}*/; }
-.ui-icon-gripsmall-diagonal-se { background-position: -64px -224px; }
-
-.ui-resizable-helper { border: 1px dotted #666666; }
-div.demo { border: none; padding: 0px; overflow: hidden; height: 100%; width: 100%; }
-div.profiletext, div.profiletext p { text-align: left; font-size: 11px; font-weight: normal; padding: 3px 0px;}
-
-div.profiletext h3 { font-size: 15px; margin: 10px 0px; }
-div.profiletext h4 { font-size: 13px; border-bottom: 1px solid #A82027; }
-
-.scroll-pane
-{
-  width: 100%;
-  height: 195px;
-  overflow: auto;
+div.profiletext h3 {
+	font-size: 15px;
+	margin: 10px 0px;
+}
+div.profiletext h4 {
+	font-size: 13px;
+	border-bottom: 1px solid #A82027;
+}
+/*
+ Styles used by kwic search panels
+ =================================
+ Tables are used here. The tables here seem to have a sound semantic meaning.
+ 
+ Example:
+```
+<div id="some_container_window_dummy" class="searchresults" style="background: #FFFFFF;">
+  <table class="show">
+    <thead>
+      <tr>
+        <th>pos</th><th>record</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td vAlign="top" rowSpan="2"><a class="internal" href="#">1</a></td><td><div class="title"></div></td>
+      </tr>
+      <tr>
+        <td>
+          <div>
+            <div class="navigation">
+            </div>
+            <div class="data-view metadata">
+              <span class="label">page: </span><span class="value">unknown</span>;<span class="label">date: </span><span class="value"></span>;
+              <span class="label">file: </span><span class="value">mercks</span>;<span class="label">keywords: </span><span class="value"></span>; 
+              <span class="label">scan: </span><span class="value"></span>;<span class="label">indices: </span><span class="value"> w p l wid f</span>; 
+              <span class="label">orig: </span><span class="value"></span>; 
+            </div>
+            <div class="data-view kwic">
+              <span class="context left">/ bey dem dann die </span> <span class="kw hilight">Frau</span> <span class="context right"> Obergefatterin / die _&amp;Frau Untergefatterin </span>
+            </div>
+            <div class="data-view full"><a href="#">full</a></div>
+            <div class="data-view image"><a href="#">image</a></div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+``` 
+ */
+.kw.hilight {
+	background-color: #aaffaa;
 }
 
-.slider-wrap, .ui-slider-handle
-{
-    width: 15px;
+div.data-view.metadata {
+	color: #999999;
+	font-style: italic;
 }
-
-.cmd {	display: inline-block; 	width: 100%;	height: 100%;		background: no-repeat center center;
-			margin: 0px 1px;	position: relative;	top: 2px; }
-
-.loading { background-image: url("img/icon_get.gif"); }
-
-.kw.hilight { background-color: #aaffaa; }
-
-div.data-view.metadata { color: #999999; font-style: italic; }
-
-.ui-autocomplete
-{
-		max-height: 200px;
-		overflow-y: auto;
-		/* prevent horizontal scrollbar */
-		overflow-x: hidden;
-		/* add padding to account for vertical scrollbar */
-		padding-right: 20px;
+/*
+ CMD style
+ =========
+ ???
+ */
+.cmd {
+	display: inline-block;
+	width: 100%;
+	height: 100%;
+	background: no-repeat center center;
+	margin: 0px 1px;
+	position: relative;
+	top: 2px;
 }
