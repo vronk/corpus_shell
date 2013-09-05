@@ -999,7 +999,7 @@
    * On other values "the result is undefined "kwic" is assumed.
    * @global string $xdataview
    */  
-  if (isset($_GET['x-dataview'])) $xdataview = trim($_GET['x-dataview']); else $xformat = "kwic";
+  if (isset($_GET['x-dataview'])) $xdataview = trim($_GET['x-dataview']); else $xdataview = "kwic";
 
   /**
    * All contexts/resources given by the HTTP GET parameter "x-context" as array
