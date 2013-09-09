@@ -170,7 +170,10 @@ function doOnDocumentReady ()
     var pcombo = GenerateProfileCombo(0);
     $("#profiledel").after(pcombo);
 }
-$(doOnDocumentReady);
+// Hook doOnDocumentReady using the noconflict save idiom
+(function($){
+	$(document).ready(doOnDocumentReady);
+})(jQuery);
 
 var PanelCount = 0;
 
