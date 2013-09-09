@@ -100,7 +100,7 @@ function GetUrlParams(url)
  *     </li>
  *     <li>For every link in a .navigation class container in a .searchresults the default behavior is replaced by the 
  *         {@link module:corpus_shell~PanelManager#OpenSubPanel} method. This method is used to enable page navigation in full text views.</li>
- * 	 </ul>
+ *      </ul>
  * </li>
  * <li>Tries to get a user id.</li>
  * <li>Initiates asynchrounous loading of the profiles and the index data.</li>
@@ -130,50 +130,42 @@ function doOnDocumentReady ()
       });
 
     var urlParams = GetUrlParams(location.search);
-    if (urlParams['userId'] && urlParams['userId'] != "")
-    {
-      userId = urlParams['userId'];
-    }
-
-    if (userId == null)
-    {
-      userId = localStorage.getItem("userId");
-    }
-
-    if (userId == null)
-    {
-      GetUserId();
-    }
-
+    GetUserId(urlParams, function() {
     updating = true;
-    GetUserData(userId);
+    GetUserData(userId,
+    function(result) {
+        ProfileController.Profiles = result;
+        // moved here from the doOnDocumentReady callback.
+        var currentProfile = PanelController.ProfileName;
+        RefreshProfileCombo(currentProfile);
+        LoadProfile(currentProfile);
+        updating = false;
+        LoadIndexCache(function(){
+            PanelController.onUpdated = function(changeText) {
+                if (!updating) {
+                    RefreshPanelList();
+                    ProfileController.SetProfile(PanelController.ProfileName, PanelController.Panels);
+                    SaveUserData(userId);
+                }
+            };
 
-    // updating = false; doesn't make sense here. Belongs to the GetUserData AJAX callback?
-    LoadIndexCache();
+            $("#userid").val(GenerateUseridLink(userId));
 
-    PanelController.onUpdated = function (changeText)
-    {
-       if (!updating)
-       {
-         RefreshPanelList();
-         ProfileController.SetProfile(PanelController.ProfileName, PanelController.Panels);
-         SaveUserData(userId);
-       }
-    };
+            var scombo = GenerateSearchCombo(0);
+            $(scombo).css("margin-top", "5px");
+            $("#searchbuttons").append(scombo);
 
-    $("#userid").val(GenerateUseridLink(userId));
-    
-    var scombo = GenerateSearchCombo(0);
-    $(scombo).css("margin-top", "5px");
-    $("#searchbuttons").append(scombo);
+            var pcombo = GenerateProfileCombo(0);
+            $("#profiledel").after(pcombo); 
 
-    var pcombo = GenerateProfileCombo(0);
-    $("#profiledel").after(pcombo);
+        });
+    });
+  });  
 }
-// Hook doOnDocumentReady using the noconflict save idiom
+// Hook doOnDocumentReady using the noConflict() save idiom
 (function($){
-	$(document).ready(doOnDocumentReady);
-})(jQuery);
+    $(document).ready(doOnDocumentReady);
+})(jQuery); 
 
 var PanelCount = 0;
 
@@ -195,30 +187,52 @@ function GenerateUseridLink(userId)
 }
 
 /**
- * Tries to get a new user ID from the modules/userdata/getUserId.php script.
- * @return {string} A user ID, maybe a GUID.
+ * @summary Tries to get a new user ID (a GUID) from the {@link ../phpdocs/user-data/_userdata---getUserId.php.html modules/userdata/getUserId.php} script.
+ * @desc Retrieval is done asynchronously so this function returns immediately and the actual result may be valid only later.</br>
+ * If userId retrieved by this function is used then put the code that uses it into an onComplete handler.
+ * @param {map} A map (associative array) with a key value pair of userId = username. Eg. the return value of {@link module:corpus_shell~PanelManager#GetUrlParams}.
+ * @param {function} onComplete Code to execute on completion of the request. Note that the two usual parameters my be undefined if the userId was retrieved from the URL.
+ * @return -
  */
-function GetUserId()
-{
-  $.getJSON(baseURL + userData + "getUserId.php", function(data)
-  {
-     userId = data.id;
-     localStorage.setItem("userId", userId);
-  });
+function GetUserId(urlParams, onComplete) {
+    if (urlParams['userId'] && urlParams['userId'] != "") {
+        userId = urlParams['userId'];
+        onComplete();
+    } else {
+        $.ajax({
+            dataType : "json",
+            url : baseURL + userData + "getUserId.php",
+            success : function(data) {
+                userId = data.id;
+                localStorage.setItem("userId", userId);
+            },
+            error : function() {
+                userId = localStorage.getItem("userId");
+            },
+            complete : function(result, jqXHR, textStatus) {
+                if (onComplete !== undefined && typeof (onComplete) === 'function')
+                    onComplete(result, jqXHR, textStatus);
+            },
+        });
+    }
 }
+
 
 /**
  * @summary Tries to retrieve profile settings saved on the server.<br/>
+ * @desc Retrieval is done asynchronously so this function returns immediately and the actual result may be valid only later.</br>
+ * If the data retrieved by this function is used then put the code that uses it into an onComplete handler.</br>
  * If contacting the the script fails the browsers localstore is used.
- * @desc Retrieval is done asynchronously so this function returns immediately and the actual result may be be valid later.
  * <ol>
  * <li>Interprets the server's answer as JSON and if this fails uses data from local store instead.</li>
  * <li>Passes the data to {@link module:corpus_shell~ProfileController} as {@link module:corpus_shell~ProfileManager#Profiles}</li>
  * </ol>
  * @param {string} userId The user id for which the data should be retrieved. May be an GUID for example.
+ * @param {function} onComplete Code to execute on completion of the request.
+ * @param {function} onError Code to execute on failure.
  * @return -
  */
-function GetUserData(userId)
+function GetUserData(userId, onComplete, onError)
 {
   $.ajax(
   {
@@ -226,36 +240,40 @@ function GetUserData(userId)
       url: baseURL + userData + "getUserData.php",
       dataType: 'json',
       data : {uid: userId},
-      complete: function(data, textStatus)
+      complete: function(jqXHR, textStatus)
       {
         var result = null;
         try {
-        	result = JSON.parse(data.responseText, null);
+            result = JSON.parse(jqXHR.responseText, null);
         }
         catch (e) {
-        	// make-it-work hack: if this is unintelligable go to the localstore and fetch data from there
-        	try {
-        	  var dataStr = localStorage.getItem(userId + "_Profiles");
-        	  result = JSON.parse(dataStr);
-        	} catch (e) {}
+            // make-it-work hack: if this is unintelligable go to the localstore and fetch data from there
+            try {
+              var dataStr = localStorage.getItem(userId + "_Profiles");
+              result = JSON.parse(dataStr);
+            } catch (e) {}
         }
         if (result == undefined || result == null || result == false || result == "" )
           result = new Array();
-
-        ProfileController.Profiles = result;
-        updating = false; // moved here from the doOnDocumentReady callback.
-        var currentProfile = PanelController.ProfileName;
-        RefreshProfileCombo(currentProfile);
-        LoadProfile(currentProfile);
-      }
+        if (onComplete !== undefined && typeof(onComplete) === 'function')
+           onComplete(result, jqXHR, textStatus);
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+          if (onError !== undefined && typeof(onError) === 'function')
+             onError(jqXHR, textStatus, textThrown);
+      },
   }
   );
 }
 
 /**
- * Loads the {@link module:corpus_shell~ResourceController}, a {@link module:corpus_shell~ResourceManager}, with data stored in indexCache.json.
+ * @summary Loads the {@link module:corpus_shell~ResourceController}, a {@link module:corpus_shell~ResourceManager}, with data stored in indexCache.json.
+ * @desc Retrieval is done asynchronously so this function returns immediately and the actual result may be valid only later.</br>
+ * If the data retrieved by this function is used then put the code that uses it into an onComplete handler.
+ * @param onComplete function to be called after the data transfer finished.
+ * @return -
  */
-function LoadIndexCache()
+function LoadIndexCache(onComplete)
 {
   ResourceController.ClearResources();
 
@@ -264,24 +282,38 @@ function LoadIndexCache()
     var resName = SearchConfig[i]["x-context"];
     ResourceController.AddResource(resName, SearchConfig[i]["DisplayText"]);
   }
+  
+    $.ajax({
+        dataType : "json",
+        url : baseURL + '/scripts/js/indexCache.json',
+        success : function(data) {
+            $.each(data, function(key, val) {
+                for (var index in val) {
+                    var item = val[index];
 
-  $.getJSON(baseURL + '/scripts/js/indexCache.json', function(data)
-  {
-    $.each(data, function(key, val)
-    {
-      for(var index in val)
-      {
-        var item = val[index];
+                    if (item.searchable == "true")
+                        item.searchable = true;
+                    else
+                        item.searchable = false;
+                    if (item.scanable == "true")
+                        item.scanable = true;
+                    else
+                        item.scanable = false;
+                    if (item.sortable == "true")
+                        item.sortable = true;
+                    else
+                        item.sortable = false;
 
-        if (item.searchable == "true") item.searchable = true; else item.searchable = false;
-        if (item.scanable == "true") item.scanable = true; else item.scanable = false;
-        if (item.sortable == "true") item.sortable = true; else item.sortable = false;
+                    ResourceController.AddIndex(key, item.idxName, item.idxTitle, item.searchable, item.scanable, item.sortable);
+                }
+            });
+        },
+        complete: function(jqXHR, textStatus) {
+            if (onComplete !== undefined && typeof(onComplete) == 'function')
+               onComplete(jqXHR, textStatus);
+        }
+    }); 
 
-        ResourceController.AddIndex(key, item.idxName, item.idxTitle, item.searchable, item.scanable, item.sortable);
-      }
-    });
-
-  });
 }
 
 /**
@@ -297,94 +329,94 @@ function json_encode(inVal)
 
 function _json_encode(inVal, out)
 {
-	out = out || new Array();
-	var undef; // undefined
-	switch (typeof inVal)
-	{
- 		case 'object':
-			if (!inVal)
-			{
-				out.push('null');
-			}
-			else
-			{
-				if (inVal.constructor == Array)
-				{
-					// Need to make a decision... if theres any associative elements of the array
-					// then I will block the whole thing as an object {} otherwise, I'll block it
-					// as a  normal array []
-					var testVal = inVal.length;
-					var compVal = 0;
-					for (var key in inVal) compVal++;
-					if (testVal != compVal)
-					{
-						// Associative
-						out.push('{');
-						i = 0;
-						for (var key in inVal)
-						{
-							if (i++ > 0) out.push(',\n');
-							out.push('"');
-							out.push(key);
-							out.push('":');
-							_json_encode(inVal[key], out);
-						}
-						out.push('}');
-					}
-					else
-					{
-						// Standard array...
-						out.push('[');
-						for (var i = 0; i < inVal.length; ++i)
-						{
-							if (i > 0) out.push(',\n');
-							_json_encode(inVal[i], out);
-						}
-						out.push(']');
-					}
+    out = out || new Array();
+    var undef; // undefined
+    switch (typeof inVal)
+    {
+         case 'object':
+            if (!inVal)
+            {
+                out.push('null');
+            }
+            else
+            {
+                if (inVal.constructor == Array)
+                {
+                    // Need to make a decision... if theres any associative elements of the array
+                    // then I will block the whole thing as an object {} otherwise, I'll block it
+                    // as a  normal array []
+                    var testVal = inVal.length;
+                    var compVal = 0;
+                    for (var key in inVal) compVal++;
+                    if (testVal != compVal)
+                    {
+                        // Associative
+                        out.push('{');
+                        i = 0;
+                        for (var key in inVal)
+                        {
+                            if (i++ > 0) out.push(',\n');
+                            out.push('"');
+                            out.push(key);
+                            out.push('":');
+                            _json_encode(inVal[key], out);
+                        }
+                        out.push('}');
+                    }
+                    else
+                    {
+                        // Standard array...
+                        out.push('[');
+                        for (var i = 0; i < inVal.length; ++i)
+                        {
+                            if (i > 0) out.push(',\n');
+                            _json_encode(inVal[i], out);
+                        }
+                        out.push(']');
+                    }
 
-				}
-				else if (typeof inVal.toString != 'undefined')
-				{
-					out.push('{');
-					var first = true;
-					for (var i in inVal)
-					{
-						var curr = out.length; // Record position to allow undo when arg[i] is undefined.
-						if (!first) out.push(',\n');
-						_json_encode(i, out);
-						out.push(':');
-						_json_encode(inVal[i], out);
-						if (out[out.length - 1] == undef)
-						{
-							out.splice(curr, out.length - curr);
-						}
-						else
-						{
-							first = false;
-						}
-					}
-					out.push('}');
-				}
-			}
-			return out;
+                }
+                else if (typeof inVal.toString != 'undefined')
+                {
+                    out.push('{');
+                    var first = true;
+                    for (var i in inVal)
+                    {
+                        var curr = out.length; // Record position to allow undo when arg[i] is undefined.
+                        if (!first) out.push(',\n');
+                        _json_encode(i, out);
+                        out.push(':');
+                        _json_encode(inVal[i], out);
+                        if (out[out.length - 1] == undef)
+                        {
+                            out.splice(curr, out.length - curr);
+                        }
+                        else
+                        {
+                            first = false;
+                        }
+                    }
+                    out.push('}');
+                }
+            }
+            return out;
 
-		case 'unknown':
-		case 'undefined':
-		case 'function':
-			out.push(undef);
-			return out;
+        case 'unknown':
+        case 'undefined':
+        case 'function':
+            out.push(undef);
+            return out;
 
-		case 'string':
-	        out.push('"');
-	        out.push(inVal.replace(/(["\\])/g, '\$1').replace(/\r/g, '').replace(/\n/g, '\n'));
-	        out.push('"');
-	        return out;
+        case 'string':
+            out.push('"');
+            out.push(inVal.replace(/(["\\])/g, '\$1').replace(/\r/g, '').replace(/\n/g, '\n'));
+            out.push('"');
+            return out;
 
-		default:
-			out.push(String(inVal));
-			return out;
-	}
+        default:
+            out.push(String(inVal));
+            return out;
+    }
 }
 
 /**
@@ -538,7 +570,7 @@ function split( val )
 
 function extractLast( term )
 {
-		return split( term ).pop();
+        return split( term ).pop();
 }
 
 function RefreshPanelList()
@@ -732,6 +764,7 @@ function DeleteProfile(profileName)
   }
 }
 
+// unused as of now
 function RefreshIndexes()
 {
   for (var i = 0; i < SearchConfig.length; i++)
@@ -742,6 +775,7 @@ function RefreshIndexes()
   }
 }
 
+// unused as of now
 function GetIndexes(resName)
 {
   $.ajax(
