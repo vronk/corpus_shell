@@ -319,7 +319,7 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
     {
       var urlObj = this.GetUrlParams(this.Url);
       var xContext = urlObj['x-context'];
-      configIdx = this.PanelController.GetSearchIdx(xContext);
+      this.Config = this.PanelController.GetSearchIdx(xContext);
       query = urlObj['query'];
     }
     else
@@ -328,7 +328,7 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
         query = searchStr;
     }
 
-    $(searchPanel).append(this.GenerateSearchInputs(configIdx, query));
+    $(searchPanel).append(this.GenerateSearchInputs(this.Config, query));
     $(searchPanel).append(this.GenerateSearchNavigation());
 
     var searchResultDiv = this.GenerateSearchResultsDiv();
@@ -814,6 +814,7 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
 
     var closeimg = document.createElement('img');
     $(closeimg).attr("src", "scripts/style/img/n.win_close.png");
+    $(closeimg).attr("alt", "X");
     $(closeimg).addClass("titletopiconclose");
     $(closeimg).addClass("noborder");
 
