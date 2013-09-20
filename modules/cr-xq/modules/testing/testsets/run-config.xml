@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<config>
-    <target key="local-8680-exist-cr-fcs">http://localhost:8680/exist/apps/cr-xq/fcs</target>
-    <testset key="testrest_fcs">testrest_fcs</testset>
-    <property key="operation">run</property>
-</config>

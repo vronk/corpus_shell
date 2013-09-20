@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<info xml:lang="en">
-    <div id="index">
-        <a class="template" href="query-input">query-input</a>
-        <a class="request" href="cr.xql?key=welcome&amp;x-format=htmldetail">Welcome</a>
-        <a href="cr.xql?operation=explain&amp;x-format=html">explain</a>
-        <a class="request" href="cr.xql?operation=scan&amp;scanClause=fcs.resource&amp;x-format=htmldetail">scan resources</a>
-    </div>
-</info>

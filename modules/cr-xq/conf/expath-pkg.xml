@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<package xmlns="http://expath.org/ns/pkg" name="http://vronk.net/cs/cr-xq/conf" abbrev="cr-xq-conf" version="0.1" spec="1.0">
-    <title>cr-xq-conf - corpus_shell content repository configurations</title>
-</package>
