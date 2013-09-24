@@ -1,0 +1,9 @@
+[submodule "modules/utils-php"]
+	path = modules/utils-php
+	url = git@github.com:simar0at/utils-php.git
+[submodule "xsl"]
+	path = xsl
+	url = git@github.com:simar0at/cs-xsl.git
+[submodule "modules/mysqlonsru"]
+	path = modules/mysqlonsru
+	url = git@github.com:simar0at/mysqlonsru.git
