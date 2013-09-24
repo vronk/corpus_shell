@@ -91,6 +91,8 @@
    * </pre>
    * 
    * @uses HandleXFormatCases()
+   * @uses Diagnostics()
+   * @uses GetDefaultStyles()
    * @uses $configName
    * @uses $fcsConfig
    * @uses $operation
@@ -98,11 +100,6 @@
    * @uses $version
    * @uses $scanClause
    * @uses $xcontext
-   * @uses Diagnostics()
-   * @uses GetDefaultStyles()
-   * @uses $operation
-   * @uses $query
-   * @uses $scanClause
    * @uses $extraRequestData
    * @uses $recordPacking
    * @uses $stylesheet
@@ -397,16 +394,30 @@
   /**
    * Reads the $explainSwitchTemplate and returns it
    * 
-   * The file is just read from disk, as this doesn't need to be filled.
+   * Even this file has to be processed by the template engine to
+   * return e.g. a meaningful host identifier.
    * content-type text/xml and charset UTF-8 are set for the answer.
+   * @uses $vlibPath
+   * @uses $localhost
    * @uses $explainSwitchTemplate
+   * @uses $explainSwitchXmlInfoSnippet
    */
   function ReturnExplain()
   {
     global $explainSwitchTemplate;
+    global $explainSwitchXmlInfoSnippet;
+    global $localhost;
+    global $vlibPath;
 
+    require_once $vlibPath;
     header ("content-type: text/xml; charset=UTF-8");
-    readfile($explainSwitchTemplate);
+        //instantiate template engine with $scanCollectionsTemplate
+    $tmpl = new vlibTemplate($explainSwitchTemplate);
+    
+    $tmpl->setVar('hostid', $localhost);
+    $tmpl->setVar('xmlinfosnippet', $explainSwitchXmlInfoSnippet);
+    
+    $tmpl->pparse();
   }
 
   /**
