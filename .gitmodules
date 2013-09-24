@@ -7,3 +7,6 @@
 [submodule "modules/mysqlonsru"]
 	path = modules/mysqlonsru
 	url = git@github.com:simar0at/mysqlonsru.git
+[submodule "modules/fcs-aggregator"]
+	path = modules/fcs-aggregator
+	url = git@github.com:simar0at/fcs-aggregator.git
