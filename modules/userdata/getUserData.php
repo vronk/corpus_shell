@@ -1,6 +1,6 @@
 <?php
 /**
- * This file script is used to provide the data sored for some user
+ * This file script is used to provide the data stored for some user
  * in a server side storage.
  * 
  * Expects an uid as a POST parameter, returns a file with that name from 
