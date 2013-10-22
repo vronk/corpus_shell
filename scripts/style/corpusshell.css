@@ -169,7 +169,8 @@ td.sidebar {
 }
 
 td.sidebar h3 {
-	font-size: 14px;font-weight bold;
+	font-size: 14px;
+        font-weight: bold;
 	padding: 35px 10px 15px;
 	background-color: #286290;
 	margin: 0;
