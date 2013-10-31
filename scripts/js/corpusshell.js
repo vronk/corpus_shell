@@ -96,9 +96,11 @@ function GetUrlParams(url)
  *         {@link module:corpus_shell~PanelManager#OpenSubPanel} method. This method is used to open a full text sub panel.</li>
  *     <li>For every link in a .data-view .full class container in a .searchresults the default behavior is replaced by the 
  *         {@link module:corpus_shell~PanelManager#OpenSubPanel} method. This method is used to open an image sub panel which shows the facsimile.</li>
- *     <li>For every link of class .value-caller in a .searchresults for a scan of Schnitzler Tageb&uuml;cher the default behavior is replaced by the 
- *         {@link module:corpus_shell~PanelManager#OpenSubPanel} method. This method experimental and not working as intended right now.</br>
- *         TODO: Intended behavior: On a click in the Scan panel open a Search panel using the search provided in the Scan panel's link.
+ *     <li>For every link of class .value-caller in a .searchresults for a kwic search result the default behavior is replaced by the 
+ *         {@link module:corpus_shell~PanelManager#OpenSubPanel} method.
+ *     </li>
+ *     <li>For every link of class .search-caller in a .searchresults for a scan result the default behavior is replaced by the 
+ *         {@link module:corpus_shell~PanelManager#OpenNewSearchPanel} method.
  *     </li>
  *     <li>For every link in a .navigation class container in a .searchresults the default behavior is replaced by the 
  *         {@link module:corpus_shell~PanelManager#OpenSubPanel} method. This method is used to enable page navigation in full text views.</li>
@@ -126,8 +128,19 @@ function doOnDocumentReady ()
          PanelController.OpenSubPanel(this, $(this).attr('href'), true, "image");
       });
     $('.searchresults a.value-caller').live("click", function (event) {
-         event.preventDefault();
-         PanelController.OpenSubPanel(this, '/switch' + $(this).attr('href') + '&version=1.2&x-context=clarin.at:icltt:cr:stb', true, "text");
+        event.preventDefault();
+        target = $(this).attr('href');
+        if (target.indexOf('http://') === -1) {
+            target = switchURL + target;
+        }
+        PanelController.OpenSubPanel(this, target, true, "text");
+      });
+    $('.searchresults a.search-caller').live("click", function (event) {
+        event.preventDefault();
+        target = $(this).attr('href');
+        var urlParams = GetUrlParams(target);
+        var ID = PanelController.OpenNewSearchPanel(urlParams['x-context'], urlParams.query);
+        PanelController.StartSearch(ID);
       });
     $('.searchresults .navigation a').live("click", function (event) {
          event.preventDefault();

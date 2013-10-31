@@ -186,7 +186,7 @@ function ResourceManager()
    */
   this.GetIndexCache = function ()
   {
-    var hStr = '<div id="openIndexList" style="height: 250px; overflow: auto;"><table id="indexList">';
+    var hStr = '<div id="openIndexList" style="height: 130px; overflow: auto;"><table id="indexList">';
 
     for (reskey in this.Resources)
     {

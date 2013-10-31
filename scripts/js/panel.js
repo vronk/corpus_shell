@@ -579,7 +579,7 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
 
         /* url +  */
     var urlStr = switchURL + "?operation=searchRetrieve&query=" + sstr + "&x-context=" + xcontext +
-                 "&x-format=html&version=1.2";
+                 "&x-format=html&x-dataview=kwic,title&version=1.2";
 
     if (!max || max <= 0) max = 10;
     if (!start || start < 1) start = 1;
@@ -595,7 +595,14 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
         type: 'GET',
         url: switchURL,
         dataType: 'xml',
-        data : {operation: 'searchRetrieve', query: sstr, 'x-context': xcontext, 'x-format': 'html', version: '1.2', maximumRecords: max, startRecord: start},
+        data : {operation: 'searchRetrieve',
+                query: sstr,
+                'x-context': xcontext,
+                'x-format': 'html',
+                'x-dataview': 'kwic,title',
+                version: '1.2',
+                maximumRecords: max,
+                startRecord: start},
         complete: function(xml, textStatus)
         {
           $(parElem).find(".searchresults").removeClass("cmd loading");;
