@@ -938,7 +938,7 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
   /**
   * purpose:    creats a div that is filled with the search result returned from the
   *             search script (switch.php)
-  * @return    -
+  * @return    {DOMElement} The created div element.
   */
   this.GenerateSearchResultsDiv = function()
   {

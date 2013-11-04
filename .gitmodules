@@ -10,3 +10,6 @@
 [submodule "modules/fcs-aggregator"]
 	path = modules/fcs-aggregator
 	url = git@github.com:simar0at/fcs-aggregator.git
+[submodule "scripts/js/openlayers"]
+	path = scripts/js/openlayers
+	url = https://github.com/openlayers/openlayers.git

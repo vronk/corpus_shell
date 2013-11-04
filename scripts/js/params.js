@@ -20,4 +20,4 @@ var userData = "/modules/userdata/";
 /** The url of the switch script. May be anywhere on the internet if cross-origin resource shareing (CORS, see enable-cors.org) is properly set up.
  * @type {url} 
  */
-var switchURL = "http://corpus3.aac.ac.at/switch";
+var switchURL = "http://localhost/corpus_shell/modules/fcs-aggregator/switch.php";

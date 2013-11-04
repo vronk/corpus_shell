@@ -1093,7 +1093,7 @@ function PanelManager (container, searchConfig)
     var urlStr = switchURL + "?operation=scan&x-format=html&x-context=" + config +
                  "&version=1.2&scanClause=" + scanIdx;
     if (scanIdx === 'geo') {
-        this.OpenNewContentPanel(urlStr, "Scan " + config + ": " + scanIdx);
+        this.OpenNewContentPanel(urlStr, "Map " + config + ": " + scanIdx);
     } else {
         this.OpenNewContentPanel(urlStr, "Scan " + config + ": " + scanIdx);
     }
@@ -1120,8 +1120,13 @@ function PanelManager (container, searchConfig)
       titlePart = "Content";
 
     var panelTitle = this.GetNewPanelTitle(titlePart);
-
-    var newPanel = new Panel(panelName, "content", panelTitle, url, position, false, maxZidx, this.Container, this, undefined);
+    
+    
+    var newPanel;
+    if (titlePart.indexOf("Map ") === 0)
+        newPanel = new MapPanel(panelName, "content", panelTitle, url, position, false, maxZidx, this.Container, this, undefined);
+    else
+        newPanel = new Panel(panelName, "content", panelTitle, url, position, false, maxZidx, this.Container, this, undefined);
     newPanel.CreatePanel();
 
     this.PanelObjects[panelName] = newPanel;

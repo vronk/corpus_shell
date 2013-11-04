@@ -1,52 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- generated 2013-08-26 using http://corpus3.aac.ac.at/cs2/corpus_shell/modules/mysqlonsru/ProfileOnSRU.php?operation=searchRetrieve&query=cairo&x-format=xml&version=1.2&maximumRecords=100&startRecord=1 -->
-<sru:searchRetrieveResponse xmlns:diag="http://www.loc.gov/zing/srw/diagnostic/"
-   xmlns:sru="http://www.loc.gov/zing/srw/" xmlns:fcs="http://clarin.eu/fcs/1.0">
+<sru:searchRetrieveResponse
+   xmlns="http://www.tei-c.org/ns/1.0"
+   xmlns:tei="http://www.tei-c.org/ns/1.0"
+   xmlns:diag="http://www.loc.gov/zing/srw/diagnostic/"
+   xmlns:sru="http://www.loc.gov/zing/srw/"
+   xmlns:fcs="http://clarin.eu/fcs/1.0">
    <sru:version>1.2</sru:version>
    <sru:numberOfRecords>1</sru:numberOfRecords>
-   <echoedSearchRetrieveRequest>
-      <version>1.2</version>
-      <query>cairo</query>
-      <baseUrl/>
-   </echoedSearchRetrieveRequest>
+   <sru:echoedSearchRetrieveRequest>
+      <sru:version>1.2</sru:version>
+      <sru:query>Damascus</sru:query>
+      <fcs:x-context></fcs:x-context>
+      <fcs:x-dataview>full</fcs:x-dataview>
+      <sru:baseUrl></sru:baseUrl>
+   </sru:echoedSearchRetrieveRequest>
    <sru:records>
       <sru:record>
-         <sru:recordSchema>http://clarin.eu/fcs/1.0/Resource.xsd</sru:recordSchema>
-         <sru:recordPacking>raw</sru:recordPacking>
+         <sru:recordSchema></sru:recordSchema>
+         <sru:recordPacking>xml</sru:recordPacking>
          <sru:recordData>
             <fcs:Resource>
                <fcs:DataView type="metadata">
-                  <fcs:f key="copyright">ICLTT</fcs:f>
-                  <fcs:f key="content">Arabic dialect profile for the region of cairo</fcs:f>
+                  <fcs:f key="copyright" >ICLTT</fcs:f>
+                  <fcs:f key="content" >Arabic dialect profile for the region of Damascus</fcs:f>
                </fcs:DataView>
                <fcs:ResourceFragment>
-                  <fcs:DataView type="w">
-                     <TEI xml:id="profile_cairo_01">
+                  <fcs:DataView type="full">
+                     <TEI xml:id="profile_damascus_01">
                         <teiHeader>
-
+                           
                            <fileDesc>
-                              <author>Charly Moerth</author>
-
+                              <author>Stephan Proch&#225;zka</author>
+                              
                               <titleStmt>
-                                 <title>A machine-readable language profile of Cairo Arabic </title>
+                                 <title>A machine-readable profile of Damscus Arabic </title>
                               </titleStmt>
-
+                              
                               <publicationStmt>
                                  <pubPlace>Vienna</pubPlace>
-                                 <date>2011</date>
+                                 <date>2012</date>
                                  <availability status="restricted">
                                     <p>
-                                       <ref type="license"
-                                          target="http://creativecommons.org/licenses/by-nc-sa/3.0/"
-                                       />
+                                       <ref type="license" target="http://creativecommons.org/licenses/by-nc-sa/3.0/"></ref>
                                     </p>
                                  </availability>
                               </publicationStmt>
-
+                              
                               <editionStmt>
                                  <edition>1.0 (Alpha)</edition>
                               </editionStmt>
-
+                              
                               <sourceDesc>
                                  <p>This is an original digital text</p>
                               </sourceDesc>
@@ -55,66 +58,91 @@
                         <text>
                            <body>
                               <head>
-                                 <name xml:lang="eng">Cairo</name>
-                                 <name xml:lang="ara">القاهیرة</name>
-                                 <name xml:lang="ara-x-DMG">ʔal-qāhira</name>
-                                 <name xml:lang="arz" type="araLoc">مصر</name>
-                                 <name xml:lang="arz-Latn" type="latLoc">maṣr</name>
+                                 <name xml:lang="eng">Damascus</name>
+                                 <name xml:lang="ara">&#1583;&#1605;&#1588;&#1602;</name>
+                                 <name xml:lang="ara-x-DMG">dima&#353;q</name>
+                                 <name xml:lang="ajp" type="araLoc">&#1575;&#1604;&#1588;&#1575;&#1605;</name>
+                                 <name xml:lang="ajp-Latn" type="latLoc">&#477;&#353;-&#353;&#257;m</name>
                               </head>
                               <div type="positioning">
                                  <p>
-                                    <ref target="Cairo-2009.JPG"/>
+                                    <ref target="damaskus-moschee-hof-1985.jpg"/>
                                  </p>
                               </div>
                               <div type="typology">
-                                 <p>Eastern › Egyptian › Upper Egypt</p>
-                                 <p>Urban, sedentary, high prestige variety</p>
-                              </div>
-                              <div type="glottonyms">
-                                 <p/>
+                                 <p>Eastern &#8250; Syro-Palestinian &#8250; Central Syrian</p>
+                                 <p>Urban, sedentary dialect, high-prestige variety</p>
                               </div>
                               <div type="general">
-                                 <p>The Egyptian varieties of Arabic form a quite diversified
-                                    linguistic group. They are usually subdivided into four major
-                                    subgroups: the dialects of Upper Egypt, Middle Egypt, Lower
-                                    Egypt and those spoken in the Oases. The dialect of the capital
-                                    belongs to the northern group. The first more detailed
-                                    description of Cairo Arabic was published as early as 1880 by
-                                    Wilhelm Spitta. </p>
-                                 <p>By contrast to most other varieties of vernacular Arabic, the
-                                    dialect of Cairo has been reduced to writing as well. There
-                                    exists quite a significant amount of literary output, in
-                                    particular stage plays. </p>
+                                 <p>The dialect of the capital of Syria is regarded as a very &#8220;elegant&#8221;
+                                    variety of Arabic and therefore possesses a very high prestige. It is
+                                    frequently used in the media and increasingly also in films. Hence
+                                    Damascus Arabic is widely understood in whole Syria, in Lebanon,
+                                    and even in Jordan and Palestine.
+                                 </p>
                               </div>
-                              <div type="sampleText">
-                                 <ptr target="cairo_sample_01"/>
+                              <div type="reserachHistory">
+                                 <p>Descriptions of the Arabic dialect of Damascus go back as far as
+                                    the 18th century when the German orientalist and theologian
+                                    Johann Heinrich CALLENBERG published his Colloquia arabica idiomatis
+                                    vulgaris, sub ductu B. Sal. Negri Damasceni olim composuit jamque
+                                    in usum scholae suae vulgavit Jo. Henr. Callenberg in Halle (in three
+                                    parts, 1720-1740). Collections of texts and short grammatical
+                                    notes were published at the end of the 19th and the first half
+                                    of the 20th centuries (Huart 1883, Oestrup 1897 [although mostly
+                                    not real Damascene dialect], Malinjoud 1924, Bergstr&#228;&#223;er 1924,
+                                    Saussey 1937-38), Cantineau 1956, Dietrich 1956) but the first
+                                    comprehensive description of the dialect appeared only in the 1960s:
+                                    Cowell 1964, Grotzfeld 1964, Grotzfeld 1965, Ambros 1977.
+                                    Today Damascus Arabic is certainly among the Arabic dialects
+                                    which are best described.
+                                 </p>
+                                 
+                                 
+                                 <p>A concise grammatical sketch of the dialect is J&#233;r&#244;me Lentin&#8217;s &#8220;Damascus Arabic&#8221;, in EALL I, 546-555.</p>
+                              </div>
+                              <div type="dictionaries">
+                                 <p>Stowasser, Karl; Ani, Moukhtar: English-Damascus Arabic. Georgetown 1964.</p>
+                                 <p>Barth&#233;lemy 1935-54 is still unmatched as the dictionary for Syrian Arabic, but it
+                                    is mainly based on the dialect of Aleppo. Nevertheless it is extremely useful for
+                                    Damascus Arabic too, as is Denizeau 1960.
+                                 </p>
+                                 <p>Very promising is the online-dictionary titled Dictionnaire d&#8217;arabe dialectal syrien
+                                    (parler de Damas) by Claude Salam&#233; &#38; J&#233;r&#244;me Lentin, although until now only the letter
+                                    B has been published.
+                                 </p>
+                                 <p>Our site provides a digital dictionary of Damascus Arabic.</p>
+                                 <ptr target="apc_eng_002"/>
+                              </div>
+                              <div type="audioData">
+                                 <p>Songs in Damascus Arabic are abundantly found on YouTube, look for instance for
+                                    the well-known band Kulna Sawa.
+                                 </p>
+                              </div>
+                              <div type="textBooks">
+                                 <p>Cantineau &#38; Helbaoui 1953: Manuel &#233;l&#233;mentaire d&#8217;arabe oriental (parler de Damas)</p>
+                                 <p>Ferguson &#38; Ani 1965: Damascus Arabic.</p>
+                                 <p>Rice &#38; Sa&#8217;id 1979: Eastern Arabic.</p>
+                                 <p>Liddicoat, Lennane, Abdul Rahim 1999: Syrian colloquial Arabic: a functional course.</p>
                               </div>
                               <div type="bibliography">
-                                 <p>Meanwhile there exists a vast amount of literature concerning
-                                    the dialect of Cairo.</p>
-                                 <ptr target="vicav_bibl_002|vicavTaxonomy=Cairo"/>
+                                 <ptr target="vicav_bibl_002|vicavTaxonomy=Damascus"/>
                               </div>
-                              <div type="dictionary">
-                                 <p>Our site provides a digital dictionary of Cairo Arabic. <ptr
-                                       target="arz_eng_006"/></p>
-                                 <p>Socrates Spiro’s dictionary is pretty old. As there is not
-                                    anything else available in digital form, it is still worth
-                                    looking at. <ptr
-                                       target="http://archive.org/details/anarabicenglish00spirgoog"
-                                    /></p>
+                              <div type="sampleText">
+                                 <ptr target="damascus_sample_01"/>
                               </div>
-                              <div type="basicGlossary"/>
+                              
+                              
+                              
                            </body>
-                        </text>
-                     </TEI>
+                        </text></TEI>
                   </fcs:DataView>
                </fcs:ResourceFragment>
             </fcs:Resource>
          </sru:recordData>
          <sru:recordPosition>1</sru:recordPosition>
-         <sru:recordIdentifier/>
+         <sru:recordIdentifier>?operation=searchRetrieve&amp;query=Damascus&amp;XDEBUG_SESSION_START=netbeans-xdebug</sru:recordIdentifier>
       </sru:record>
-      <sru:nextRecordPosition/>
    </sru:records>
    <sru:res>1</sru:res>
 </sru:searchRetrieveResponse>
