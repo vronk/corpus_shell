@@ -159,6 +159,9 @@ function doOnDocumentReady ()
             var currentProfile = PanelController.ProfileName;
             RefreshProfileCombo(currentProfile);
             LoadProfile(currentProfile);
+            if (ProfileController.Profiles.sideBarOpen === false) {
+                ToggleSideBar();
+            }
             updating = false;
             LoadIndexCache(function() {
             // The following code is executed after a delay that depends on how the data about available resources is fetched and
@@ -435,7 +438,7 @@ function _json_encode(inVal, out)
 
         case 'string':
             out.push('"');
-            out.push(inVal.replace(/(["\\])/g, '\$1').replace(/\r/g, '').replace(/\n/g, '\n'));
+            out.push(inVal.replace(/(["\\])/g, '\\$1').replace(/\r/g, '').replace(/\n/g, '\n'));
             out.push('"');
             return out;
 
@@ -447,7 +450,7 @@ function _json_encode(inVal, out)
 
 /**
  * @desc Tries to save the users profile data to the server. As a backup saves the profile data to the local store.
- * @param {string} userId  The user id for which the data should be saved. May be an GUID for example.
+ * @param {string} userid  The user id for which the data should be saved. May be an GUID for example.
  */
 function SaveUserData(userid)
 {
@@ -456,8 +459,11 @@ function SaveUserData(userid)
   // Now save things locally, may be something goes wrong on transmission ...
   // make-things-work hack: This only makes sense if we at least compare the local and the
   // remote profile at load time and then use the newer one.
-  
-  localStorage.setItem(userId + "_Profiles", dataStr);
+  try {
+    localStorage.setItem(userId + "_Profiles", dataStr);
+  } catch (e) {
+      // this fails on IE if this is running on localhost -> debugging :-(
+  }
   
   $.ajax(
   {
@@ -485,15 +491,18 @@ function ToggleSideBar()
   if (left == "0" || left == "0px")
   {
     left = left - width + 7;
+    ProfileController.Profiles.sideBarOpen = false;
     $("#sidebaricon").attr("src", "scripts/style/img/sidebargrip.right.png");
   }
   else
   {
     left = 0;
+    ProfileController.Profiles.sideBarOpen = true;
     $("#sidebaricon").attr("src", "scripts/style/img/sidebargrip.left.png");
   }
 
   $("#sidebar").css("left", left+"px");
+  SaveUserData(userId);
 }
 
 /**
