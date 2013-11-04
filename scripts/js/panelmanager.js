@@ -1134,8 +1134,8 @@ function PanelManager (container, searchConfig)
   }
 
   /**
-  * @param -
-  * purpose:
+  * @param {MainPanelObject} panelObj A object describing the panel to be created
+  * Called when restoring the hibernated layout to create a search panel.
   * @return    -
   */
   this.CreateNewSearchPanelObj = function(panelObj)
@@ -1150,19 +1150,24 @@ function PanelManager (container, searchConfig)
   };
 
   /**
-  * @param -
-  * purpose:
+  * @param {MainPanelObject} panelObj A object describing the panel to be created
+  * Called when restoring the hibernated layout to create other panels.
   * @return    -
   */
   this.CreateNewContentPanelObj = function(panelObj)
   {
-    if (panelObj == undefined) return;
+        if (panelObj === undefined)
+            return;
 
-    var maxZidx = this.GetMaxZIndex() + 1;
-    var newPanel = new Panel(panelObj.Id, panelObj.Type, panelObj.Title, panelObj.Url, panelObj.Position, false, maxZidx ,this.Container, this, 0);
-    newPanel.CreatePanel();
+        var maxZidx = this.GetMaxZIndex() + 1;
+        var newPanel;
+        if (panelObj.Title.indexOf("Map ") === 0)
+            newPanel = new MapPanel(panelObj.Id, panelObj.Type, panelObj.Title, panelObj.Url, panelObj.Position, false, maxZidx, this.Container, this, 0);
+        else
+            newPanel = new Panel(panelObj.Id, panelObj.Type, panelObj.Title, panelObj.Url, panelObj.Position, false, maxZidx, this.Container, this, 0);
+        newPanel.CreatePanel();
 
-    this.PanelObjects[panelObj.Id] = newPanel;
+        this.PanelObjects[panelObj.Id] = newPanel;
   };
 
   /**
