@@ -15,12 +15,16 @@
   
   include "../utils-php/config.php";
 
-  // TODO: where is this printed to? who checks this?
-  print_r($_POST);
-  if (isset($_POST['uid']) && trim($_POST['uid']) != "" && isset($_POST['data']) && trim($_POST['data']) != "")
-  {
-    print "<msg>ok</msg>";
-
+  xdebug_disable();
+//  xdebug_start_error_collection();
+  header("content-type: text/xml");
+  // print_r's output is directed to the browser!
+  print "<userdata>";
+  print "<debug>"
+  . "<var name='\$_POST'>";
+  print(str_replace(array("<", "&", ">"), array("&lt;", "&amp;", "&gt;"), print_r($_POST, true)));
+  print "</var></debug>";
+  if (isset($_POST['uid']) && trim($_POST['uid']) != "" && isset($_POST['data']) && trim($_POST['data']) != "") {
     $uid = trim($_POST['uid']);
     $data = trim($_POST['data']);
 
@@ -28,10 +32,26 @@
 
     $filename = $userdataPath . $uid . ".json";
 
-    $handle = fopen($filename, "w");
-    fwrite($handle, $data);
-    fclose($handle);
-  }
-  else
+    // disable warning
+    $handle = @fopen($filename, "w");
+    if ($handle === false) {
+        print "<msg>open error</msg>";
+    } else {
+        if (fwrite($handle, $data) === false) {
+            "<msg>write error</msg>";
+        } else {
+            print "<msg>ok</msg>";
+        }
+        fclose($handle);
+    }
+} else {
     print "<msg>not ok</msg>";
-?>
+}
+//xdebug_stop_error_collection();
+//$xdebug_errors = xdebug_get_collected_errors();
+//print "<debug>";
+//print "<xdebug>";
+//print(str_replace(array("<", "&", ">"), array("&lt;", "&amp;", "&gt;"), print_r($xdebug_errors, true)));
+//print "</xdebug>";
+//print "</debug>";
+print "</userdata>";

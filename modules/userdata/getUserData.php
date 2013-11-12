@@ -17,6 +17,7 @@
  */
   include "../utils-php/config.php";
 
+  header('Content-type: application/json');
 // use POST
   if (isset($_POST['uid']) && trim($_POST['uid']) != "")
 // use GET
@@ -31,4 +32,3 @@
   }
   else
     print "null";
-?>
