@@ -313,21 +313,8 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
   */
   this.CreateNewSearchPanel = function(configIdx, searchStr)
   {
-    var searchPanel = document.createElement('div');
-
-    $(searchPanel).addClass("draggable ui-widget-content whiteback");
-    $(searchPanel).attr("id", this.Id);
-    $(searchPanel).attr("onclick", "PanelController.BringToFront('" + this.Id + "');");
-    $(searchPanel).css("position", "absolute");
-
-    $(searchPanel).css("left", this.Position.Left);
-    $(searchPanel).css("top", this.Position.Top);
-    $(searchPanel).css("width", this.Position.Width);
-    $(searchPanel).css("height", this.Position.Height);
-    $(searchPanel).css("z-index", this.ZIndex);
-
-    var titlep = this.GeneratePanelTitle(this.Title, 0, false);
-    $(searchPanel).append(titlep);
+        var searchPanel;
+        var failed = false;
 
     var query = "";
 
@@ -344,14 +331,60 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
         query = searchStr;
     }
 
+        $.ajax("scripts/js/panel.tpl.html", {
+            async: false,
+            error: function(jqXHR, status, error) {
+                failed = true;
+            },
+            success: function(responseXHTML, status, jqXHR) {
+                searchPanel = $(responseXHTML);
+            }
+        });
+
+        var searchUI;
+        if (!failed) {
+            $.ajax("scripts/js/searchui.tpl.html", {
+                async: false,
+                error: function(jqXHR, status, error) {
+                    failed = true;
+                },
+                success: function(responseXHTML, status, jqXHR) {
+                    searchUI = $(responseXHTML);
+                }
+            });
+        }
+        
+        if (failed) {
+            searchPanel = document.createElement('div');
+            $(searchPanel).addClass("draggable ui-widget-content whiteback");
+            var titlep = this.GeneratePanelTitle(this.Title, 0, false);
+            $(searchPanel).append(titlep);
     $(searchPanel).append(this.GenerateSearchInputs(this.Config, query));
     $(searchPanel).append(this.GenerateSearchNavigation());
-
-    var searchResultDiv = this.GenerateSearchResultsDiv();
     var newHeight = parseInt(this.Position.Height.replace(/px/g, "")) - titleBarPlusBottomSpacing - searchUIHeight - 10; //???
-
     $(searchResultDiv).css("height", newHeight + "px");
+            var searchResultDiv = this.GenerateSearchResultsDiv();
     $(searchPanel).append(searchResultDiv);
+        } else {
+            this.FillInPanelTitle(searchPanel, this.Title, 0, false);
+
+            this.searchbutton = searchUI.find(".c_s-ui-searchbutton input");
+            this.searchbutton.attr("onclick", "PanelController.StartSearch('" + this.Id + "');");
+            this.ConfigureSearchTextInput(searchUI.find(".searchstring"), query);
+            this.ConfigureSearchContextCombo(searchUI.find(".searchcombo"), this.Config);
+            
+            searchPanel.find(".c_s-ui-widget-header").after(searchUI);
+        }
+
+        $(searchPanel).attr("id", this.Id);
+        $(searchPanel).attr("onclick", "PanelController.BringToFront('" + this.Id + "');");
+        $(searchPanel).css("position", "absolute");
+
+        $(searchPanel).css("left", this.Position.Left);
+        $(searchPanel).css("top", this.Position.Top);
+        $(searchPanel).css("width", this.Position.Width);
+        $(searchPanel).css("height", this.Position.Height);
+        $(searchPanel).css("z-index", this.ZIndex);
 
     $(this.Container).append(searchPanel);
     this.InitDraggable();
@@ -364,8 +397,36 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
   */
   this.CreateNewSubPanel = function()
   {
-    var newPanel = document.createElement('div');
-    $(newPanel).addClass("draggable ui-widget-content whiteback");
+    var failed = false;
+    var newPanel;
+    
+    $.ajax("scripts/js/panel.tpl.html", {
+        async: false,
+        error: function (jqXHR, status, error) {
+            failed = true;
+        },
+        success: function (responseXHTML, status, jqXHR) {
+            newPanel = $(responseXHTML);
+        }
+    });
+    
+            var usePin = 1;
+
+            if (this.Type == "content")
+                usePin = 0;
+    
+            var titlep;
+            if (failed) {
+                newPanel = document.createElement('div');
+                $(newPanel).addClass("draggable ui-widget-content whiteback");
+                titlep = this.GeneratePanelTitle(this.Title, usePin, this.Pinned);
+                $(newPanel).append(titlep);
+                var searchResultDiv = this.GenerateSearchResultsDiv();
+                $(searchResultDiv).css('height', $(newPanel).height() - titleBarPlusBottomSpacing);
+                $(newPanel).append(searchResultDiv);
+            } else {
+                this.FillInPanelTitle($(newPanel), this.Title, usePin, this.Pinned);
+            }
 
     $(newPanel).attr("id", this.Id);
     $(newPanel).attr("onclick", "PanelController.BringToFront('" + this.Id + "');");
@@ -377,19 +438,8 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
     $(newPanel).css("height", this.Position.Height);
     $(newPanel).css("z-index", this.ZIndex);
 
-    var usePin = 1;
-
-    if (this.Type == "content")
-      usePin = 0;
-
-    var titlep = this.GeneratePanelTitle(this.Title, usePin, this.Pinned);
-    $(newPanel).append(titlep);
-    var searchResultDiv = this.GenerateSearchResultsDiv();
-    $(searchResultDiv).css('height', $(newPanel).height() - titleBarPlusBottomSpacing);
-    $(newPanel).append(searchResultDiv);
-
     $(this.Container).append(newPanel);
-    this.CorrectSearchResultHeight(newPanel);
+    if (failed) this.CorrectSearchResultHeight(newPanel);
 
     if (this.Type == "image")
       this.GetFacsimile();
@@ -430,34 +480,66 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
   };
 
   /**
-  * @param -
-  * purpose:    makes the panel DOM object resizeable and draggable.
-  * @return    -
+  * Configures the jQuery UI resiza and drag functions.
   */
   this.InitDraggable = function()
   {
     var panelId = this.Id;
+        var scrollarea;
 
     $(this.GetCssId())
     .resizable({ containment: "parent", aspectRatio: false,
                resize: function(event, ui)
                {
                  PanelController.BringToFront(panelId);
+                        var needsCalculation = !$(this).hasClass("c_s-ui-widget");
+                        if (needsCalculation) {
                  var hgt = $(this).height();
                  if ($(this).find(".searchstring").length != 0)
                    $(this).find(".searchresults").css("height", hgt - titleBarPlusBottomSpacing - searchUIHeight + "px");
                  else
                    $(this).find(".searchresults").css("height", hgt - titleBarPlusBottomSpacing + "px");
-
-                 PanelController.RefreshScrollPane(panelId);
-
                  var wid = $(this).width();
                  $(this).find(".searchresults").css("width", wid + "px");
-
+                            PanelController.RefreshScrollPane(panelId);
+                        }
+                        /* Part of the Firefox doesn't interpret overflow together with
+                         * a heigth to be calculated workaround.
+                         */ 
+                        if (scrollarea !== undefined) {
+                            var height = $(this).find(".c_s-searchresults-container").height();
+                            if (height !== scrollarea.height())
+                               scrollarea.height(height);
+                        }
+                        /* End workaround */
                  PanelController.UpdatePanelPosition(panelId);
+                    },
+                    /* Part of the Firefox doesn't interpret overflow together with
+                     * a heigth to be calculated workaround.
+                     */ 
+                    start: function (event, ui) {
+                        if ($.browser.mozilla) {
+                            if (scrollarea === undefined) {
+                                scrollarea = $(this).find(".c_s-scroll-area");
                }
+                            scrollarea.css("position", "absolute");
+                        }
+                    },
+                    /* Part of the Firefox doesn't interpret overflow together with
+                     * a heigth to be calculated workaround.
+                     */ 
+                    stop: function (event, ui) {
+                        if ($.browser.mozilla) {
+                            if (scrollarea !== undefined) {
+                                scrollarea.css("position", "relative");
+                                var height = $(this).find(".c_s-searchresults-container").height();
+                                if (height !== scrollarea.height())
+                                    scrollarea.height(height);
+                            }
+                        }                       
+                    }                    
                })
-    .draggable({ handle: "p", containment: "parent",  snap: true,
+                .draggable({handle: ".c_s-ui-widget-header", containment: "parent", snap: true,
                start: function(event, ui)
                {
                  PanelController.BringToFront(panelId);
@@ -476,8 +558,10 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
   */
   this.InitScrollPane = function()
   {
+        if (!$(this.GetCssId()).hasClass("c_s-ui-widget")) {
    var srdiv = $(this.GetCssId()).find(".searchresults");
    $(srdiv).jScrollPane({ mouseWheelSpeed: 10});
+        }
   };
   
   /**
@@ -638,7 +722,18 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
           }
           else
           {
+            var height;
+            if ($.browser.mozilla) {
+            /* Part of a crude hack to get around missing support for overflow and
+             * percentage height in table cells in firefox (only fixed px overflows
+             * are used).
+             */
+             height = $(parElem).find(".c_s-scroll-area").height();
+            }
             $(resultPane).html(hstr);
+            if ($.browser.mozilla) {
+                $(parElem).find(".c_s-scroll-area").height(height);
+            }
             PanelController.InitScrollPane(panelId);
           }
           var hits = $(resultPane).find(".result-header").attr("data-numberOfRecords");
@@ -651,30 +746,21 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
     return urlStr;
   };
 
-  // generate dom objects
+  /**
+   * A jQuery object representing a clickabel UI item which knows how to perform
+   * a search
+   */
+  this.searchbutton;
 
   /**
-  * @param {number} configIdx  Selected index of SearchCombo
+   * 
+   * @param {jQuery} searchstring A jQuery object representing text input
   * @param {string} searchStr Search string
-  * purpose:    creates a div with the searchsting text input, the endpoint combobox,
-  *             and the start search button.<br/>
-  * If the Go button is clicked PanelController's {@link module:corpus_shell~PanelManager#StartSearch} is invoked
-  * with this panels unique id.
-  * @return    the complete div as a DOM object
   */
-  this.GenerateSearchInputs = function(configIdx, searchStr)
-  {
-    var searchdiv = document.createElement('div');
-    $(searchdiv).addClass("searchdiv");
-    $(searchdiv).text("Search for ");
-
-    var searchstring = document.createElement('input');
-    $(searchstring).addClass("searchstring");
-    $(searchstring).attr("type", "text");
-
+  this.ConfigureSearchTextInput = function (searchstring, searchStr) {
     var availableTags = ResourceController.GetLabelValueArray();
 
-    $(searchstring)
+    searchstring
       .bind( "keydown", function( event ) {
        if ( event.keyCode === $.ui.keyCode.TAB &&
          $( this ).data( "autocomplete" ).menu.active ) {
@@ -707,38 +793,87 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
       }
      });
 
-    if (searchStr != undefined)
-      $(searchstring).val(searchStr);
+    if (searchStr !== undefined)
+      searchstring.val(searchStr);
 
+    var searchbutton = this.searchbutton;
+    
+    searchstring.keyup(function(event)
+    {
+      if(event.keyCode === 13)
+        searchbutton.click();
+    });
+  };
+  
+  /**
+   * 
+   * @param {jQuery} searchcombo A jQuery object representing an option element
+   *                             that should be used to present possible search
+   *                             contexts.
+   * @param {number} configIdx A number that denotes the preselected option.
+   */
+  this.ConfigureSearchContextCombo = function(searchcombo, configIdx) {
+    for (var i = 0; i < this.PanelController.SearchConfig.length; i++)
+    {
+       var searchoption = $(document.createElement('option'));
+       searchoption.attr("value", i);
+
+       if (i === configIdx)
+         searchoption.attr("selected", "selected");
+
+       searchoption.text(this.PanelController.SearchConfig[i]["DisplayText"]);
+       searchcombo.append(searchoption);
+    }
+    
+    var searchbutton = this.searchbutton;
+        
+    searchcombo.keyup(function(event)
+    {
+      if(event.keyCode === 13)
+         searchbutton.click();
+    });  
+  };
+  // generate dom objects
+
+  /**
+  * @param {number} configIdx  Selected index of SearchCombo
+  * @param {string} searchStr Search string
+  * purpose:    creates a div with the searchsting text input, the endpoint combobox,
+  *             and the start search button.<br/>
+  * If the Go button is clicked PanelController's {@link module:corpus_shell~PanelManager#StartSearch} is invoked
+  * with this panels unique id.
+  * @return    the complete div as a DOM object
+  */
+  this.GenerateSearchInputs = function(configIdx, searchStr)
+  {
     var buttondiv = document.createElement('div');
     $(buttondiv).css('float', 'right');
 
-    var searchbutton = document.createElement('input');
-    $(searchbutton).addClass("searchbutton");
-    $(searchbutton).attr("type", "button");
-    $(searchbutton).attr("value", "Go");
-    $(searchbutton).attr("onclick", "PanelController.StartSearch('" + this.Id + "');");
+    this.searchbutton = $(document.createElement('input'));
+    this.searchbutton.addClass("searchbutton");
+    this.searchbutton.attr("type", "button");
+    this.searchbutton.attr("value", "Go");
+    this.searchbutton.attr("onclick", "PanelController.StartSearch('" + this.Id + "');");
 
+    var searchdiv = document.createElement('div');
+    $(searchdiv).addClass("searchdiv");
+    $(searchdiv).text("Search for ");
+
+    var searchstring = document.createElement('input');
+    $(searchstring).addClass("searchstring");
+    $(searchstring).attr("type", "text");
+    
     var searchcombo = this.GenerateSearchCombo(configIdx);
 
+    this.ConfigureSearchTextInput($(searchstring), searchStr);
+    this.ConfigureSearchContextCombo($(searchcombo), configIdx);
+    
     $(searchdiv).append(searchstring);
     $(searchdiv).append(" in ");
     $(searchdiv).append(searchcombo);
     $(searchdiv).append(" ");
-    $(buttondiv).append(searchbutton);
+    $(buttondiv).append(this.searchbutton);
     $(searchdiv).append(buttondiv);
-
-    $(searchstring).keyup(function(event)
-    {
-      if(event.keyCode == 13)
-        $(searchbutton).click();
-    });
-
-    $(searchcombo).keyup(function(event)
-    {
-      if(event.keyCode == 13)
-        $(searchbutton).click();
-    });
 
     return searchdiv;
   };
@@ -754,29 +889,43 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
     var searchcombo = document.createElement('select');
     $(searchcombo).addClass("searchcombo");
 
-    for (var i = 0; i < this.PanelController.SearchConfig.length; i++)
-    {
-       var searchoption = document.createElement('option');
-       $(searchoption).attr("value", i);
-
-       if (i == configIdx)
-         $(searchoption).attr("selected", "selected");
-
-       $(searchoption).text(this.PanelController.SearchConfig[i]["DisplayText"]);
-       $(searchcombo).append(searchoption);
-    }
-
     return searchcombo;
   };
 
   /**
+   * @param {jQuery} context The jQuery object that should be manipulated.
+   *        This object is expected to have some space of class
+   *        c_s-ui-widget-header-title for the title and two hidden
+   *        markers of class titletopiconpin for the pinned state one
+   *        of which has also class c_s-greyed and both have class c_s-hidden
+   *        initially. The class c_s-hidden will be removed to denote the
+   *        current state. Elements with class titletopiconclose and
+   *        titletopiconmax will have onclick handlers attached.
   * @param {string} titlestring The panel's title.
-  * @param {number} pin With a value of 1 the panel gehts a pin icon.
+  * @param {number} pin With a value of 1 the panel gets a pin icon.
   * @param {boolean} pinned Boolean value that tells wether the panel is pinned.
   * purpose:    creates a paragraph containing the panel title and the icons to pin
   *             (optional), maximize, and close.
   * @return    the complete panel title paragraph as a DOM object
   */
+ 
+  this.FillInPanelTitle = function(context, titlestring, pin, pinned) {
+        context.find(".c_s-ui-widget-header-title").text(titlestring);
+        if (pin === 1)
+        {
+            if (pinned === true) {
+                context.find(".titletopiconpin").removeClass("c_s-hidden");
+            } else {
+                context.find(".titletopiconpin.c_s-greyed").removeClass("c_s-hidden");
+            }
+        }
+        context.find(".titletopiconclose").attr("onclick", "PanelController.ClosePanel('" + this.Id + "');");
+        context.find(".titletopiconmax").attr("onclick", "PanelController.MaximizePanel('" + this.Id + "');");
+        // TODO Check this!
+        context.find(".titletopiconpin").attr("onclick", "PinPanel(this, 2);");
+        context.find(".titletopiconpin.c_s-greyed").attr("onclick", "PinPanel(this, 1);");
+  };
+
   this.GeneratePanelTitle = function(titlestring, pin, pinned)
   {
     var titlep = document.createElement('p');

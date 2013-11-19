@@ -511,7 +511,11 @@ function PanelManager (container, searchConfig)
   {
     var panel = this.GetPanel(panelId);
 
-    if (panel != null && panel.Position != position)
+    if (panel !== null && 
+        (panel.Position.Top !== position.Top ||
+        panel.Position.Left !== position.Left ||
+        panel.Position.Width !== position.Width ||
+        panel.Position.Height !== position.Height))
     {
       panel.Position = position;
       this.TriggerChangedEvent("Panel position changed: " + panelId);

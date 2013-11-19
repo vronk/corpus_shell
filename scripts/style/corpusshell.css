@@ -5,40 +5,68 @@
  Setting html and body to 100% is the HTML5 way of using the whole window.
  Other parts of the page have to be configured to expand as well.
  Failure to do this results in the gray (#CCCCCC) background being visible.
- The generic table setting is used by the "window captions".
- Note/Todo: The example below looks broken and it actually is. The problem
- with the idea of organizing the title bar as a table is that this
- violates the specs. A paragraph as used here as a container in principle
- cannot hold other block level elements such as a table so eg. Firefox
- interprets the paragraph as two paragraph one before and one after the
- table. Blind tables aren't used that much anymore in web sites in 2013
- so this should be changed in the long run.
+ The UI-style is achieved by formatting the HTML tags as a blind table.
+ This causes problems in Firefox only.
+ This has the advantage that the remaining vertical space is automatically used
+ by the AJAX content. This panel is used as template for stand alone panels like
+ the one used for scan as well as for the panels that depend on another main
+ panel. Note that the order of the buttons seems to be reversed. This is because
+ they are all formated as float right where the first icon specified in HTML
+ gets the rightmost place.
  
  Example:
  ```
  <html>
+ <head>
+   <!-- just for demonstrating dynimcally loaded content. -->
+   <style>
+.searchresults .demo {
+  background-color: pink;
+}
+#panel1 {
+position: absolute; left: 20px; top: 10px; width: 200px; height: 100px;
+}
+
+.titletopiconpin.c_s-hidden {
+display: inline;
+}
+
+.titletopiconmax:hover + .titletopiconpin {
+display: none;
+}
+
+.titletopiconclose:hover ~ .titletopiconpin {
+display: none;
+}
+   </style>
+ </head>
  <body>
-   <div style="position: absolute; left: 20px; top 10px; width: 200px; height: 100px;" class="draggable ui-widget-content whiteback ui-resizable ui-draggable">
-   <p class="ui-widget-header">
-   <table style="width: 100%;">
-     <tbody>
-       <tr>
-         <td>Search 1</td>
-         <td style="width: 17px;">
-           <a href="#" class="noborder">
-             <img src="http://corpus3.aac.ac.at/cs2/corpus_shell/scripts/style/img/n.win_max.png" class="titletopiconmax noborder">
-           </a>
-         </td>
-         <td style="width: 17px;">
-           <a href="#" class="noborder">
-             <img src="http://corpus3.aac.ac.at/cs2/corpus_shell/scripts/style/img/n.win_close.png" class="titletopiconclose noborder">
-           </a>
-         </td>
-       </tr>
-     </tbody>
-   </table>
-   </p>
-   </div>
+     <div class="c_s-ui-widget draggable ui-widget-content whiteback ui-resizable ui-draggable" id="panel1">
+         <div class="c_s-ui-widget-header">
+             <div class="c_s-line">
+                 <span class="c_s-ui-widget-header-title">Search 1</span>
+                 <span class="c_s-ui-widget-header-button titletopiconclose">
+                     <img src="http://corpus3.aac.ac.at/cs2/corpus_shell/scripts/style/img/n.win_close.png" class="noborder">
+                 </span>
+                 <span class="c_s-ui-widget-header-button titletopiconmax">
+                     <img src="http://corpus3.aac.ac.at/cs2/corpus_shell/scripts/style/img/n.win_max.png" class="noborder">
+                 </span>
+                 <span class="c_s-ui-widget-header-button titletopiconpin c_s-hidden">
+                     <img src="http://corpus3.aac.ac.at/cs2/corpus_shell/scripts/style/img/pin.color.png" class="noborder">
+                 </span>
+                 <span class="c_s-ui-widget-header-button titletopiconpin c_s-hidden c_s-grayed">
+                     <img src="http://corpus3.aac.ac.at/cs2/corpus_shell/scripts/style/img/pin.gray.png" class="noborder">
+                 </span>
+             </div>
+         </div>
+         <div class="c_s-searchresults-container">
+             <div class="searchresults">
+                 <!-- just for demonstrating dynimcally loaded content. -->
+                 <div class="demo">AJAX Response</div>
+             </div>
+         </div>
+         <div class="c_s-panel-resize-spacer"><div class="c_s-line"></div></div>
+     </div>
  </body>
  </html>
 
@@ -62,13 +90,81 @@ table {
 	font-size: 11px;
 }
 
-div p.ui-widget-header {
+.c_s-ui-widget-header {
+        display: table-row;
+        /* minimum height = height of the pictograms */
+        height: 17px;
 	cursor: move;
 	border: 1px solid #aaaaaa;
 	background: #cccccc url(base/images/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x;
 	color: #222222;
 	font-weight: bold;
 }
+
+.c_s-ui-widget-header-button {
+        float: right;
+        /* minimum width = width of the pictograms */
+        width: 17px;
+        cursor: default;
+}
+
+.c_s-ui-widget-header-button.c_s-hidden {
+    display: none;
+}
+    /* -- Table based layout -- */
+.c_s-ui-widget.ui-widget-content {
+     display: table; 
+    /* Who exactly sees this particular shade of blueish white?
+       If the PNG is used for this (jQuery standard), it's not clipped at 
+       the corners in chrome...*/
+    background: #FAFAFF;
+}
+
+.c_s-line {
+    display: table-cell;
+    /*height: 1px;*/
+}
+
+.c_s-ui-widget-header .c_s-line {
+    /* minimum height = height of the pictograms */
+    height: 17px;
+    cursor: move;
+    border: 1px solid #aaaaaa;
+    background: #cccccc url(base/images/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x;
+    color: #222222;
+    font-weight: bold;
+}
+
+.c_s-searchresults-container {
+    display: table-row;
+    /*height: 77%;*/
+}
+
+.c_s-panel-resize-spacer {
+    display: table-row;
+    height: 10px;
+}
+.c_s-searchresults-container .searchresults {
+    border-top: 5px solid white;
+}
+
+.c_s-searchresults-container .searchresults img {
+    width: 320px;
+    float: right;
+}
+
+.c_s-searchresults-container > .c_s-line {
+    height: 100%;
+}
+
+.c_s-scroll-area {
+    /* This works in every browser but Firefox. Needs to be emulated there.
+       The alternative is the flexbox layout. The most current version is
+       not available in Firefox below 21 (e.g. 17)*/
+    height: 100%;
+    overflow: auto;
+}
+
 /*
  Side bar: The initial user interface
  ====================================
@@ -245,61 +341,110 @@ a.searchresult:hover, a.searchresult:focus {
 /*
  Styles for the result "windows"
  ===============================
- These styles define how the search result windows look like.
+ These styles define how the search result windows look like. The layout is
+ achieved by using styling the HTML tags as blind table.
  
  ```
-	<div class="draggable ui-widget-content whiteback ui-resizable ui-draggable" id="panel1" style="left: 20px; top: 10px; width: 500px; height: 250px; position: absolute; z-index: 2;">
-		<p class="ui-widget-header">
-			<table style="width: 100%;">
-				<tbody>
-					<tr>
-						<td>Search 1</td>
-						<td style="width: 17px;"><a class="noborder" href="#"><img class="titletopiconmax noborder" src="http://corpus3.aac.ac.at/cs2/corpus_shell/scripts/style/img/n.win_max.png" width="25" height="25"></a></td>
-						<td style="width: 17px;"><a class="noborder" href="#"><img class="titletopiconclose noborder" src="http://corpus3.aac.ac.at/cs2/corpus_shell/scripts/style/img/n.win_close.png" width="25" height="25"></a></td>
-					</tr>
-				</tbody>
-			</table>
-	    </p>
-        <div class="searchdiv">
-        	Search for <input aria-haspopup="true" class="searchstring ui-autocomplete-input" role="textbox" type="text" autocomplete="off" aria-autocomplete="list">
-        	in <select class="searchcombo">
-        	 	  <option value="0">Resource 0</option>
-        	 	  <option value="1">Resource 1</option>
-        	 	 </select>
-        	<div style="float: right;">
-        	  <input class="searchbutton" value="Go" type="button">
+<html>
+    <head>
+        <link type="text/css" rel="stylesheet" href="scripts/style/corpusshell.css"/>
+        <link rel="stylesheet" href="scripts/style/jquery/clarindotblue/jquery-ui-1.8.24.custom.css" type="text/css">
+
+        <!-- just for demonstrating dynimcally loaded content. -->
+        <style>
+            .searchresults .demo {
+                background-color: pink;
+                height: 100%;
+            }
+            #panel1 {
+                left: 20px; top: 10px; width: 500px; height: 250px; position: absolute; z-index: 2;
+            }
+            #autocomplete-demo2 {
+                z-index: 14; top: 10px; left: 540px; display: block; width: 159px;
+            }
+            .ui-autocomplete.ui-menu {
+                z-index: 14;
+                display: none;
+            }
+            .ui-autocomplete-input:focus + .ui-autocomplete.ui-menu {
+                display: block;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="c_s-ui-widget draggable ui-widget-content whiteback ui-resizable ui-draggable" id="panel1">
+            <div class="c_s-ui-widget-header">
+                <div class="c_s-line">
+                    <span class="c_s-ui-widget-header-title">Search 1</span>
+                 <span class="c_s-ui-widget-header-button titletopiconclose">
+                     <img src="http://corpus3.aac.ac.at/cs2/corpus_shell/scripts/style/img/n.win_close.png" class="noborder">
+                 </span>
+                 <span class="c_s-ui-widget-header-button titletopiconmax">
+                     <img src="http://corpus3.aac.ac.at/cs2/corpus_shell/scripts/style/img/n.win_max.png" class="noborder">
+                 </span>
+                 <span class="c_s-ui-widget-header-button titletopiconpin c_s-hidden">
+                     <img src="http://corpus3.aac.ac.at/cs2/corpus_shell/scripts/style/img/pin.color.png" class="noborder">
+                 </span>
+                 <span class="c_s-ui-widget-header-button titletopiconpin c_s-hidden c_s-grayed">
+                     <img src="http://corpus3.aac.ac.at/cs2/corpus_shell/scripts/style/img/pin.gray.png" class="noborder">
+                 </span>
+                </div>
             </div>
+            <div class="c_s-search-ui">
+                <div class="c_s-line">
+                Search for
+                <div style="display: inline-block">
+                    <input aria-haspopup="true" class="searchstring ui-autocomplete-input" role="textbox" type="text" autocomplete="off" aria-autocomplete="list" value="Select for suggestions"/>
+                    <ul role="menu" class="ui-autocomplete ui-menu ui-widget ui-widget-content ui-corner-all">
+                        <li role="menuitem" class="ui-menu-item"><a tabindex="-1" class="ui-corner-all">Suggestions for search results:</a></li>
+                        <li role="menuitem" class="ui-menu-item"><a tabindex="-1" class="ui-corner-all">CQL Server Choice</a></li>
+                        <li role="menuitem" class="ui-menu-item"><a tabindex="-1" class="ui-corner-all">CQL All</a></li>
+                        <li role="menuitem" class="ui-menu-item"><a tabindex="-1" class="ui-corner-all">part of speech</a></li>
+                    </ul>
+                </div>
+                in <select class="searchcombo">
+                    <option value="0">Resource 0</option>
+                    <option value="1">Resource 1</option>
+                </select>
+                <div class="c_s-ui-searchbutton">
+                    <input class="searchbutton" value="Go" type="button">
+                </div>
+                </div>
+            </div>
+            <div class="c_s-navigation-ui">
+                <div class="c_s-line">
+                <span class="navigationtitle">Search results</span>
+                <span class="navigationmain">
+                    <i>hits:</i>&nbsp;<span class="hitcount">101</span>;&nbsp;<i>from:</i>&nbsp;<input class="startrecord" type="text">&nbsp;<i>max:</i>&nbsp;
+                    <input class="maxrecord" type="text">
+                    <a class="noborder" href="#"><img class="navigationicon" src="http://corpus3.aac.ac.at/cs2/corpus_shell/scripts/style/img/n.arrow_right_b.png" width="25" height="25"></a>
+                    <a class="noborder" href="#"><img class="navigationicon" src="http://corpus3.aac.ac.at/cs2/corpus_shell/scripts/style/img/n.arrow_left.png" width="25" height="25"></a>
+                    <a class="noborder" href="#"><img class="navigationicon" src="http://corpus3.aac.ac.at/cs2/corpus_shell/scripts/style/img/n.arrow_right.png" width="25" height="25"></a>
+                </span>
+                </div>
+            </div>
+            <div class="c_s-searchresults-container">
+                <div class="searchresults">
+                    <!-- just for demonstrating dynimcally loaded content. -->
+                    <div class="demo">AJAX Response</div>
+                </div>
+            </div>
+            <div class="c_s-panel-resize-spacer"><div class="c_s-line"></div></div>
         </div>
-        <table class="navigation">
-        	<tbody>
-        		<tr>
-        			<td class="navigationtitle">Search results</td>
-        			<td class="navigationmain">
-        				<i>hits:</i>&nbsp;<span class="hitcount">101</span>;&nbsp;<i>from:</i>&nbsp;<input class="startrecord" type="text">&nbsp;<i>max:</i>&nbsp;
-        				<input class="maxrecord" type="text">
-        				<a class="noborder" href="#"><img class="navigationicon" src="http://corpus3.aac.ac.at/cs2/corpus_shell/scripts/style/img/n.arrow_right_b.png" width="25" height="25"></a>
-        				<a class="noborder" href="#"><img class="navigationicon" src="http://corpus3.aac.ac.at/cs2/corpus_shell/scripts/style/img/n.arrow_left.png" width="25" height="25"></a>
-        				<a class="noborder" href="#"><img class="navigationicon" src="http://corpus3.aac.ac.at/cs2/corpus_shell/scripts/style/img/n.arrow_right.png" width="25" height="25"></a>
-        			</td>
-        		</tr>
-        	</tbody>
-        </table>
-        <div tabIndex="0" class="searchresults" hideFocus="false">
-        	Some search results.
-        </div>
-    </div>
-    <ul style="z-index: 14; top: 10px; left: 540px; display: block; width: 159px;" class="ui-autocomplete ui-menu ui-widget ui-widget-content ui-corner-all">
-    	  <li role="menuitem" class="ui-menu-item"><a tabindex="-1" class="ui-corner-all">Suggestions for search results:</a></li>
-    	  <li role="menuitem" class="ui-menu-item"><a tabindex="-1" class="ui-corner-all">CQL Server Choice</a></li>
-    	  <li role="menuitem" class="ui-menu-item"><a tabindex="-1" class="ui-corner-all">CQL All</a></li>
-    	  <li role="menuitem" class="ui-menu-item"><a tabindex="-1" class="ui-corner-all">part of speech</a></li>
-    	  <li role="menuitem" class="ui-menu-item"><a tabindex="-1" class="ui-corner-all">Item 5</a></li>
-    	  <li role="menuitem" class="ui-menu-item"><a tabindex="-1" class="ui-corner-all">Item 6</a></li>
-    	  <li role="menuitem" class="ui-menu-item"><a tabindex="-1" class="ui-corner-all">Item 7</a></li>
-    	  <li role="menuitem" class="ui-menu-item"><a tabindex="-1" class="ui-corner-all">Item 8</a></li>
-    	  <li role="menuitem" class="ui-menu-item"><a tabindex="-1" class="ui-corner-all">Item 9</a></li>
-    	  <li role="menuitem" class="ui-menu-item"><a tabindex="-1" class="ui-corner-all">Item 10</a></li>
-    </ul>
+        <ul role="menu" id="autocomplete-demo2" class="ui-autocomplete ui-menu ui-widget ui-widget-content ui-corner-all">
+            <li role="menuitem" class="ui-menu-item"><a tabindex="-1" class="ui-corner-all">Suggestions for search results:</a></li>
+            <li role="menuitem" class="ui-menu-item"><a tabindex="-1" class="ui-corner-all">CQL Server Choice</a></li>
+            <li role="menuitem" class="ui-menu-item"><a tabindex="-1" class="ui-corner-all">CQL All</a></li>
+            <li role="menuitem" class="ui-menu-item"><a tabindex="-1" class="ui-corner-all">part of speech</a></li>
+            <li role="menuitem" class="ui-menu-item"><a tabindex="-1" class="ui-corner-all">Item 5</a></li>
+            <li role="menuitem" class="ui-menu-item"><a tabindex="-1" class="ui-corner-all">Item 6</a></li>
+            <li role="menuitem" class="ui-menu-item"><a tabindex="-1" class="ui-corner-all">Item 7</a></li>
+            <li role="menuitem" class="ui-menu-item"><a tabindex="-1" class="ui-corner-all">Item 8</a></li>
+            <li role="menuitem" class="ui-menu-item"><a tabindex="-1" class="ui-corner-all">Item 9</a></li>
+            <li role="menuitem" class="ui-menu-item"><a tabindex="-1" class="ui-corner-all">Item 10</a></li>
+        </ul>
+    </body>
+</html>
  ```
  */
 
@@ -307,12 +452,16 @@ a.searchresult:hover, a.searchresult:focus {
 	border: none;
 }
 
-img.titletopiconmax, img.titletopiconclose, img.titletopiconpin {
+.titletopiconmax > img, .titletopiconclose > img, .titletopiconpin > img {
 	width: 15px;
 	height: 15px;
 	vertical-align: middle;
 }
 
+.titletopiconpin {
+    /* has to be enabled if needed */
+    display: none;
+}
 .ui-icon {
 	width: 16px;
 	height: 16px;
@@ -326,9 +475,23 @@ img.titletopiconmax, img.titletopiconclose, img.titletopiconpin {
 	border: 1px dotted #666666;
 }
 
-div.searchdiv {
-	padding: 8px;
+.c_s-search-ui {
+        display: table-row;
+}
+
+.c_s-search-ui .c_s-line {
+        padding: 8px;
 	font-size: 12px;
+}
+
+.c_s-navigation-ui {
+        display: table-row;
+}
+
+.c_s-navigation-ui .c_s-line {
+	padding: 5px 8px;
+	font-size: 12px;
+        background-color: #CCCCCC;
 }
 
 .ui-autocomplete {
@@ -338,6 +501,10 @@ div.searchdiv {
 	overflow-x: hidden;
 	/* add padding to account for vertical scrollbar */
 	padding-right: 20px;
+}
+
+.c_s-ui-searchbutton{
+        float: right; 
 }
 
 div.searchresults {
@@ -356,35 +523,24 @@ input.searchbutton {
 	color: #000000;
 }
 
-table.navigation {
-	border-collapse: collapse;
-	border: none;
-	margin: 0px;
-	margin-bottom: 10px;
-	padding: 5px 10px;
-	width: 100%;
-	background-color: #CCCCCC;
-	clear: both;
-}
-
-td.navigationtitle {
+.navigationtitle {
 	text-align: left;
 	font-size: 14px;
 	font-variant: small-caps;
-	padding-left: 10px;
 }
 
-td.navigationmain {
+.navigationmain {
+        float: right;
 	text-align: right;
 	vertical-align: middle;
 	font-size: 10px;
-	padding: 3px 10px;
+	padding: 0px 10px;
 }
 
 span.hitcount {
 	font-weight: bold;
 	font-size: 14px;
-	vertical-align: middle;
+	vertical-align: bottom;
 }
 
 input.startrecord, input.maxrecord {
@@ -412,7 +568,7 @@ img.navigationicon {
 	overflow: visible;
 	border-radius: 6px;
 }
-.ui-widget-header p, .ui-widget-content p {
+.ui-widget-header p, .ui-widget-content p, .c_s-ui-widget-header > .c_s-line {
 	margin: 0;
 	padding: 0px 0px 0px 10px;
 	border-radius: 6px;
