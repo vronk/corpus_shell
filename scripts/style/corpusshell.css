@@ -201,7 +201,7 @@ a.internal {
 	text-align: left;
 }
 
-a.sidebar:link, a.sidebar:active, a.sidebar:visited {
+td.sidebar .sidebar, td.sidebar .sidebar:link, td.sidebar .sidebar:active, td.sidebar .sidebar:visited {
 	display: block;
 	font-size: 12px;
 	color: #000000;
@@ -210,9 +210,10 @@ a.sidebar:link, a.sidebar:active, a.sidebar:visited {
 	text-align: left;
 	padding: 5px 10px;
 	border: 1px dotted #286290;
+        cursor: default;
 }
 
-a.sidebar:hover, a.sidebar:focus {
+td.sidebar .sidebar:hover, td.sidebar .sidebar:focus {
 	color: #FFFFFF;
 	background-color: #286290;
 	display: block;

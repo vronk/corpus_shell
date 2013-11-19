@@ -16,7 +16,10 @@
     <!-- jQuery UI 1.8.x (24) -->
     <script type="text/javascript" src="scripts/js/jquery/jquery-ui.min.js"></script>
     <script type="text/javascript" src="scripts/js/json.js"></script>
-    <!-- A mous wheel support plugin -->
+	<!-- A javascript library for manipulating the browser history including made up
+	     history entries and modifications of the current state/URL -->
+	<script type="text/javascript" src="scripts/js/jquery/jquery.history.js"></script>
+    <!-- A mouse wheel support plugin -->
     <script type="text/javascript" src="scripts/js/jquery/jquery.mousewheel.min.js"></script>
     <!-- An MIT/GPL licensed library for creating scrollable areas on the fly -->
     <script type="text/javascript" src="scripts/js/jquery/jquery.jscrollpane.min.js"></script>
@@ -37,52 +40,54 @@
     <script type="text/javascript" src="http://corpus3.aac.ac.at/cs2/corpus_shell/scripts/js/corpusshell.config.php"></script>    
     <script type="text/javascript" src="scripts/js/corpusshell.config.php"></script>
     
+	<!-- The following file contains utillity functions that are used by the other so this
+	     has to be loaded before the others. -->
+    <script type="text/javascript" src="scripts/js/corpusshell.js"></script>
     <script type="text/javascript" src="scripts/js/profilemanager.js"></script>
     <script type="text/javascript" src="scripts/js/panel.js"></script>
     <script type="text/javascript" src="scripts/js/mappanel.js"></script>
     <script type="text/javascript" src="scripts/js/panelmanager.js"></script>
     <script type="text/javascript" src="scripts/js/ressourcemanager.js"></script>
-    <script type="text/javascript" src="scripts/js/corpusshell.js"></script>
     <title>ICLTT Corpus Shell</title>
   </head>
   <body>
-    <div id="sidebar">
-     	<table class="sidebar">
-     		 <tr>
-      		 	<td class="sidebar">
-      		 		 <h3>ICLTT Corpus Shell</h3>
-      		 		 <div style="padding: 10px;" id="searchbuttons">
-         				<a href="#" onclick="PanelController.OpenNewSearchPanel($('#searchbuttons .searchcombo').val());" class="sidebar">New search panel</a>
-         			</div>
-      		 		 <div style="padding: 10px;" id="openpanels">
-         				<a href="#" onclick="TogglePanelList();" class="sidebar" id="TogglePanelListButton">Show panel list</a>
-         			</div>
-         			<div style="padding: 10px;" id="profilebuttons">
-         			 <a href="#" onclick="LoadProfile($('#profilebuttons .searchcombo').val());" class="sidebar" id="profileload">Load selected profile</a>
-         			 <a href="#" onclick="DeleteProfile($('#profilebuttons .searchcombo').val());" style="margin-top: 5px;" class="sidebar" id="profiledel">Delete selected profile</a>
-         			 <a href="#" onclick="SaveProfileAs($('#profilebuttons #newprofilename').val());" style="margin-top: 10px;" class="sidebar" id="profilesave">Save current profile as ...</a>
-         			 <a href="#" onclick="CreateNewProfile($('#profilebuttons #newprofilename').val());" style="margin-top: 5px;" class="sidebar" id="profilenew">Create new profile</a>
-         			 <input type="text" class="searchstring" id="newprofilename" style="margin: 5px 0px;"/>
-         			 <a href="#" onclick="GetUserData(userId);" style="margin-top: 10px;" class="sidebar">Refresh user profiles</a>
-         			</div>
-      		 		 <div style="padding: 10px;" id="indexes">
-         				<!--
-         				<a href="#" onclick="RefreshIndexes();" class="sidebar" id="RefreshIndexesButton">Refresh indexes</a>
-         				<a href="#" onclick="LoadIndexCache();" class="sidebar" id="LoadIndexesButton">Load indexes</a>
-         				-->
-         				<a href="#" onclick="ShowIndexCache();" class="sidebar" id="ShowIndexesButton">Show indexes</a>
-         			</div>
-         			<div style="padding: 10px;" id="userdata">
-         			  <span style="color: #000000; width: 100%;">Link to your profiles: </span> <br/>
-         			  <input style="width: 100%;" type="text" value="" id="userid" onclick="this.select();"/>
-         			</div>
-      		 	</td>
-      		 	<td class="sidebartoggle" onclick="ToggleSideBar();" onmouseover="ToggleSideBarHiLight(1);" onmouseout="ToggleSideBarHiLight(0);">
-      		 		<img id="sidebaricon" src="scripts/style/img/sidebargrip.left.png" />
-      		 	</td>
-     		 </tr>
-     	</table>
-    </div>
+      <div id="sidebar">
+          <table class="sidebar">
+              <tr>
+                  <td class="sidebar">
+                      <h3>ICLTT Corpus Shell</h3>
+                      <div style="padding: 10px;" id="searchbuttons">
+                          <span class="sidebar">New search panel</span>
+                      </div>
+                      <div style="padding: 10px;" id="openpanels">
+                          <span class="sidebar" id="TogglePanelListButton">Show panel list</span>
+                      </div>
+                      <div style="padding: 10px;" id="profilebuttons">
+                          <span class="sidebar" id="profileload">Load selected profile</span>
+                          <span class="sidebar" id="profiledel" style="margin-top: 5px;">Delete selected profile</span>
+                          <span class="sidebar" id="profilesave" style="margin-top: 10px;">Save current profile as ...</span>
+                          <span class="sidebar" id="profilenew" style="margin-top: 5px;">Create new profile</span>
+                          <input type="text" class="searchstring" id="newprofilename" style="margin: 5px 0px;"/>
+                          <span class="sidebar" id="profilerefresh" style="margin-top: 10px;">Refresh user profiles</span>
+                      </div>
+                      <div style="padding: 10px;" id="indexes">
+                          <!--
+                          <a href="#" onclick="RefreshIndexes();" class="sidebar" id="RefreshIndexesButton">Refresh indexes</a>
+                          <a href="#" onclick="LoadIndexCache();" class="sidebar" id="LoadIndexesButton">Load indexes</a>
+                          -->
+                          <span class="sidebar" id="ShowIndexesButton">Show indexes</span>
+                      </div>
+                      <div style="padding: 10px;" id="userdata">
+                          <span style="color: #000000; width: 100%;">Link to your profiles: </span> <br/>
+                          <input style="width: 100%;" type="text" value="" id="userid" onclick="this.select();"/>
+                      </div>
+                  </td>
+                  <td class="sidebartoggle">
+                      <img id="sidebaricon" src="scripts/style/img/sidebargrip.left.png" />
+                  </td>
+              </tr>
+          </table>
+      </div>
     <div id="messagebox">
     </div>
 <div class="demo" id="mainpanel">
