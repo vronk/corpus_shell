@@ -14,6 +14,14 @@
  */
 
 /**
+ * The controller object managing all the panels. Currently the target for
+ * its operation is an id selector of #snaptarget
+ */ 
+var PanelController;
+// Everything here assumes $ === jQuery so ensure this
+(function ($) {
+
+/**
  * Creates a PanelManager.
  * @constructor
  * @param container {string} A jQuery selector which selects the part of the page
@@ -823,7 +831,15 @@ function PanelManager (container, searchConfig)
   };
   
   /**
+   * @typedef {Object} PanelDescription
+   * @property {string} config Name of the x-context/config this should be from. URI encoded.
+   * @property {string} panelType A panel type as in {@link module:corpus_shell~Panel#type}
+   * @property {string] searchStr A query or a search clause (for scans). URI encoded.
+   */
+  
+  /**
    * Datastructure holding the panels registerd by {@link module:corpus_shell~PanelManager#EnsureSearchPanelOpened}.
+   * @type {array.<PanelDescription>}
    */
   this.EnsuredPanels = [];
   /**
@@ -833,9 +849,9 @@ function PanelManager (container, searchConfig)
    *                        may be an internal resource name.
    * @param {string} [searchstr] The search string to execute in the new panel.
    */
-  this.EnsureSearchPanelOpened = function(config, searchstr)
+  this.EnsureSearchPanelOpened = function(config, panelType, searchStr)
   {
-  	 this.EnsuredPanels.push({config: config, searchstr: searchstr});
+  	 this.EnsuredPanels.push({config: decodeURIComponent(config), panelType: panelType, searchStr: decodeURIComponent(searchStr)});
   };
   
   /**
@@ -1422,9 +1438,33 @@ function PanelManager (container, searchConfig)
 
     return cnt;
   };
-
+  
   /**
-  * @param -
+   * Query if panel fitting the description is already open
+   * @param {PanelDescription} panelDescription
+   * @returns {Boolean} Whether such a panel is already open.
+   */
+  this.isPanelOpen = function (panelDescription) {
+        var found = false;
+        var configIdx = this.GetSearchIdx(panelDescription.config);
+        for (var pkey in this.PanelObjects) {
+            found = this.PanelObjects[pkey].Config === configIdx &&
+                    this.PanelObjects[pkey].Type === panelDescription.panelType;
+            if (!found)
+                continue;
+            if (panelDescription.panelType === "search")
+                found = this.PanelObjects[pkey].UrlParams.query === panelDescription.searchStr;
+            else
+                found = this.PanelObjects[pkey].UrlParams.scanClause === panelDescription.searchStr;
+            if (found)
+                break;
+        }
+        return found;
+    };
+    
+  /**
+  * @param {string] name ???
+  * @param {Object} panels ???
   * purpose:
   * @return    -
   */
@@ -1462,20 +1502,14 @@ function PanelManager (container, searchConfig)
     this.RefreshUsedPanels();
     this.RefreshUsedSearchPanelTitles();
         for (var key in this.EnsuredPanels) {
-            var found = false;
-            var configIdx = this.GetSearchIdx(this.EnsuredPanels[key].config);
-            for (var pkey in this.PanelObjects) {
-                found = this.PanelObjects[pkey].Config === configIdx;
-                if (found) break;
-            }
-            if (found) continue;
-            this.OpenNewSearchPanel(this.EnsuredPanels[key].config, this.EnsuredPanels[key].searchStr);
+            if (this.isPanelOpen(this.EnsuredPanels[key])) continue;
+            if (this.EnsuredPanels[key].panelType === "search")
+                this.OpenNewSearchPanel(this.EnsuredPanels[key].config, this.EnsuredPanels[key].searchStr);
+            else
+                this.OpenNewContentPanel(switchURL + '?x-format=html&version=1.2&x-context=' + this.EnsuredPanels[key].config +
+                   '&operation=scan&scanClause=' + this.EnsuredPanels[key].searchStr);
         }
   };
 }
-
-/**
- * The controller object managing all the panels. Currently the target for
- * its operation is an id selector of #snaptarget
- */ 
-var PanelController = new PanelManager("#snaptarget", SearchConfig);
+PanelController = new PanelManager("#snaptarget", SearchConfig);
+})(jQuery);

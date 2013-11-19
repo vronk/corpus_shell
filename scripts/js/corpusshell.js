@@ -84,6 +84,8 @@ function GetUrlParams(url)
   return urlParams;
 }
 
+// Everything here assumes $ === jQuery so ensure this
+(function ($) {
 
 /**
  * @summary Initialization for the corpus_shell app. Run on $(document).ready().
@@ -234,7 +236,11 @@ function GetUserId(urlParams, onComplete, onError) {
                 localStorage.setItem("userId", userId);
             },
             error : function() {
-                userId = localStorage.getItem("userId");
+                try {
+                    userId = localStorage.getItem("userId");
+                } catch (e) {
+                    // most probably IE on localhost
+                }
                 if (onError !== undefined && typeof (onError) === 'function')
                     onError(jqXHR, textStatus, textThrown);
             },
@@ -448,6 +454,8 @@ function _json_encode(inVal, out)
     }
 }
 
+var originalShareLink;
+
 /**
  * @desc Tries to save the users profile data to the server. As a backup saves the profile data to the local store.
  * @param {string} userid  The user id for which the data should be saved. May be an GUID for example.
@@ -471,10 +479,29 @@ function SaveUserData(userid)
       url: baseURL + userData + "saveUserData.php",
       dataType: 'xml',
       data : {uid: userid, data: dataStr},
-      complete: function(xml, textStatus)
+      complete: function(jqXHR, textStatus)
       {
-        // this almost ever succedes. Even if the php is only a locally downloaded copy with no php
-        // interpreter to run it, so it surely is no valid XML :-(
+        // li.share a is for drupal/gratis. How to do this without drupal?
+        function errorHandler() {
+            History.replaceState(null, null,"?userId=");
+            if (originalShareLink !== undefined) {
+                $("li.share a").attr("href", originalShareLink);
+            }
+        }
+        // complete (!= success) is even called if the php is only a locally downloaded copy with no php
+        // interpreter to run it, so it surely is no valid XML
+        var shareLink = $("li.share a");
+        if (jqXHR.status === 200 && textStatus === "success") {
+            var msg = $(jqXHR.responseXML).find("msg").text();
+            if (msg === "ok") {
+                History.replaceState(null, null, "?userId=" + userid);
+                if (originalShareLink === undefined)
+                    originalShareLink = shareLink.attr("href");
+                $("li.share a").attr("href", "?userId=" + userid);
+            }
+            else errorHandler();
+            // TODO: display the message somewhere.
+        } else errorHandler();
       }
   }
   );
@@ -893,3 +920,5 @@ function ShowIndexCache()
   $('#openIndexList td.dottedr').css('vertical-align', 'top');
   $('#openIndexList td.dottedr').css('text-align', 'right');
 }
+
+})(jQuery);

@@ -10,6 +10,13 @@
  */
 
 /**
+ * The ResourceController object, an {@link module:corpus_shell~ResourceManager} instance.
+ */
+var ResourceController;
+// Everything here assumes $ === jQuery so ensure this
+(function ($) {
+
+/**
  * @classdesc Manages resources that is search endpoints and their possible inexes.
  * @constructor 
  */
@@ -225,8 +232,5 @@ function ResourceManager()
     return hStr + '</table></div>';
   }
 }
-
-/**
- * The ResourceController object, an {@link module:corpus_shell~ResourceManager} instance.
- */
-var ResourceController = new ResourceManager();
+ResourceController = new ResourceManager();
+})(jQuery);

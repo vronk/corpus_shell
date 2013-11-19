@@ -8,6 +8,8 @@
  * @module corpus_shell
  */
 
+var Panel;
+
 /**
  * @typedef {Object} Position
  * @property {number} Left
@@ -16,6 +18,8 @@
  * @property {number} Height
  */
 
+// Everything here assumes $ === jQuery so ensure this
+(function ($) {
 /**
  * Creates a panel in corpus_shell.
  * @constructor
@@ -37,7 +41,7 @@
  * @requires     corpus_shell~PanelController
  * @requires     jQuery
  */
-function Panel(id, type, title, url, position, pinned, zIndex, container, panelController, config)
+Panel = function (id, type, title, url, position, pinned, zIndex, container, panelController, config)
 {
   /**
    * @public
@@ -48,7 +52,7 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
   /** 
    * @public
    * @type {string}
-   * @desc One of search, image, 
+   * @desc One of search, image, content, 
    */
   this.Type = type;
   /**
@@ -60,9 +64,15 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
   /**
    * @public
    * @type {url}
-   * @desc A URL used for searching.
+   * @desc A URL used for creating this panel.
    */
   this.Url = url;
+  /**
+   * @public
+   * @type {Object}
+   * @desc An Object which members correspond to the params of the URL used for creating this panel.
+   */  
+  this.UrlParams = GetUrlParams(url);
   /**
    * @public
    * @type {Position}
@@ -98,6 +108,9 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
    * @desc The index in {@link module:corpus_shell~SearchConfig} for the config to use in search operations.
    */
   this.Config = config;
+  if (panelController !== undefined && config === undefined && this.Type !== "search") {
+      this.Config = panelController.GetSearchIdx(this.UrlParams['x-context']);
+  }
 
   /* methods */
 
@@ -110,7 +123,7 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
    */
   this.CreatePanel = function(searchstr)
   {
-    if (this.Type == "search")
+    if (this.Type === "search")
       this.CreateNewSearchPanel(this.Config, searchstr);
     else
       this.CreateNewSubPanel();
@@ -125,6 +138,7 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
   this.SetUrl = function(url)
   {
     this.Url = url;
+    this.UrlParams = GetUrlParams(url);
     this.PanelController.SetPanelUrl(this.Id, url);
   };
 
@@ -264,6 +278,8 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
     }
   }
 
+  var titleBarPlusBottomSpacing = 21 + 11;
+  var searchUIHeight = 20 + 23 + 10;
   /**
   * @param -
   * purpose:    corrects the height of the searchresult div dependent on the panel type
@@ -274,9 +290,9 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
     var hgt = $(this.GetCssId()).height();
 
     if (this.Type == "search")
-      $(this.GetCssId()).find(".searchresults").height(hgt - 105);
+      $(this.GetCssId()).find(".searchresults").height(hgt - titleBarPlusBottomSpacing - searchUIHeight);
     else
-      $(this.GetCssId()).find(".searchresults").height(hgt - 35);
+      $(this.GetCssId()).find(".searchresults").height(hgt - titleBarPlusBottomSpacing);
   };
 
   /**
@@ -332,7 +348,7 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
     $(searchPanel).append(this.GenerateSearchNavigation());
 
     var searchResultDiv = this.GenerateSearchResultsDiv();
-    var newHeight = parseInt(this.Position.Height.replace(/px/g, "")) - 105;
+    var newHeight = parseInt(this.Position.Height.replace(/px/g, "")) - titleBarPlusBottomSpacing - searchUIHeight - 10; //???
 
     $(searchResultDiv).css("height", newHeight + "px");
     $(searchPanel).append(searchResultDiv);
@@ -369,7 +385,7 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
     var titlep = this.GeneratePanelTitle(this.Title, usePin, this.Pinned);
     $(newPanel).append(titlep);
     var searchResultDiv = this.GenerateSearchResultsDiv();
-    $(searchResultDiv).css('height', $(newPanel).height() - 35);
+    $(searchResultDiv).css('height', $(newPanel).height() - titleBarPlusBottomSpacing);
     $(newPanel).append(searchResultDiv);
 
     $(this.Container).append(newPanel);
@@ -429,9 +445,9 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
                  PanelController.BringToFront(panelId);
                  var hgt = $(this).height();
                  if ($(this).find(".searchstring").length != 0)
-                   $(this).find(".searchresults").css("height", hgt - 105 + "px");
+                   $(this).find(".searchresults").css("height", hgt - titleBarPlusBottomSpacing - searchUIHeight + "px");
                  else
-                   $(this).find(".searchresults").css("height", hgt - 35 + "px");
+                   $(this).find(".searchresults").css("height", hgt - titleBarPlusBottomSpacing + "px");
 
                  PanelController.RefreshScrollPane(panelId);
 
@@ -947,3 +963,4 @@ function Panel(id, type, title, url, position, pinned, zIndex, container, panelC
     return resultdiv;
   };
 }
+})(jQuery);

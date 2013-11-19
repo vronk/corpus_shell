@@ -1,6 +1,13 @@
-MapPanel.prototype = new Panel();
+var MapPanel;
 
-function MapPanel(id, type, title, url, position, pinned, zIndex, container, panelController, config) {
+// Everything here assumes $ === jQuery so ensure this
+(function ($) {
+
+/**
+ * A class for displaying geographical information in a panel
+ * Inherits from Panel using prototype inheritance (see below)
+ */
+MapPanel = function (id, type, title, url, position, pinned, zIndex, container, panelController, config) {
     Panel.call(this, id, type, title, url, position, pinned, zIndex, container, panelController, config);
     this.Url = this.Url.replace("x-format=html", "x-format=json");
 
@@ -113,3 +120,7 @@ function MapPanel(id, type, title, url, position, pinned, zIndex, container, pan
     };
 
 }
+
+MapPanel.prototype = new Panel();
+
+})(jQuery);

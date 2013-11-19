@@ -8,6 +8,14 @@
  */
 
 /**
+ * The ProfileController object: the central instance of {@link module:corpus_shell~ProfileManager}
+ */
+var ProfileController;
+
+// Everything here assumes $ === jQuery so ensure this
+(function ($) {
+
+/**
  * @classdesc A class for managing the profiles that contain queries, windows and their layout.
  * @constructor 
  */
@@ -108,8 +116,5 @@ function ProfileManager()
     return newProfile;
   }
 }
-
-/**
- * The ProfileController object: the central instance of {@link module:corpus_shell~ProfileManager}
- */
-var ProfileController = new ProfileManager();
+ProfileController = new ProfileManager();
+})(jQuery);
