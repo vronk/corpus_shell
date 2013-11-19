@@ -19,16 +19,16 @@
 
   header('Content-type: application/json');
 // use POST
-  if (isset($_POST['uid']) && trim($_POST['uid']) != "")
+if (isset($_POST['uid']) && trim($_POST['uid']) != "") {
 // use GET
 //  if (isset($_GET['uid']) && trim($_GET['uid']) != "")
-  {
     $uid = trim($_POST['uid']);
     $filename = $userdataPath . $uid . ".json";
-    if (file_exists($filename))
-    {
-      readfile($filename);
+    if (file_exists($filename)) {
+        readfile($filename);
+    } else {
+        print "false";
     }
-  }
-  else
+} else {
     print "null";
+}
