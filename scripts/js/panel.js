@@ -480,76 +480,88 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
   };
 
   /**
+   * A method called if the content might need a refresh, e.g. the map.
+   * @param {type} event
+   * @param {type} ui
+   * @returns -
+   */
+  this.UpdateContentView = function(event, ui) {
+    // for th panels handled by this class there is no need to do anything.
+  }
+  /**
   * Configures the jQuery UI resiza and drag functions.
   */
   this.InitDraggable = function()
   {
+    var self = this;
     var panelId = this.Id;
-        var scrollarea;
+    var scrollarea;
 
     $(this.GetCssId())
-    .resizable({ containment: "parent", aspectRatio: false,
-               resize: function(event, ui)
-               {
-                 PanelController.BringToFront(panelId);
-                        var needsCalculation = !$(this).hasClass("c_s-ui-widget");
-                        if (needsCalculation) {
-                 var hgt = $(this).height();
-                 if ($(this).find(".searchstring").length != 0)
-                   $(this).find(".searchresults").css("height", hgt - titleBarPlusBottomSpacing - searchUIHeight + "px");
-                 else
-                   $(this).find(".searchresults").css("height", hgt - titleBarPlusBottomSpacing + "px");
-                 var wid = $(this).width();
-                 $(this).find(".searchresults").css("width", wid + "px");
-                            PanelController.RefreshScrollPane(panelId);
-                        }
-                        /* Part of the Firefox doesn't interpret overflow together with
-                         * a heigth to be calculated workaround.
-                         */ 
-                        if (scrollarea !== undefined) {
-                            var height = $(this).find(".c_s-searchresults-container").height();
-                            if (height !== scrollarea.height())
-                               scrollarea.height(height);
-                        }
-                        /* End workaround */
-                 PanelController.UpdatePanelPosition(panelId);
-                    },
-                    /* Part of the Firefox doesn't interpret overflow together with
-                     * a heigth to be calculated workaround.
-                     */ 
-                    start: function (event, ui) {
-                        if ($.browser.mozilla) {
-                            if (scrollarea === undefined) {
-                                scrollarea = $(this).find(".c_s-scroll-area");
-               }
-                            scrollarea.css("position", "absolute");
-                        }
-                    },
-                    /* Part of the Firefox doesn't interpret overflow together with
-                     * a heigth to be calculated workaround.
-                     */ 
-                    stop: function (event, ui) {
-                        if ($.browser.mozilla) {
+                    .resizable({containment: "parent", aspectRatio: false,
+                        resize: function(event, ui)
+                        {
+                            PanelController.BringToFront(panelId);
+                            var needsCalculation = !$(this).hasClass("c_s-ui-widget");
+                            if (needsCalculation) {
+                                var hgt = $(this).height();
+                                if ($(this).find(".searchstring").length != 0)
+                                    $(this).find(".searchresults").css("height", hgt - titleBarPlusBottomSpacing - searchUIHeight + "px");
+                                else
+                                    $(this).find(".searchresults").css("height", hgt - titleBarPlusBottomSpacing + "px");
+                                var wid = $(this).width();
+                                $(this).find(".searchresults").css("width", wid + "px");
+                                PanelController.RefreshScrollPane(panelId);
+                            }
+                            self.UpdateContentView(event, ui);
+                            /* Part of the Firefox doesn't interpret overflow together with
+                             * a heigth to be calculated workaround.
+                             */
                             if (scrollarea !== undefined) {
-                                scrollarea.css("position", "relative");
                                 var height = $(this).find(".c_s-searchresults-container").height();
                                 if (height !== scrollarea.height())
                                     scrollarea.height(height);
                             }
-                        }                       
-                    }                    
-               })
-                .draggable({handle: ".c_s-ui-widget-header", containment: "parent", snap: true,
-               start: function(event, ui)
-               {
-                 PanelController.BringToFront(panelId);
-               } ,
-               stop: function(event, ui)
-               {
-                 PanelController.UpdatePanelPosition(panelId);
-               }
-               });
-  };
+                            /* End workaround */
+                            PanelController.UpdatePanelPosition(panelId);
+                        },
+                        /* Part of the Firefox doesn't interpret overflow together with
+                         * a heigth to be calculated workaround.
+                         */
+                        start: function(event, ui) {
+                            if ($.browser.mozilla) {
+                                if (scrollarea === undefined) {
+                                    scrollarea = $(this).find(".c_s-scroll-area");
+                                }
+                                scrollarea.css("position", "absolute");
+                            }
+                        },
+                        /* Part of the Firefox doesn't interpret overflow together with
+                         * a heigth to be calculated workaround.
+                         */
+                        stop: function(event, ui) {
+                            if ($.browser.mozilla) {
+                                if (scrollarea !== undefined) {
+                                    scrollarea.css("position", "relative");
+                                    var height = $(this).find(".c_s-searchresults-container").height();
+                                    if (height !== scrollarea.height())
+                                        scrollarea.height(height);
+                                }
+                                self.UpdateContentView(event, ui);
+                            }
+                        }
+                    })
+                    .draggable({handle: ".c_s-ui-widget-header", containment: "parent", snap: true,
+                        start: function(event, ui)
+                        {
+                            PanelController.BringToFront(panelId);
+                        },
+                        stop: function(event, ui)
+                        {
+                            PanelController.UpdatePanelPosition(panelId);
+                        }
+                    });
+        };
 
   /**
   * @param -

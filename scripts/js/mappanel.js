@@ -115,7 +115,7 @@ MapPanel = function (id, type, title, url, position, pinned, zIndex, container, 
      * This method needs to pass the call to map's updateSize.
      * @returns -
      */
-    this.RefreshScrollPane = function() {
+    this.UpdateContentView = function(event, ui) {
         this.map.updateSize();
     };
 

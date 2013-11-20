@@ -15,7 +15,9 @@
   
   include "../utils-php/config.php";
 
-  xdebug_disable();
+  if (function_exists('xdebug_disable')) {
+    xdebug_disable();
+  }
 //  xdebug_start_error_collection();
   header("content-type: text/xml");
   // print_r's output is directed to the browser!
