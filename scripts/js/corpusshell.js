@@ -395,13 +395,21 @@ function GetUserId(urlParams, onComplete, onError) {
             url : baseURL + userData + "getUserId.php",
             success : function(data) {
                 userId = data.id;
-                localStorage.setItem("userId", userId);
+                try {
+                    localStorage.setItem("userId", userId);
+                } catch (e) {
+                    // most probably IE on localhost
+                    if(!window.console){ window.console = {log: function(){} }; }
+                    window.console.log("Error using localStorage. Is this an IE trying to use localStorage for localhost? If yes then consider this a security feature.")
+                }
             },
             error : function() {
                 try {
                     userId = localStorage.getItem("userId");
                 } catch (e) {
                     // most probably IE on localhost
+                    if(!window.console){ window.console = {log: function(){} }; }
+                    window.console.log("Error using localStorage. Is this an IE trying to use localStorage for localhost? If yes then consider this a security feature.")
                 }
                 if (onError !== undefined && typeof (onError) === 'function')
                     onError(jqXHR, textStatus, textThrown);

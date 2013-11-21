@@ -1509,9 +1509,17 @@ function PanelManager (container, searchConfig)
             if (this.isPanelOpen(this.EnsuredPanels[key])) continue;
             if (this.EnsuredPanels[key].panelType === "search")
                 this.OpenNewSearchPanel(this.EnsuredPanels[key].config, this.EnsuredPanels[key].searchStr);
-            else
+            else {
+                if (this.EnsuredPanels[key].searchStr !== 'geo') {
                 this.OpenNewContentPanel(switchURL + '?x-format=html&version=1.2&x-context=' + this.EnsuredPanels[key].config +
                    '&operation=scan&scanClause=' + this.EnsuredPanels[key].searchStr);
+                }
+                else {
+                    this.OpenNewContentPanel(switchURL + '?x-format=html&version=1.2&x-context=' + this.EnsuredPanels[key].config +
+                   '&operation=scan&scanClause=' + this.EnsuredPanels[key].searchStr,
+                   "Map " + this.EnsuredPanels[key].config + ": " + this.EnsuredPanels[key].searchStr);
+                }
+            }
         }
   };
 }

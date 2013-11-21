@@ -15,7 +15,7 @@ MapPanel = function (id, type, title, url, position, pinned, zIndex, container, 
     this.map;
     this.markers = new OpenLayers.Layer.Markers(this.Id + "_markers");
     this.icon_size = new OpenLayers.Size(20, 20);
-    this.icon = new OpenLayers.Icon('scripts/style/img/dot.png',
+    this.icon = new OpenLayers.Icon(baseURL + 'scripts/style/img/dot.png',
             this.icon_size,
             new OpenLayers.Pixel(-(this.icon_size.w / 2),
                     -(this.icon_size.h / 2))
