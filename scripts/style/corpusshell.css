@@ -754,3 +754,8 @@ div.data-view.metadata {
 	position: relative;
 	top: 2px;
 }
+
+    /* A class for forcing the hand/pointer cursor (used for the mappanel dircles).*/
+    .cursor_pointer {
+        cursor: pointer;
+    }

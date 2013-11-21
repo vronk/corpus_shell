@@ -88,10 +88,12 @@ MapPanel = function (id, type, title, url, position, pinned, zIndex, container, 
         this.scanResult.terms.forEach(function(term)
         {
             LatLon = term.value.split(", ");
+            newIcon = this.icon.clone();
+            newIcon.imageDiv.className += " cursor_pointer";
             marker = new OpenLayers.Marker(new OpenLayers.LonLat(LatLon[1], LatLon[0]).transform(
                     'EPSG:4326', // transform from WGS 1984
                     this.map.getProjectionObject() // to whatever map needs, most of the time Spherical Mercator Projection
-                    ), this.icon.clone());
+                    ), newIcon);
             marker.URL = term.nextHref;
             marker.events.register('click', marker, markerCallback);
             this.markers.addMarker(marker);
