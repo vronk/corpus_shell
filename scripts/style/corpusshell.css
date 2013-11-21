@@ -46,16 +46,16 @@ display: none;
              <div class="c_s-line">
                  <span class="c_s-ui-widget-header-title">Search 1</span>
                  <span class="c_s-ui-widget-header-button titletopiconclose">
-                     <img src="http://corpus3.aac.ac.at/cs2/corpus_shell/scripts/style/img/n.win_close.png" class="noborder">
+                        <!-- picture is set using css background! -->
                  </span>
                  <span class="c_s-ui-widget-header-button titletopiconmax">
-                     <img src="http://corpus3.aac.ac.at/cs2/corpus_shell/scripts/style/img/n.win_max.png" class="noborder">
+                        <!-- picture is set using css background! -->
                  </span>
                  <span class="c_s-ui-widget-header-button titletopiconpin c_s-hidden">
-                     <img src="http://corpus3.aac.ac.at/cs2/corpus_shell/scripts/style/img/pin.color.png" class="noborder">
+                        <!-- picture is set using css background! -->
                  </span>
                  <span class="c_s-ui-widget-header-button titletopiconpin c_s-hidden c_s-grayed">
-                     <img src="http://corpus3.aac.ac.at/cs2/corpus_shell/scripts/style/img/pin.gray.png" class="noborder">
+                        <!-- picture is set using css background! -->
                  </span>
              </div>
          </div>
@@ -105,6 +105,10 @@ table {
         float: right;
         /* minimum width = width of the pictograms */
         width: 17px;
+        height: 17px;
+        background-position: 1px 1px;
+        background-size: 15px 15px;
+        background-repeat: no-repeat;
         cursor: default;
 }
 
@@ -133,6 +137,38 @@ table {
     background: #cccccc url(base/images/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x;
     color: #222222;
     font-weight: bold;
+}
+
+.noborder {
+	border: none;
+}
+
+.titletopiconmax > img, .titletopiconclose > img, .titletopiconpin > img {
+	width: 15px;
+	height: 15px;
+	vertical-align: middle;
+}
+
+.c_s-hidden {
+    display: none;
+}
+
+.titletopiconpin {
+    /* has to be enabled if needed -> c_s-hidden*/
+    background-image: url(img/pin.color.png);
+}
+
+.titletopiconpin.c_s-grayed{
+    /* has to be enabled if needed -> c_s-hidden */
+    background-image: url(img/pin.gray.png);
+}
+
+.titletopiconmax {
+    background-image: url(img/n.win_max.png);
+}
+
+.titletopiconclose {
+    background-image: url(img/n.win_close.png);
 }
 
 .c_s-searchresults-container {
@@ -190,47 +226,32 @@ table {
      	<table class="sidebar">
      		 <tr>
       		 	<td class="sidebar">
-      		 		 <h3>ICLTT Corpus Shell</h3>
-      		 		 <div style="padding: 10px;" id="searchbuttons">
-         				<a href="#" class="sidebar">New search panel</a>
-         			</div>
-         			<div id="openpanels" style="padding: 10px;">
-         				<a id="TogglePanelListButton" class="sidebar" href="#">Hide panel list</a>
-         				<div id="openpanelslist" style="padding: 10px 0px; border-left: 1px dotted rgb(102, 102, 102); border-right: 1px dotted rgb(102, 102, 102); border-bottom: 1px dotted rgb(102, 102, 102);">
-         				<table id="panelList" style="margin-left: 15px; width: 165px; border-collapse: collapse;">
-         				  <tbody>
-         				    <tr>
-         				      <td colspan="2"><a class="sidebar" href="#" style="display: block; padding-top: 2px; padding-bottom: 2px;">Search 1</a></td>
-         				    </tr>
-         				    <tr>
-         				      <td colspan="2"><a class="sidebar" href="#" style="display: block; padding-top: 2px; padding-bottom: 2px;">Search 2</a></td>
-         				    </tr>
-         				    <tr>
-         				      <td style="width: 20px;"></td>
-         				      <td><a class="sidebar" href="#" style="display: block; padding-top: 2px; padding-bottom: 2px;">Full text</a></td>
-         				    </tr>
-         				    <tr>
-         				      <td style="width: 20px;"></td>
-         				      <td><a class="sidebar" href="#" style="display: block; padding-top: 2px; padding-bottom: 2px;">Facsimile</a></td>
-         				    </tr>
-         				    <tr>
-         				      <td colspan="2"><a class="sidebar" href="#" style="display: block; padding-top: 2px; padding-bottom: 2px;">Search 3</a></td>
-         				    </tr>
-         				  </tbody>
-         				</table>
-         		    </div>
-         			</div>
-         			<div style="padding: 10px;" id="profilebuttons">
-         			  <select class="searchcombo" style="margin: 5px 0px;" id="profilecombo">
-         			    <option value="default" selected="selected">default</option>
-         			  </select>
-         			  <a href="#" style="margin-top: 5px;" class="sidebar" id="profilenew">Create new profile</a>
-         			  <input type="text" class="searchstring" id="newprofilename" style="margin: 5px 0px;"/>
-         			</div>
-         			<div style="padding: 10px;" id="userdata">
-         			  <span style="color: #000000; width: 100%;">Link to your profiles: </span> <br/>
-         			  <input style="width: 100%;" type="text" value="test data" id="userid"/>
-         			</div>
+<h3>ICLTT Corpus Shell</h3>
+                      <div style="padding: 10px;" id="searchbuttons">
+                          <span class="sidebar">New search panel</span>
+                      </div>
+                      <div style="padding: 10px;" id="openpanels">
+                          <span class="sidebar" id="TogglePanelListButton">Show panel list</span>
+                      </div>
+                      <div style="padding: 10px;" id="profilebuttons">
+                          <span class="sidebar" id="profileload">Load selected profile</span>
+                          <span class="sidebar" id="profiledel" style="margin-top: 5px;">Delete selected profile</span>
+                          <span class="sidebar" id="profilesave" style="margin-top: 10px;">Save current profile as ...</span>
+                          <span class="sidebar" id="profilenew" style="margin-top: 5px;">Create new profile</span>
+                          <input type="text" class="searchstring" id="newprofilename" style="margin: 5px 0px;"/>
+                          <span class="sidebar" id="profilerefresh" style="margin-top: 10px;">Refresh user profiles</span>
+                      </div>
+                      <div style="padding: 10px;" id="indexes">
+                          <!--
+                          <a href="#" onclick="RefreshIndexes();" class="sidebar" id="RefreshIndexesButton">Refresh indexes</a>
+                          <a href="#" onclick="LoadIndexCache();" class="sidebar" id="LoadIndexesButton">Load indexes</a>
+                          -->
+                          <span class="sidebar" id="ShowIndexesButton">Show indexes</span>
+                      </div>
+                      <div style="padding: 10px;" id="userdata">
+                          <span style="color: #000000; width: 100%;">Link to your profiles: </span> <br/>
+                          <input style="width: 100%;" type="text" value="" id="userid" onclick="this.select();"/>
+                      </div>
          		</td>
          		<td class="sidebartoggle">
       		 		<img id="sidebaricon" src="http://corpus3.aac.ac.at/cs2/corpus_shell/scripts/style/img/sidebargrip.left.png" />
@@ -382,16 +403,16 @@ a.searchresult:hover, a.searchresult:focus {
                 <div class="c_s-line">
                     <span class="c_s-ui-widget-header-title">Search 1</span>
                  <span class="c_s-ui-widget-header-button titletopiconclose">
-                     <img src="http://corpus3.aac.ac.at/cs2/corpus_shell/scripts/style/img/n.win_close.png" class="noborder">
+                        <!-- picture is set using css background! -->
                  </span>
                  <span class="c_s-ui-widget-header-button titletopiconmax">
-                     <img src="http://corpus3.aac.ac.at/cs2/corpus_shell/scripts/style/img/n.win_max.png" class="noborder">
+                        <!-- picture is set using css background! -->
                  </span>
                  <span class="c_s-ui-widget-header-button titletopiconpin c_s-hidden">
-                     <img src="http://corpus3.aac.ac.at/cs2/corpus_shell/scripts/style/img/pin.color.png" class="noborder">
+                        <!-- picture is set using css background! -->
                  </span>
                  <span class="c_s-ui-widget-header-button titletopiconpin c_s-hidden c_s-grayed">
-                     <img src="http://corpus3.aac.ac.at/cs2/corpus_shell/scripts/style/img/pin.gray.png" class="noborder">
+                        <!-- picture is set using css background! -->
                  </span>
                 </div>
             </div>
@@ -422,9 +443,9 @@ a.searchresult:hover, a.searchresult:focus {
                 <span class="navigationmain">
                     <i>hits:</i>&nbsp;<span class="hitcount">101</span>;&nbsp;<i>from:</i>&nbsp;<input class="startrecord" type="text">&nbsp;<i>max:</i>&nbsp;
                     <input class="maxrecord" type="text">
-                    <a class="noborder" href="#"><img class="navigationicon" src="http://corpus3.aac.ac.at/cs2/corpus_shell/scripts/style/img/n.arrow_right_b.png" width="25" height="25"></a>
-                    <a class="noborder" href="#"><img class="navigationicon" src="http://corpus3.aac.ac.at/cs2/corpus_shell/scripts/style/img/n.arrow_left.png" width="25" height="25"></a>
-                    <a class="noborder" href="#"><img class="navigationicon" src="http://corpus3.aac.ac.at/cs2/corpus_shell/scripts/style/img/n.arrow_right.png" width="25" height="25"></a>
+                    <span class="load"></span>
+                    <span class="prev"></span>
+                    <span class="next"></span>
                 </span>
                 </div>
             </div>
@@ -453,20 +474,30 @@ a.searchresult:hover, a.searchresult:focus {
  ```
  */
 
-.noborder {
-	border: none;
-}
-
-.titletopiconmax > img, .titletopiconclose > img, .titletopiconpin > img {
-	width: 15px;
-	height: 15px;
-	vertical-align: middle;
-}
-
-.titletopiconpin {
-    /* has to be enabled if needed */
-    display: none;
-}
+.navigationmain .load,
+.navigationmain .prev,
+.navigationmain .next {
+    width: 16px;
+    height: 16px;
+    background-position: 1.5px 1.5px;
+    background-size: 13px 13px;
+    background-repeat: no-repeat;
+    display: inline-block;
+    vertical-align: middle;
+ }
+ 
+ .navigationmain .load {
+    background-image: url(img/n.arrow_right_b.png);  
+ }
+ 
+ .navigationmain .prev {
+    background-image: url(img/n.arrow_left.png);  
+ }
+ 
+ .navigationmain .next {
+    background-image: url(img/n.arrow_right.png); 
+ }
+ 
 .ui-icon {
 	width: 16px;
 	height: 16px;

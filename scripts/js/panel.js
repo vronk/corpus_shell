@@ -354,18 +354,18 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
             });
         }
         
-        if (failed) {
-            searchPanel = document.createElement('div');
-            $(searchPanel).addClass("draggable ui-widget-content whiteback");
-            var titlep = this.GeneratePanelTitle(this.Title, 0, false);
-            $(searchPanel).append(titlep);
-    $(searchPanel).append(this.GenerateSearchInputs(this.Config, query));
-    $(searchPanel).append(this.GenerateSearchNavigation());
-    var newHeight = parseInt(this.Position.Height.replace(/px/g, "")) - titleBarPlusBottomSpacing - searchUIHeight - 10; //???
-    $(searchResultDiv).css("height", newHeight + "px");
-            var searchResultDiv = this.GenerateSearchResultsDiv();
-    $(searchPanel).append(searchResultDiv);
-        } else {
+            if (failed) {
+                searchPanel = document.createElement('div');
+                $(searchPanel).addClass("draggable ui-widget-content whiteback");
+                var titlep = this.GeneratePanelTitle(this.Title, 0, false);
+                $(searchPanel).append(titlep);
+                $(searchPanel).append(this.GenerateSearchInputs(this.Config, query));
+                $(searchPanel).append(this.GenerateSearchNavigation());
+                var newHeight = parseInt(this.Position.Height.replace(/px/g, "")) - titleBarPlusBottomSpacing - searchUIHeight - 10; //???
+                $(searchResultDiv).css("height", newHeight + "px");
+                var searchResultDiv = this.GenerateSearchResultsDiv();
+                $(searchPanel).append(searchResultDiv);
+            } else {
             this.FillInPanelTitle(searchPanel, this.Title, 0, false);
 
             this.searchbutton = searchUI.find(".c_s-ui-searchbutton input");
