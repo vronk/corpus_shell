@@ -329,7 +329,7 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
         query = searchStr;
     }
 
-        $.ajax("scripts/js/panel.tpl.html", {
+        $.ajax(templateLocation + "panel.tpl.html", {
             async: false,
             error: function(jqXHR, status, error) {
                 failed = true;
@@ -341,7 +341,7 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
 
         var searchUI;
         if (!failed) {
-            $.ajax("scripts/js/searchui.tpl.html", {
+            $.ajax(templateLocation + "searchui.tpl.html", {
                 async: false,
                 error: function(jqXHR, status, error) {
                     failed = true;
@@ -398,7 +398,7 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
     var failed = false;
     var newPanel;
     
-    $.ajax("scripts/js/panel.tpl.html", {
+    $.ajax(templateLocation + "panel.tpl.html", {
         async: false,
         error: function (jqXHR, status, error) {
             failed = true;

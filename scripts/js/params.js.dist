@@ -26,3 +26,10 @@ var userData = "/modules/userdata/";
  * @type {url} 
  */
 var switchURL = baseURL + "/modules/fcs-aggregator/switch.php";
+/** The url or path where the templates which are used for the UI should be loaded from.
+ * Please not: if this is a relative url it may be relative to whatever URL the
+ * corpus_shell is called from. Do not use relative URLs if you can't be sure
+ * about that. Note that this is assumed to end with a slash (/)
+ * @type {url|path}
+ */
+var templateLocation = "scripts/js/";
