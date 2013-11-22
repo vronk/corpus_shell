@@ -631,7 +631,18 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
           }
           else
           {
+            var height;
+            if ($.browser.mozilla) {
+            /* Part of a crude hack to get around missing support for overflow and
+             * percentage height in table cells in firefox (only fixed px overflows
+             * are used).
+             */
+             height = $(elem).find(".c_s-scroll-area").height();
+            }
             $(elem).find(".searchresults").html(responseText);
+            if ($.browser.mozilla) {
+                $(elem).find(".c_s-scroll-area").height(height);
+            }
             panel.InitScrollPane();
           }
         }
