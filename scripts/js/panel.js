@@ -265,16 +265,14 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
     if (pinnedState == 1)
     {
       this.Pinned = true;
-      $(paneldiv).find(".titletopiconpin").attr("src", "scripts/style/img/pin.gray.png");
-      $(paneldiv).find(".titletopiconpin").removeClass("pinned");
-      $(paneldiv).find(".titletopiconpin").parent().attr("onclick", "PanelController.PinPanel('" + this.Id + "', 2);");
+      $(paneldiv).find(".titletopiconpin:not(.c_s-grayed)").removeClass("c_s-hidden");
+      $(paneldiv).find(".titletopiconpin.c_s-grayed").addClass("c_s-hidden");
     }
     else
     {
       this.Pinned = false;
-      $(paneldiv).find(".titletopiconpin").attr("src", "scripts/style/img/pin.color.png");
-      $(paneldiv).find(".titletopiconpin").addClass("pinned");
-      $(paneldiv).find(".titletopiconpin").parent().attr("onclick", "PanelController.PinPanel('" + this.Id + "', 1);");
+      $(paneldiv).find(".titletopiconpin:not(.c_s-grayed)").addClass("c_s-hidden");
+      $(paneldiv).find(".titletopiconpin.c_s-grayed").removeClass("c_s-hidden");      
     }
   }
 
@@ -937,16 +935,16 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
         if (pin === 1)
         {
             if (pinned === true) {
-                context.find(".titletopiconpin").removeClass("c_s-hidden");
+                context.find(".titletopiconpin.c_s-grayed").removeClass("c_s-hidden");
             } else {
-                context.find(".titletopiconpin.c_s-greyed").removeClass("c_s-hidden");
+                context.find(".titletopiconpin:not(.c_s-grayed)").removeClass("c_s-hidden");
             }
         }
         context.find(".titletopiconclose").attr("onclick", "PanelController.ClosePanel('" + this.Id + "');");
         context.find(".titletopiconmax").attr("onclick", "PanelController.MaximizePanel('" + this.Id + "');");
         // TODO Check this!
-        context.find(".titletopiconpin").attr("onclick", "PinPanel(this, 2);");
-        context.find(".titletopiconpin.c_s-greyed").attr("onclick", "PinPanel(this, 1);");
+        context.find(".titletopiconpin").attr("onclick", "PanelController.PinPanel('" + this.Id + "', 2);");
+        context.find(".titletopiconpin.c_s-grayed").attr("onclick", "PanelController.PinPanel('" + this.Id + "', 1);");
   };
 
   this.GeneratePanelTitle = function(titlestring, pin, pinned)
