@@ -94,11 +94,17 @@ table {
         display: table-row;
         /* minimum height = height of the pictograms */
         height: 17px;
-	cursor: move;
+}
+
+.c_s-ui-widget-header > .c_s-line
+{
+    	cursor: move;
 	border: 1px solid #aaaaaa;
 	background: #cccccc url(base/images/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x;
 	color: #222222;
 	font-weight: bold;
+        border-radius: 6px;
+	font-size: 12px;
 }
 
 .c_s-ui-widget-header-button {
@@ -604,12 +610,13 @@ img.navigationicon {
 	overflow: visible;
 	border-radius: 6px;
 }
-.ui-widget-header p, .ui-widget-content p, .c_s-ui-widget-header > .c_s-line {
+.ui-widget-header p, .ui-widget-content p {
 	margin: 0;
 	padding: 0px 0px 0px 10px;
-	border-radius: 6px;
+        border-radius: 6px;
 	font-size: 12px;
 }
+
 .loading {
 	background-image: url("img/icon_get.gif");
 }
