@@ -194,6 +194,7 @@ table {
 .c_s-searchresults-container .searchresults img {
     width: 320px;
     float: right;
+    margin: 3px;
 }
 
 .c_s-searchresults-container > .c_s-line {
