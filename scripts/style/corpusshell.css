@@ -133,6 +133,9 @@ table {
 .c_s-line {
     display: table-cell;
     height: 1px;
+    /* makes position absolute within the cell absolute using the cell as
+       origin */
+    position: relative;
 }
 
 .c_s-ui-widget-header .c_s-line {
@@ -583,7 +586,7 @@ input.searchbutton {
 span.hitcount {
 	font-weight: bold;
 	font-size: 14px;
-	vertical-align: bottom;
+	vertical-align: middle;
 }
 
 input.startrecord, input.maxrecord {
