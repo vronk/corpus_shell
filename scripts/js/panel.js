@@ -368,6 +368,9 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
 
             this.searchbutton = searchUI.find(".c_s-ui-searchbutton input");
             this.searchbutton.attr("onclick", "PanelController.StartSearch('" + this.Id + "');");
+            searchUI.find(".navigationmain .load").attr("onclick", "PanelController.StartSearch('" + this.Id + "');");
+            searchUI.find(".navigationmain .prev").attr("onclick", "PanelController.StartSearchPrev('" + this.Id + "');");
+            searchUI.find(".navigationmain .next").attr("onclick", "PanelController.StartSearchNext('" + this.Id + "');");
             this.ConfigureSearchTextInput(searchUI.find(".searchstring"), query);
             this.ConfigureSearchContextCombo(searchUI.find(".searchcombo"), this.Config);
             
@@ -693,8 +696,10 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
     $(parElem).find(".hitcount").text("-");
 
     // get batch start and size
-    var start = parseInt($(parElem).find(".startrecord").val());
-    var max = parseInt($(parElem).find(".maxrecord").val());
+    var startInput = $(parElem).find(".startrecord");
+    var maxInput = $(parElem).find(".maxrecord");
+    var start = parseInt(startInput.val(), 10);
+    var max = parseInt(maxInput.val(), 10);
 
     var xcontext = this.PanelController.GetResourceName(sele);
 
@@ -757,8 +762,19 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
             }
             PanelController.InitScrollPane(panelId);
           }
-          var hits = $(resultPane).find(".result-header").attr("data-numberOfRecords");
-          $(parElem).find(".hitcount").text(hits);
+          $(parElem).find(".c_s-navigation-ui").css("display", "");
+          var hits = parseInt($(resultPane).find(".result-header").attr("data-numberOfRecords"), 10);
+          if (hits === 1) {
+              $(parElem).find(".c_s-navigation-ui").css("display", "none");
+          } else {
+              $(parElem).find(".hitcount").text(hits);
+              if (start > hits) {
+                 start = hits;
+                 startInput.val(start);
+              }
+              if ((start + max) > hits)
+                 maxInput.val(hits - start + 1);
+          }
           $(resultPane).find(".result-header").hide();
         }
     }
