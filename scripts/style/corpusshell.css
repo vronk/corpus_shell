@@ -148,6 +148,10 @@ table {
     font-weight: bold;
 }
 
+.c_s-ui-widget-header-title {
+    margin-left: 6px;
+}
+
 .noborder {
 	border: none;
 }
@@ -619,6 +623,10 @@ img.navigationicon {
 	padding: 0px 0px 0px 10px;
         border-radius: 6px;
 	font-size: 12px;
+}
+
+.ui-widget-content p:nth-last-of-type(1) {
+    margin-bottom: 6px;
 }
 
 .loading {
