@@ -740,6 +740,7 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
              hstr = xml.statusText;
           hstr = hstr.replace(/&amp;/g, "&");
 
+          var hits;
           // init or refresh scrollbars
           if ($(parElem).find(".searchresults").data('jsp') != undefined)
           {
@@ -749,21 +750,23 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
           else
           {
             var height;
+            var navigationHeight;
             if ($.browser.mozilla) {
             /* Part of a crude hack to get around missing support for overflow and
              * percentage height in table cells in firefox (only fixed px overflows
              * are used).
              */
              height = $(parElem).find(".c_s-scroll-area").height();
+             navigationHeight = $(parElem).find(".c_s-navigation-ui").height();
             }
             $(resultPane).html(hstr);
+            hits = parseInt($(resultPane).find(".result-header").attr("data-numberOfRecords"), 10);
             if ($.browser.mozilla) {
-                $(parElem).find(".c_s-scroll-area").height(height);
+                $(parElem).find(".c_s-scroll-area").height(hits === 1 ? height + navigationHeight : height);
             }
             PanelController.InitScrollPane(panelId);
           }
           $(parElem).find(".c_s-navigation-ui").css("display", "");
-          var hits = parseInt($(resultPane).find(".result-header").attr("data-numberOfRecords"), 10);
           if (hits === 1) {
               $(parElem).find(".c_s-navigation-ui").css("display", "none");
           } else {
