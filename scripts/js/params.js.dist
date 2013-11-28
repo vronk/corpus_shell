@@ -33,3 +33,32 @@ var switchURL = baseURL + "/modules/fcs-aggregator/switch.php";
  * @type {url|path}
  */
 var templateLocation = "scripts/js/";
+
+/**
+ * Default width of a new panel.
+ * Anything acceptable as a CSS width, px preferable.
+ * @type {string}
+ */
+var defaultWidth = "525px";
+
+/**
+ * Default height of a new panel
+ * Anything acceptable as a CSS height, px preferable.
+ * @type {string}
+ */
+var defaultHeight = "600px";
+
+/**
+ * Default left offset for new panels.
+ * This will be used to calculate the offset of new windows so a cascading
+ * windows effect is achieved.
+ * @type {number}
+ */
+var defaultLeftOffset = 212;
+
+/**
+ * Default top offset for new panels.
+ * This will be used to calculate the offset of new windows so a cascading
+ * windows effect is achieved.
+ */
+var defaultTopOffset = 10;

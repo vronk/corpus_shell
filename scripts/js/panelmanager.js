@@ -1046,6 +1046,21 @@ function PanelManager (container, searchConfig)
   }
 
   /**
+   * Get the positon for a newly created panel.
+   * @returns {Position} The postion for a newly created panel usind a cascading
+   * effect.
+   */
+  this.GetInitialPosition = function () {
+    var panelCount = this.GetPanelCount();
+    var position = new Object();
+    position["Left"] = defaultLeftOffset + 20*panelCount + "px";
+    position["Top"] = defaultTopOffset + 20*panelCount +  "px";
+    position["Width"] = defaultWidth;
+    position["Height"] = defaultHeight;
+    return position;
+  };
+  
+  /**
    * @public
    * @param {number|string} config The index of the {@link module:corpus_shell~SearchConfig} to use or <br/>
    *                        may be an internal resource name.
@@ -1056,7 +1071,7 @@ function PanelManager (container, searchConfig)
    * <ol> 
    * <li>Fetches the next unique panel id -> {@link module:corpus_shell~PanelManager#GetNewPanelId}. </li>
    * <li>Calculates an initial position as a {@link Position} object. <br/>
-   *     It uses a cascading effect {@link module:corpus_shell~PanelManager#GetPanelCount} and an initial size of 525px x 600px. </li>
+   *     It uses a cascading effect {@link module:corpus_shell~PanelManager#GetPanelCount} and by default an initial size of 525px x 600px. </li>
    * <li>Places the new window above all currently visible. -> {@link module:corpus_shell~PanelManager#GetMaxZIndex}</li>
    * <li>Creates a new title for the panel using "Search" as a part of that title. -> {@link module:corpus_shell~PanelManager#GetNewPanelTitle}</li>
    * <li>Converts the internal name to an index if necessary -> {@link module:corpus_shell~PanelManager#GetSearchIdx}.</li>
@@ -1073,13 +1088,8 @@ function PanelManager (container, searchConfig)
   this.OpenNewSearchPanel = function(config, searchstr)
   {
     var panelName = this.GetNewPanelId();
-    var panelCount = this.GetPanelCount();
 
-    var position = new Object();
-    position["Left"] = 212 + 20*panelCount + "px";
-    position["Top"] = 10 + 20*panelCount +  "px";
-    position["Width"] = "525px";
-    position["Height"] = "600px";
+    var position = this.GetInitialPosition();
 
     var maxZidx = this.GetMaxZIndex() + 1;
     var panelTitle = this.GetNewPanelTitle("Search");
@@ -1127,13 +1137,8 @@ function PanelManager (container, searchConfig)
   this.OpenNewContentPanel = function(url, titlePart)
   {
     var panelName = this.GetNewPanelId();
-    var panelCount = this.GetPanelCount();
 
-    var position = new Object();
-    position["Left"] = 212 + 20*panelCount + "px";
-    position["Top"] = 10 + 20*panelCount +  "px";
-    position["Width"] = "525px";
-    position["Height"] = "600px";
+    var position = this.GetInitialPosition();
 
     var maxZidx = this.GetMaxZIndex() + 1;
     if (titlePart == undefined)
@@ -1507,8 +1512,10 @@ function PanelManager (container, searchConfig)
     this.RefreshUsedSearchPanelTitles();
         for (var key in this.EnsuredPanels) {
             if (this.isPanelOpen(this.EnsuredPanels[key])) continue;
-            if (this.EnsuredPanels[key].panelType === "search")
-                this.OpenNewSearchPanel(this.EnsuredPanels[key].config, this.EnsuredPanels[key].searchStr);
+            if (this.EnsuredPanels[key].panelType === "search") {
+                var ID = this.OpenNewSearchPanel(this.EnsuredPanels[key].config, this.EnsuredPanels[key].searchStr);
+                PanelController.StartSearch(ID);
+            }
             else {
                 if (this.EnsuredPanels[key].searchStr !== 'geo') {
                 this.OpenNewContentPanel(switchURL + '?x-format=html&version=1.2&x-context=' + this.EnsuredPanels[key].config +
