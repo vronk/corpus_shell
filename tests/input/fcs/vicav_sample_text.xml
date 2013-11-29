@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- generated 2013-08-26 using http://corpus3.aac.ac.at/cs2/corpus_shell/modules/mysqlonsru/SampleTextOnSRU.php?operation=searchRetrieve&query=cairo_sample_01&x-format=xml&version=1.2&maximumRecords=100&startRecord=1
-     Note: The query string is different eg. _not_ cairo.
-     Note: The sample is wrong currently it's not cairene arabic.-->
-<sru:searchRetrieveResponse xmlns:diag="http://www.loc.gov/zing/srw/diagnostic/"
-   xmlns:sru="http://www.loc.gov/zing/srw/" xmlns:fcs="http://clarin.eu/fcs/1.0">
+<sru:searchRetrieveResponse xmlns="http://www.tei-c.org/ns/1.0"
+   xmlns:tei="http://www.tei-c.org/ns/1.0"
+   xmlns:diag="http://www.loc.gov/zing/srw/diagnostic/"
+   xmlns:sru="http://www.loc.gov/zing/srw/"
+   xmlns:fcs="http://clarin.eu/fcs/1.0">
    <sru:version>1.2</sru:version>
    <sru:numberOfRecords>1</sru:numberOfRecords>
    <echoedSearchRetrieveRequest>
@@ -30,8 +30,7 @@
                               <s n="1">
                                  <w>
                                     <fs>
-                                       <f name="wordform" xml:lang="ar-arz-x-cairo-vicavTrans"
-                                          >ʔahl-an</f>
+                                       <f name="wordform" xml:lang="ar-arz-x-cairo-vicavTrans">ʔahl-an</f>
                                        <f name="pos">adverb</f>
                                        <f name="lemma" xml:lang="ar-arz-x-cairo-vicavTrans">ʔahl</f>
                                        <f name="translation">welcome</f>

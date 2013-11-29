@@ -1,0 +1,100 @@
+.tei-fs {
+    display: none;
+    position: absolute;
+    background: #FFF;
+    background: rgba(255,255,255, 0.8);
+    z-index: 100;
+    top: 0;
+    left: 0;
+    width: 15em;
+    padding-left: 2px;
+    border-left: 1px solid;
+    margin-left: 2px;
+}
+
+ul.tei-fs {
+    list-style: none;
+    list-style-type: none;
+}
+
+.tei-w {
+    display: inline;
+    position: relative;
+}
+
+.tei-s {
+    display: block;
+}
+
+.tei-w:hover .tei-fs,
+.tei-w:active .tei-fs{
+    display: block;
+}
+
+.tei-fs:hover,
+.tei-w:active {
+    display: block;
+}
+/*
+        <item key="interrogativeAdverb">Interrogative Adverb</item>
+        <item key="adjective">Adjective</item>
+        <item key="commonNoun">Common Noun</item>
+        <item key="properNoun">Proper Noun</item>
+        <item key="cliticPronoun">Clitic Pronoun</item>
+        <item key="interrogativePronoun">Interrogative Pronoun</item>
+        <item key="preposition">Preposition</item>
+        <item key="definiteArticle">Definite Article</item>
+        <item key="particle">Particle</item>
+        <item key="verbalParticle">Verbal Particle</item>    
+ */
+.pos.pronoun {
+    border-bottom: 1px DarkViolet solid;
+}
+
+.pos.cliticPronoun {
+    border-bottom: 1px MediumVioletRed solid;
+}
+
+.pos.interrogativePronoun {
+    border-bottom: 1px Fuchsia solid;
+}
+
+.pos.verb {
+    border-bottom: 1px DarkBlue solid;
+}
+
+.pos.verbalParticle {
+    border-bottom: 1px Blue solid;
+}
+
+.pos.adverb {
+    border-bottom: 1px LimeGreen solid;
+}
+
+.pos.interrogativeAdverb {
+    border-bottom: 1px GreenYellow solid;
+}
+
+.pos.adjective {
+    border-bottom: 1px DarkGreen solid;
+}
+
+.pos.commonNoun {
+    border-bottom: 1px Black solid;
+}
+
+.pos.definiteArticle {
+    border-bottom: 1px DarkGray solid;
+}
+
+.pos.properNoun {
+    border-bottom: 1px DarkGray solid;
+}
+
+.pos.particle {
+    border-bottom: 1px Gray solid;
+}
+
+.pos.preposition {
+    border-bottom: 1px Brown solid;
+}
