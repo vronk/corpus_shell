@@ -4,7 +4,7 @@
     background: #FFF;
     background: rgba(255,255,255, 0.8);
     z-index: 100;
-    top: 0;
+    top: 90%;
     left: 0;
     width: 15em;
     padding-left: 2px;
@@ -32,21 +32,10 @@ ul.tei-fs {
 }
 
 .tei-fs:hover,
-.tei-w:active {
+.tei-fs:active {
     display: block;
 }
-/*
-        <item key="interrogativeAdverb">Interrogative Adverb</item>
-        <item key="adjective">Adjective</item>
-        <item key="commonNoun">Common Noun</item>
-        <item key="properNoun">Proper Noun</item>
-        <item key="cliticPronoun">Clitic Pronoun</item>
-        <item key="interrogativePronoun">Interrogative Pronoun</item>
-        <item key="preposition">Preposition</item>
-        <item key="definiteArticle">Definite Article</item>
-        <item key="particle">Particle</item>
-        <item key="verbalParticle">Verbal Particle</item>    
- */
+
 .pos.pronoun {
     border-bottom: 1px DarkViolet solid;
 }
