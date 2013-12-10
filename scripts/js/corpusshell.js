@@ -248,7 +248,7 @@ function doOnDocumentReady ()
     });
     
     $('#searchbuttons .sidebar').bind("click", function () {
-        PanelController.OpenNewSearchPanel($('#searchbuttons .searchcombo').val());
+        PanelController.OpenNewSearchPanel(parseInt($('#searchbuttons .searchcombo').val()));
     });
     
     $('#TogglePanelListButton').bind("click", function () {
@@ -280,12 +280,18 @@ function doOnDocumentReady ()
     });
 
     $('.searchresults .data-view.full a').live("click", function (event) {
-         event.preventDefault();
-         PanelController.OpenSubPanel(this, $(this).attr('href'), true, "text");
+            var target = $(this).attr('target');
+            if (target === undefined || target === "") {
+                event.preventDefault();
+                PanelController.OpenSubPanel(this, $(this).attr('href'), true, "text");
+            }
       });
     $('.searchresults .data-view.image a').live("click", function (event) {
-         event.preventDefault();
-         PanelController.OpenSubPanel(this, $(this).attr('href'), true, "image");
+            var target = $(this).attr('target');
+            if (target === undefined || target === "") {
+                event.preventDefault();
+                PanelController.OpenSubPanel(this, $(this).attr('href'), true, "image");
+            }
       });
     $('.searchresults a.value-caller').live("click", function (event) {
         event.preventDefault();
