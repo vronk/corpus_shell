@@ -111,6 +111,19 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
   if (panelController !== undefined && config === undefined && this.Type !== "search") {
       this.Config = panelController.GetSearchIdx(this.UrlParams['x-context']);
   }
+  /**
+   * @public
+   * @type {number}
+   * @desc The default start record when the returned record set is displayed. 
+   */
+  this.DefaultStartRecord = 1;
+  
+  /**
+   * @public
+   * @type {number}
+   * @desc The default maximum number of record when the returned record set is displayed. 
+   */
+  this.DefaultMaxRecords = 10;
 
   /* methods */
 
@@ -367,8 +380,23 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
             this.FillInPanelTitle(searchPanel, this.Title, 0, false);
 
             this.searchbutton = searchUI.find(".c_s-ui-searchbutton input");
-            this.searchbutton.attr("onclick", "PanelController.StartSearch('" + this.Id + "');");
-            searchUI.find(".navigationmain .load").attr("onclick", "PanelController.StartSearch('" + this.Id + "');");
+            this.searchbutton.attr("onclick", "PanelController.StartSearch('" + this.Id + "', true);");
+            var startrecordInput = searchUI.find(".startrecord");
+            var maxrecordInput = searchUI.find(".maxrecord");
+            var loadButton = searchUI.find(".navigationmain .load");
+            this.DefaultStartRecord = parseInt(startrecordInput.val(), 10);
+            this.DefaultMaxRecords = parseInt(maxrecordInput.val(), 10);
+            startrecordInput.keyup(function(event)
+                {
+                    if (event.keyCode === 13)
+                        loadButton.click();
+                });
+            maxrecordInput.keyup(function(event)
+                {
+                    if (event.keyCode === 13)
+                        loadButton.click();
+                });
+            loadButton.attr("onclick", "PanelController.StartSearch('" + this.Id + "');");
             searchUI.find(".navigationmain .prev").attr("onclick", "PanelController.StartSearchPrev('" + this.Id + "');");
             searchUI.find(".navigationmain .next").attr("onclick", "PanelController.StartSearchNext('" + this.Id + "');");
             this.ConfigureSearchTextInput(searchUI.find(".searchstring"), query);
@@ -677,10 +705,16 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
   * purpose:    invokes a AJAX call to the switch script that handles search orders
   *             to every search ressource; displays the search result in the
   *             searchresult div
-  * @return {url} the url string that was used to get the displayed search result
+  * @param {number} [start] Optionally use this as the start record when retrieving the data.
+  * @param {number} [max] Optionally use this as the maximum number of records the server should return. 
+  * @return {url} The url string that was used to get the displayed search result
   */
-  this.StartSearch = function()
+  this.StartSearch = function(start, max)
   {
+    if (start === undefined)
+        start = this.DefaultStartRecord;
+    if (max === undefined)
+        max = this.DefaultMaxRecords;
     var parElem = this.GetCssId();
     var sstr = $(parElem).find(".searchstring").val();
     var sele = parseInt($(parElem).find(".searchcombo").val());
@@ -693,13 +727,10 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
     }
     resultPane.text("");
     PanelController.RefreshScrollPane(panelId);
-    $(parElem).find(".hitcount").text("-");
 
     // get batch start and size
     var startInput = $(parElem).find(".startrecord");
     var maxInput = $(parElem).find(".maxrecord");
-    var start = parseInt(startInput.val(), 10);
-    var max = parseInt(maxInput.val(), 10);
 
     var xcontext = this.PanelController.GetResourceName(sele);
 
@@ -707,15 +738,19 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
     var urlStr = switchURL + "?operation=searchRetrieve&query=" + sstr + "&x-context=" + xcontext +
                  "&x-format=html&x-dataview=kwic,title&version=1.2";
 
-    if (!max || max <= 0) max = 10;
-    if (!start || start < 1) start = 1;
+    if (!max || max <= 0) max = this.DefaultMaxRecords;
+    if (!start || start < 1) start = this.DefaultStartRecord;
 
     urlStr += '&maximumRecords=' + max + '&startRecord=' + start;
 
     this.SetUrl(urlStr);
 
     var panelId = this.Id;
-
+    
+    $(parElem).find(".hitcount").text("-");
+    startInput.val(start);
+    maxInput.val(max);
+    
     $.ajax(
     {
         type: 'GET',
@@ -893,7 +928,7 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
     this.searchbutton.addClass("searchbutton");
     this.searchbutton.attr("type", "button");
     this.searchbutton.attr("value", "Go");
-    this.searchbutton.attr("onclick", "PanelController.StartSearch('" + this.Id + "');");
+    this.searchbutton.attr("onclick", "PanelController.StartSearch('" + this.Id + ", true');");
 
     var searchdiv = document.createElement('div');
     $(searchdiv).addClass("searchdiv");

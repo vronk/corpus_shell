@@ -248,7 +248,7 @@ function doOnDocumentReady ()
     });
     
     $('#searchbuttons .sidebar').bind("click", function () {
-        PanelController.OpenNewSearchPanel(parseInt($('#searchbuttons .searchcombo').val()));
+        PanelController.OpenNewSearchPanel(parseInt($('#searchbuttons .searchcombo').val(), 10));
     });
     
     $('#TogglePanelListButton').bind("click", function () {

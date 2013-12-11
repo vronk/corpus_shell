@@ -1333,19 +1333,27 @@ function PanelManager (container, searchConfig)
   };
 
   /**
-  * @param panelId - unique panel identifier
+  * @param {string} panelId - unique panel identifier
+  * @param {boolean} [resetPaging] Wheter to set the start record for the result set to 1.
   * @desc purpose: Store the search urls for all the searches started using the panels <br/>
   * after executing them there. -> {@link module:corpus_shell~Panel#StartSearch}
   * @fires module:corpus_shell~PanelManager#event:onUpdated
   * @return    -
   */
-  this.StartSearch = function(panelId)
+  this.StartSearch = function(panelId, resetPaging)
   {
     var panel = this.GetPanelObj(panelId);
 
     if (panel != undefined)
     {
-      var url = panel.StartSearch();
+      var startInput = $('#' + panelId).find('.startrecord');
+      var start = parseInt(startInput.val(), 10);
+      if (resetPaging === true) {
+          start = 1;
+          startInput.val(start);
+      }
+      var max = parseInt($('#' + panelId).find('.maxrecord').val());
+      var url = panel.StartSearch(start, max);
       this.SetPanelUrl(panelId, url);
     }
   };
@@ -1364,13 +1372,13 @@ function PanelManager (container, searchConfig)
       var start = parseInt($('#' + panelId).find('.startrecord').val());
       var max = parseInt($('#' + panelId).find('.maxrecord').val());
 
-      if (!max || max <= 0) max = 10;
-      if (!start || start < 1) start = 1;
+      if (!max || max <= 0) max = panel.DefaultMaxRecords;
+      if (!start || start < 1) start = panel.DefaultStartRecord;
 
       if (start - max > 0)
-        $('#' + panelId).find('.startrecord').val(start - max);
+        start = start - max;
 
-      var url = panel.StartSearch();
+      var url = panel.StartSearch(start, max);
       this.SetPanelUrl(panelId, url);
     }
   };
@@ -1384,20 +1392,20 @@ function PanelManager (container, searchConfig)
   {
     var panel = this.GetPanelObj(panelId);
 
-    if (panel != undefined)
+    if (panel !== undefined)
     {
       var start = parseInt($('#' + panelId).find('.startrecord').val());
       var max = parseInt($('#' + panelId).find('.maxrecord').val());
 
-      if (!max || max <= 0) max = 10;
-      if (!start || start < 1) start = 1;
+      if (!max || max <= 0) max = panel.DefaultMaxRecords;
+      if (!start || start < 1) start = panel.DefaultStartRecord;
 
       var hitCount = parseInt($('#' + panelId).find('.hitcount').html());
 
       if (hitCount && start + max <= hitCount)
-        $('#' + panelId).find('.startrecord').val(start + max);
+        start = start + max;
 
-      var url = panel.StartSearch();
+      var url = panel.StartSearch(start, max);
       this.SetPanelUrl(panelId, url);
     }
   };
