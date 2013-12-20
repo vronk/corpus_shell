@@ -370,12 +370,12 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
                 $(searchPanel).addClass("draggable ui-widget-content whiteback");
                 var titlep = this.GeneratePanelTitle(this.Title, 0, false);
                 $(searchPanel).append(titlep);
-                $(searchPanel).append(this.GenerateSearchInputs(this.Config, query));
-                $(searchPanel).append(this.GenerateSearchNavigation());
-                var newHeight = parseInt(this.Position.Height.replace(/px/g, "")) - titleBarPlusBottomSpacing - searchUIHeight - 10; //???
-                $(searchResultDiv).css("height", newHeight + "px");
+    $(searchPanel).append(this.GenerateSearchInputs(this.Config, query));
+    $(searchPanel).append(this.GenerateSearchNavigation());
+    var newHeight = parseInt(this.Position.Height.replace(/px/g, "")) - titleBarPlusBottomSpacing - searchUIHeight - 10; //???
+    $(searchResultDiv).css("height", newHeight + "px");
                 var searchResultDiv = this.GenerateSearchResultsDiv();
-                $(searchPanel).append(searchResultDiv);
+    $(searchPanel).append(searchResultDiv);
             } else {
             this.FillInPanelTitle(searchPanel, this.Title, 0, false);
 
@@ -721,7 +721,9 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
 
     //  empty result-pane and indicate loading
     var resultPane = $(parElem).find(".searchresults").addClass("cmd loading");
-    if (resultPane.data('jsp') != undefined)
+    var oldHits = parseInt($(resultPane).find(".result-header").attr("data-numberOfRecords"), 10);
+    oldHits = isNaN(oldHits) ? 2: oldHits;
+    if (resultPane.data('jsp') !== undefined)
     {
        resultPane = resultPane.data('jsp').getContentPane();
     }
@@ -766,7 +768,7 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
                 startRecord: start},
         complete: function(xml, textStatus)
         {
-          $(parElem).find(".searchresults").removeClass("cmd loading");;
+          resultPane = $(parElem).find(".searchresults").removeClass("cmd loading");;
 
           var hstr;
           if (xml.responseText != undefined)
@@ -797,7 +799,9 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
             $(resultPane).html(hstr);
             hits = parseInt($(resultPane).find(".result-header").attr("data-numberOfRecords"), 10);
             if ($.browser.mozilla) {
-                $(parElem).find(".c_s-scroll-area").height(hits === 1 ? height + navigationHeight : height);
+                height = (oldHits <= 1) && (hits > 1) ? height - navigationHeight : height;
+                height = (hits <= 1) && (oldHits > 1) ? height + navigationHeight : height;
+                $(parElem).find(".c_s-scroll-area").height(height);
             }
             PanelController.InitScrollPane(panelId);
           }
@@ -805,7 +809,7 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
           if (hits === 1) {
               $(parElem).find(".c_s-navigation-ui").css("display", "none");
           } else {
-              $(parElem).find(".hitcount").text(hits);
+          $(parElem).find(".hitcount").text(hits);
               if (start > hits) {
                  start = hits;
                  startInput.val(start);

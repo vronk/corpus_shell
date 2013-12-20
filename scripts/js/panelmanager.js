@@ -1348,11 +1348,14 @@ function PanelManager (container, searchConfig)
     {
       var startInput = $('#' + panelId).find('.startrecord');
       var start = parseInt(startInput.val(), 10);
+      var maxInput = $('#' + panelId).find('.maxrecord');
+      var max = parseInt(maxInput.val());
       if (resetPaging === true) {
-          start = 1;
+          start = panel.DefaultStartRecord;
           startInput.val(start);
+          max = panel.DefaultMaxRecords;
+          maxInput.val(max);
       }
-      var max = parseInt($('#' + panelId).find('.maxrecord').val());
       var url = panel.StartSearch(start, max);
       this.SetPanelUrl(panelId, url);
     }
@@ -1523,8 +1526,10 @@ function PanelManager (container, searchConfig)
             if (this.EnsuredPanels[key].panelType === "search") {
                 var ID = this.OpenNewSearchPanel(this.EnsuredPanels[key].config, this.EnsuredPanels[key].searchStr);
                 PanelController.StartSearch(ID);
-            }
-            else {
+            } else if (this.EnsuredPanels[key].panelType === "explain") {
+                this.OpenNewContentPanel(switchURL + '?x-format=html&version=1.2&x-context=' + this.EnsuredPanels[key].config +
+                   '&operation=explain');
+            } else {
                 if (this.EnsuredPanels[key].searchStr !== 'geo') {
                 this.OpenNewContentPanel(switchURL + '?x-format=html&version=1.2&x-context=' + this.EnsuredPanels[key].config +
                    '&operation=scan&scanClause=' + this.EnsuredPanels[key].searchStr);
