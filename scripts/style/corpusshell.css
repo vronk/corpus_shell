@@ -27,7 +27,8 @@
 position: absolute; left: 20px; top: 10px; width: 200px; height: 100px;
 }
 
-.titletopiconpin.c_s-hidden {
+.titletopiconpin.c_s-hidden,
+.titletopiconnorm.c_s-hidden {
 display: inline;
 }
 
@@ -49,6 +50,9 @@ display: none;
                         <!-- picture is set using css background! -->
                  </span>
                  <span class="c_s-ui-widget-header-button titletopiconmax">
+                        <!-- picture is set using css background! -->
+                 </span>
+                 <span class="c_s-ui-widget-header-button titletopiconnorm c_s-hidden">
                         <!-- picture is set using css background! -->
                  </span>
                  <span class="c_s-ui-widget-header-button titletopiconpin c_s-hidden">
@@ -178,6 +182,10 @@ table {
 
 .titletopiconmax {
     background-image: url(img/n.win_max.png);
+}
+
+.titletopiconnorm {
+    background-image: url(img/n.win_norm.png);
 }
 
 .titletopiconclose {
