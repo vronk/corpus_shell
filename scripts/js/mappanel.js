@@ -117,7 +117,7 @@ MapPanel = function (id, type, title, url, position, pinned, zIndex, container, 
      * This method needs to pass the call to map's updateSize.
      * @returns -
      */
-    this.UpdateContentView = function(event, ui) {
+    this.UpdateContentView = function() {
         this.map.updateSize();
     };
 

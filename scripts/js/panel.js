@@ -242,9 +242,17 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
     this.SetZIndex(zIdx);
 
     this.CorrectSearchResultHeight();
-
-    $(this.GetCssId()).find(".titletopiconmax").attr("src", "scripts/style/img/n.win_max.png");
-    $(this.GetCssId()).find(".titletopiconmax").parent().attr("onclick", "PanelController.MaximizePanel('" + this.Id + "');");
+    
+    var iconMax = $(this.GetCssId()).find(".titletopiconmax");
+    var iconNorm = $(this.GetCssId()).find(".titletopiconnorm");
+    
+    if (iconNorm.length === 0) {
+        iconMax.attr("src", "scripts/style/img/n.win_max.png");
+        iconMax.parent().attr("onclick", "PanelController.MaximizePanel('" + this.Id + "');");
+    } else {
+        iconNorm.addClass("c_s-hidden");
+        iconMax.removeClass("c_s-hidden");       
+    }
   }
 
   /**
@@ -262,9 +270,17 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
 
     this.CorrectSearchResultHeight();
 
-    $(this.GetCssId()).find(".titletopiconmax").attr("src", "scripts/style/img/n.win_norm.png");
-    $(this.GetCssId()).find(".titletopiconmax").parent().attr("onclick", "PanelController.NormalizePanel('" + this.Id + "');");
-  }
+    var iconMax = $(this.GetCssId()).find(".titletopiconmax");
+    var iconNorm = $(this.GetCssId()).find(".titletopiconnorm");
+    
+    if (iconNorm.length === 0) {
+        iconMax.attr("src", "scripts/style/img/n.win_norm.png");
+        iconMax.parent().attr("onclick", "PanelController.NormalizePanel('" + this.Id + "');");
+    } else {
+        iconMax.addClass("c_s-hidden");
+        iconNorm.removeClass("c_s-hidden");
+    }
+  };
 
   /**
   * @param pinnedState - a value of 1 means that the panel is pinned
@@ -298,6 +314,7 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
   */
   this.CorrectSearchResultHeight = function()
   {
+    this.MozillaWorkaroundScrollAreaHeight();
     var hgt = $(this.GetCssId()).height();
 
     if (this.Type == "search")
@@ -306,6 +323,21 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
       $(this.GetCssId()).find(".searchresults").height(hgt - titleBarPlusBottomSpacing);
   };
 
+  this.MozillaWorkaroundScrollAreaHeight = function()
+  {
+            var self = $(this.GetCssId());
+            var scrollarea = self.find(".c_s-scroll-area");;
+            if ($.browser.mozilla) {
+                if (scrollarea !== undefined) {
+                    scrollarea.css("position", "relative");
+                    var height = self.find(".c_s-searchresults-container").height();
+                    if (height !== scrollarea.height())
+                        scrollarea.height(height);
+                }
+                this.UpdateContentView();
+            }
+  };
+  
   /**
   * @param {number} configIdx Preselected index of SearchCombo
   * @param {string} searchStr Search string to inserted in search input
@@ -510,13 +542,12 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
 
   /**
    * A method called if the content might need a refresh, e.g. the map.
-   * @param {type} event
-   * @param {type} ui
    * @returns -
    */
-  this.UpdateContentView = function(event, ui) {
+  this.UpdateContentView = function() {
     // for th panels handled by this class there is no need to do anything.
-  }
+  };
+  
   /**
   * Configures the jQuery UI resiza and drag functions.
   */
@@ -534,7 +565,7 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
                             var needsCalculation = !$(this).hasClass("c_s-ui-widget");
                             if (needsCalculation) {
                                 var hgt = $(this).height();
-                                if ($(this).find(".searchstring").length != 0)
+                                if ($(this).find(".searchstring").length !== 0)
                                     $(this).find(".searchresults").css("height", hgt - titleBarPlusBottomSpacing - searchUIHeight + "px");
                                 else
                                     $(this).find(".searchresults").css("height", hgt - titleBarPlusBottomSpacing + "px");
@@ -569,15 +600,7 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
                          * a heigth to be calculated workaround.
                          */
                         stop: function(event, ui) {
-                            if ($.browser.mozilla) {
-                                if (scrollarea !== undefined) {
-                                    scrollarea.css("position", "relative");
-                                    var height = $(this).find(".c_s-searchresults-container").height();
-                                    if (height !== scrollarea.height())
-                                        scrollarea.height(height);
-                                }
-                                self.UpdateContentView(event, ui);
-                            }
+                            self.MozillaWorkaroundScrollAreaHeight();
                         }
                     })
                     .draggable({handle: ".c_s-ui-widget-header", containment: "parent", snap: true,
@@ -1000,6 +1023,7 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
         }
         context.find(".titletopiconclose").attr("onclick", "PanelController.ClosePanel('" + this.Id + "');");
         context.find(".titletopiconmax").attr("onclick", "PanelController.MaximizePanel('" + this.Id + "');");
+        context.find(".titletopiconnorm").attr("onclick", "PanelController.NormalizePanel('" + this.Id + "');");
         // TODO Check this!
         context.find(".titletopiconpin").attr("onclick", "PanelController.PinPanel('" + this.Id + "', 2);");
         context.find(".titletopiconpin.c_s-grayed").attr("onclick", "PanelController.PinPanel('" + this.Id + "', 1);");
