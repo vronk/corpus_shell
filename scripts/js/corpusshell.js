@@ -312,7 +312,12 @@ function doOnDocumentReady ()
          event.preventDefault();
          PanelController.OpenSubPanel(this, $(this).attr('href'), true, "text");
       });
-
+    $('a.c_s_fcs_xml_link').live("click", function (event) {
+        event.preventDefault();
+        PanelController.OpenNewContentPanel($(this).attr('href'), 'XML ');
+    });
+    if (sitesTitle === undefined)
+        sitesTitle = document.title;
     var urlParams = GetUrlParams(location.search);
     GetUserId(urlParams, function() {
     // the $(document).ready callback returns here. The following code is executed after a delay that depends on how userId is fetched and
@@ -527,10 +532,33 @@ function LoadIndexCache(onComplete, onError) {
     });
 }
 
+/**
+ * 
+ * @type {string} A title that is to be displayed on the Tab of the browser.
+ */
+
+var sitesTitle;
+
+/**
+ * @type {link} A manipulates a special link that could be used to save the url with
+ * the userid for later use.
+ */
 var originalShareLink;
 
 /**
+ * Lock for not retrying user data saving unless last attempt succeeded or failed.
+ * @type Boolean
+ */
+var saveUserDataLock = false;
+/**
+ * Remember to try to save again after the last attempt completet.
+ * @type Boolean
+ */
+var changedWhileSaving = false;
+
+/**
  * @desc Tries to save the users profile data to the server. As a backup saves the profile data to the local store.
+ * Manipulates the browsers history so the link in the address bar changes using the updated userid.
  * @param {string} userid  The user id for which the data should be saved. May be an GUID for example.
  */
 function SaveUserData(userid)
@@ -545,7 +573,8 @@ function SaveUserData(userid)
   } catch (e) {
       // this fails on IE if this is running on localhost -> debugging :-(
   }
-  
+  if (saveUserDataLock === false) {
+  saveUserDataLock = true;
   $.ajax(
   {
       type: 'POST',
@@ -556,7 +585,7 @@ function SaveUserData(userid)
       {
         // li.share a is for drupal/gratis. How to do this without drupal?
         function errorHandler() {
-            History.replaceState(null, null,"?userId=");
+            History.replaceState(null, sitesTitle,"?userId=");
             if (originalShareLink !== undefined) {
                 $("li.share a").attr("href", originalShareLink);
             }
@@ -564,10 +593,16 @@ function SaveUserData(userid)
         // complete (!= success) is even called if the php is only a locally downloaded copy with no php
         // interpreter to run it, so it surely is no valid XML
         var shareLink = $("li.share a");
+        saveUserDataLock = false;
+        if (changedWhileSaving === true) {
+            changedWhileSaving = false;
+            SaveUserData(userId);
+            return;
+        }
         if (jqXHR.status === 200 && textStatus === "success") {
             var msg = $(jqXHR.responseXML).find("msg").text();
             if (msg === "ok") {
-                History.replaceState(null, null, "?userId=" + userid);
+                History.replaceState(null, sitesTitle, "?userId=" + userid);
                 if (originalShareLink === undefined)
                     originalShareLink = shareLink.attr("href");
                 $("li.share a").attr("href", "?userId=" + userid);
@@ -578,6 +613,9 @@ function SaveUserData(userid)
       }
   }
   );
+  } else {
+      changedWhileSaving = true;
+  }
 }
 
 /**
