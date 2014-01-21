@@ -122,6 +122,11 @@ table {
         cursor: default;
 }
 
+.c_s_fcs_xml_link {
+       float: right;
+       padding: 0 10px;
+}
+
 .c_s-ui-widget-header-button.c_s-hidden {
     display: none;
 }
@@ -748,6 +753,22 @@ div.profiletext h4 {
 	font-size: 13px;
 	border-bottom: 1px solid #A82027;
 }
+.tei-authors {
+        font-style: italic;
+}
+
+.tei-div.typology p {
+        white-space: nowrap;
+}
+.tei-div.typology {
+        display: inline-block;
+}
+.vicav-profile h2,
+.vicav-profile h3 {
+        white-space: nowrap;
+        display: inline-block;
+}
+
 /*
  Styles used by kwic search panels
  =================================
