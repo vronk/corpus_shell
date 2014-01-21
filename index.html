@@ -28,7 +28,19 @@
     <!-- jQuery plugin that provides special handling for special IE 8 and IE 9 CORS behavior -->
     <script type="text/javascript" src="scripts/js/jquery/jquery.xdomainrequest.min.js"></script>
     <!-- Openlayers for creating map views using Google Maps, Openstreetmap or other map providers -->
-    <script type="text/javascript" src="scripts/js/openlayers/lib/OpenLayers.js"></script>
+    <!-- Enable this if you don't want or cannot compile Openlayers to one file
+    <script type="text/javascript" src="scripts/js/openlayers/lib/OpenLayers.js"></script> -->
+    <!-- For the compiled version of OpenLaysers.js. E. g. using
+    cd build
+    python.exe .\build.py -c closure full
+    Would use google closure-compiler from http://dl.google.com/closure-compiler/compiler-latest.zip -->
+    <script type="text/javascript" src="scripts/js/openlayers/build/OpenLayers.js"></script>
+    <!-- ACE (Ajax.org Code Editor) for displaying code (editing?), mostly XML, with comfort -->
+    <!-- created using
+    npm install
+    node .\Makefile.dryice.js -nc -s
+    renamed ace-min.js ace-packed.js -->
+    <script type="text/javascript" src="scripts/js/ace-packed.js"></script>
     <!-- JS API for Google Maps -->
     <script src="http://maps.google.com/maps/api/js?v=3&amp;sensor=false"></script>
     
@@ -48,6 +60,7 @@
     <script type="text/javascript" src="scripts/js/profilemanager.js"></script>
     <script type="text/javascript" src="scripts/js/panel.js"></script>
     <script type="text/javascript" src="scripts/js/mappanel.js"></script>
+    <script type="text/javascript" src="scripts/js/xmlpanel.js"></script>
     <script type="text/javascript" src="scripts/js/panelmanager.js"></script>
     <script type="text/javascript" src="scripts/js/ressourcemanager.js"></script>
     <title>ICLTT Corpus Shell</title>
