@@ -153,7 +153,7 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
     this.Url = url;
     this.UrlParams = GetUrlParams(url);
     this.PanelController.SetPanelUrl(this.Id, url);
-    $(this.GetCssId()).find("a.c_s_fcs_xml_link").attr("href", url.replace("x-format=html", "x-format=xml"));   
+    $(this.GetCssId()).find("a.c_s_fcs_xml_link").attr("href", url.replace("x-format=html", "x-format=xml").replace("x-format=json", "x-format=xml"));   
   };
 
   /**
@@ -1028,7 +1028,7 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
         // TODO Check this!
         context.find(".titletopiconpin").attr("onclick", "PanelController.PinPanel('" + this.Id + "', 2);");
         context.find(".titletopiconpin.c_s-grayed").attr("onclick", "PanelController.PinPanel('" + this.Id + "', 1);");
-        context.find("a.c_s_fcs_xml_link").attr("href", this.Url.replace("x-format=html", "x-format=xml"));
+        context.find("a.c_s_fcs_xml_link").attr("href", this.Url.replace("x-format=html", "x-format=xml").replace("x-format=json", "x-format=xml"));
   };
 
   this.GeneratePanelTitle = function(titlestring, pin, pinned)
