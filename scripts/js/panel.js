@@ -66,7 +66,7 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
    * @type {url}
    * @desc A URL used for creating this panel.
    */
-  this.Url = url;
+  this.Url = encodeURI(url);
   /**
    * @public
    * @type {Object}
@@ -150,7 +150,7 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
   */
   this.SetUrl = function(url)
   {
-    this.Url = url;
+    this.Url = encodeURI(url);
     this.UrlParams = GetUrlParams(url);
     this.PanelController.SetPanelUrl(this.Id, url);
     $(this.GetCssId()).find("a.c_s_fcs_xml_link").attr("href", url.replace("x-format=html", "x-format=xml").replace("x-format=json", "x-format=xml"));   

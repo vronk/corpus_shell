@@ -9,7 +9,7 @@ var XmlPanel;
  */
 XmlPanel = function (id, type, title, url, position, pinned, zIndex, container, panelController, config) {
     Panel.call(this, id, type, title, url, position, pinned, zIndex, container, panelController, config);
-    this.Url = this.Url.replace("x-format=html", "x-format=xml");
+    this.Url = encodeURI(this.Url.replace("x-format=html", "x-format=xml"));
 
     this.xmlResult;
     this.editor;
