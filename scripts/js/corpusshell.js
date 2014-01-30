@@ -56,6 +56,12 @@ var searchPanelCount = 1;
 var Indexes = null;
 
 /**
+ * 
+ * @type {string} A title that is to be displayed on the Tab of the browser.
+ */
+
+var sitesTitle;
+/**
  * @summary Get parameters from the supplied uri/url
  * @desc Returns them as a "map" (a JavaScript object which properties correspond to the parameters).
  *       Does not depend on $ as jQuery and is used by other modules (panel.js) too.
@@ -535,13 +541,6 @@ function LoadIndexCache(onComplete, onError) {
         },
     });
 }
-
-/**
- * 
- * @type {string} A title that is to be displayed on the Tab of the browser.
- */
-
-var sitesTitle;
 
 /**
  * @type {link} A manipulates a special link that could be used to save the url with
