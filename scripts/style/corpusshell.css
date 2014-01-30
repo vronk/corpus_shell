@@ -122,7 +122,8 @@ table {
         cursor: default;
 }
 
-.c_s_fcs_xml_link {
+.c_s_fcs_xml_link,
+.c_s_tei_xml_link {
        float: right;
        padding: 0 10px;
 }

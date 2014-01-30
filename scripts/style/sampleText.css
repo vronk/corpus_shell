@@ -1,20 +1,46 @@
 .tei-fs {
     display: none;
     position: absolute;
-    background: #FFF;
-    background: rgba(255,255,255, 0.8);
+    background: #CCC;
+    background: rgba(204,204,204, 0.8);
     z-index: 100;
     top: 90%;
     left: 0;
     width: 15em;
     padding-left: 2px;
-    border-left: 1px solid;
-    margin-left: 2px;
+    border: 1px solid #999;
+    margin: 0 0 0 5px;
+    box-shadow: 10px 5px 5px black;
 }
 
-ul.tei-fs {
-    list-style: none;
-    list-style-type: none;
+.tei-fs dt {
+    float: left;
+    clear: left;
+    display: inline-block;
+    width: 4em;
+}
+.tei-fs dd {
+    float: right;
+    clear: right;
+    width: 10.5em;
+    margin: 0 0 0 0;
+}
+
+.tei-fs dt:after {
+    content: ":";
+    padding: 0 0.1em 0 0;
+}
+
+.tei-fs dt.pos + dd {
+    color: rgb(154,5,69);
+}
+
+.tei-fs dt.lemma + dd {
+    color: rgb(2,37,157);
+}
+
+.tei-fs dt + dd {
+    color: rgb(60,124,1);
 }
 
 .tei-w {
@@ -22,8 +48,16 @@ ul.tei-fs {
     position: relative;
 }
 
+.tei-w:hover {
+    background: #CCC;
+    cursor: default;
+}
+
 .tei-s {
     display: block;
+    position: relative;
+    padding: 2px 10px;
+    background: #F1F1F1;
 }
 
 .tei-w:hover .tei-fs,
@@ -40,50 +74,102 @@ ul.tei-fs {
     border-bottom: 1px DarkViolet solid;
 }
 
+.pos.pronoun .tei-fs dt.pos + dd {
+    color: DarkViolet;
+}
+
 .pos.cliticPronoun {
     border-bottom: 1px MediumVioletRed solid;
+}
+
+.pos.cliticPronoun .tei-fs dt.pos + dd {
+    color: MediumVioletRed;
 }
 
 .pos.interrogativePronoun {
     border-bottom: 1px Fuchsia solid;
 }
 
+.pos.interrogativePronoun .tei-fs dt.pos + dd {
+    color: Fuchsia;
+}
+
 .pos.verb {
     border-bottom: 1px DarkBlue solid;
+}
+
+.pos.verb .tei-fs dt.pos + dd {
+    color: DarkBlue;
 }
 
 .pos.verbalParticle {
     border-bottom: 1px Blue solid;
 }
 
+.pos.verbalParticle .tei-fs dt.pos + dd {
+    color: Blue;
+}
+
 .pos.adverb {
-    border-bottom: 1px LimeGreen solid;
+    border-bottom: 1px ForestGreen solid;
+}
+
+.pos.adverb .tei-fs dt.pos + dd {
+    color: ForestGreen;
 }
 
 .pos.interrogativeAdverb {
-    border-bottom: 1px GreenYellow solid;
+    border-bottom: 1px SeaGreen solid;
+}
+
+.pos.interrogativeAdverb .tei-fs dt.pos + dd {
+    color: SeaGreen;
 }
 
 .pos.adjective {
     border-bottom: 1px DarkGreen solid;
 }
 
+.pos.adjective .tei-fs dt.pos + dd {
+    color: DarkGreen;
+}
+
 .pos.commonNoun {
     border-bottom: 1px Black solid;
 }
 
+.pos.commonNoun .tei-fs dt.pos + dd {
+    color: Black;
+}
+
 .pos.definiteArticle {
-    border-bottom: 1px DarkGray solid;
+    border-bottom: 1px DarkSlateGray solid;
+}
+
+.pos.definiteArticle .tei-fs dt.pos + dd {
+    color: DarkSlateGray;
 }
 
 .pos.properNoun {
-    border-bottom: 1px DarkGray solid;
+    border-bottom: 1px DimGray solid;
+}
+
+.pos.properNoun .tei-fs dt.pos + dd {
+    color: DimGray;
 }
 
 .pos.particle {
     border-bottom: 1px Gray solid;
 }
 
+.pos.particle .tei-fs dt.pos + dd {
+    color: Gray;
+}
+
 .pos.preposition {
     border-bottom: 1px Brown solid;
+}
+
+.pos.preposition .tei-fs dt.pos + dd {
+    color: Brown;
 }

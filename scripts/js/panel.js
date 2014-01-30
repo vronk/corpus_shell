@@ -153,7 +153,10 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
     this.Url = encodeURI(url);
     this.UrlParams = GetUrlParams(url);
     this.PanelController.SetPanelUrl(this.Id, url);
-    $(this.GetCssId()).find("a.c_s_fcs_xml_link").attr("href", url.replace("x-format=html", "x-format=xml").replace("x-format=json", "x-format=xml"));   
+    var thisPanel = $(this.GetCssId());
+    thisPanel.find("a.c_s_fcs_xml_link").attr("href", url.replace("x-format=html", "x-format=xml").replace("x-format=json", "x-format=xml"));
+    if (this.UrlParams['operation'] === 'searchRetrieve')
+        thisPanel.find("a.c_s_tei_xml_link").removeClass("c_s-hidden").attr("href", this.Url.replace("x-format=html", "x-format=xmltei"));
   };
 
   /**
@@ -411,6 +414,7 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
     $(searchPanel).append(searchResultDiv);
             } else {
             this.FillInPanelTitle(searchPanel, this.Title, 0, false);
+            searchPanel.find("a.c_s_tei_xml_link").removeClass("c_s-hidden").attr("href", this.Url.replace("x-format=html", "x-format=xmltei"));
 
             this.searchbutton = searchUI.find(".c_s-ui-searchbutton input");
             this.searchbutton.attr("onclick", "PanelController.StartSearch('" + this.Id + "', true);");
@@ -698,6 +702,9 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
             }
             panel.InitScrollPane();
           }
+        },
+        success: function(xhr) {
+            panel.SetUrl(panel.Url);
         }
     }
     );
@@ -772,6 +779,7 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
     this.SetUrl(urlStr);
 
     var panelId = this.Id;
+    var panel = this;
     
     $(parElem).find(".hitcount").text("-");
     startInput.val(start);
@@ -842,6 +850,9 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
                  maxInput.val(hits - start + 1);
           }
           $(resultPane).find(".result-header").hide();
+        },
+        success: function(xhr) {
+            panel.SetUrl(panel.Url);
         }
     }
     );

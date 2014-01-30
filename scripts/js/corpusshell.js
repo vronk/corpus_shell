@@ -316,6 +316,10 @@ function doOnDocumentReady ()
         event.preventDefault();
         PanelController.OpenNewContentPanel($(this).attr('href'), 'XML ');
     });
+    $('a.c_s_tei_xml_link').live("click", function (event) {
+        event.preventDefault();
+        PanelController.OpenNewContentPanel($(this).attr('href'), 'TEI ');
+    });
     if (sitesTitle === undefined)
         sitesTitle = document.title;
     var urlParams = GetUrlParams(location.search);
