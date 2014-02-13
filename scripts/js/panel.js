@@ -850,7 +850,7 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
           $(resultPane).find(".result-header").hide();
         },
         success: function(xhr) {
-            panel.SetUrl(panel.Url);
+            panel.SetUrl(decodeURI(panel.Url));
         }
     }
     );
