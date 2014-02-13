@@ -25,7 +25,7 @@ XmlPanel = function (id, type, title, url, position, pinned, zIndex, container, 
     {
         var elem = this.GetCssId();
         var panel = this;
-
+        $(panel.GetCssId()).find(".c_s_fcs_xml_link").addClass("c_s-hidden");
         $.ajax(
                 {
                     type: 'GET',

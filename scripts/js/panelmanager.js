@@ -1192,7 +1192,7 @@ function PanelManager (container, searchConfig)
         var newPanel;
         if (panelObj.Title.indexOf("Map ") === 0)
             newPanel = new MapPanel(panelObj.Id, panelObj.Type, panelObj.Title, panelObj.Url, panelObj.Position, false, maxZidx, this.Container, this, 0);
-        else if (panelObj.Title.indexOf("XML ") === 0)
+        else if ((panelObj.Title.indexOf("XML ") === 0) || (panelObj.Title.indexOf("TEI ") === 0))
             newPanel = new XmlPanel(panelObj.Id, panelObj.Type, panelObj.Title, panelObj.Url, panelObj.Position, false, maxZidx, this.Container, this, 0);
         else
             newPanel = new Panel(panelObj.Id, panelObj.Type, panelObj.Title, panelObj.Url, panelObj.Position, false, maxZidx, this.Container, this, 0);
