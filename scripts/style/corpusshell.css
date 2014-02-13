@@ -61,6 +61,8 @@ display: none;
                  <span class="c_s-ui-widget-header-button titletopiconpin c_s-hidden c_s-grayed">
                         <!-- picture is set using css background! -->
                  </span>
+                 <a class="c_s_fcs_xml_link" href="#">FCS-SRU</a>
+                 <a class="c_s_tei_xml_link c_s-hidden" href="#">TEI</a>
              </div>
          </div>
          <div class="c_s-searchresults-container">
@@ -119,15 +121,36 @@ table {
         background-position: 1px 1px;
         background-size: 15px 15px;
         background-repeat: no-repeat;
+        border-radius: 8px;
         cursor: default;
+        margin: 1px;
+}
+
+.c_s-ui-widget-header-button:hover {
+       box-shadow: 2px 0 2px #555555;
 }
 
 .c_s_fcs_xml_link,
 .c_s_tei_xml_link {
        float: right;
-       padding: 0 10px;
+       margin: 1px 2px;
+       padding: 0px 3px;
+       color: #1C5A80;
+       text-decoration: none;
+       border: 1px solid #1C5A80;
+       border-radius: 8px;
+       font-size: 10px;
 }
 
+.c_s_fcs_xml_link:visited,
+.c_s_tei_xml_link:visited {
+       color: #1C5A80;
+}
+
+.c_s_fcs_xml_link:hover,
+.c_s_tei_xml_link:hover {
+       box-shadow: 2px 0 2px #555555;
+}
 .c_s-ui-widget-header-button.c_s-hidden {
     display: none;
 }
@@ -442,6 +465,8 @@ a.searchresult:hover, a.searchresult:focus {
                  <span class="c_s-ui-widget-header-button titletopiconpin c_s-hidden c_s-grayed">
                         <!-- picture is set using css background! -->
                  </span>
+                 <a class="c_s_fcs_xml_link" href="#">FCS-SRU</a>
+                 <a class="c_s_tei_xml_link c_s-hidden" href="#">TEI</a>
                 </div>
             </div>
             <div class="c_s-search-ui">
