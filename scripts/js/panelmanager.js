@@ -1136,6 +1136,8 @@ function PanelManager (container, searchConfig)
   */
   this.OpenNewContentPanel = function(url, titlePart)
   {
+    if (url === '#')
+        return;
     var panelName = this.GetNewPanelId();
 
     var position = this.GetInitialPosition();

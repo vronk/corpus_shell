@@ -66,7 +66,7 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
    * @type {url}
    * @desc A URL used for creating this panel.
    */
-  this.Url = encodeURI(url);
+  this.Url = url;
   /**
    * @public
    * @type {Object}
@@ -414,8 +414,6 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
     $(searchPanel).append(searchResultDiv);
             } else {
             this.FillInPanelTitle(searchPanel, this.Title, 0, false);
-            searchPanel.find("a.c_s_tei_xml_link").removeClass("c_s-hidden").attr("href", this.Url.replace("x-format=html", "x-format=xmltei"));
-
             this.searchbutton = searchUI.find(".c_s-ui-searchbutton input");
             this.searchbutton.attr("onclick", "PanelController.StartSearch('" + this.Id + "', true);");
             var startrecordInput = searchUI.find(".startrecord");
@@ -436,7 +434,7 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
             loadButton.attr("onclick", "PanelController.StartSearch('" + this.Id + "');");
             searchUI.find(".navigationmain .prev").attr("onclick", "PanelController.StartSearchPrev('" + this.Id + "');");
             searchUI.find(".navigationmain .next").attr("onclick", "PanelController.StartSearchNext('" + this.Id + "');");
-            this.ConfigureSearchTextInput(searchUI.find(".searchstring"), query);
+            this.ConfigureSearchTextInput(searchUI.find(".searchstring"), decodeURIComponent(query));
             this.ConfigureSearchContextCombo(searchUI.find(".searchcombo"), this.Config);
             
             searchPanel.find(".c_s-ui-widget-header").after(searchUI);
@@ -679,7 +677,7 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
         {
           var responseText = xml.responseText;
 
-          responseText = $(responseText).find(".title, .data-view, .navigation, .content");
+          responseText = $(responseText).find(".title, .data-view, .navigation, .content, .tei-teiHeader");
 
           if ($(elem).find(".searchresults").data('jsp') != undefined)
           {
@@ -1039,7 +1037,9 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
         // TODO Check this!
         context.find(".titletopiconpin").attr("onclick", "PanelController.PinPanel('" + this.Id + "', 2);");
         context.find(".titletopiconpin.c_s-grayed").attr("onclick", "PanelController.PinPanel('" + this.Id + "', 1);");
-        context.find("a.c_s_fcs_xml_link").attr("href", this.Url.replace("x-format=html", "x-format=xml").replace("x-format=json", "x-format=xml"));
+        if (this.Url in this) {
+            this.SetUrl(this.Url);
+        }
   };
 
   this.GeneratePanelTitle = function(titlestring, pin, pinned)
