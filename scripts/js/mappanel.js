@@ -47,6 +47,9 @@ MapPanel = function (id, type, title, url, position, pinned, zIndex, container, 
 
                         $(elem).find(".searchresults").html(responseText);
                         panel.initalizeLayers();
+                    },
+                    success: function() {
+                        panel.SetUrl(panel.Url);
                     }
                 }
         );
