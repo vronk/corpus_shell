@@ -716,7 +716,8 @@ div.demo {
 /*
  Styles used by VICAV language profiles
  ======================================
- Blind tables are used here. These should be replaced.
+ Blind tables are used here. These should be replaced. Contains styles used by
+ other types of data too, e. g. th copyright/metadata handling.
  
  Example:
 ```
@@ -789,10 +790,83 @@ div.profiletext h4 {
 .tei-div.typology {
         display: inline-block;
 }
-.vicav-profile h2,
-.vicav-profile h3 {
+.vicav_profiles_001 h2,
+.vicav_profiles_001 h3 {
         white-space: nowrap;
         display: inline-block;
+}
+/**
+  Copyright/Metadata
+  ------------------
+  Copyright is hidden by default and a © is show which can bo hovered to get the
+  full statement as a tool tip.
+*/
+
+.searchresults > .data-view.metadata:nth-last-of-type(1),
+.searchresults .data-view.metadata:nth-last-of-type(3),
+.searchresults .show tr:nth-last-of-type(1) > td .data-view.metadata {
+    display: inline-block;
+}
+
+.data-view.metadata {
+    color: #555555;
+    position: relative;
+    display: none;
+    font-style: italic;
+}
+
+.data-view.metadata:before {
+    content:"©";
+}
+
+.metadata.wrapper {
+    display:none;
+    position:absolute;
+    left: 20px;
+    top: -150%;
+    width: 20em;
+    background: #FFF;
+    z-index: 5;
+    box-shadow: 10px 5px 5px black;
+}
+
+.data-view.metadata:hover > .metadata.wrapper,
+.metadata.wrapper:hover {
+    display: block;
+}
+
+/*
+ Styles used by VICAV language bibliography
+ ==========================================
+ Hide keywords by default, show them as tooltip.
+*/
+
+.indexTerms {
+    position: relative;
+    cursor: help;
+    display: inline;
+}
+
+.indexTerms:before {
+    content: "Keywords";
+    text-decoration: underline;
+}
+
+.indexTerms .tei-index {
+    display: none;
+    cursor: auto;
+    position: absolute;
+    top: 0;
+    left: 20px;
+    background: #FFF;
+    z-index: 6;
+    box-shadow: 10px 5px 5px black;
+    padding: 0 1em 0 2em;
+}
+
+.indexTerms:hover .tei-index,
+.indexTerms .tei-index li:hover {
+    display: block;
 }
 
 /*
@@ -841,10 +915,6 @@ div.profiletext h4 {
 	background-color: #aaffaa;
 }
 
-div.data-view.metadata {
-	color: #999999;
-	font-style: italic;
-}
 /*
  CMD style
  =========
@@ -860,7 +930,11 @@ div.data-view.metadata {
 	top: 2px;
 }
 
-    /* A class for forcing the hand/pointer cursor (used for the mappanel dircles).*/
-    .cursor_pointer {
+/*
+ Styles used by map panels
+ =========================
+
+ A class for forcing the hand/pointer cursor (used for the mappanel dircles).*/
+.cursor_pointer {
         cursor: pointer;
-    }
+}
