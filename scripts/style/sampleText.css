@@ -9,7 +9,7 @@
     width: 15em;
     padding-left: 2px;
     border: 1px solid #999;
-    margin: 0 0 0 5px;
+    margin: 0 0 0 1em;
     box-shadow: 10px 5px 5px black;
 }
 
@@ -57,7 +57,6 @@
     display: block;
     position: relative;
     padding: 2px 10px;
-    background: #F1F1F1;
 }
 
 .tei-w:hover .tei-fs,

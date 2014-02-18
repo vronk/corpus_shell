@@ -1,0 +1,150 @@
+.tei-entry {
+    margin-top: 15px;
+    background: rgb(222,232,254);
+    border: 1px solid grey
+}
+
+/*.tei-entry {
+    margin-top: 15px;
+    background:rgb(242,242,242);
+    border: 1px solid grey
+}*/
+
+.tei-form-lemma {
+    font-weight: bold;
+}
+
+.tei-form-inflected {
+    display: block;
+    margin-left:30px
+}
+
+.tei-form-ana {
+    font-weight: bold;
+    font-style: italic;
+    color: rgb(63,116,254);
+}
+
+/*.tei-form-ana {
+    font-weight: bold;
+    font-style: italic;
+    color: blue;
+}*/
+
+.tei-form-ana:before {
+    content: " (";
+}
+
+.tei-form-ana:after {
+    content: ")";
+}
+
+.tei-orth.ar-arz-x-cairo-arabic:before {
+    content:"(";
+}
+
+.tei-orth.ar-arz-x-cairo-arabic:after {
+    content:")";
+}
+
+.tei-gramGrp {
+    padding: 0 0 0 0;
+    display: inline;
+    color: rgb(247,15,9)
+}
+
+/*.tei-gramGrp {
+    padding: 0 0 0 0;
+    display: inline;
+    color: rgb(0,64,0);
+}*/
+ 
+.tei-gramGrp:before {
+    content:"[";
+}
+
+.tei-gramGrp:after {
+    content:"]";
+}
+
+.tei-gram {
+    margin: 0 0 0 0;
+    display: inline;
+    list-style: none;    
+}
+
+dt.tei-gram:after {
+    content: ":";
+}
+
+dd.tei-gram:after {
+    content: ", ";
+}
+
+dd.tei-gram:nth-last-of-type(1):after {
+    content: "";
+}
+
+.tei-cit-example {
+    padding: 3px;
+    color:green;
+    border:1px solid rgb(97,137,1);
+    background: rgb(250,255,183);
+}
+
+.tei-cit-translation-de {
+    color:rgb(126,126,126);
+    font-style: italic;
+}
+
+.tei-sense .tei-cits .tei-cit-example  {
+    margin-left: 20px;
+}
+
+.tei-cit-example .tei-cit-translation-en {
+    color: rgb(193,97,0);
+    font-style: italic;
+}
+
+.tei-cit-translation-de:before {
+    content: "(";
+}
+
+.tei-cit-translation-de:after {
+    content: ")";
+}
+
+.tei-def-de {
+    color:rgb(126,126,126);
+    font-style: italic
+}
+
+.tei-def-de:before {
+    content: "(";
+}
+
+.tei-def-de:after {
+    content: ")";
+}
+
+.tei-sense > .tei-cits {
+    margin-top: 5px;
+    border-top:0.5px dotted grey;
+}
+
+.tei-sense > .tei-defs {
+    margin-top: 5px;
+    border-top:0.5px dotted grey;
+    font-style: italic;
+    color: rgb(36,53,208);
+}
+
+/*
+ * hide during development
+ *
+.data-view.metadata,
+div.note,
+.result-header > span {
+    display: none;
+}
+/**/
