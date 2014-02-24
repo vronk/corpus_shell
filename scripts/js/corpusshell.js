@@ -285,11 +285,13 @@ function doOnDocumentReady ()
        ShowIndexCache();
     });
 
+    var clickHandled = false;
     $('.searchresults .data-view.full a').live("click", function (event) {
             var target = $(this).attr('target');
             if (target === undefined || target === "") {
                 event.preventDefault();
                 PanelController.OpenSubPanel(this, $(this).attr('href'), true, "text");
+                clickHandled = true;
             }
       });
     $('.searchresults .data-view.image a').live("click", function (event) {
@@ -297,10 +299,16 @@ function doOnDocumentReady ()
             if (target === undefined || target === "") {
                 event.preventDefault();
                 PanelController.OpenSubPanel(this, $(this).attr('href'), true, "image");
+                clickHandled = true;
             }
       });
     $('.searchresults a.value-caller').live("click", function (event) {
         event.preventDefault();
+        if (clickHandled === true) {
+            clickHandled = false;
+            return;
+        }
+        clickHandled = false;
         target = $(this).attr('href');
         if (target.indexOf('http://') === -1) {
             target = switchURL + target;
@@ -309,6 +317,11 @@ function doOnDocumentReady ()
       });
     $('.searchresults a.search-caller').live("click", function (event) {
         event.preventDefault();
+            if (clickHandled === true) {
+            clickHandled = false;
+            return;
+        }
+        clickHandled = false;
         target = $(this).attr('href');
         var urlParams = GetUrlParams(target);
         var ID = PanelController.OpenNewSearchPanel(urlParams['x-context'], urlParams.query);
@@ -317,6 +330,7 @@ function doOnDocumentReady ()
     $('.searchresults .navigation a').live("click", function (event) {
          event.preventDefault();
          PanelController.OpenSubPanel(this, $(this).attr('href'), true, "text");
+         clickHandled = true;
       });
     $('a.c_s_fcs_xml_link').live("click", function (event) {
         event.preventDefault();
