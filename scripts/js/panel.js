@@ -655,7 +655,7 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
   {
     return '#' + this.Id;
   };
-
+          
   /**
   * @param -
   * purpose:    loads this.Url via AJAX and places the content of the remote file
@@ -667,6 +667,11 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
   {
     var elem = this.GetCssId();
     var panel = this;
+    if (this.initialSearchResultClasses === undefined) {
+        this.initialSearchResultClasses = $(elem).find(".searchresults").attr('class');
+    } else {
+        $(elem).find(".searchresults").attr('class', this.initialSearchResultClasses);
+    }
 
     $.ajax(
     {
@@ -675,9 +680,18 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
         dataType: 'xml',
         complete: function(xml, textStatus)
         {
-          var responseText = xml.responseText;
+          var responseText = $(xml.responseText);
 
-          responseText = $(responseText).find(".title, .data-view, .navigation, .content, .tei-teiHeader");
+          //The "type" of resource, the x-context, is passed as a class of the
+          //returned div. This div is skipped over in this kind of panel so
+          //try to get the classes and then add them to the .searchresults div
+          var snippetClasses;
+          for (var key in responseText) {
+              snippetClasses = $(responseText[key]).attr('class');
+              if (snippetClasses !== undefined)
+                 break;
+          }
+          responseText = responseText.find(".title, .data-view, .navigation, .content");
 
           if ($(elem).find(".searchresults").data('jsp') != undefined)
           {
@@ -694,7 +708,9 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
              */
              height = $(elem).find(".c_s-scroll-area").height();
             }
-            $(elem).find(".searchresults").html(responseText);
+            var searchResults = $(elem).find(".searchresults");
+            searchResults.attr('class', searchResults.attr('class') + ' ' + snippetClasses);
+            searchResults.html(responseText);
             if ($.browser.mozilla) {
                 $(elem).find(".c_s-scroll-area").height(height);
             }
