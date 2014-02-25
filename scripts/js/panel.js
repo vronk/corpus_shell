@@ -686,11 +686,12 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
           //returned div. This div is skipped over in this kind of panel so
           //try to get the classes and then add them to the .searchresults div
           var snippetClasses;
-          for (var key in responseText) {
-              snippetClasses = $(responseText[key]).attr('class');
+          responseText.each(function() {
+              snippetClasses = $(this).attr('class');
               if (snippetClasses !== undefined)
-                 break;
-          }
+                 return false;
+          });
+          
           responseText = responseText.find(".title, .data-view, .navigation, .content");
 
           if ($(elem).find(".searchresults").data('jsp') != undefined)
