@@ -1,1 +1,39 @@
-span.bibl { font-style: italic; color: #000099;}span.persName ,span.person { font-weight: bold;  color: #009900; }span.placeName { font-weight: bold;  color: #990000; }span.rs { font-weight: bold;  color: #333366; }.inline-wrap {position: relative;}.inline-wrap .attributes { background-color: #CCCCFF; position: absolute; top: 1.5em; z-index:4; }body { font: 13px/1.5 'Istok Web', arial, sans-serif; }
+
+
+span.bibl { font-style: italic; color: #000099;}
+
+span.persName ,span.person { font-weight: bold;  color: #009900; }
+
+span.placeName { font-weight: bold;  color: #990000; }
+
+span.rs { font-weight: bold;  color: #333366; }
+
+
+
+.inline-wrap {position: relative;}
+
+.inline-wrap .attributes { background-color: #CCCCFF; position: absolute; top: 1.5em; z-index:4; }
+
+body { font: 13px/1.5 'Istok Web', arial, sans-serif; }
+
+.content {
+    position: relative;
+}
+
+.zr-description,
+.zr-indexInfo {
+    position: relative;
+    z-index: 2;
+}
+
+.zr-description.background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    opacity: 0.3;
+    /*Old IEs < 8*/
+    filter: alpha(opacity=30);
+}
