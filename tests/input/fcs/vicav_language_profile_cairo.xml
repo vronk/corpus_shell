@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sru:searchRetrieveResponse xmlns="http://www.tei-c.org/ns/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:diag="http://www.loc.gov/zing/srw/diagnostic/" xmlns:sru="http://www.loc.gov/zing/srw/" xmlns:fcs="http://clarin.eu/fcs/1.0">
+    <sru:version>1.2</sru:version>
+    <sru:numberOfRecords>1</sru:numberOfRecords>
+    <sru:echoedSearchRetrieveRequest>
+        <sru:version>1.2</sru:version>
+        <sru:query>profile==Cairo</sru:query>
+        <fcs:x-context>vicav_profiles_001</fcs:x-context>
+        <fcs:x-dataview>kwic,title</fcs:x-dataview>
+        <sru:baseUrl>http://localhost/vicav2/corpus_shell/modules/mysqlonsru/ProfileOnSRU.php</sru:baseUrl>
+    </sru:echoedSearchRetrieveRequest>
+    <sru:extraResponseData>
+        <fcs:returnedRecords>1</fcs:returnedRecords>
+        <fcs:numberOfMatches/>
+        <fcs:duration>0.0</fcs:duration>
+        <fcs:transformedQuery>SELECT DISTINCT id, entry FROM vicav_profiles_001 WHERE lemma = 'Cairo'</fcs:transformedQuery>
+    </sru:extraResponseData>
+    <sru:records>
+        <sru:record>
+            <sru:recordSchema/>
+            <sru:recordPacking>xml</sru:recordPacking>
+            <sru:recordData>
+                <fcs:Resource>
+                    <fcs:ResourceFragment>
+                        <fcs:DataView type="title">A machine-readable language profile of Cairo Arabic</fcs:DataView>
+                        <fcs:DataView type="full">
+                            <TEI xml:id="profile_cairo_01">
+                                <teiHeader>
+                                    <fileDesc>
+                                        <author>Charly Moerth</author>
+                                        <titleStmt>
+                                            <title>A machine-readable language profile of Cairo Arabic</title>
+                                        </titleStmt>
+                                        <publicationStmt>
+                                            <pubPlace>Vienna</pubPlace>
+                                            <date>2011</date>
+                                            <availability status="restricted">
+                                                <p>
+                                                    <ref type="license" target="http://creativecommons.org/licenses/by-nc-sa/3.0/"/>
+                                                </p>
+                                            </availability>
+                                        </publicationStmt>
+                                        <editionStmt>
+                                            <edition>1.0 (Alpha)</edition>
+                                        </editionStmt>
+                                        <sourceDesc>
+                                            <p>This is an original digital text</p>
+                                        </sourceDesc>
+                                    </fileDesc>
+                                </teiHeader>
+                                <text>
+                                    <body>
+                                        <div>
+                                            <head>
+                                                <ref target="Cairo-2009.JPG"/>
+                                                <name xml:lang="eng">Cairo</name>
+                                                <name xml:lang="ara">القاهیرة</name>
+                                                <name xml:lang="ara-x-DMG">ʔal-Qāhira</name>
+                                                <name xml:lang="arz" type="araLoc">مصر</name>
+                                                <name xml:lang="arz-Latn" type="latLoc">Maṣr</name>
+                                                <ref target="#xpath1(//author)"/>
+                                            </head>
+                                            <div type="positioning">
+                                                <p>
+                                                    <geo>30.05, 31.233333</geo>
+                                                </p>
+                                            </div>
+                                            <div type="typology">
+                                                <p>Eastern › Egyptian › Upper Egypt</p>
+                                                <p>Urban, sedentary, high prestige variety</p>
+                                            </div>
+                                            <div type="general">
+                                                <p>The Egyptian varieties of Arabic form a quite diversified linguistic group.
+               They are usually subdivided into four major subgroups: the dialects of Upper Egypt,
+               Middle Egypt, Lower Egypt and those spoken in the Oases.
+               The dialect of the capital belongs to the northern group.</p>
+                                                <p>By contrast to most other varieties of vernacular Arabic, the dialect of Cairo
+               has been reduced to writing as well. There exists quite a significant amount of
+               literary output, in particular stage plays.</p>
+                                            </div>
+                                            <div type="researchHistory">
+                                                <p>
+                                                    The first serious reliable descriptions of Egyptian Arabic
+               were written in the 19th century: Wilhelm Spitta published his grammar 
+               in 1890,
+                                                    <ref target="vicav_bibl_002|id==vollers_karl_001">Vollers a textbook in 1890</ref>
+                                                    . These were followed by Nallino (1900) 
+               and Willmore (1905). The great bulk of publications was written after 
+               World War II: Tomiche (1962), Mitchell (1962), Salib (1981) and Ahmed (1981). 
+               Most studies followed rather traditional approaches. An exception is Wise 
+               (1975) who produced a transformational grammar. For generations of learners 
+               of spoken Egyptian the course material compiled by Abdel-Masih 
+               (1978-9) was the main guidance.
+                                                </p>
+                                                <div>
+                                                    <head>Test level 3</head>
+                                                    <p>abc</p>
+                                                </div>
+                                                <p>The most substantial contributions of the Egyptian
+            dialects were made by Behnstedt and Woidich. Most of their work was done 
+            in the 80ies and 90ies of the 20th century.</p>
+                                            </div>
+                                            <div type="sampleText">
+                                                <p>
+                                                    <ptr target="vicav_sampletexts|sampleText==cairo_sample_01"/>
+                                                </p>
+                                            </div>
+                                            <div type="bibliography">
+                                                <p>
+                                                    Until the late twentieth century, the language of the Egyptian capital
+            remained poorly documented. Meanwhile, a number of most valuable descriptions 
+            have been published. The amount of literature is quite considerable.
+                                                    <ptr target="vicav_bibl_002|vicavTaxonomy=Cairo"/>
+                                                </p>
+                                            </div>
+                                            <div type="dictionaries">
+                                                <p>There exist several dictionaries for those who want to study Egyptian Arabic.
+            The so far most comprehensive one is Hinds/Badawi (Arabic-English). It was published 
+            in 1986.</p>
+                                                <p>
+                                                    Our site provides a digital dictionary of Cairo Arabic.
+                                                    <ptr target="arz_eng_006"/>
+                                                </p>
+                                                <p>
+                                                    Socrates Spiro’s dictionary is pretty old. As there is not anything else
+            available in digital form, it is still worth looking at.
+                                                    <ptr target="http://archive.org/details/anarabicenglish00spirgoog"/>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </body>
+                                </text>
+                            </TEI>
+                        </fcs:DataView>
+                    </fcs:ResourceFragment>
+                </fcs:Resource>
+            </sru:recordData>
+            <sru:recordPosition>1</sru:recordPosition>
+            <sru:recordIdentifier>?x-context=vicav_profiles_001&amp;operation=searchRetrieve&amp;version=1.2&amp;query=profile%3D%3DCairo&amp;startRecord=1&amp;maximumRecords=10&amp;recordPacking=xml&amp;x-dataview=kwic%2Ctitle&amp;x-format=xml</sru:recordIdentifier>
+        </sru:record>
+    </sru:records>
+    <sru:res>1</sru:res>
+</sru:searchRetrieveResponse>

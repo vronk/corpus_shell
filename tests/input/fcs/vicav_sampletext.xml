@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sru:searchRetrieveResponse xmlns="http://www.tei-c.org/ns/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:diag="http://www.loc.gov/zing/srw/diagnostic/" xmlns:sru="http://www.loc.gov/zing/srw/" xmlns:fcs="http://clarin.eu/fcs/1.0">
+    <sru:version>1.2</sru:version>
+    <sru:numberOfRecords>1</sru:numberOfRecords>
+    <sru:echoedSearchRetrieveRequest>
+        <sru:version>1.2</sru:version>
+        <sru:query>sampleText==cairo_sample_01</sru:query>
+        <fcs:x-context>vicav_profiles_001</fcs:x-context>
+        <fcs:x-dataview>kwic,title</fcs:x-dataview>
+        <sru:baseUrl>http://127.0.0.1/corpus_shell/modules/mysqlonsru/ProfileOnSRU.php</sru:baseUrl>
+    </sru:echoedSearchRetrieveRequest>
+    <sru:extraResponseData>
+        <fcs:returnedRecords>1</fcs:returnedRecords>
+        <fcs:numberOfMatches/>
+        <fcs:duration>0.0</fcs:duration>
+        <fcs:transformedQuery>SELECT DISTINCT sid, entry FROM vicav_profiles_001 WHERE sid = 'cairo_sample_01'</fcs:transformedQuery>
+    </sru:extraResponseData>
+    <sru:records>
+        <sru:record>
+            <sru:recordSchema/>
+            <sru:recordPacking>xml</sru:recordPacking>
+            <sru:recordData>
+                <fcs:Resource>
+                    <fcs:ResourceFragment>
+                        <fcs:DataView type="title">A short sample of Cairo Arabic</fcs:DataView>
+                        <fcs:DataView type="full">
+                            <TEI xml:id="cairo_sample_01">
+                                <teiHeader>
+                                    <fileDesc>
+                                        <author>Charly Moerth</author>
+                                        <titleStmt>
+                                            <title>A short sample of Cairo Arabic</title>
+                                        </titleStmt>
+                                        <publicationStmt>
+                                            <pubPlace>Vienna</pubPlace>
+                                            <date>2014</date>
+                                            <availability status="restricted">
+                                                <p>
+                                                    <ref type="license" target="http://creativecommons.org/licenses/by-nc-sa/3.0/"/>
+                                                </p>
+                                            </availability>
+                                        </publicationStmt>
+                                        <editionStmt>
+                                            <edition>1.0 (Alpha)</edition>
+                                        </editionStmt>
+                                        <sourceDesc>
+                                            <p>This is an original digital text</p>
+                                        </sourceDesc>
+                                    </fileDesc>
+                                </teiHeader>
+                                <text>
+                                    <body>
+                                        <head>Short sample text (Cairo)</head>
+                                        <div type="sampleText">
+                                            <s n="1">
+                                                <w>
+                                                    <fs>
+                                                        <f name="wordform" xml:lang="ar-arz-x-cairo-vicavTrans">ʔahl-an</f>
+                                                        <f name="pos">adverb</f>
+                                                        <f name="lemma" xml:lang="ar-arz-x-cairo-vicavTrans">ʔahl</f>
+                                                        <f name="translation">welcome</f>
+                                                    </fs>
+                                                </w>
+                                                <c>!</c>
+                                            </s>
+                                            <s>
+                                                <w>
+                                                    <fs>
+                                                        <f name="wordform" xml:lang="ar-arz-x-cairo-vicavTrans">ʔana</f>
+                                                        <f name="pos">pronoun</f>
+                                                        <f name="lemma" xml:lang="ar-arz-x-cairo-vicavTrans">ʔana</f>
+                                                        <f name="translation">I</f>
+                                                    </fs>
+                                                </w>
+                                                <w>
+                                                    <fs>
+                                                        <f name="wordform" xml:lang="ar-arz-x-cairo-vicavTrans">ʔism</f>
+                                                        <f name="pos">commonNoun</f>
+                                                        <f name="lemma" xml:lang="ar-arz-x-cairo-vicavTrans">ʔism</f>
+                                                        <f name="translation">name</f>
+                                                    </fs>
+                                                </w>
+                                                <w>
+                                                    <fs>
+                                                        <f name="wordform" xml:lang="ar-arz-x-cairo-vicavTrans">i</f>
+                                                        <f name="pos">cliticPronoun</f>
+                                                        <f name="lemma" xml:lang="ar-arz-x-cairo-vicavTrans">i</f>
+                                                        <f name="translation">me, my</f>
+                                                    </fs>
+                                                </w>
+                                                <w>
+                                                    <fs>
+                                                        <f name="wordform" xml:lang="ar-arz-x-cairo-vicavTrans">muna</f>
+                                                        <f name="pos">properNoun</f>
+                                                        <f name="lemma" xml:lang="ar-arz-x-cairo-vicavTrans">muna</f>
+                                                        <f name="translation">Mona</f>
+                                                    </fs>
+                                                </w>
+                                                <c>.</c>
+                                            </s>
+                                            <s>
+                                                <w>
+                                                    <fs>
+                                                        <f name="wordform" xml:lang="ar-arz-x-cairo-vicavTrans">ʔana</f>
+                                                        <f name="pos">pronoun</f>
+                                                        <f name="lemma" xml:lang="ar-arz-x-cairo-vicavTrans">ʔana</f>
+                                                        <f name="translation">I</f>
+                                                    </fs>
+                                                </w>
+                                                <w>
+                                                    <fs>
+                                                        <f name="wordform" xml:lang="ar-arz-x-cairo-vicavTrans">min</f>
+                                                        <f name="pos">preposition</f>
+                                                        <f name="lemma" xml:lang="ar-arz-x-cairo-vicavTrans">min</f>
+                                                        <f name="translation">from</f>
+                                                    </fs>
+                                                </w>
+                                                <w>
+                                                    <fs>
+                                                        <f name="wordform">maṣr</f>
+                                                        <f name="pos">properNoun</f>
+                                                        <f name="lemma">maṣr</f>
+                                                        <f name="translation">Cairo; Egypt</f>
+                                                    </fs>
+                                                </w>
+                                                <w>
+                                                    <fs>
+                                                        <f name="wordform">il</f>
+                                                        <f name="pos">definiteArticle</f>
+                                                        <f name="lemma">ǝl</f>
+                                                        <f name="translation">the</f>
+                                                    </fs>
+                                                </w>
+                                                <c>-</c>
+                                                <w>
+                                                    <fs>
+                                                        <f name="wordform">ʔadīma</f>
+                                                        <f name="pos">adjective</f>
+                                                        <f name="lemma">ʔadīm</f>
+                                                        <f name="translation">old</f>
+                                                    </fs>
+                                                </w>
+                                                <c>.</c>
+                                            </s>
+                                            <s>
+                                                <w>
+                                                    <fs>
+                                                        <f name="wordform">ʔintu</f>
+                                                        <f name="pos">pronoun</f>
+                                                        <f name="number">plural</f>
+                                                        <f name="lemma">ʔintu</f>
+                                                        <f name="translation">you (pl.)</f>
+                                                    </fs>
+                                                </w>
+                                                <w>
+                                                    <fs>
+                                                        <f name="wordform">mnēn</f>
+                                                        <f name="pos">interrogativeAdverb</f>
+                                                        <f name="lemma">minēn</f>
+                                                        <f name="translation">where from</f>
+                                                    </fs>
+                                                </w>
+                                                <c>?</c>
+                                            </s>
+                                            <s>
+                                                <w>
+                                                    <fs>
+                                                        <f name="wordform">ʔizzayy</f>
+                                                        <f name="pos">interrogativeAdverb</f>
+                                                        <f name="lemma">kīf</f>
+                                                        <f name="translation">how</f>
+                                                    </fs>
+                                                </w>
+                                                <w>
+                                                    <fs>
+                                                        <f name="wordform">ukum</f>
+                                                        <f name="pos">cliticPronoun</f>
+                                                        <f name="number">plural</f>
+                                                        <f name="lemma">kum</f>
+                                                        <f name="translation">you, your</f>
+                                                    </fs>
+                                                </w>
+                                                <c>?</c>
+                                            </s>
+                                            <s>
+                                                <w>
+                                                    <fs>
+                                                        <f name="wordform">kuwayyisīn</f>
+                                                        <f name="pos">adjective</f>
+                                                        <f name="number">plural</f>
+                                                        <f name="lemma">kuwayyis</f>
+                                                        <f name="translation">good, fine, well</f>
+                                                    </fs>
+                                                </w>
+                                                <w>
+                                                    <fs>
+                                                        <f name="wordform">in-šāʔ-aḷḷāh</f>
+                                                        <f name="pos">particle</f>
+                                                        <f name="lemma">ʔin-šāʔ-aḷḷāh</f>
+                                                        <f name="translation">God willing</f>
+                                                    </fs>
+                                                </w>
+                                                <c>!</c>
+                                            </s>
+                                            <s>
+                                                <w>
+                                                    <fs>
+                                                        <f name="wordform">bi</f>
+                                                        <f name="pos">verbalParticle</f>
+                                                        <f name="lemma">bi</f>
+                                                        <f name="usage">(progressive aspect)</f>
+                                                    </fs>
+                                                </w>
+                                                <c>-</c>
+                                                <w>
+                                                    <fs>
+                                                        <f name="wordform">tiʕmilu</f>
+                                                        <f name="pos">verb</f>
+                                                        <f name="number">plural</f>
+                                                        <f name="tense">present</f>
+                                                        <f name="person">2</f>
+                                                        <f name="lemma">ʕamal</f>
+                                                        <f name="translation">to do</f>
+                                                    </fs>
+                                                </w>
+                                                <w>
+                                                    <fs>
+                                                        <f name="wordform">ʔēh</f>
+                                                        <f name="pos">interrogativePronoun</f>
+                                                        <f name="lemma">ʔēh</f>
+                                                        <f name="translation">what</f>
+                                                    </fs>
+                                                </w>
+                                                <w>
+                                                    <fs>
+                                                        <f name="wordform">dilwaʔti</f>
+                                                        <f name="pos">adverb</f>
+                                                        <f name="lemma">dilwaʔti</f>
+                                                        <f name="translation">now</f>
+                                                    </fs>
+                                                </w>
+                                                <c>?</c>
+                                            </s>
+                                            <s>
+                                                <w>
+                                                    <fs>
+                                                        <f name="wordform">ʕawzīn</f>
+                                                        <f name="pos"/>
+                                                        <f name="number"/>
+                                                        <f name="lemma">ʕāwiz</f>
+                                                        <f name="translation">want</f>
+                                                    </fs>
+                                                </w>
+                                                <w>
+                                                    <fs>
+                                                        <f name="wordform">tīgu</f>
+                                                        <f name="pos">verb</f>
+                                                        <f name="number">plural</f>
+                                                        <f name="tense">present</f>
+                                                        <f name="person">2</f>
+                                                        <f name="lemma">gih</f>
+                                                        <f name="translation">to come</f>
+                                                    </fs>
+                                                </w>
+                                                <w>
+                                                    <fs>
+                                                        <f name="wordform">maʕā</f>
+                                                        <f name="pos">preposition</f>
+                                                        <f name="lemma">maʕa</f>
+                                                        <f name="translation">with</f>
+                                                    </fs>
+                                                </w>
+                                                <w>
+                                                    <fs>
+                                                        <f name="wordform">ya</f>
+                                                        <f name="pos">cliticPronoun</f>
+                                                        <f name="lemma">i/ya</f>
+                                                        <f name="translation">me, my</f>
+                                                    </fs>
+                                                </w>
+                                                <c>?</c>
+                                            </s>
+                                            <s>
+                                                <w>
+                                                    <fs>
+                                                        <f name="wordform">yaḷḷa</f>
+                                                        <f name="pos">particle</f>
+                                                        <f name="lemma">yaḷḷa</f>
+                                                        <f name="translation">let us</f>
+                                                    </fs>
+                                                </w>
+                                                <w>
+                                                    <fs>
+                                                        <f name="wordform">nišrab</f>
+                                                        <f name="pos">verb</f>
+                                                        <f name="person">1</f>
+                                                        <f name="number">plural</f>
+                                                        <f name="tense">present</f>
+                                                        <f name="lemma">širib</f>
+                                                        <f name="translation">to drink</f>
+                                                    </fs>
+                                                </w>
+                                                <w>
+                                                    <fs>
+                                                        <f name="wordform">ʔahwa</f>
+                                                        <f name="pos">commonNoun</f>
+                                                        <f name="lemma">ʔahwa</f>
+                                                        <f name="translation">coffee</f>
+                                                    </fs>
+                                                </w>
+                                                <c>!</c>
+                                            </s>
+                                        </div>
+                                    </body>
+                                </text>
+                            </TEI>
+                        </fcs:DataView>
+                    </fcs:ResourceFragment>
+                </fcs:Resource>
+            </sru:recordData>
+            <sru:recordPosition>1</sru:recordPosition>
+            <sru:recordIdentifier>?x-context=vicav_profiles_001&amp;operation=searchRetrieve&amp;version=1.2&amp;query=sampleText%3D%3Dcairo_sample_01&amp;startRecord=1&amp;maximumRecords=10&amp;recordPacking=xml&amp;x-dataview=kwic%2Ctitle&amp;x-format=xml</sru:recordIdentifier>
+        </sru:record>
+    </sru:records>
+    <sru:res>1</sru:res>
+</sru:searchRetrieveResponse>
