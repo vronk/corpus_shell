@@ -692,7 +692,11 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
                  return false;
           });
           
-          responseText = responseText.find(".title, .data-view, .navigation, .content");
+          var responseTable = responseText.find("table.show");
+          if (responseTable.length === 0)
+            responseText = responseText.find(".title, .data-view, .navigation, .content");
+          else
+            responseText = responseTable;
 
           if ($(elem).find(".searchresults").data('jsp') != undefined)
           {

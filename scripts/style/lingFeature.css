@@ -1,0 +1,138 @@
+a{
+    text-decoration:none;
+}
+table {
+    border:1px solid #000000;
+    border-collapse:collapse;
+}
+td {
+    border:1px solid #000000;
+    vertical-align: top;
+}
+
+ul.dvContents {
+    list-style: none;
+    display: block;
+}
+
+ul.dvContents > li {
+    width: 33.33333%;
+    display: inline;
+    float: left;
+    line-height: 2em;
+}
+
+ul.dvContents::after {
+    content:'';
+    display: block;
+    clear: both;
+}
+
+.h1_contents{
+    display:block;
+    font-size:15pt;
+    text-decoration:none;
+}
+
+.h2_contents{
+    display:block;
+    font-size:14pt;
+    text-decoration:none;
+}
+
+.h3_contents{
+    display:block;
+    font-size:13pt;
+    text-decoration:none;
+    text-indent:20px;
+}
+
+.searchresults .tei-body .feature {
+    margin-bottom: 10px;
+    margin-top: 20px;
+    background: rgb(215,235,255);
+    border: 1px solid rgb(10,1,165);
+    width: 100%;
+}
+
+.searchresults .tei-body .feature > * {
+    margin: 0 0 0 0;
+    position: relative;
+    line-height: 1;
+    margin: 10px 0 10px 0;
+    padding-left: 10px;
+    display: block;
+}
+
+.searchresults .tei-body .feature > h1{
+    font-size:16pt;
+}
+
+.searchresults .tei-body .feature > h2{
+    font-size:14pt;
+}
+.searchresults .tei-body .feature > h3{
+    font-size:12pt;
+}
+
+.spHigh {
+    color: red;
+}
+
+.aGoTocontents {
+    font-size: 10pt;
+    font-weight: bold;
+    padding-right: 10px;
+    padding-left: 10px;
+    float: right;
+    display: block;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 50%;
+    text-align: right;
+}
+
+.tdCom {
+    background: rgb(223,223,223);
+    padding-left: 10px;
+    padding-right: 5px;
+    width: 200px;
+}
+
+.tdLeft {
+    background: rgb(223,223,223);
+    padding-left:10px;
+    padding-right:5px;
+    width: 80px;
+}
+
+.tdRight {
+    background: rgb(223,223,223);
+    padding-left:10px;
+    padding-right:5px;
+}
+
+.lingfeature .tei-table {
+    width: 100%;
+}
+
+.aOuter:hover{
+    position:relative;
+}
+
+.translation{
+    margin-left: 1em;
+    text-indent: -1em;
+    line-height: 20px;
+    color: rgb(0,98,196);
+    font-style: italic;
+}
+
+.example {
+    margin-left: 1em;
+    text-indent: -1em;
+    line-height: 20px;
+    color: black;
+}
+
