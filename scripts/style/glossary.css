@@ -85,45 +85,45 @@ dd.tei-gram:nth-last-of-type(1):after {
     content: "";
 }
 
-.tei-cit-example {
+.tei-cit.example {
     padding: 3px;
     color:green;
     border:1px solid rgb(97,137,1);
     background: rgb(250,255,183);
 }
 
-.tei-cit-translation-de {
+.tei-cit.translation-de {
     color:rgb(126,126,126);
     font-style: italic;
 }
 
-.tei-sense .tei-cits .tei-cit-example  {
+.tei-sense .tei-cits .tei-cit.example  {
     margin-left: 20px;
 }
 
-.tei-cit-example .tei-cit-translation-en {
+.tei-cit.example .tei-cit.translation-en {
     color: rgb(193,97,0);
     font-style: italic;
 }
 
-.tei-cit-translation-de:before {
+.tei-cit.translation-de:before {
     content: "(";
 }
 
-.tei-cit-translation-de:after {
+.tei-cit.translation-de:after {
     content: ")";
 }
 
-.tei-def-de {
+.tei-def.lang-de {
     color:rgb(126,126,126);
     font-style: italic
 }
 
-.tei-def-de:before {
+.tei-def.lang-de:before {
     content: "(";
 }
 
-.tei-def-de:after {
+.tei-def.lang-de:after {
     content: ")";
 }
 

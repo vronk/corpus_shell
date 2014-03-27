@@ -109,7 +109,7 @@ ul.dvContents::after {
 
 .tdRight {
     background: rgb(223,223,223);
-    padding-left:10px;
+    padding-left:1em;
     padding-right:5px;
 }
 
@@ -121,17 +121,14 @@ ul.dvContents::after {
     position:relative;
 }
 
-.translation{
-    margin-left: 1em;
-    text-indent: -1em;
-    line-height: 20px;
+.tei-cit {
+    display: block;
     color: rgb(0,98,196);
     font-style: italic;
 }
 
 .example {
-    margin-left: 1em;
-    text-indent: -1em;
+    text-indent: 1em;
     line-height: 20px;
     color: black;
 }
