@@ -1,4 +1,4 @@
-a{
+.lingfeature a{
     text-decoration:none;
 }
 table {
@@ -10,44 +10,44 @@ td {
     vertical-align: top;
 }
 
-ul.dvContents {
+.lingfeature ul.dvContents {
     list-style: none;
     display: block;
 }
 
-ul.dvContents > li {
+.lingfeature ul.dvContents > li {
     width: 33.33333%;
     display: inline;
     float: left;
     line-height: 2em;
 }
 
-ul.dvContents::after {
+.lingfeature ul.dvContents::after {
     content:'';
     display: block;
     clear: both;
 }
 
-.h1_contents{
+.lingfeature .h1_contents{
     display:block;
     font-size:15pt;
     text-decoration:none;
 }
 
-.h2_contents{
+.lingfeature .h2_contents{
     display:block;
     font-size:14pt;
     text-decoration:none;
 }
 
-.h3_contents{
+.lingfeature .h3_contents{
     display:block;
     font-size:13pt;
     text-decoration:none;
     text-indent:20px;
 }
 
-.searchresults .tei-body .feature {
+.searchresults .lingfeature .tei-body .feature {
     margin-bottom: 10px;
     margin-top: 20px;
     background: rgb(215,235,255);
@@ -55,7 +55,7 @@ ul.dvContents::after {
     width: 100%;
 }
 
-.searchresults .tei-body .feature > * {
+.searchresults .lingfeature .tei-body .feature > * {
     margin: 0 0 0 0;
     position: relative;
     line-height: 1;
@@ -64,22 +64,22 @@ ul.dvContents::after {
     display: block;
 }
 
-.searchresults .tei-body .feature > h1{
+.searchresults .lingfeature .tei-body .feature > h1{
     font-size:16pt;
 }
 
-.searchresults .tei-body .feature > h2{
+.searchresults .lingfeature .tei-body .feature > h2{
     font-size:14pt;
 }
-.searchresults .tei-body .feature > h3{
+.searchresults .lingfeature .tei-body .feature > h3{
     font-size:12pt;
 }
 
-.spHigh {
+.lingfeature .spHigh {
     color: red;
 }
 
-.aGoTocontents {
+.lingfeature .aGoTocontents {
     font-size: 10pt;
     font-weight: bold;
     padding-right: 10px;
@@ -111,7 +111,7 @@ ul.dvContents::after {
     background: rgb(223,223,223);
 }
 
-.tdRight,
+.lingfeature .tdRight,
 .searchresults .lingfeature td.tdRight {
     padding-left:2em;
     padding-right:5px;
@@ -121,18 +121,17 @@ ul.dvContents::after {
     width: 100%;
 }
 
-.aOuter:hover{
+.lingfeature .aOuter:hover{
     position:relative;
 }
 
-.tei-cit {
+.lingfeature .tei-cit {
     display: block;
     color: rgb(0,98,196);
     font-style: italic;    
 }
-
-.example {
-    margin-left: -1em;
+.lingfeature .example {
+    display: block;
     text-indent: -1em;
     line-height: 20px;
     color: black;
