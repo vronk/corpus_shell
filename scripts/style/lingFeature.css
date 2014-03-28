@@ -109,6 +109,10 @@ ul.dvContents::after {
 
 .tdRight {
     background: rgb(223,223,223);
+}
+
+.tdRight,
+.searchresults .lingfeature td.tdRight {
     padding-left:2em;
     padding-right:5px;
 }
