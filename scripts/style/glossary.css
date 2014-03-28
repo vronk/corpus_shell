@@ -65,6 +65,11 @@
 
 .tei-gramGrp:after {
     content:"]";
+    margin-left: -4px;
+}
+
+.tei-gram:first-child {
+    margin-left: -4px;
 }
 
 .tei-gram {
@@ -112,6 +117,11 @@ dd.tei-gram:nth-last-of-type(1):after {
 
 .tei-cit.translation-de:after {
     content: ")";
+    margin-left: -4px;
+}
+
+.tei-cit.translation-de *:first-child {
+    margin-left: -4px;
 }
 
 .tei-def.lang-de {
@@ -121,6 +131,7 @@ dd.tei-gram:nth-last-of-type(1):after {
 
 .tei-def.lang-de:before {
     content: "(";
+    margin-left: 4px;
 }
 
 .tei-def.lang-de:after {
@@ -139,6 +150,26 @@ dd.tei-gram:nth-last-of-type(1):after {
     color: rgb(36,53,208);
 }
 
+.tei-quote span.tei-usg.tei-type-hint {
+    font-size: smaller;
+    color:rgb(126,126,126);
+}
+
+.tei-quote span.tei-usg.tei-type-hint:before {
+    content: "[";
+}
+
+.tei-quote span.tei-usg.tei-type-hint:after {
+    content: "]";
+}
+
+.tei-usg.tei-type-dom {
+    border: 1px solid green;
+    font-size: smaller;
+    padding: 1px 2px;
+    color: green;
+    border-radius: 8px;
+}
 /*
  * hide during development
  *

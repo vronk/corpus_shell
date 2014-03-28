@@ -9,17 +9,56 @@ span.placeName { font-weight: bold;  color: #990000; }
 span.rs { font-weight: bold;  color: #333366; }
 
 
-.inline-wrap {position: relative;}
-.inline-wrap .attributes { background-color: #CCCCFF; position: absolute; top: 1.5em; z-index:4; }
+.inline-wrap {
+position: relative;
+}
+.inline-wrap .attributes {
+background-color: #CCCCFF;
+position: absolute;
+top: 1.5em;
+z-index:4;
+}
 
 /* generic XML-structure rendering */
-label, .label, .cmds-elem-prop .label { font-size: 0.9em; color: #014172; font-style: italic; }
-.value-text { }
+label, .label, .cmds-elem-prop .label {
+font-size: 0.9em;
+color: #014172;
+font-style: italic;
+}
+.value-text {}
 .value-unspecified {}
 .value-empty {}
-.number { text-align: right;}
-.cmds-xmlelem {padding:2px; border-top: 1px dashed #A6C9E2;}
-.cmds-xmlelem.has-children { border: 1px solid #A6C9E2; margin: 2px;}
+.number {
+text-align: right;
+}
+.cmds-xmlelem.wrapper {
+position: relative;
+border-top: 0px;
+}
+.cmds-xmlelem.wrapper:before {
+content: "\26ab";
+color: darkgreen;
+}
+.cmds-xmlelem.wrapper > div {
+display: none;
+z-index: 1000;
+position:absolute;
+background: #fff;
+left: 100%; bottom: 0;
+box-shadow: 10px 5px 5px black;
+}
+.cmds-xmlelem.wrapper:hover > div,
+.cmds-xmlelem.wrapper > div:hover {
+    display: block;
+}
+.cmds-xmlelem {
+padding:2px;
+border-top: 1px dashed #A6C9E2;
+}
+.cmds-xmlelem.has-children {
+border: 1px solid #A6C9E2;
+margin: 2px;
+}
 .cmds-xmlelem.value-text .value {}
 .cmds-xmlelem.value-text .value:before { content: ": "; }
 .cmds-xmlelem.value-text .inline.label {}
