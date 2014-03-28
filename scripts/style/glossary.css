@@ -10,8 +10,13 @@
     border: 1px solid grey
 }*/
 
-.tei-form-lemma {
+.tei-form-lemma,
+.tei-form-multiWordUnit {
     font-weight: bold;
+}
+
+.tei-form-multiWordUnit {
+    border-bottom: 1px dotted #AAA;
 }
 
 .tei-form-inflected {
@@ -169,6 +174,19 @@ dd.tei-gram:nth-last-of-type(1):after {
     padding: 1px 2px;
     color: green;
     border-radius: 8px;
+}
+
+.inline-wrap .bibl {
+    font-size: x-small;
+}
+
+.inline-wrap .bibl:before {
+    content: "\00a0"; 
+}
+
+.inline-wrap + .inline-wrap .bibl:before {
+    content: ";\00a0";
+    margin-left: -4px;
 }
 /*
  * hide during development
