@@ -853,6 +853,8 @@ div.profiletext h4 {
 }
 
 .indexTerms .tei-index {
+    white-space: nowrap;
+    min-width: 10em;
     display: none;
     cursor: auto;
     position: absolute;
@@ -937,4 +939,34 @@ div.profiletext h4 {
  A class for forcing the hand/pointer cursor (used for the mappanel dircles).*/
 .cursor_pointer {
         cursor: pointer;
+}
+
+/*
+ Styles user may use in paragraphs and hilighted parts
+ =====================================================
+ */
+ 
+.tei-hi.bold,
+.tei-p.bold {
+    font-weight: bold;
+}
+
+.tei-hi.underline,
+.tei-p.underline {
+    text-decoration: underline;
+}
+
+.tei-hi.italic,
+.tei-p.italic {
+    font-style: italic;
+}
+
+.tei-hi.bigger,
+.tei-p.bigger {
+    font-size: 110%;
+}
+
+tei-hi.smaller,
+tei-p.smaller {
+    font-size: 90%;
 }
