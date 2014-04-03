@@ -944,6 +944,34 @@ div.profiletext h4 {
 /*
  Styles user may use in paragraphs and hilighted parts
  =====================================================
+
+Example:
+```
+<p class="tei-p">
+  <span class="tei-hi ">paragraph default</span> <span class="tei-hi bold">bold</span>
+  <span class="tei-hi italic">italic</span> <span class="tei-hi underline">undderline</span>
+  sth<span class="tei-hi subs">subs</span> sth<span class="tei-hi supers">supers</span>
+  sth<span class="tei-hi subscript">subscript</span> sth<span class="tei-hi superscript">superscript</span>
+</p>
+<p class="tei-p italic">
+  <span class="tei-hi ">paragraph default</span> <span class="tei-hi bold">bold</span>
+  <span class="tei-hi italic">italic</span> <span class="tei-hi underline">undderline</span>
+  sth<span class="tei-hi subs">subs</span> sth<span class="tei-hi supers">supers</span>
+  sth<span class="tei-hi subscript">subscript</span> sth<span class="tei-hi superscript">superscript</span>
+</p>
+<p class="tei-p bold">
+  <span class="tei-hi ">paragraph default</span> <span class="tei-hi bold">bold</span>
+  <span class="tei-hi italic">italic</span> <span class="tei-hi underline">undderline</span>
+  sth<span class="tei-hi subs">subs</span> sth<span class="tei-hi supers">supers</span>
+  sth<span class="tei-hi subscript">subscript</span> sth<span class="tei-hi superscript">superscript</span>
+</p>
+<p class="tei-p underline">
+  <span class="tei-hi ">paragraph default</span> <span class="tei-hi bold">bold</span>
+  <span class="tei-hi italic">italic</span> <span class="tei-hi underline">undderline</span>
+  sth<span class="tei-hi subs">subs</span> sth<span class="tei-hi supers">supers</span>
+  sth<span class="tei-hi subscript">subscript</span> sth<span class="tei-hi superscript">superscript</span>
+</p>
+```
  */
  
 .tei-hi.bold,
@@ -966,7 +994,19 @@ div.profiletext h4 {
     font-size: 110%;
 }
 
-tei-hi.smaller,
-tei-p.smaller {
+.tei-hi.smaller,
+.tei-p.smaller {
     font-size: 90%;
+}
+
+.tei-hi.superscript,
+.tei-hi.supers {
+    font-size: xx-small;
+    vertical-align: super;
+}
+
+.tei-hi.subscript,
+.tei-hi.subs {
+    font-size: xx-small;
+    vertical-align: sub;
 }
