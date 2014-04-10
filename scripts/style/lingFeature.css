@@ -106,9 +106,15 @@
     position:relative;
 }
 
-.searchresults .vicav_lingfeatures_001 .tei-cit {
+.searchresults .vicav_lingfeatures_001 .tei-cit.example .tei-cit.translation-en {
     display: block;
     color: rgb(0,98,196);
+    font-style: italic;    
+}
+
+.searchresults .vicav_lingfeatures_001 .tei-cit.example .tei-cit.translation-de {
+    display: block;
+    color: rgb(98,98,98);
     font-style: italic;    
 }
 
@@ -118,6 +124,13 @@
     line-height: 20px;
     color: black;
     position: relative;
+}
+
+.searchresults .vicav_lingfeatures_001 .tei-cit.example {
+    padding: 0;
+    color: inherit;
+    border: 0;
+    background: inherit;
 }
 
 /* defaults if not displayed in an already customized layout like drupal*/
