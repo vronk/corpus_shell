@@ -1,53 +1,53 @@
-.lingfeature a{
+/* specific look of the linguistic features layout*/
+.searchresults .vicav_lingfeatures_001 a{
     text-decoration:none;
 }
-table {
-    border:1px solid #000000;
-    border-collapse:collapse;
-}
-td {
-    border:1px solid #000000;
-    vertical-align: top;
-}
 
-.lingfeature ul.dvContents {
+.searchresults .vicav_lingfeatures_001 ul.dvContents {
     list-style: none;
     display: block;
 }
 
-.lingfeature ul.dvContents > li {
+.searchresults .vicav_lingfeatures_001 ul.dvContents > li {
+    display: inline;
+}
+
+.searchresults .vicav_lingfeatures_001 ul.dvContents > li a {
     width: 33.33333%;
     display: inline;
     float: left;
-    line-height: 2em;
+    line-height: 1.5em;
 }
 
-.lingfeature ul.dvContents::after {
+.searchresults .vicav_lingfeatures_001 ul.dvContents::after {
     content:'';
     display: block;
     clear: both;
 }
 
-.lingfeature .h1_contents{
+.searchresults .vicav_lingfeatures_001 ul.dvContents > li a.h1_contents {
+    width: 100%;
+    float: none;
+    display: block;
+    font-size: 14pt;
+    text-decoration:none;
+    clear: both;
+}
+
+.searchresults .vicav_lingfeatures_001 ul.dvContents > li a.h2_contents {
     display:block;
-    font-size:15pt;
+    font-size:11pt;
     text-decoration:none;
 }
 
-.lingfeature .h2_contents{
+.searchresults .vicav_lingfeatures_001 ul.dvContents > li a.h3_contents{
     display:block;
-    font-size:14pt;
-    text-decoration:none;
-}
-
-.lingfeature .h3_contents{
-    display:block;
-    font-size:13pt;
+    font-size:10pt;
     text-decoration:none;
     text-indent:20px;
 }
 
-.searchresults .lingfeature .tei-body .feature {
+.searchresults .vicav_lingfeatures_001 .tei-body .feature {
     margin-bottom: 10px;
     margin-top: 20px;
     background: rgb(215,235,255);
@@ -55,7 +55,7 @@ td {
     width: 100%;
 }
 
-.searchresults .lingfeature .tei-body .feature > * {
+.searchresults .vicav_lingfeatures_001 .tei-body .feature > * {
     margin: 0 0 0 0;
     position: relative;
     line-height: 1;
@@ -64,22 +64,22 @@ td {
     display: block;
 }
 
-.searchresults .lingfeature .tei-body .feature > h1{
+.searchresults .vicav_lingfeatures_001 .tei-body .feature > h1{
     font-size:16pt;
 }
 
-.searchresults .lingfeature .tei-body .feature > h2{
+.searchresults .vicav_lingfeatures_001 .tei-body .feature > h2{
     font-size:14pt;
 }
-.searchresults .lingfeature .tei-body .feature > h3{
+.searchresults .vicav_lingfeatures_001 .tei-body .feature > h3{
     font-size:12pt;
 }
 
-.lingfeature .spHigh {
+.searchresults .vicav_lingfeatures_001 .tei-w.high {
     color: red;
 }
 
-.lingfeature .aGoTocontents {
+.searchresults .vicav_lingfeatures_001 .aGoTocontents {
     font-size: 10pt;
     font-weight: bold;
     padding-right: 10px;
@@ -91,6 +91,43 @@ td {
     bottom: 0;
     width: 50%;
     text-align: right;
+}
+
+.searchresults .vicav_lingfeatures_001 td.tdRight {
+    padding-left:2em;
+    padding-right:5px;
+}
+
+.searchresults .vicav_lingfeatures_001 .tei-table {
+    width: 100%;
+}
+
+.searchresults .vicav_lingfeatures_001 .aOuter:hover{
+    position:relative;
+}
+
+.searchresults .vicav_lingfeatures_001 .tei-cit {
+    display: block;
+    color: rgb(0,98,196);
+    font-style: italic;    
+}
+
+.searchresults .vicav_lingfeatures_001 .example {
+    display: block;
+    text-indent: -1em;
+    line-height: 20px;
+    color: black;
+    position: relative;
+}
+
+/* defaults if not displayed in an already customized layout like drupal*/
+table {
+    border:1px solid #000000;
+    border-collapse:collapse;
+}
+td {
+    border:1px solid #000000;
+    vertical-align: top;
 }
 
 .tdCom {
@@ -110,30 +147,3 @@ td {
 .tdRight {
     background: rgb(223,223,223);
 }
-
-.lingfeature .tdRight,
-.searchresults .lingfeature td.tdRight {
-    padding-left:2em;
-    padding-right:5px;
-}
-
-.lingfeature .tei-table {
-    width: 100%;
-}
-
-.lingfeature .aOuter:hover{
-    position:relative;
-}
-
-.lingfeature .tei-cit {
-    display: block;
-    color: rgb(0,98,196);
-    font-style: italic;    
-}
-.lingfeature .example {
-    display: block;
-    text-indent: -1em;
-    line-height: 20px;
-    color: black;
-}
-

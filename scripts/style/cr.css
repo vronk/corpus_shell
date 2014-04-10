@@ -1,4 +1,7 @@
-
+html {
+    /*if set to white #FFF oXygen shows blue!?*/
+	background-color: #FFFEFE;
+}
 
 span.bibl { font-style: italic; color: #000099;}
 
@@ -7,17 +10,6 @@ span.persName ,span.person { font-weight: bold;  color: #009900; }
 span.placeName { font-weight: bold;  color: #990000; }
 
 span.rs { font-weight: bold;  color: #333366; }
-
-
-.inline-wrap {
-position: relative;
-}
-.inline-wrap .attributes {
-background-color: #CCCCFF;
-position: absolute;
-top: 1.5em;
-z-index:4;
-}
 
 /* generic XML-structure rendering */
 label, .label, .cmds-elem-prop .label {
@@ -91,4 +83,8 @@ body { font: 13px/1.5 'Istok Web', arial, sans-serif; }
     opacity: 0.3;
     /*Old IEs < 8*/
     filter: alpha(opacity=30);
+}
+
+.hilight.match {
+    color: red;
 }

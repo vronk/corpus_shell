@@ -66,14 +66,25 @@
  
 .tei-gramGrp:before {
     content:"[";
+    color: black;
 }
 
 .tei-gramGrp:after {
     content:"]";
     margin-left: -4px;
+    color: black;
 }
 
-.tei-gram:first-child {
+dt.tei-gram {
+    display: none;
+}
+/* hidden with the above statement */
+dt.tei-gram:after {
+    content: ":";
+}
+
+/* fist-child/nth-child(1) is the dt which is hidden */
+.tei-gram:nth-child(2) {
     margin-left: -4px;
 }
 
@@ -83,16 +94,16 @@
     list-style: none;    
 }
 
-dt.tei-gram:after {
-    content: ":";
-}
-
 dd.tei-gram:after {
     content: ", ";
 }
 
 dd.tei-gram:nth-last-of-type(1):after {
     content: "";
+}
+
+.tei-gram.root {
+    color: darkgreen;
 }
 
 .tei-cit.example {
