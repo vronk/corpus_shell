@@ -6,7 +6,7 @@
 	<import file="${scripts.dir}\build_defs.xml" />   
 
 
-	<property name="target-scripts.dir" location="xsl"/>
+	<property name="target-scripts.dir" location="../xsl"/>
 	<property name="in.dir" location="input"/>
 	<property name="output-actual.dir" location="output-actual"/>
 	<property name="output-expected.dir" location="output-expected"/>
@@ -68,11 +68,15 @@
 		
 	</target>		
 	
-	<taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
+	<taskdef resource="net/sf/antcontrib/antcontrib.properties">
+	  <classpath>
+        <pathelement location="${scripts.dir}/ant-contrib/ant-contrib-1.0b3.jar"/>
+      </classpath>
+	</taskdef>
 	
 	<typedef name="countfilter"
 		classname="net.sf.antcount.filters.CountFilter"
-		classpath="antcount.jar" />
+		classpath="${scripts.dir}/ant/lib/antcount.jar" />
 	
 	<!-- actual one test (parametrized) -->
 	<target name="one-test" >
