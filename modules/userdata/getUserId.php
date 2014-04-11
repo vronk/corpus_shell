@@ -22,8 +22,12 @@
     $data = $namespace;
     $data .= $_SERVER['REQUEST_TIME'];
     $data .= $_SERVER['HTTP_USER_AGENT'];
-    $data .= $_SERVER['LOCAL_ADDR'];
-    $data .= $_SERVER['LOCAL_PORT'];
+	// The well documented keys are SERVER_* (they exist if apache is used)
+    if (array_key_exists("SERVER_ADDR", $_SERVER)) $data .= $_SERVER['SERVER_ADDR'];
+    if (array_key_exists("SERVER_PORT", $_SERVER)) $data .= $_SERVER['SERVER_PORT'];
+	// These may be set (they seem to exist if CGI or IIS is used)
+    if (array_key_exists("LOCAL_ADDR", $_SERVER)) $data .= $_SERVER['LOCAL_ADDR'];
+    if (array_key_exists("LOCAL_PORT", $_SERVER)) $data .= $_SERVER['LOCAL_PORT'];
     $data .= $_SERVER['REMOTE_ADDR'];
     $data .= $_SERVER['REMOTE_PORT'];
     $hash = strtoupper(hash('ripemd128', $uid . $guid . md5($data)));

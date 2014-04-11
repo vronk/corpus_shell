@@ -44,7 +44,7 @@ function PanelManager (container, searchConfig)
    * @type {map.<MainPanelObject>} 
    * @desc A "map" (that is an object with ever extending dynamic properties) of parent/main panels created accessible by their unique id.
    */
-  this.Panels = new Array();
+  this.Panels = [];
   /** @protected */
   this.ProfileName = "default";
   /** 
@@ -52,19 +52,19 @@ function PanelManager (container, searchConfig)
    * @type {array.<string>}
    * @desc Array of all panel ids currently in use.
    */
-  this.UsedPanels = new Array();
+  this.UsedPanels = [];
   /**
    * @protected
    * @type {array.<string>}
    * @desc array of all search panel titles currently in use. 
    */
-  this.UsedSearchPanelTitles = new Array();
+  this.UsedSearchPanelTitles = [];
   /** 
    * @protected
    * @type {map.<module:corpus_shell~Panel>}
    * @desc A "map" (that is an object with ever extending dynamic properties) of panels accessible by their unique id.
    */
-  this.PanelObjects = new Array();
+  this.PanelObjects = [];
 
   /** @event */
   this.onUpdated = null;
@@ -77,7 +77,7 @@ function PanelManager (container, searchConfig)
   {
     if (typeof this.onUpdated == "function")
       this.onUpdated(change);
-  }
+  };
 
   /* methods */
 
@@ -108,7 +108,7 @@ function PanelManager (container, searchConfig)
     this.AddPanelId(panelId);
     this.AddSearchPanelTitle(title);
     this.TriggerChangedEvent("Mainpanel added: " + panelId);
-  }
+  };
 
   /**
    * purpose:    adds an image panel to the list of panels (this.Panels[parentId].Panels)
@@ -125,7 +125,7 @@ function PanelManager (container, searchConfig)
   this.AddImagePanel = function(parentId, panelId, pinned, position, url, title, zIndex)
   {
     this.AddSubPanel(parentId, panelId, pinned, position, url, title, zIndex, "image");
-  }
+  };
 
   /**
    * purpose:    adds a text panel to the list of panels (this.Panels[parentId].Panels)
@@ -142,7 +142,7 @@ function PanelManager (container, searchConfig)
   this.AddTextPanel = function(parentId, panelId, pinned, position, url, title, zIndex)
   {
     this.AddSubPanel(parentId, panelId, pinned, position, url, title, zIndex, "text");
-  }
+  };
 
   /**
    * purpose:    adds a subpanel to the list of panels (this.Panels[parentId].Panels)
@@ -177,7 +177,7 @@ function PanelManager (container, searchConfig)
 
       this.TriggerChangedEvent(message);
     }
-  }
+  };
 
   //getters
 
@@ -197,7 +197,7 @@ function PanelManager (container, searchConfig)
     }
 
     return main;
-  }
+  };
 
   /**
    * gets subpanel, if it doesn't exist, returns null
@@ -224,7 +224,7 @@ function PanelManager (container, searchConfig)
 
       return null;
     }
-  }
+  };
 
   /**
    * purpose:    searches for the corresponding parent panel to a given
@@ -242,7 +242,7 @@ function PanelManager (container, searchConfig)
      }
 
      return null;
-  }
+  };
 
   /**
    * purpose:    searches for the corresponding parent panelId to a given
@@ -260,7 +260,7 @@ function PanelManager (container, searchConfig)
      }
 
      return null;
-  }
+  };
 
   /**
    * purpose:    searches for a panel without knowing wether it is a main or a
@@ -279,7 +279,7 @@ function PanelManager (container, searchConfig)
       panel = this.GetSubPanel("", panelId);
 
     return panel;
-  }
+  };
 
   /**
    * purpose:
@@ -289,7 +289,7 @@ function PanelManager (container, searchConfig)
   this.GetPinnedImagePanel = function(parentId)
   {
     return this.GetPinnedPanel(parentId, "image");
-  }
+  };
 
   /**
    * purpose:
@@ -299,7 +299,7 @@ function PanelManager (container, searchConfig)
   this.GetPinnedImagePanelId = function(parentId)
   {
     return this.GetPinnedPanelId(parentId, "image");
-  }
+  };
 
   /**
    * purpose:
@@ -309,7 +309,7 @@ function PanelManager (container, searchConfig)
   this.GetPinnedTextPanel = function(parentId)
   {
     return this.GetPinnedPanel(parentId, "text");
-  }
+  };
 
   /**
    * purpose:
@@ -319,7 +319,7 @@ function PanelManager (container, searchConfig)
   this.GetPinnedTextPanelId = function(parentId)
   {
     return this.GetPinnedPanelId(parentId, "text");
-  }
+  };
 
   /**
    * purpose:
@@ -345,7 +345,7 @@ function PanelManager (container, searchConfig)
     }
 
     return null;
-  }
+  };
 
   /**
    * purpose:
@@ -371,7 +371,7 @@ function PanelManager (container, searchConfig)
     }
 
     return null;
-  }
+  };
 
   /**
    * purpose:
@@ -386,7 +386,7 @@ function PanelManager (container, searchConfig)
       return panel.Position;
     else
       return null;
-  }
+  };
 
   /**
    * purpose:
@@ -401,7 +401,7 @@ function PanelManager (container, searchConfig)
       return panel.Url;
     else
       return null;
-  }
+  };
 
   /**
    * purpose:
@@ -411,7 +411,7 @@ function PanelManager (container, searchConfig)
   this.GetPanelDivFromElement = function(elem)
   {
     return $(titlep).parents(".draggable");
-  }
+  };
 
   /**
    * purpose:
@@ -423,7 +423,7 @@ function PanelManager (container, searchConfig)
     var panelObj = this.GetPanelObj(panelId);
     if (panelObj)
       panelObj.InitScrollPane();
-  }
+  };
 
   /**
    * purpose:
@@ -788,8 +788,7 @@ function PanelManager (container, searchConfig)
   }
 
   /**
-  * @param -
-  * purpose:
+  * purpose: Updates the array of pannel ids.
   * @return    -
   */
   this.RefreshUsedPanels = function()
@@ -806,11 +805,10 @@ function PanelManager (container, searchConfig)
         this.AddPanelId(subKey);
       }
     }
-  }
+  };
 
   /**
-  * @param -
-  * purpose:
+  * purpose: Updated the array of panel titles.
   * @return    -
   */
   this.RefreshUsedSearchPanelTitles = function()
@@ -822,8 +820,24 @@ function PanelManager (container, searchConfig)
       var panel = this.Panels[key];
       this.AddSearchPanelTitle(panel.Title);
     }
-  }
-
+  };
+  
+  /**
+   * Datastructure holding the panels registerd by {@link module:corpus_shell~PanelManager#EnsureSearchPanelOpened}.
+   */
+  this.EnsuredPanels = [];
+  /**
+   * Ensures that a search panel for this resource will be visible when the initialization is finished.
+   * @public
+   * @param {number|string} config The index of the {@link module:corpus_shell~SearchConfig} to use or <br/>
+   *                        may be an internal resource name.
+   * @param {string} [searchstr] The search string to execute in the new panel.
+   */
+  this.EnsureSearchPanelOpened = function(config, searchstr)
+  {
+  	 this.EnsuredPanels.push({config: config, searchstr: searchstr});
+  };
+  
   /**
   * @param panelId - unique panel identifier
   * purpose:
@@ -834,7 +848,7 @@ function PanelManager (container, searchConfig)
     var main = this.Panels[panelId];
 
     return (main != undefined);
-  }
+  };
 
   /**
   * @param panelId - unique panel identifier
@@ -1029,6 +1043,7 @@ function PanelManager (container, searchConfig)
    * <li>Add the new panel to this object's "map" of all panels by its unique id. -> {@link module:corpus_shell~PanelManager#PanelObjects}</li>
    * <li>Create a new main panel object for this panel in the map of main panel objects which is one above the created panel -> {@link module:corpus_shell~PanelManager#AddMainPanel}</li>
    * </ol>
+   * Note: Do not call this from an arbitrary jQuery ready handler! The initialization is most probably not finished and the newly created panel will just vanish.<br/>
    * @summary purpose: Creates a new search panel and registers it with this object.
    * @fires module:corpus_shell~PanelManager#event:onUpdated
    * @return    -
@@ -1055,7 +1070,7 @@ function PanelManager (container, searchConfig)
 
     this.PanelObjects[panelName] = newPanel;
     this.AddMainPanel(panelName, "search", position, undefined, panelTitle, maxZidx + 1);
-  }
+  };
 
 
   /**
@@ -1113,7 +1128,7 @@ function PanelManager (container, searchConfig)
     newPanel.CreatePanel();
 
     this.PanelObjects[panelObj.Id] = newPanel;
-  }
+  };
 
   /**
   * @param -
@@ -1129,7 +1144,7 @@ function PanelManager (container, searchConfig)
     newPanel.CreatePanel();
 
     this.PanelObjects[panelObj.Id] = newPanel;
-  }
+  };
 
   /**
   * @param elem {node} The link/anchor node where this call originated.
@@ -1266,7 +1281,7 @@ function PanelManager (container, searchConfig)
        var position = panelObj.Position;
        this.SetPanelPosition(panelId, position);
      }
-  }
+  };
 
   /**
   * @param panelId - unique panel identifier
@@ -1284,7 +1299,7 @@ function PanelManager (container, searchConfig)
       var url = panel.StartSearch();
       this.SetPanelUrl(panelId, url);
     }
-  }
+  };
 
   /**
   * @param panelId - unique panel identifier
@@ -1309,7 +1324,7 @@ function PanelManager (container, searchConfig)
       var url = panel.StartSearch();
       this.SetPanelUrl(panelId, url);
     }
-  }
+  };
 
   /**
   * @param panelId - unique panel identifier
@@ -1336,7 +1351,7 @@ function PanelManager (container, searchConfig)
       var url = panel.StartSearch();
       this.SetPanelUrl(panelId, url);
     }
-  }
+  };
 
   //SearchConfig methods
 
@@ -1354,7 +1369,7 @@ function PanelManager (container, searchConfig)
         return idx;
     }
     return 0;
-  }
+  };
 
   /**
   * @param {number} idx The index to get the internal resource name for.
@@ -1364,7 +1379,7 @@ function PanelManager (container, searchConfig)
   this.GetResourceName = function(idx)
   {
     return this.SearchConfig[idx]["x-context"];
-  }
+  };
 
   // other helpers (place them elsewhere?)
   
@@ -1382,7 +1397,7 @@ function PanelManager (container, searchConfig)
     }
 
     return cnt;
-  }
+  };
 
   /**
   * @param -
@@ -1422,7 +1437,17 @@ function PanelManager (container, searchConfig)
     }
     this.RefreshUsedPanels();
     this.RefreshUsedSearchPanelTitles();
-  }
+        for (var key in this.EnsuredPanels) {
+            var found = false;
+            var configIdx = this.GetSearchIdx(this.EnsuredPanels[key].config);
+            for (var pkey in this.PanelObjects) {
+                found = this.PanelObjects[pkey].Config === configIdx;
+                if (found) break;
+            }
+            if (found) continue;
+            this.OpenNewSearchPanel(this.EnsuredPanels[key].config, this.EnsuredPanels[key].searchStr);
+        }
+  };
 }
 
 /**
