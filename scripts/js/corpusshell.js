@@ -288,9 +288,10 @@ function doOnDocumentReady ()
     var clickHandled = false;
     $('.searchresults .data-view.full a').live("click", function (event) {
             var target = $(this).attr('target');
-            if (target === undefined || target === "") {
+            var href = $(this).attr('href');
+            if ((target === undefined || target === "") && !href.startsWith('#')) {
                 event.preventDefault();
-                PanelController.OpenSubPanel(this, $(this).attr('href'), true, "text");
+                PanelController.OpenSubPanel(this, href, true, "text");
                 clickHandled = true;
             }
       });
