@@ -3,7 +3,7 @@
 	<property file="build-tests.props"></property>
 	
 	<property name="scripts.dir" location="../utils"/>
-	<import file="${scripts.dir}\build.xml" />   
+	<import file="${scripts.dir}\build_defs.xml" />   
 
 
 	<property name="target-scripts.dir" location="xsl"/>
