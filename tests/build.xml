@@ -1,12 +1,16 @@
 <project name="c_s-xsl-tests" xmlns:au="antlib:org.apache.ant.antunit">
 
-	<property name="scripts.dir" location="C:\Users\m\3\7utils"/>
+	<property file="build-tests.props"></property>
+	
+	<property name="scripts.dir" location="../utils"/>
 	<import file="${scripts.dir}\build.xml" />   
 
+
+	<property name="target-scripts.dir" location="xsl"/>
 	<property name="in.dir" location="input"/>
 	<property name="output-actual.dir" location="output-actual"/>
 	<property name="output-expected.dir" location="output-expected"/>
-	<property name="webscripts_url" value="../../../scripts/"/>
+	<property name="webscripts.url" value="../../../scripts/"/>
 	<property name="successful-tests.file" value="success.txt"/>
 	<property name="failed-tests.file" value="failed.txt"/>
 	
@@ -28,7 +32,7 @@
 	<target name="tests" description="the tests sequence (defined and sequentially executed)" depends="setup">
 			
 <!--			obsolete: dataset/amc.pivot_facetDocsrcRessort_c20						  -->
-		<property name="tests" value="dataset/amc.searchResult_hl_Haus,
+		<!--<property name="tests" value="dataset/amc.searchResult_hl_Haus,
 			dataset/amc.facetRegion_c20,dataset/amc.facetRegionYear_c20,
 			dataset/amc.facetRegionYear_Haus_baseq,
 			dataset/amc.pivot_facetDocsrcYear_small,
@@ -38,7 +42,8 @@
 			dataset/amc.compare_Haus-Baum_facetYear_baseurl, dataset/amc.compare_Haus-Baum_facetYear_baseurl_hits,
 			dataset/amc.compare_schwarzesLoch, dataset/amc.compare_schwarzesLoch_1,
 			dataset/amc.stats_base,dataset/amc.stats_core_docsrc-year_tokens-zeilen_dataset,
-			fcs/result2view_v2,fcs/scan2view_v2" ></property>
+			fcs/result2view_v2,fcs/scan2view_v2" ></property>-->
+		<property name="tests" value="fcs/result2view_v2,fcs/scan2view_v2" />
 		
 		<foreach list="${tests}" target="one-test" param="keyx" />
 		
@@ -92,12 +97,12 @@
 			replace="/"			defaultvalue="Error"  override="true"/>
 		
 		<echo>stylesheet: ${stylesheet}.xsl</echo>
-		<saxon-xslt style="../xsl/${stylesheet}.xsl" in="${in.dir}/${key}.xml" out="${output-actual.dir}/${key}.html" force="true">
+		<saxon-xslt style="${target-scripts.dir}/${stylesheet}.xsl" in="${in.dir}/${key}.xml" out="${output-actual.dir}/${key}.html" force="true">
 			<param name="format" expression="htmlpage"/>
 <!--	important to provide the mappings file  (e.g. for links resolving)		-->
 			<param name="mappings-file" expression="file:/${mappings.file}"/>
-			<param name="scripts-dir" expression="${webscripts_url}"/>
-			<param name="scripts_url" expression="${webscripts_url}"/>
+			<param name="scripts-dir" expression="${webscripts.url}"/>
+			<param name="scripts_url" expression="${webscripts.url}"/>
 <!--			<param name="baseurl" expression="http://localhost:8983/solr/collection2/select?"/>-->
 			<param name="default-base-data-path" expression="file:/${base-data.file}"/>
 		</saxon-xslt>
@@ -138,7 +143,7 @@
 	
 	
 	<property name="package" value="org.diffxml"/>
-	<property name="diffxml.dir" value="C:/apps/diffxml"/>	
+	<property name="diffxml.dir" value="lib/diffxml"/>	
 	<property name="diffxml.class" value="${package}.diffxml.DiffXML"/>
 	<property name="patch.class" value="${package}/patchxml/PatchXML"/>
 	
