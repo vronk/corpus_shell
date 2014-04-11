@@ -1,0 +1,43 @@
+
+# This is the template properties file for tests-build
+
+# Values stated here as comments are the defaults, set in the build file itself.
+# Copy the file to build-tests.props and adapt parameters to your needs. 
+# They will override the defaults.
+ 
+# see README about required dependencies
+
+# base-dir for the utils-scripts
+#  needed for auxiliary util-build files: build_defs and build_docs
+#  TODO: where to get!  
+#scripts.dir=../utils
+
+#diffxml.dir=lib/diffxml
+
+# the base directory of the xsl-stylesheets to be tested
+# it could be the xsl folder in the corpus_shell, 
+# but the xsl-suite is actually maintained as separated repo: cs-xsl @ https://github.com/vronk/cs-xsl
+#target-scripts.dir=../xsl
+# target-scripts.dir=../../cs-xsl
+
+# directory with the source xml test files, with subdirectories parallel to those in target-scripts.dir
+#in.dir=input
+
+# directory to write the output of the xsl transformation to; subdirectories parallel to those in target-scripts.dir
+#output-actual.dir=output-actual
+
+# directory with the output of the xsl transformation as expected (should be); subdirectories parallel to those in target-scripts.dir
+#output-expected.dir=output-expected
+
+# path to webscripts (css, js) passed as parameter scripts-dir and scripts_url (FIXME: inconsistent) into the tested stylesheets
+#webscripts.url=../../../scripts/
+
+# file to write successful tests to
+#successful-tests.file=success.txt
+
+# file to write failed tests to
+#failed-tests.file=failed.txt
+
+# names of tests to be run. the source-files have to be available under in.dir
+# name until first dot is used to determine the appropriate xsl to test against (substring-after '.' is arbitrary descriptive identifier) 
+#tests=fcs/result2view_v2,fcs/scan2view_v2

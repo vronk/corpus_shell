@@ -162,7 +162,11 @@ $.fn.QueryInput = function (options)
              //param_settings.source = fcsScan;
         } else if (param_settings.values) {
             //    $(input).autocomplete(param_settings);
-            param_settings.values.forEach(function(v) { $(select).append("<option value='" + v +"' >" + v + "</option>") });
+            if (typeof  param_settings.values[0] ==='object') {// accept format with value and label
+                  param_settings.values.forEach(function(v) { $(select).append("<option value='" + v.value +"' >" + v.label + "</option>") });
+               } else { 
+                   param_settings.values.forEach(function(v) { $(select).append("<option value='" + v +"' >" + v + "</option>") });
+             }
         } else { /* if no values,  rather make a textbox out of it? */ 
           //select = 
         }

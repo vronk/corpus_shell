@@ -10,16 +10,14 @@
            targets for corpus_shell
     </description>
 	
+	<property file="build.props"></property>
 	
 <!--	<property name="cache.dir" value="data2" />-->
+	<property name="scripts.dir" value="." />
 	<property name="out.dir" value="output" />
 	<property name="docs.dir" value="docs" />
 	<property name="xsl.dir" value="xsl/" />
 	
-	
-	<property name="scripts.dir" location="C:\Users\m\3\7utils"/>
-	
-	<import file="${scripts.dir}\build.xml" />   
 	
 	
 	<target name="gen-docs" depends="gen-build-info,gen-jsdocs">
@@ -33,13 +31,7 @@
 		</ant>		
 	</target>
 	
-	<target name="gen-jsdocs2" >
-		<ant antfile="${scripts.dir}\build_docs.xml" target="gen-jsdoc">
-			<property name="src.dir" location="../../code/fromMDService2/scripts/" />
-			<property name="docs.dir" location="../../code/fromMDService2/docs"/>
-		</ant>
-	</target>
-	
+
 	<target name="gen-xsldocs" >
 		<property name="out.fn" value="c_s-xsl"></property>
 		<ant antfile="${scripts.dir}\build_docs.xml" target="ay-xsl">
