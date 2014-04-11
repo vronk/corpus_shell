@@ -12,6 +12,8 @@
 #  TODO: where to get!  
 #scripts.dir=../utils
 
+# path to diffxml library
+# source: http://diffxml.sourceforge.net/
 #diffxml.dir=lib/diffxml
 
 # the base directory of the xsl-stylesheets to be tested
