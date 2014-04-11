@@ -47,7 +47,7 @@
     text-indent:20px;
 }
 
-.searchresults .vicav_lingfeatures_001 .tei-body .feature {
+.searchresults .vicav_lingfeatures_001 .tei-head {
     margin-bottom: 10px;
     margin-top: 20px;
     background: rgb(215,235,255);
@@ -55,42 +55,47 @@
     width: 100%;
 }
 
-.searchresults .vicav_lingfeatures_001 .tei-body .feature > * {
-    margin: 0 0 0 0;
-    position: relative;
-    line-height: 1;
-    margin: 10px 0 10px 0;
-    padding-left: 10px;
-    display: block;
+.searchresults .vicav_lingfeatures_001 .tei-body .tei-div > table {
+    display:table;    
 }
 
-.searchresults .vicav_lingfeatures_001 .tei-body .feature > h1{
+.searchresults .vicav_lingfeatures_001 .tei-body .tei-div > * {
+    position: relative;
+    line-height: 1;
+    padding-left: 10px;
+    margin: 10px 0;
+}
+
+.searchresults .vicav_lingfeatures_001 .tei-body .tei-head > * {
+    display: inline-block;
+    width: 50%;
+}
+
+.searchresults .vicav_lingfeatures_001 .tei-body .tei-head > h1 {
     font-size:16pt;
 }
 
-.searchresults .vicav_lingfeatures_001 .tei-body .feature > h2{
+.searchresults .vicav_lingfeatures_001 .tei-body .tei-head > h2 {
     font-size:14pt;
+    margin: 6px 0;
 }
-.searchresults .vicav_lingfeatures_001 .tei-body .feature > h3{
+.searchresults .vicav_lingfeatures_001 .tei-body .tei-head > h3 {
     font-size:12pt;
+    margin: 4px 0;
 }
 
 .searchresults .vicav_lingfeatures_001 .tei-w.high {
     color: red;
 }
 
-.searchresults .vicav_lingfeatures_001 .aGoTocontents {
+.searchresults .vicav_lingfeatures_001 .xsl-aContents {
     font-size: 10pt;
     font-weight: bold;
-    padding-right: 10px;
-    padding-left: 10px;
-    float: right;
-    display: block;
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    width: 50%;
     text-align: right;
+}
+
+.searchresults .vicav_lingfeatures_001 .xsl-aContents:after {
+    content:"\00a0\00a0";
 }
 
 .searchresults .vicav_lingfeatures_001 td.tdRight {
@@ -106,16 +111,21 @@
     position:relative;
 }
 
-.searchresults .vicav_lingfeatures_001 .tei-cit.example .tei-cit.translation-en {
+.searchresults .vicav_lingfeatures_001 .tei-cit.example .tei-cit {
     display: block;
-    color: rgb(0,98,196);
-    font-style: italic;    
+    font-style: italic;  
+}
+
+.searchresults .vicav_lingfeatures_001 .tei-cit.example .tei-cit.translation-en {
+    color: rgb(0,98,196); 
 }
 
 .searchresults .vicav_lingfeatures_001 .tei-cit.example .tei-cit.translation-de {
-    display: block;
-    color: rgb(98,98,98);
-    font-style: italic;    
+    color: rgb(98,98,98);  
+}
+
+.searchresults .vicav_lingfeatures_001 .tei-cit.example .tei-cit.translation-es {
+    color: #CC6600;  
 }
 
 .searchresults .vicav_lingfeatures_001 .example {

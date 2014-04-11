@@ -1011,6 +1011,10 @@ Example:
     vertical-align: sub;
 }
 
+.tei-head {
+    position: relative;
+}
+
 /* inline wrap table rendering 
    ===========================
    Attributs which are'nt processed right now by default are rendered as tables
