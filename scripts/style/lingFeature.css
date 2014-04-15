@@ -143,16 +143,6 @@
     background: inherit;
 }
 
-/* defaults if not displayed in an already customized layout like drupal*/
-table.tei-table {
-    border:1px solid #000000;
-    border-collapse:collapse;
-}
-td.tei-cell {
-    border:1px solid #000000;
-    vertical-align: top;
-}
-
 .tdCom {
     background: rgb(223,223,223);
     padding-left: 10px;
