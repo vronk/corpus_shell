@@ -144,11 +144,11 @@
 }
 
 /* defaults if not displayed in an already customized layout like drupal*/
-table {
+table.tei-table {
     border:1px solid #000000;
     border-collapse:collapse;
 }
-td {
+td.tei-cell {
     border:1px solid #000000;
     vertical-align: top;
 }
