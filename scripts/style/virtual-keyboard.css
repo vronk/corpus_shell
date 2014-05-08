@@ -1,0 +1,47 @@
+/**
+ * Virtual keyboard (mockup)
+ */
+ 
+ input.virtual-keyboard-input:focus + ul.virtual-keyboard,
+ ul.virtual-keyboard:active,
+ ul.virtual-keyboard:hover {
+     display: block;
+ }
+ 
+ ul.virtual-keyboard {
+     display: none;
+     position: fixed;
+     z-index: 100;
+     margin-bottom: 0;
+     margin-top: 8px;
+ }
+ 
+ ul.virtual-keyboard {
+     list-style-type: none;
+     list-style: none;
+     height: 2.3em;
+     border: 1px solid;
+     background: #FFF;
+ }
+ 
+ ul.virtual-keyboard li {
+     display: inline-block;
+     width: 2em;
+     font-size: 1.5em;
+     border: 1px solid;
+     background: #FFF;
+     cursor: default;
+ }
+ 
+ ul.virtual-keyboard:after {
+      content: "";
+      position: absolute;
+      width: 0;
+      height: 0;
+      border-width: 10px;
+      border-style: solid;
+      border-color: transparent transparent #000 transparent;
+      top: -20px;
+      left: 10px;      
+ }
+
