@@ -7,10 +7,9 @@
 
     <link rel="stylesheet" type="text/css" href="scripts/style/base/jquery.ui.css" />
     <link rel="stylesheet" type="text/css" href="scripts/style/base/jquery.ui.resizable.css" />
-<!--    <link rel="stylesheet" type="text/css" href="scripts/style/jquery.sbscroller.css" /> -->
-    <link rel="stylesheet" type="text/css" href="scripts/style/jquery.jscrollpane.css"/>
     <link rel="stylesheet" type="text/css" href="scripts/style/corpusshell.css" />
     <link rel="stylesheet" type="text/css" href="scripts/style/cr.css"/>
+    <link rel="stylesheet" type="text/css" href="scripts/style/virtual-keyboard.css" />
     <link rel="stylesheet" type="text/css" href="scripts/style/sampleText.css" />
     <link rel="stylesheet" type="text/css" href="scripts/style/lingFeature.css" />
     <link rel="stylesheet" type="text/css" href="scripts/style/glossary.css" />
@@ -22,13 +21,16 @@
     <!--<script type="text/javascript" src="scripts/js/jquery/jquery-ui.js"></script>-->
     <script type="text/javascript" src="scripts/js/jquery/jquery-ui.min.js"></script>
     <script type="text/javascript" src="scripts/js/json.js"></script>
+    <!-- A library for accessing and manipulating URIs -->
+    <script type="text/javascript" src="scripts/js/URI.js"></script>
 	<!-- A javascript library for manipulating the browser history including made up
 	     history entries and modifications of the current state/URL -->
 	<script type="text/javascript" src="scripts/js/jquery/jquery.history.js"></script>
     <!-- A mouse wheel support plugin -->
     <script type="text/javascript" src="scripts/js/jquery/jquery.mousewheel.min.js"></script>
-    <!-- An MIT/GPL licensed library for creating scrollable areas on the fly -->
-    <script type="text/javascript" src="scripts/js/jquery/jquery.jscrollpane.min.js"></script>
+    <!-- A plugin for manuipulating selections in textarea and input type text. Caret manipulation
+         can be donn by selecting a range of 0 -->
+    <script type="text/javascript" src="scripts/js/jquery/jquery.selection.js"></script>
     <!-- jQuery plugin that provides special handling for special IE 8 and IE 9 CORS behavior -->
     <script type="text/javascript" src="scripts/js/jquery/jquery.xdomainrequest.min.js"></script>
     <!-- Openlayers for creating map views using Google Maps, Openstreetmap or other map providers -->
@@ -62,12 +64,13 @@
 	<!-- The following file contains utillity functions that are used by the other so this
 	     has to be loaded before the others. -->
     <script type="text/javascript" src="scripts/js/corpusshell.js"></script>
+    <script type="text/javascript" src="scripts/js/virtual-keyboard.js"></script>
     <script type="text/javascript" src="scripts/js/profilemanager.js"></script>
+    <script type="text/javascript" src="scripts/js/panelmanager.js"></script>
+    <script type="text/javascript" src="scripts/js/ressourcemanager.js"></script>
     <script type="text/javascript" src="scripts/js/panel.js"></script>
     <script type="text/javascript" src="scripts/js/mappanel.js"></script>
     <script type="text/javascript" src="scripts/js/xmlpanel.js"></script>
-    <script type="text/javascript" src="scripts/js/panelmanager.js"></script>
-    <script type="text/javascript" src="scripts/js/ressourcemanager.js"></script>
     <title>ICLTT Corpus Shell</title>
   </head>
   <body>

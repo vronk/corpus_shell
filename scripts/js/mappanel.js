@@ -1,7 +1,7 @@
 var MapPanel;
 
+!function ($, Panel, PanelController, OpenLayers, params) {
 // Everything here assumes $ === jQuery so ensure this
-(function ($) {
 
 /**
  * A class for displaying geographical information in a panel
@@ -15,7 +15,7 @@ MapPanel = function (id, type, title, url, position, pinned, zIndex, container, 
     this.map;
     this.markers = new OpenLayers.Layer.Markers(this.Id + "_markers");
     this.icon_size = new OpenLayers.Size(20, 20);
-    this.icon = new OpenLayers.Icon(baseURL + 'scripts/style/img/dot.png',
+    this.icon = new OpenLayers.Icon(params.baseURL + 'scripts/style/img/dot.png',
             this.icon_size,
             new OpenLayers.Pixel(-(this.icon_size.w / 2),
                     -(this.icon_size.h / 2))
@@ -90,10 +90,10 @@ MapPanel = function (id, type, title, url, position, pinned, zIndex, container, 
         });
         this.scanResult.terms.forEach(function(term)
         {
-            LatLon = term.value.split(", ");
-            newIcon = this.icon.clone();
+            var LatLon = term.value.split(", ");
+            var newIcon = this.icon.clone();
             newIcon.imageDiv.className += " cursor_pointer";
-            marker = new OpenLayers.Marker(new OpenLayers.LonLat(LatLon[1], LatLon[0]).transform(
+            var marker = new OpenLayers.Marker(new OpenLayers.LonLat(LatLon[1], LatLon[0]).transform(
                     'EPSG:4326', // transform from WGS 1984
                     this.map.getProjectionObject() // to whatever map needs, most of the time Spherical Mercator Projection
                     ), newIcon);
@@ -104,7 +104,7 @@ MapPanel = function (id, type, title, url, position, pinned, zIndex, container, 
     };
 
     markerCallback = function(evt) {
-        target = this.URL;
+        var target = this.URL;
         var urlParams = GetUrlParams(target);
         var ID = PanelController.OpenNewSearchPanel(urlParams['x-context'], urlParams.query);
         PanelController.StartSearch(ID);
@@ -124,8 +124,8 @@ MapPanel = function (id, type, title, url, position, pinned, zIndex, container, 
         this.map.updateSize();
     };
 
-}
+};
 
 MapPanel.prototype = new Panel();
 
-})(jQuery);
+}(jQuery, Panel, PanelController, OpenLayers, params);

@@ -45,7 +45,7 @@ function PanelManager (container, searchConfig)
    * @public
    * @type {array.<SearchConfigItem>}
    */
-  this.SearchConfig = searchConfig
+  this.SearchConfig = searchConfig;
 
   /**
    * @protected
@@ -1431,7 +1431,7 @@ function PanelManager (container, searchConfig)
   {
     for (var idx = 0; idx < this.SearchConfig.length; idx++)
     {
-      if (this.SearchConfig[idx]['x-context'] == xContext)
+      if (this.SearchConfig[idx]['x-context'] === xContext)
         return idx;
     }
     return 0;

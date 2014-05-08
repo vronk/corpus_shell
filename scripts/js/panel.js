@@ -19,7 +19,12 @@ var Panel;
  */
 
 // Everything here assumes $ === jQuery so ensure this
-(function ($) {
+!function ($, params, PanelController, ResourceController, VirtualKeyboard, document) {
+// fetchKeys? wait? when? where?
+    VirtualKeyboard.keys = {
+        "arz_eng_006": ["ʔ", "ā", "ḅ", "ʕ", "ḍ", "ḏ", "ē", "ġ", "ǧ", "ḥ", "ī", "ᴵ", "ḷ", "ṃ", "ō", "ṛ", "ṣ", "š", "ṭ", "ṯ", "ū", "ẓ", "ž"],
+        "mecmua": ["ʾ", "ā", "ä", "s̱", "ç", "ḥ", "ḫ", "ẕ"]
+    };
 /**
  * Creates a panel in corpus_shell.
  * @constructor
@@ -101,7 +106,7 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
    * The {@link module:corpus_shell~PanelManager} object this panel belongs to.
    * @public 
    */
-  this.PanelController = panelController;
+  this.PanelController = PanelController;
   /**
    * @public
    * @type {number}
@@ -365,7 +370,7 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
 
     var query = "";
 
-    if (this.Url != undefined && this.Url != "")
+    if (this.Url !== undefined && this.Url !== "")
     {
       var urlObj = this.GetUrlParams(this.Url);
       var xContext = urlObj['x-context'];
@@ -374,11 +379,11 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
     }
     else
     {
-      if (searchStr != undefined)
+      if (searchStr !== undefined)
         query = searchStr;
     }
 
-        $.ajax(templateLocation + "panel.tpl.html", {
+        $.ajax(params.templateLocation + "panel.tpl.html", {
             async: false,
             error: function(jqXHR, status, error) {
                 failed = true;
@@ -390,7 +395,7 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
 
         var searchUI;
         if (!failed) {
-            $.ajax(templateLocation + "searchui.tpl.html", {
+            $.ajax(params.templateLocation + "searchui.tpl.html", {
                 async: false,
                 error: function(jqXHR, status, error) {
                     failed = true;
@@ -452,6 +457,7 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
 
     $(this.Container).append(searchPanel);
     this.InitDraggable();
+    VirtualKeyboard.attachKeyboards();
   };
 
   /**
@@ -464,7 +470,7 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
     var failed = false;
     var newPanel;
     
-    $.ajax(templateLocation + "panel.tpl.html", {
+    $.ajax(params.templateLocation + "panel.tpl.html", {
         async: false,
         error: function (jqXHR, status, error) {
             failed = true;
@@ -787,7 +793,7 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
     var xcontext = this.PanelController.GetResourceName(sele);
 
         /* url +  */
-    var urlStr = switchURL + "?operation=searchRetrieve&query=" + sstr + "&x-context=" + xcontext +
+    var urlStr = params.switchURL + "?operation=searchRetrieve&query=" + sstr + "&x-context=" + xcontext +
                  "&x-format=html&x-dataview=kwic,title&version=1.2";
 
     if (!max || max <= 0) max = this.DefaultMaxRecords;
@@ -807,7 +813,7 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
     $.ajax(
     {
         type: 'GET',
-        url: switchURL,
+        url: params.switchURL,
         dataType: 'xml',
         data : {operation: 'searchRetrieve',
                 query: sstr,
@@ -890,53 +896,56 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
    * @param {jQuery} searchstring A jQuery object representing text input
   * @param {string} searchStr Search string
   */
-  this.ConfigureSearchTextInput = function (searchstring, searchStr) {
-    var availableTags = ResourceController.GetLabelValueArray();
+        this.ConfigureSearchTextInput = function(searchstring, searchStr) {
+            var availableTags = ResourceController.GetLabelValueArray();
 
-    searchstring
-      .bind( "keydown", function( event ) {
-       if ( event.keyCode === $.ui.keyCode.TAB &&
-         $( this ).data( "autocomplete" ).menu.active ) {
-        event.preventDefault();
-       }
-      })
-     .autocomplete({
-      minLength: 0,
-      source: // availableTags
-      function( request, response ) {
-       //  delegate back to autocomplete, but extract the last term
-       response( $.ui.autocomplete.filter(
-        availableTags, extractLast( request.term ) ) );
-      }
-      ,
-      focus: function() {
-       //  prevent value inserted on focus
-       return false;
-      },
-      select: function( event, ui ) {
-       var terms = split( this.value );
-       //  remove the current input
-       terms.pop();
-       //  add the selected item
-       terms.push( ui.item.value );
-       //  add placeholder to get the comma-and-space at the end
-       terms.push( "" );
-       this.value = terms.join("=");
-       return false;
-      }
-     });
+            searchstring
+                    .bind("keydown", function(event) {
+                        if (event.keyCode === $.ui.keyCode.TAB &&
+                                $(this).data("autocomplete").menu.active) {
+                            event.preventDefault();
+                        }
+                    })
+                    .autocomplete({
+                        minLength: 0,
+                        source: // availableTags
+                                function(request, response) {
+                                    //  delegate back to autocomplete, but extract the last term
+                                    response($.ui.autocomplete.filter(
+                                            availableTags, extractLast(request.term)));
+                                }
+                        ,
+                        focus: function() {
+                            //  prevent value inserted on focus
+                            return false;
+                        },
+                        select: function(event, ui) {
+                            var terms = split(this.value);
+                            //  remove the current input
+                            terms.pop();
+                            //  add the selected item
+                            terms.push(ui.item.value);
+                            //  add placeholder to get the comma-and-space at the end
+                            terms.push("");
+                            this.value = terms.join("=");
+                            return false;
+                        }
+                    });
+            searchstring.attr('data-context', this.PanelController.GetResourceName(this.Config));
+            searchstring.attr('id', this.Id + '-searchstring');
+            // fetchKeys? wait? when? where?
 
-    if (searchStr !== undefined)
-      searchstring.val(searchStr);
+            if (searchStr !== undefined)
+                searchstring.val(searchStr);
 
-    var searchbutton = this.searchbutton;
-    
-    searchstring.keyup(function(event)
-    {
-      if(event.keyCode === 13)
-        searchbutton.click();
-    });
-  };
+            var searchbutton = this.searchbutton;
+            
+            searchstring.keyup(function(event)
+            {
+                if (event.keyCode === 13)
+                    searchbutton.click();
+            });
+        };
   
   /**
    * 
@@ -1248,5 +1257,5 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
     $(resultdiv).addClass("searchresults");
     return resultdiv;
   };
-}
-})(jQuery);
+};
+}(jQuery, params, PanelController, ResourceController, VirtualKeyboard, document);

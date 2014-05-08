@@ -1,7 +1,7 @@
 var XmlPanel;
 
 // Everything here assumes $ === jQuery so ensure this
-(function ($) {
+(function ($, Panel, ace) {
 
 /**
  * A class for displaying XML data in a panel
@@ -66,5 +66,5 @@ XmlPanel = function (id, type, title, url, position, pinned, zIndex, container, 
 
 XmlPanel.prototype = new Panel();
 
-})(jQuery);
+})(jQuery, Panel, ace);
 

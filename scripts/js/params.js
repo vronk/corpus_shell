@@ -57,3 +57,19 @@ var defaultLeftOffset = 212;
  * windows effect is achieved.
  */
 var defaultTopOffset = 10;
+
+//TODO make use of the module pattern
+!function() {
+    var module = {};
+
+    module.baseURL = baseURL;
+    module.userData = userData;
+    module.switchURL = switchURL;
+    module.templateLocation = templateLocation;
+    module.defaultWidth = defaultWidth;
+    module.defaultHeight = defaultHeight;
+    module.defaultLeftOffset = defaultLeftOffset;
+    module.defaultTopOffset = defaultTopOffset;
+
+    this.params = module;
+}();
