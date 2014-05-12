@@ -12,9 +12,6 @@
      font-size: 120%; 
      list-style-type: none;
      list-style: none;
-	 -webkit-box-sizing: border-box;
-     -moz-box-sizing: border-box;
-     box-sizing: border-box;
      border: 1px solid #BBB;
      background: #BBB;
      padding: 0 0.3em 0.2em 0.1em;
@@ -35,6 +32,12 @@
      background: #EEE;
      cursor: default;
      margin: 0.2em 0;
+ }
+ 
+ ul.virtual-keyboard li:active {
+     -webkit-box-shadow: none;
+     -moz-box-shadow: none;
+     box-shadow: none;
  }
  
  ul.virtual-keyboard:after {
