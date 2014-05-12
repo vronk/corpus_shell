@@ -61,36 +61,6 @@ var Indexes = null;
  */
 
 var sitesTitle;
-/**
- * @summary Get parameters from the supplied uri/url
- * @desc Returns them as a "map" (a JavaScript object which properties correspond to the parameters).
- *       Does not depend on $ as jQuery and is used by other modules (panel.js) too.
- * @param {url} url Some url witch contains parameters to be converted to a "map".
- * @return {map} Parameters in the url as a "map".  
- */
-function GetUrlParams(url)
-{
-  var urlParams = {};
-  if (url != undefined)
-  {
-    var match;
-    var pl     = /\+/g;  // Regex for replacing addition symbol with a space
-    var search = /([^&=]+)=?([^&]*)/g;
-    var decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); };
-
-    var query  = "";
-    var qmPos = url.indexOf('?');
-    if (qmPos != -1)
-      query = url.substr(qmPos + 1);
-    else
-      query = url;
-
-    while (match = search.exec(query))
-       urlParams[decode(match[1])] = decode(match[2]);
-  }
-
-  return urlParams;
-}
 
 function split( val )
 {
@@ -207,6 +177,37 @@ function _json_encode(inVal, out)
 
 // Everything here assumes $ === jQuery so ensure this
 (function ($) {
+
+/**
+ * @summary Get parameters from the supplied uri/url
+ * @desc Returns them as a "map" (a JavaScript object which properties correspond to the parameters).
+ *       Does not depend on $ as jQuery and is used by other modules (panel.js) too.
+ * @param {url} url Some url witch contains parameters to be converted to a "map".
+ * @return {map} Parameters in the url as a "map".  
+ */
+function GetUrlParams(url)
+{
+  var urlParams = {};
+  if (url != undefined)
+  {
+    var match;
+    var pl     = /\+/g;  // Regex for replacing addition symbol with a space
+    var search = /([^&=]+)=?([^&]*)/g;
+    var decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); };
+
+    var query  = "";
+    var qmPos = url.indexOf('?');
+    if (qmPos != -1)
+      query = url.substr(qmPos + 1);
+    else
+      query = url;
+
+    while (match = search.exec(query))
+       urlParams[decode(match[1])] = decode(match[2]);
+  }
+
+  return urlParams;
+}
 
 /**
  * @summary Initialization for the corpus_shell app. Run on $(document).ready().

@@ -1,6 +1,6 @@
 var MapPanel;
 
-!function ($, Panel, PanelController, OpenLayers, params) {
+!function ($, Panel, PanelController, params) {
 // Everything here assumes $ === jQuery so ensure this
 
 /**
@@ -102,10 +102,12 @@ MapPanel = function (id, type, title, url, position, pinned, zIndex, container, 
             this.markers.addMarker(marker);
         }, this);
     };
+    
+    var self = this;
 
     markerCallback = function(evt) {
         var target = this.URL;
-        var urlParams = GetUrlParams(target);
+        var urlParams = self.GetUrlParams(target);
         var ID = PanelController.OpenNewSearchPanel(urlParams['x-context'], urlParams.query);
         PanelController.StartSearch(ID);
     };
@@ -128,4 +130,4 @@ MapPanel = function (id, type, title, url, position, pinned, zIndex, container, 
 
 MapPanel.prototype = new Panel();
 
-}(jQuery, Panel, PanelController, OpenLayers, params);
+}(jQuery, Panel, PanelController, params); // OpenLayers too, my be loaded by another module / drupal theme

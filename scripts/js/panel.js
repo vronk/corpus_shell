@@ -51,6 +51,37 @@ var Panel;
 Panel = function (id, type, title, url, position, pinned, zIndex, container, panelController, config)
 {
   /**
+  * @param url - string containing an URL
+  * purpose:    parses the given url and fills an array fill with the key/value pairs
+  *             of all url parameters
+  * @return    array with key/value pairs of the url params
+  */
+  // This has to be on top as it's used below in initializing some other member variable
+  this.GetUrlParams = function(url)
+  {
+    var urlParams = {};
+    if (url != undefined)
+    {
+      var match;
+      var pl     = /\+/g;  //  Regex for replacing addition symbol with a space
+      var search = /([^&=]+)=?([^&]*)/g;
+      var decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); };
+
+      var query  = "";
+      var qmPos = url.indexOf('?');
+      if (qmPos != -1)
+        query = url.substr(qmPos + 1);
+      else
+        query = url;
+
+      while (match = search.exec(query))
+         urlParams[decode(match[1])] = decode(match[2]);
+    }
+
+    return urlParams;
+  };
+
+  /**
    * @public
    * @type {string}
    * @desc Used as an id for an HTML element. 
@@ -79,7 +110,7 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
    * @type {Object}
    * @desc An Object which members correspond to the params of the URL used for creating this panel.
    */  
-  this.UrlParams = GetUrlParams(url);
+  this.UrlParams = this.GetUrlParams(url);
   /**
    * @public
    * @type {Position}
@@ -158,7 +189,7 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
   this.SetUrl = function(url)
   {
     this.Url = encodeURI(url);
-    this.UrlParams = GetUrlParams(url);
+    this.UrlParams = this.GetUrlParams(url);
     this.PanelController.SetPanelUrl(this.Id, url);
     var thisPanel = $(this.GetCssId());
     thisPanel.find("a.c_s_fcs_xml_link").attr("href", url.replace("x-format=html", "x-format=xml").replace("x-format=json", "x-format=xml"));
@@ -519,36 +550,6 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
       this.GetFullText();
 
     this.InitDraggable();
-  };
-
-  /**
-  * @param url - string containing an URL
-  * purpose:    parses the given url and fills an array fill with the key/value pairs
-  *             of all url parameters
-  * @return    array with key/value pairs of the url params
-  */
-  this.GetUrlParams = function(url)
-  {
-    var urlParams = {};
-    if (url != undefined)
-    {
-      var match;
-      var pl     = /\+/g;  //  Regex for replacing addition symbol with a space
-      var search = /([^&=]+)=?([^&]*)/g;
-      var decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); };
-
-      var query  = "";
-      var qmPos = url.indexOf('?');
-      if (qmPos != -1)
-        query = url.substr(qmPos + 1);
-      else
-        query = url;
-
-      while (match = search.exec(query))
-         urlParams[decode(match[1])] = decode(match[2]);
-    }
-
-    return urlParams;
   };
 
   /**
