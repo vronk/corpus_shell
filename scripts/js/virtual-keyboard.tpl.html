@@ -3,15 +3,68 @@
     <head>
         <title>Virtual Keyboard Mockup</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<style type="text/css">
+			html {
+				width: 100%;
+				height: 100%;
+				-webkit-box-sizing: border-box; 
+				-moz-box-sizing: border-box;   
+				box-sizing: border-box;  
+			}
+			body {
+				width: 100%;
+				height: 100%;
+				margin: 0 0 0 0;
+			}
+			* { 
+				-webkit-box-sizing: border-box; 
+				-moz-box-sizing: border-box;   
+				box-sizing: border-box;
+			}
+		</style>
         <link rel="stylesheet" type="text/css" href="virtual-keyboard.css"/>
     </head>
     <body>
         <div>
         <input name="query" type="text" size="18" class="virtual-keyboard-input" id="sth-unique"/>
         <ul id="template" role="menu" class="virtual-keyboard">
-            <li role="menuitem" class="key-prototype">ö</li>
-            <li role="menuitem" class="remove-for-production">ü</li>
-        </ul>
+		    <!-- note that newlines are erased when this is loaded on demand. There are side effects as
+		    new lines count as some space character which may be missing in the on demand loaded variant of this
+		    HTML snippet! The following is one way of making sure there is no space so it can be set by css in a consistent way.-->
+            <li role="menuitem" class="key-prototype">ö</
+			li><li role="menuitem" class="remove-for-production">ü</
+			li><li role="menuitem" class="remove-for-production">ä</
+			li><li role="menuitem" class="remove-for-production">ß</
+			li><li role="menuitem" class="remove-for-production">Ö</
+			li><li role="menuitem" class="remove-for-production">Ü</
+			li><li role="menuitem" class="remove-for-production">Ä</
+			li><li role="menuitem" class="remove-for-production">§</
+			li><li role="menuitem" class="remove-for-production">ö</
+			li><li role="menuitem" class="remove-for-production">ü</
+			li><li role="menuitem" class="remove-for-production">ä</
+			li><li role="menuitem" class="remove-for-production">ß</
+			li><li role="menuitem" class="remove-for-production">Ö</
+			li><li role="menuitem" class="remove-for-production">Ü</
+			li><li role="menuitem" class="remove-for-production">Ä</
+			li><li role="menuitem" class="remove-for-production">§</
+			li><li role="menuitem" class="remove-for-production">ö</
+			li><li role="menuitem" class="remove-for-production">ü</
+			li><li role="menuitem" class="remove-for-production">ä</
+			li><li role="menuitem" class="remove-for-production">ß</
+			li><li role="menuitem" class="remove-for-production">Ö</
+			li><li role="menuitem" class="remove-for-production">Ü</
+			li><li role="menuitem" class="remove-for-production">Ä</
+			li><li role="menuitem" class="remove-for-production">§</
+			li><li role="menuitem" class="remove-for-production">ö</
+			li><li role="menuitem" class="remove-for-production">ü</
+			li><li role="menuitem" class="remove-for-production">ä</
+			li><li role="menuitem" class="remove-for-production">ß</
+			li><li role="menuitem" class="remove-for-production">Ö</
+			li><li role="menuitem" class="remove-for-production">Ü</
+			li><li role="menuitem" class="remove-for-production">Ä</
+			li><li role="menuitem" class="remove-for-production">§</
+			li>
+			</ul>
         </div>
     </body>
 </html>
