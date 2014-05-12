@@ -23,8 +23,10 @@ var Panel;
 // fetchKeys? wait? when? where?
     VirtualKeyboard.keys = {
         "arz_eng_006": ["ʔ", "ā", "ḅ", "ʕ", "ḍ", "ḏ", "ē", "ġ", "ǧ", "ḥ", "ī", "ᴵ", "ḷ", "ṃ", "ō", "ṛ", "ṣ", "š", "ṭ", "ṯ", "ū", "ẓ", "ž"],
-        "mecmua": ["ʾ", "ā", "ä", "s̱", "ç", "ḥ", "ḫ", "ẕ"]
+        "mecmua": ["ʾ", "ā", "ä", "s̱", "ç", "ḥ", "ḫ", "ẕ", "more missing!"]
     };
+    VirtualKeyboard.keys['apc_eng_002'] = VirtualKeyboard.keys['arz_eng_006'];
+    VirtualKeyboard.keys['aeb_eng_001__v001'] = VirtualKeyboard.keys['arz_eng_006'];
 /**
  * Creates a panel in corpus_shell.
  * @constructor
@@ -890,6 +892,12 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
    * a search
    */
   this.searchbutton;
+  
+  /**
+   * A jQuery object that is used for submitting the search "phrases". A virtual
+   * keyboard might need to be appended zo this. 
+   */
+  this.searchinput;
 
   /**
    * 
@@ -945,6 +953,7 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
                 if (event.keyCode === 13)
                     searchbutton.click();
             });
+            this.searchinput = searchstring;
         };
   
   /**
@@ -966,6 +975,15 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
        searchoption.text(this.PanelController.SearchConfig[i]["DisplayText"]);
        searchcombo.append(searchoption);
     }
+    
+    var obj = this;
+    searchcombo.on("change", function(){
+        var newContext = obj.PanelController.GetResourceName(this.selectedIndex);
+        obj.searchinput.data('context', newContext);
+        /* debugging only, will not be read again by data() */
+        obj.searchinput.attr('data-context', newContext);        
+        VirtualKeyboard.attachKeyboards();
+    });
     
     var searchbutton = this.searchbutton;
         
