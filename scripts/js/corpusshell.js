@@ -176,7 +176,7 @@ function _json_encode(inVal, out)
 }
 
 // Everything here assumes $ === jQuery so ensure this
-(function ($) {
+(function ($, PanelController, ResourceController, ProfileController, params) {
 
 /**
  * @summary Get parameters from the supplied uri/url
@@ -294,6 +294,10 @@ function doOnDocumentReady ()
                 event.preventDefault();
                 PanelController.OpenSubPanel(this, href, true, "text");
                 clickHandled = true;
+            } else if (href.indexOf('archive.org') >= 0) {
+                event.preventDefault();
+                PanelController.OpenNewContentPanel(href, "Book ");
+                clickHandled = true;
             }
       });
     $('.searchresults .data-view.image a').live("click", function (event) {
@@ -311,9 +315,9 @@ function doOnDocumentReady ()
             return;
         }
         clickHandled = false;
-        target = $(this).attr('href');
+        var target = $(this).attr('href');
         if (target.indexOf('http://') === -1) {
-            target = switchURL + target;
+            target = params.switchURL + target;
         }
         PanelController.OpenSubPanel(this, target, true, "text");
       });
@@ -324,7 +328,7 @@ function doOnDocumentReady ()
             return;
         }
         clickHandled = false;
-        target = $(this).attr('href');
+        var target = $(this).attr('href');
         var urlParams = GetUrlParams(target);
         var ID = PanelController.OpenNewSearchPanel(urlParams['x-context'], urlParams.query);
         PanelController.StartSearch(ID);
@@ -407,7 +411,7 @@ function GenerateUseridLink(userId)
   var url = document.URL;
   var pos = url.indexOf("?");
 
-  if (pos != -1)
+  if (pos !== -1)
     url = url.substr(0, pos);
 
   return url + "?userId=" + userId;
@@ -1044,4 +1048,4 @@ function ShowIndexCache()
   $('#openIndexList td.dottedr').css('text-align', 'right');
 }
 
-})(jQuery);
+})(jQuery, PanelController, ResourceController, ProfileController, params);

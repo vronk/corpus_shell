@@ -19,7 +19,7 @@
  */ 
 var PanelController;
 // Everything here assumes $ === jQuery so ensure this
-(function ($) {
+!function ($, SearchConfig, params) {
 
 /**
  * Creates a PanelManager.
@@ -33,7 +33,7 @@ var PanelController;
  * @requires jQuery
  *
  */
-function PanelManager (container, searchConfig)
+var PanelManager = function (container, searchConfig)
 {
   /**  
    * @public
@@ -83,7 +83,7 @@ function PanelManager (container, searchConfig)
    */
   this.TriggerChangedEvent = function (change)
   {
-    if (typeof this.onUpdated == "function")
+    if (typeof this.onUpdated === "function")
       this.onUpdated(change);
   };
 
@@ -175,7 +175,7 @@ function PanelManager (container, searchConfig)
     else
       parent = this.GetMainPanel(parentId);
 
-    if (parent != undefined && parent != null)
+    if (parent !== undefined && parent !== null)
     {
       parent.Panels[panelId] = this.GetNewPanelObject(panelId, type, pinned, position, url, title, zIndex);
       this.AddPanelId(panelId);
@@ -198,7 +198,7 @@ function PanelManager (container, searchConfig)
   {
     var main = this.Panels[panelId];
 
-    if (main == undefined)
+    if (main === undefined)
     {
       this.AddMainPanel(panelId);
       main = this.Panels[panelId];
@@ -216,17 +216,17 @@ function PanelManager (container, searchConfig)
    */
   this.GetSubPanel = function(parentId, panelId)
   {
-    if (parentId != "")
+    if (parentId !== "")
     {
       var subPanel = this.Panels[parentId].Panels[panelId];
-      return subPanel == undefined ? null : subPanel;
+      return subPanel === undefined ? null : subPanel;
     }
     else
     {
       for (var key in this.Panels)
       {
         var subPanel = this.Panels[key].Panels[panelId];
-        if (subPanel != undefined)
+        if (subPanel !== undefined)
           return subPanel;
       }
 
@@ -245,7 +245,7 @@ function PanelManager (container, searchConfig)
      for (var key in this.Panels)
      {
        var subPanel = this.Panels[key].Panels[panelId];
-       if (subPanel != undefined)
+       if (subPanel !== undefined)
          return this.Panels[key];
      }
 
@@ -1152,6 +1152,8 @@ function PanelManager (container, searchConfig)
     var newPanel;
     if (titlePart.indexOf("Map ") === 0)
         newPanel = new MapPanel(panelName, "content", panelTitle, url, position, false, maxZidx, this.Container, this, undefined);
+    else if (titlePart.indexOf("Book ") === 0)
+        newPanel = new BookReaderPanel(panelName, "content", panelTitle, url, position, false, maxZidx, this.Container, this, undefined);
     else if ((titlePart.indexOf("XML ") === 0) || (titlePart.indexOf("TEI ") === 0))
         newPanel = new XmlPanel(panelName, "content", panelTitle, url, position, false, maxZidx, this.Container, this, undefined);
     else
@@ -1192,6 +1194,8 @@ function PanelManager (container, searchConfig)
         var newPanel;
         if (panelObj.Title.indexOf("Map ") === 0)
             newPanel = new MapPanel(panelObj.Id, panelObj.Type, panelObj.Title, panelObj.Url, panelObj.Position, false, maxZidx, this.Container, this, 0);
+        else if (panelObj.Title.indexOf("Book ") === 0)
+            newPanel = new BookReaderPanel(panelObj.Id, panelObj.Type, panelObj.Title, panelObj.Url, panelObj.Position, false, maxZidx, this.Container, this, 0);
         else if ((panelObj.Title.indexOf("XML ") === 0) || (panelObj.Title.indexOf("TEI ") === 0))
             newPanel = new XmlPanel(panelObj.Id, panelObj.Type, panelObj.Title, panelObj.Url, panelObj.Position, false, maxZidx, this.Container, this, 0);
         else
@@ -1531,17 +1535,17 @@ function PanelManager (container, searchConfig)
             if (this.isPanelOpen(this.EnsuredPanels[key])) continue;
             if (this.EnsuredPanels[key].panelType === "search") {
                 var ID = this.OpenNewSearchPanel(this.EnsuredPanels[key].config, this.EnsuredPanels[key].searchStr);
-                PanelController.StartSearch(ID);
+                this.StartSearch(ID);
             } else if (this.EnsuredPanels[key].panelType === "explain") {
-                this.OpenNewContentPanel(switchURL + '?x-format=html&version=1.2&x-context=' + this.EnsuredPanels[key].config +
+                this.OpenNewContentPanel(params.switchURL + '?x-format=html&version=1.2&x-context=' + this.EnsuredPanels[key].config +
                    '&operation=explain');
             } else {
                 if (this.EnsuredPanels[key].searchStr !== 'geo') {
-                this.OpenNewContentPanel(switchURL + '?x-format=html&version=1.2&x-context=' + this.EnsuredPanels[key].config +
+                this.OpenNewContentPanel(params.switchURL + '?x-format=html&version=1.2&x-context=' + this.EnsuredPanels[key].config +
                    '&operation=scan&scanClause=' + this.EnsuredPanels[key].searchStr);
                 }
                 else {
-                    this.OpenNewContentPanel(switchURL + '?x-format=html&version=1.2&x-context=' + this.EnsuredPanels[key].config +
+                    this.OpenNewContentPanel(params.switchURL + '?x-format=html&version=1.2&x-context=' + this.EnsuredPanels[key].config +
                    '&operation=scan&scanClause=' + this.EnsuredPanels[key].searchStr,
                    "Map " + this.EnsuredPanels[key].config + ": " + this.EnsuredPanels[key].searchStr);
                 }
@@ -1549,5 +1553,5 @@ function PanelManager (container, searchConfig)
         }
   };
 }
-PanelController = new PanelManager("#snaptarget", SearchConfig);
-})(jQuery);
+this.PanelController = new PanelManager("#snaptarget", SearchConfig);
+}(jQuery, SearchConfig, params);
