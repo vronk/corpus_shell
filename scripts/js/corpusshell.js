@@ -290,7 +290,7 @@ function doOnDocumentReady ()
     $('.searchresults .data-view.full a').live("click", function (event) {
             var target = $(this).attr('target');
             var href = $(this).attr('href');
-            if ((target === undefined || target === "") && !href.startsWith('#')) {
+            if ((target === undefined || target === "") && (href.indexOf('#') > 0)) {
                 event.preventDefault();
                 PanelController.OpenSubPanel(this, href, true, "text");
                 clickHandled = true;
