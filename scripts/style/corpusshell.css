@@ -254,6 +254,7 @@ table {
        The alternative is the flexbox layout. The most current version is
        not available in Firefox below 21 (e.g. 17)*/
     height: 100%;
+    padding-right: 3px;
     overflow: auto;
 }
 
