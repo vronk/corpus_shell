@@ -1,182 +1,185 @@
 .tei-entry {
-    margin-top: 15px;
-    background: rgb(222,232,254);
-    border: 1px solid grey
-}
-
-/*.tei-entry {
-    margin-top: 15px;
-    background:rgb(242,242,242);
-    border: 1px solid grey
-}*/
-
-.tei-form-lemma,
-.tei-form-multiWordUnit {
-    font-weight: bold;
-}
-
-.tei-form-multiWordUnit {
-    border-bottom: 1px dotted #AAA;
-}
-
-.tei-form-inflected {
-    display: block;
-    margin-left:30px
-}
-
-.tei-form-ana {
-    font-weight: bold;
-    font-style: italic;
-    color: rgb(63,116,254);
-}
-
-/*.tei-form-ana {
-    font-weight: bold;
-    font-style: italic;
-    color: blue;
-}*/
-
-.tei-form-ana:before {
-    content: " (";
-}
-
-.tei-form-ana:after {
-    content: ")";
-}
-
-.tei-orth.ar-arz-x-cairo-arabic:before {
-    content:"(";
-}
-
-.tei-orth.ar-arz-x-cairo-arabic:after {
-    content:")";
-}
-
-.tei-gramGrp {
-    padding: 0 0 0 0;
-    display: inline;
-    color: rgb(247,15,9)
-}
-
-/*.tei-gramGrp {
-    padding: 0 0 0 0;
-    display: inline;
-    color: rgb(0,64,0);
-}*/
- 
-.tei-gramGrp:before {
-    content:"[";
-    color: black;
-}
-
-.tei-gramGrp:after {
-    content:"]";
-    margin-left: -4px;
-    color: black;
-}
-
-dt.tei-gram {
-    display: none;
-}
-/* hidden with the above statement */
-dt.tei-gram:after {
-    content: ":";
-}
-
-/* fist-child/nth-child(1) is the dt which is hidden */
-.tei-gram:nth-child(2) {
-    margin-left: -4px;
-}
-
-.tei-gram {
-    margin: 0 0 0 0;
-    display: inline;
-    list-style: none;    
-}
-
-dd.tei-gram:after {
-    content: ", ";
-}
-
-dd.tei-gram:nth-last-of-type(1):after {
-    content: "";
-}
-
-.tei-gram.root {
-    color: darkgreen;
+    background: #DEE8FE;
+    margin-bottom: 1em;
 }
 
 .tei-cit.example {
-    padding: 3px;
-    color:green;
-    border:1px solid rgb(97,137,1);
-    background: rgb(250,255,183);
+    margin-bottom: 1em;
 }
 
-.tei-cit.translation-de {
-    color:rgb(126,126,126);
+.tei-form-lemma,
+.tei-form-multiWordUnit {
+    display: inline-block;
+    margin-bottom: 0.5em;
+}
+
+.tei-form-multiWordUnit {
+    border-bottom: 1px dotted slategray;
+}
+
+.tei-orth {
+    font-weight: bold;
+}
+.tei-form-inflected .tei-orth {
+    font-weight: normal;
+}
+.tei-form-inflected,
+.tei-bibls {
+    display: block;
+    margin-left: 1.5em;
+}
+.tei-cits {
+    display: block;
+    border: 1px solid lightslategray;
+}
+.tei-cit {
+    display: block;
+    padding: 0.2em;
+}
+.tei-gramGrp {
+    display: inline;
+}
+dt.tei-gram {
+    display: none;
+}            
+.tei-gram.pos,
+.tei-gram.gender,
+.tei-gram.subc,
+.tei-form-ana,
+.tei-defs {
     font-style: italic;
+    color: #3366FF;
+}
+.tei-gram.root {
+    color: #009966;
+}
+.tei-gram.root,
+.tei-gram.pos,
+.tei-gram.gender,
+.tei-gram.subc,
+.tei-gram.arguments
+{
+    display: inline;
+}
+.tei-form-ana:before {
+    content: "\00a0";
+}
+dd.tei-gram {
+    margin: 0;
+}
+.tei-cit.example {                
+    /* background: #C7D8FE; */
+    background: #EAF0FE;
 }
 
-.tei-sense .tei-cits .tei-cit.example  {
-    margin-left: 20px;
+.tei-entry .tei-cit.example {
+    padding-left: 1.5em;
+    border: 0;
+    margin-bottom: 0;
 }
 
-.tei-cit.example .tei-cit.translation-en {
-    color: rgb(193,97,0);
-    font-style: italic;
+.tei-entry .tei-cit {
+    border-bottom: 1px solid lightslategray;
+}
+.tei-entry .tei-cit:nth-last-child(1) {
+    border-bottom: 0;
 }
 
-.tei-cit.translation-de:before {
-    content: "(";
+.tei-cit.example .translation-de,
+.tei-cit.example .translation-en,
+.tei-cit.example .translation-fr,
+.tei-cit.example .translation-es {
+    border-bottom: 1px solid lightslategray;
+    border-left: 1px solid lightslategray;
+    border-right: 1px solid lightslategray;
 }
-
-.tei-cit.translation-de:after {
-    content: ")";
-    margin-left: -4px;
+.tei-cit.example .translation-en {
+    border-top: 1px solid lightslategray;
 }
-
-.tei-cit.translation-de *:first-child {
-    margin-left: -4px;
+.tei-bibls {
+    height: 0.7em;
 }
-
-.tei-def.lang-de {
-    color:rgb(126,126,126);
-    font-style: italic
+.tei-bibl {
+    position: relative;
+    bottom: 5px;
+    display: inline-block;
+    font-size: xx-small;
+    color: slategray;
 }
-
-.tei-def.lang-de:before {
-    content: "(";
-    margin-left: 4px;
-}
-
-.tei-def.lang-de:after {
-    content: ")";
-}
-
-.tei-sense > .tei-cits {
-    margin-top: 5px;
-    border-top:0.5px dotted grey;
-}
-
-.tei-sense > .tei-defs {
-    margin-top: 5px;
-    border-top:0.5px dotted grey;
-    font-style: italic;
-    color: rgb(36,53,208);
-}
-
-.tei-quote span.tei-usg.tei-type-hint {
+.tei-def {
+    display:block;
+}            
+.tei-usg.tei-type-dom {
+    display: inline-block;
+    border: 1px solid green;
     font-size: smaller;
-    color:rgb(126,126,126);
+    padding: 1px 2px;
+    color: #00793B;
+    border-radius: 8px;
+    margin: 0.5em 0 0.5em 0;
 }
-
-.tei-quote span.tei-usg.tei-type-hint:before {
+.tei-gram:after,
+.tei-bibl:after {
+    content: ",";
+}
+.tei-bibl:nth-last-child(1):after,
+dd.tei-gram:nth-last-child(3):after {
+    content: "";
+}
+.tei-gram.arguments:before {
+    content: "(";
+}
+.tei-gram.arguments:after {
+    content: ")";
+}
+.tei-gram.arguments.compulsatory:before {
+    content: "";
+}
+.tei-gram.arguments.compulsatory:after {
+    content: "";
+}
+.tei-gram.root:before {
     content: "[";
 }
-
-.tei-quote span.tei-usg.tei-type-hint:after {
+.tei-gram.root:after {
     content: "]";
+}
+.translation-en:before,
+.translation-de:before,
+.translation-fr:before,
+.translation-es:before,
+.lang-en:before,
+.lang-de:before
+{
+    color: #00793B;
+    font-size: xx-small;
+    border: 1px solid #00793B;
+    padding: 1px 2px 0 2px;
+    border-radius: 5px;
+    display: inline-block;
+    width: 1em;
+    text-align: center;
+}
+.translation-en:before,
+.lang-en:before {
+    content: "en";
+}            
+.lang-en:before,
+.lang-de:before
+{
+    margin-right: 0.5em;
+}
+.translation-de:before,
+.lang-de:before {
+    content: "de";
+}
+
+.translation-fr:before {
+    content: "fr";
+}
+
+.translation-es:before {
+    content: "es"; 
 }
 
 .tei-usg.tei-type-dom {
@@ -187,24 +190,6 @@ dd.tei-gram:nth-last-of-type(1):after {
     border-radius: 8px;
 }
 
-.inline-wrap .bibl {
-    font-size: x-small;
+table.show tr td:nth-child(2) {
+    width: 100%;
 }
-
-.inline-wrap .bibl:before {
-    content: "\00a0"; 
-}
-
-.inline-wrap + .inline-wrap .bibl:before {
-    content: ";\00a0";
-    margin-left: -4px;
-}
-/*
- * hide during development
- *
-.data-view.metadata,
-div.note,
-.result-header > span {
-    display: none;
-}
-/**/
