@@ -116,21 +116,8 @@
     font-style: italic;  
 }
 
-.searchresults .vicav_lingfeatures_001 .tei-cit.example .tei-cit.translation-en {
-    color: rgb(0,98,196); 
-}
-
-.searchresults .vicav_lingfeatures_001 .tei-cit.example .tei-cit.translation-de {
-    color: rgb(98,98,98);  
-}
-
-.searchresults .vicav_lingfeatures_001 .tei-cit.example .tei-cit.translation-es {
-    color: #CC6600;  
-}
-
 .searchresults .vicav_lingfeatures_001 .example {
     display: block;
-    text-indent: -1em;
     line-height: 20px;
     color: black;
     position: relative;
