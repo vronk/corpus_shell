@@ -1016,6 +1016,38 @@ Example:
     position: relative;
 }
 
+/*
+ Styles for interviews (TEI utterances)
+ =====================================================
+
+Example:
+```
+```
+ */
+ 
+.tei-u {
+    display: block;
+    margin: 0 0 0 0;
+    background: #DEE8FE;
+}
+ 
+.tei-u-who {
+    display: inline-block;
+    min-width: 6em;
+    margin: 0 0 3px 0;
+    color: #3366FF;
+    font-style: italic;
+}
+ 
+ .tei-u-who:after {
+    content: ':';
+}
+ 
+.tei-u-what {
+    display: inline;
+    margin: 0 0 0 0;
+}
+ 
 /* inline wrap table rendering 
    ===========================
    Attributs which are'nt processed right now by default are rendered as tables
