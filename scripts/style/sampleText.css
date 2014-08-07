@@ -46,6 +46,7 @@
 .tei-w {
     display: inline;
     position: relative;
+    border-bottom: 1px dotted lightslategray;
 }
 
 .tei-w:hover {
