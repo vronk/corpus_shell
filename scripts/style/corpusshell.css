@@ -1039,13 +1039,51 @@ Example:
     font-style: italic;
 }
  
- .tei-u-who:after {
+.tei-u-who:after {
     content: ':';
 }
  
 .tei-u-what {
     display: inline;
     margin: 0 0 0 0;
+}
+
+
+.xsl-first-of-group.tei-w:before {
+    color: #00793B;
+    font-size: xx-small;
+    border: 1px solid #00793B;
+    padding: 1px 2px 0 2px;
+    border-radius: 5px;
+    display: inline-block;
+    text-align: center;
+}
+
+.xsl-first-of-group.tei-w.lang-fr:before {
+    content:"fr";
+    width: 1em;
+}
+
+.xsl-first-of-group.tei-w.lang-aeb:before {
+    content:"aeb";
+    width: 2em;
+}
+
+.tei-w.tei-type-FM {
+    border-bottom: inherit;
+}
+
+.tei-w.tei-type-FM:hover {
+    background-color: inherit;
+}
+
+.tei-kinesic {
+    color: #00793B;
+    border: 1px solid #00793B;
+    padding: 1px 2px 0 2px;
+    border-radius: 5px;
+    display: inline-block;
+    text-align: center;    
 }
  
 /* inline wrap table rendering 
