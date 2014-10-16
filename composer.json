@@ -1,0 +1,25 @@
+{
+    "name": "vendor/corpus-shell",
+    "description": "Description of project corpus_shell.",
+    "authors": [
+        {
+            "name": "Omar Siam",
+            "email": "Omar.Siam@oeaw.ac.at"
+        },
+        {
+            "name": "Matej Ďurčo",
+            "email": "Matej.Durco@oeaw.ac.at"
+        }        
+    ],
+    "require": {},
+    "require-dev": {
+        "atoum/atoum": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "ACDH\\FCSSRU\\switchAggregator\\": "modules/fcs-aggregator/",
+            "jmathai\\phpMultiCurl\\EpiCurl\\":"modules/utils-php/",
+            "ACDH\\FCSSRU\\":"modules/utils-php/"
+        }
+    }    
+}
