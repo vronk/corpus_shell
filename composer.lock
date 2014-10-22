@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "5bc904e6681d822abd5cba0fe01369c3",
+    "hash": "2fdb334fffa3a4f2230425b3e90d55f6",
     "packages": [],
     "packages-dev": [
         {
@@ -310,16 +310,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "4.3.3",
+            "version": "4.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "5a0bc4dcbb7340c0a9a9bc3507854a67c564edc4"
+                "reference": "23e4e0310f037aae873cc81b8658dbbb82878f71"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/5a0bc4dcbb7340c0a9a9bc3507854a67c564edc4",
-                "reference": "5a0bc4dcbb7340c0a9a9bc3507854a67c564edc4",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/23e4e0310f037aae873cc81b8658dbbb82878f71",
+                "reference": "23e4e0310f037aae873cc81b8658dbbb82878f71",
                 "shasum": ""
             },
             "require": {
@@ -330,7 +330,7 @@
                 "ext-spl": "*",
                 "php": ">=5.3.3",
                 "phpunit/php-code-coverage": "~2.0",
-                "phpunit/php-file-iterator": "~1.3.1",
+                "phpunit/php-file-iterator": "~1.3.2",
                 "phpunit/php-text-template": "~1.2",
                 "phpunit/php-timer": "~1.0.2",
                 "phpunit/phpunit-mock-objects": "~2.3",
@@ -380,7 +380,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2014-10-16 16:53:00"
+            "time": "2014-10-22 11:43:12"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -436,6 +436,65 @@
                 "xunit"
             ],
             "time": "2014-10-03 05:12:11"
+        },
+        {
+            "name": "phpunit/phpunit-skeleton-generator",
+            "version": "2.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sebastianbergmann/phpunit-skeleton-generator.git",
+                "reference": "c0eeb18f31893c2f0c387bce84f8a3816a0eacd1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-skeleton-generator/zipball/c0eeb18f31893c2f0c387bce84f8a3816a0eacd1",
+                "reference": "c0eeb18f31893c2f0c387bce84f8a3816a0eacd1",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3",
+                "phpunit/php-text-template": "~1.2",
+                "sebastian/version": "~1.0",
+                "symfony/console": "~2.4"
+            },
+            "require-dev": {
+                "mikey179/vfsstream": "~1.2",
+                "phpunit/phpunit": "~4.0"
+            },
+            "bin": [
+                "phpunit-skelgen"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Sebastian Bergmann",
+                    "email": "sebastian@phpunit.de",
+                    "role": "lead"
+                }
+            ],
+            "description": "Tool that can generate skeleton test classes from production code classes and vice versa",
+            "homepage": "https://github.com/sebastianbergmann/phpunit-skeleton-generator",
+            "keywords": [
+                "Skeleton",
+                "phpunit",
+                "testing",
+                "xunit"
+            ],
+            "time": "2014-05-14 17:42:22"
         },
         {
             "name": "sebastian/comparator",
@@ -555,16 +614,16 @@
         },
         {
             "name": "sebastian/environment",
-            "version": "1.1.0",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/environment.git",
-                "reference": "6288ebbf6fa3ed2b2ff2d69c356fbaaf4f0971a7"
+                "reference": "0d9bf79554d2a999da194a60416c15cf461eb67d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/environment/zipball/6288ebbf6fa3ed2b2ff2d69c356fbaaf4f0971a7",
-                "reference": "6288ebbf6fa3ed2b2ff2d69c356fbaaf4f0971a7",
+                "url": "https://api.github.com/repos/sebastianbergmann/environment/zipball/0d9bf79554d2a999da194a60416c15cf461eb67d",
+                "reference": "0d9bf79554d2a999da194a60416c15cf461eb67d",
                 "shasum": ""
             },
             "require": {
@@ -576,7 +635,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.1.x-dev"
+                    "dev-master": "1.2.x-dev"
                 }
             },
             "autoload": {
@@ -601,7 +660,7 @@
                 "environment",
                 "hhvm"
             ],
-            "time": "2014-10-07 09:23:16"
+            "time": "2014-10-22 06:38:05"
         },
         {
             "name": "sebastian/exporter",
@@ -702,6 +761,61 @@
             "description": "Library that helps with managing the version number of Git-hosted PHP projects",
             "homepage": "https://github.com/sebastianbergmann/version",
             "time": "2014-03-07 15:35:33"
+        },
+        {
+            "name": "symfony/console",
+            "version": "v2.5.5",
+            "target-dir": "Symfony/Component/Console",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/Console.git",
+                "reference": "ca053eaa031c93afb68a71e4eb1f4168dfd4a661"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/Console/zipball/ca053eaa031c93afb68a71e4eb1f4168dfd4a661",
+                "reference": "ca053eaa031c93afb68a71e4eb1f4168dfd4a661",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "psr/log": "~1.0",
+                "symfony/event-dispatcher": "~2.1"
+            },
+            "suggest": {
+                "psr/log": "For using the console logger",
+                "symfony/event-dispatcher": ""
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.5-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Symfony\\Component\\Console\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                },
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                }
+            ],
+            "description": "Symfony Console Component",
+            "homepage": "http://symfony.com",
+            "time": "2014-09-25 09:53:56"
         },
         {
             "name": "symfony/yaml",
