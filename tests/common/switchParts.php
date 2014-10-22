@@ -29,7 +29,8 @@ class FCSSwitchParts extends FCSSwitch {
         return parent::GetXslStyleDomDocument($operation, $configItem);
     }
     protected function GetXslStyle($operation, $configItem) {
-        return $this->pr . 'modules/fcs-aggregator/' . parent::GetXslStyle($operation, $configItem);
+        $pathOnly = str_replace(array('http://localhost/', 'http://127.0.0.1/'), '../../../', parent::GetXslStyle($operation, $configItem));
+        return $this->pr . 'modules/fcs-aggregator/' . $pathOnly;
     }
 }
 
