@@ -103,7 +103,9 @@ class FCSSwitchTest extends XPathTestCase {
         
         $configItem = $this->t->GetConfig($sru_fcs_params->xcontext);
         $xmlDoc = $this->t->GetDomDocument($this->pr . 'xsl/tests/input/fcs/vicav_glossary_explain.xml');
+        $this->assertNotFalse($xmlDoc, 'An input file has to exist.');
         $xslDoc = $this->t->GetXslStyleDomDocument($sru_fcs_params->operation, $configItem);
+        $this->assertNotFalse($xslDoc, 'An XSLT stylesheet has to exist.');
         $this->df->loadXML($this->t->ReturnXslT($xmlDoc, $xslDoc, true, false));
         $this->df->xmlIndent();
         $return = $this->df->saveXML();
