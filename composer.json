@@ -13,7 +13,8 @@
     ],
     "require": {},
     "require-dev": {
-        "phpunit/phpunit": "4.3.*"
+        "phpunit/phpunit": "4.3.*",
+        "phpunit/phpunit-skeleton-generator": "2.0.*"
     },
     "autoload": {
         "psr-4": {
