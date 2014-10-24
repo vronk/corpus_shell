@@ -91,21 +91,81 @@ class GlossaryOnSRUTest extends XPathTestCase {
         $this->assertInstanceOf('ACDH\\FCSSRU\\Http\\Response', $ret);
         $this->assertNotEquals('', $ret->getBody());
     }
+    
+    protected function setupDBMockForSqlScan($prefilter, $completeSql = null) {
+        if (isset($completeSql)) {
+            $this->expectedSqls = array(
+                $completeSql
+            );
+        } else {
+            $this->expectedSqls = array(
+            "SELECT ndx.txt, base.entry, base.sid, COUNT(*) FROM $this->context AS base ".
+            "INNER JOIN ".
+                "(SELECT ndx.id, ndx.txt FROM ".
+                $prefilter .
+                "WHERE ndx.txt LIKE '%%' GROUP BY ndx.id) AS ndx ".
+            "ON base.id = ndx.id  GROUP BY ndx.txt ORDER BY ndx.txt",            
+            );
+        }
+        $this->dbMock->expects($this->exactly(1))->method('query')
+                ->with($this->expectedSqls[0])
+                ->willReturn(false);        
+    }
+    
+    protected $expectedSqls = array();
+    
     /**
      * @test
      */
     public function it_should_use_the_right_sql_for_scan() {
         $this->params->operation = 'scan';
-        $this->dbMock->expects($this->exactly(1))->method('query')
-                ->with("SELECT ndx.txt, base.entry, base.sid, COUNT(*) FROM $this->context AS base ".
-                       "INNER JOIN ".
-                       "(SELECT ndx.id, ndx.txt FROM $this->context"."_ndx AS ndx ".
-                       "WHERE ndx.txt LIKE '%%' GROUP BY ndx.id) AS ndx ".
-                       "ON base.id = ndx.id  GROUP BY ndx.txt ORDER BY ndx.txt")
-                ->willReturn(false);
+        $this->setupDBMockForSqlScan("$this->context"."_ndx AS ndx ");
         $ret = $this->t->scan();
         $this->assertInstanceOf('ACDH\FCSSRU\SRUDiagnostics', $ret);
     }
+    
+    /**
+     * @test
+     */
+    public function it_should_use_the_right_sql_for_rfpid_scan() {
+        $this->params->operation = 'scan';
+        $this->params->scanClause = 'rfpid';
+        $this->setupDBMockForSqlScan('', "SELECT id, entry, sid FROM $this->context ORDER BY CAST(id AS SIGNED)");
+        $ret = $this->t->scan();
+        $this->assertInstanceOf('ACDH\FCSSRU\SRUDiagnostics', $ret);
+    }
+    
+    protected function setupDBMockForSqlSearch($prefilter) {
+        $query = $this->params->query;
+        $this->dbMock->expects($this->at(0))->method('escape_string')
+                ->with($this->params->query)
+                ->willReturn($this->params->query);
+        $this->expectedSqls = array(
+            "SELECT entry FROM $this->context WHERE id = 1",
+            "SELECT COUNT(*)  FROM $this->context AS base ".
+            "INNER JOIN ".
+                "(SELECT ndx.id, ndx.txt FROM ".
+                $prefilter .
+                "WHERE ndx.txt LIKE '%$query%' GROUP BY ndx.id) AS ndx ".
+            "ON base.id = ndx.id ",
+            "SELECT ndx.txt, base.entry, base.sid, COUNT(*) FROM $this->context AS base ".
+                "INNER JOIN ".
+                "(SELECT ndx.id, ndx.txt FROM ".
+                $prefilter .
+                "WHERE ndx.txt LIKE '%$query%' GROUP BY ndx.id) AS ndx ".
+            "ON base.id = ndx.id  GROUP BY base.sid LIMIT 0, 10"
+        );
+        $this->dbMock->expects($this->at(1))->method('query')
+                ->with($this->expectedSqls[0])
+                ->willReturn(false);
+        $this->dbMock->expects($this->at(2))->method('query')
+                ->with($this->expectedSqls[1])
+                ->willReturn(false);
+        $this->dbMock->expects($this->at(3))->method('query')
+                ->with($this->expectedSqls[2])
+                ->willReturn(false);      
+    }
+    
     /**
      * @test
      */
@@ -113,21 +173,53 @@ class GlossaryOnSRUTest extends XPathTestCase {
         $this->params->operation = 'searchRetrieve';
         $query = 'waer';
         $this->params->query = $query;
-        $this->dbMock->expects($this->at(0))->method('escape_string')
-                ->with($this->params->query)
-                ->willReturn($this->params->query);
-        $this->dbMock->expects($this->at(1))->method('query')
-                ->with("SELECT entry FROM $this->context WHERE id = 1")
-                ->willReturn(false);
-        $this->dbMock->expects($this->at(2))->method('query')
-                ->with("SELECT COUNT(*)  FROM $this->context AS base INNER JOIN (SELECT ndx.id, ndx.txt FROM $this->context"."_ndx AS ndx WHERE ndx.txt LIKE '%$query%' GROUP BY ndx.id) AS ndx ON base.id = ndx.id ")
-                ->willReturn(false);
-        $this->dbMock->expects($this->at(3))->method('query')
-                ->with("SELECT ndx.txt, base.entry, base.sid, COUNT(*) FROM $this->context AS base INNER JOIN (SELECT ndx.id, ndx.txt FROM $this->context"."_ndx AS ndx WHERE ndx.txt LIKE '%$query%' GROUP BY ndx.id) AS ndx ON base.id = ndx.id  GROUP BY base.sid LIMIT 0, 10")
-                ->willReturn(false);
+        $this->setupDBMockForSqlSearch("$this->context"."_ndx AS ndx ");
         $ret = $this->t->search();
         $this->assertInstanceOf('ACDH\FCSSRU\SRUDiagnostics', $ret);
     }
     
+    protected function changeContext($anotherContext) {
+        $this->context = $anotherContext;
+        $this->params->xcontext = $anotherContext;
+        $this->params->context[0] = $anotherContext;
+    }
+    
+    protected function getReleasedPrefilter() {
+        return "(SELECT tab.id, tab.xpath, tab.txt FROM $this->context"."_ndx AS tab ".
+                     "INNER JOIN ".
+                        "(SELECT inner.id FROM $this->context"."_ndx AS `inner` ".
+                        "WHERE inner.txt = 'released' ".
+                        "AND inner.xpath LIKE '%-change-f-status-') AS prefid ".
+                     "ON tab.id = prefid.id WHERE tab.txt != '-') AS ndx ";
+    }
 
+    /**
+     * @test
+     */
+    public function it_should_use_the_right_sql_for_restricted_scan() {
+        $this->params->operation = 'scan';
+        $restrictedContext = 'aeb_eng_001__v001';
+        $this->changeContext($restrictedContext);
+        $this->setupDBMockForSqlScan($this->getReleasedPrefilter());
+        
+        $ret = $this->t->scan();
+        
+        $this->assertInstanceOf('ACDH\FCSSRU\SRUDiagnostics', $ret);
+    }
+        
+    /**
+     * @test
+     */
+    public function it_should_use_the_right_sql_for_restricted_search() {
+        $this->params->operation = 'searchRetrieve';
+        $query = 'waer';
+        $this->params->query = $query;
+        $restrictedContext = 'aeb_eng_001__v001';
+        $this->changeContext($restrictedContext);
+        $this->setupDBMockForSqlSearch($this->getReleasedPrefilter());
+        
+        $ret = $this->t->search();
+        
+        $this->assertInstanceOf('ACDH\FCSSRU\SRUDiagnostics', $ret);
+    }
 }
