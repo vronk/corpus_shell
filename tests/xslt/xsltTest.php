@@ -14,6 +14,7 @@ require_once __DIR__ . '/../common/XPathTestCase.php';
 require_once __DIR__ . '/../common/switchParts.php';
 
 class XSLTTests extends XPathTestCase {
+    /// Switch response to HTML
     /**
      * @test
      */
@@ -37,6 +38,7 @@ class XSLTTests extends XPathTestCase {
                 '', 'scan', 'fcs.resource');
     }
     
+    /// Language profiles to HTML
     /**
      * @test
      */
@@ -45,6 +47,40 @@ class XSLTTests extends XPathTestCase {
                 'vicav_profiles_001', 'explain');
     }
     
+    /// Glossary to HTML
+    /**
+     * @test
+     */
+    public function it_should_transform_a_vicav_glossary_explain() {
+        $this->doAssertTransformEqualsExpectedIndented("vicav_glossary_explain",
+                'arz_eng_006', 'explain');
+    }
+    
+    /**
+     * @test
+     */
+    public function it_should_transform_a_single_vicav_glossary_entry_from_arz_eng_006() {
+        $this->doAssertTransformEqualsExpectedIndented("vicav-entry", "arz_eng_006",
+                "searchRetrieve", "cql.serverChoice==water");
+    }
+    
+    /**
+     * @test
+     */
+    public function it_should_transform_multiple_glossary_entries_from_apc_eng_002() {
+       $this->doAssertTransformEqualsExpectedIndented("vicav_glossary_damascus", "apc_eng_002",
+               "searchRetrieve", "water"); 
+    }
+    
+    /**
+     * @test
+     */
+    public function it_should_transform_multiple_glossary_entries_from_aeb_eng_001__v001() {
+       $this->doAssertTransformEqualsExpectedIndented("vicav_glossary_tunisia", "aeb_eng_001__v001",
+               "searchRetrieve", "water"); 
+    }
+    
+    /// Bibliography 
     /**
      * @test
      */
