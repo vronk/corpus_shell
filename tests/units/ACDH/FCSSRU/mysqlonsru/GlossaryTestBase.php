@@ -70,7 +70,7 @@ abstract class GlossaryTestBase extends XPathTestCase {
             "INNER JOIN ".
                 "(SELECT ndx.id, ndx.txt FROM ".
                 $prefilter .
-                "WHERE ndx.txt LIKE '%%' GROUP BY ndx.id) AS ndx ".
+                "WHERE ndx.txt LIKE '%%') AS ndx ".
             "ON base.id = ndx.id  GROUP BY ndx.txt ORDER BY ndx.txt",            
             );
         }
@@ -92,13 +92,13 @@ abstract class GlossaryTestBase extends XPathTestCase {
             "INNER JOIN ".
                 "(SELECT ndx.id, ndx.txt FROM ".
                 $prefilter .
-                "WHERE ndx.txt LIKE '%$query%' GROUP BY ndx.id) AS ndx ".
+                "WHERE ndx.txt LIKE '%$query%') AS ndx ".
             "ON base.id = ndx.id ",
             "SELECT ndx.txt, base.entry, base.sid, COUNT(*) FROM $this->context AS base ".
                 "INNER JOIN ".
                 "(SELECT ndx.id, ndx.txt FROM ".
                 $prefilter .
-                "WHERE ndx.txt LIKE '%$query%' GROUP BY ndx.id) AS ndx ".
+                "WHERE ndx.txt LIKE '%$query%') AS ndx ".
             "ON base.id = ndx.id  GROUP BY base.sid LIMIT 0, 10"
         );
         $this->dbMock->expects($this->at(1))->method('query')
