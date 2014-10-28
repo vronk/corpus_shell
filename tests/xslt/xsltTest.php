@@ -80,7 +80,42 @@ class XSLTTests extends XPathTestCase {
                "searchRetrieve", "water"); 
     }
     
-    /// Bibliography 
+    /// Tools texts
+    /**
+     * @test
+     */
+    public function it_should_transform_a_vicav_tools_explain() {
+        $this->doAssertTransformEqualsExpectedIndented("vicav_tools_explain", "vicav_tools_001", "explain");
+    }
+    
+    /**
+     * @test
+     */
+    public function it_should_transform_a_vicav_tools_scan_to_json() {
+        global $sru_fcs_params;
+        
+        $sru_fcs_params->xformat = 'json';
+        $this->t->GetDefaultStyles();
+        
+        $this->doAssertTransformEqualsExpectedJSON("vicav_tools_scan", "vicav_tools_001",
+                "scan", "toolsText");
+    }
+    /**
+     * @test
+     */
+    public function it_should_transform_vicav_tools_guidelines() {
+       $this->doAssertTransformEqualsExpectedIndented("vicav_tools_guidelines", "vicav_tools_001",
+               "searchRetrieve", "toolsText=Dictionary"); 
+    }    
+    /// Bibliography
+    /**
+     * @test
+     */
+    public function it_should_transform_a_vicav_bibliography_explain() {
+        $this->doAssertTransformEqualsExpectedIndented("vicav_bibliography_explain",
+                'vicav_bibl_002', 'explain');
+    }
+    
     /**
      * @test
      */
@@ -93,12 +128,23 @@ class XSLTTests extends XPathTestCase {
         if (!isset($baseurl)) {
             $baseurl = 'http://corpus3.aac.ac.at/vicav2/corpus_shell//modules/fcs-aggregator/switch.php';
         }
-        $expected = $this->getExpectedFile("$filename.html");
-        $actual = $this->getActualTransform("$filename.xml",
+        $expected = $this->getExpectedFileXML("$filename.html");
+        $actual = $this->getActualTransformXML("$filename.xml",
                 $context, $operation, $searchOrScanClaus, $baseurl);
         $expected->xmlIndent();
         $actual->xmlIndent();
-        $this->assertEquals($expected->saveXML(), $actual->saveXML());    }
+        $this->assertEquals($expected->saveXML(), $actual->saveXML());        
+    }
+    
+    protected function doAssertTransformEqualsExpectedJSON($filename, $context, $operation, $searchOrScanClaus = null, $baseurl = null) {
+        if (!isset($baseurl)) {
+            $baseurl = 'http://corpus3.aac.ac.at/vicav2/corpus_shell//modules/fcs-aggregator/switch.php';
+        }
+        $expected = $this->getExpectedFileJSON("$filename.json");
+        $actual = $this->getActualTransformJSON("$filename.xml",
+                $context, $operation, $searchOrScanClaus, $baseurl);
+        $this->assertEquals($expected, $actual);
+    }
     /**
      * @var FCSSwitchParts
      */
@@ -147,18 +193,37 @@ class XSLTTests extends XPathTestCase {
     }
     
     /**
+     * @param string $filename
+     * @return string
+     */
+    private function getExpectedFile($filename) {
+        $expectedFilename = $this->pr . "xsl/tests/output-expected/fcs/$filename";
+        $expectedfile = fopen($expectedFilename, 'r');
+        $this->assertNotFalse($expectedfile, "A working expected file $expectedFilename has to exist.");
+        $ret = fread($expectedfile , filesize($expectedFilename));
+        fclose($expectedfile);
+        return $ret;
+    }
+    
+    /**
      * 
      * @param string $filename
      * @return ACDH\FCSSRU\IndentDomDocument
      */
-    protected function getExpectedFile($filename) {
+    protected function getExpectedFileXML($filename) {
         $ret = new IndentDomDocument();
         $ret->setWhiteSpaceForIndentation(' ');
-        $expectedFilename = $this->pr . "xsl/tests/output-expected/fcs/$filename";
-        $expectedfile = fopen($expectedFilename, 'r');
-        $this->assertNotFalse($expectedfile, "A working expected file $filename has to exist.");
-        $ret->loadXML(fread($expectedfile , filesize($expectedFilename)));
-        fclose($expectedfile);
+        $ret->loadXML($this->getExpectedFile($filename));
+        return $ret;
+    }
+
+    /**
+     * @param string $filename
+     * @return array
+     */
+    protected function getExpectedFileJSON($filename) {
+        $ret = json_decode($this->getExpectedFile($filename), true);
+        $this->assertNotNull($ret, "Can not decode JSON in $filename.");
         return $ret;
     }
     
@@ -170,11 +235,16 @@ class XSLTTests extends XPathTestCase {
      * @param string $operation
      * @param string $queryOrScanClause
      * @param string $baseUrl
-     * @return ACDH\FCSSRU\IndentDomDocument
+     * @return string The result of the transformation as a string or <b>FALSE</b> on error.
      */
-    protected function getActualTransform($inputFilename, $xcontext, $operation, $queryOrScanClause = null, $baseUrl = null) {
+    private function getActualTransform($inputFilename, $xcontext, $operation, $queryOrScanClause = null, $baseUrl = null) {
         global $sru_fcs_params;
         global $switchUrl;
+        
+        $savedSwitchUrl = $switchUrl;
+        if (isset($baseUrl)) {
+            $switchUrl = $baseUrl;
+        }
         
         $sru_fcs_params->operation = $operation;
         $sru_fcs_params->xcontext = $xcontext;
@@ -186,21 +256,50 @@ class XSLTTests extends XPathTestCase {
                 $sru_fcs_params->query = $queryOrScanClause;
             }
         }
-        $savedSwitchUrl = $switchUrl;
-        if (isset($baseUrl)) {
-            $switchUrl = $baseUrl;
-        }
-        $ret = new IndentDomDocument();
-        $ret->setWhiteSpaceForIndentation(' ');
         $configItem = $this->t->GetConfig($sru_fcs_params->xcontext);
         $this->assertTrue(is_array($configItem), "Couldn't load config for context $xcontext!");
         $xmlDoc = $this->t->GetDomDocument($this->pr . "xsl/tests/input/fcs/$inputFilename");
         $this->assertNotFalse($xmlDoc, "$inputFilename not found!");
         $xslDoc = $this->t->GetXslStyleDomDocument($sru_fcs_params->operation, $configItem);
         $this->assertNotFalse($xslDoc, "XSL for " . $sru_fcs_params->operation . " not found!");
-        $ret->loadXML($this->t->ReturnXslT($xmlDoc, $xslDoc, true, false));
+        $ret = $this->t->ReturnXslT($xmlDoc, $xslDoc, true, false);
         $switchUrl = $savedSwitchUrl;
         return $ret;
+    }
+
+    /**
+     * 
+     * @global type $sru_fcs_params
+     * @param string $inputFilename
+     * @param string $xcontext
+     * @param string $operation
+     * @param string $queryOrScanClause
+     * @param string $baseUrl
+     * @return string The result of the transformation as a string or <b>FALSE</b> on error.
+     * 
+     */
+    protected function getActualTransformXML($inputFilename, $xcontext, $operation, $queryOrScanClause = null, $baseUrl = null) {        
+        $ret = new IndentDomDocument();
+        $ret->setWhiteSpaceForIndentation(' ');
+        $ret->loadXML($this->getActualTransform($inputFilename, $xcontext, $operation, $queryOrScanClause, $baseUrl));
+        return $ret;        
+    }
+
+    /**
+     * 
+     * @global type $sru_fcs_params
+     * @param string $inputFilename
+     * @param string $xcontext
+     * @param string $operation
+     * @param string $queryOrScanClause
+     * @param string $baseUrl
+     * @return array
+     * 
+     */
+    protected function getActualTransformJSON($inputFilename, $xcontext, $operation, $queryOrScanClause = null, $baseUrl = null) {
+        $ret = json_decode($this->getActualTransform($inputFilename, $xcontext, $operation, $queryOrScanClause, $baseUrl), true);
+        $this->assertNotNull($ret, "Transformed XML from $inputFilename should be valid JSON.");
+        return $ret; 
     }
 }
 
