@@ -14,16 +14,31 @@
                         <scenarioAssociation-array>
                             <scenarioAssociation>
                                 <field name="url">
-                                    <String>xsl/tests/input/fcs/vicav_bibliography.xml</String>
+                                    <String>xsl/tests/input/fcs/vicav_tools_guidelines.xml</String>
                                 </field>
                                 <field name="scenarioIds">
                                     <list>
-                                        <String>vicav_bibliography</String>
+                                        <String>vicav_guidlines_xsl</String>
                                     </list>
                                 </field>
                                 <field name="scenarioTypes">
                                     <list>
                                         <String>XSL</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>xsl/fcs/scan2view_v1.xsl</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>scan-to-html v1</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XML</String>
                                     </list>
                                 </field>
                             </scenarioAssociation>
@@ -74,16 +89,16 @@
                             </scenarioAssociation>
                             <scenarioAssociation>
                                 <field name="url">
-                                    <String>xsl/fcs/scan2view_v1.xsl</String>
+                                    <String>xsl/tests/input/fcs/vicav_bibliography.xml</String>
                                 </field>
                                 <field name="scenarioIds">
                                     <list>
-                                        <String>scan-to-html v1</String>
+                                        <String>vicav_bibliography</String>
                                     </list>
                                 </field>
                                 <field name="scenarioTypes">
                                     <list>
-                                        <String>XML</String>
+                                        <String>XSL</String>
                                     </list>
                                 </field>
                             </scenarioAssociation>
@@ -4514,7 +4529,7 @@
                                     <Boolean>false</Boolean>
                                 </field>
                                 <field name="showInHTMLPane">
-                                    <Boolean>false</Boolean>
+                                    <Boolean>true</Boolean>
                                 </field>
                                 <field name="showInXMLPane">
                                     <Boolean>true</Boolean>
@@ -5179,7 +5194,7 @@
         </folder>
         <folder path="modules/fcs-aggregator/"/>
         <folder path="scripts/"/>
-        <folder path="tests/"/>
         <folder path="xsl/"/>
+        <folder path="xsl/tests/"/>
     </projectTree>
 </project>

@@ -18,6 +18,7 @@
     },
     "autoload": {
         "psr-4": {
+            "ACDH\\FCSSRU\\mysqlonsru\\":"modules/mysqlonsru/",
             "ACDH\\FCSSRU\\switchAggregator\\": "modules/fcs-aggregator/",
             "jmathai\\phpMultiCurl\\EpiCurl\\":"modules/utils-php/",
             "ACDH\\FCSSRU\\":"modules/utils-php/"
