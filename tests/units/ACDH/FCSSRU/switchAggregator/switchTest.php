@@ -92,6 +92,7 @@ class FCSSwitchTest extends XPathTestCase {
      */
     public function it_should_be_able_transform_an_explain_input_for_arz_eng_006() {
         global $sru_fcs_params;
+        global $switchUrl;
 
         $expectedFilename = $this->pr . 'xsl/tests/output-expected/fcs/vicav_glossary_explain.html';
         $expectedfile = fopen($expectedFilename, 'r');
@@ -106,7 +107,13 @@ class FCSSwitchTest extends XPathTestCase {
         $this->assertNotFalse($xmlDoc, 'An input file has to exist.');
         $xslDoc = $this->t->GetXslStyleDomDocument($sru_fcs_params->operation, $configItem);
         $this->assertNotFalse($xslDoc, 'An XSLT stylesheet has to exist.');
-        $this->df->loadXML($this->t->ReturnXslT($xmlDoc, $xslDoc, true, false));
+        
+        $savedSwitchURL = $switchUrl;
+        $switchUrl ='http://corpus3.aac.ac.at/vicav2/corpus_shell//modules/fcs-aggregator/switch.php';
+        $resXML = $this->t->ReturnXslT($xmlDoc, $xslDoc, true, false);
+        $switchUrl = $savedSwitchURL;
+        
+        $this->df->loadXML($resXML);
         $this->df->xmlIndent();
         $return = $this->df->saveXML();
   
