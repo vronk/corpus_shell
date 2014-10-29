@@ -15,9 +15,7 @@ require_once __DIR__ . '/../common/switchParts.php';
 
 class XSLTTests extends XPathTestCase {
     /// Switch response to HTML
-    /**
-     * @test
-     */
+    /** @test */
     public function it_should_transform_a_switch_explain() {
         // html of switches explain has no wrapping div, so it's not valid xml.
         // Use the full page version instead.
@@ -29,99 +27,118 @@ class XSLTTests extends XPathTestCase {
         $this->doAssertTransformEqualsExpectedIndented("switch-explain",
                 '', 'explain');
     }
-    
-    /**
-     * @test
-     */
+    /** @test */
     public function it_should_transform_a_switch_resources_scan() {
         $this->doAssertTransformEqualsExpectedIndented("switch-resource-scan",
                 '', 'scan', 'fcs.resource');
     }
     
     /// Language profiles to HTML
-    /**
-     * @test
-     */
+    /** @test */
     public function it_should_transform_a_vicav_profile_explain() {
-        $this->doAssertTransformEqualsExpectedIndented("vicav_profile_explain",
+        $this->doAssertTransformEqualsExpectedIndented("vicav_language_profile_explain",
                 'vicav_profiles_001', 'explain');
+    }
+    /** @test */
+    public function it_should_transform_a_vicav_profile_scan_to_json() {
+        $this->doAssertTransformEqualsExpectedJSON("vicav_language_profile_scan", 'vicav_profiles_001',
+                'scan', 'profile');        
+    }
+    /** @test */
+    public function it_should_transform_a_vicav_profile_scan_geo_to_json() {
+        $this->doAssertTransformEqualsExpectedJSON("vicav_language_profile_scan_geo", 'vicav_profiles_001',
+                'scan', 'geo');        
+    }
+    /** @test */
+    public function it_should_transform_a_vicav_profile_for_cairo() {
+        $this->doAssertTransformEqualsExpectedIndented("vicav_language_profile_cairo", 'vicav_profiles_001',
+                'searchRetrieve', 'profile==Cairo');
+    }
+    /** @test */
+    public function it_should_transform_a_vicav_profile_for_sanliurfa() {
+        $this->doAssertTransformEqualsExpectedIndented("vicav_language_profile_sanliurfa", 'vicav_profiles_001',
+                'searchRetrieve', 'profile==Şanlıurfa');
+    }
+    /** @test */
+    public function it_should_transform_a_vicav_profile_for_baghdad() {
+        $this->doAssertTransformEqualsExpectedIndented("vicav_language_profile_baghdad", 'vicav_profiles_001',
+                'searchRetrieve', 'profile==Baghdad');
+    }
+    /** @test */
+    public function it_should_transform_a_vicav_sampletext_for_cairo() {
+        $this->doAssertTransformEqualsExpectedIndented("vicav_sampletext", 'vicav_sampletexts',
+                'searchRetrieve', 'sampleText==cairo_sample_01',
+                'http://localhost/corpus_shell//modules/fcs-aggregator/switch.php');
     }
     
     /// Glossary to HTML
-    /**
-     * @test
-     */
+    /** @test */
     public function it_should_transform_a_vicav_glossary_explain() {
         $this->doAssertTransformEqualsExpectedIndented("vicav_glossary_explain",
                 'arz_eng_006', 'explain');
     }
-    
-    /**
-     * @test
-     */
+    /** @test */
     public function it_should_transform_a_single_vicav_glossary_entry_from_arz_eng_006() {
         $this->doAssertTransformEqualsExpectedIndented("vicav-entry", "arz_eng_006",
                 "searchRetrieve", "cql.serverChoice==water");
     }
-    
-    /**
-     * @test
-     */
+    /** @test */
     public function it_should_transform_multiple_glossary_entries_from_apc_eng_002() {
        $this->doAssertTransformEqualsExpectedIndented("vicav_glossary_damascus", "apc_eng_002",
                "searchRetrieve", "water"); 
     }
-    
-    /**
-     * @test
-     */
+    /** @test */
     public function it_should_transform_multiple_glossary_entries_from_aeb_eng_001__v001() {
        $this->doAssertTransformEqualsExpectedIndented("vicav_glossary_tunisia", "aeb_eng_001__v001",
                "searchRetrieve", "water"); 
     }
     
     /// Tools texts
-    /**
-     * @test
-     */
+    /** @test */
     public function it_should_transform_a_vicav_tools_explain() {
         $this->doAssertTransformEqualsExpectedIndented("vicav_tools_explain", "vicav_tools_001", "explain");
     }
-    
-    /**
-     * @test
-     */
+    /** @test */
     public function it_should_transform_a_vicav_tools_scan_to_json() {
-        global $sru_fcs_params;
-        
-        $sru_fcs_params->xformat = 'json';
-        $this->t->GetDefaultStyles();
-        
         $this->doAssertTransformEqualsExpectedJSON("vicav_tools_scan", "vicav_tools_001",
                 "scan", "toolsText");
     }
-    /**
-     * @test
-     */
+    /** @test */
     public function it_should_transform_vicav_tools_guidelines() {
        $this->doAssertTransformEqualsExpectedIndented("vicav_tools_guidelines", "vicav_tools_001",
                "searchRetrieve", "toolsText=Dictionary"); 
-    }    
+    }
+    
+    /// Meta texts
+    /** @test */
+    public function it_should_transform_a_meta_text_scan() {
+        $this->doAssertTransformEqualsExpectedJSON("vicav_metatext_scan", "vicav_meta",
+                "scan", "metaText");
+    }
+    /** @test */
+    public function it_should_transform_a_meta_text() {
+        $this->doAssertTransformEqualsExpectedIndented("vicav_metatext", "vicav_meta",
+                "searchRetrieve", "metaText=Dictionaries");
+    }
+    
     /// Bibliography
-    /**
-     * @test
-     */
+    /** @test */
     public function it_should_transform_a_vicav_bibliography_explain() {
         $this->doAssertTransformEqualsExpectedIndented("vicav_bibliography_explain",
                 'vicav_bibl_002', 'explain');
     }
-    
-    /**
-     * @test
-     */
+    /** @test */
     public function it_should_transform_a_vicav_bibliography_sousse() {
         $this->doAssertTransformEqualsExpectedIndented("vicav_bibliography",
                 'vicav_bibl_002', 'searchRetrieve', 'vicavTaxonomy=Sousse');
+    }
+    
+    /// ÖWB entry
+    /* FIXME * @test */
+    public function it_should_transform_an_oewb_entry() {
+        $this->markTestIncomplete('Bad fixtures');
+//        $this->doAssertTransformEqualsExpectedIndented('oewb-entry', 'oewb',
+//                'searchRetrieve', 'entry=dummyEntry');
     }
     
     protected function doAssertTransformEqualsExpectedIndented($filename, $context, $operation, $searchOrScanClaus = null, $baseurl = null) {
@@ -297,8 +314,14 @@ class XSLTTests extends XPathTestCase {
      * 
      */
     protected function getActualTransformJSON($inputFilename, $xcontext, $operation, $queryOrScanClause = null, $baseUrl = null) {
-        $ret = json_decode($this->getActualTransform($inputFilename, $xcontext, $operation, $queryOrScanClause, $baseUrl), true);
-        $this->assertNotNull($ret, "Transformed XML from $inputFilename should be valid JSON.");
+        global $sru_fcs_params;
+        
+        $sru_fcs_params->xformat = 'json';
+        $this->t->GetDefaultStyles();
+        
+        $jsonText = $this->getActualTransform($inputFilename, $xcontext, $operation, $queryOrScanClause, $baseUrl);
+        $ret = json_decode($jsonText, true);
+        $this->assertNotNull($ret, "Transformed XML from $inputFilename should be valid JSON.\n$jsonText");
         return $ret; 
     }
 }
