@@ -785,10 +785,10 @@ div.profiletext h4 {
         font-style: italic;
 }
 
-.tei-div.typology p {
+.tei-div.tei-type-typology p {
         white-space: nowrap;
 }
-.tei-div.typology {
+.tei-div.tei-type-typology {
         display: inline-block;
 }
 .vicav_profiles_001 h2,
