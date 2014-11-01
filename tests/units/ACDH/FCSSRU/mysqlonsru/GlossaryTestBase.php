@@ -50,6 +50,7 @@ abstract class GlossaryTestBase extends XPathTestCase {
 //        $this->dbMock = $this->getMock('mysqli',
         $this->dbMock = $this->getMock('NoRealClass',
                 array('query', 'escape_string'));
+        $this->dbMock->error = 'Mock: no error.';
         
         $this->df = new IndentDomDocument();
         $this->namespaces = array(
