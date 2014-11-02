@@ -88,3 +88,41 @@ body { font: 13px/1.5 'Istok Web', arial, sans-serif; }
 .hilight.match {
     color: red;
 }
+
+.result-header .note:before {
+    content: "Query details ... ";
+    font-size: 0.9em;
+    color: #014172;
+    font-style: italic;
+}
+
+.result-header .note:hover span {
+    display: inline;
+}
+
+.result-header .note span {
+    display: none;
+}
+
+.cmd_next,
+.cmd_prev {
+    position: absolute;
+    background-image: url(base/images/ui-icons_2e83ff_256x240.png)/*{iconsContent}*/;
+}
+
+.cmd_prev {
+    background-position: -80px -192px;
+    left: 24px;
+}
+
+.cmd_next {
+    background-position: -48px -192px;
+    right: 24px;
+}
+.internal.next,
+.internal.prev {
+    display: inline-block;
+    width: 49%;
+    height: 16px;
+    position: relative;
+}
