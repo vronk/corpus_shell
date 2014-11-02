@@ -126,3 +126,11 @@ body { font: 13px/1.5 'Istok Web', arial, sans-serif; }
     height: 16px;
     position: relative;
 }
+
+#header > a {
+    float: right;
+}
+
+#header > div {
+    float:left;
+}
