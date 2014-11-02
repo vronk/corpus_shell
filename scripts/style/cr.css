@@ -128,9 +128,14 @@ body { font: 13px/1.5 'Istok Web', arial, sans-serif; }
 }
 
 #header > a {
+    display: block;
     float: right;
+    clear: right;
+    margin-left: 1em;
 }
 
 #header > div {
-    float:left;
+    float: left;
+    clear: left;
+    margin-right: 1em;
 }
