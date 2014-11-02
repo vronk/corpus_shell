@@ -254,9 +254,14 @@ class XSLTTests extends XPathTestCase {
      * @param string $baseUrl
      * @return string The result of the transformation as a string or <b>FALSE</b> on error.
      */
-    private function getActualTransform($inputFilename, $xcontext, $operation, $queryOrScanClause = null, $baseUrl = null) {
+    private function getActualTransform($inputFilename, $xcontext, $operation, $queryOrScanClause = null, $baseUrl = null, $logoURL = null, $siteName = null) {
         global $sru_fcs_params;
         global $switchUrl;
+        global $switchSiteLogo;
+        global $switchSiteName;
+        
+        $switchSiteLogo = $logoURL;
+        $switchSiteName = $siteName;
         
         $savedSwitchUrl = $switchUrl;
         if (isset($baseUrl)) {
