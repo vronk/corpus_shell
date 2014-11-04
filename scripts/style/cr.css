@@ -61,7 +61,7 @@ margin: 2px;
 .cmds-xmlelem .attributes .value {}
 .cmds-xmlelem .attributes .value:before {content: "=";}
 
-body { font: 13px/1.5 'Istok Web', arial, sans-serif; }
+body { font: 13px/1.5 'Istok', arial, sans-serif; }
 
 .content {
     position: relative;
