@@ -138,8 +138,11 @@ dd.tei-gram:nth-last-child(3):after {
 .tei-gram.arguments.compulsatory:after {
     content: "";
 }
-.tei-gram.root:before {
+.tei-gram.root.xsl-first-of-group:before {
     content: "[";
+}
+.tei-gram.root:before {
+    content: ",";
 }
 .tei-gram.root:after {
     content: "]";
