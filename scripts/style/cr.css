@@ -63,6 +63,10 @@ margin: 2px;
 
 body { font: 13px/1.5 'Istok', arial, sans-serif; }
 
+input.virtual-keyboard-input {
+    font-family: 'Istok';
+}
+
 .content {
     position: relative;
 }
