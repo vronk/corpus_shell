@@ -1,15 +1,15 @@
 [submodule "modules/utils-php"]
 	path = modules/utils-php
-	url = git@github.com:simar0at/utils-php.git
+	url = https://github.com/simar0at/utils-php.git
 [submodule "xsl"]
 	path = xsl
-	url = git@github.com:simar0at/cs-xsl.git
+	url = https://github.com/simar0at/cs-xsl.git
 [submodule "modules/mysqlonsru"]
 	path = modules/mysqlonsru
-	url = git@github.com:simar0at/mysqlonsru.git
+	url = https://github.com/simar0at/mysqlonsru.git
 [submodule "modules/fcs-aggregator"]
 	path = modules/fcs-aggregator
-	url = git@github.com:simar0at/fcs-aggregator.git
+	url = https://github.com/simar0at/fcs-aggregator.git
 [submodule "scripts/js/openlayers"]
 	path = scripts/js/openlayers
 	url = https://github.com/openlayers/openlayers.git
