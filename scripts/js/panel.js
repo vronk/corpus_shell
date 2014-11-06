@@ -23,10 +23,11 @@ var Panel;
 // fetchKeys? wait? when? where?
     VirtualKeyboard.keys = {
         "arz_eng_006": ["ʔ", "ā", "ḅ", "ʕ", "ḍ", "ḏ", "ē", "ġ", "ǧ", "ḥ", "ī", "ᴵ", "ḷ", "ṃ", "ō", "ṛ", "ṣ", "š", "ṭ", "ṯ", "ū", "ẓ", "ž"],
+        "apc_eng_002": ["ʔ", "ā", "ḅ", "ʕ", "ḍ", "ḏ", "ē", "ǝ", "ᵊ", "ġ", "ǧ", "ḥ", "ī", "ᴵ", "ḷ", "ṃ", "ō", "ṛ", "ṣ", "š", "ṭ", "ṯ", "ū", "ẓ", "ž"],
+        "aeb_eng_001__v001":["ʔ", "ā", "ḅ", "ʕ", "ḏ̣", "ḏ", "ē", "ġ", "ǧ", "ḥ", "ī", "ᴵ", "ḷ", "ṃ", "ō", "ṛ", "ṣ", "š", "ṭ", "ṯ", "ū", "ẓ", "ž"], 
         "mecmua": ["ʾ", "ʿ", "ā", "č", "ç", "ė", "ḍ", "ḏ", "ġ", "ḥ", "ḫ", "ī", "ı", "ñ", "s̱", "ş", "ṣ", "š", "ṭ", "ū", "ü", "ẕ", "ż", "ẓ"]
     };
-    VirtualKeyboard.keys['apc_eng_002'] = VirtualKeyboard.keys['arz_eng_006'];
-    VirtualKeyboard.keys['aeb_eng_001__v001'] = VirtualKeyboard.keys['arz_eng_006'];
+    VirtualKeyboard.keys['tunico_texts'] = VirtualKeyboard.keys['aeb_eng_001__v001'];
 /**
  * Creates a panel in corpus_shell.
  * @constructor
