@@ -37,8 +37,6 @@ class EpiCurlTest extends \PHPUnit_Framework_TestCase {
      * @covers jmathai\phpMultiCurl\EpiCurl::addCurl
      */
     public function testAddCurl() {
-        $this->markTestSkipped('Code stops PHPUnit, check!');
-        return;
         $epiCurlManager = $this->object->addCurl(curl_init("http://localhost:41337"));
         $exampleOrg200 = $this->object->addCurl(curl_init("http://www.example.org"));
         $exampleOrg404 = $this->object->addCurl(curl_init("http://www.example.org/nonexistent"));
@@ -46,15 +44,13 @@ class EpiCurlTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals(404, $exampleOrg404->code);
         // www.example.org always shows the same hint on what it's purpose is.
         $this->assertEquals($exampleOrg200->data, $exampleOrg404->data);
-        $this->assertNull($epiCurlManager->code);
+        $this->assertEquals(0, $epiCurlManager->code);
     }
     
     /**
      * @covers jmathai\phpMultiCurl\EpiCurl::cleanupResponses
      */
     public function testCleanupResponses() {
-        $this->markTestSkipped('Code stops PHPUnit, check!');
-        return;
         $exampleOrg200 = $this->object->addCurl(curl_init("http://www.example.org"));
         $exampleOrg404 = $this->object->addCurl(curl_init("http://www.example.org/nonexistent"));
         $this->assertInternalType('array', $exampleOrg404->headers);
