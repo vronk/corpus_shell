@@ -13,6 +13,6 @@
 [submodule "scripts/js/openlayers"]
 	path = scripts/js/openlayers
 	url = https://github.com/openlayers/openlayers.git
-[submodule "utils"]
-	path = utils
-	url = git@corpus3.aac.ac.at:utils
+#[submodule "utils"]
+#	path = utils
+#	url = git@corpus3.aac.ac.at:utils
