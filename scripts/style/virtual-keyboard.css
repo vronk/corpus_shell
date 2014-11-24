@@ -32,6 +32,7 @@
      background: #EEE;
      cursor: default;
      margin: 0.2em 0.12em;
+     line-height: 2.0;
  }
  
  ul.virtual-keyboard li:active {

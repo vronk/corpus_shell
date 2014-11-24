@@ -574,6 +574,12 @@ a.searchresult:hover, a.searchresult:focus {
 	font-size: 12px;
 }
 
+.c_s-search-ui input.searchstring,
+.c_s-search-ui select {
+        font: 13px/1.5 'AndikaW', arial, serif;
+        height: 30px;
+}
+
 .c_s-navigation-ui {
         display: table-row;
 }
