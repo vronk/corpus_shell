@@ -15,6 +15,7 @@
                             <scenarioAssociation>
                                 <field name="url">
                                     <String>xsl/tests/input/csv-table-export/tunis-course-4.xml</String>
+                                    <String>xsl/tests/input/csv-table-export/msa-course-3.xml</String>
                                 </field>
                                 <field name="scenarioIds">
                                     <list>
@@ -30,6 +31,7 @@
                             <scenarioAssociation>
                                 <field name="url">
                                     <String>xsl/profile.xsl</String>
+                                    <String>xsl/tests/input/csv-table-export/damascus-course-4.xml</String>
                                 </field>
                                 <field name="scenarioIds">
                                     <list>
@@ -59,11 +61,11 @@
                             </scenarioAssociation>
                             <scenarioAssociation>
                                 <field name="url">
-                                    <String>xsl/glossary-explain.xsl</String>
+                                    <String>xsl/profile.xsl</String>
                                 </field>
                                 <field name="scenarioIds">
                                     <list>
-                                        <String>glossary-to-html</String>
+                                        <String>profile-to-html</String>
                                     </list>
                                 </field>
                                 <field name="scenarioTypes">
@@ -105,6 +107,36 @@
                             <scenarioAssociation>
                                 <field name="url">
                                     <String>xsl/tests/input/csv-table-export/tunis-course-1.xml</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>vicav_glossary csv-table-export</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XSL</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>xsl/tests/input/voc-export/tunis-course-1.xml</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>vicav_glossary csv-table-export</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XSL</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>xsl/tests/input/fcs/scan2view_v1/damascus-units-with-hash.xml</String>
                                 </field>
                                 <field name="scenarioIds">
                                     <list>
@@ -5860,7 +5892,7 @@
                                                 </paramDescriptor>
                                             </field>
                                             <field name="value">
-                                                <String>csv-fcdeluxe</String>
+                                                <String>csv-anki</String>
                                             </field>
                                             <field name="hasXPathValue">
                                                 <Boolean>false</Boolean>
