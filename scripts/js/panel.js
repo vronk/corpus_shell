@@ -8,8 +8,6 @@
  * @module corpus_shell
  */
 
-var Panel;
-
 /**
  * @typedef {Object} Position
  * @property {number} Left
@@ -49,7 +47,7 @@ var Panel;
  * @requires     corpus_shell~PanelController
  * @requires     jQuery
  */
-Panel = function (id, type, title, url, position, pinned, zIndex, container, panelController, config)
+var module = function (id, type, title, url, position, pinned, zIndex, container, panelController, config)
 {
   /**
   * @param url - string containing an URL
@@ -397,11 +395,8 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
   * @summary purpose:    creates a new search panel and displays it.
   * @return    -
   */
-  this.CreateNewSearchPanel = function(configIdx, searchStr)
+  this.CreateNewSearchPanel = function(unused, searchStr)
   {
-        var searchPanel;
-        var failed = false;
-
     var query = "";
 
     if (this.Url !== undefined && this.Url !== "")
@@ -417,42 +412,10 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
         query = searchStr;
     }
 
-        $.ajax(params.templateLocation + "panel.tpl.html", {
-            async: false,
-            error: function(jqXHR, status, error) {
-                failed = true;
-            },
-            success: function(responseXHTML, status, jqXHR) {
-                searchPanel = $(responseXHTML);
-            }
-        });
-
-        var searchUI;
-        if (!failed) {
-            $.ajax(params.templateLocation + "searchui.tpl.html", {
-                async: false,
-                error: function(jqXHR, status, error) {
-                    failed = true;
-                },
-                success: function(responseXHTML, status, jqXHR) {
-                    searchUI = $(responseXHTML);
-                }
-            });
-        }
-        
-            if (failed) {
-                searchPanel = document.createElement('div');
-                $(searchPanel).addClass("draggable ui-widget-content whiteback");
-                var titlep = this.GeneratePanelTitle(this.Title, 0, false);
-                $(searchPanel).append(titlep);
-    $(searchPanel).append(this.GenerateSearchInputs(this.Config, query));
-    $(searchPanel).append(this.GenerateSearchNavigation());
-    var newHeight = parseInt(this.Position.Height.replace(/px/g, "")) - titleBarPlusBottomSpacing - searchUIHeight - 10; //???
-    $(searchResultDiv).css("height", newHeight + "px");
-                var searchResultDiv = this.GenerateSearchResultsDiv();
-    $(searchPanel).append(searchResultDiv);
-            } else {
-            this.FillInPanelTitle(searchPanel, this.Title, 0, false);
+    var searchPanel = module.panelProto.clone();
+    var searchUI = module.searchUIProto.clone();
+ 
+    this.FillInPanelTitle(searchPanel, this.Title, 0, false);
             this.searchbutton = searchUI.find(".c_s-ui-searchbutton input");
             this.searchbutton.attr("onclick", "PanelController.StartSearch('" + this.Id + "', true);");
             var startrecordInput = searchUI.find(".startrecord");
@@ -477,7 +440,6 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
             this.ConfigureSearchContextCombo(searchUI.find(".searchcombo"), this.Config);
             
             searchPanel.find(".c_s-ui-widget-header").after(searchUI);
-        }
 
         $(searchPanel).attr("id", this.Id);
         $(searchPanel).attr("onclick", "PanelController.BringToFront('" + this.Id + "');");
@@ -501,36 +463,11 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
   */
   this.CreateNewSubPanel = function()
   {
-    var failed = false;
-    var newPanel;
-    
-    $.ajax(params.templateLocation + "panel.tpl.html", {
-        async: false,
-        error: function (jqXHR, status, error) {
-            failed = true;
-        },
-        success: function (responseXHTML, status, jqXHR) {
-            newPanel = $(responseXHTML);
-        }
-    });
-    
-            var usePin = 1;
-
-            if (this.Type == "content")
-                usePin = 0;
-    
-            var titlep;
-            if (failed) {
-                newPanel = document.createElement('div');
-                $(newPanel).addClass("draggable ui-widget-content whiteback");
-                titlep = this.GeneratePanelTitle(this.Title, usePin, this.Pinned);
-                $(newPanel).append(titlep);
-                var searchResultDiv = this.GenerateSearchResultsDiv();
-                $(searchResultDiv).css('height', $(newPanel).height() - titleBarPlusBottomSpacing);
-                $(newPanel).append(searchResultDiv);
-            } else {
-                this.FillInPanelTitle($(newPanel), this.Title, usePin, this.Pinned);
-            }
+    var newPanel = module.panelProto.clone();
+    var usePin = 1;
+    if (this.Type === "content")
+        usePin = 0;    
+    this.FillInPanelTitle($(newPanel), this.Title, usePin, this.Pinned);
 
     $(newPanel).attr("id", this.Id);
     $(newPanel).attr("onclick", "PanelController.BringToFront('" + this.Id + "');");
@@ -543,11 +480,10 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
     $(newPanel).css("z-index", this.ZIndex);
 
     $(this.Container).append(newPanel);
-    if (failed) this.CorrectSearchResultHeight(newPanel);
 
-    if (this.Type == "image")
+    if (this.Type === "image")
       this.GetFacsimile();
-    else if ((this.Type == "text") || (this.Type == "content"))
+    else if ((this.Type === "text") || (this.Type === "content"))
       this.GetFullText();
 
     this.InitDraggable();
@@ -995,64 +931,6 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
          searchbutton.click();
     });  
   };
-  // generate dom objects
-
-  /**
-  * @param {number} configIdx  Selected index of SearchCombo
-  * @param {string} searchStr Search string
-  * purpose:    creates a div with the searchsting text input, the endpoint combobox,
-  *             and the start search button.<br/>
-  * If the Go button is clicked PanelController's {@link module:corpus_shell~PanelManager#StartSearch} is invoked
-  * with this panels unique id.
-  * @return    the complete div as a DOM object
-  */
-  this.GenerateSearchInputs = function(configIdx, searchStr)
-  {
-    var buttondiv = document.createElement('div');
-    $(buttondiv).css('float', 'right');
-
-    this.searchbutton = $(document.createElement('input'));
-    this.searchbutton.addClass("searchbutton");
-    this.searchbutton.attr("type", "button");
-    this.searchbutton.attr("value", "Go");
-    this.searchbutton.attr("onclick", "PanelController.StartSearch('" + this.Id + ", true');");
-
-    var searchdiv = document.createElement('div');
-    $(searchdiv).addClass("searchdiv");
-    $(searchdiv).text("Search for ");
-
-    var searchstring = document.createElement('input');
-    $(searchstring).addClass("searchstring");
-    $(searchstring).attr("type", "text");
-    
-    var searchcombo = this.GenerateSearchCombo(configIdx);
-
-    this.ConfigureSearchTextInput($(searchstring), searchStr);
-    this.ConfigureSearchContextCombo($(searchcombo), configIdx);
-    
-    $(searchdiv).append(searchstring);
-    $(searchdiv).append(" in ");
-    $(searchdiv).append(searchcombo);
-    $(searchdiv).append(" ");
-    $(buttondiv).append(this.searchbutton);
-    $(searchdiv).append(buttondiv);
-
-    return searchdiv;
-  };
-
-  /**
-  * @param configIdx - selected index of SearchCombo
-  * purpose:    creates the endpoint combobox, selects the entry with the index given
-  *             in configIdx
-  * @return    the combobox as a DOM object
-  */
-  this.GenerateSearchCombo = function(configIdx)
-  {
-    var searchcombo = document.createElement('select');
-    $(searchcombo).addClass("searchcombo");
-
-    return searchcombo;
-  };
 
   /**
    * @param {jQuery} context The jQuery object that should be manipulated.
@@ -1091,191 +969,47 @@ Panel = function (id, type, title, url, position, pinned, zIndex, container, pan
             this.SetUrl(this.Url);
         }
   };
-
-  this.GeneratePanelTitle = function(titlestring, pin, pinned)
-  {
-    var titlep = document.createElement('p');
-    $(titlep).addClass("ui-widget-header");
-
-    var titletable = document.createElement('table');
-    $(titletable).css("width", "100%");
-
-    var titletr = document.createElement('tr');
-    var lefttd = document.createElement('td');
-    $(lefttd).text(titlestring);
-
-    if (pin == 1)
-    {
-       var pintd = document.createElement('td');
-       $(pintd).css("width", "17px");
-
-       var pina = document.createElement('a');
-       $(pina).attr("href", "#");
-
-       if (pinned == true)
-         $(pina).attr("onclick", "PinPanel(this, 1);");
-       else
-         $(pina).attr("onclick", "PinPanel(this, 2);");
-       $(pina).addClass("noborder");
-
-       var pinimg = document.createElement('img');
-
-       if (pinned == true)
-         $(pinimg).attr("src", "scripts/style/img/pin.color.png");
-       else
-         $(pinimg).attr("src", "scripts/style/img/pin.gray.png");
-
-       $(pinimg).addClass("titletopiconpin");
-       $(pinimg).addClass("noborder");
-    }
-
-    var righttd1 = document.createElement('td');
-    $(righttd1).css("width", "17px");
-
-    var maxa = document.createElement('a');
-    $(maxa).attr("href", "#");
-    $(maxa).attr("onclick", "PanelController.MaximizePanel('" + this.Id + "');");
-    $(maxa).addClass("noborder");
-
-    var maximg = document.createElement('img');
-    $(maximg).attr("src", "scripts/style/img/n.win_max.png");
-    $(maximg).addClass("titletopiconmax");
-    $(maximg).addClass("noborder");
-
-    var righttd2 = document.createElement('td');
-    $(righttd2).css("width", "17px");
-
-    var closea = document.createElement('a');
-    $(closea).attr("href", "#");
-    $(closea).attr("onclick", "PanelController.ClosePanel('" + this.Id + "');");
-    $(closea).addClass("noborder");
-
-    var closeimg = document.createElement('img');
-    $(closeimg).attr("src", "scripts/style/img/n.win_close.png");
-    $(closeimg).attr("alt", "X");
-    $(closeimg).addClass("titletopiconclose");
-    $(closeimg).addClass("noborder");
-
-    $(maxa).append(maximg);
-    $(closea).append(closeimg);
-
-    $(righttd1).append(maxa);
-    $(righttd2).append(closea);
-
-    $(titletr).append(lefttd);
-
-    if (pin == 1)
-    {
-      $(pina).append(pinimg);
-      $(pintd).append(pina);
-
-      $(titletr).append(pintd);
-    }
-
-    $(titletr).append(righttd1);
-    $(titletr).append(righttd2);
-
-    $(titletable).append(titletr);
-    $(titlep).append(titletable);
-
-    return titlep;
-  };
-
-  /**
-  * purpose:    creates a table with icons to navigate through the search result
-  * @return    returns the complete table as a DOM object
-  */
-  this.GenerateSearchNavigation = function()
-  {
-    var navtable = document.createElement('table');
-    $(navtable).addClass("navigation");
-
-    var navtr = document.createElement('tr');
-    var navigationtitle = document.createElement('td');
-    $(navigationtitle).text("Search results");
-    $(navigationtitle).addClass("navigationtitle");
-
-    var navigationmain = document.createElement('td');
-    $(navigationmain).addClass("navigationmain");
-    $(navigationmain).append("<i>hits:</i>&nbsp;");
-
-    var hitcount = document.createElement('span');
-    $(hitcount).addClass("hitcount");
-    $(hitcount).text("0");
-
-    $(navigationmain).append(hitcount);
-    $(navigationmain).append(";&nbsp;<i>from:</i>&nbsp;");
-
-    var startrecord = document.createElement('input');
-    $(startrecord).addClass("startrecord");
-    $(startrecord).attr("type","text");
-    $(startrecord).val("1");
-
-    $(navigationmain).append(startrecord);
-    $(navigationmain).append("&nbsp;<i>max:</i>&nbsp;");
-
-    var maxrecord = document.createElement('input');
-    $(maxrecord).addClass("maxrecord");
-    $(maxrecord).attr("type","text");
-    $(maxrecord).val("10");
-
-    $(navigationmain).append(maxrecord);
-
-    var loada = document.createElement('a');
-    $(loada).addClass("noborder");
-    $(loada).attr("href", "#");
-    $(loada).attr("onclick", "PanelController.StartSearch('" + this.Id + "');");
-
-    var loadimg = document.createElement('img');
-    $(loadimg).addClass("navigationicon");
-    $(loadimg).attr("src", "scripts/style/img/n.arrow_right_b.png");
-
-    $(loada).append(loadimg);
-
-    var preva = document.createElement('a');
-    $(preva).addClass("noborder");
-    $(preva).attr("href", "#");
-    $(preva).attr("onclick", "PanelController.StartSearchPrev('" + this.Id + "');}");
-
-    var previmg = document.createElement('img');
-    $(previmg).addClass("navigationicon");
-    $(previmg).attr("src", "scripts/style/img/n.arrow_left.png");
-
-    $(preva).append(previmg);
-
-    var nexta = document.createElement('a');
-    $(nexta).addClass("noborder");
-    $(nexta).attr("href", "#");
-    $(nexta).attr("onclick", "PanelController.StartSearchNext('" + this.Id + "');");
-
-    var nextimg = document.createElement('img');
-    $(nextimg).addClass("navigationicon");
-    $(nextimg).attr("src", "scripts/style/img/n.arrow_right.png");
-
-    $(nexta).append(nextimg);
-
-    $(navigationmain).append(loada);
-    $(navigationmain).append(preva);
-    $(navigationmain).append(nexta);
-
-    $(navtr).append(navigationtitle);
-    $(navtr).append(navigationmain);
-
-    $(navtable).append(navtr);
-
-    return navtable;
-  };
-
-  /**
-  * purpose:    creats a div that is filled with the search result returned from the
-  *             search script (switch.php)
-  * @return    {DOMElement} The created div element.
-  */
-  this.GenerateSearchResultsDiv = function()
-  {
-    var resultdiv = document.createElement('div');
-    $(resultdiv).addClass("searchresults");
-    return resultdiv;
-  };
 };
+    
+    module.panelProto;
+    module.searchUIProto;
+    module.failed = PanelController === undefined ||
+        ResourceController === undefined ||
+        VirtualKeyboard === undefined ||
+        VirtualKeyboard.failed ||
+        URI === undefined;
+
+    if (!module.failed) {
+        $.ajax(params.templateLocation + "panel.tpl.html", {
+            async: false,
+            dataType: 'html',
+            error: function() {
+                module.failed = true;
+            },
+            success: function(unused, unused2, jqXHR) {
+                module.panelProto = $(jqXHR.responseText).find('#template');
+                module.failed = (module.panelProto.length === undefined ||
+                        module.panelProto.length !== 1);
+                module.panelProto.find('.remove-for-production').remove();
+                module.panelProto.removeAttr('id');
+                $.ajax(params.templateLocation + "searchui.tpl.html", {
+                async: false,
+                        dataType: 'html',
+                        error: function () {
+                            module.failed = true;
+                        },
+                        success: function (unused, unused2, jqXHR) {
+                            module.searchUIProto = $(jqXHR.responseText).find('#template');
+                            module.failed = (module.searchUIProto.length === undefined ||
+                                    module.searchUIProto.length !== 1);
+                            module.searchUIProto.find('.remove-for-production').remove();
+                            module.searchUIProto.removeAttr('id');
+                        }
+                    });
+            }
+        });
+    }
+    
+    // publish
+    this.Panel = module;
 }(jQuery, params, PanelController, ResourceController, VirtualKeyboard, document);
