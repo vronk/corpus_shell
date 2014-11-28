@@ -42,16 +42,32 @@ function ResourceManager()
   /**
    * @param {string} resname A resource name.
    * @param {string} idxname An index name.
-   * @param {booblean} searchable Is the index searchable?
-   * @param {boolean} scanable Is the index scanable?
-   * @param {boolean} sortable Is the index sortable?
+   * @param {boolean} searchable Is the index searchable? (accepts anything JS interprets as boolean)
+   * @param {boolean} scanable Is the index scanable? (accepts anything JS interprets as boolean)
+   * @param {boolean} sortable Is the index sortable? (accepts anything JS interprets as boolean)
    * @desc Adds an index name and its properties to a resource if it exist.
    * @return -  
    */  
-  this.AddIndex = function (resname, idxname, idxtitle, searchable, scanable, sortable)
+  this.AddIndex = function (resname, idxname, idxtitle, searchable, scanable, sortable, native)
   {
-    if (this.Resources[resname] != undefined)
-      this.Resources[resname].Indexes[idxname] = this.GetNewIndexObject(idxname, idxtitle, searchable, scanable, sortable);
+    if (searchable)
+        searchable = true;
+    else
+        searchable = false;
+    if (scanable)
+        scanable = true;
+    else
+        scanable = false;
+    if (sortable)
+        sortable = true;
+    else
+        sortable = false;
+    if (native)
+        native = true;
+    else
+        native = false;
+    if (this.Resources[resname] !== undefined)
+      this.Resources[resname].Indexes[idxname] = this.GetNewIndexObject(idxname, idxtitle, searchable, scanable, sortable, native);
   }
 
   /**
@@ -94,7 +110,7 @@ function ResourceManager()
    * @desc Creates a new IndexObject.
    * @return {IndexObject} The newly created IndexObject.
    */
-  this.GetNewIndexObject = function (name, title, searchable, scanable, sortable)
+  this.GetNewIndexObject = function (name, title, searchable, scanable, sortable, native)
   {
     var newObj = new Object();
     newObj["Name"] = name;
@@ -102,6 +118,7 @@ function ResourceManager()
     newObj["Searchable"] = searchable;
     newObj["Scanable"] = scanable;
     newObj["Sortable"] = sortable;
+    newObj["Native"] = native;
 
     return newObj;
   }
@@ -209,9 +226,12 @@ function ResourceManager()
         hStr += '<td class="dotted" colspan="3">' + idx.Title + ' (' + idx.Name + ')</td></tr>';
 
         hStr += '<tr><td class="dottedr is' + idx.Searchable + '"';
-        if (idx.Searchable == true)
+        if (idx.Searchable === true)
           hStr += ' style="cursor: pointer;" onclick="PanelController.OpenNewSearchPanel(\'' + resource.Name + '\', \'' +  idx.Name + '=\');"';
-        hStr += '>search</td>';
+        hStr += '>search';
+        if (idx.Native === true)
+            hStr += ' native'
+        hStr += '</td>';
         hStr += '<td class="dottedr is' + idx.Scanable + '"'
 
         if (idx.Scanable == true)
