@@ -59,7 +59,7 @@ var module = function (id, type, title, url, position, pinned, zIndex, container
   this.GetUrlParams = function(url)
   {
     var urlParams = {};
-    if (url != undefined)
+    if (url !== undefined)
     {
       var match;
       var pl     = /\+/g;  //  Regex for replacing addition symbol with a space
@@ -68,7 +68,7 @@ var module = function (id, type, title, url, position, pinned, zIndex, container
 
       var query  = "";
       var qmPos = url.indexOf('?');
-      if (qmPos != -1)
+      if (qmPos !== -1)
         query = url.substr(qmPos + 1);
       else
         query = url;
@@ -440,6 +440,11 @@ var module = function (id, type, title, url, position, pinned, zIndex, container
             this.ConfigureSearchContextCombo(searchUI.find(".searchcombo"), this.Config);
             
             searchPanel.find(".c_s-ui-widget-header").after(searchUI);
+            
+            if (this.canUseNative()) {
+                searchPanel.find(".c_s-native-ui").css("display", "table-row");
+                searchPanel.find("input.c_s-queryType-native").attr('checked', this.UrlParams.queryType === "native");
+            }
 
         $(searchPanel).attr("id", this.Id);
         $(searchPanel).attr("onclick", "PanelController.BringToFront('" + this.Id + "');");
@@ -454,6 +459,19 @@ var module = function (id, type, title, url, position, pinned, zIndex, container
     $(this.Container).append(searchPanel);
     this.InitDraggable();
     VirtualKeyboard.attachKeyboards();
+  };
+  
+  this.canUseNative = function(){
+    var context = this.PanelController.GetResourceName(this.Config); 
+    var availableTags = ResourceController.Resources[context];
+    if (availableTags !== undefined) {
+        for (var key in availableTags["Indexes"]) {
+            var native = availableTags["Indexes"][key]["Native"];
+            if (native === true)
+                 return true;
+        }
+    }
+    return false;
   };
 
   /**
@@ -652,7 +670,7 @@ var module = function (id, type, title, url, position, pinned, zIndex, container
           else
           {
             var height;
-            if ($.browser.mozilla) {
+            if ($.browser !== undefined && $.browser.mozilla) {
             /* Part of a crude hack to get around missing support for overflow and
              * percentage height in table cells in firefox (only fixed px overflows
              * are used).
@@ -662,7 +680,7 @@ var module = function (id, type, title, url, position, pinned, zIndex, container
             var searchResults = $(elem).find(".searchresults");
             searchResults.attr('class', searchResults.attr('class') + ' ' + snippetClasses);
             searchResults.html(responseText);
-            if ($.browser.mozilla) {
+            if ($.browser !== undefined && $.browser.mozilla) {
                 $(elem).find(".c_s-scroll-area").height(height);
             }
             panel.InitScrollPane();
@@ -734,12 +752,22 @@ var module = function (id, type, title, url, position, pinned, zIndex, container
 
         /* url +  */
     var urlStr = params.switchURL + "?operation=searchRetrieve&query=" + sstr + "&x-context=" + xcontext +
-                 "&x-format=html&x-dataview=kwic,title&version=1.2";
+                 "&x-format=html&version=1.2";
+    if (this.UrlParams['x-dataview'] !== undefined) {
+        urlStr += "&x-dataview=" +this.UrlParams['x-dataview'];
+    } else {
+        urlStr += "&x-dataview=kwic,title"
+    }
 
     if (!max || max <= 0) max = this.DefaultMaxRecords;
     if (!start || start < 1) start = this.DefaultStartRecord;
 
     urlStr += '&maximumRecords=' + max + '&startRecord=' + start;
+    
+    var useQueryTypeNative = $(parElem).find(".c_s-queryType-native:checked");
+    if (useQueryTypeNative.length === 1) {
+        urlStr += "&queryType=native";
+    }
 
     this.SetUrl(urlStr);
 
@@ -755,14 +783,7 @@ var module = function (id, type, title, url, position, pinned, zIndex, container
         type: 'GET',
         url: params.switchURL,
         dataType: 'xml',
-        data : {operation: 'searchRetrieve',
-                query: sstr,
-                'x-context': xcontext,
-                'x-format': 'html',
-                'x-dataview': 'kwic,title',
-                version: '1.2',
-                maximumRecords: max,
-                startRecord: start},
+        data : this.UrlParams,
         complete: function(xml, textStatus)
         {
           resultPane = $(parElem).find(".searchresults").removeClass("cmd loading");;
