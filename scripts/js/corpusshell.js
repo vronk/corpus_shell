@@ -330,7 +330,7 @@ function doOnDocumentReady ()
         clickHandled = false;
         var target = $(this).attr('href');
         var urlParams = GetUrlParams(target);
-        var ID = PanelController.OpenNewSearchPanel(urlParams['x-context'], urlParams.query);
+        var ID = PanelController.OpenNewSearchPanel(urlParams['x-context'], urlParams.query, urlParams['x-dataview']);
         PanelController.StartSearch(ID);
       });
     $('.searchresults .navigation a').live("click", function (event) {
@@ -365,7 +365,6 @@ function doOnDocumentReady ()
             var currentProfile = PanelController.ProfileName;
             PanelController.ProfileName = "";
             RefreshProfileCombo(currentProfile);
-            LoadProfile(currentProfile);
             if (ProfileController.Profiles._sideBarOpen === false) {
                 ToggleSideBar();
             }
@@ -390,6 +389,7 @@ function doOnDocumentReady ()
                 var pcombo = GenerateProfileCombo(0);
                 $("#profiledel").after(pcombo);
 
+                LoadProfile(currentProfile);
             });
         });
     });
@@ -535,19 +535,7 @@ function LoadIndexCache(onComplete, onError) {
             $.each(data, function(key, val) {
                 for (var index in val) {
                     var item = val[index];
-                    if (item.searchable == "true")
-                        item.searchable = true;
-                    else
-                        item.searchable = false;
-                    if (item.scanable == "true")
-                        item.scanable = true;
-                    else
-                        item.scanable = false;
-                    if (item.sortable == "true")
-                        item.sortable = true;
-                    else
-                        item.sortable = false;
-                    ResourceController.AddIndex(key, item.idxName, item.idxTitle, item.searchable, item.scanable, item.sortable);
+                    ResourceController.AddIndex(key, item.idxName, item.idxTitle, item.searchable, item.scanable, item.sortable, item.native);
                 }
             });
         },
