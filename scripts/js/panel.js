@@ -25,7 +25,8 @@
         "aeb_eng_001__v001":["ʔ", "ā", "ḅ", "ʕ", "ḏ̣", "ḏ", "ē", "ġ", "ǧ", "ḥ", "ī", "ᴵ", "ḷ", "ṃ", "ō", "ṛ", "ṣ", "š", "ṭ", "ṯ", "ū", "ẓ", "ž"], 
         "mecmua": ["ʾ", "ʿ", "ā", "č", "ç", "ė", "ḍ", "ḏ", "ġ", "ḥ", "ḫ", "ī", "ı", "ñ", "s̱", "ş", "ṣ", "š", "ṭ", "ū", "ü", "ẕ", "ż", "ẓ"]
     };
-    VirtualKeyboard.keys['tunico_texts'] = VirtualKeyboard.keys['aeb_eng_001__v001'];
+    VirtualKeyboard.keys['tunico_conc'] = VirtualKeyboard.keys['aeb_eng_001__v001'];
+    VirtualKeyboard.keys['tunico'] = VirtualKeyboard.keys['aeb_eng_001__v001'];
 /**
  * Creates a panel in corpus_shell.
  * @constructor
