@@ -37,17 +37,26 @@ describe("panel tests:", function() {
         it("should have access to its ResourceController dependency", function() {
             expect(ResourceController).toBeDefined();
         });
+//        xit("should have access to the jquery.jScrollPane dependency", function () {
+//            expect($.fn.jScrollPane).toBeDefined();
+//        });
         describe("Check that the prototypes are as expected:", function () {
             it("should have a valid panel prototype", function () {
                 expect(Panel.panelProto).toExist();
-//                expect(Panel.virtualKeyboardProto.length).toEqual(1);
+                expect(Panel.panelProto.length).toEqual(1);
                 //Tests for the effective class which is undefined for the prototype (FF, IE) (element not in use/XML not HTML):
-                //expect(VirtualKeyboard.virtualKeyboardProto).toHaveClass('class', 'virtual-keyboard');
-//                expect(Panel.virtualKeyboardProto).toHaveAttr('class', 'virtual-keyboard');
-//                expect(Panel.virtualKeyboardProto).not.toHaveAttr('id');
+                expect(Panel.panelProto).toHaveClass('c_s-ui-widget');
+                expect(Panel.panelProto).toHaveClass('ui-resizable');
+                expect(Panel.panelProto).toHaveClass('ui-draggable');
+                //expect(Panel.panelProto).toHaveAttr('class', 'c_s-ui-widget draggable ui-widget-content whiteback ui-resizable ui-draggable');
+                expect(Panel.panelProto).not.toHaveAttr('id');
             });
-            it("should have a valid search UI prototype", function () {
+            it("should have a valid search UI prototype (3 parts)", function () {
                 expect(Panel.searchUIProto).toExist();
+                expect(Panel.searchUIProto.length).toEqual(3);
+                expect(Panel.searchUIProto).toHaveClass('c_s-search-ui');
+                expect(Panel.searchUIProto).toHaveClass('c_s-navigation-ui');
+                expect(Panel.searchUIProto).not.toHaveAttr('id');
             });
         });
     });
@@ -99,115 +108,126 @@ describe("panel tests:", function() {
         return $(".virtual-keyboard-input#"+randomId);
     };
 
-    xdescribe("Attaching to inputs of class .virtual-keyboard-input:", function() {
+    describe("Creating Panels:", function() {
         beforeEach(simpleFixtureSetup);
-        describe("one input:", function() {
-            it("should add a keyboard to inputs of class virtual keyboard input", function() {
-                expect($(".virtual-keyboard-input")).toBeInDOM();
-                expect($(".virtual-keyboard-input")).toHaveData('context', 'arz_eng_006');
-                expect($(".virtual-keyboard-input")).toHaveId('sth-unique');
-                var randomId = SpecHelper.generateUUID();
-                $(".virtual-keyboard-input").attr('id', randomId);
-                VirtualKeyboard.attachKeyboards();
-                expect($(".virtual-keyboard")).toBeInDOM();
-                expect($(".virtual-keyboard")).toHaveData('linked_input', randomId)
+        afterEach(function() {PanelController.RemoveAllPanels();});
+        describe("Simple (Sub) Panel:", function() {
+            it("should add a panel to the snaptarget", function() {
+                expect($("#snaptarget")).toBeInDOM();
+                PanelController.OpenNewScanPanel("vicav_profiles_001", "cql.serverChoice");
+                expect($(".c_s-ui-widget")).toBeInDOM();
+                //expect($(".c_s-ui-widget")).toHaveData('linked_input', randomId)
             });
-            it("should not add keyboards to inputs that don't provide context data", function() {
-                $(".virtual-keyboard-input#sth-unique").data('context', '');
-                VirtualKeyboard.attachKeyboards();
-                expect($(".virtual-keyboard")).not.toExist();
-            });
-            it("should not add keyboards to inputs that provide unknown context data", function() {
-                $(".virtual-keyboard-input#sth-unique").data('context', 'fasel');
-                VirtualKeyboard.attachKeyboards();
-                expect($(".virtual-keyboard")).not.toExist();
-            });
-            it("should add keyboards to inputs that don't provide context data if a default is given", function() {
-                $(".virtual-keyboard-input#sth-unique").data('context', '');
-                VirtualKeyboard.attachKeyboards('arz_eng_006');
-                expect($(".virtual-keyboard")).toExist();
-            });
-            it("should add those keys to the template", function() {
-                VirtualKeyboard.attachKeyboards();
-                // Currently may fail because of unsupported CORS for JSON on IE up to 9. Keyboard unuseabel (no keys)
-                expect($(".virtual-keyboard *").length).toEqual(VirtualKeyboard.keys["arz_eng_006"].length);
-                $(".virtual-keyboard *").each(function(i, element) {
-                    expect($(element).text()).toEqual(VirtualKeyboard.keys["arz_eng_006"][i]);
-                });
-            });
-            it("should change the keyboard if the context changes", function() {
-                VirtualKeyboard.attachKeyboards();
-                expect($('.virtual-keyboard')).toExist();
-                $('#sth-unique').data('context', '');
-                VirtualKeyboard.attachKeyboards();
-                expect($('.virtual-keyboard')).not.toExist();
-            });
+//            xit("should not add keyboards to inputs that provide unknown context data", function() {
+//                $(".virtual-keyboard-input#sth-unique").data('context', 'fasel');
+//                VirtualKeyboard.attachKeyboards();
+//                expect($(".virtual-keyboard")).not.toExist();
+//            });
+//            xit("should add keyboards to inputs that don't provide context data if a default is given", function() {
+//                $(".virtual-keyboard-input#sth-unique").data('context', '');
+//                VirtualKeyboard.attachKeyboards('arz_eng_006');
+//                expect($(".virtual-keyboard")).toExist();
+//            });
+//            xit("should add those keys to the template", function() {
+//                VirtualKeyboard.attachKeyboards();
+//                // Currently may fail because of unsupported CORS for JSON on IE up to 9. Keyboard unuseabel (no keys)
+//                expect($(".virtual-keyboard *").length).toEqual(VirtualKeyboard.keys["arz_eng_006"].length);
+//                $(".virtual-keyboard *").each(function(i, element) {
+//                    expect($(element).text()).toEqual(VirtualKeyboard.keys["arz_eng_006"][i]);
+//                });
+//            });
+//            xit("should change the keyboard if the context changes", function() {
+//                VirtualKeyboard.attachKeyboards();
+//                expect($('.virtual-keyboard')).toExist();
+//                $('#sth-unique').data('context', '');
+//                VirtualKeyboard.attachKeyboards();
+//                expect($('.virtual-keyboard')).not.toExist();
+//            });
         });
 
-        describe("many inputs", function() {
-            beforeEach(function(){
-                this.firstInput = randomizeFirstInputId();
+        describe("Create Search Panels:", function() {
+            beforeEach(function() {
+                simpleFixtureSetup()
             });
-            it("should work with any number of inputs on the same page", function() {
-                for (var i = 0; i < 9; i++) {
-                    addAnotherTestInput();
-                }
-                VirtualKeyboard.attachKeyboards();
-                expect($(".virtual-keyboard").length).toEqual(10);
-                $(".virtual-keyboard").each(function(unused, element) {
-                    var element = $(element);
-                    expect(element).toHaveData('linked_input');
-                    expect($("#" + element.data('linked_input'))).toBeInDOM();
-                });
+            afterEach(function() {PanelController.RemoveAllPanels();});
+            it("should add a panel to the snaptarget", function() {
+                PanelController.OpenNewSearchPanel(1, 10);
+                expect($(".c_s-ui-widget")).toBeInDOM();
+                expect($(".c_s-search-ui")).toBeInDOM();
+                expect($(".c_s-native-ui")).toBeInDOM();
+                expect($(".c_s-native-ui").css("display") === "none").toBeTruthy();
+                expect($(".c_s-navigation-ui")).toBeInDOM();
+                PanelController.ClosePanel("panel1");
+                expect($(".c_s-ui-widget")).not.toBeInDOM(); 
             });
-            it("should be able to only attach keyboards to new inputs", function() {
-                VirtualKeyboard.attachKeyboards();
-                for (var i = 0; i < 3; i++) {
-                    addAnotherTestInput();
-                    VirtualKeyboard.attachKeyboards();
-                }
-                expect($(".virtual-keyboard").length).toEqual(4);
-                $(".virtual-keyboard-input").each(function(unused, element) {
-                    var id = $(element).attr("id");
-                    expect($(".virtual-keyboard-input#" + id + "+.virtual-keyboard")).toHaveData('linked_input', id);
-                });
+//            xit("should be able to only attach keyboards to new inputs", function() {
+//                VirtualKeyboard.attachKeyboards();
+//                for (var i = 0; i < 3; i++) {
+//                    addAnotherTestInput();
+//                    VirtualKeyboard.attachKeyboards();
+//                }
+//                expect($(".virtual-keyboard").length).toEqual(4);
+//                $(".virtual-keyboard-input").each(function(unused, element) {
+//                    var id = $(element).attr("id");
+//                    expect($(".virtual-keyboard-input#" + id + "+.virtual-keyboard")).toHaveData('linked_input', id);
+//                });
+//            });
+//            xit("should attach the keyboard according to the context context attribute", function(){
+//                for (var i = 0; i < 3; i++) {
+//                    var currentInput = addAnotherTestInput();
+//                    // data() only pulls the data-* attribute on first access, never changes it.
+//                    currentInput.attr('data-context', 'mecmua');
+//                }
+//                expect($('.virtual-keyboard-input[data-context="mecmua"]')).toBeInDOM();
+//                expect($('.virtual-keyboard-input[data-context="arz_eng_006"]')).toBeInDOM();
+//                VirtualKeyboard.attachKeyboards();
+//                expect($('.virtual-keyboard[data-context="mecmua"]')).toBeInDOM();
+//                expect($('.virtual-keyboard[data-context="arz_eng_006"]')).toBeInDOM();
+//            });
+        });
+
+        describe("Create Search Panels with native search:", function() {
+            beforeEach(function() {
+                simpleFixtureSetup()                                
+                SpecHelper.loadIndexCache();
             });
-            it("should attach the keyboard according to the context context attribute", function(){
-                for (var i = 0; i < 3; i++) {
-                    var currentInput = addAnotherTestInput();
-                    // data() only pulls the data-* attribute on first access, never changes it.
-                    currentInput.attr('data-context', 'mecmua');
-                }
-                expect($('.virtual-keyboard-input[data-context="mecmua"]')).toBeInDOM();
-                expect($('.virtual-keyboard-input[data-context="arz_eng_006"]')).toBeInDOM();
-                VirtualKeyboard.attachKeyboards();
-                expect($('.virtual-keyboard[data-context="mecmua"]')).toBeInDOM();
-                expect($('.virtual-keyboard[data-context="arz_eng_006"]')).toBeInDOM();            });
+            afterEach(function() {PanelController.RemoveAllPanels();});
+            it("should add a panel to the snaptarget", function() {
+                PanelController.OpenNewSearchPanel(10, 10);
+                expect($(".c_s-ui-widget")).toBeInDOM();
+                expect($(".c_s-search-ui")).toBeInDOM();
+                expect($(".c_s-native-ui")).toBeInDOM();
+                expect($("input.c_s-queryType-native")).toBeInDOM();
+                expect($(".c_s-native-ui").css("display") === "table-row").toBeTruthy();
+                expect($(".c_s-navigation-ui")).toBeInDOM();
+                PanelController.ClosePanel("panel1");
+                expect($(".c_s-ui-widget")).not.toBeInDOM(); 
+            });
         });
     });
 
-    xdescribe("Manipulating inputs:", function() {
-        beforeEach(simpleFixtureSetup);
-        describe("many inputs", function() {
-            beforeEach(randomizeFirstInputId);
-            it("should insert a character into the text control it's attached to", function() {
-                for (var i = 0; i < 2; i++) {
-                    addAnotherTestInput();
-                    VirtualKeyboard.attachKeyboards();
-                }
-                $(".virtual-keyboard").each(function(unused, element) {
-                    var linked_input = $('#' + $(element).data('linked_input'));
-                    $(element).children().each(function(unused, element) {
-                        var text_before = linked_input.val();
-                        $(element).trigger("click");
-                        var text_after = linked_input.val();
-                        expect(text_after.length > text_before.length).toBeTruthy();
-                        expect(linked_input.val()).toEqual(text_before + $(element).text());
-                    });
-                });
+    describe("Manipulating inputs:", function() {
+        beforeEach(function() {
+                simpleFixtureSetup()                                
+                SpecHelper.loadIndexCache();
+        });
+        afterEach(function() {PanelController.RemoveAllPanels();});
+        describe("One panel", function() {
+            it("should close the panel on a click to close", function() {
+                PanelController.OpenNewScanPanel("vicav_profiles_001", "cql.serverChoice"); // it's id is panel1, but thats magic :(
+                expect($(".c_s-ui-widget")).toBeInDOM();
+                PanelController.ClosePanel("panel1");
+                expect($(".c_s-ui-widget")).not.toBeInDOM();                
+            });
+            it("should add queryType=native if the correponding checkbox is checked", function() {
+                PanelController.OpenNewSearchPanel(10, 10);
+                expect($("input.c_s-queryType-native")).toBeInDOM();
+                expect($(".c_s-native-ui").css("display") === "table-row").toBeTruthy();
+                $("input.c_s-queryType-native").attr('checked', true);
+                PanelController.StartSearch('panel1');
             });
         });
-        describe("one input", function() {
+        xdescribe("one input", function() {
             describe("insertion tests", function() {
                 beforeEach(function() {
                     this.testVal = 'test';

@@ -1,4 +1,4 @@
-!function($, jasmine, URI) {
+!function($, jasmine, URI, ResourceController) {
     jasmine.getFixtures().fixturesPath = 'spec/fixtures';
     var module = {};
     module.matchers = {
@@ -92,7 +92,38 @@
             fakeXHR.restore();
         }
     };
+    
+    module.loadIndexCache = function (onComplete, onError) {
+        ResourceController.ClearResources();
+
+        for (var i = 0; i < SearchConfig.length; i++) {
+            var resName = SearchConfig[i]["x-context"];
+            ResourceController.AddResource(resName, SearchConfig[i]["DisplayText"]);
+        }
+
+        $.ajax({
+            dataType: "json",
+            url: 'spec/fixtures/indexCache.json',
+            async: false,
+            success: function (data) {
+                $.each(data, function (key, val) {
+                    for (var index in val) {
+                        var item = val[index];
+                        ResourceController.AddIndex(key, item.idxName, item.idxTitle, item.searchable, item.scanable, item.sortable, item.native);
+                    }
+                });
+            },
+            complete: function (jqXHR, textStatus) {
+                if (onComplete !== undefined && typeof (onComplete) === 'function')
+                    onComplete(jqXHR, textStatus);
+            },
+            error: function (jqXHR, textStatus) {
+                if (onError !== undefined && typeof (onError) === 'function')
+                    onError(jqXHR, textStatus, textThrown);
+            }
+        });
+    };
         
     //publish
     this.SpecHelper = module;
-}(window.jQuery, jasmine, URI);
+}(window.jQuery, jasmine, URI, ResourceController);
