@@ -8,7 +8,8 @@
 }
 
 .tei-form-lemma,
-.tei-form-multiWordUnit {
+.tei-form-multiWordUnit,
+.tei-form-construction {
     display: inline-block;
     margin-bottom: 0.5em;
 }
@@ -17,7 +18,8 @@
     border-bottom: 1px dotted slategray;
 }
 
-.tei-orth {
+.tei-orth,
+.tei-form-construction {
     font-weight: bold;
 }
 .tei-form-inflected .tei-orth {
@@ -109,7 +111,8 @@ dd.tei-gram {
 .tei-def {
     display:block;
 }            
-.tei-usg.tei-type-dom {
+.tei-usg.tei-type-dom,
+.tei-usg.tei-type-prag {
     display: inline-block;
     border: 1px solid green;
     font-size: smaller;
