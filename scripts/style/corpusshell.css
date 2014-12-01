@@ -569,9 +569,19 @@ a.searchresult:hover, a.searchresult:focus {
         display: table-row;
 }
 
-.c_s-search-ui .c_s-line {
+.c_s-search-ui .c_s-line{
         padding: 8px;
+}
+
+.c_s-search-ui .c_s-line,
+.c_s-native-ui .c_s-line{
 	font-size: 12px;
+}
+.c_s-native-ui {
+        display: none;
+}
+.c_s-native-ui .c_s-line{
+	padding: 0 8px 0 8px;
 }
 
 .c_s-search-ui input.searchstring,

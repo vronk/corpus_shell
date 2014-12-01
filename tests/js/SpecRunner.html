@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Jasmine Spec Runner v2.0.0</title>
+
+  <link rel="shortcut icon" type="image/png" href="lib/jasmine-2.0.0/jasmine_favicon.png">
+  <link rel="stylesheet" type="text/css" href="lib/jasmine-2.0.0/jasmine.css">
+  <link rel="stylesheet" type="text/css" href="../../scripts/style/normalize.css"/>
+  <link rel="stylesheet" type="text/css" href="../../scripts/style/corpusshell.css"/>
+  <link rel="stylesheet" type="text/css" href="../../scripts/style/cr.css"/>
+  
+  <script type="text/javascript" src="lib/jasmine-2.0.0/jasmine.js"></script>
+  <script type="text/javascript" src="lib/jasmine-2.0.0/jasmine-html.js"></script>
+  <script type="text/javascript" src="lib/jasmine-2.0.0/boot.js"></script>
+  
+  <!--[if lt IE 9]>
+    <!-- These browsers + IE9 don't support CORS for JSON like the newer ones! JSONP needs to be used. -->
+    <script src="lib/jquery-1.11.1.js"></script>
+  <![endif]-->
+  <!--[if gte IE 9]><!-->
+    <script src="lib/jquery-2.1.1.js"></script>
+  <!--<![endif]-->
+  <!--<script src="lib/jquery-1.8.3.min.js"></script>-->
+  
+  <script type="text/javascript" src="lib/jasmine-jquery.js"></script>
+<!--  <script type="text/javascript" src="lib/mock-ajax.js"></script>-->
+  <script type="text/javascript" src="lib/sinon-server-1.9.1.js"></script>
+  <script type="text/javascript" src="lib/sinon-ie-1.9.1.js"></script>
+  <script type="text/javascript" src="spec/params.js"></script>
+  
+  <!-- include source files here... -->
+  <script type="text/javascript" src="../../scripts/js/URI.js"></script>
+  <script type="text/javascript" src="../../scripts/js/jquery/jquery-ui-1.8.24.min.js"></script>
+  <script type="text/javascript" src="../../scripts/js/jquery/jquery.selection.js"></script>
+  <script type="text/javascript" src="../../scripts/js/virtual-keyboard.js"></script>
+  <script type="text/javascript" src="spec/fixtures/corpusshell.config.js"></script>
+  <!-- dynamic configuration of available targets. This php script returns javascript.
+      The ICLTT version lives at http://corpus3.aac.ac.at/cs2/corpus_shell/scripts/js/corpusshell.config.php. -->
+  <!--<script type="text/javascript" src="http://corpus3.aac.ac.at/vicav2/corpus_shell/scripts/js/corpusshell.config.php"></script>-->
+<!--  <script type="text/javascript" src="http://localhost/corpus_shell/scripts/js/corpusshell.config.php"></script>-->
+  <script type="text/javascript" src="../../scripts/js/panelmanager.js"></script>
+  <script type="text/javascript" src="../../scripts/js/ressourcemanager.js"></script>
+  <script type="text/javascript" src="../../scripts/js/panel.js"></script>
+
+  <!-- include spec files here... -->
+  <script type="text/javascript" src="spec/spec-helper.js"></script>
+  <script type="text/javascript" src="spec/panel-spec.js"></script>
+
+</head>
+
+<body>
+    <div id="log"></div>
+</body>
+</html>

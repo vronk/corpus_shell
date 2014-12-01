@@ -1,25 +1,128 @@
-<div class="c_s-search-ui">
-    <div class="c_s-line">
-        Search for
-        <div style="display: inline-block">
-            <input aria-haspopup="true" class="searchstring ui-autocomplete-input virtual-keyboard-input" role="textbox" type="text" autocomplete="off" aria-autocomplete="list"/>
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>corpus_shell Panel Mockup</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <link rel="stylesheet" type="text/css" href="../style/base/jquery.ui.css" />
+        <link rel="stylesheet" type="text/css" href="../style/base/jquery.ui.resizable.css" />
+        <!-- font that contains most of the characters we need -->
+        <link rel="stylesheet" type="text/css" href="/static/fonts/andika/Andika.css" />
+        <link rel="stylesheet" type="text/css" href="../style/corpusshell.css"/>
+        <style type="text/css">
+            html {
+                width: 100%;
+                height: 100%;
+                -webkit-box-sizing: border-box; 
+                -moz-box-sizing: border-box;   
+                box-sizing: border-box;  
+            }
+            body {
+                width: 100%;
+                height: 100%;
+                margin: 0 0 0 0;
+            }
+            * { 
+                -webkit-box-sizing: border-box; 
+                -moz-box-sizing: border-box;   
+                box-sizing: border-box;
+            }
+            #snaptarget {
+                left: 10px;
+                top: 10px;
+                width: 800px;
+                height: 600px;
+            }
+            .c_s-ui-widget.draggable {
+                left: 212px;
+                top: 10px;
+                width: 525px;
+                height: 400px;
+                position: absolute;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="snaptarget">
+            <div class="c_s-ui-widget draggable ui-widget-content whiteback ui-resizable ui-draggable">
+                <div class="c_s-ui-widget-header">
+                    <div class="c_s-line">
+                        <span class="c_s-ui-widget-header-title">Search 1</span>
+                        <span class="c_s-ui-widget-header-button titletopiconclose">
+                            <!-- picture is set using css background! -->
+                        </span>
+                        <span class="c_s-ui-widget-header-button titletopiconmax">
+                            <!-- picture is set using css background! -->
+                        </span>
+                        <span class="c_s-ui-widget-header-button titletopiconnorm c_s-hidden">
+                            <!-- picture is set using css background! -->
+                        </span>
+                        <span class="c_s-ui-widget-header-button titletopiconpin c_s-hidden">
+                            <!-- picture is set using css background! -->
+                        </span>
+                        <span class="c_s-ui-widget-header-button titletopiconpin c_s-hidden c_s-grayed">
+                            <!-- picture is set using css background! -->
+                        </span>
+                        <a class="c_s_fcs_xml_link" href="#">FCS-SRU</a>
+                        <a class="c_s_tei_xml_link c_s-hidden" href="#">TEI</a>
+                    </div>
+                </div>
+                <div id="template" class="c_s-search-ui">
+                    <div class="c_s-line">
+                        Search for
+                        <div style="display: inline-block">
+                            <input aria-haspopup="true" class="searchstring ui-autocomplete-input virtual-keyboard-input" role="textbox" type="text" autocomplete="off" aria-autocomplete="list"/>
+                        </div>
+                        in <select class="searchcombo">
+                            <option class="remove-for-production" value="0" selected="selected">Tunico Texts</option>
+                            <option class="remove-for-production" value="1">Profiles</option>
+                            <option class="remove-for-production" value="2">Sample Texts</option>
+                            <option class="remove-for-production" value="3">Meta Texts</option>
+                            <option class="remove-for-production" value="4">Tools Texts</option>
+                            <option class="remove-for-production" value="5">Linguistic Feature Texts</option>
+                            <option class="remove-for-production" value="6">Bibliography</option>
+                            <option class="remove-for-production" value="7">Dictionary Cairo Variety</option>
+                            <option class="remove-for-production" value="8">Dictionary Tunis Variety</option>
+                            <option class="remove-for-production" value="9">Language Course - Dictionary Tunis Variety</option>
+                            <option class="remove-for-production" value="10">Dictionary Damascus Variety</option>
+                            <option class="remove-for-production" value="11">Dictionary Standard Arabic</option>
+                        </select>
+                        <div class="c_s-ui-searchbutton">
+                            <input class="searchbutton" value="Go" type="button">
+                        </div>
+                    </div>
+                </div>
+                <div id="template" class="c_s-native-ui">
+                    <div class="c_s-line">
+                        <span><span>Use alternate query language</span></span>
+                        <span><input class="c_s-queryType-native" type="checkbox"/></span>
+                    </div>
+                </div>
+                <div id="template" class="c_s-navigation-ui">
+                    <div class="c_s-line">
+                        <span class="navigationtitle"><span>Search results</span></span>
+                        <span class="navigationmain">
+                            <i>hits:</i>&nbsp;<span class="hitcount">-</span>;&nbsp;<i>from:</i>&nbsp;<input class="startrecord" type="text" value="1">&nbsp;<i>max:</i>&nbsp;
+                            <input class="maxrecord" type="text" value="10">
+                            <span class="load"></span>
+                            <span class="prev"></span>
+                            <span class="next"></span>
+                        </span>
+                    </div>
+                </div>
+                <div class="c_s-searchresults-container">
+                    <div class="c_s-line">
+                        <div class="c_s-scroll-area">
+                            <div class="searchresults">
+                                <div class="content remove-for-production"><table><tbody><tr><td align="right" valign="top">1</td><td><span><a class="search-caller" href="//corpus3.aac.oeaw.ac.at/vicavmobile/corpus_shell//modules/fcs-aggregator/switch.php?version=1.2&amp;operation=searchRetrieve&amp;query=cql.serverChoice%3DContributors&amp;x-context=vicav_meta&amp;startRecord=1&amp;maximumRecords=10&amp;x-format=html&amp;x-dataview=kwic,title">Contributors</a></span></td></tr><tr><td align="right" valign="top">1</td><td><span><a class="search-caller" href="//corpus3.aac.oeaw.ac.at/vicavmobile/corpus_shell//modules/fcs-aggregator/switch.php?version=1.2&amp;operation=searchRetrieve&amp;query=cql.serverChoice%3DDictionaries&amp;x-context=vicav_meta&amp;startRecord=1&amp;maximumRecords=10&amp;x-format=html&amp;x-dataview=kwic,title">Dictionaries</a></span></td></tr><tr><td align="right" valign="top">1</td><td><span><a class="search-caller" href="//corpus3.aac.oeaw.ac.at/vicavmobile/corpus_shell//modules/fcs-aggregator/switch.php?version=1.2&amp;operation=searchRetrieve&amp;query=cql.serverChoice%3DLinguistics&amp;x-context=vicav_meta&amp;startRecord=1&amp;maximumRecords=10&amp;x-format=html&amp;x-dataview=kwic,title">Linguistics</a></span></td></tr><tr><td align="right" valign="top">1</td><td><span><a class="search-caller" href="//corpus3.aac.oeaw.ac.at/vicavmobile/corpus_shell//modules/fcs-aggregator/switch.php?version=1.2&amp;operation=searchRetrieve&amp;query=cql.serverChoice%3DText Technology&amp;x-context=vicav_meta&amp;startRecord=1&amp;maximumRecords=10&amp;x-format=html&amp;x-dataview=kwic,title">Text Technology</a></span></td></tr></tbody></table></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="c_s-panel-resize-spacer"><div class="c_s-line"></div></div>
+                <div class="remove-for-production ui-resizable-handle ui-resizable-e" style="z-index: 1000;"></div>
+                <div class="remove-for-production ui-resizable-handle ui-resizable-s" style="z-index: 1000;"></div>
+                <div class="remove-for-production ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se" style="z-index: 1000;"></div>
+            </div>
         </div>
-        in <select class="searchcombo">
-        </select>
-        <div class="c_s-ui-searchbutton">
-            <input class="searchbutton" value="Go" type="button">
-        </div>
-    </div>
-</div>
-<div class="c_s-navigation-ui">
-    <div class="c_s-line">
-        <span class="navigationtitle"><span>Search results</span></span>
-        <span class="navigationmain">
-            <i>hits:</i>&nbsp;<span class="hitcount">-</span>;&nbsp;<i>from:</i>&nbsp;<input class="startrecord" type="text" value="1">&nbsp;<i>max:</i>&nbsp;
-            <input class="maxrecord" type="text" value="10">
-            <span class="load"></span>
-            <span class="prev"></span>
-            <span class="next"></span>
-        </span>
-    </div>
-</div>
+    </body>
+</html>
