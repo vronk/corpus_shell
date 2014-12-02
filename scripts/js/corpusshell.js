@@ -287,11 +287,12 @@ function doOnDocumentReady ()
     });
 
     var clickHandled = false;
-    $(document).on("click", '.searchresults .data-view.full a', function (event) {
+    var ordinaryLinkHandler = function (event) {
             var target = $(this).attr('target');
             var href = $(this).attr('href');
             var targetURI = URI(href);
-            var internal = URI(params.switchURL).equals(targetURI.search("").normalize());
+            var internal = URI(params.switchURL).equals(targetURI.search("").normalize()) &&
+                    !$(this).hasClass("search-caller");
             if ((target === undefined || target === "") && ((href.indexOf('#') > 0) || internal)) {
                 event.preventDefault();
                 PanelController.OpenSubPanel(this, href, true, "text");
@@ -301,7 +302,9 @@ function doOnDocumentReady ()
                 PanelController.OpenNewContentPanel(href, "Book ");
                 clickHandled = true;
             }
-      });
+      };
+    $(document).on("click", '.searchresults .data-view.full a', ordinaryLinkHandler);
+    $(document).on("click", '.searchresults .data-view.application_x-clarin-fcs-kwic_xml a', ordinaryLinkHandler);
     $(document).on("click", '.searchresults .data-view.image a', function (event) {
             var target = $(this).attr('target');
             if (target === undefined || target === "") {
