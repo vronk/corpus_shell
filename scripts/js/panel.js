@@ -442,9 +442,10 @@ var module = function (id, type, title, url, position, pinned, zIndex, container
             
             searchPanel.find(".c_s-ui-widget-header").after(searchUI);
             
+            this.nativequery = searchPanel.find(".c_s-native-ui");
             if (this.canUseNative()) {
-                searchPanel.find(".c_s-native-ui").css("display", "table-row");
-                searchPanel.find("input.c_s-queryType-native").attr('checked', this.UrlParams.queryType === "native");
+                this.nativequery.css("display", "table-row");
+                this.nativequery.find("input.c_s-queryType-native").attr('checked', this.UrlParams.queryType === "native");
             }
 
         $(searchPanel).attr("id", this.Id);
@@ -855,9 +856,16 @@ var module = function (id, type, title, url, position, pinned, zIndex, container
   
   /**
    * A jQuery object that is used for submitting the search "phrases". A virtual
-   * keyboard might need to be appended zo this. 
+   * keyboard might need to be appended to this. 
    */
   this.searchinput;
+  
+  /**
+   * A jQuery object that is used to switch to a native query format, e.g. CorpusQL
+   * instead of ContextQL. Needs to be switched on and off if the selected context
+   * changes.
+   */
+  this.nativequery;
 
   /**
    * 
@@ -938,11 +946,19 @@ var module = function (id, type, title, url, position, pinned, zIndex, container
     
     var obj = this;
     searchcombo.on("change", function(){
-        var newContext = obj.PanelController.GetResourceName(this.selectedIndex);
+        obj.Config = this.selectedIndex;
+        var newContext = obj.PanelController.GetResourceName(obj.Config);
         obj.searchinput.data('context', newContext);
         /* debugging only, will not be read again by data() */
         obj.searchinput.attr('data-context', newContext);        
         VirtualKeyboard.attachKeyboards();
+        if (obj.canUseNative()) {
+            obj.nativequery.css("display", "table-row");
+            obj.nativequery.find("input.c_s-queryType-native").attr('checked', obj.UrlParams.queryType === "native");
+        } else {
+            obj.nativequery.css("display", "none");
+            obj.nativequery.find("input.c_s-queryType-native").attr('checked', false);
+        }
     });
     
     var searchbutton = this.searchbutton;
