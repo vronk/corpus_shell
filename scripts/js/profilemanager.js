@@ -7,13 +7,11 @@
  * @module corpus_shell 
  */
 
-/**
- * The ProfileController object: the central instance of {@link module:corpus_shell~ProfileManager}
- */
-var ProfileController;
-
 // Everything here assumes $ === jQuery so ensure this
-(function ($) {
+!function ($) {
+    
+    //publish
+    this.ProfileController = new ProfileManager();
 
 /**
  * @classdesc A class for managing the profiles that contain queries, windows and their layout.
@@ -24,45 +22,45 @@ function ProfileManager()
   /**
    * A "map" (that is an object with ever extending dynamic properties) of maps for
    * {@link MainPanelObject}s.
-   * @type {map.<map.<MainPanelObject>>} 
+   * @type {map<map<MainPanelObject>>} 
    */
   this.Profiles = new Array();
 
   /**
    * @param {string} name Name of the profile.
-   * @param {map.<MainPanelObject>} profile A Profile to set.
+   * @param {map<MainPanelObject>} profile A Profile to set.
    * @desc Set a particular profile by name
    * @return -
    */
   this.SetProfile = function(name, profile)
   {
     this.Profiles[name] = profile;
-  }
+  };
 
   /**
    * @param {string} name New name of the profile.
-   * @param {map.<MainPanelObject>} profile A Profile to clone.
+   * @param {map<MainPanelObject>} profile A Profile to clone.
    * @desc Set a clone of a particular profile by name
    * @return -
    */
   this.SetProfileAsNew = function(name, profile)
   {
     this.Profiles[name] = this.CloneProfile(profile);
-  }
+  };
 
   /**
    * @param {string} name Name of the profile.
    * @desc Retrieve a profile by name.
-   * @return {map.<MainPanelObject>} The profile stored by this name. If there is now profile stored a new empty object is returned.
+   * @return {map<MainPanelObject>} The profile stored by this name. If there is now profile stored a new empty object is returned.
    */
   this.GetProfile = function(name)
   {
     var profile = this.Profiles[name];
-    if (profile == undefined)
+    if (profile === undefined)
       profile = new Array();
 
     return profile;
-  }
+  };
 
   /**
    * @param {string} name Name of the profile.
@@ -75,7 +73,7 @@ function ProfileManager()
     var profile = this.Profiles[name];
     this.Profiles[newName] = profile;
     delete this.Profiles[name];
-  }
+  };
 
   /**
    * @param {string} name Name of the profile.
@@ -85,9 +83,9 @@ function ProfileManager()
   this.DeleteProfile = function(name)
   {
     var profile = this.Profiles[name];
-    if (profile != undefined)
+    if (profile !== undefined)
       delete this.Profiles[name];
-  }
+  };
 
   /**
    * @desc Retrieves the name of all profiles stored in {@link module:corpus_shell~ProfileController}.
@@ -97,13 +95,13 @@ function ProfileManager()
   this.GetProfileNames = function()
   {
     var list = new Array();
-    for (var key in ProfileController.Profiles)
+    for (var key in this.Profiles)
     {
       list.push(key);
     }
 
     return list;
-  }
+  };
 
   /**
    * @param {map.<MainPanelObject>} profile A profile to clone.
@@ -112,9 +110,9 @@ function ProfileManager()
    */
   this.CloneProfile = function(profile)
   {
-    var newProfile = jQuery.extend(true, {}, profile);
+    var newProfile = $.extend(true, {}, profile);
     return newProfile;
-  }
+  };
 }
-ProfileController = new ProfileManager();
-})(jQuery);
+this.ProfileController = new ProfileManager();
+}(jQuery);

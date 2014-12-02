@@ -510,7 +510,9 @@ var PanelManager = function (container, searchConfig)
   this.SetPanelPosition = function(panelId, position)
   {
     var panel = this.GetPanel(panelId);
-
+    
+    if (panel.Maximized) {return;}
+    
     if (panel !== null && 
         (panel.Position.Top !== position.Top ||
         panel.Position.Left !== position.Left ||
@@ -549,7 +551,7 @@ var PanelManager = function (container, searchConfig)
   {
     var panel = this.GetPanel(panelId);
 
-    if (panel != null && panel.ZIndex != zIndex)
+    if (panel !== null && panel.ZIndex !== zIndex)
     {
       panel.ZIndex = zIndex;
 
@@ -902,16 +904,28 @@ var PanelManager = function (container, searchConfig)
   */
   this.NormalizePanel = function(panelId)
   {
+    if (panelId === undefined) {return;}
+    
+    var panel = this.GetPanel(panelId);
+    
+    if (!panel.Maximized) {return;}
+    
     var position = this.GetPanelPosition(panelId);
+    
+    panel.Maximized = false;
 
     var panelObj = this.GetPanelObj(panelId);
     if (panelObj)
     {
       var maxZidx = this.GetMaxZIndex() + 1;
       panelObj.Normalize(position, maxZidx);
+      this.maximizedPanel = undefined;
+      this.TriggerChangedEvent("Panel normal size: " + panelId);     
     }
-  }
+  };
 
+  this.maximizedPanel = undefined;
+  
   /**
   * @param panelId - unique panel identifier
   * purpose:
@@ -921,6 +935,13 @@ var PanelManager = function (container, searchConfig)
   {
     var wid = $("#mainpanel").width();
     var hgt = $("#mainpanel").height();
+    var panel = this.GetPanel(panelId);
+    
+    if (this.maximizedPanel !== undefined) {
+        this.NormalizePanel(this.maximizedPanel);
+    }
+    
+    panel.Maximized = true;
 
     var position = new Object();
     position["Left"] = "5px";
@@ -931,10 +952,15 @@ var PanelManager = function (container, searchConfig)
     var panelObj = this.GetPanelObj(panelId);
     if (panelObj)
     {
-      var maxZidx = this.GetMaxZIndex() + 1;
-      panelObj.Maximize(position, maxZidx);
+      var maxZidx = this.GetMaxZIndex();
+      var curZidx = panelObj.ZIndex;
+      var newZidx = curZidx < maxZidx ? maxZidx + 2 : curZidx;
+      panelObj.Maximize(position, newZidx);
+      panel.ZIndex = newZidx;
+      this.maximizedPanel = panelObj.Id;
+      this.TriggerChangedEvent("Panel maximized: " + panelId);
     }
-  }
+  };
 
   /**
   * @param -
@@ -993,7 +1019,7 @@ var PanelManager = function (container, searchConfig)
     }
 
     return maxZidx;
-  }
+  };
 
   /**
   * @param -
@@ -1036,14 +1062,15 @@ var PanelManager = function (container, searchConfig)
   */
   this.BringToFront = function(panelId)
   {
-    var maxZidx = this.GetMaxZIndex() + 1;
-    this.SetPanelZIndex(panelId, maxZidx);
-
+    var curMaxZidx = this.GetMaxZIndex();
     var panelObj = this.GetPanelObj(panelId);
 
-    if (panelObj)
-      panelObj.SetZIndex(maxZidx);
-  }
+    if (panelObj !== undefined && panelObj.ZIndex < curMaxZidx) {    
+        var maxZidx = curMaxZidx + 2;
+        this.SetPanelZIndex(panelId, maxZidx);
+        panelObj.SetZIndex(maxZidx);
+    }
+  };
 
   /**
    * Get the positon for a newly created panel.
@@ -1101,6 +1128,7 @@ var PanelManager = function (container, searchConfig)
     var newPanel = new Panel(panelName, "search", panelTitle, "", position, false, maxZidx, this.Container, this, config);
     if (dataview !== undefined)
        newPanel.UrlParams['x-dataview'] = dataview;
+    this.NormalizePanel(this.maximizedPanel);
     newPanel.CreatePanel(searchstr);
 
     this.PanelObjects[panelName] = newPanel;
@@ -1161,6 +1189,7 @@ var PanelManager = function (container, searchConfig)
         newPanel = new XmlPanel(panelName, "content", panelTitle, url, position, false, maxZidx, this.Container, this, undefined);
     else
         newPanel = new Panel(panelName, "content", panelTitle, url, position, false, maxZidx, this.Container, this, undefined);
+    this.NormalizePanel(this.maximizedPanel);
     newPanel.CreatePanel();
 
     this.PanelObjects[panelName] = newPanel;
@@ -1174,13 +1203,23 @@ var PanelManager = function (container, searchConfig)
   */
   this.CreateNewSearchPanelObj = function(panelObj)
   {
-    if (panelObj == undefined) return;
+    if (panelObj === undefined) return;
 
     var maxZidx = this.GetMaxZIndex() + 1;
-    var newPanel = new Panel(panelObj.Id, panelObj.Type, panelObj.Title, panelObj.Url, panelObj.Position, false, maxZidx ,this.Container, this, 0);
+    var zIndex = parseInt(panelObj.ZIndex);
+    if (isNaN(zIndex))
+      zIndex = maxZidx;
+    var newPanel = new Panel(panelObj.Id, panelObj.Type, panelObj.Title, panelObj.Url, panelObj.Position, false, zIndex ,this.Container, this, 0, panelObj.Maximized);
+    this.NormalizePanel(this.maximizedPanel);
     newPanel.CreatePanel();
-
+        
     this.PanelObjects[panelObj.Id] = newPanel;
+    
+    if (panelObj.Maximized) {
+       if (this.maximizedPanel === undefined) {
+            this.MaximizePanel(panelObj.Id);
+       } 
+    }
   };
 
   /**
@@ -1196,13 +1235,14 @@ var PanelManager = function (container, searchConfig)
         var maxZidx = this.GetMaxZIndex() + 1;
         var newPanel;
         if (panelObj.Title.indexOf("Map ") === 0)
-            newPanel = new MapPanel(panelObj.Id, panelObj.Type, panelObj.Title, panelObj.Url, panelObj.Position, false, maxZidx, this.Container, this, 0);
+            newPanel = new MapPanel(panelObj.Id, panelObj.Type, panelObj.Title, panelObj.Url, panelObj.Position, false, maxZidx, this.Container, this, 0, panelObj.Maximized);
         else if (panelObj.Title.indexOf("Book ") === 0)
-            newPanel = new BookReaderPanel(panelObj.Id, panelObj.Type, panelObj.Title, panelObj.Url, panelObj.Position, false, maxZidx, this.Container, this, 0);
+            newPanel = new BookReaderPanel(panelObj.Id, panelObj.Type, panelObj.Title, panelObj.Url, panelObj.Position, false, maxZidx, this.Container, this, 0, panelObj.Maximized);
         else if ((panelObj.Title.indexOf("XML ") === 0) || (panelObj.Title.indexOf("TEI ") === 0))
-            newPanel = new XmlPanel(panelObj.Id, panelObj.Type, panelObj.Title, panelObj.Url, panelObj.Position, false, maxZidx, this.Container, this, 0);
+            newPanel = new XmlPanel(panelObj.Id, panelObj.Type, panelObj.Title, panelObj.Url, panelObj.Position, false, maxZidx, this.Container, this, 0, panelObj.Maximized);
         else
-            newPanel = new Panel(panelObj.Id, panelObj.Type, panelObj.Title, panelObj.Url, panelObj.Position, false, maxZidx, this.Container, this, 0);
+            newPanel = new Panel(panelObj.Id, panelObj.Type, panelObj.Title, panelObj.Url, panelObj.Position, false, maxZidx, this.Container, this, 0, panelObj.Maximized);
+        this.NormalizePanel(this.maximizedPanel);
         newPanel.CreatePanel();
 
         this.PanelObjects[panelObj.Id] = newPanel;
@@ -1258,6 +1298,7 @@ var PanelManager = function (container, searchConfig)
       //function Panel(id, type, title, url, position, pinned, zIndex, container, panelController, config)
 
       var newPanel = new Panel(panelId, type, panelTitle, url, position, pinned, maxZidx, this.Container, this, undefined);
+      this.NormalizePanel(this.maximizedPanel);
       newPanel.CreatePanel();
 
       if (type == "image")
@@ -1296,7 +1337,8 @@ var PanelManager = function (container, searchConfig)
   {
     if (panelObj == undefined) return;
 
-    var newPanel = new Panel(panelObj.Id, panelObj.Type, panelObj.Title, panelObj.Url, panelObj.Position, panelObj.Pinned, panelObj.ZIndex ,this.Container, this, 0);
+    var newPanel = new Panel(panelObj.Id, panelObj.Type, panelObj.Title, panelObj.Url, panelObj.Position, panelObj.Pinned, panelObj.ZIndex ,this.Container, this, 0, panelObj.Maximized);
+    this.NormalizePanel(this.maximizedPanel);
     newPanel.CreatePanel();
     this.PanelObjects[panelObj.Id] = newPanel;
   }
@@ -1511,18 +1553,18 @@ var PanelManager = function (container, searchConfig)
     for (var key in this.Panels)
     {
       var panel = this.Panels[key];
-      if ((panel.Type == undefined) || (panel.Type == "search"))
+      if ((panel.Type === undefined) || (panel.Type === "search"))
       {
         panel['Type'] = "search";
         this.CreateNewSearchPanelObj(panel);
-        if (panel.Url != undefined && panel.Url != "")
+        if (panel.Url !== undefined && panel.Url !== "")
         {
           var panelObj = this.GetPanelObj(panel.Id);
-          if (panelObj != undefined)
+          if (panelObj !== undefined)
             panelObj.StartSearch();
         }
       }
-      else if (panel.Type == "content")
+      else if (panel.Type === "content")
       {
         this.CreateNewContentPanelObj(panel);
       }

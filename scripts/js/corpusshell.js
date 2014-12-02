@@ -176,7 +176,7 @@ function _json_encode(inVal, out)
 }
 
 // Everything here assumes $ === jQuery so ensure this
-(function ($, PanelController, ResourceController, ProfileController, params) {
+(function ($, PanelController, ResourceController, ProfileController, params, URI) {
 
 /**
  * @summary Get parameters from the supplied uri/url
@@ -287,10 +287,12 @@ function doOnDocumentReady ()
     });
 
     var clickHandled = false;
-    $('.searchresults .data-view.full a').live("click", function (event) {
+    $(document).on("click", '.searchresults .data-view.full a', function (event) {
             var target = $(this).attr('target');
             var href = $(this).attr('href');
-            if ((target === undefined || target === "") && (href.indexOf('#') > 0)) {
+            var targetURI = URI(href);
+            var internal = URI(params.switchURL).equals(targetURI.search("").normalize());
+            if ((target === undefined || target === "") && ((href.indexOf('#') > 0) || internal)) {
                 event.preventDefault();
                 PanelController.OpenSubPanel(this, href, true, "text");
                 clickHandled = true;
@@ -300,7 +302,7 @@ function doOnDocumentReady ()
                 clickHandled = true;
             }
       });
-    $('.searchresults .data-view.image a').live("click", function (event) {
+    $(document).on("click", '.searchresults .data-view.image a', function (event) {
             var target = $(this).attr('target');
             if (target === undefined || target === "") {
                 event.preventDefault();
@@ -308,7 +310,7 @@ function doOnDocumentReady ()
                 clickHandled = true;
             }
       });
-    $('.searchresults a.value-caller').live("click", function (event) {
+    $(document).on("click", '.searchresults a.value-caller', function (event) {
         event.preventDefault();
         if (clickHandled === true) {
             clickHandled = false;
@@ -321,7 +323,7 @@ function doOnDocumentReady ()
         }
         PanelController.OpenSubPanel(this, target, true, "text");
       });
-    $('.searchresults a.search-caller').live("click", function (event) {
+    $(document).on("click", '.searchresults a.search-caller', function (event) {
         event.preventDefault();
             if (clickHandled === true) {
             clickHandled = false;
@@ -333,16 +335,16 @@ function doOnDocumentReady ()
         var ID = PanelController.OpenNewSearchPanel(urlParams['x-context'], urlParams.query, urlParams['x-dataview']);
         PanelController.StartSearch(ID);
       });
-    $('.searchresults .navigation a').live("click", function (event) {
+    $(document).on("click", '.searchresults .navigation a', function (event) {
          event.preventDefault();
          PanelController.OpenSubPanel(this, $(this).attr('href'), true, "text");
          clickHandled = true;
       });
-    $('a.c_s_fcs_xml_link').live("click", function (event) {
+    $(document).on("click", 'a.c_s_fcs_xml_link', function (event) {
         event.preventDefault();
         PanelController.OpenNewContentPanel($(this).attr('href'), 'XML ');
     });
-    $('a.c_s_tei_xml_link').live("click", function (event) {
+    $(document).on("click", 'a.c_s_tei_xml_link', function (event) {
         event.preventDefault();
         PanelController.OpenNewContentPanel($(this).attr('href'), 'TEI ');
     });
@@ -414,7 +416,7 @@ function GenerateUseridLink(userId)
   if (pos !== -1)
     url = url.substr(0, pos);
 
-  return url + "?userId=" + userId;
+  return url + "?userId=" + encodeURIComponent(userId);
 }
 
 /**
@@ -613,10 +615,10 @@ function SaveUserData(userid)
         if (jqXHR.status === 200 && textStatus === "success") {
             var msg = $(jqXHR.responseXML).find("msg").text();
             if (msg === "ok") {
-                History.replaceState(null, sitesTitle, "?userId=" + userid);
+                History.replaceState(null, sitesTitle, "?userId=" + encodeURIComponent(userid));
                 if (originalShareLink === undefined)
                     originalShareLink = shareLink.attr("href");
-                $("li.share a").attr("href", "?userId=" + userid);
+                $("li.share a").attr("href", "?userId=" + encodeURIComponent(userid));
             }
             else errorHandler();
             // TODO: display the message somewhere.
@@ -1036,4 +1038,4 @@ function ShowIndexCache()
   $('#openIndexList td.dottedr').css('text-align', 'right');
 }
 
-})(jQuery, PanelController, ResourceController, ProfileController, params);
+})(jQuery, PanelController, ResourceController, ProfileController, params, URI);

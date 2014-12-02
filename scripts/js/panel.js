@@ -40,7 +40,8 @@
  * @param {string} container A jQuery selector which selects the part of the page
  *                           the pannels appear in
  * @param {module:corpus_shell~PanelManager} panelController The object this panel belongs to.
- * @param {number} config An index in {@link module:corpus_shell~SearchConfig}.
+ * @param {number} config An index in {@link module:corpus_shell~SearchConfig}
+ * @param {boolean} maximized.
  * @classdesc
  * purpose:      represents a panel in corpus_shell
  *
@@ -48,7 +49,7 @@
  * @requires     corpus_shell~PanelController
  * @requires     jQuery
  */
-var module = function (id, type, title, url, position, pinned, zIndex, container, panelController, config)
+var module = function (id, type, title, url, position, pinned, zIndex, container, panelController, config, maximized)
 {
   /**
   * @param url - string containing an URL
@@ -129,6 +130,12 @@ var module = function (id, type, title, url, position, pinned, zIndex, container
    * @desc At which "height" in the stack of panels is this panel.
    */
   this.ZIndex = zIndex;
+  /** 
+   * @public
+   * @type {boolean}
+   * @desc Is this panel maximized.
+   */
+  this.maximized = maximized;
   /**
    * @public
    * @type {string}
@@ -266,7 +273,7 @@ var module = function (id, type, title, url, position, pinned, zIndex, container
     this.ZIndex = zIdx;
 
     $(this.GetCssId()).css("z-index", zIdx);
-  }
+  };
 
   /**
   * @param position - object that contains values for top and left position as
