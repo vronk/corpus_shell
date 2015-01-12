@@ -18,49 +18,29 @@
     display: table-cell;
 }
 
-.application_x-clarin-fcs-kwic_xml .tei-fs {
-    margin: 0 0 0 0;
-    padding: 0 0 0 0;
-    display: inline-block;
-}
-
 .application_x-clarin-fcs-kwic_xml .tei-w {
     display: inline-block;
     vertical-align: top;
-}
-
-.application_x-clarin-fcs-kwic_xml .tei-w .xsl-wrap {
-    display: block;
     text-align: center;
     white-space: nowrap;
-}
-
-.application_x-clarin-fcs-kwic_xml .tei-w dl {
-    display: block;
-}
-
-.application_x-clarin-fcs-kwic_xml .tei-fs dt {
-    display: none;
-}
-
-.application_x-clarin-fcs-kwic_xml .tei-fs dd {
-    margin-left: 0;
-    text-align: center;
 }
 
 .application_x-clarin-fcs-kwic_xml .left {
    text-align: right;
 }
 
-.application_x-clarin-fcs-kwic_xml .right,
-.application_x-clarin-fcs-kwic_xml .kw {
+.application_x-clarin-fcs-kwic_xml .right {
    text-align: left;
 }
 
+.application_x-clarin-fcs-kwic_xml .kw {
+   text-align: center; 
+}
+
 .application_x-clarin-fcs-kwic_xml .left .tei-w {
-    padding-right: 0.5em; 
+    padding-right: 0.3em; 
 }
 
 .application_x-clarin-fcs-kwic_xml .right .tei-w {
-    padding-left: 0.5em;  
+    padding-left: 0.3em;  
 }
