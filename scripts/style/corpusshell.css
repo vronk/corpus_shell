@@ -1065,6 +1065,12 @@ Example:
     margin: 0 0 0 6em;
 }
 
+.tei-u-what a,
+.tei-u-what a:hover {
+    color: black !important;
+    text-decoration: none !important;
+    border-bottom: 1px dotted black;
+}
 
 .xsl-first-of-group.tei-w:before {
     color: #00793B;
