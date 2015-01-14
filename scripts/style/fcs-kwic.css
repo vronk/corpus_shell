@@ -23,6 +23,7 @@
     vertical-align: top;
     text-align: center;
     white-space: nowrap;
+    border-bottom: 0px;
 }
 
 .application_x-clarin-fcs-kwic_xml .left {
@@ -43,4 +44,23 @@
 
 .application_x-clarin-fcs-kwic_xml .right .tei-w {
     padding-left: 0.3em;  
+}
+
+.application_x-clarin-fcs-kwic_xml a,
+.application_x-clarin-fcs-kwic_xml a:hover {
+    color: #333;
+    border-bottom: thin dotted #333;
+    text-decoration: none;
+}
+
+.application_x-clarin-fcs-kwic_xml .tei-fs {
+    width: 5em;
+}
+.application_x-clarin-fcs-kwic_xml .tei-fs dt,
+.application_x-clarin-fcs-kwic_xml .tei-fs dd {
+    width: auto;
+}
+
+.application_x-clarin-fcs-kwic_xml .tei-fs dd {
+    float: none;
 }
