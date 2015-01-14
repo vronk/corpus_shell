@@ -1044,15 +1044,16 @@ Example:
 .tei-u {
     display: block;
     margin: 0 0 0 0;
-    background: #DEE8FE;
+    background: #DEE8FE;  
 }
  
 .tei-u-who {
-    display: inline-block;
+    display: block;
     min-width: 6em;
-    margin: 0 0 3px 0;
+    margin: 0 0 0 0;
     color: #3366FF;
     font-style: italic;
+    float: left;
 }
  
 .tei-u-who:after {
@@ -1060,8 +1061,8 @@ Example:
 }
  
 .tei-u-what {
-    display: inline;
-    margin: 0 0 0 0;
+    display: block;
+    margin: 0 0 0 6em;
 }
 
 
