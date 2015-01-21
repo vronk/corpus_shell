@@ -920,6 +920,13 @@ var module = function (id, type, title, url, position, pinned, zIndex, container
             searchstring.attr('data-context', this.PanelController.GetResourceName(this.Config));
             searchstring.attr('id', this.Id + '-searchstring');
             // fetchKeys? wait? when? where?
+            
+            var virtualKeyboardToggle = searchstring.nextAll(".virtual-keyboard-toggle");
+            if (virtualKeyboardToggle.length === 1) {
+                virtualKeyboardToggle.attr('id', this.Id + '-vkb-toggle');
+                var toggleLable = virtualKeyboardToggle.nextAll('label');
+                toggleLable.attr('for', this.Id + '-vkb-toggle')
+            }
 
             if (searchStr !== undefined)
                 searchstring.val(searchStr);

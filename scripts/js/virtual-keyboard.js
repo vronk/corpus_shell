@@ -60,7 +60,7 @@
         });
     };
     
-    keyClicked = function(event) {
+    var keyClicked = function(event) {
         var key = $(event.currentTarget);
         var container = key.parent();
         var input = $('#' + container.data('linked_input'));
@@ -75,6 +75,13 @@
         }
     };
     
+    var hideKeyboardOnESC = function(e) {
+        if (e.which === 27) {
+            var checkbox = $(e.target).nextAll("input[type='checkbox']");
+            checkbox.prop("checked", false);
+        }
+    };
+    
     /**
      * 
      * @param {string} context a default context used if no data-context is present.
@@ -83,24 +90,30 @@
     module.attachKeyboards = function(defaultContext) {
         if (module.failed) return;
         var inputs = $(".virtual-keyboard-input");
+        inputs.on("keydown", hideKeyboardOnESC);
         var defaultContext = defaultContext;
         inputs.each(function(unused, element) {
             var myInput = $(element);
+            var toggleCb = myInput.nextAll("input[type='checkbox']");
+            var toggleLabel = toggleCb.nextAll("label");
             //sanity checks
             var localContext = myInput.data("context");
             if ((localContext === undefined || localContext === '') && defaultContext !== undefined) {
                 localContext = defaultContext;
                 myInput.data('context', defaultContext);
             }
-            var existingKeyboard = $(".virtual-keyboard-input#"+myInput.attr('id')+"+.virtual-keyboard");
+            var existingKeyboard = $(".virtual-keyboard-input#"+myInput.attr('id')+"~.virtual-keyboard");
             if (existingKeyboard.size() > 0) {
                 if (existingKeyboard.data('context') !== localContext)
                     existingKeyboard.remove();
                 else
                     return;
             }
-            if (localContext === undefined || module.keys[localContext] === undefined)
-                return;
+            if (localContext === undefined || module.keys[localContext] === undefined) {
+                toggleCb.hide();
+                toggleLabel.hide();
+                return;                
+            }
             //create keyboard
             var virtualKeyboard = module.virtualKeyboardProto.clone();
             // data() stores in javascript not in DOM
@@ -108,7 +121,15 @@
             var virtualKeyboardKeyProto = virtualKeyboard.find(".key-prototype");
             virtualKeyboardKeyProto.removeClass("key-prototype");
             virtualKeyboardKeyProto.on("click", keyClicked);
-            virtualKeyboard.insertAfter(myInput);
+            var insertAfterElement = myInput;
+            if (toggleLabel.length === 1) {
+                toggleCb.show();
+                toggleLabel.show();
+                insertAfterElement = toggleLabel;
+                if (toggleLabel.hasClass("virtual-keyboard-first-three"))
+                   toggleLabel.text(module.keys[localContext][0] + module.keys[localContext][1] + module.keys[localContext][2]);
+            }
+            virtualKeyboard.insertAfter(insertAfterElement);
             for (var i in module.keys[localContext]) {
                 var key = virtualKeyboardKeyProto.clone(true);
                 key.text(module.keys[localContext][i]);

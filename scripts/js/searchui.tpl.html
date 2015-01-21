@@ -7,7 +7,8 @@
         <link rel="stylesheet" type="text/css" href="../style/base/jquery.ui.resizable.css" />
         <!-- font that contains most of the characters we need -->
         <link rel="stylesheet" type="text/css" href="/static/fonts/andika/Andika.css" />
-        <link rel="stylesheet" type="text/css" href="../style/corpusshell.css"/>
+        <link rel="stylesheet" type="text/css" href="../style/corpusshell.css"/>        
+        <link rel="stylesheet" type="text/css" href="../style/virtual-keyboard.css"/>
         <style type="text/css">
             html {
                 width: 100%;
@@ -69,8 +70,20 @@
                 <div id="template" class="c_s-search-ui">
                     <div class="c_s-line">
                         Search for
-                        <div style="display: inline-block">
+                        <div class="virtual-keyboard-input-combo virtual-keyboard-input-above">
                             <input aria-haspopup="true" class="searchstring ui-autocomplete-input virtual-keyboard-input" role="textbox" type="text" autocomplete="off" aria-autocomplete="list"/>
+                            <input type="checkbox" value="unused" class="virtual-keyboard-toggle" id="someid3" checked="checked"/><label for="someid3" class="virtual-keyboard-first-three">öüä</label>
+                            <ul role="menu" class="virtual-keyboard remove-for-production">
+                                <li role="menuitem"
+                                    >ö</li><li role="menuitem"
+                                           >ü</li><li role="menuitem"
+                                           >ä</li><li role="menuitem"
+                                           >ß</li><li role="menuitem"
+                                           >Ö</li><li role="menuitem"
+                                           >Ü</li><li role="menuitem"
+                                           >Ä</li><li role="menuitem"
+                                           >§</li>
+                            </ul>
                         </div>
                         in <select class="searchcombo">
                             <option class="remove-for-production" value="0" selected="selected">Tunico Texts</option>
