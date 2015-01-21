@@ -104,7 +104,6 @@ table {
 
 .c_s-ui-widget-header > .c_s-line
 {
-    	cursor: move;
 	border: 1px solid #aaaaaa;
 	background: #cccccc url(base/images/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x;
 	color: #222222;
@@ -140,6 +139,15 @@ table {
        border: 1px solid #1C5A80;
        border-radius: 8px;
        font-size: 10px;
+       cursor: default;
+}
+
+.c_s_fcs_xml_link {
+    width: 4.5em;
+}
+
+.c_s_tei_xml_link {
+    width: 2em;
 }
 
 .c_s_fcs_xml_link:visited,
@@ -182,7 +190,18 @@ table {
 }
 
 .c_s-ui-widget-header-title {
+    display: inline-block;
     margin-left: 6px;
+    cursor: move;
+    width: 60%;
+    width: calc(100% - 54px - 7em - 8px - 6px);
+    /* This will reenable drag support using jQuery UI in touch IE */
+    -ms-touch-action: none;
+}
+
+.ui-resizable-handle {    
+    /* This will reenable drag support using jQuery UI in touch IE */
+    -ms-touch-action: none;
 }
 
 .noborder {

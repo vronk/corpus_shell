@@ -28,10 +28,17 @@
 
 .application_x-clarin-fcs-kwic_xml .left {
    text-align: right;
+   padding-left: 0.3em;
 }
 
 .application_x-clarin-fcs-kwic_xml .right {
    text-align: left;
+   padding-right: 0.3em;
+}
+
+
+.application_x-clarin-fcs-kwic_xml .tei-ptr-doc {
+    padding-right: 0.3em;
 }
 
 .application_x-clarin-fcs-kwic_xml .kw {
@@ -54,7 +61,7 @@
 }
 
 .application_x-clarin-fcs-kwic_xml .tei-fs {
-    width: 5em;
+    width: 7em;
 }
 .application_x-clarin-fcs-kwic_xml .tei-fs dt,
 .application_x-clarin-fcs-kwic_xml .tei-fs dd {
@@ -63,4 +70,8 @@
 
 .application_x-clarin-fcs-kwic_xml .tei-fs dd {
     float: none;
+}
+
+table.show tr.application_x-clarin-fcs-kwic_xml td:nth-child(2) {
+    width: auto;
 }
