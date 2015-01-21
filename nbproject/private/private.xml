@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1"/>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="2">
+        <file>
+            <url>index.html</url>
+            <bookmark id="2">
+                <name/>
+                <line>0</line>
+                <key/>
+            </bookmark>
+        </file>
+    </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/M:/git/corpus_shell/tests/units/ACDH/FCSSRU/switchAggregator/switchTest.php</file>
-            <file>file:/M:/git/corpus_shell/modules/utils-php/Http/Response.php</file>
-            <file>file:/M:/git/corpus_shell/modules/mysqlonsru/FilteredGlossaryOnSRU.php</file>
-            <file>file:/M:/git/corpus_shell/tests/modules/utils-php/EpiCurlManagerTest.php</file>
-            <file>file:/M:/git/corpus_shell/modules/mysqlonsru/ProfileOnSRU.php</file>
-            <file>file:/M:/git/corpus_shell/modules/mysqlonsru/common.php</file>
-            <file>file:/M:/git/corpus_shell/modules/mysqlonsru/GlossaryOnSRU.php</file>
-            <file>file:/M:/git/corpus_shell/vendor/phpunit/phpunit/src/Framework/TestCase.php</file>
-            <file>file:/M:/git/corpus_shell/modules/mysqlonsru/BibliographyOnSRU.php</file>
-            <file>file:/M:/git/corpus_shell/tests/modules/utils-php/EpiCurlTest.php</file>
-            <file>file:/M:/git/corpus_shell/tests/units/ACDH/FCSSRU/mysqlonsru/GlossaryOnSRUTest.php</file>
-            <file>file:/M:/git/corpus_shell/modules/fcs-aggregator/switch.config</file>
+            <file>file:/C:/git/corpus_shell/xsl/tests/output-actual/texts-tunis/tunis.html</file>
         </group>
     </open-files>
 </project-private>
