@@ -579,7 +579,10 @@ var module = function (id, type, title, url, position, pinned, zIndex, container
                             self.MozillaWorkaroundScrollAreaHeight();
                         }
                     })
-                    .draggable({handle: ".c_s-ui-widget-header", containment: "parent", snap: true,
+                    .draggable({
+                        handle: ".c_s-ui-widget-header-title",
+                        containment: "parent",
+                        snap: true,
                         start: function(event, ui)
                         {
                             PanelController.BringToFront(panelId);
@@ -942,10 +945,10 @@ var module = function (id, type, title, url, position, pinned, zIndex, container
     for (var i = 0; i < this.PanelController.SearchConfig.length; i++)
     {
        var searchoption = $(document.createElement('option'));
-       searchoption.attr("value", i);
+       searchoption.prop("value", i);
 
        if (i === configIdx)
-         searchoption.attr("selected", "selected");
+         searchoption.prop("selected", true);
 
        searchoption.text(this.PanelController.SearchConfig[i]["DisplayText"]);
        searchcombo.append(searchoption);

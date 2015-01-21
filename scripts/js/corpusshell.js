@@ -691,17 +691,17 @@ function GenerateProfileCombo(idx, selEntry)
     if (profiles[pos] === "_sideBarOpen")
         continue;
     var profileoption = document.createElement('option');
-    $(profileoption).attr("value", profiles[pos]);
+    $(profileoption).prop("value", profiles[pos]);
 
-    if (selEntry != undefined)
+    if (selEntry !== undefined)
     {
-      if (profiles[pos] == selEntry)
-        $(profileoption).attr("selected", "selected");
+      if (profiles[pos] === selEntry)
+        $(profileoption).prop("selected", true);
     }
     else
     {
-      if (i == idx)
-        $(profileoption).attr("selected", "selected");
+      if (i === idx)
+        $(profileoption).prop("selected", true);
     }
 
     $(profileoption).text(profiles[pos]);
@@ -744,8 +744,8 @@ function GenerateSearchCombo(config)
      var searchoption = document.createElement('option');
      $(searchoption).attr("value", i);
 
-     if (i == config)
-       $(searchoption).attr("selected", "selected");
+     if (i === config)
+       $(searchoption).prop("selected", true);
 
      $(searchoption).text(SearchConfig[i]["DisplayText"]);
      $(searchcombo).append(searchoption);
