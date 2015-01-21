@@ -194,6 +194,8 @@ table {
     margin-left: 6px;
     cursor: move;
     width: 60%;
+    width: -moz-calc(100% - 54px - 7em - 8px - 6px);
+    width: -webkit-calc(100% - 54px - 7em - 8px - 6px);
     width: calc(100% - 54px - 7em - 8px - 6px);
     /* This will reenable drag support using jQuery UI in touch IE */
     -ms-touch-action: none;
