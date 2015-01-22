@@ -63,6 +63,7 @@
 .application_x-clarin-fcs-kwic_xml .tei-fs,
 .tei-u-what .tei-fs {
     width: 8em;
+    white-space: normal;
 }
 
 .application_x-clarin-fcs-kwic_xml .tei-fs > dt,
