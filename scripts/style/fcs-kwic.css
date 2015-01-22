@@ -60,16 +60,20 @@
     text-decoration: none;
 }
 
-.application_x-clarin-fcs-kwic_xml .tei-fs {
-    width: 7em;
-}
-.application_x-clarin-fcs-kwic_xml .tei-fs dt,
-.application_x-clarin-fcs-kwic_xml .tei-fs dd {
-    width: auto;
+.application_x-clarin-fcs-kwic_xml .tei-fs,
+.tei-u-what .tei-fs {
+    width: 8em;
 }
 
-.application_x-clarin-fcs-kwic_xml .tei-fs dd {
-    float: none;
+.application_x-clarin-fcs-kwic_xml .tei-fs > dt,
+.tei-u-what .tei-fs > dt {
+    width: 3em;
+}
+
+.application_x-clarin-fcs-kwic_xml .tei-fs > dt + dd,
+.tei-u-what .tei-fs > dt + dd{
+    color: inherit;
+    width: 4em;
 }
 
 table.show tr.application_x-clarin-fcs-kwic_xml td:nth-child(2) {

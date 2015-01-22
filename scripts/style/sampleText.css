@@ -1,4 +1,5 @@
 .tei-fs {
+    width: 13em;
     display: none;
     position: absolute;
     background: #CCC;
@@ -6,41 +7,51 @@
     z-index: 100;
     top: 90%;
     left: 0;
-    width: 15em;
     padding-left: 2px;
     border: 1px solid #999;
     margin: 0 0 0 1em;
     box-shadow: 10px 5px 5px black;
 }
 
-.tei-fs dt {
+.tei-fs > dt {
+    width: 5em;
+    display: inline-block;
+    vertical-align: top;
     float: left;
     clear: left;
-    display: inline-block;
-    width: 4em;
-}
-.tei-fs dd {
-    float: right;
-    clear: right;
-    width: 10.5em;
-    margin: 0 0 0 0;
+    text-align: right;
+    padding-right: 0.3em;
+    overflow: hidden;
 }
 
-.tei-fs dt:after {
+.tei-fs > dt:after {
     content: ":";
     padding: 0 0.1em 0 0;
 }
 
-.tei-fs dt.pos + dd {
+.tei-fs > dt + dd {
+    width: 7em;
+    display: inline-block;
+    text-align: left;
+    float: right;
+    clear: right;
+    padding: 0 0.3em 0 0.3em;
+    vertical-align: top;
+    color: rgb(60,124,1);
+    margin: 0 0 0 0;
+}
+
+.tei-fs > dt.pos + dd {
     color: rgb(154,5,69);
 }
 
-.tei-fs dt.lemma + dd {
+.tei-fs > dt.lemma + dd {
     color: rgb(2,37,157);
 }
 
-.tei-fs dt + dd {
-    color: rgb(60,124,1);
+.tei-fs > dt + dd > * {
+    display: block;
+    width: auto;
 }
 
 .tei-w {
