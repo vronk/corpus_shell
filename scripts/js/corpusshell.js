@@ -176,7 +176,7 @@ function _json_encode(inVal, out)
 }
 
 // Everything here assumes $ === jQuery so ensure this
-(function ($, PanelController, ResourceController, ProfileController, params, URI) {
+(function ($, PanelController, ResourceController, ProfileController, params, URI, HTMLOnDemandLoader) {
 
 /**
  * @summary Get parameters from the supplied uri/url
@@ -303,6 +303,12 @@ function doOnDocumentReady ()
                 clickHandled = true;
             }
       };
+    $(document).on("click", '.tei-fs a.search-caller', function(){       
+        var href = $(this).attr('href');
+        var targetURI = URI(href).protocol(URI().protocol());
+        HTMLOnDemandLoader.fetchUrlIntoTag(targetURI.normalize().href(), $(this).parent(), $(this).parent().parent(), '15em', '4em');
+        clickHandled = true;
+    })
     $(document).on("click", '.searchresults .data-view.full a', ordinaryLinkHandler);
     $(document).on("click", '.searchresults .data-view.application_x-clarin-fcs-kwic_xml a', ordinaryLinkHandler);
     $(document).on("click", '.searchresults .data-view.image a', function (event) {
@@ -1041,4 +1047,4 @@ function ShowIndexCache()
   $('#openIndexList td.dottedr').css('text-align', 'right');
 }
 
-})(jQuery, PanelController, ResourceController, ProfileController, params, URI);
+})(jQuery, PanelController, ResourceController, ProfileController, params, URI, HTMLOnDemandLoader);
