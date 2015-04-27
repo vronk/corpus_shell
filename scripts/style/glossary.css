@@ -88,6 +88,7 @@ dd.tei-gram {
 }
 
 .tei-cit.example .translation-de,
+.tei-cit.example .translation-deu,
 .tei-cit.example .translation-en,
 .tei-cit.example .translation-fr,
 .tei-cit.example .translation-es {
@@ -152,6 +153,7 @@ dd.tei-gram:nth-last-child(3):after {
 }
 .translation-en:before,
 .translation-de:before,
+.translation-deu:before,
 .translation-fr:before,
 .translation-es:before,
 .lang-en:before,
@@ -171,13 +173,19 @@ dd.tei-gram:nth-last-child(3):after {
     content: "en";
 }            
 .lang-en:before,
-.lang-de:before
+.lang-de:before,
+.lang-deu:before
 {
     margin-right: 0.5em;
 }
 .translation-de:before,
 .lang-de:before {
     content: "de";
+}
+
+.translation-deu:before,
+.lang-deu:before {
+    content: "deu";
 }
 
 .translation-fr:before {
