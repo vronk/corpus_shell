@@ -896,12 +896,17 @@ div.profiletext h4 {
     display: none;
     cursor: auto;
     position: absolute;
-    top: 0;
+    bottom: 90%;
     left: 20px;
     background: #FFF;
     z-index: 6;
     box-shadow: 10px 5px 5px black;
     padding: 0 1em 0 2em;
+}
+
+tr:nth-of-type(-2n+10) .indexTerms .tei-index {
+    top: 90%;
+    bottom: auto;
 }
 
 .indexTerms:hover .tei-index,
