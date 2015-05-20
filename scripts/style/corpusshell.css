@@ -1129,6 +1129,20 @@ Example:
     display: inline-block;
     text-align: center;    
 }
+
+.tei-charDecl th {
+    font-size: x-small;
+    font-weight: normal;
+}
+
+td.tei-mapping-arabic {
+    font-size: 133%;
+}
+
+th.tei-charProp-value,
+td.tei-charProp-value {
+    font-weight: bold;
+}
  
 /* inline wrap table rendering 
    ===========================
