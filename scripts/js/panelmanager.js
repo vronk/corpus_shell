@@ -1181,12 +1181,18 @@ var PanelManager = function (container, searchConfig)
     
     
     var newPanel;
-    if (titlePart.indexOf("Map ") === 0)
+    if (titlePart.indexOf("Map ") === 0) {
+        var posWidthParts = position.Width.split(/(\d*)((px)|(em))?/i);
+        position.Width = '' + (posWidthParts[1] * 1.8) + posWidthParts[2];
         newPanel = new MapPanel(panelName, "content", panelTitle, url, position, false, maxZidx, this.Container, this, undefined);
+    }
     else if (titlePart.indexOf("Book ") === 0)
         newPanel = new BookReaderPanel(panelName, "content", panelTitle, url, position, false, maxZidx, this.Container, this, undefined);
-    else if ((titlePart.indexOf("XML ") === 0) || (titlePart.indexOf("TEI ") === 0))
+    else if ((titlePart.indexOf("XML ") === 0) || (titlePart.indexOf("TEI ") === 0)) {
+        var posWidthParts = position.Width.split(/(\d*)((px)|(em))?/i);
+        position.Width = '' + (posWidthParts[1] * 2) + posWidthParts[2];
         newPanel = new XmlPanel(panelName, "content", panelTitle, url, position, false, maxZidx, this.Container, this, undefined);
+    }
     else
         newPanel = new Panel(panelName, "content", panelTitle, url, position, false, maxZidx, this.Container, this, undefined);
     this.NormalizePanel(this.maximizedPanel);

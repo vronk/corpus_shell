@@ -8,8 +8,6 @@ var MapPanel;
  * Inherits from Panel using prototype inheritance (see below)
  */
 MapPanel = function (id, type, title, url, position, pinned, zIndex, container, panelController, config) {
-    var posWidthParts = position.Width.split(/(\d*)((px)|(em))?/i);
-    position.Width = '' + (posWidthParts[1] * 1.8) + posWidthParts[2];
     Panel.call(this, id, type, title, url, position, pinned, zIndex, container, panelController, config);
     this.Url = this.Url.replace("x-format=html", "x-format=json");
 

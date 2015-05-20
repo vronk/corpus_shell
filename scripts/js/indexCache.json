@@ -1,1 +1,458 @@
-{"vicav_profiles_001":{"cql.serverChoice":{"idxName":"cql.serverChoice","idxTitle":"cql.serverChoice","searchable":"true","scanable":"true","sortable":"false"},"profile":{"idxName":"profile","idxTitle":"VICAV Profile","searchable":"true","scanable":"true","sortable":"false"},"geo":{"idxName":"geo","idxTitle":"VICAV Profile Geo Coordinates","searchable":"true","scanable":"true","sortable":"false"},"rfpid":{"idxName":"rfpid","idxTitle":"Resource Fragement PID","searchable":"true","scanable":"true","sortable":"false"}},"vicav_sampletexts":{"cql.serverChoice":{"idxName":"cql.serverChoice","idxTitle":"cql.serverChoice","searchable":"true","scanable":"true","sortable":"false"},"sampleText":{"idxName":"sampleText","idxTitle":"VICAV Profile Sample Text","searchable":"true","scanable":"true","sortable":"false"},"rfpid":{"idxName":"rfpid","idxTitle":"Resource Fragement PID","searchable":"true","scanable":"true","sortable":"false"}},"vicav_meta":{"cql.serverChoice":{"idxName":"cql.serverChoice","idxTitle":"cql.serverChoice","searchable":"true","scanable":"true","sortable":"false"},"metaText":{"idxName":"metaText","idxTitle":"VICAV Meta Text","searchable":"true","scanable":"true","sortable":"false"},"rfpid":{"idxName":"rfpid","idxTitle":"Resource Fragement PID","searchable":"true","scanable":"true","sortable":"false"}},"vicav_tools_001":{"cql.serverChoice":{"idxName":"cql.serverChoice","idxTitle":"cql.serverChoice","searchable":"true","scanable":"true","sortable":"false"},"toolsText":{"idxName":"toolsText","idxTitle":"VICAV Tools","searchable":"true","scanable":"true","sortable":"false"},"rfpid":{"idxName":"rfpid","idxTitle":"Resource Fragement PID","searchable":"true","scanable":"true","sortable":"false"}},"vicav_lingfeatures_001":{"cql.serverChoice":{"idxName":"cql.serverChoice","idxTitle":"cql.serverChoice","searchable":"true","scanable":"true","sortable":"false"},"lingfeature":{"idxName":"lingfeature","idxTitle":"VICAV Linguistic Features Samples","searchable":"true","scanable":"true","sortable":"false"},"rfpid":{"idxName":"rfpid","idxTitle":"Resource Fragement PID","searchable":"true","scanable":"true","sortable":"false"}},"vicav_bibl_002":{"cql.serverChoice":{"idxName":"cql.serverChoice","idxTitle":"cql.serverChoice","searchable":"true","scanable":"true","sortable":"false"},"id":{"idxName":"id","idxTitle":"VICAV Bibliography","searchable":"true","scanable":"true","sortable":"false"},"vicavTaxonomy":{"idxName":"vicavTaxonomy","idxTitle":"VICAV Bibliography by VICAV Taxonomy","searchable":"true","scanable":"true","sortable":"false"},"author":{"idxName":"author","idxTitle":"VICAV Bibliography by author","searchable":"true","scanable":"true","sortable":"false"},"imprintDate":{"idxName":"imprintDate","idxTitle":"VICAV Bibliography by date published","searchable":"true","scanable":"true","sortable":"false"},"rfpid":{"idxName":"rfpid","idxTitle":"Resource Fragement PID","searchable":"true","scanable":"true","sortable":"false"}},"arz_eng_006":{"cql.serverChoice":{"idxName":"cql.serverChoice","idxTitle":"cql.serverChoice","searchable":"true","scanable":"true","sortable":"false"},"entry":{"idxName":"entry","idxTitle":"VICAV Egyptian - English\/German any entry","searchable":"true","scanable":"true","sortable":"false"},"sense":{"idxName":"sense","idxTitle":"VICAV Egyptian - English\/German translated sense","searchable":"true","scanable":"true","sortable":"false"},"unit":{"idxName":"unit","idxTitle":"Language Course Egyptian - English\/German unit","searchable":"true","scanable":"true","sortable":"false"},"rfpid":{"idxName":"rfpid","idxTitle":"Resource Fragement PID","searchable":"true","scanable":"true","sortable":"false"},"xmlid":{"idxName":"xmlid","idxTitle":"XML ID","searchable":"true","scanable":"true","sortable":"false"}},"aeb_eng_001__v001":{"cql.serverChoice":{"idxName":"cql.serverChoice","idxTitle":"cql.serverChoice","searchable":"true","scanable":"true","sortable":"false"},"entry":{"idxName":"entry","idxTitle":"VICAV Tunisian - English\/German any entry","searchable":"true","scanable":"true","sortable":"false"},"sense":{"idxName":"sense","idxTitle":"VICAV Tunisian - English\/German translated sense","searchable":"true","scanable":"true","sortable":"false"},"unit":{"idxName":"unit","idxTitle":"Language Course Tunisian - English\/German unit","searchable":"true","scanable":"true","sortable":"false"},"rfpid":{"idxName":"rfpid","idxTitle":"Resource Fragement PID","searchable":"true","scanable":"true","sortable":"false"},"xmlid":{"idxName":"xmlid","idxTitle":"XML ID","searchable":"true","scanable":"true","sortable":"false"}},"apc_eng_002":{"cql.serverChoice":{"idxName":"cql.serverChoice","idxTitle":"cql.serverChoice","searchable":"true","scanable":"true","sortable":"false"},"entry":{"idxName":"entry","idxTitle":"VICAV Syrian - English\/German any entry","searchable":"true","scanable":"true","sortable":"false"},"sense":{"idxName":"sense","idxTitle":"VICAV Syrian - English\/German translated sense","searchable":"true","scanable":"true","sortable":"false"},"unit":{"idxName":"unit","idxTitle":"Language Course Syrian - English\/German unit","searchable":"true","scanable":"true","sortable":"false"},"rfpid":{"idxName":"rfpid","idxTitle":"Resource Fragement PID","searchable":"true","scanable":"true","sortable":"false"},"xmlid":{"idxName":"xmlid","idxTitle":"XML ID","searchable":"true","scanable":"true","sortable":"false"}},"ar_de__v001":{"cql.serverChoice":{"idxName":"cql.serverChoice","idxTitle":"cql.serverChoice","searchable":"true","scanable":"true","sortable":"false"},"entry":{"idxName":"entry","idxTitle":"VICAV ar - de any entry","searchable":"true","scanable":"true","sortable":"false"},"sense":{"idxName":"sense","idxTitle":"VICAV ar - de translated sense","searchable":"true","scanable":"true","sortable":"false"},"unit":{"idxName":"unit","idxTitle":"Language Course ar - de unit","searchable":"true","scanable":"true","sortable":"false"},"rfpid":{"idxName":"rfpid","idxTitle":"Resource Fragement PID","searchable":"true","scanable":"true","sortable":"false"},"xmlid":{"idxName":"xmlid","idxTitle":"XML ID","searchable":"true","scanable":"true","sortable":"false"}},"tunico_conc":{"word":{"idxName":"word","idxTitle":"word","searchable":"true","scanable":"true","sortable":"true","native":"true"},"id":{"idxName":"id","idxTitle":"id","searchable":"true","scanable":"true","sortable":"true","native":"true"},"pos":{"idxName":"pos","idxTitle":"pos","searchable":"true","scanable":"true","sortable":"true","native":"true"},"lemma":{"idxName":"lemma","idxTitle":"lemma","searchable":"true","scanable":"true","sortable":"true","native":"true"},"lemmaRef":{"idxName":"lemmaRef","idxTitle":"lemmaRef","searchable":"true","scanable":"true","sortable":"true","native":"true"}},"tunico":{"rf":{"idxName":"rf","idxTitle":"rf","searchable":"true","scanable":"false","sortable":"false"},"fcs.toc":{"idxName":"fcs.toc","idxTitle":"fcs.toc","searchable":"true","scanable":"false","sortable":"false"},"cql.serverChoice":{"idxName":"cql.serverChoice","idxTitle":"cql.serverChoice","searchable":"true","scanable":"false","sortable":"false"},"wid":{"idxName":"wid","idxTitle":"wid","searchable":"true","scanable":"false","sortable":"false"},"pos":{"idxName":"pos","idxTitle":"pos","searchable":"true","scanable":"false","sortable":"false"},"lemmaRef":{"idxName":"lemmaRef","idxTitle":"lemmaRef","searchable":"true","scanable":"false","sortable":"false"},"lemma":{"idxName":"lemma","idxTitle":"lemma","searchable":"true","scanable":"false","sortable":"false"},"speaker":{"idxName":"speaker","idxTitle":"speaker","searchable":"true","scanable":"false","sortable":"false"},"fcs.resource":{"idxName":"fcs.resource","idxTitle":"fcs.resource","searchable":"true","scanable":"false","sortable":"false"},"fcs.rf":{"idxName":"fcs.rf","idxTitle":"fcs.rf","searchable":"true","scanable":"false","sortable":"false"}}}
+{
+    "vicav_profiles_001": {
+        "cql.serverChoice": {
+            "idxName": "cql.serverChoice",
+            "idxTitle": "cql.serverChoice",
+            "searchable": "true",
+            "scanable": "true",
+            "sortable": "false"
+        },
+        "profile": {
+            "idxName": "profile",
+            "idxTitle": "VICAV Profile",
+            "searchable": "true",
+            "scanable": "true",
+            "sortable": "false"
+        },
+        "geo": {
+            "idxName": "geo",
+            "idxTitle": "VICAV Profile Geo Coordinates",
+            "searchable": "true",
+            "scanable": "true",
+            "sortable": "false"
+        },
+        "rfpid": {
+            "idxName": "rfpid",
+            "idxTitle": "Resource Fragement PID",
+            "searchable": "true",
+            "scanable": "true",
+            "sortable": "false"
+        }
+    },
+    "vicav_sampletexts": {
+        "cql.serverChoice": {
+            "idxName": "cql.serverChoice",
+            "idxTitle": "cql.serverChoice",
+            "searchable": "true",
+            "scanable": "true",
+            "sortable": "false"
+        },
+        "sampleText": {
+            "idxName": "sampleText",
+            "idxTitle": "VICAV Profile Sample Text",
+            "searchable": "true",
+            "scanable": "true",
+            "sortable": "false"
+        },
+        "rfpid": {
+            "idxName": "rfpid",
+            "idxTitle": "Resource Fragement PID",
+            "searchable": "true",
+            "scanable": "true",
+            "sortable": "false"
+        }
+    },
+    "vicav_meta": {
+        "cql.serverChoice": {
+            "idxName": "cql.serverChoice",
+            "idxTitle": "cql.serverChoice",
+            "searchable": "true",
+            "scanable": "true",
+            "sortable": "false"
+        },
+        "metaText": {
+            "idxName": "metaText",
+            "idxTitle": "VICAV Meta Text",
+            "searchable": "true",
+            "scanable": "true",
+            "sortable": "false"
+        },
+        "rfpid": {
+            "idxName": "rfpid",
+            "idxTitle": "Resource Fragement PID",
+            "searchable": "true",
+            "scanable": "true",
+            "sortable": "false"
+        }
+    },
+    "vicav_tools_001": {
+        "cql.serverChoice": {
+            "idxName": "cql.serverChoice",
+            "idxTitle": "cql.serverChoice",
+            "searchable": "true",
+            "scanable": "true",
+            "sortable": "false"
+        },
+        "toolsText": {
+            "idxName": "toolsText",
+            "idxTitle": "VICAV Tools",
+            "searchable": "true",
+            "scanable": "true",
+            "sortable": "false"
+        },
+        "rfpid": {
+            "idxName": "rfpid",
+            "idxTitle": "Resource Fragement PID",
+            "searchable": "true",
+            "scanable": "true",
+            "sortable": "false"
+        }
+    },
+    "vicav_lingfeatures_001": {
+        "cql.serverChoice": {
+            "idxName": "cql.serverChoice",
+            "idxTitle": "cql.serverChoice",
+            "searchable": "true",
+            "scanable": "true",
+            "sortable": "false"
+        },
+        "lingfeature": {
+            "idxName": "lingfeature",
+            "idxTitle": "VICAV Linguistic Features Samples",
+            "searchable": "true",
+            "scanable": "true",
+            "sortable": "false"
+        },
+        "rfpid": {
+            "idxName": "rfpid",
+            "idxTitle": "Resource Fragement PID",
+            "searchable": "true",
+            "scanable": "true",
+            "sortable": "false"
+        }
+    },
+    "vicav_bibl_002": {
+        "cql.serverChoice": {
+            "idxName": "cql.serverChoice",
+            "idxTitle": "cql.serverChoice",
+            "searchable": "true",
+            "scanable": "true",
+            "sortable": "false"
+        },
+        "id": {
+            "idxName": "id",
+            "idxTitle": "VICAV Bibliography",
+            "searchable": "true",
+            "scanable": "true",
+            "sortable": "false"
+        },
+        "vicavTaxonomy": {
+            "idxName": "vicavTaxonomy",
+            "idxTitle": "VICAV Bibliography by VICAV Taxonomy",
+            "searchable": "true",
+            "scanable": "true",
+            "sortable": "false"
+        },
+        "author": {
+            "idxName": "author",
+            "idxTitle": "VICAV Bibliography by author",
+            "searchable": "true",
+            "scanable": "true",
+            "sortable": "false"
+        },
+        "imprintDate": {
+            "idxName": "imprintDate",
+            "idxTitle": "VICAV Bibliography by date published",
+            "searchable": "true",
+            "scanable": "true",
+            "sortable": "false"
+        },
+        "rfpid": {
+            "idxName": "rfpid",
+            "idxTitle": "Resource Fragement PID",
+            "searchable": "true",
+            "scanable": "true",
+            "sortable": "false"
+        }
+    },
+    "arz_eng_006": {
+        "cql.serverChoice": {
+            "idxName": "cql.serverChoice",
+            "idxTitle": "cql.serverChoice",
+            "searchable": "true",
+            "scanable": "true",
+            "sortable": "false"
+        },
+        "entry": {
+            "idxName": "entry",
+            "idxTitle": "VICAV Egyptian - English\/German any entry",
+            "searchable": "true",
+            "scanable": "true",
+            "sortable": "false"
+        },
+        "sense": {
+            "idxName": "sense",
+            "idxTitle": "VICAV Egyptian - English\/German translated sense",
+            "searchable": "true",
+            "scanable": "true",
+            "sortable": "false"
+        },
+        "unit": {
+            "idxName": "unit",
+            "idxTitle": "Language Course Egyptian - English\/German unit",
+            "searchable": "true",
+            "scanable": "true",
+            "sortable": "false"
+        },
+        "rfpid": {
+            "idxName": "rfpid",
+            "idxTitle": "Resource Fragement PID",
+            "searchable": "true",
+            "scanable": "true",
+            "sortable": "false"
+        },
+        "xmlid": {
+            "idxName": "xmlid",
+            "idxTitle": "XML ID",
+            "searchable": "true",
+            "scanable": "true",
+            "sortable": "false"
+        }
+    },
+    "aeb_eng_001__v001": {
+        "cql.serverChoice": {
+            "idxName": "cql.serverChoice",
+            "idxTitle": "cql.serverChoice",
+            "searchable": "true",
+            "scanable": "true",
+            "sortable": "false"
+        },
+        "entry": {
+            "idxName": "entry",
+            "idxTitle": "VICAV Tunisian - English\/German any entry",
+            "searchable": "true",
+            "scanable": "true",
+            "sortable": "false"
+        },
+        "sense": {
+            "idxName": "sense",
+            "idxTitle": "VICAV Tunisian - English\/German translated sense",
+            "searchable": "true",
+            "scanable": "true",
+            "sortable": "false"
+        },
+        "unit": {
+            "idxName": "unit",
+            "idxTitle": "Language Course Tunisian - English\/German unit",
+            "searchable": "true",
+            "scanable": "true",
+            "sortable": "false"
+        },
+        "rfpid": {
+            "idxName": "rfpid",
+            "idxTitle": "Resource Fragement PID",
+            "searchable": "true",
+            "scanable": "true",
+            "sortable": "false"
+        },
+        "xmlid": {
+            "idxName": "xmlid",
+            "idxTitle": "XML ID",
+            "searchable": "true",
+            "scanable": "true",
+            "sortable": "false"
+        }
+    },
+    "apc_eng_002": {
+        "cql.serverChoice": {
+            "idxName": "cql.serverChoice",
+            "idxTitle": "cql.serverChoice",
+            "searchable": "true",
+            "scanable": "true",
+            "sortable": "false"
+        },
+        "entry": {
+            "idxName": "entry",
+            "idxTitle": "VICAV Syrian - English\/German any entry",
+            "searchable": "true",
+            "scanable": "true",
+            "sortable": "false"
+        },
+        "sense": {
+            "idxName": "sense",
+            "idxTitle": "VICAV Syrian - English\/German translated sense",
+            "searchable": "true",
+            "scanable": "true",
+            "sortable": "false"
+        },
+        "unit": {
+            "idxName": "unit",
+            "idxTitle": "Language Course Syrian - English\/German unit",
+            "searchable": "true",
+            "scanable": "true",
+            "sortable": "false"
+        },
+        "rfpid": {
+            "idxName": "rfpid",
+            "idxTitle": "Resource Fragement PID",
+            "searchable": "true",
+            "scanable": "true",
+            "sortable": "false"
+        },
+        "xmlid": {
+            "idxName": "xmlid",
+            "idxTitle": "XML ID",
+            "searchable": "true",
+            "scanable": "true",
+            "sortable": "false"
+        }
+    },
+    "ar_de__v001": {
+        "cql.serverChoice": {
+            "idxName": "cql.serverChoice",
+            "idxTitle": "cql.serverChoice",
+            "searchable": "true",
+            "scanable": "true",
+            "sortable": "false"
+        },
+        "entry": {
+            "idxName": "entry",
+            "idxTitle": "VICAV ar - de any entry",
+            "searchable": "true",
+            "scanable": "true",
+            "sortable": "false"
+        },
+        "sense": {
+            "idxName": "sense",
+            "idxTitle": "VICAV ar - de translated sense",
+            "searchable": "true",
+            "scanable": "true",
+            "sortable": "false"
+        },
+        "unit": {
+            "idxName": "unit",
+            "idxTitle": "Language Course ar - de unit",
+            "searchable": "true",
+            "scanable": "true",
+            "sortable": "false"
+        },
+        "rfpid": {
+            "idxName": "rfpid",
+            "idxTitle": "Resource Fragement PID",
+            "searchable": "true",
+            "scanable": "true",
+            "sortable": "false"
+        },
+        "xmlid": {
+            "idxName": "xmlid",
+            "idxTitle": "XML ID",
+            "searchable": "true",
+            "scanable": "true",
+            "sortable": "false"
+        }
+    },
+    "tunico_conc": {
+        "word": {
+            "idxName": "word",
+            "idxTitle": "word",
+            "searchable": "true",
+            "scanable": "true",
+            "sortable": "true",
+            "native": "true"
+        },
+        "id": {
+            "idxName": "id",
+            "idxTitle": "id",
+            "searchable": "true",
+            "scanable": "true",
+            "sortable": "true",
+            "native": "true"
+        },
+        "pos": {
+            "idxName": "pos",
+            "idxTitle": "pos",
+            "searchable": "true",
+            "scanable": "true",
+            "sortable": "true",
+            "native": "true"
+        },
+        "lemma": {
+            "idxName": "lemma",
+            "idxTitle": "lemma",
+            "searchable": "true",
+            "scanable": "true",
+            "sortable": "true",
+            "native": "true"
+        },
+        "lemmaRef": {
+            "idxName": "lemmaRef",
+            "idxTitle": "lemmaRef",
+            "searchable": "true",
+            "scanable": "true",
+            "sortable": "true",
+            "native": "true"
+        }
+    },
+    "tunico": {
+        "rf": {
+            "idxName": "rf",
+            "idxTitle": "rf",
+            "searchable": "true",
+            "scanable": "false",
+            "sortable": "false"
+        },
+        "fcs.toc": {
+            "idxName": "fcs.toc",
+            "idxTitle": "fcs.toc",
+            "searchable": "true",
+            "scanable": "false",
+            "sortable": "false"
+        },
+        "cql.serverChoice": {
+            "idxName": "cql.serverChoice",
+            "idxTitle": "cql.serverChoice",
+            "searchable": "true",
+            "scanable": "false",
+            "sortable": "false"
+        },
+        "wid": {
+            "idxName": "wid",
+            "idxTitle": "wid",
+            "searchable": "true",
+            "scanable": "false",
+            "sortable": "false"
+        },
+        "pos": {
+            "idxName": "pos",
+            "idxTitle": "pos",
+            "searchable": "true",
+            "scanable": "false",
+            "sortable": "false"
+        },
+        "lemmaRef": {
+            "idxName": "lemmaRef",
+            "idxTitle": "lemmaRef",
+            "searchable": "true",
+            "scanable": "false",
+            "sortable": "false"
+        },
+        "lemma": {
+            "idxName": "lemma",
+            "idxTitle": "lemma",
+            "searchable": "true",
+            "scanable": "false",
+            "sortable": "false"
+        },
+        "speaker": {
+            "idxName": "speaker",
+            "idxTitle": "speaker",
+            "searchable": "true",
+            "scanable": "false",
+            "sortable": "false"
+        },
+        "fcs.resource": {
+            "idxName": "fcs.resource",
+            "idxTitle": "fcs.resource",
+            "searchable": "true",
+            "scanable": "false",
+            "sortable": "false"
+        },
+        "fcs.rf": {
+            "idxName": "fcs.rf",
+            "idxTitle": "fcs.rf",
+            "searchable": "true",
+            "scanable": "false",
+            "sortable": "false"
+        }
+    }
+}
