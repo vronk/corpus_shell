@@ -822,6 +822,10 @@ div.profiletext h4 {
         font-style: italic;
 }
 
+.tei-authors .last-change {
+        font-size: x-small;
+}
+
 .tei-div.tei-type-typology p {
         white-space: nowrap;
 }
@@ -899,7 +903,7 @@ div.profiletext h4 {
     bottom: 0.5em;
     left: 20px;
     background: #FFF;
-    z-index: 6;
+    z-index: 1;
     box-shadow: 10px 5px 5px black;
     padding: 0 1em 0 2em;
 }
