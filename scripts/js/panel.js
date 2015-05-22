@@ -201,7 +201,7 @@ var module = function (id, type, title, url, position, pinned, zIndex, container
     var thisPanel = $(this.GetCssId());
     thisPanel.find("a.c_s_fcs_xml_link").attr("href", url.replace("x-format=html", "x-format=xml").replace("x-format=json", "x-format=xml"));
     if (this.UrlParams['operation'] === 'searchRetrieve')
-        thisPanel.find("a.c_s_tei_xml_link").removeClass("c_s-hidden").attr("href", this.Url.replace("x-format=html", "x-format=xmltei"));
+        thisPanel.find("a.c_s_tei_xml_link").removeClass("c_s-hidden").attr("href", url.replace("x-format=html", "x-format=xmltei"));
   };
 
   /**
