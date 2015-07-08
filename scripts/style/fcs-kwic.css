@@ -28,12 +28,10 @@
 
 .application_x-clarin-fcs-kwic_xml .left {
    text-align: right;
-   padding-left: 0.3em;
 }
 
 .application_x-clarin-fcs-kwic_xml .right {
    text-align: left;
-   padding-right: 0.3em;
 }
 
 
@@ -45,12 +43,9 @@
    text-align: center; 
 }
 
-.application_x-clarin-fcs-kwic_xml .left .tei-w {
-    padding-right: 0.3em; 
-}
-
-.application_x-clarin-fcs-kwic_xml .right .tei-w {
-    padding-left: 0.3em;  
+.application_x-clarin-fcs-kwic_xml .tei-w,
+.application_x-clarin-fcs-kwic_xml .tei-pc {
+    white-space: pre;
 }
 
 .application_x-clarin-fcs-kwic_xml a,
