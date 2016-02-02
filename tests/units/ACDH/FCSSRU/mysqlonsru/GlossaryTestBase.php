@@ -87,27 +87,50 @@ abstract class GlossaryTestBase extends XPathTestCase {
     
     protected $expectedSqls = array();
     
-    protected function setupDBMockForSqlSearch($prefilter) {
-        $query = $this->params->query;
+    protected function setupDBMockForSqlSearch($prefilter, $ndxAndCondition = '', $exact = false) {
+        $splitted = $this->findCQLParts();
+        $dbquery = preg_replace('/"([^"]*)"/', '$1', $splitted['searchClause'] !== '' ? $splitted['searchClause'] : $this->params->query);
         $this->dbMock->expects($this->at(0))->method('escape_string')
-                ->with($this->params->query)
-                ->willReturn($this->params->query);
-        $qEnc = $this->protectedSRUFromMysql->encodecharrefs($query);
-        $this->expectedSqls = array(
+                ->with($dbquery)
+                ->willReturn($dbquery);
+        $qEnc = $this->protectedSRUFromMysql->encodecharrefs($dbquery);
+        $anyWhere = "(ndx.txt LIKE '%$dbquery%' OR ndx.txt LIKE '%$qEnc%') ";
+        $anySearch = array(
             "SELECT entry FROM $this->context WHERE id = 1",
             "SELECT COUNT(*)  FROM $this->context AS base ".
             "INNER JOIN ".
                 "(SELECT ndx.id, ndx.txt FROM ".
                 $prefilter .
-                "WHERE ndx.txt LIKE '%$query%' OR ndx.txt LIKE '%$qEnc%' GROUP BY ndx.id) AS ndx ".
+                "WHERE ". $this->protectedSRUFromMysql->_and($anyWhere, $ndxAndCondition).
+                "GROUP BY ndx.id) AS ndx ".
             "ON base.id = ndx.id WHERE ndx.id > 700",
             "SELECT ndx.txt, base.entry, base.sid, COUNT(*) FROM $this->context AS base ".
                 "INNER JOIN ".
                 "(SELECT ndx.id, ndx.txt FROM ".
                 $prefilter .
-                "WHERE ndx.txt LIKE '%$query%' OR ndx.txt LIKE '%$qEnc%' GROUP BY ndx.id) AS ndx ".
+                "WHERE ". $this->protectedSRUFromMysql->_and($anyWhere, $ndxAndCondition).
+                "GROUP BY ndx.id) AS ndx ".
             "ON base.id = ndx.id WHERE ndx.id > 700 GROUP BY base.sid LIMIT 0, 10"
         );
+        $exactWhere = "(ndx.txt = '$dbquery' OR ndx.txt = '$qEnc') ";
+        $exactSearch = array(
+            "SELECT entry FROM $this->context WHERE id = 1",
+            "SELECT COUNT(*)  FROM $this->context AS base ".
+            "INNER JOIN ".
+                "(SELECT ndx.id, ndx.txt FROM ".
+                $prefilter .
+                "WHERE ". $this->protectedSRUFromMysql->_and($exactWhere, $ndxAndCondition).
+                "GROUP BY ndx.id) AS ndx ".
+            "ON base.id = ndx.id WHERE ndx.id > 700",
+            "SELECT ndx.txt, base.entry, base.sid, COUNT(*) FROM $this->context AS base ".
+                "INNER JOIN ".
+                "(SELECT ndx.id, ndx.txt FROM ".
+                $prefilter .
+                "WHERE ". $this->protectedSRUFromMysql->_and($exactWhere, $ndxAndCondition).
+                "GROUP BY ndx.id) AS ndx ".
+            "ON base.id = ndx.id WHERE ndx.id > 700 GROUP BY base.sid LIMIT 0, 10"            
+        );
+        $this->expectedSqls = $exact ? $exactSearch : $anySearch; 
         $this->dbMock->expects($this->at(1))->method('query')
                 ->with($this->expectedSqls[0])
                 ->willReturn(false);
@@ -119,6 +142,12 @@ abstract class GlossaryTestBase extends XPathTestCase {
                 ->willReturn(false);      
     }
     
-
+    protected function findCQLParts() {
+        $cqlIdentifier = '("([^"])*")|([^\s()=<>"\/]*)';
+        $matches = array();
+        $regexp = '/(?<index>'.$cqlIdentifier.') *(?<operator>(==?)|(>=?)|(<=?)|('.$cqlIdentifier.')) *(?<searchClause>'.$cqlIdentifier.')/';
+        preg_match($regexp, $this->params->query, $matches);
+        return $matches;
+    }
 }
 

@@ -85,6 +85,42 @@ class GlossaryOnSRUTest extends GlossaryTestBase {
         $this->assertInstanceOf('ACDH\FCSSRU\SRUDiagnostics', $ret);
     }
     
+    /**
+     * @test
+     */
+    public function it_should_use_the_right_sql_for_search_with_unicode_characters() {
+        $this->params->operation = 'searchRetrieve';
+        $query = 'ṃāžžix';
+        $this->params->query = $query;
+        $this->setupDBMockForSqlSearch("$this->context"."_ndx AS ndx ");
+        $ret = $this->t->search();
+        $this->assertInstanceOf('ACDH\FCSSRU\SRUDiagnostics', $ret);
+    }
+       
+    /**
+     * @test
+     */
+    public function it_should_use_the_right_sql_for_search_sense_index() {
+        $this->params->operation = 'searchRetrieve';
+        $query = 'sense=Öl';
+        $this->params->query = $query;
+        $this->setupDBMockForSqlSearch("$this->context"."_ndx AS ndx ", "(ndx.xpath LIKE '%-quote-')");
+        $ret = $this->t->search();
+        $this->assertInstanceOf('ACDH\FCSSRU\SRUDiagnostics', $ret);
+    }
+       
+    /**
+     * @test
+     */
+    public function it_should_use_the_right_sql_for_search_complex_cql() {
+        $this->params->operation = 'searchRetrieve';
+        $query = 'entry == "a car"';
+        $this->params->query = $query;
+        $this->setupDBMockForSqlSearch("$this->context"."_ndx AS ndx ", '', true);
+        $ret = $this->t->search();
+        $this->assertInstanceOf('ACDH\FCSSRU\SRUDiagnostics', $ret);
+    }
+    
     protected function changeContext($anotherContext) {
         $this->context = $anotherContext;
         $this->params->xcontext = $anotherContext;

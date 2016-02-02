@@ -20,4 +20,12 @@ class SRUFromMysqlParts extends SRUFromMysqlBase {
     public function encodecharrefs($str) {
         return parent::encodecharrefs($str);
     }
+    
+    public function _and($string1, $string2) {
+        return parent::_and($string1, $string2);
+    }
+    
+    public function _or($string1, $string2) {
+        return parent::_or($string1, $string2);
+    }
 }
