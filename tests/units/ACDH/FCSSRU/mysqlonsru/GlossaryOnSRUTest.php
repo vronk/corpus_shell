@@ -19,6 +19,7 @@ class GlossaryOnSRUTest extends GlossaryTestBase {
         'entry' => "",
         'sense' => "(ndx.xpath LIKE '%-quote-')",
         'unit' => "(ndx.xpath LIKE '%-bibl-%Course-')",
+        'xmlid' => "(ndx.xpath LIKE '%-xml:id')"        
     );
     protected $onlyExactMatches = array('unit');
     protected $columnBased = array('xmlid', 'rfpid'); 
@@ -68,19 +69,21 @@ class GlossaryOnSRUTest extends GlossaryTestBase {
      * @test
      */
     public function it_should_use_the_right_sql_for_scan() {
-        $this->params->operation = 'scan';
-        $this->setupDBMockForSqlScan("$this->context"."_ndx AS ndx ");
-        $ret = $this->t->scan();
-        $this->assertInstanceOf('ACDH\FCSSRU\SRUDiagnostics', $ret);
+       $this->it_should_use_the_right_sql_for_scan_with_an_index(''); 
     }
     
     /**
      * @test
+     * @dataProvider searchableIndexesProvider
      */
-    public function it_should_use_the_right_sql_for_rfpid_scan() {
+    public function it_should_use_the_right_sql_for_scan_with_an_index($index) {
         $this->params->operation = 'scan';
-        $this->params->scanClause = 'rfpid';
-        $this->setupDBMockForSqlScan('', "SELECT id, entry, sid FROM $this->context ORDER BY CAST(id AS SIGNED)");
+        $this->params->scanClause = $index;
+        if ($index === 'rfpid') { # expected it to be in_array($index, $this->columnBased)
+            $this->setupDBMockForSqlScan('', '', "SELECT id, entry, sid FROM $this->context ORDER BY CAST(id AS SIGNED)");
+        } else {
+            $this->setupDBMockForSqlScan("$this->context"."_ndx AS ndx ", $index === '' ? '' : $this->ndxAndCondiction[$index]);
+        }
         $ret = $this->t->scan();
         $this->assertInstanceOf('ACDH\FCSSRU\SRUDiagnostics', $ret);
     }

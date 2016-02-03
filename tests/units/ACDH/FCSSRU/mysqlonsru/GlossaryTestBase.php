@@ -66,7 +66,7 @@ abstract class GlossaryTestBase extends XPathTestCase {
         );
     }
             
-    protected function setupDBMockForSqlScan($prefilter, $completeSql = null) {
+    protected function setupDBMockForSqlScan($prefilter, $ndxAndCondition = '', $completeSql = null) {
         if (isset($completeSql)) {
             $this->expectedSqls = array(
                 $completeSql
@@ -77,7 +77,7 @@ abstract class GlossaryTestBase extends XPathTestCase {
             "INNER JOIN ".
                 "(SELECT ndx.id, ndx.txt FROM ".
                 $prefilter .
-                "WHERE ndx.txt LIKE '%' GROUP BY ndx.id) AS ndx ".
+                "WHERE ".$this->protectedSRUFromMysql->_and("ndx.txt LIKE '%' ", $ndxAndCondition)."GROUP BY ndx.id) AS ndx ".
             "ON base.id = ndx.id WHERE ndx.id > 700 GROUP BY ndx.txt ORDER BY ndx.txt",            
             );
         }
