@@ -28,4 +28,8 @@ class SRUFromMysqlParts extends SRUFromMysqlBase {
     public function _or($string1, $string2) {
         return parent::_or($string1, $string2);
     }
+    
+    public function findCQLParts() {
+        return parent::findCQLParts();
+    }
 }
