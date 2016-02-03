@@ -5,7 +5,8 @@ namespace tests\unit\ACDH\FCSSRU\mysqlonsru;
 use Tests\Common\XPathTestCase,
     Tests\Common\SRUFromMysqlParts,
     ACDH\FCSSRU\SRUWithFCSParameters,
-    ACDH\FCSSRU\IndentDomDocument;
+    ACDH\FCSSRU\IndentDomDocument,
+    ACDH\FCSSRU\mysqlonsru\GlossaryOnSRU;
 
 $runner = true;
 
@@ -87,59 +88,56 @@ abstract class GlossaryTestBase extends XPathTestCase {
     
     protected $expectedSqls = array();
     
-    protected function setupDBMockForSqlSearch($prefilter, $ndxAndCondition = '', $exact = false) {
+    protected function setupMockAndGetDBQueryString() {
         $splitted = $this->findCQLParts();
         $dbquery = preg_replace('/"([^"]*)"/', '$1', $splitted['searchClause'] !== '' ? $splitted['searchClause'] : $this->params->query);
         $this->dbMock->expects($this->at(0))->method('escape_string')
                 ->with($dbquery)
                 ->willReturn($dbquery);
-        $qEnc = $this->protectedSRUFromMysql->encodecharrefs($dbquery);
-        $anyWhere = "(ndx.txt LIKE '%$dbquery%' OR ndx.txt LIKE '%$qEnc%') ";
-        $anySearch = array(
+        return $dbquery;
+    }
+    
+    protected function setupExpectedMockSql($search) {       
+        $this->expectedSqls = $search;
+        for ($i = 0; $i < count($this->expectedSqls); $i++) {
+            $this->dbMock->expects($this->at($i + 1))->method('query')
+                         ->with($this->expectedSqls[$i])
+                         ->willReturn(false);
+        }
+    }
+    
+    protected function setupDBMockForSqlSearch($prefilter, $ndxAndCondition = '', $exact = false) {
+        $dbquery = $this->setupMockAndGetDBQueryString();
+        $qEnc = $this->protectedSRUFromMysql->encodecharrefs($dbquery); 
+        $anyWhere = "(ndx.txt LIKE '%$dbquery%' OR ndx.txt LIKE '%$qEnc%') ";        
+        $exactWhere = "(ndx.txt = '$dbquery' OR ndx.txt = '$qEnc') ";
+        $search = array(
             "SELECT entry FROM $this->context WHERE id = 1",
             "SELECT COUNT(*)  FROM $this->context AS base ".
             "INNER JOIN ".
                 "(SELECT ndx.id, ndx.txt FROM ".
                 $prefilter .
-                "WHERE ". $this->protectedSRUFromMysql->_and($anyWhere, $ndxAndCondition).
+                "WHERE ". $this->protectedSRUFromMysql->_and($exact ? $exactWhere : $anyWhere, $ndxAndCondition).
                 "GROUP BY ndx.id) AS ndx ".
             "ON base.id = ndx.id WHERE ndx.id > 700",
             "SELECT ndx.txt, base.entry, base.sid, COUNT(*) FROM $this->context AS base ".
                 "INNER JOIN ".
                 "(SELECT ndx.id, ndx.txt FROM ".
                 $prefilter .
-                "WHERE ". $this->protectedSRUFromMysql->_and($anyWhere, $ndxAndCondition).
+                "WHERE ". $this->protectedSRUFromMysql->_and($exact ? $exactWhere : $anyWhere, $ndxAndCondition).
                 "GROUP BY ndx.id) AS ndx ".
             "ON base.id = ndx.id WHERE ndx.id > 700 GROUP BY base.sid LIMIT 0, 10"
         );
-        $exactWhere = "(ndx.txt = '$dbquery' OR ndx.txt = '$qEnc') ";
-        $exactSearch = array(
+        $this->setupExpectedMockSql($search);
+    }
+    
+    protected function setupDBMockForColumnBasedSqlSearch($column) {
+        $dbquery = $this->setupMockAndGetDBQueryString();
+        $search = array(
             "SELECT entry FROM $this->context WHERE id = 1",
-            "SELECT COUNT(*)  FROM $this->context AS base ".
-            "INNER JOIN ".
-                "(SELECT ndx.id, ndx.txt FROM ".
-                $prefilter .
-                "WHERE ". $this->protectedSRUFromMysql->_and($exactWhere, $ndxAndCondition).
-                "GROUP BY ndx.id) AS ndx ".
-            "ON base.id = ndx.id WHERE ndx.id > 700",
-            "SELECT ndx.txt, base.entry, base.sid, COUNT(*) FROM $this->context AS base ".
-                "INNER JOIN ".
-                "(SELECT ndx.id, ndx.txt FROM ".
-                $prefilter .
-                "WHERE ". $this->protectedSRUFromMysql->_and($exactWhere, $ndxAndCondition).
-                "GROUP BY ndx.id) AS ndx ".
-            "ON base.id = ndx.id WHERE ndx.id > 700 GROUP BY base.sid LIMIT 0, 10"            
-        );
-        $this->expectedSqls = $exact ? $exactSearch : $anySearch; 
-        $this->dbMock->expects($this->at(1))->method('query')
-                ->with($this->expectedSqls[0])
-                ->willReturn(false);
-        $this->dbMock->expects($this->at(2))->method('query')
-                ->with($this->expectedSqls[1])
-                ->willReturn(false);
-        $this->dbMock->expects($this->at(3))->method('query')
-                ->with($this->expectedSqls[2])
-                ->willReturn(false);      
+            "SELECT $column, entry, ".($column === 'id' ? 'sid' : 'id').", 1 FROM $this->context WHERE $column='$dbquery'"
+            );
+        $this->setupExpectedMockSql($search);        
     }
     
     protected function findCQLParts() {
@@ -148,6 +146,51 @@ abstract class GlossaryTestBase extends XPathTestCase {
         $regexp = '/(?<index>'.$cqlIdentifier.') *(?<operator>(==?)|(>=?)|(<=?)|('.$cqlIdentifier.')) *(?<searchClause>'.$cqlIdentifier.')/';
         preg_match($regexp, $this->params->query, $matches);
         return $matches;
+    }
+    
+    protected function getAllIndexes($typeOfIndex) {
+        $params = new SRUWithFCSParameters('explain');
+        $context = 'dummy_dummy';
+        $params->context[0] = $context;
+        $glossary = new GlossaryOnSRU($params);
+        $dbMock = $this->getMock('NoRealClass',
+                array('query', 'escape_string'));
+        $dbMock->error = 'Mock: no error.';
+        $dbMock->expects($this->exactly(1))->method('query')
+                ->with("SELECT entry FROM $context WHERE id = 1")
+                ->willReturn(false);       
+        $ref = new \ReflectionProperty('ACDH\FCSSRU\mysqlonsru\GlossaryOnSRU', 'db');
+        $ref->setAccessible(true);
+        $ref->setValue($glossary, $dbMock);
+        $explain = $glossary->explain();
+        $xml = new \DOMDocument();
+        $xml->loadXML($explain->getBody());
+        try {
+            $xml->createAttributeNS('http://explain.z3950.org/dtd/2.0/', 'zr:create-ns');    
+        } catch (\DOMException $exc) {}
+        $xmlSearcher = new \DOMXPath($xml);
+        $indexes = $xmlSearcher->query('//zr:index[@'.$typeOfIndex.'="true"]/zr:map/zr:name[@set="fcs"]/text()');
+        $ret = array();
+        foreach ($indexes as $index) {
+            $ret['index '.$index->textContent] = array($index->textContent);
+        }
+        return $ret;
+    }
+        
+    public function searchableIndexesProvider() {
+        return $this->getAllIndexes('search');        
+    }
+        
+    public function scanableIndexesProvider() {
+        return $this->getAllIndexes('scan');        
+    }
+    
+    public function sortableIndexesProvider() {
+        return $this->getAllIndexes('sort');        
+    }
+    
+    public function nativeIndexesProvider() {
+        return $this->getAllIndexes('native');        
     }
 }
 

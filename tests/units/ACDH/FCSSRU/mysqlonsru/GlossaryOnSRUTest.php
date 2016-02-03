@@ -14,6 +14,18 @@ require_once __DIR__ . '/../../../../../vendor/autoload.php';
 require_once __DIR__ . '/../../../../../modules/mysqlonsru/GlossaryOnSRU.php';
 
 class GlossaryOnSRUTest extends GlossaryTestBase {
+    
+    protected $ndxAndCondiction = array(
+        'entry' => "",
+        'sense' => "(ndx.xpath LIKE '%-quote-')",
+        'unit' => "(ndx.xpath LIKE '%-bibl-%Course-')",
+    );
+    protected $onlyExactMatches = array('unit');
+    protected $columnBased = array('xmlid', 'rfpid'); 
+    protected $columnForIndex = array(
+       'rfpid' => 'id',
+       'xmlid' => 'sid',
+    );
 
     public function __construct($name = null, array $data = array(), $dataName = '') {
         parent::__construct($name, $data, $dataName);
@@ -99,22 +111,44 @@ class GlossaryOnSRUTest extends GlossaryTestBase {
        
     /**
      * @test
+     * @dataProvider searchableIndexesProvider
      */
-    public function it_should_use_the_right_sql_for_search_sense_index() {
+    public function it_should_use_the_right_sql_for_search_sense_index($index) {
         $this->params->operation = 'searchRetrieve';
-        $query = 'sense=Öl';
+        $query = "$index=Öl";
         $this->params->query = $query;
-        $this->setupDBMockForSqlSearch("$this->context"."_ndx AS ndx ", "(ndx.xpath LIKE '%-quote-')");
+        if (in_array($index, $this->columnBased)) {
+            $this->setupDBMockForColumnBasedSqlSearch($this->columnForIndex[$index]);
+        } else {
+            $this->setupDBMockForSqlSearch("$this->context"."_ndx AS ndx ", $this->ndxAndCondiction[$index], in_array($index, $this->onlyExactMatches));
+        }
         $ret = $this->t->search();
         $this->assertInstanceOf('ACDH\FCSSRU\SRUDiagnostics', $ret);
     }
-       
+    
     /**
      * @test
+     * @dataProvider searchableIndexesProvider
      */
-    public function it_should_use_the_right_sql_for_search_complex_cql() {
+    public function it_should_use_the_right_sql_for_search_complex_cql($index) {
         $this->params->operation = 'searchRetrieve';
-        $query = 'entry == "a car"';
+        $query = $index.' == "a car"';
+        $this->params->query = $query;
+        if (in_array($index, $this->columnBased)) {
+            $this->setupDBMockForColumnBasedSqlSearch($this->columnForIndex[$index]);
+        } else {
+            $this->setupDBMockForSqlSearch("$this->context"."_ndx AS ndx ", $this->ndxAndCondiction[$index], true);
+        }
+        $ret = $this->t->search();
+        $this->assertInstanceOf('ACDH\FCSSRU\SRUDiagnostics', $ret);
+    }
+    
+    /**
+     * @xtest
+     */
+    public function it_should_use_the_right_sql_for_search_complex_cql_2() {
+        $this->params->operation = 'searchRetrieve';
+        $query = 'entry exact "a car"';
         $this->params->query = $query;
         $this->setupDBMockForSqlSearch("$this->context"."_ndx AS ndx ", '', true);
         $ret = $this->t->search();
