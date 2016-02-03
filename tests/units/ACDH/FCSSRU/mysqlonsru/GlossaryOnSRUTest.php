@@ -15,8 +15,11 @@ require_once __DIR__ . '/../../../../../modules/mysqlonsru/GlossaryOnSRU.php';
 
 class GlossaryOnSRUTest extends GlossaryTestBase {
     
-    protected $ndxAndCondiction = array(
-        'entry' => "",
+    protected $ndxAndCondiction = array(        
+        '' => '',
+        'serverChoice' => '',
+        'cql.serverChoice' => '',
+        'entry' => '',
         'sense' => "(ndx.xpath LIKE '%-quote-')",
         'unit' => "(ndx.xpath LIKE '%-bibl-%Course-')",
         'xmlid' => "(ndx.xpath LIKE '%-xml:id')"        
@@ -118,7 +121,7 @@ class GlossaryOnSRUTest extends GlossaryTestBase {
      */
     public function it_should_use_the_right_sql_for_search_sense_index($index) {
         $this->params->operation = 'searchRetrieve';
-        $query = "$index=Öl";
+        $query = $index.($index === '' ? '' : '=')."Öl";
         $this->params->query = $query;
         if (in_array($index, $this->columnBased)) {
             $this->setupDBMockForColumnBasedSqlSearch($this->columnForIndex[$index]);
@@ -134,6 +137,7 @@ class GlossaryOnSRUTest extends GlossaryTestBase {
      * @dataProvider searchableIndexesProvider
      */
     public function it_should_use_the_right_sql_for_search_complex_cql($index) {
+        if ($index === '') { return; } // this doesn't work, is according to spec.
         $this->params->operation = 'searchRetrieve';
         $query = $index.' == "a car"';
         $this->params->query = $query;

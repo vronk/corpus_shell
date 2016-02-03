@@ -89,8 +89,8 @@ abstract class GlossaryTestBase extends XPathTestCase {
     protected $expectedSqls = array();
     
     protected function setupMockAndGetDBQueryString() {
-        $splitted = $this->findCQLParts();
-        $dbquery = preg_replace('/"([^"]*)"/', '$1', $splitted['searchClause'] !== '' ? $splitted['searchClause'] : $this->params->query);
+        $splitted = $this->protectedSRUFromMysql->findCQLParts();
+        $dbquery = preg_replace('/"([^"]*)"/', '$1', $splitted['searchString'] !== '' ? $splitted['searchString'] : $this->params->query);
         $this->dbMock->expects($this->at(0))->method('escape_string')
                 ->with($dbquery)
                 ->willReturn($dbquery);
@@ -140,14 +140,6 @@ abstract class GlossaryTestBase extends XPathTestCase {
         $this->setupExpectedMockSql($search);        
     }
     
-    protected function findCQLParts() {
-        $cqlIdentifier = '("([^"])*")|([^\s()=<>"\/]*)';
-        $matches = array();
-        $regexp = '/(?<index>'.$cqlIdentifier.') *(?<operator>(==?)|(>=?)|(<=?)|('.$cqlIdentifier.')) *(?<searchClause>'.$cqlIdentifier.')/';
-        preg_match($regexp, $this->params->query, $matches);
-        return $matches;
-    }
-    
     protected function getAllIndexes($typeOfIndex) {
         $params = new SRUWithFCSParameters('explain');
         $context = 'dummy_dummy';
@@ -170,7 +162,11 @@ abstract class GlossaryTestBase extends XPathTestCase {
         } catch (\DOMException $exc) {}
         $xmlSearcher = new \DOMXPath($xml);
         $indexes = $xmlSearcher->query('//zr:index[@'.$typeOfIndex.'="true"]/zr:map/zr:name[@set="fcs"]/text()');
-        $ret = array();
+        $ret = array(
+            'empty index' => array(''),
+            'index serverChoice' => array('serverChoice'),
+            'index cql.serverChoice' => array('cql.serverChoice'),
+        );
         foreach ($indexes as $index) {
             $ret['index '.$index->textContent] = array($index->textContent);
         }
