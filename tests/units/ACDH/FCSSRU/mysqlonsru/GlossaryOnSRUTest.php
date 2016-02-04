@@ -21,6 +21,10 @@ class GlossaryOnSRUTest extends GlossaryTestBase {
         'cql.serverChoice' => '',
         'entry' => '',
         'sense' => "(ndx.xpath LIKE '%-quote-')",
+        'sense-en' => "(ndx.xpath LIKE '%-translation-en-quote-')",
+        'sense-de' => "(ndx.xpath LIKE '%-translation-de-quote-')",
+        'sense-es' => "(ndx.xpath LIKE '%-translation-es-quote-')",
+        'sense-fr' => "(ndx.xpath LIKE '%-translation-fr-quote-')",
         'unit' => "(ndx.xpath LIKE '%-bibl-%Course-')",
         'xmlid' => "(ndx.xpath LIKE '%-xml:id')"        
     );
@@ -204,6 +208,35 @@ class GlossaryOnSRUTest extends GlossaryTestBase {
         $this->assertInstanceOf('ACDH\FCSSRU\SRUDiagnostics', $ret);
         $this->assertEquals($ret->getDiagnosticId(), 1, 'it should report an genreal system error because the mock does not return data!');
     }
+        
+    /**
+     * @test
+     * @dataProvider searchableIndexesProvider
+     */
+    public function it_should_not_accept_any_operator_for_search($index) {
+        if ($index === '') { return; } // this doesn't work, is according to spec.  
+        $this->params->operation = 'searchRetrieve';
+        $this->params->query = $index.' someop error';
+        $ret = $this->t->search();
+        $this->assertInstanceOf('ACDH\FCSSRU\SRUDiagnostics', $ret, 'someop: it should return a diagnostics object!');
+        $this->assertEquals($ret->getDiagnosticId(), 4, 'someop: it should report an unsupported operation!');           
+    }
+    
+    /**
+     * @test
+     * @dataProvider searchableIndexesProvider
+     */
+    public function it_should_not_accept_invalid_indexes_for_search($index) {       
+        $this->params->operation = 'searchRetrieve';
+        $this->params->scanClause = $index.'Invaliddate==something';
+        $ret = $this->t->search();
+        $this->assertInstanceOf('ACDH\FCSSRU\SRUDiagnostics', $ret, $index.'Invaliddate==something: it should return a diagnostics object!');
+        $this->assertEquals($ret->getDiagnosticId(), 51, $index.'Invaliddate==something: it should report result set does not exist!');  
+        $this->params->scanClause = $index.'Invaliddate exact something';
+        $ret = $this->t->search();
+        $this->assertInstanceOf('ACDH\FCSSRU\SRUDiagnostics', $ret, $index.'Invaliddate exact something: it should return a diagnostics object!');
+        $this->assertEquals($ret->getDiagnosticId(), 51, $index.'Invaliddate exact something: it should report result set does not exist!');             
+    } 
     
     protected function changeContext($anotherContext) {
         $this->context = $anotherContext;
