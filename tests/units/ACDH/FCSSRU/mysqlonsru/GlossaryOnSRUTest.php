@@ -159,7 +159,7 @@ class GlossaryOnSRUTest extends GlossaryTestBase {
      * @test
      * @dataProvider searchableIndexesProvider
      */
-    public function it_should_use_the_right_sql_for_search_sense_index($index) {
+    public function it_should_use_the_right_sql_for_wildcard_searching_some_index($index) {
         $this->params->operation = 'searchRetrieve';
         $query = $index.($index === '' ? '' : '=')."Öl";
         $this->params->query = $query;
@@ -177,7 +177,7 @@ class GlossaryOnSRUTest extends GlossaryTestBase {
      * @test
      * @dataProvider searchableIndexesProvider
      */
-    public function it_should_use_the_right_sql_for_search_complex_cql($index) {
+    public function it_should_use_the_right_sql_for_exact_searching_complex_cql($index) {
         if ($index === '') { return; } // this doesn't work, is according to spec.
         $this->params->operation = 'searchRetrieve';
         $query = $index.' == "a car"';
