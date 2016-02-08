@@ -72,12 +72,14 @@ abstract class GlossaryTestBase extends XPathTestCase {
                 $completeSql
             );
         } else {
+            $whereClause = $ndxAndCondition !== '' && $ndxAndCondition[0] === '/' ? '' :
+               "WHERE ".$this->protectedSRUFromMysql->_and("ndx.txt LIKE '%' ", $ndxAndCondition);
             $this->expectedSqls = array(
             "SELECT ndx.txt, base.entry, base.sid, COUNT(*) FROM $this->context AS base ".
             "INNER JOIN ".
                 "(SELECT ndx.id, ndx.txt FROM ".
-                $prefilter .
-                "WHERE ".$this->protectedSRUFromMysql->_and("ndx.txt LIKE '%' ", $ndxAndCondition)."GROUP BY ndx.id) AS ndx ".
+                $prefilter.$whereClause.
+                "GROUP BY ndx.id) AS ndx ".
             "ON base.id = ndx.id WHERE ndx.id > 700 GROUP BY ndx.txt ORDER BY ndx.txt",            
             );
         }
@@ -105,26 +107,37 @@ abstract class GlossaryTestBase extends XPathTestCase {
                          ->willReturn(false);
         }
     }
+
+// Complex XPath SQL
+//SELECT ndx.txt, base.entry, base.sid, COUNT(*) FROM arz_eng_006 AS base INNER JOIN (
+//SELECT ndx.id, ndx.txt FROM (
+//    SELECT tab.id, tab.xpath, prefid.txt FROM (
+//      SELECT tab.id, tab.xpath, prefid.txt FROM arz_eng_006_ndx AS tab INNER JOIN (
+//      SELECT inner.id, inner.txt FROM arz_eng_006_ndx AS `inner` WHERE inner.txt = 'released' AND inner.xpath LIKE '%-change-f-status-') AS prefid ON tab.id = prefid.id WHERE tab.txt != '-') AS tab
+//    INNER JOIN (
+//    SELECT base.id, ExtractValue(base.entry, '//cit[@xml:lang="en"]//text()') AS 'txt' FROM arz_eng_006 AS base GROUP BY base.id HAVING txt != '') AS prefid
+//    ON tab.id = prefid.id WHERE tab.txt != '-') AS ndx WHERE ndx.txt LIKE '%' GROUP BY ndx.id) AS ndx
+//ON base.id = ndx.id WHERE ndx.id > 700 GROUP BY ndx.txt ORDER BY ndx.txt
     
     protected function setupDBMockForSqlSearch($prefilter, $ndxAndCondition = '', $exact = false) {
         $dbquery = $this->setupMockAndGetDBQueryString();
         $qEnc = $this->protectedSRUFromMysql->encodecharrefs($dbquery); 
         $anyWhere = "(ndx.txt LIKE '%$dbquery%' OR ndx.txt LIKE '%$qEnc%') ";        
         $exactWhere = "(ndx.txt = '$dbquery' OR ndx.txt = '$qEnc') ";
+        $whereClause = $ndxAndCondition !== '' && $ndxAndCondition[0] === '/' ? '' :
+            "WHERE ". $this->protectedSRUFromMysql->_and($exact ? $exactWhere : $anyWhere, $ndxAndCondition);
         $search = array(
             "SELECT entry FROM $this->context WHERE id = 1",
             "SELECT COUNT(*)  FROM $this->context AS base ".
             "INNER JOIN ".
                 "(SELECT ndx.id, ndx.txt FROM ".
-                $prefilter .
-                "WHERE ". $this->protectedSRUFromMysql->_and($exact ? $exactWhere : $anyWhere, $ndxAndCondition).
+                $prefilter.$whereClause.
                 "GROUP BY ndx.id) AS ndx ".
             "ON base.id = ndx.id WHERE ndx.id > 700",
             "SELECT ndx.txt, base.entry, base.sid, COUNT(*) FROM $this->context AS base ".
                 "INNER JOIN ".
                 "(SELECT ndx.id, ndx.txt FROM ".
-                $prefilter .
-                "WHERE ". $this->protectedSRUFromMysql->_and($exact ? $exactWhere : $anyWhere, $ndxAndCondition).
+                $prefilter.$whereClause.
                 "GROUP BY ndx.id) AS ndx ".
             "ON base.id = ndx.id WHERE ndx.id > 700 GROUP BY base.sid LIMIT 0, 10"
         );
