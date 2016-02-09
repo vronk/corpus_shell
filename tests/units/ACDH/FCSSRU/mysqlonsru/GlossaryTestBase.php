@@ -74,13 +74,11 @@ abstract class GlossaryTestBase extends XPathTestCase {
         } else {
             $whereClause = $ndxAndCondition !== '' && $ndxAndCondition[0] === '/' ? '' :
                "WHERE ".$this->protectedSRUFromMysql->_and("ndx.txt LIKE '%' ", $ndxAndCondition);
+            $innerSql = $this->getInnerSql($whereClause, $prefilter);
             $this->expectedSqls = array(
             "SELECT ndx.txt, base.entry, base.sid, COUNT(*) FROM $this->context AS base ".
-            "INNER JOIN ".
-                "(SELECT ndx.id, ndx.txt FROM ".
-                $prefilter.$whereClause.
-                "GROUP BY ndx.id) AS ndx ".
-            "ON base.id = ndx.id WHERE ndx.id > 700 GROUP BY ndx.txt ORDER BY ndx.txt",            
+            $innerSql.
+            "ON base.id = ndx.id WHERE base.id > 700 GROUP BY ndx.txt ORDER BY ndx.txt",            
             );
         }
         $this->dbMock->expects($this->exactly(1))->method('query')
@@ -88,6 +86,17 @@ abstract class GlossaryTestBase extends XPathTestCase {
                 ->willReturn(false);        
     }
     
+    protected function getInnerSql($whereClause, $prefilter) {
+        $result = strpos($prefilter, 'ExtractValue(') === false ?
+            "INNER JOIN ".
+                "(SELECT ndx.id, ndx.txt FROM ".
+                $prefilter.$whereClause.
+                "GROUP BY ndx.id) AS ndx " :
+            "INNER JOIN ".$prefilter;
+        return $result;
+    }
+
+
     protected $expectedSqls = array();
     
     protected function setupMockAndGetDBQueryString() {
@@ -107,17 +116,6 @@ abstract class GlossaryTestBase extends XPathTestCase {
                          ->willReturn(false);
         }
     }
-
-// Complex XPath SQL
-//SELECT ndx.txt, base.entry, base.sid, COUNT(*) FROM arz_eng_006 AS base INNER JOIN (
-//SELECT ndx.id, ndx.txt FROM (
-//    SELECT tab.id, tab.xpath, prefid.txt FROM (
-//      SELECT tab.id, tab.xpath, prefid.txt FROM arz_eng_006_ndx AS tab INNER JOIN (
-//      SELECT inner.id, inner.txt FROM arz_eng_006_ndx AS `inner` WHERE inner.txt = 'released' AND inner.xpath LIKE '%-change-f-status-') AS prefid ON tab.id = prefid.id WHERE tab.txt != '-') AS tab
-//    INNER JOIN (
-//    SELECT base.id, ExtractValue(base.entry, '//cit[@xml:lang="en"]//text()') AS 'txt' FROM arz_eng_006 AS base GROUP BY base.id HAVING txt != '') AS prefid
-//    ON tab.id = prefid.id WHERE tab.txt != '-') AS ndx WHERE ndx.txt LIKE '%' GROUP BY ndx.id) AS ndx
-//ON base.id = ndx.id WHERE ndx.id > 700 GROUP BY ndx.txt ORDER BY ndx.txt
     
     protected function setupDBMockForSqlSearch($prefilter, $ndxAndCondition = '', $exact = false) {
         $dbquery = $this->setupMockAndGetDBQueryString();
@@ -126,20 +124,15 @@ abstract class GlossaryTestBase extends XPathTestCase {
         $exactWhere = "(ndx.txt = '$dbquery' OR ndx.txt = '$qEnc') ";
         $whereClause = $ndxAndCondition !== '' && $ndxAndCondition[0] === '/' ? '' :
             "WHERE ". $this->protectedSRUFromMysql->_and($exact ? $exactWhere : $anyWhere, $ndxAndCondition);
+        $innerSql = $this->getInnerSql($whereClause, $prefilter);
         $search = array(
             "SELECT entry FROM $this->context WHERE id = 1",
             "SELECT COUNT(*)  FROM $this->context AS base ".
-            "INNER JOIN ".
-                "(SELECT ndx.id, ndx.txt FROM ".
-                $prefilter.$whereClause.
-                "GROUP BY ndx.id) AS ndx ".
-            "ON base.id = ndx.id WHERE ndx.id > 700",
+            $innerSql.
+            "ON base.id = ndx.id WHERE base.id > 700",
             "SELECT ndx.txt, base.entry, base.sid, COUNT(*) FROM $this->context AS base ".
-                "INNER JOIN ".
-                "(SELECT ndx.id, ndx.txt FROM ".
-                $prefilter.$whereClause.
-                "GROUP BY ndx.id) AS ndx ".
-            "ON base.id = ndx.id WHERE ndx.id > 700 GROUP BY base.sid LIMIT 0, 10"
+            $innerSql.
+            "ON base.id = ndx.id WHERE base.id > 700 GROUP BY base.sid LIMIT 0, 10"
         );
         $this->setupExpectedMockSql($search);
     }

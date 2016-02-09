@@ -113,8 +113,8 @@ class GlossaryOnSRUTest extends GlossaryTestBase {
         }
         $xPathInnerPart =
         "(SELECT base.id, ExtractValue(base.entry, '".$this->ndxAndCondiction[$index].$predicate."') AS 'txt' ".
-        "FROM $this->context AS base GROUP BY base.id HAVING txt != '') AS prefid ";
-        return $this->getPrefilter($xPathInnerPart);
+        "FROM $this->context AS base GROUP BY base.id HAVING txt != '') AS ndx ";
+        return $xPathInnerPart;
     }
     
     /**
@@ -191,7 +191,7 @@ class GlossaryOnSRUTest extends GlossaryTestBase {
         $this->params->query = $query;
         if (in_array($index, $this->columnBased)) {
             $this->setupDBMockForColumnBasedSqlSearch($this->columnForIndex[$index]);
-        } elseif (($this->ndxAndCondiction[$index] !== '') && ($this->ndxAndCondiction[$index][0] === '/')) {//[.=\"a car\"]
+        } elseif (($this->ndxAndCondiction[$index] !== '') && ($this->ndxAndCondiction[$index][0] === '/')) {
         $this->setupDBMockForSqlSearch($this->getXPathPrefilter($index, $searchTerm, false),
             $this->ndxAndCondiction[$index], in_array($index, $this->onlyExactMatches));
         } else {
