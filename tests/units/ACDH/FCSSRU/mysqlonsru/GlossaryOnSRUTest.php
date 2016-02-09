@@ -25,6 +25,9 @@ class GlossaryOnSRUTest extends GlossaryTestBase {
         'sense-de' => "//cit[@xml:lang=\"de\"]//text()",
         'sense-es' => "//cit[@xml:lang=\"es\"]//text()",
         'sense-fr' => "//cit[@xml:lang=\"fr\"]//text()",
+        'lemma' => "//form[@type=\"lemma\" or @type=\"multiUnitWord\"]/orth[@xml:lang=\"fa-Arab\" or @xml:lang=\"fa-x-modDMG\"]",
+        'pos' => '//gramGrp/gram[@type="pos"]',
+        'inflected' => '//form[@type="inflected"]/orth[position()<3]',
         'unit' => "(ndx.xpath LIKE '%-bibl-%Course-')",
         'xmlid' => "(ndx.xpath LIKE '%-xml:id')"        
     );
@@ -88,7 +91,7 @@ class GlossaryOnSRUTest extends GlossaryTestBase {
         $this->params->scanClause = $index;
         if ($index === 'rfpid') { # expected it to be in_array($index, $this->columnBased)
             $this->setupDBMockForSqlScan('', '', "SELECT id, entry, sid FROM $this->context ORDER BY CAST(id AS SIGNED)");
-        } elseif (($this->ndxAndCondiction[$index] !== '') && ($this->ndxAndCondiction[$index][0] === '/')) {//[.=\"a car\"]
+        } elseif (($this->ndxAndCondiction[$index] !== '') && ($this->ndxAndCondiction[$index][0] === '/')) {
             $this->setupDBMockForSqlScan($this->getXPathPrefilter($index), $this->ndxAndCondiction[$index]);
         } else {
             $this->setupDBMockForSqlScan("$this->context"."_ndx AS ndx ", $index === '' ? '' : $this->ndxAndCondiction[$index]);
