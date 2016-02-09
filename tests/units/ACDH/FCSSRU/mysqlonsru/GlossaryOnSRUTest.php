@@ -105,15 +105,16 @@ class GlossaryOnSRUTest extends GlossaryTestBase {
                      "ON tab.id = prefid.id WHERE tab.txt != '-') AS ndx ";
     }
     
-    protected function getXPathPrefilter($index, $query = '', $exact = null) {
+    protected function getXPathPrefilter($index, $query = '', $exact = null, $additionalExtractValues = '', $additionalHavingConditions = '') {
         if ($exact === null) {
             $predicate = '';
         } else {
             $predicate = '['.($exact === true ? ".=\"$query\"" : "contains(., \"$query\")").']';
         }
         $xPathInnerPart =
-        "(SELECT base.id, ExtractValue(base.entry, '".$this->ndxAndCondiction[$index].$predicate."') AS 'txt' ".
-        "FROM $this->context AS base GROUP BY base.id HAVING txt != '') AS ndx ";
+        "(SELECT base.id, ExtractValue(base.entry, '".$this->ndxAndCondiction[$index].$predicate."') AS 'txt'".
+        $additionalExtractValues.
+        " FROM $this->context AS base GROUP BY base.id HAVING txt != ''$additionalHavingConditions) AS ndx ";
         return $xPathInnerPart;
     }
     
@@ -215,7 +216,7 @@ class GlossaryOnSRUTest extends GlossaryTestBase {
         if (in_array($index, $this->columnBased)) {
             $this->setupDBMockForColumnBasedSqlSearch($this->columnForIndex[$index]);
         } elseif (($this->ndxAndCondiction[$index] !== '') && ($this->ndxAndCondiction[$index][0] === '/')) {//[.=\"a car\"]
-        $this->setupDBMockForSqlSearch($this->getXPathPrefilter($index, $searchTerm, true),
+            $this->setupDBMockForSqlSearch($this->getXPathPrefilter($index, $searchTerm, true),
             $this->ndxAndCondiction[$index], in_array($index, $this->onlyExactMatches));
         } else {
             $this->setupDBMockForSqlSearch("$this->context"."_ndx AS ndx ", $this->ndxAndCondiction[$index], true);
@@ -304,6 +305,26 @@ class GlossaryOnSRUTest extends GlossaryTestBase {
         $restrictedContext = 'aeb_eng_001__v001';
         $this->changeContext($restrictedContext);
         $this->setupDBMockForSqlSearch($this->getReleasedPrefilter());
+        
+        $ret = $this->t->search();
+        
+        $this->assertInstanceOf('ACDH\FCSSRU\SRUDiagnostics', $ret);
+    }
+        
+    /**
+     * @test
+     */
+    public function it_should_use_the_right_sql_for_restricted_search_with_an_xpath() {
+        $this->params->operation = 'searchRetrieve';
+        $searchTerm = 'water';
+        $index = 'sense-en';
+        $query = $index.'='.$searchTerm;
+        $this->params->query = $query;
+        $restrictedContext = 'aeb_eng_001__v001';
+        $this->changeContext($restrictedContext);
+        $this->setupDBMockForSqlSearch($this->getXPathPrefilter($index, $searchTerm, false,
+                ", ExtractValue(base.entry, '//f[@name=\"status\"]/symbol/@value[.=\"released\"]') AS 'f1'",
+                " AND f1 != ''"));
         
         $ret = $this->t->search();
         
