@@ -5,59 +5,7 @@ Description:
   The best description of CQL comes from the CQL homepage at the Library of Congress
   http://www.loc.gov/standards/sru/specs/cql.html
 
-
-Backus Naur Form (BNF) definition for CQL.
-["::=" represents "is defined as"]
-
-sortedQuery 	     ::= 	prefixAssignment sortedQuery | scopedClause ['sortby' sortSpec]
-sortSpec 	        ::= 	sortSpec singleSpec | singleSpec
-singleSpec 	      ::= 	index [modifierList]
-
-cqlQuery 	        ::= 	prefixAssignment cqlQuery | scopedClause
-prefixAssignment 	::= 	'>' prefix '=' uri | '>' uri
-scopedClause 	    ::= 	scopedClause booleanGroup searchClause | searchClause
-booleanGroup 	    ::= 	boolean [modifierList]
-boolean 	         ::= 	'and' | 'or' | 'not' | 'prox'
-searchClause 	    ::= 	'(' cqlQuery ')' | index relation searchTerm | searchTerm
-relation 	        ::= 	comparitor [modifierList]
-comparitor 	      ::= 	comparitorSymbol | namedComparitor
-comparitorSymbol 	::= 	'=' | '>' | '<' | '>=' | '<=' | '<>' | '=='
-namedComparitor 	 ::= 	identifier
-modifierList 	    ::= 	modifierList modifier | modifier
-modifier 	        ::= 	'/' modifierName [comparitorSymbol modifierValue]
-prefix, uri,
-modifierName,
-modifierValue,
-searchTerm,
-index 	           ::= 	term
-term 	            ::= 	identifier | 'and' | 'or' | 'not' | 'prox' | 'sortby'
-identifier 	      ::= 	charString1 | charString2
-charString1 	     ::= 	Any sequence of characters that does not include any of the
-                       following:
-
-                           whitespace
-                           ( (open parenthesis )
-                           ) (close parenthesis)
-                           =
-                           <
-                           >
-                           '"' (double quote)
-                           /
-
-                       If the final sequence is a reserved word, that token is returned
-                       instead. Note that '.' (period) may be included, and a sequence of
-                       digits is also permitted. Reserved words are 'and', 'or', 'not',
-                       and 'prox' (case insensitive). When a reserved word is used in a
-                       search term, case is preserved.
-
-charString2 	     ::= 	Double quotes enclosing a sequence of any characters except double
-                       quote (unless preceded by backslash (\)). Backslash escapes the
-                       character following it. The resultant value includes all backslash
-                       characters except those releasing a double quote (this allows other
-                       systems to interpret the backslash character). The surrounding double
-                       quotes are not included.
 ~/
-
 
 [*
 
@@ -72,7 +20,7 @@ function UserInput(obj)
 
 	this.nodes = new Array();
 	this.tokens = new Array();
- this.offsets = new Array();
+        this.offsets = new Array();
 
 	this.cql = function () { return this.rootNode() ? this.rootNode().cql : ""; };
 	this.verbose = function (curpos) { return this.translateNode(this.rootNode(), 'verbose',curpos); };
@@ -113,8 +61,8 @@ function parseInput(str) {
 	var error_count = 0;
 	if( ( error_count = __parse( this.input_string, error_offsets, error_lookaheads ) ) > 0 ) {
 				for( var i = 0; i < error_count; i++ )
-						this.err_string += "bei <span class=\"error\">" + this.input_string.substr( error_offsets[i] ) + "</span> (pos: " + error_offsets[i] + ")" + " wird " +
-						error_lookaheads[i].join(' oder ') + " erwartet <br/>" ;
+						this.err_string += "at <span class=\"error\">" + this.input_string.substr( error_offsets[i] ) + "</span> (pos: " + error_offsets[i] + ")" + " expected " +
+						error_lookaheads[i].join(' or ') + "<br/>" ;
 	}
 }
 
@@ -156,7 +104,7 @@ function createNode( type, user_value, user_string, cql, start, children ) {
 
 	/*
 	if (offset==user_input.input_string.length) {
-		offset = (user_string == user_input.input_string.substring(offset-n.len)) ? offset : offset -1;
+		offset = (user_string === user_input.input_string.substring(offset-n.len)) ? offset : offset -1;
 	} else {
 		offset = offset -1;
 	}
@@ -243,7 +191,7 @@ function resolveBag(n) {
 	var cql = prefix;
 	for( var i = 0; i < n.children.length; i++ ) {
 		 cql = cql +	n.children[i].cql;
-		 if (i != (n.children.length-1)) cql = cql + infix;
+		 if (i !==  (n.children.length-1)) cql = cql + infix;
 	}
 	cql = cql + sufix;
 
@@ -276,7 +224,7 @@ function userValueAt(ix) {
 function hasTokenTypeAt(ix,type) {
 
 	var tts = this.tokenTypesAt(ix);
-	for(var i = 0; i < tts.length; i++) if(tts[i] == type) return true;
+	for(var i = 0; i < tts.length; i++) if(tts[i] === type) return true;
   return false;
 }
 
@@ -350,7 +298,7 @@ function setGroupAt(startPos, endPos, conn_type) {
   for (var i = startIx; i < endIx; i++) {
   	var old_node = this.tokens[i];
   	new_q = new_q + old_node.userx;
-   	if (i != (endIx - 1)) new_q = new_q + infix;
+   	if (i !==  (endIx - 1)) new_q = new_q + infix;
   }
   new_q = new_q + sufix + this.input_string.substring(this.tokens[endIx].end);
 
@@ -373,7 +321,7 @@ function formatNode(n,prefix) {
 
 function translateNode(n, mode, curpos) {
 	 // output("n:" + formatNode(n," "));
-	if (n == null) return "";
+	if (n === null) return "";
 
 	var key = "", pattern="", userval="";
 
@@ -406,7 +354,7 @@ function translateNode(n, mode, curpos) {
 			uservalx = userval ;
 	  }
 	  // highlight curent Token
-	  if (mode=="verbose" && n == this.tokens[this.tokenAt(curpos)]) {
+	  if (mode=="verbose" && n === this.tokens[this.tokenAt(curpos)]) {
 	  	x = x + "<span class='highlight'>" + sprintf(pattern, uservalx) + "</span>";
 		} else {
 			x = x + sprintf(pattern, uservalx);
@@ -426,7 +374,7 @@ function translateNode(n, mode, curpos) {
 				var child = this.translateNode(n.children[i],mode,curpos);
 				if (child.length>0) {
 					x = x + child;
-					if (i != (n.children.length-1)) x = x + infix;
+					if (i !==  (n.children.length-1)) x = x + infix;
 				}
 			}
 			x = x + sufix;
@@ -452,6 +400,58 @@ function TestCql (inputStr)
 
 *]
 
+/~
+Backus Naur Form (BNF) definition for CQL.
+["::=" represents "is defined as"]
+
+sortedQuery 	     ::= 	prefixAssignment sortedQuery | scopedClause ['sortby' sortSpec]
+sortSpec 	        ::= 	sortSpec singleSpec | singleSpec
+singleSpec 	      ::= 	index [modifierList]
+
+cqlQuery 	        ::= 	prefixAssignment cqlQuery | scopedClause
+prefixAssignment 	::= 	'>' prefix '=' uri | '>' uri
+scopedClause 	    ::= 	scopedClause booleanGroup searchClause | searchClause
+booleanGroup 	    ::= 	boolean [modifierList]
+boolean 	         ::= 	'and' | 'or' | 'not' | 'prox'
+searchClause 	    ::= 	'(' cqlQuery ')' | index relation searchTerm | searchTerm
+relation 	        ::= 	comparitor [modifierList]
+comparitor 	      ::= 	comparitorSymbol | namedComparitor
+comparitorSymbol 	::= 	'=' | '>' | '<' | '>=' | '<=' | '<>' | '=='
+namedComparitor 	 ::= 	identifier
+modifierList 	    ::= 	modifierList modifier | modifier
+modifier 	        ::= 	'/' modifierName [comparitorSymbol modifierValue]
+prefix, uri,
+modifierName,
+modifierValue,
+searchTerm,
+index 	           ::= 	term
+term 	            ::= 	identifier | 'and' | 'or' | 'not' | 'prox' | 'sortby'
+identifier 	      ::= 	charString1 | charString2
+charString1 	     ::= 	Any sequence of characters that does not include any of the
+                       following:
+
+                           whitespace
+                           ( (open parenthesis )
+                           ) (close parenthesis)
+                           =
+                           <
+                           >
+                           '"' (double quote)
+                           /
+
+                       If the final sequence is a reserved word, that token is returned
+                       instead. Note that '.' (period) may be included, and a sequence of
+                       digits is also permitted. Reserved words are 'and', 'or', 'not',
+                       and 'prox' (case insensitive). When a reserved word is used in a
+                       search term, case is preserved.
+
+charString2 	     ::= 	Double quotes enclosing a sequence of any characters except double
+                       quote (unless preceded by backslash (\)). Backslash escapes the
+                       character following it. The resultant value includes all backslash
+                       characters except those releasing a double quote (this allows other
+                       systems to interpret the backslash character). The surrounding double
+                       quotes are not included.
+~/
 
 /~ --- Token definitions --- ~/
 
@@ -469,7 +469,7 @@ function TestCql (inputStr)
   '\(' BRACKETOPEN;
   '\)' BRACKETCLOSE;
 
-  '[A-ZÄÖÜa-z_äöüß]+'      ALPHA    [* %match = createLeafNode("alpha", %match, %match, %match, %offset); *]
+  '[\w_]+'      ALPHA    [* %match = createLeafNode("alpha", %match, %match, %match, %offset); *]
   ;
   '[0-9]+'                 INT      [* %match = parseInt( %match ); *]
   ;
@@ -520,7 +520,7 @@ var test_user_input;
 
 if (typeof inProduction =="undefined") {
 
- if (typeof arguments != "undefined") {
+ if (typeof arguments !==  "undefined") {
  		if (arguments[0]) input_str = arguments[0];
  }
  if (input_str=="" && typeof prompt== 'function' ) {
@@ -551,11 +551,11 @@ function test(ix) {
 }
 
 function output (x) {
-	if (typeof console != 'undefined') {
+	if (typeof console !==  'undefined') {
 		console.log(x);
-	} else if (typeof print == 'function') {
+	} else if (typeof print === 'function') {
 		print (x);
-	} else if (typeof alert == 'function') {
+	} else if (typeof alert === 'function') {
 		alert(x);
 	}
 
