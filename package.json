@@ -1,0 +1,28 @@
+{
+  "name": "corpus_shell",
+  "version": "0.8.0",
+  "description": "HTML App used to query multiple FCS endpoints in one UI",
+  "main": "index.html",
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/simar0at/corpus_shell.git"
+  },
+  "author": "Omar Siam <omar.siam@oeaw.ac.at>",
+  "license": " CC-BY-NC-SA-3.0",
+  "bugs": {
+    "url": "https://github.com/simar0at/corpus_shell/issues"
+  },
+  "homepage": "https://github.com/simar0at/corpus_shell#readme",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-execute": "^0.2.2",
+    "jscc-node": "^0.3.0"
+  }
+}

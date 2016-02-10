@@ -1,0 +1,32 @@
+{
+  "name": "corpus_shell",
+  "homepage": "https://github.com/simar0at/corpus_shell",
+  "authors": [
+    "Omar Siam <Omar.Siam@oeaw.ac.at>"
+  ],
+  "description": "HTML App used to query multiple FCS endpoints in one UI",
+  "main": "index.html",
+  "moduleType": [],
+  "license": "CC BY-SA 3.0 AT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^2.2.0",
+    "openlayers": "*",
+    "jquery-selection": "^1.0.1",
+    "tablesorter": "jquery.tablesorter#^2.25.3",
+    "jquery-history": "^1.5.0-final",
+    "jquery-ui": "^1.11.4",
+    "jquery-migrate": "^1.3.0",
+    "urijs": "URIjs#^1.17.0"
+  },
+  "devDependencies": {
+    "jasmine-core": "jasmine#^2.4.1"
+  }
+}
