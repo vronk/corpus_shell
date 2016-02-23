@@ -108,20 +108,30 @@ input.virtual-keyboard-input {
     display: none;
 }
 
-.cmd_next,
-.cmd_prev {
+.result-navigation.prev-next {
+    display: block;
+}
+
+.cmd_prev, .cmd_next {    
     position: absolute;
+}
+
+.cmd_next:after,
+.cmd_prev:before {
+    content: "\a0";
+    position: relative;
     background-image: url(base/images/ui-icons_2e83ff_256x240.png)/*{iconsContent}*/;
+    width: 16px;
+    height: 16px;
+    display: inline-block;
 }
 
-.cmd_prev {
+.cmd_prev:before {
     background-position: -80px -192px;
-    left: 24px;
 }
 
-.cmd_next {
+.cmd_next:after {
     background-position: -48px -192px;
-    right: 24px;
 }
 .internal.next,
 .internal.prev {
@@ -129,6 +139,11 @@ input.virtual-keyboard-input {
     width: 49%;
     height: 16px;
     position: relative;
+}
+
+.internal.prev.disabled,
+.internal.next.disabled {
+    display: none;
 }
 
 #header > a {
