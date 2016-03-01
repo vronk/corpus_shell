@@ -913,6 +913,11 @@ tr:nth-of-type(-2n+10) .indexTerms .tei-index {
     bottom: auto;
 }
 
+.indexTerms .tei-index.to-right {
+	left: auto;
+	right: 20px;
+}
+
 .indexTerms:hover .tei-index,
 .indexTerms .tei-index li:hover {
     display: block;

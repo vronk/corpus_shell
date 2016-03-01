@@ -357,6 +357,11 @@ function doOnDocumentReady ()
         event.preventDefault();
         PanelController.OpenNewContentPanel($(this).attr('href'), 'TEI ');
     });
+    $(document).on("mouseenter", '.indexTerms', function(event) {
+      var sender = $(event.target);
+      var pos = sender.position();
+      console.info('Pos: ' + pos.left + ' ' + pos.top);
+    });
     if (sitesTitle === undefined)
         sitesTitle = document.title;
     var urlParams = GetUrlParams(location.search);
