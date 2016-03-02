@@ -102,7 +102,7 @@ class GlossaryOnSRUTest extends GlossaryTestBase {
     }
        
     protected function getPrefilter($innerPart) {
-        return "(SELECT tab.id, tab.xpath, prefid.txt FROM $this->context"."_ndx AS tab ".
+        return "(SELECT tab.id, tab.xpath, tab.txt FROM $this->context"."_ndx AS tab ".
                      "INNER JOIN ".
                      $innerPart.
                      "ON tab.id = prefid.id WHERE tab.txt != '-') AS ndx ";
@@ -115,7 +115,7 @@ class GlossaryOnSRUTest extends GlossaryTestBase {
             $predicate = '['.($exact === true ? ".=\"$query\"" : "contains(., \"$query\")").']';
         }
         $xPathInnerPart =
-        "(SELECT base.id, ExtractValue(base.entry, '".$this->ndxAndCondiction[$index].$predicate."') AS 'txt'".
+        "(SELECT base.id, Trim(Replace(ExtractValue(base.entry, '".$this->ndxAndCondiction[$index].$predicate."'), '\\r\\n', ' ')) AS 'txt'".
         $additionalExtractValues.
         " FROM $this->context AS base GROUP BY base.id HAVING txt != ''$additionalHavingConditions) AS ndx ";
         return $xPathInnerPart;
@@ -326,7 +326,7 @@ class GlossaryOnSRUTest extends GlossaryTestBase {
         $restrictedContext = 'aeb_eng_001__v001';
         $this->changeContext($restrictedContext);
         $this->setupDBMockForSqlSearch($this->getXPathPrefilter($index, $searchTerm, false,
-                ", ExtractValue(base.entry, '//f[@name=\"status\"]/symbol/@value[.=\"released\"]') AS 'f1'",
+                ", Trim(Replace(ExtractValue(base.entry, '//f[@name=\"status\"]/symbol/@value[.=\"released\"]'), '\\r\\n', ' ')) AS 'f1'",
                 " AND f1 != ''"));
         
         $ret = $this->t->search();
