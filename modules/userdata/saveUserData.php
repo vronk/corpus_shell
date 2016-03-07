@@ -12,14 +12,19 @@
  * @see getUserId.php
  * @package user-data
  */
-  
+
+\mb_internal_encoding('UTF-8');
+\mb_http_output('UTF-8');
+\mb_http_input('UTF-8');
+\mb_regex_encoding('UTF-8'); 
+
   include "../utils-php/config.php";
 
   if (function_exists('xdebug_disable')) {
     xdebug_disable();
   }
 //  xdebug_start_error_collection();
-  header("content-type: text/xml");
+  header("content-type: text/xml; charset=UTF-8");
   // print_r's output is directed to the browser!
   print "<userdata>";
   print "<debug>"
